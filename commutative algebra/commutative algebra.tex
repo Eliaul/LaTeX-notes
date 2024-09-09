@@ -1,0 +1,81 @@
+\documentclass[fontset=none]{Notes}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\usepackage{tikz-cd,wrapstuff}
+\usepackage{fixdif,siunitx,tikz,nicematrix}
+\usetikzlibrary{matrix,calc}
+
+\input{font.def}
+
+\usepackage[subscriptcorrection,nofontinfo,mtpbb,mtpfrak]{mtpro2}
+
+\tikzcdset{
+  arrow style=tikz,
+  diagrams={>={Straight Barb[scale=0.8]}}
+}
+
+\allowdisplaybreaks[1]
+
+\newlength{\mymathln}
+\newcommand{\aligninside}[2]{
+  \settowidth{\mymathln}{#2}
+  \mathmakebox[\mymathln]{#1}
+}
+
+\DeclareMathOperator\Spec{Spec}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\nil{nil}
+\DeclareMathOperator\rad{rad}
+\DeclareMathOperator\Ann{Ann}
+\DeclareMathOperator\Max{Max}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Tor{Tor}
+\DeclareMathOperator\Frac{Frac}
+\DeclareMathOperator\Tr{Tr}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\coker{coker}
+
+\newcommand{\ideal}[1]{\mathfrak{#1}}
+\newcommand{\mat}[1]{\mathbold{#1}}
+\newcommand{\uline}{\underline{\hphantom{X}}}
+
+\usepackage{enumitem}
+
+\setlist[enumerate]{nosep}
+
+%\DeclareMathAlphabet\mathcal{OMS}{cmsy}{m}{n}
+
+\newlength\stextwidth
+\newcommand\makesamewidth[3][c]{%
+  \settowidth{\stextwidth}{#2}%
+  \makebox[\stextwidth][#1]{#3}%
+}
+
+
+
+\begin{document}
+
+\frontmatter
+
+\tableofcontents
+
+\mainmatter
+
+\include{chapters/ring}
+
+\include{chapters/module}
+
+\include{chapters/rings of fractions}
+
+\include{chapters/integral dependence}
+
+\include{chapters/chain condition}
+
+\include{chapters/Noetherian rings}
+
+\end{document}

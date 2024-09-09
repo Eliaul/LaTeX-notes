@@ -1,0 +1,2119 @@
+\documentclass[fontset=none,zihao=-4]{Notes}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\usepackage{tikz-cd,wrapstuff}
+\usepackage{fixdif,siunitx,tikz,nicematrix}
+
+\usetikzlibrary{hobby,calc,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.pathreplacing}
+
+\input{font.def}
+
+\DeclareMathOperator\Int{Int}
+\DeclareMathOperator\supp{supp}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Ann{Ann}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\diag{diag}
+\DeclareMathOperator\Or{O}
+\DeclareMathOperator\rank{rank}
+
+\newcommand{\inn}[1]{\left\langle#1\right\rangle}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\spa}[1]{\operatorname{span}\left(#1\right)}
+
+
+\tikzcdset{
+  arrow style=tikz,
+  diagrams={>={Straight Barb[scale=0.8]}}
+}
+
+\tikzset{
+  point/.style={
+    circle,fill,inner sep=0pt,minimum width=5pt
+  }
+}
+
+\usepackage[subscriptcorrection,nofontinfo,mtpbb]{mtpro2}
+
+
+
+\setlist[enumerate]{nosep,label=(\arabic*)}
+\setlist[itemize]{nosep}
+
+\title{\sffamily 内积空间上的算子}
+\author{Eliauk}
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{对偶空间和伴随映射}
+
+本文的域 $\mathbb{F}$ 均指代 $\mathbb{R}$ 或者 $\mathbb{C}$。
+对于 $\mathbb{F}$ 上的 $n$ 向量空间 $V$，记\emph{对偶空间}为 $V^*=\Hom(V,\mathbb{F})$，
+即 $V\to\mathbb{F}$ 的线性映射全体构成的向量空间。我们有以下重要的结果：
+
+\begin{theorem}
+  对于 $n$ 维向量空间 $V$，其对偶空间 $V^*$ 也是 $n$ 维向量空间。
+  并且对于 $V$ 的一组基 $e_1,\dots,e_n$，记线性映射 $e_i^*:V\to\mathbb{F}$
+  满足
+  \[
+    e_i^*(e_j)=\delta_{ij},  
+  \]
+  那么 $e_1^*,\dots,e_n^*$ 是 $V^*$ 的一组基，被称为 $e_1,\dots,e_n$
+  的对偶基。
+\end{theorem}
+\begin{proof}
+  我们有 $\dim V^*=(\dim V)(\dim\mathbb{F})=n$。所以实际上我们只需要说明 $e_1^*,\dots,e_n^*$
+  线性无关即可，但是为了强调对偶基的作用，这里仍然验证 $e_1^*,\dots,e_n^*$ 线性无关且张成 $V^*$。
+  任取 $f\in V^*$，对于任意 $v\in V$，设 $v=\sum v_ie_i$，那么
+  \[
+    f(v)=f\left(\sum v_ie_i\right)=\sum v_if(e_i)=\sum f(e_i)e_i^*(v),
+  \]
+  所以 $f=\sum f(e_i)e_i^*$，故 $e_1^*,\dots,e_n^*$ 张成 $V^*$。
+
+  令 $a_1,\dots,a_n\in\mathbb{F}$ 使得
+  \[
+    a_1e_1^*+\cdots+a_ne_n^*=0,  
+  \]
+  那么
+  \[
+    a_i=a_1e_1^*(e_i)+\cdots+a_ne_n^*(e_i)=0,  
+  \]
+  所以 $e_1^*,\dots,e_n^*$ 线性无关。
+\end{proof}
+
+下面假设 $V$ 是内积空间，即 Euclid 空间（实内积空间）或者酉空间（复内积空间）。
+内积空间上的线性变换我们一般称之为算子。
+假设 $e_1,\dots,e_n$ 是 $V$ 的标准正交基。那么对偶基满足
+\[
+  e_i^*(u)  =u_i=\inn{u,e_i}\quad \forall u=\sum u_ie_i\in V.
+\]
+任取 $f\in V^*$，设 $f=\sum a_i e_i^*$，那么
+\[
+  f(u)=\sum a_i e_i^*(u)=\sum a_i\inn{u,e_i}=\inn{u,\sum \bar a_ie_i},  
+\]
+即存在 $v=\sum \bar a_ie_i$ 使得
+\[
+  f(u)=\inn{u,v}.  
+\]
+此外，这样的 $v$ 还是唯一的：假设 $w\in V$ 也使得 $f(u)=\inn{u,w}$，那么
+$\inn{u,v}=\inn{u,w}$，即 $\inn{u,v-w}=0$，取 $u=v-w$，就得出 $v-w=0$，
+所以 $w=v$。事实上，上面的结果被称为\emph{Riesz 表示定理}。
+这直接引出了伴随算子的概念。
+
+设 $\varphi:V\to W$ 是 $n$ 维内积空间 $V$ 到 $m$ 维内积空间 $W$ 的线性映射，那么对于任意的
+$w\in W$，我们考虑映射 $f:V\to \mathbb{F}$ 为 $f(v)=\inn{\varphi(v),w}$。
+容易验证 $f$ 是线性映射，所以 $f\in V^*$。根据上面的叙述，存在唯一的
+$u\in V$ 使得 $\inn{\varphi(v),w}=f(v)=\inn{v,u}$。如果我们定义
+$\varphi^*:W\to V$ 为 $\varphi^*(w)=u$，那么就有
+\[
+  \inn{\varphi(v),w}=\inn{v,\varphi^*(w)}.  
+\]
+由于 $u$ 的唯一性，所以 $\varphi^*:W\to V$ 是良定义的。
+这个 $\varphi^*$ 被称为 $\varphi$ 的\emph{伴随映射}。
+如果 $W=V$，那么 $\varphi^*$ 被称为 $\varphi$ 的\emph{伴随算子}。
+
+\begin{proposition}
+  $\varphi$ 的伴随映射 $\varphi^*$ 是 $W\to V$ 的线性映射。
+\end{proposition}
+\begin{proof}
+  任取 $a_1,a_2\in\mathbb{F}$，$w_1,w_2\in W$，那么
+  \begin{align*}
+    \inn{u,\varphi^*(a_1w_1+a_2w_2)}&=
+    \inn{\varphi(u),a_1w_1+a_2w_2}=
+    \bar a_1\inn{\varphi(u),w_1}+\bar a_2\inn{\varphi(u),w_2}\\
+    &=\bar a_1\inn{u,\varphi^*(w_1)}+\bar a_2\inn{u,\varphi^*(w_2)}\\
+    &=\inn{u,a_1\varphi^*(w_1)+a_2\varphi^*(w_2)},
+  \end{align*}
+  由 $u$ 的任意性，所以 $\varphi^*(a_1w_1+a_2w_2)=a_1\varphi^*(w_1)+a_2\varphi^*(w_2)$，
+  即 $\varphi^*$ 是 $W\to V$ 的线性映射。
+\end{proof}
+
+接下来我们介绍伴随映射的一些重要的性质。
+
+\begin{proposition}[伴随映射的性质]
+  设 $\varphi:V\to W$ 是内积空间之间的线性映射，那么
+  \begin{enumerate}
+    \item 对于任意的线性映射 $\psi:V\to W$，有 $(\varphi+\psi)^*=\varphi^*+\psi^*$；
+    \item 对于任意 $\lambda\in\mathbb{F}$，有 $(\lambda\varphi)^*=\bar\lambda\varphi^*$；
+    \item $(\varphi^*)^*=\varphi$；
+    \item 对于任意的线性映射 $\psi:V\to W$，有 $(\varphi\psi)^*=\psi^*\varphi^*$；
+    \item 对于恒等变换 $\mathbb{1}_V$，有 $\mathbb{1}_V^*=\mathbb{1}_V$；
+    \item 若 $\varphi$ 可逆，那么 $\varphi^*$ 可逆，并且 $(\varphi^*)^{-1}=(\varphi^{-1})^*$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 任取 $w\in W$，那么
+  \begin{align*}
+    \inn{u,(\varphi+\psi)^*(w)}&=\inn{(\varphi+\psi)(u),w}=
+    \inn{\varphi(u)+\psi(u),w}\\
+    &=  \inn{\varphi(u),w}+\inn{\psi(u),w}=\inn{u,\varphi^*(w)}+
+    \inn{u,\psi^*(w)}\\
+    &=\inn{u,\varphi^*(w)+\psi^*(w)}=\inn{u,(\varphi^*+\psi^*)(w)},
+  \end{align*}
+  根据 $u$ 的任意性，所以 $(\varphi+\psi)^*=\varphi^*+\psi^*$。
+
+  (2) 任取 $w\in W$，那么
+  \[
+    \inn{u,(\lambda\varphi)^*(w)}=\inn{(\lambda\varphi)(u),w}=\lambda\inn{\varphi(u),w}
+    =\lambda\inn{u,\varphi^*(w)}=\inn{u,(\bar\lambda\varphi^*)(w)},
+  \]
+  根据 $u$ 的任意性，所以 $(\lambda\varphi)^*=\bar\lambda\varphi^*$。
+
+  (3) 和 (4) 的证明和上面完全类似。
+
+  (5) 任取 $v\in V$，那么 $\inn{u,\mathbb{1}_V^*(v)}=\inn{u,v}$，所以 $\mathbb{1}_V^*=\mathbb{1}_V$。
+
+  (6) 由于 $\varphi\varphi^{-1}=\varphi^{-1}\varphi=\mathbb{1}$，利用 (4) 和 (5)，所以
+  \[
+    (\varphi^{-1})^*\varphi^*=\varphi^*(\varphi^{-1})^*=\mathbb{1},  
+  \]
+  故 $\varphi^*$ 可逆，且 $(\varphi^*)^{-1}=(\varphi^{-1})^*$。
+\end{proof}
+
+\begin{proposition}\label{prop:matrix of adjoint}
+  设线性映射 $\varphi:V\to W$ 在 $n$ 维内积空间 $V$ 的一组标准正交基 $e_1,\dots,e_n$ 
+  和 $m$ 维内积空间 $W$ 的一组标准正交基 $f_1,\dots,f_m$ 下的表示矩阵为 $m\times n$
+  矩阵 $A$，
+  那么伴随算子 $\varphi^*$ 在这组基下的表示矩阵为 $n\times m$ 矩阵 $A^*$。
+  这里 $A^*$ 表示共轭转置。
+\end{proposition}
+\begin{proof}
+  设 $A=(a_{ij})$，那么 $\varphi(e_j)=\sum_i a_{ij}f_i$，所以
+  \[
+    \inn{e_i,\varphi^*(f_j)}=\inn{\varphi(e_i),f_j}=\inn{\sum_k a_{ki}f_k,f_j}
+    =\sum_k a_{ki}\inn{f_k,f_j}=a_{ji}.
+  \]
+  于是我们有
+  \[
+    \inn{u,\varphi^*(f_j)}=\sum_i u_i\inn{e_i,\varphi^*(f_j)}=\sum_i u_ia_{ji}
+    =\sum_i a_{ji}\inn{u,e_i}=\inn{u,\sum_i \bar a_{ji}e_i},
+  \]
+  根据 $u$ 的任意性，所以 $\varphi^*(f_j)=\sum_i\bar a_{ji}e_i$，
+  即 $\varphi^*$ 在这组基下的表示矩阵为 $A^*$。
+\end{proof}
+
+\begin{proposition}\label{prop:invariant space of adjoint}
+  设内积空间 $V$ 上的算子 $\varphi$ 有不变子空间 $U$，那么正交补
+  $U^\bot$ 是 $\varphi^*$ 的不变子空间。
+\end{proposition}
+\begin{proof}
+  任取 $w\in U^\bot$，$u\in U$，那么 $\varphi(u)\in U$，所以
+  \[
+    \inn{u,\varphi^*(w)}=\inn{\varphi(u),w}=0,  
+  \]
+  所以 $\varphi^*(w)\in U^\bot$，即 $U^\bot$ 是 $\varphi^*$ 的不变子空间。
+\end{proof}
+
+\begin{proposition}\label{prop:ker and im of adjoint}
+  设 $\varphi$ 是内积空间 $V$ 上的算子，那么
+  \begin{enumerate}
+    \item $\ker \varphi^*=(\im\varphi)^\bot$；
+    \item $\im\varphi^*=(\ker\varphi)^\bot$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 任取 $v\in\ker\varphi^*$，即 $\varphi^*(v)=0$，当且仅当对于任意的
+  $u\in V$ 有 $\inn{u,\varphi^*(v)}=0$，当且仅当 $\inn{\varphi(u),v}=0$，
+  当且仅当 $v\in(\im\varphi)^\bot$。
+
+  (2) 由 (1) 我们有 $\im\varphi=(\ker\varphi^*)^\bot$，用 $\varphi^*$ 替换
+  $\varphi$ 即得 $\im\varphi^*=(\ker\varphi)^\bot$。
+\end{proof}
+
+\section{正规算子}
+
+线性代数的主要研究内容是在各种意义下对线性变换进行分类，
+如相抵、相似等，对于内积空间，我们主要研究线性变换在标准正交基下的
+形态，即正交相似或者酉相似，其中正交对角化和酉对角化又是主要的研究目标，
+在研究这两类对角化问题的时候，人们发现有一类算子发挥着主要的作用（实际上是
+酉对角化的充要条件），即正规算子。
+
+对于 $n$ 维内积空间 $V$ 上的算子 $\varphi$，如果 $\varphi$ 和 $\varphi^*$
+可交换，即
+\[
+  \varphi\varphi^*=\varphi^*\varphi,  
+\]
+那么我们说 $\varphi$ 是\emph{正规算子}。根据 \autoref{prop:matrix of adjoint}，
+正规算子 $\varphi$ 的表示矩阵 $A$ 满足
+\[
+  AA^*=A^*A,  
+\]
+所以这样的矩阵我们称之为\emph{正规矩阵}。
+
+\begin{proposition}\label{prop:equiv of normal operator}
+  设 $\varphi$ 是内积空间 $V$ 上的算子，那么下面的说法等价：
+  \begin{enumerate}
+    \item $\varphi$ 是正规算子；
+    \item 任取 $v\in V$，有 $\lVert\varphi(v)\rVert=\norm{\varphi^*(v)}$；
+    \item $\varphi$ 在 $V$ 的标准正交基下的表示矩阵为正规矩阵。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 任取 $v\in V$，那么
+  \[
+    \inn{\varphi(v),\varphi(v)}=\inn{v,\varphi^*\varphi(v)}=
+    \inn{v,\varphi\varphi^*(v)}=\inn{\varphi^*(v),\varphi^*(v)},  
+  \]
+  所以 $\lVert\varphi(v)\rVert=\norm{\varphi^*(v)}$。
+
+  $(2)\Rightarrow (1)$ 任取 $v\in V$，有
+  \[
+    \inn{v,\varphi^*\varphi(v)}=\inn{\varphi(v),\varphi(v)}
+    =\inn{\varphi^*(v),\varphi^*(v)}=\inn{v,\varphi\varphi^*(v)},
+  \]
+  故 $\inn{v,(\varphi^*\varphi-\varphi\varphi^*)(v)}=0$，而
+  $\varphi^*\varphi-\varphi\varphi^*$ 是自伴随算子，根据
+  \autoref{thm:property of self-adjoint operator}，
+  所以
+  $\varphi^*\varphi-\varphi\varphi^*=0$。
+  
+  $(3)\Rightarrow (1)$ 设 $e_1,\dots,e_n$ 是 $V$ 的标准正交基，
+  $\varphi$ 在这组基下的表示矩阵为 $A$。那么
+  \[
+    \varphi(e_1,\dots,e_n)=(e_1,\dots,e_n)A,\quad 
+    \varphi^*(e_1,\dots,e_n)=(e_1,\dots,e_n)A^*,  
+  \]
+  所以
+  \[
+    \varphi\varphi^*(e_1,\dots,e_n)=(e_1,\dots,e_n)AA^*,
+    \quad \varphi^*\varphi(e_1,\dots,e_n)=(e_1,\dots,e_n)A^*A,  
+  \]
+  $AA^*=A^*A$ 表明 $\varphi\varphi^*=\varphi^*\varphi$。
+\end{proof}
+
+\begin{proposition}\label{prop:im of normal operator}
+  正规算子 $\varphi$ 满足 $(\im\varphi)^\bot=\ker\varphi$。
+\end{proposition}
+\begin{proof}
+  根据 \autoref{prop:ker and im of adjoint}，我们知道
+  $(\im\varphi)^\bot=\ker\varphi^*$，根据 \autoref{prop:equiv of normal operator}
+  的 (2)，有 $\ker\varphi^*=\ker\varphi$，所以 $(\im\varphi)^\bot=\ker\varphi$。
+\end{proof}
+
+\begin{proposition}\label{prop:eigenvec is orthonormal}
+  正规算子 $\varphi$ 的不同特征值 $\lambda,\mu$ 对应的特征子空间互相正交。
+\end{proposition}
+\begin{proof}
+  任取非零的 $v\in V_\lambda$，$w\in V_\mu$，由于
+  $(\varphi-\mu \mathbb{1})(w)=0$，所以 $(\varphi^*-\bar\mu\mathbb{1})(w)=0$，
+  所以 $\varphi^*(w)=\bar\mu w$，所以
+  \[
+    \lambda\inn{v,w}=\inn{\lambda v,w}=\inn{\varphi(v),w}=\inn{v,\varphi^*(w)}
+    =\inn{v,\bar\mu w}  =\mu\inn{v,w},
+  \]
+  $\lambda\neq\mu$ 表明 $\inn{v,w}=0$。
+\end{proof}
+
+\subsection{复正规算子的酉相似}
+
+首先我们利用 Jordan 标准型说明有限维酉空间上的算子都能在某组标准正交基下
+被上三角化，这一结论被称为 Schur 定理。
+
+\begin{theorem}
+  令 $V$ 是域 $\mathbb{F}$ 上的 $n$ 维向量空间，$\varphi:V\to V$ 是线性变换，
+  那么存在 $V$ 的一组基 $e_1,\dots,e_n$ 使得 $\varphi$ 在这组基下的表示矩阵为
+  上三角矩阵当且仅当 $\varphi$ 的最小多项式在 $\mathbb{F}$ 上能够
+  完全分裂为一次多项式。
+\end{theorem}
+\begin{proof}
+  $(\Rightarrow)$ 若 $\varphi$ 在 $e_1,\dots,e_n$ 下的表示矩阵为上三角矩阵
+  \[
+    A=
+    \begin{pNiceMatrix}
+      a_{11} & & \Block{2-2}<\Large>{*} & \\
+      & a_{22} & & \\
+      & & \ddots & \\
+      & & & a_{nn}
+    \end{pNiceMatrix}  ,
+  \]
+  那么 $\varphi$ 的特征多项式显然为
+  \[
+    c(x)=(x-a_{11})(x-a_{22})\cdots(x-a_{nn}).
+  \]
+  由于最小多项式 $m(x)$ 整除 $c(x)$，所以 $m(x)$ 在 $\mathbb{F}$
+  上完全分裂为一次多项式。
+
+  $(\Leftarrow)$ 若 $\varphi$ 的最小多项式 $m(x)$ 在 $\mathbb{F}$
+  上完全分裂为一次多项式。那么 $\varphi$ 在 $\mathbb{F}$ 上
+  有 Jordan 标准型，是上三角矩阵。
+\end{proof}
+
+\begin{corollary}\label{coro:upper-triangular matrix and minimal polynomial}
+  令 $V$ 是域 $\mathbb{F}$ 上的 $n$ 维内积空间，$\varphi:V\to V$ 是线性变换，
+  那么存在 $V$ 的一组标准正交基 $e_1,\dots,e_n$ 使得 $\varphi$ 在这组基下的表示矩阵为
+  上三角矩阵当且仅当 $\varphi$ 的最小多项式在 $\mathbb{F}$ 上能够
+  完全分裂为一次多项式。
+\end{corollary}
+\begin{proof}
+  $(\Rightarrow)$ 显然。
+
+  $(\Leftarrow)$ 若 $\varphi$ 的最小多项式 $m(x)$ 在 $\mathbb{F}$
+  上完全分裂为一次多项式，那么存在 $V$ 的一组基 $f_1,\dots,f_n$ 使得 $\varphi$ 在这组基下的表示矩阵为
+  上三角矩阵，等价地说，对于 $1\leq k\leq n$，$\spa{f_1,\dots,f_k}$
+  是 $\varphi$ 的不变子空间。对 $f_1,\dots,f_n$ 使用 Gram-Schmidt 正交化，
+  得到一组标准正交基 $e_1,\dots,e_n$，并且满足 
+  \[
+    \spa{e_1,\dots,e_k}=\spa{f_1,\dots,f_k}\quad 1\leq k\leq n.  
+  \]
+  由于 $\spa{e_1,\dots,e_k}$ 是 $\varphi$ 的不变子空间，所以 
+  $\varphi$ 在标准正交基 $e_1,\dots,e_n$ 下的表示矩阵为上三角矩阵。
+\end{proof}
+
+\begin{corollary}[Schur 定理]
+  $V$ 是有限维酉空间，$\varphi:V\to V$ 是线性变换，那么存在 $V$ 的一组标准正交基 $e_1,\dots,e_n$ 使得 $\varphi$ 在这组基下的表示矩阵为
+  上三角矩阵。
+\end{corollary}
+\begin{proof}
+  由于 $\mathbb{C}$ 上的任意多项式都能完全分裂为一次多项式的乘积，再根据
+  \autoref{coro:upper-triangular matrix and minimal polynomial} 即得。
+\end{proof}
+
+现在我们便可以证明复谱定理，即复矩阵能够酉对角化的充分必要条件是
+其为正规矩阵。
+
+\begin{theorem}[复谱定理]\label{thm:canonical form of complex normal operator}
+  对于 $n$ 维酉空间 $V$，$\varphi:V\to V$ 是线性变换，那么存在 $V$ 的一组标准正交基 $e_1,\dots,e_n$ 使得 $\varphi$ 在这组基下的表示矩阵为
+  对角阵当且仅当 $\varphi$ 是正规算子。
+\end{theorem}
+\begin{proof}
+  $(\Rightarrow)$ 若存在 $V$ 的一组标准正交基 $e_1,\dots,e_n$ 使得 $\varphi$ 在这组基下的表示矩阵为
+  对角阵
+  \[
+    A=\diag(a_1,\dots,a_n),  
+  \]
+  那么 $\varphi^*$ 在这组基下的表示矩阵为
+  \[
+    A^*=\diag(\bar a_1,\dots,\bar a_n) , 
+  \]
+  又因为
+  \[
+    AA^*=\diag(a_1\bar a_1,\dots,a_n\bar a_n)=A^*A,  
+  \]
+  所以 $\varphi\varphi^*=\varphi^*\varphi$，即 $\varphi$ 是正规算子。
+
+  $(\Leftarrow)$ 若 $\varphi$ 是正规算子，根据 Schur 定理，存在
+  $V$ 的一组标准正交基 $e_1,\dots,e_n$ 使得 $\varphi$ 在这组基下的表示矩阵为
+  上三角阵
+  \[
+    A=
+    \begin{pmatrix}
+      a_{11} & a_{12} & \cdots & a_{1n} \\
+      & a_{22} & \cdots & a_{2n} \\
+      & & \ddots & \vdots \\
+      & & & a_{nn}
+    \end{pmatrix} , 
+  \]
+  那么 $\varphi^*$ 在这组基下的表示矩阵为 $A^*$。$\varphi$ 正规表明
+  $AA^*=A^*A$，即
+  \[
+    \begin{pmatrix}
+      a_{11} & a_{12} & \cdots & a_{1n} \\
+      & a_{22} & \cdots & a_{2n} \\
+      & & \ddots & \vdots \\
+      & & & a_{nn}
+    \end{pmatrix}
+    \begin{pmatrix}
+      \bar a_{11} &  &  &  \\
+      \bar a_{12} & \bar a_{22} & & \\
+      \vdots & \vdots & \ddots & \\
+      \bar a_{1n} &  \bar a_{2n} & \cdots & \bar a_{nn}
+    \end{pmatrix}=
+    \begin{pmatrix}
+      \bar a_{11} &  &  &  \\
+      \bar a_{12} & \bar a_{22} & & \\
+      \vdots & \vdots & \ddots & \\
+      \bar a_{1n} &  \bar a_{2n} & \cdots & \bar a_{nn}
+    \end{pmatrix}
+    \begin{pmatrix}
+      a_{11} & a_{12} & \cdots & a_{1n} \\
+      & a_{22} & \cdots & a_{2n} \\
+      & & \ddots & \vdots \\
+      & & & a_{nn}
+    \end{pmatrix}.
+  \]
+  对比两边的 $(1,1)$-元得到 $\norm{a_{11}}^2+\norm{a_{12}}^2+\cdots+\norm{a_{1n}}^2=\norm{a_{11}}^2$，
+  故 $\norm{a_{12}}^2+\cdots+\norm{a_{1n}}^2=0$，这表明
+  $a_{12}=\cdots=a_{1n}=0$。然后对比 $(2,2)$-元可得
+  $a_{23}=\cdots=a_{2n}=0$，以此类推可得 $i\neq j$ 时有 $a_{ij}=0$，
+  即 $A$ 为对角阵。
+\end{proof}
+
+\begin{corollary}
+  两个复正规矩阵酉相似的充分必要条件是它们有相同的特征值（计重数）。
+\end{corollary}
+
+\subsection{实正规算子的正交相似}
+
+对于实正规算子而言，我们想要仿照复正规算子的方法，但是
+$\mathbb{R}$ 上的不可约多项式最高为二次多项式，所以实正规算子
+的最小多项式可能不会完全分裂为一次多项式的乘积，故我们首先研究
+最小多项式为二次不可约多项式的实正规算子。
+
+\begin{theorem}\label{thm:degree two real normal operator}
+  设 $\varphi$ 是 $n$ 维 Euclid 空间 $V$ 上的正规算子，其最小多项式为
+  $m(x)=(x-a)^2+b^2$，其中 $a,b\in\mathbb{R}$ 且 $b>0$，即
+  $m(x)$ 是二次不可约多项式。
+  那么 $n=2k$ 是偶数，并且存在 $\varphi$ 的 $2$ 维不变子空间
+  $V_1,V_2,\dots,V_k$ 使得
+  \begin{enumerate}
+    \item $i\neq j$ 时 $V_i\bot V_j$。
+    \item $V=V_1\oplus V_2\oplus\cdots\oplus V_k$。
+    \item 对于 $1\leq i\leq k$，存在 $V_i$ 的标准正交基 $e_{2i-1},e_{2i}$
+    使得 $\varphi|_{V_i}$ 在这组基下的表示矩阵为
+    \[
+      \begin{pmatrix}
+        a & b\\
+        -b & a
+      \end{pmatrix}  .
+    \]
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  如果 $n$ 是奇数，那么 $\varphi$ 的特征多项式 $c(x)$ 是奇数次多项式，
+  所以有实根 $\lambda_0$，而最小多项式 $m(x)$ 和 $c(x)$ 的根相同，所以
+  $\lambda_0$ 是 $m(x)$ 的根，这与 $m(x)$ 在 $\mathbb{R}$ 上不可约矛盾，
+  所以 $n$ 必须为偶数。设 $n=2k$，我们对 $k$ 进行归纳。
+
+  $k=1$ 时，即 $n=2$，我们说明存在 $V$ 的一组标准正交基使得
+  $\varphi$ 的表示矩阵如上。令
+  \[
+    \psi=\frac{1}{b}(\varphi-a\mathbb{1}),
+  \]
+  那么 $\psi$ 也是正规算子，并且
+  \[
+    \psi^2+\mathbb{1}=\frac{1}{b^2}(\varphi-a\mathbb{1})^2+\mathbb{1} 
+    =0, 
+  \]
+  所以 $\psi$ 不是零映射且最小多项式为 $x^2+1$。取单位向量 $e_1$ 使得
+  $\psi(e_1)\neq 0$，记 $e_2=-\psi(e_1)$，那么 $\psi(e_2)=-\psi^2(e_1)=e_1$。
+  $\psi$ 是正规算子表明 $\norm{\psi(v)}=\norm{\psi^*(v)}$，故
+  \begin{align*}
+    &\hphantom{{}={}}\norm{\psi^*(e_1)-e_2}^2+\norm{\psi^*(e_2)+e_1}^2\\
+    &=\norm{\psi^*(e_1)}^2-2\inn{\psi^*(e_1),e_2}+\norm{e_2}^2+
+    \norm{\psi^*(e_2)}^2+2\inn{\psi^*(e_2),e_1}+\norm{e_1}^2\\
+    &=\norm{\psi(e_1)}^2-2\inn{e_1,\psi(e_2)}+\norm{e_2}^2+
+    \norm{\psi(e_2)}^2+2\inn{e_2,\psi(e_1)}+\norm{e_1}^2\\
+    &=\norm{\psi(e_2)}^2-2\norm{\psi(e_2),e_1}+\norm{e_1}^2+
+    \norm{\psi(e_1)}^2+2\inn{\psi(e_1),e_2}+\norm{e_2}^2\\
+    &=\norm{\psi(e_2)-e_1}^2+\norm{\psi(e_1)+e_2}^2 =0,
+  \end{align*}
+  所以 $\psi^*(e_1)=e_2$ 以及 $\psi^*(e_2)=-e_1$。这就表明
+  \[
+    \inn{e_1,e_2}=\inn{\psi(e_2),e_2}=\inn{e_2,\psi^*(e_2)}=\inn{e_2,-e_1}
+    =-\inn{e_1,e_2},  
+  \]
+  所以 $\inn{e_1,e_2}=0$，即 $e_1,e_2$ 正交。又因为
+  \[
+    \norm{e_2}^2=\inn{e_2,e_2}=\inn{-\psi(e_1),e_2}=-\inn{e_1,\psi^*(e_2)}
+    =\inn{e_1,e_1}=\norm{e_1}^2=1,  
+  \]
+  所以 $e_2$ 是单位向量。故 $e_1,e_2$ 是 $V$ 的标准正交基且 $\psi$
+  在这组基下的表示矩阵为
+  \[
+    A=\begin{pmatrix}
+      0 & 1 \\
+      -1 & 0
+    \end{pmatrix}  ,
+  \]
+  那么 $\varphi$ 在这组基下的表示矩阵为
+  \[
+    bA+a=\begin{pmatrix}
+      a & b \\
+      -b & a
+    \end{pmatrix}  .
+  \]
+
+  下面假设结论对 $k-1$ 成立。同样记
+  \[
+    \psi=\frac{1}{b}(\varphi-a\mathbb{1}),
+  \]
+  那么 $\psi$ 不是零映射且最小多项式为 $x^2+1$。取单位向量 $e_1$ 使得
+  $\psi(e_1)\neq 0$，记 $e_2=-\psi(e_1)$，那么 $\psi(e_2)=e_1$。
+  重复上面的证明，可知 $e_1,e_2$ 正交且均为单位向量。记 $V_1=\spa{e_1,e_2}$。
+  那么 $V_1$ 是 $\varphi$ 的不变子空间，且 $\varphi|_{V_1}$ 在 $e_1,e_2$
+  下的表示矩阵为  
+  $\begin{psmallmatrix}
+    a & b \\
+    -b & a
+  \end{psmallmatrix}$。此外，我们有 $V=V_1\oplus V_1^\bot$。
+  注意到
+  \begin{align*}
+    \varphi^*(e_1)&=(b\psi^*+a\mathbb{1})(e_1)=be_2+ae_1\in V_1, \\
+    \varphi^*(e_2)&=(b\psi^*+a\mathbb{1})(e_2)=ae_2-be_1\in V_1,
+  \end{align*}
+  所以 $V_1$ 是 $\varphi^*$ 的不变子空间，根据 \autoref{prop:invariant space of adjoint}，
+  所以 $V_1^\bot$ 是 $(\varphi^*)^*=\varphi$ 的不变子空间。
+  那么我们可以考虑限制 $\varphi|_{V_1^\bot}$。显然 $m(x)$ 仍然是
+  $\varphi|_{V_1^\bot}$ 的零化多项式，而 $m(x)$ 不可约，所以
+  $\varphi|_{V_1^\bot}$ 的最小多项式还是 $m(x)$。那么根据归纳假设，
+  存在 $\varphi|_{V_1^\bot}$ 的 $2$ 维不变子空间 $V_2,\dots,V_k$
+  使得
+  \[
+    V_1^\bot=V_2\oplus\cdots\oplus V_k,  
+  \] 
+  其中 $i\neq j$ 时有 $V_i\bot V_j$，并且 $V_i$ 有标准正交基 $e_{2i-1},e_{2i}$
+  使得  $\varphi|_{V_1^\bot}$ 限制在 $V_i$ 上的表示矩阵为 
+  $\begin{psmallmatrix}
+    a & b \\
+    -b & a
+  \end{psmallmatrix}$。显然 $V_2,\dots,V_k$ 也是 $\varphi$ 的不变子空间，这就完成了证明。
+\end{proof} 
+
+下面我们就可以研究 Euclid 空间上的一般正规算子了。
+
+\begin{theorem}\label{thm:property of real normal operator}
+  设 $\varphi$ 是 Euclid 空间 $V$ 上的正规算子，其最小多项式 $m(x)$ 的
+  所有不可约因子为
+  \[
+    (x-a_1)^2+b_1^2,\dots,(x-a_s)^2+b_s^2,x-a_{2s+1} ,\dots,x-a_{2s+t},
+  \]
+  其中 $a_1,\dots,a_s,a_{2s+1},\dots,a_{2s+t}\in\mathbb{R}$，$b_1,\dots,b_s>0$。
+  那么
+  \begin{enumerate}
+    \item 每个不可约因子的幂次都是一次，即
+    \[
+      m(x)=\bigl((x-a_1)^2+b_1^2\bigr)\cdots
+      \bigl((x-a_s)^2+b_s^2\bigr)(x-a_{2s+1})\cdots(x-a_{2s+t}).
+    \]
+    \item 存在 $\varphi$ 的两两正交的不变子空间 $W_1,\dots,W_s,W_{2s+1},\dots,W_{2s+t}$，
+    使得 $\varphi|_{W_i}$ 的最小多项式 $m_i(x)$ 为
+    \[
+      m_i(x)=
+      \begin{cases}
+        (x-a_i)^2+b_i^2 & 1\leq i\leq s,\\
+        x-a_i & 2s+1\leq i\leq 2s+t.
+      \end{cases}  
+    \]
+    \item $V=W_1\oplus\cdots\oplus W_s\oplus W_{2s+1}\oplus \cdots\oplus W_{2s+t}$。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  假设
+  \[
+    m(x)=\bigl((x-a_1)^2+b_1^2\bigr)^{r_1}\cdots
+    \bigl((x-a_s)^2+b_s^2\bigr)^{r_s}(x-a_{2s+1})^{r_{2s+1}}\cdots(x-a_{2s+t})
+    ^{r_{2s+t}},
+  \]
+  其中 $r_1,\dots,r_s,r_{2s+1},\dots,r_{2s+t}\geq 1$。
+  假设某个 $r_i\geq 2$，记这个不可约因子为 $p_i(x)$。
+  设 $g_i(x)$ 满足 $m(x)=p_i^2(x)g_i(x)$。那么 $m(\varphi)=p_i^2(\varphi)g_i(\varphi)=0$。
+  任取 $v\in V$，那么 $p_i^2(\varphi)g_i(\varphi)(v)=0$，所以
+  $p_i(\varphi)g_i(\varphi)(v)\in\ker p_i(\varphi)$，同时注意到
+  $p_i(\varphi)g_i(\varphi)(v)\in\im p_i(\varphi)$。
+  由于 $p_i(\varphi)$ 也是正规算子，根据 \autoref{prop:im of normal operator}，
+  所以 $p_i(\varphi)g_i(\varphi)(v)=0$，故 $p_i(\varphi)g_i(\varphi)=0$。
+  这表明 $p_i(x)g_i(x)$ 是 $\varphi$ 的零化多项式，与 $m(x)$ 是最小多项式矛盾。
+  所以 $r_i=1$。这就证明了 (1)。
+
+  记号不变，那么对于每个 $i$，设 $m(x)=p_i(x)f_i(x)$，其中 $p_i\nmid f_i$。
+  令 $W_i=\ker p_i(\varphi)$。任取 $w\in W_i$，那么
+  $p_i(\varphi)(w)=0$，那么 $p_i(\varphi)(\varphi(w))=\varphi(p_i(\varphi)(w))=0$，
+  所以 $\varphi(w)\in W_i$，故 $W_i$ 是 $\varphi$ 的不变子空间。
+  记 $\varphi_i=\varphi|_{W_i}$，那么
+  \[
+    p_i(\varphi_i)(w)=p_i(\varphi)(w)=0\quad w\in W_i,
+  \]
+  这表明 $p_i(x)$ 是 $\varphi_i$ 的零化多项式。又因为 $p_i$ 不可约，
+  所以 $p_i(x)$ 就是 $\varphi_i$ 的最小多项式。
+  $i\neq j$ 时，任取 $w_i\in W_i$，$w_j\in W_j$。此时 $p_i(x)$ 和 $p_j(x)$
+  互素，所以存在 $q_i(x)$ 和 $q_j(x)$ 使得 $p_i(x)q_i(x)+p_j(x)q_j(x)=1$，
+  故 $p_i(\varphi)q_i(\varphi)+p_j(\varphi)q_j(\varphi)=\mathbb{1}$。
+  那么
+  \[
+    w_i=p_j(\varphi)q_j(\varphi)(w_i),\quad
+    w_j=p_i(\varphi)q_i(\varphi)(w_j),  
+  \]
+  注意 $p_j(\varphi)$ 也是正规算子，所以 $\ker p_j(\varphi)^*=\ker p_j(\varphi)$，所以
+  \begin{align*}
+    \inn{w_i,w_j}&=\inn{p_j(\varphi)q_j(\varphi)(w_i),p_i(\varphi)q_i(\varphi)(w_j)}\\
+    &=\inn{q_j(\varphi)(w_i),p_i(\varphi)q_i(\varphi)p_j(\varphi)^*(w_j)}\\
+    &=0.
+  \end{align*}
+  这就表明 $W_1,\dots,W_s,W_{2s+1},\dots,W_{2s+t}$ 两两正交。所以 (2) 成立。
+
+  由于多项式 $f_i(x)$ 互素，所以存在多项式 $u_i(x)$
+  使得
+  \[
+    \sum_i u_i(x)f_i(x)=1,  
+  \]
+  即 $\sum_i u_i(\varphi)f_i(\varphi)=\mathbb{1}$。任取 $v\in V$，那么
+  \[
+    v=\sum_i u_i(\varphi)f_i(\varphi)(v),  
+  \]
+  由于
+  \[
+    p_i(\varphi)  u_i(\varphi)f_i(\varphi)(v)=u_i(\varphi)m(\varphi)(v)=0,
+  \]
+  所以 $u_i(\varphi)f_i(\varphi)(v)\in\ker p_i(\varphi)=W_i$，所以
+  \[
+    V= W_1+\cdots+ W_s+ W_{2s+1}+ \cdots+ W_{2s+t}.
+  \]
+  $W_i$ 两两正交表明这是直和，这就证明了 (3)。
+\end{proof}
+
+\begin{theorem}[实正规算子的正交相似标准型]\label{thm:canonical form of real normal operator}
+  设 $\varphi$ 是 $n$ 维 Euclid 空间 $V$ 上的正规算子，那么存在 $2$
+  维不变子空间 $V_1,\dots,V_s$ 和 $1$ 维不变子空间 $V_{2s+1},\dots,V_{n}$，
+  它们两两正交，并且
+  \[
+    V=V_1\oplus \cdots\oplus V_s\oplus V_{2s+1}\oplus\cdots\oplus V_n.  
+  \]
+  此外，对于 $1\leq i\leq s$，存在 $V_i$ 的标准正交基 $e_{2i-1},e_{2i}$，
+  对于 $2s+1\leq j\leq n$，存在 $V_j$ 的单位向量 $e_j$，使得 $\varphi$
+  在标准正交基 $e_1,e_2,\dots,e_{2s-1},e_{2s},e_{2s+1},\dots,e_n$ 下
+  的表示矩阵为下列分块对角阵：
+  \[
+    \diag\left(
+    \begin{pmatrix}
+      a_1 & b_1 \\
+      -b_1 & a_1
+    \end{pmatrix},\dots,
+    \begin{pmatrix}
+      a_s & b_s \\
+      -b_s & a_s
+    \end{pmatrix},
+    a_{2s+1},\dots,a_{n}
+    \right)  ,
+  \]
+  其中 $a_1,\dots,a_s,a_{2s+1},\dots,a_n$ 是实数，$b_1,\dots,b_s>0$。此时容易看出，
+  $a_{2s+1},\dots,a_n$ 是 $\varphi$ 的 $n-2s$ 个实特征值，
+  $a_1\pm b_1i,\dots,a_s\pm b_si$ 是 $\varphi$ 的 $2s$ 个复特征值。
+\end{theorem}
+\begin{proof}
+  根据 \autoref{thm:property of real normal operator}，可设
+  $\varphi$ 的最小多项式为
+  \[
+    m(x)=\bigl((x-a_1)^2+b_1^2\bigr)\cdots
+    \bigl((x-a_\ell)^2+b_\ell^2\bigr)(x-a_{2\ell+1})\cdots(x-a_{2\ell+t}),
+  \]
+  并且
+  \[
+    V=W_1\oplus\cdots\oplus W_\ell\oplus W_{2\ell+1}\oplus \cdots\oplus W_{2\ell+t},
+  \]
+  其中 $W_j$ 两两正交且为 $\varphi$ 的不变子空间。此时 $\varphi|_{W_j}$
+  是 $W_j$ 上的正规算子。
+
+  当 $1\leq j\leq \ell$ 的时候，$\varphi|_{W_j}$ 的最小多项式为
+  $(x-a_{j})^2+b_j^2$，根据 \autoref{thm:degree two real normal operator}，
+  有
+  \[
+    W_j=V_{j,1}\oplus \cdots\oplus V_{j,k_{j}} ,
+  \]
+  其中 $V_{j,1},\dots,V_{j,k_j}$ 是两两正交的 $\varphi|_{W_j}$ 的不变子空间，
+  对于每个 $V_{j,r}$，存在标准正交基 $e_{2r-1}^{(j)},e_{2r}^{(j)}$ 使得
+  $\varphi|_{W_j}$ 在这组基下的表示矩阵为
+  \[
+    \begin{pmatrix}
+      a_j & b_j \\
+      -b_j & a_j
+    \end{pmatrix}  ,
+  \]
+  那么 $\varphi|_{W_j}$ 在 $W_j$ 的标准正交基 $e_{1}^{(j)},e_2^{(j)},\dots,e_{2k_j-1}^{(j)},e_{2k_j}^{(j)}$
+  下的表示矩阵为
+  \[
+    \diag\left(
+      \begin{pmatrix}
+        a_j & b_j \\
+        -b_j & a_j
+      \end{pmatrix},\dots,
+      \begin{pmatrix}
+        a_j & b_j \\
+        -b_j & a_j
+      \end{pmatrix}
+    \right)  ,
+  \]
+  其中有 $k_j$ 个分块。
+
+  当 $2\ell+1\leq j\le 2\ell+t$ 的时候，$\varphi|_{W_j}$ 的最小多项式
+  为 $x-a_{j}$，因此 $\varphi|_{W_j}=a_j\mathbb{1}_{W_j}$，此时
+  任取 $W_j$ 的一组标准正交基 $e_1^{(j)},\dots,e_{k_j}^{(j)}$，
+  记 $V_{j,r}=\spa{e_{r}^{(j)}}$，所以
+  \[
+    W_j=V_{j,1}\oplus \cdots\oplus V_{j,k_{j}} ,
+  \]
+  并且 $\varphi|_{W_j}$ 在这组基下的表示矩阵为 $a_jI_{k_j}$。
+
+  综上，我们有
+  \[
+      V=\bigoplus_{j=1}^{\ell}\bigoplus_{r=1}^{k_j}V_{j,r}
+      \oplus\bigoplus_{j=2\ell+1}^{2\ell+t}\bigoplus_{r=1}^{k_j} V_{j,r},
+  \]
+  此时 $e_1^{(1)},\dots,e_{k_1}^{(1)},\dots,e_{1}^{(\ell)},\dots,e_{k_{\ell}}^{(\ell)},e_{1}^{(2\ell+1)},\dots,e_{k_{2\ell+1}}^{(2\ell+1)},\dots,e_1^{2\ell+t},\dots,e_{k_{2\ell+t}}^{(2\ell+t)}$
+  是 $V$ 的标准正交基，并且 $\varphi$ 在这组基下的表示矩阵即为所求。
+\end{proof}
+
+\begin{corollary}
+  两个实正规矩阵正交相似当且仅当它们有相同的实特征值和复特征值（计重数）。
+\end{corollary}
+
+\section{酉算子和正交算子}
+
+对于酉空间 $V$ 上的算子 $\varphi$，如果满足
+\[
+  \norm{\varphi(v)}=\norm{v}\quad \forall v\in V,  
+\]
+那么我们说 $\varphi$ 是\emph{酉算子}。对于 Euclid 空间而言，我们说
+$\varphi$ 是\emph{正交算子}。
+
+\begin{proposition}
+  设 $\varphi$ 是酉空间 $V$ 上的算子，那么下面的说法等价：
+  \begin{enumerate}
+    \item $\varphi$ 是酉算子；
+    \item 任取 $u,v\in V$ 有 $\inn{\varphi(u),\varphi(v)}=\inn{u,v}$；
+    \item $\varphi$ 将标准正交基变为标准正交基，即若 $e_1,\dots,e_n$
+    是 $V$ 的标准正交基，那么 $\varphi(e_1),\dots,\varphi(e_n)$ 是 $V$ 的标准正交基；
+    \item $\varphi$ 在任意标准正交基下的表示矩阵是酉矩阵。
+    \item $\varphi$ 是正规算子，且 $\varphi\varphi^*=\varphi^*\varphi=\mathbb{1}$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 任取 $u,v\in V$，那么
+  \begin{align*}
+    \inn{u,u}+2\inn{u,v}+\inn{v,v}&=\inn{u+v,u+v}\\
+    &=\inn{\varphi(u+v),\varphi(u+v)}  \\
+    &=
+    \inn{\varphi(u),\varphi(u)}+2\inn{\varphi(u),\varphi(v)}+\inn{\varphi(v),\varphi(v)}\\
+    &=\inn{u,u}+2\inn{\varphi(u),\varphi(v)}+\inn{v,v},\\
+  \end{align*}
+  这就表明 $\inn{\varphi(u),\varphi(v)}=\inn{u,v}$。
+
+  $(2)\Rightarrow(3)$ 注意到
+  \[
+    \inn{\varphi(e_i),\varphi(e_j)}=\inn{e_i,e_j}=\delta_{ij},  
+  \]
+  故 $\varphi(e_1),\dots,\varphi(e_n)$ 是 $V$ 的标准正交基。
+
+  $(3)\Rightarrow (4)$ 设 $\varphi$ 在标准正交基 $e_1,\dots,e_n$ 下的表示矩阵为 $A=(a_{ij})$，
+  即
+  \[
+    \varphi(e_j)=\sum_{k=1}^n a_{kj}e_k.  
+  \]
+  那么
+  \begin{align*}
+    \inn{\varphi(e_i),\varphi(e_j)}&=\inn{\sum_{k=1}^n a_{ki}e_k,\sum_{\ell=1}^n a_{\ell j}e_{\ell}}  
+    =\sum_{k=1}^n\sum_{\ell=1}^n a_{ki}\bar a_{\ell j}\inn{e_k,e_{\ell}}\\
+    &=\sum_{k=1}^n\sum_{\ell=1}^n a_{ki}\bar a_{kj}\delta_{k\ell}
+    =\sum_{k=1}^na_{ki}\bar a_{kj},
+  \end{align*}
+  由于 $\varphi(e_1),\dots,\varphi(e_n)$ 也是标准正交基，所以
+  \[
+    \sum_{k=1}^na_{ki}\bar a_{kj}=\delta_{ij},
+  \]
+  这就表明 $A^*A=I_n$，故 $A$ 是酉矩阵。
+
+  $(4)\Rightarrow (5)$ 此时 $\varphi$ 在标准正交基下的表示矩阵是酉矩阵
+  $A$，所以 $\varphi\varphi^*$ 在这组基下的表示矩阵为 $AA^*=I_n$，故
+  $\varphi$ 正规并且 $\varphi\varphi^*=\varphi^*\varphi=\mathbb{1}$。
+
+  $(5)\Rightarrow (1)$ 任取 $v\in V$，那么
+  \[
+    \norm{\varphi(v)}^2=\inn{\varphi(v),\varphi(v)}=\inn{v,\varphi^*\varphi(v)}
+    =\inn{v,v} =\norm{v}^2, 
+  \]
+  所以 $\varphi$ 是酉算子。
+\end{proof}
+
+\begin{corollary}\label{coro:group of On}
+  设 $\varphi:V\to V$ 是酉算子，那么 $\varphi$ 可逆，并且 $\varphi^{-1}=\varphi^*$
+  也是酉算子。此外，若 $\varphi,\psi$ 都是酉算子，那么 $\varphi\psi$ 也是酉算子。
+\end{corollary}
+\begin{proof}
+  由于
+  \[
+    \varphi^*(\varphi^*)^*=\varphi^*\varphi=\mathbb{1},  
+  \]
+  所以 $\varphi^*$ 也是酉算子。类似地，
+  \[
+    (\varphi\psi)^*(\varphi\psi)=\psi^*\varphi^*\varphi\psi=\psi^*\psi=\mathbb{1},  
+  \]
+  所以 $\varphi\psi$ 也是酉算子。 
+\end{proof}
+
+显然上述结论对于 Euclid 空间上的正交算子也都是成立的。
+\autoref{coro:group of On} 告诉我们酉空间 $V$ 上所有酉算子
+的集合 $\Or_n(\mathbb{C})$ 构成群，我们称为\emph{酉群}。
+类似地，Euclid 空间上的正交算子集合 $\Or_n(\mathbb{R})$ 也构成群，我们称为\emph{正交群}。
+由于酉算子是正规算子，这允许我们使用上一节的结果。
+
+\begin{theorem}
+  若 $\varphi$ 是酉算子，那么 $\varphi$ 的特征值 $\lambda_0$ 的模长为 $1$。
+  特别的，若 $\varphi$ 是正交算子，那么 $\lambda_0=\pm 1$。 
+\end{theorem}
+\begin{proof}
+  设 $v\in V$ 是 $\lambda_0$ 的特征向量，即 $\varphi(v)=\lambda_0v$，那么
+  \[
+    |\lambda_0|\norm{v}=\norm{\lambda_0v}
+    =\norm{\varphi(v)}=\norm{v},
+  \]
+  由于 $\norm{v}\neq 0$，所以 $|\lambda_0|=1$。
+\end{proof}
+
+\begin{theorem}[酉算子的酉相似]
+  设 $\varphi$ 是 $n$ 维酉空间 $V$ 上的酉算子，其特征值为
+  \[
+    e^{i\theta_1},\dots,e^{i\theta_n},  
+  \]
+  那么存在 $V$
+  的一组标准正交基 $e_1,\dots,e_n$，使得 $\varphi$ 在这组基下的表示矩阵为
+  对角阵
+  \[
+    \diag(e^{i\theta_1},\dots,e^{i\theta_n})  .
+  \]
+\end{theorem}
+\begin{proof}
+  由 \autoref{thm:canonical form of complex normal operator} 立即得到。
+\end{proof}
+
+\begin{theorem}[正交算子的正交相似]
+  设 $\varphi$ 是 $n$ 维 Euclid 空间 $V$ 上的正交算子，其特征值为
+  \[
+    e^{i\theta_1},e^{-i\theta_1},\dots,e^{i\theta_s},e^{-i\theta_s},
+    \underbrace{1,\dots,1}_{\text{$t$ times}},
+    \underbrace{-1,\dots,-1}_{\text{$n-2s-t$ times}},
+  \]
+  其中 $0<\theta_1\leq\cdots\leq \theta_s<\pi$。那么存在 $V$
+  的一组标准正交基 $e_1,\dots,e_n$，使得 $\varphi$ 在这组基下的表示矩阵为
+  分块对角阵
+  \[
+    \diag\left(
+      \begin{pmatrix}
+        \cos\theta_1 & \sin\theta_1\\
+        -\sin\theta_1 & \cos\theta_1
+      \end{pmatrix},\dots,
+      \begin{pmatrix}
+        \cos\theta_s & \sin\theta_s\\
+        -\sin\theta_s & \cos\theta_s
+      \end{pmatrix},
+      \underbrace{1,\dots,1}_{\text{$t$ times}},
+      \underbrace{-1,\dots,-1}_{\text{$n-2s-t$ times}}
+    \right)  .
+  \]
+\end{theorem}
+\begin{proof}
+  由 \autoref{thm:canonical form of real normal operator} 立即得到。
+\end{proof}
+
+\section{自伴随算子和反自伴随算子}
+
+如果内积空间 $V$ 上的算子 $\varphi$ 满足 $\varphi=\varphi^*$，那么
+我们说 $\varphi$ 是\emph{自伴随算子}。如果 $\varphi=-\varphi^*$，那么
+我们说 $\varphi$ 是\emph{反自伴随算子}。
+
+设 $\varphi$ 在某组标准正交基下的表示矩阵为 $A$，那么 $\varphi^*$
+在这组基下的表示矩阵为 $A^*$，所以自伴随算子对应 $A=A^*$ 的矩阵，
+这类矩阵被称为\emph{Hermite 矩阵}，对于 Euclid 空间的情况，则对应
+$A=A^T$ 的矩阵，被称为\emph{实对称矩阵}。类似地，反自伴随算子
+对应 $A=-A^*$ 的矩阵，被称为\emph{反 Hermite 矩阵}，对于 Euclid 空间的情况，则对应
+$A=-A^T$ 的矩阵，被称为\emph{反对称矩阵}。
+
+\begin{theorem}\label{thm:eigenvalue of self-adjoint operator}
+  自伴随算子 $\varphi$ 的特征值必为实数。
+\end{theorem}
+\begin{proof}
+  设 $\lambda_0$ 是 $\varphi$ 的特征值，那么任取 $\lambda_0$ 的特征向量 $v$，有
+  \[
+    \lambda_0\inn{v,v}=\inn{\lambda_0v,v}=\inn{\varphi(v),v}  =
+    \inn{v,\varphi(v)}=\bar\lambda_0\inn{v,v},
+  \]
+  $\inn{v,v}\neq 0$ 表明 $\lambda_0=\bar\lambda_0$，所以 $\lambda_0$ 为实数。
+\end{proof}
+
+\begin{theorem}\label{thm:property of self-adjoint operator}
+  $\varphi$ 是内积空间 $V$ 上的自伴随算子，如果对于任意的 $v\in V$
+  都有 $\inn{\varphi(v),v}=0$，那么 $\varphi=0$。
+\end{theorem}
+\begin{proof}
+  首先假设 $V$ 是 Euclid 空间，任取 $u,v\in V$，此时有恒等式
+  （实际上就是仿照 $ab=\left((a+b)^2-(a-b)^2\right)/4$）
+  \[
+    \inn{\varphi(u),v}=\frac{\inn{\varphi(u+v),u+v}-\inn{\varphi(u-v),u-v}}{4},  
+  \]
+  这表明 $\inn{\varphi(u),v}=0$，令 $v=\varphi(u)$，所以 
+  $\varphi(u)=0$，这就表明 $\varphi=0$。
+
+  现在假设 $V$ 是酉空间，任取 $u,v\in V$，此时有恒等式
+  \begin{align*}
+    \inn{\varphi(u),v}&=\frac{\inn{\varphi(u+v),u+v}-\inn{\varphi(u-v),u-v}}{4}\\
+    &+\frac{\inn{\varphi(u+iv),u+iv}-\inn{\varphi(u-iv),u-iv}}{4}i,
+  \end{align*}
+  同样表明 $\inn{\varphi(u),v}=0$，令 $v=\varphi(u)$，所以 
+  $\varphi(u)=0$，这就表明 $\varphi=0$。
+\end{proof}
+
+\begin{theorem}\label{thm:property of complex self-adjoint operator}
+  $\varphi$ 是酉空间 $V$ 上的算子，那么 $\varphi$ 是自伴随算子当且仅当
+  对于任意的 $v\in V$，$\inn{\varphi(v),v}$ 都是实数。
+\end{theorem}
+\begin{proof}
+  若 $\varphi$ 是自伴随算子，那么
+  \[
+    \inn{\varphi(v),v}=\inn{v,\varphi(v)}=\overline{\inn{\varphi(v),v}} , 
+  \]
+  即 $\inn{\varphi(v),v}$ 是实数。
+
+  若对于任意的 $v\in V$，$\inn{\varphi(v),v}$ 都是实数。
+  那么
+  \[
+    \inn{(\varphi-\varphi^*)(v),v}=\inn{\varphi(v),v}-\overline{\inn{v,\varphi^*(v)}}
+    =  \inn{\varphi(v),v}-\overline{\inn{\varphi(v),v}}=0,
+  \]
+  所以 $\varphi=\varphi^*$，即 $\varphi$ 是自伴随算子。
+\end{proof}
+
+\begin{theorem}[自伴随算子的酉相似]
+  设 $\varphi$ 是 $n$ 维酉空间 $V$ 上的自伴随算子，其特征值为
+  \[
+    \lambda_1,\dots,\lambda_n,  
+  \]
+  其中 $\lambda_1,\dots,\lambda_n\in\mathbb{R}$，那么存在 $V$
+  的一组标准正交基 $e_1,\dots,e_n$ 使得 $\varphi$ 在这组基下的表示矩阵为
+  对角阵
+  \[
+    \diag(\lambda_1,\dots,\lambda_n)  .
+  \]
+\end{theorem}
+\begin{proof}
+  由 \autoref{thm:canonical form of complex normal operator} 立即得到。
+\end{proof}
+
+\begin{theorem}[自伴随算子的正交相似，实谱定理]\label{thm:canonical form of real self-adjoint operator}
+  设 $\varphi$ 是 $n$ 维 Euclid 空间 $V$ 上的自伴随算子，其特征值为
+  \[
+    \lambda_1,\dots,\lambda_n,  
+  \]
+  其中 $\lambda_1,\dots,\lambda_n\in\mathbb{R}$，那么存在 $V$
+  的一组标准正交基 $e_1,\dots,e_n$ 使得 $\varphi$ 在这组基下的表示矩阵为
+  对角阵
+  \[
+    \diag(\lambda_1,\dots,\lambda_n)  .
+  \]
+\end{theorem}
+\begin{proof}
+  由 \autoref{thm:canonical form of real normal operator} 立即得到。
+\end{proof}
+
+\begin{corollary}
+  对于 $n$ 维 Euclid 空间 $V$，$\varphi:V\to V$ 是线性变换，那么存在 $V$ 的一组标准正交基 $e_1,\dots,e_n$ 使得 $\varphi$ 在这组基下的表示矩阵为
+  对角阵当且仅当 $\varphi$ 是自伴随算子。
+\end{corollary}
+\begin{proof}
+  充分性由 \autoref{thm:canonical form of real self-adjoint operator} 保证。
+  由于 $\varphi^*$ 的表示矩阵是 $\varphi$ 表示矩阵的转置，对角阵的转置
+  还是本身，所以必要性显然。
+\end{proof}
+
+\begin{example}\label{exa:diag of self-adjoint matrix}
+  给定实对称矩阵
+  \[
+    A=\begin{pmatrix}
+      4 & 2 & 2 \\
+      2 & 4 & 2\\
+      2 & 2 & 4
+    \end{pmatrix}  ,
+  \]
+  求正交矩阵 $P$ 使得 $P^{-1}AP$ 为对角阵。
+\end{example}
+\begin{solution}
+  根据谱定理，$A$ 可以正交对角化，此时 $A$ 的特征向量可以组成
+  $\mathbb{R}^3$ 的一组标准正交基，故我们只需要求出 $A$ 的一组正交
+  的特征向量然后按列拼成的矩阵就是 $P$ 矩阵。
+
+  计算特征多项式为
+  \[
+    \det(xI_3-A)=(x-8)(x-2)^2,  
+  \]
+  所以 $A$ 的特征值为 $\lambda_1=8$，$\lambda_2=\lambda_3=2$。
+  这表明特征值 $8$ 的特征子空间只有一维，求解方程组 $(8I_3-A)x=0$ 可得
+  解空间的基为 $(1,1,1)^T$。特征值 $2$ 的特征子空间为二维，求解方程组
+  $(2I_3-A)x=0$ 可得解空间的基为 $(-1,1,0)^T,(-1,0,1)^T$。
+  \autoref{prop:eigenvec is orthonormal} 表明不同特征值对应的特征向量一定正交。
+  所以只需要 Gram-Schmidt 正交化特征值 $2$ 的两个特征向量，得到
+  $(-1,1,0)^T,(-1/2,-1/2,1)^T$。然后将上述三个向量单位化便得到
+  \[
+    P=\begin{pNiceMatrix}[cell-space-limits = 3pt]
+      \frac{1}{\sqrt{3}} & -\frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{6}}\\
+      \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{6}} \\
+      \frac{1}{\sqrt{3}} & 0 & \frac{\sqrt{2}}{\sqrt{3}}
+    \end{pNiceMatrix}  ,\quad
+    P^{-1}AP=\begin{pmatrix}
+      8 \\
+      & 2 \\
+      & & 2
+    \end{pmatrix}.\qedhere
+  \]
+\end{solution}
+
+下面我们研究反自伴随算子。
+
+\begin{theorem}
+  反自伴随算子 $\varphi$ 的特征值必为纯虚数。
+\end{theorem}
+\begin{proof}
+  设 $\lambda_0$ 是 $\varphi$ 的特征值，那么任取 $\lambda_0$ 的特征向量 $v$，有
+  \[
+    \lambda_0\inn{v,v}=\inn{\lambda_0v,v}=\inn{\varphi(v),v}  =
+    \inn{v,-\varphi(v)}=-\bar\lambda_0\inn{v,v},
+  \]
+  $\inn{v,v}\neq 0$ 表明 $\lambda_0=-\bar\lambda_0$，所以 $\lambda_0$ 为纯虚数。
+\end{proof}
+
+\begin{theorem}[反自伴随算子的酉相似]
+  设 $\varphi$ 是 $n$ 维酉空间 $V$ 上的反自伴随算子，其特征值为
+  \[
+    \pm ib_1,\dots,\pm ib_s, \underbrace{0,\dots,0}_{\text{$n-2s$ times}},
+  \]
+  其中 $b_1,\dots,b_s>0$，那么存在 $V$
+  的一组标准正交基 $e_1,\dots,e_n$ 使得 $\varphi$ 在这组基下的表示矩阵为
+  对角阵
+  \[
+    \diag\left(ib_1,-ib_1,\dots,ib_s,-ib_s, \underbrace{0,\dots,0}_{\text{$n-2s$ times}}\right)  .
+  \]
+\end{theorem}
+\begin{proof}
+  由 \autoref{thm:canonical form of complex normal operator} 立即得到。
+\end{proof}
+
+\begin{theorem}[反自伴随算子的正交相似]
+  设 $\varphi$ 是 $n$ 维 Euclid 空间 $V$ 上的反自伴随算子，其特征值为
+  \[
+    \pm ib_1,\dots,\pm ib_s, \underbrace{0,\dots,0}_{\text{$n-2s$ times}},
+  \]
+  其中 $b_1,\dots,b_s>0$，那么存在 $V$
+  的一组标准正交基 $e_1,\dots,e_n$ 使得 $\varphi$ 在这组基下的表示矩阵为
+  对角阵
+  \[
+    \diag\left(
+      \begin{pmatrix}
+        0 & b_1 \\
+        -b_1 & 0
+      \end{pmatrix},\dots,
+      \begin{pmatrix}
+        0 & b_s \\
+        -b_s & 0
+      \end{pmatrix},
+      \underbrace{0,\dots,0}_{\text{$n-2s$ times}}
+    \right)  .
+  \]
+\end{theorem}
+\begin{proof}
+  由 \autoref{thm:canonical form of real normal operator} 立即得到。
+\end{proof}
+
+\section{半正定算子}
+
+内积空间 $V$ 上的自伴随算子 $\varphi$ 如果满足
+\[
+  \inn{\varphi(v),v}\geq 0\quad \forall v\in V,  
+\]
+那么我们说 $\varphi$ 是\emph{半正定算子}。注意，对于酉空间而言，
+由于 \autoref{thm:property of complex self-adjoint operator}，所以
+上述定义是有意义的。
+对于一个算子 $\varphi$，如果存在算子 $\psi$ 使得 $\varphi=\psi^2$，那么
+我们说 $\psi$ 是 $\varphi$ 的\emph{平方根}。
+
+现在我们将上述定义翻译成矩阵的语言。设自伴随算子 $\varphi$ 在标准正交基
+$e_1,\dots,e_n$ 下的表示矩阵为 Hermite (实对称) 矩阵 $P$，那么对于任意 $v\in V$，
+设 $v$ 在这组基下的坐标为 $x=(x_1,\dots,x_n)\in\mathbb{F}^n$，那么
+\[
+  \inn{\varphi(v),v}=(Px)^*x=x^*P^*x=x^*Px.
+\]
+所以对于 Hermite (实对称) 矩阵 $P$，如果任意 $x\in\mathbb{F}^n$ 使得
+\[
+  x^*Px\geq 0,  
+\]
+那么我们说 $P$ 是\emph{半正定矩阵}。同样的，如果存在矩阵 $S$ 使得
+$P=S^2$，那么我们说 $S$ 是 $P$ 的平方根。
+
+\begin{theorem}[半正定算子的刻画]\label{thm:property of semipositive}
+  令 $\varphi$ 是内积空间 $V$ 上的算子，那么下面的说法等价：
+  \begin{enumerate}
+    \item $\varphi$ 是半正定算子；
+    \item $\varphi$ 是自伴随算子并且 $\varphi$ 的所有特征值非负；
+    \item $\varphi$ 有半正定的平方根；
+    \item $\varphi$ 有自伴随的平方根；
+    \item 存在算子 $\psi$ 使得 $\varphi=\psi^*\psi$。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 设 $\lambda_0$ 是 $\varphi$ 的特征值，
+  \autoref{thm:eigenvalue of self-adjoint operator} 表明 $\lambda_0$
+  为实数。任取 $\lambda_0$ 的特征向量 $v$，那么
+  \[
+    0\leq\inn{\varphi(v),v}=\lambda_0\inn{v,v} , 
+  \]
+  由于 $\inn{v,v}>0$，所以 $\lambda_0\geq 0$。
+
+  $(2)\Rightarrow(3)$ 根据谱定理，我们知道存在 $V$ 的一组标准正交基
+  $e_1,\dots,e_n$ 使得 $\varphi$ 在这组基下的表示矩阵为对角阵，
+  对角线为 $\varphi$ 的所有特征值 $\lambda_1,\dots,\lambda_n$，
+  由于 $\lambda_i\geq 0$，所以可以令 $\psi:V\to V$ 满足
+  \[
+    \psi(e_i)=\sqrt{\lambda_i} e_i, 
+  \]
+  此时对于任意 $v\in V$，设 $v$ 在这组基下的坐标为 $x=(x_1,\dots,x_n)\in\mathbb{F}^n$，那么
+  \[
+    \inn{\psi(v),v}=x^*\diag\left(\sqrt{\lambda_1},\dots,\sqrt{\lambda_n}\right)  
+    x=\sqrt{\lambda_1}|x_1|^2+\cdots+\sqrt{\lambda_n}
+    |x_n|^2\geq 0,
+  \]
+  所以 $\psi$ 是半正定算子。此外 $\psi^2(e_i)=\lambda_ie_i=\varphi(e_i)$，所以
+  $\varphi=\psi^2$。
+
+  $(3)\Rightarrow (4)$ 显然。
+
+  $(4)\Rightarrow (5)$ 设 $\varphi=\psi^2$，$\psi$ 是自伴随算子，那么
+  $\varphi=\psi^2=\psi^*\psi$。
+
+  $(5)\Rightarrow (1)$ 如果存在算子 $\psi$ 使得 $\varphi=\psi^*\psi$，那么
+  $\varphi^*=\psi^*\psi=\varphi$，所以 $\varphi$ 是自伴随算子。
+  任取 $v\in V$，那么
+  \[
+    \inn{\varphi(v),v}=\inn{\psi^*\psi(v),v}=\inn{\psi(v),\psi(v)}\geq 0,  
+  \]
+  所以 $\varphi$ 是半正定算子。
+\end{proof}
+
+\begin{theorem}\label{thm:root is unique}
+  内积空间 $V$ 上的半正定算子的半正定平方根是唯一的。
+\end{theorem}
+\begin{proof}
+  设 $\varphi$ 是半正定算子，$\lambda_0\geq 0$ 是 $\varphi$ 的特征值，
+  $v$ 是 $\lambda_0$ 的特征向量。令 $\psi$ 是 $\varphi$ 的半正定平方根，我们首先证明
+  $\psi$ 必须满足 $\psi(v)=\sqrt{\lambda_0}v$。根据谱定理，存在 $V$
+  的一组标准正交基 $e_1,\dots,e_n$ 使得 $\psi$ 在这组基下的表示矩阵为
+  对角阵，对角线为 $\psi$ 的特征值 $\mu_1,\dots,\mu_n$。
+  设 $v=x_1e_1+\cdots+x_ne_n$，那么
+  \[
+    \psi(v)=x_1\mu_1e_1+\cdots+x_n\mu_ne_n,  
+  \]
+  于是
+  \[
+    \lambda_0 v=\varphi(v)=\psi^2(v)=x_1\mu_1^2e_1+\cdots+x_n\mu_n^2e_n,  
+  \]
+  于是
+  \[
+    x_1(\lambda_0-\mu_1^2)e_1+\cdots+x_n(\lambda_0-\mu_n^2)e_n=  0,
+  \]
+  所以 $x_i(\lambda_0-\mu_i^2)=0$，故 $x_i=0$ 或者 $\lambda_0=\mu_i^2$。
+  这表明
+  \[
+    v=\sum_{\{k|\mu_k^2=\lambda_0\}} x_ke_k,
+  \]
+  所以 
+  \[
+    \psi(v)=\sum_{\{k|\mu_k^2=\lambda_0\}} x_k\mu_ke_k=
+    \sum_{\{k|\mu_k^2=\lambda_0\}} x_k\sqrt{\lambda_0}e_k=\sqrt{\lambda_0}v.
+  \]
+
+  根据谱定理，存在 $V$
+  的一组标准正交基 $f_1,\dots,f_n$ 使得 $\varphi$ 在这组基下的表示矩阵为
+  对角阵，对角线为 $\varphi$ 的特征值，所以此时 $f_1,\dots,f_n$ 为 $\varphi$
+  的特征向量，而上面的叙述表明 $\psi$ 在 $f_i$ 上的作用是唯一确定的，所以
+  $\psi$ 是唯一的。
+\end{proof}
+
+\autoref{thm:root is unique} 表明我们可以良好的定义一个半正定算子 $\varphi$ 的半正定平方根，
+此时我们把这个半正定平方根记为 $\sqrt{\varphi}$。
+
+% \begin{example}
+%   计算正定实矩阵
+%   \[
+%     A=
+%     \begin{pmatrix}
+%       6 & 5 & 3 \\
+%       3  &4 & -3 \\
+
+%     \end{pmatrix}  
+%   \]
+%   的正定平方根。
+% \end{example}
+
+\section{奇异值分解和极分解}
+
+\begin{proposition}\label{prop:property of *map and map}
+  令 $\varphi:V\to W$ 是内积空间之间的线性映射，那么
+  \begin{enumerate}
+    \item $\varphi^*\varphi$ 是 $V$ 上的半正定算子；
+    \item $\ker\varphi^*\varphi=\ker\varphi$；
+    \item $\im\varphi^*\varphi=\im\varphi^*$；
+    \item $\dim\im\varphi=\dim\im\varphi^*=\dim\im\varphi^*\varphi$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 显然 $\varphi^*\varphi$ 是自伴随算子。任取 $v\in V$ 有
+  \[
+    \inn{\varphi^*\varphi(v),v}=\inn{\varphi(v),\varphi(v)}\geq 0,  
+  \]
+  所以 $\varphi^*\varphi$ 是半正定算子。
+
+  (2) 显然 $\ker\varphi\subseteq\ker\varphi^*\varphi$。任取
+  $v\in\ker \varphi^*\varphi$，那么
+  \[
+    \inn{\varphi(v),\varphi(v)}=\inn{\varphi^*\varphi(v),v}=0,  
+  \]
+  所以 $\varphi(v)=0$，所以 $\ker\varphi^*\varphi\subseteq\ker\varphi$。
+
+  (3) 我们有
+  \[
+    \im\varphi^*\varphi=(\ker\varphi^*\varphi)^\bot=(\ker\varphi)^\bot=\im\varphi^*.  
+  \]
+
+  (4) 我们有
+  \[
+    \dim\im\varphi=\dim V-\dim\ker\varphi=\dim V-\dim(\im\varphi^*)^\bot
+    =\dim\im\varphi^*.\qedhere  
+  \]
+\end{proof}
+
+对于线性映射 $\varphi:V\to W$，我们将 $\varphi^*\varphi$ 的所有特征值的算数
+平方根从大到小排列，称为 $\varphi$ 的\emph{奇异值}。通过下面的命题，我们将看到奇异值反映了
+映射的一些信息。
+
+\begin{proposition}
+  $\varphi:V\to W$ 是线性映射，那么
+  \begin{enumerate}
+    \item $\varphi$ 是单射当且仅当 $\varphi$ 的奇异值都非零；
+    \item $\varphi$ 的正奇异值的个数等于 $\dim\im\varphi$，
+    所以 $\varphi$ 是满射当且仅当 $\varphi$ 的正奇异值的个数等于
+    $\dim W$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 根据 \autoref{prop:property of *map and map}，$\ker\varphi=\ker\varphi^*\varphi$，
+  所以 $\varphi$ 是单射当且仅当 $\varphi^*\varphi$ 是单射，而 $\varphi^*\varphi$
+  是 $V$ 上的线性变换，所以 $\varphi^*\varphi$ 是单射当且仅当 $\varphi^*\varphi$ 可逆，
+  当且仅当 $\varphi^*\varphi$ 的特征值全不为零，当且仅当 $\varphi$ 的奇异值全不为零。
+
+  (2) 根据谱定理，$\varphi^*\varphi$ 在某组标准正交基下的表示矩阵为对角阵，
+  对角线为所有特征值，再根据 \autoref{prop:property of *map and map}，
+  所以 $\dim\im\varphi=\dim\im\varphi^*\varphi$ 为 $\varphi^*\varphi$ 的非零特征值
+  的个数（计重数），即 $\varphi$ 的正奇异值的个数。
+\end{proof}
+
+\begin{theorem}[线性映射的奇异值分解]\label{thm:SVD of linear map}
+  令 $V$ 是 $n$ 维内积空间，$W$ 是 $m$ 维内积空间，$\varphi:V\to W$ 是线性映射，
+  设 $\varphi$ 的所有正奇异值为 $s_1,\dots,s_k$，
+  那么存在 $V$ 的一个正交向量组 $e_1,\dots,e_k$ 和 $W$ 的一个正交向量组
+  $f_1,\dots,f_k$ 使得
+  \[
+    \varphi(v)=s_1\inn{v,e_1}f_1+\cdots+s_k\inn{v,e_k}f_k,  
+  \]
+  其中 $v\in V$。
+\end{theorem}
+\begin{proof}
+  设 $\varphi$ 的所有奇异值为 $s_1,\dots,s_n$，后面 $n-k$ 个奇异值为零。
+  由于 $\varphi^*\varphi$ 是半正定算子，根据谱定理，存在 $V$ 
+  的标准正交基 $e_1,\dots,e_n$ 使得 $\varphi^*\varphi$ 在这组基下的表示矩阵为
+  对角阵
+  \[
+    \diag(s_1^2,\dots,s_n^2).  
+  \]
+  对于 $1\leq i\le k$，令
+  \[
+    f_i=\frac{1}{s_i}\varphi(e_i).  
+  \]
+  那么
+  \[
+    \inn{f_i,f_j}=\frac{1}{s_is_j}\inn{\varphi(e_i),\varphi(e_j)}
+    =\frac{1}{s_is_j}\inn{e_i,\varphi^*\varphi(e_j)}=  
+    \frac{1}{s_is_j}\inn{e_i,s_j^2e_j}=\frac{s_j}{s_i}\inn{e_i,e_j}
+    =\delta_{ij},
+  \]
+  所以 $f_1,\dots,f_k$ 两两正交。
+
+  任取 $v\in V$，那么
+  \[
+    v=\inn{v,e_1}e_1+\cdots+\inn{v,e_n}e_n,  
+  \]
+  所以
+  \begin{align*}
+    \varphi(v)&=\inn{v,e_1}\varphi(e_1) +\cdots+\inn{v,e_n}\varphi(e_n)\\
+    &=s_1\inn{v,e_1}f_1+\cdots+s_k\inn{v,e_k}f_k\\
+    &+\inn{v,e_{k+1}}\varphi(e_{k+1})+\cdots+\inn{v,e_n}\varphi(e_n),
+  \end{align*}
+  注意到 $k+1\leq i\leq n$ 的时候有 $\varphi^*\varphi(e_i)=0$，所以
+  $e_i\in\ker\varphi^*\varphi=\ker\varphi$，即 $\varphi(e_i)=0$，所以
+  \[
+    \varphi(v)=s_1\inn{v,e_1}f_1+\cdots+s_k\inn{v,e_k}f_k.\qedhere
+  \]
+\end{proof}
+
+\autoref{thm:SVD of linear map} 会带来一些有意思的结果。我们将
+$e_1,\dots,e_k$ 扩充为 $V$ 的标准正交基 $e_1,\dots,e_n$，
+将 $f_1,\dots,f_k$ 扩充为 $W$ 的标准正交基 $f_1,\dots,f_m$，那么
+$1\leq i\leq k$ 时，
+\[
+  \varphi(e_i)=s_if_i,  
+\]
+$k+1\leq i\leq n$ 时，
+\[
+  \varphi(e_i)=0.  
+\]
+这表明 $\varphi$ 在这两组基下的表示矩阵为一个 $m\times n$ 的“对角阵”，对角线
+依次为 $\varphi$ 的非零奇异值。特别地，如果 $W=V$，那么这表明对于任意算子 $\varphi$，
+总能选取两组不同的标准正交基，使得 $\varphi$ 在这两组正交基下的表示矩阵是对角阵。
+
+我们定义 $m\times n$ 阶对角阵为只有 $a_{ii}\ (1\leq i\le \min\{m,n\})$ 不为零的矩阵。
+
+\begin{theorem}[矩阵的奇异值分解]\label{thm:SVD of matrix}
+  设 $A$ 是 $\mathbb{F}$ 上的 $m\times n$ 矩阵，那么存在 $m$ 阶酉（正交）矩阵
+  $P$，$n$ 阶酉（正交）矩阵 $Q$ 以及 $m\times n$ 的对角矩阵 $D$，使得
+  \[
+    A=PDQ^*,  
+  \]
+  其中 $D$ 的对角线非零元素依次为 $A$ 的奇异值。
+\end{theorem}
+\begin{proof}
+  令 $\varphi:\mathbb{F}^n\to\mathbb{F}^m$ 为矩阵 $A$ 相对于标准基表示的线性映射。
+  设 $\varphi$ 的奇异值为 $s_1,\dots,s_n$，前 $k$ 个不为零。根据 \autoref{thm:SVD of linear map}，
+  存在 $\mathbb{F}^n$ 的正交向量组 $e_1,\dots,e_k$ 和 $\mathbb{F}^m$ 的正交向量组
+  $f_1,\dots,f_k$ 使得
+  \[
+    \varphi(v)=s_1\inn{v,e_1}f_1+\cdots+s_k\inn{v,e_k}f_k.
+  \]
+  将 $e_1,\dots,e_k$ 扩充为 $\mathbb{F}^n$ 的标准正交基 $e_1,\dots,e_n$，
+   $f_1,\dots,f_k$ 扩充为 $\mathbb{F}^m$ 的标准正交基 $f_1,\dots,f_m$。
+  令 $Q$ 为 $e_1,\dots,e_n$ 按列拼成的矩阵，$P$ 为 $f_1,\dots,f_m$ 拼成的矩阵。
+  此时 $P,Q$ 为酉（正交）矩阵。
+  设 $u_1,\dots,u_n$ 为 $\mathbb{F}^n$ 的标准基，那么
+  $1\leq i\leq k$ 时有
+  \[
+    (AQ-PD)u_i=Ae_i-Ps_iu_i =s_if_i-s_iPu_i=s_if_i-s_if_i=0,
+  \]
+  当 $k+1\leq i\leq n$ 时有
+  \[
+    (AQ-PD)u_i=Ae_i-0=0-0=0,
+  \]
+  所以 $AQ=PD$，故 $A=PDQ^*$。
+\end{proof}
+
+\begin{theorem}[线性映射的极分解]\label{thm:polar decoposition of map}
+  对于内积空间 $V$ 上的算子 $\varphi$，存在酉（正交）算子 $\sigma$ 使得
+  \[
+    \varphi=\sigma\sqrt{\varphi^*\varphi},  
+  \]
+  显然 $\varphi$ 可逆当且仅当 $\sigma$ 是唯一确定的。
+\end{theorem}
+\begin{proof}
+  设 $s_1,\dots,s_k$ 是 $\varphi$ 的正奇异值，根据奇异值分解，存在
+  $V$ 的正交向量组 $e_1,\dots,e_k$ 和 $f_1,\dots,f_k$ 使得
+  \[
+    \varphi(v)=s_1\inn{v,e_1}f_1+\cdots+s_k\inn{v,e_k}f_k\quad \forall v\in V,  
+  \]
+  此时
+  \begin{align*}
+    \inn{v,\varphi^*(u)}&=\inn{\varphi(v),u}=
+    s_1\inn{v,e_1}\inn{f_1,u}+\cdots+s_k\inn{v,e_k}\inn{f_k,u}\\
+    &= \inn{v,s_1\inn{u,f_1}e_1+\cdots+s_k\inn{u,f_k}e_k},
+  \end{align*}
+  所以
+  \[
+    \varphi^*(u)=  s_1\inn{u,f_1}e_1+\cdots+s_k\inn{u,f_k}e_k\quad \forall u\in V.
+  \]
+  于是对于任意的 $v\in V$，有
+  \begin{align*}
+    \varphi^*\varphi(v)&=s_1\inn{v,e_1}\varphi^*(f_1)+\cdots+s_k\inn{v,e_k}\varphi^*(f_k)\\
+    &=s_1^2\inn{v,e_1}e_1+\cdots+s_k^2\inn{v,e_k}e_k,
+  \end{align*}
+  此时
+  \[
+    \sqrt{\varphi^*\varphi}(v)=s_1\inn{v,e_1}e_1+\cdots+s_k\inn{v,e_k}e_k,
+  \]
+  直接验证可知这确实是 $\varphi^*\varphi$ 的半正定平方根。这表明此时
+  $\sqrt{\varphi^*\varphi}$ 将基 $e_i$ 送到 $s_ie_i$，所以自然就会构造
+  $\sigma$ 将 $e_i$ 再送到 $f_i$。
+
+  将 $e_1,\dots,e_k$ 和 $f_1,\dots,f_k$ 扩充为标准正交基 $e_1,\dots,e_n$
+  和 $f_1,\dots,f_n$。
+  定义算子 $\sigma$ 为
+  \[
+    \sigma(v)=\inn{v,e_1}f_1+\cdots+\inn{v,e_n}f_n,  
+  \]
+  那么
+  \[
+    \norm{\sigma(v)}^2=\inn{v,e_1}^2+\cdots+\inn{v,e_n}^2=\norm{v}^2,
+  \]
+  所以 $\sigma$ 是酉（正交）算子。
+
+  于是
+  \[
+    \sigma\sqrt{\varphi^*\varphi}(v)=s_1\inn{v,e_1}f_1+\cdots+s_k\inn{v,e_k}f_k=\varphi(v),
+  \]
+  所以 $\varphi=\sigma\sqrt{\varphi^*\varphi}$ 即为所求。
+\end{proof}
+
+\begin{theorem}[矩阵的极分解]
+  设 $A$ 是 $\mathbb{F}$ 上的 $n$ 阶矩阵，那么存在酉（正交）矩阵
+  $S$ 使得
+  \[
+    A=S\sqrt{A^*A},  
+  \]
+  $A$ 可逆当且仅当这样的 $P$ 是唯一的。此外，在实际计算过程中，我们一般不会直接
+  计算 $\sqrt{A^*A}$，而是先计算 $A$ 的奇异值分解，得到 $A=PDQ^*$，其中
+  $P,Q$ 为酉（正交）矩阵，然后得到 $A=(PQ^*)(QDQ^*)$，此时可以验证
+  奇异值分解得到的 $QDQ^*=\sqrt{A^*A}$。
+\end{theorem}
+\begin{proof}
+  令 $\varphi:\mathbb{F}^n\to\mathbb{F}^n$ 为矩阵 $A$ 相对于标准基表示的线性映射。
+  根据线性映射的极分解，存在酉（正交）算子 $\sigma$ 使得
+  \[
+    \varphi=\sigma\sqrt{\varphi^*\varphi},  
+  \]
+  比对两端在标准基下的表示矩阵即得 $A=S\sqrt{A^*A}$。
+
+  设 $\varphi$ 的奇异值为 $s_1,\dots,s_n$，前 $k$ 个不为零。根据 \autoref{thm:SVD of linear map}，
+  存在 $\mathbb{F}^n$ 的正交向量组 $e_1,\dots,e_k$ 和 $\mathbb{F}^m$ 的正交向量组
+  $f_1,\dots,f_k$ 使得
+  \[
+    \varphi(v)=s_1\inn{v,e_1}f_1+\cdots+s_k\inn{v,e_k}f_k.
+  \]
+  将 $e_1,\dots,e_k$ 扩充为 $\mathbb{F}^n$ 的标准正交基 $e_1,\dots,e_n$，
+   $f_1,\dots,f_k$ 扩充为 $\mathbb{F}^m$ 的标准正交基 $f_1,\dots,f_m$。
+  令 $Q$ 为 $e_1,\dots,e_n$ 按列拼成的矩阵，$P$ 为 $f_1,\dots,f_m$ 拼成的矩阵。
+  根据 \autoref{thm:SVD of matrix} 的证明，此时 $A=PDQ^*$ 就是 $A$ 的奇异值分解。
+  根据 \autoref{thm:polar decoposition of map} 的证明，
+  我们知道 $\sqrt{\varphi^*\varphi}$ 将 $e_i$ 送到 $s_ie_i$。 
+  所以 $A=PDQ^*=(PQ^*)(QDQ^*)$ 时，有
+  \[
+    QDQ^*e_i=QDu_i=s_iQu_i=s_ie_i,
+  \]
+  其中 $u_i$ 表示 $\mathbb{F}^n$ 的标准基。所以 $\sqrt{\varphi^*\varphi}$ 在
+  标准基下的表示矩阵就是 $QDQ^*=\sqrt{A^*A}$。
+\end{proof}
+
+\begin{example}
+  计算实矩阵
+  \[
+    A=\begin{pmatrix}
+      1 & 2 & 5 \\
+      1 & 0 & 1 \\
+      0 & 1 & 2
+    \end{pmatrix}  
+  \]
+  的奇异值分解和极分解。
+\end{example}
+\begin{solution}
+  计算得
+  \[
+    A^TA=\begin{pmatrix}
+      2 & 2 & 6\\
+      2 & 5 & 12\\
+      6 & 12 & 30
+    \end{pmatrix},  
+  \]
+  故 $A^TA$ 的特征多项式为 $-x(x-1)(x-36)$，所以 $A$ 的奇异值为 $6,1,0$。
+  仿照 \autoref{exa:diag of self-adjoint matrix}，可得
+  \[
+    Q=\begin{pNiceMatrix}[cell-space-limits = 3pt]
+      \frac{1}{\sqrt{30}} & \frac{2}{\sqrt{5}} & \frac{1}{\sqrt{6}}\\
+      \frac{2}{\sqrt{30}} & -\frac{1}{\sqrt{5}} & \frac{2}{\sqrt{6}} \\
+      \frac{5}{\sqrt{30}} & 0 & -\frac{1}{\sqrt{6}}
+    \end{pNiceMatrix},\quad
+    Q^{-1}(A^TA)Q=
+    \begin{pmatrix}
+      36 & & \\
+      & 1 \\
+      & & 0
+    \end{pmatrix}.
+  \]
+  记 $Q$ 的三个列向量为 $e_1,e_2,e_3$。根据 \autoref{thm:SVD of linear map} 的证明，我们计算
+  \begin{align*}
+    f_1&=\frac{1}{s_1}Ae_1=\frac{1}{\sqrt{30}}(5,1,2)^T,\\
+    f_2&=\frac{1}{s_2}Ae_2=\frac{1}{\sqrt{5}}(0,2,-1)^T,
+  \end{align*}
+  然后将 $f_1,f_2$ 扩充为 $\mathbb{R}^3$ 的一组标准正交基，可添加
+  $f_3=\frac{1}{\sqrt{6}}(-1,1,2)^T$，故得到 $A$ 的奇异值分解
+  \[
+    P=\begin{pNiceMatrix}[cell-space-limits = 3pt]
+      \frac{5}{\sqrt{30}} & 0 & -\frac{1}{\sqrt{6}}\\
+      \frac{1}{\sqrt{30}} & \frac{2}{\sqrt{5}} & \frac{1}{\sqrt{6}} \\
+      \frac{2}{\sqrt{30}} & -\frac{1}{\sqrt{5}} & \frac{2}{\sqrt{6}}
+    \end{pNiceMatrix},\quad 
+    A=P\begin{pmatrix}
+      6 \\
+      & 1 \\
+      & & 0
+    \end{pmatrix}Q^T.
+  \]
+  对于极分解，只需要计算
+  \[
+    PQ^T=\begin{pmatrix}
+      0 & 0 & 1\\
+      1 & 0 & 0 \\
+      0 & 1 & 0
+    \end{pmatrix}  ,\quad 
+    QDQ^T=\begin{pmatrix}
+      1 & 0 & 1\\
+      0 & 1 & 2\\
+      1 & 2 & 5
+    \end{pmatrix},
+  \]
+  故 $A$ 的极分解为
+  \[
+    A=  \begin{pmatrix}
+      0 & 0 & 1\\
+      1 & 0 & 0 \\
+      0 & 1 & 0
+    \end{pmatrix}\begin{pmatrix}
+      1 & 0 & 1\\
+      0 & 1 & 2\\
+      1 & 2 & 5
+    \end{pmatrix}.
+  \]
+  此时可以验证
+  \[
+    QDQ^T=\begin{pmatrix}
+      1 & 0 & 1\\
+      0 & 1 & 2\\
+      1 & 2 & 5
+    \end{pmatrix}=\sqrt{A^TA}.\qedhere
+  \]
+\end{solution}
+
+\section{Moore–Penrose 广义逆和最小二乘}
+
+设 $\varphi:V\to W$ 是内积空间之间的线性映射，$w\in W$，考虑方程
+\[
+  \varphi(v)=w,  
+\]
+只有 $w\in\im\varphi$ 时才会有解，此时解集为陪集 $v+\ker\varphi$。
+那么在无解或者解不唯一的时候，能否找到 $v\in V$ 使得 $\norm{\varphi(v)-w}$
+尽可能小？（本节的范数均指代内积诱导的范数）这便是线性方程组的最小二乘问题。而 Moore-Penrose 广义逆提供了解决此问题的
+一个优美的视角。
+
+根据同态基本定理，我们知道有同构
+\[
+  V/\ker\varphi\simeq \im\varphi,  
+\]
+注意到
+\[
+  \dim (\ker\varphi)^\bot= \dim V-\dim\ker\varphi=\dim V/\ker\varphi,
+\]
+所以 $(\ker\varphi)^\bot\simeq V/\ker\varphi$，同构映射显然为
+$v\mapsto v+\ker\varphi$，实际上就是商同态 $V\to V/\ker\varphi$
+在 $(\ker\varphi)^\bot$ 上的限制。于是我们有同构
+\[
+  (\ker\varphi)^\bot\simeq V/\ker\varphi\simeq \im\varphi,  
+\]
+我们把这个同构记为 $\varphi|_{(\ker\varphi)^\bot}:(\ker\varphi)^\bot\to \im\varphi$ ,
+这是可逆的。自然我们就会考虑 $\varphi|_{(\ker\varphi)^\bot}^{-1}:\im\varphi\to (\ker\varphi)^\bot\to V$，
+如果能将定义域扩大到整个 $W$，直觉上便有理由将其称为 $\varphi$ 的“广义逆”。
+
+对于 $w\in W$，由于 $W=\im\varphi\oplus (\im\varphi)^\bot$，所以 $w=w_1+w_2$，
+其中 $w_1\in\im\varphi,w_2\in(\im\varphi)^\bot$，于是我们只需要考虑正交投影
+$P_{\im\varphi}:W\to W$ 即可将 $w$ 送到 $P(w)=w_1\in \im\varphi$。于是我们定义
+$\varphi^\dagger=\varphi|_{(\ker\varphi)^\bot}^{-1}\circ P_{\im\varphi}$，其满足
+\[
+  W\to \im\varphi\to (\ker\varphi)^\bot\to V,\quad
+  w\mapsto w_1\mapsto \varphi|_{(\ker\varphi)^\bot}^{-1}(w_1).
+\]
+这个映射 $\varphi^\dagger$ 被称为 $\varphi$ 的\emph{Moore-Penrose 广义逆}，
+也被称为\emph{伪逆}。显然
+\[
+  \ker\varphi^\dagger=(\im\varphi)^\bot,\quad 
+  \im\varphi^\dagger=(\ker\varphi)^\bot.  
+\]
+回顾 \autoref{prop:ker and im of adjoint}，这表明 $\varphi^\dagger$
+和 $\varphi^*$ 的核和像都是相同的。
+
+\begin{proposition}\label{prop:property of Moore-Penrose}
+  令 $\varphi:V\to W$ 是线性映射，那么
+  \begin{enumerate}
+    \item $\varphi\varphi^\dagger=P_{\im\varphi}$，$P_{\im\varphi}$
+    表示 $W$ 到 $\im\varphi$ 的正交投影；
+    \item $\varphi^\dagger\varphi=P_{(\ker\varphi)^\bot}$，
+    $P_{(\ker\varphi)^\bot}$ 表示 $V$ 到 $(\ker\varphi)^\bot$ 的正交投影；
+    \item 若 $\varphi$ 可逆，那么 $\varphi^\dagger=\varphi^{-1}$；
+    \item $(\varphi^\dagger)^\dagger=\varphi$。
+  \end{enumerate} 
+\end{proposition}
+\begin{proof}
+  (1) 根据定义显然。
+
+  (2) 任取 $v\in V$，那么
+  \[
+    \varphi^\dagger\varphi(v)=\varphi|_{(\ker\varphi)^\bot}^{-1}  
+    P_{\im\varphi}\varphi(v)=\varphi|_{(\ker\varphi)^\bot}^{-1}\varphi(v)
+    =P_{(\ker\varphi)^\bot}(v),
+  \]
+  所以 $\varphi^\dagger\varphi=P_{(\ker\varphi)^\bot}$。
+
+  (3) $\varphi$ 可逆表明 $(\ker\varphi)^\bot=V$ 以及 $\im\varphi=W$，由 (1) 和 (2)
+  即得
+  \[
+    \varphi\varphi^\dagger=\mathbb{1}_{W},\varphi^{\dagger}\varphi=\mathbb{1}_V,  
+  \]
+  即 $\varphi^\dagger=\varphi^{-1}$。
+
+  (4) 注意到 $V=(\ker\varphi)\oplus(\ker\varphi)^\bot$。任取 $v\in\ker\varphi$，那么
+  \[
+    (\varphi^\dagger)^\dagger(v)=(\varphi^{\dagger})|_{\im\varphi}^{-1}
+    P_{(\ker\varphi)^\bot}(v)=0=\varphi(v).
+  \]
+  任取 $u\in(\ker\varphi)^\bot$，那么
+  \[
+    (\varphi^\dagger)^\dagger(u)=(\varphi^{\dagger})|_{\im\varphi}^{-1}
+    P_{(\ker\varphi)^\bot}(u)=(\varphi^\dagger)|_{\im\varphi}^{-1}(u),
+  \]
+  而 $(\varphi^{\dagger})^{-1}(u)=\varphi(u)+\ker\varphi^\dagger=\varphi(u)+(\im\varphi)^\bot$，
+  又因为 $\varphi(u)\in\im\varphi$，所以 
+  \[
+    (\varphi^\dagger)^\dagger(u)=(\varphi^\dagger)|_{\im\varphi}^{-1}(u)=\varphi(u).
+  \]
+  故 $(\varphi^\dagger)^\dagger=\varphi$。
+\end{proof}
+
+\begin{theorem}[广义逆的刻画]\label{thm:character of Moore-Penrose}
+  令 $\varphi:V\to W$ 是线性映射，那么广义逆 $\varphi^\dagger$ 由满足下列四条性质，并且
+  由这四条性质唯一确定。
+  \begin{enumerate}
+    \item $\varphi\varphi^\dagger\varphi=\varphi$；
+    \item $\varphi^\dagger\varphi\varphi^\dagger=\varphi^\dagger$；
+    \item $\varphi\varphi^\dagger$ 是自伴随算子；
+    \item $\varphi^\dagger\varphi$ 是自伴随算子。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  首先我们说明广义逆满足这四条性质。(1) 和 (2) 根据 \autoref{prop:property of Moore-Penrose}
+  即得。对于 (3)，根据 \autoref{prop:property of Moore-Penrose}，任取 $w\in W$，有
+  \[
+    \varphi\varphi^\dagger(w)=P_{\im\varphi}(w),  
+  \]
+  若 $w\in\im\varphi$，那么
+  \begin{align*}
+    \inn{(\varphi\varphi^\dagger)^*(w),u}&=\inn{P_{\im\varphi}^*(w),u}=\inn{w,P_{\im\varphi}(u)}
+    =\inn{P_{\im\varphi}(w),u+P_{\im\varphi}(u)-u}\\
+    &=\inn{P_{\im\varphi}(w),u}+\inn{P_{\im\varphi}(w),P_{\im\varphi}(u)-u}
+    =\inn{P_{\im\varphi}(w),u},
+  \end{align*}
+  最后一个等号是因为 $P_{\im\varphi}(u)-u\in(\im\varphi)^\bot$。这表明
+  \[
+    (\varphi\varphi^\dagger)^*(w)=P_{\im\varphi}(w)=(\varphi\varphi^\dagger)(w).
+  \]
+  若 $w\in(\im\varphi)^\bot$，由于
+  \[
+    \ker P_{\im\varphi}^*=(\im P_{\im\varphi})^\bot=(\im\varphi)^\bot,  
+  \]
+  所以
+  \[
+    P_{\im\varphi}^*(w)=0=P_{\im\varphi}(w),  
+  \]
+  故此时 $(\varphi\varphi^\dagger)^*(w)=(\varphi\varphi^\dagger)(w)=0$。
+  由于 $W=(\im\varphi)\oplus(\im\varphi)^\bot$，所以 $(\varphi\varphi^\dagger)^*=\varphi\varphi^\dagger$。
+  (4) 同理。
+
+  下面我们说明唯一性。假设 $\sigma$ 和 $\tau$ 都满足上面的四条性质，那么
+  \begin{align*}
+    \sigma&=\sigma\varphi\sigma=(\sigma\varphi)^*\sigma=\varphi^*\sigma^*\sigma
+    =(\varphi\tau\varphi)^*\sigma^*\sigma=\varphi^*\tau^*\varphi^*\sigma^*\sigma\\
+    &=(\tau\varphi)^*(\sigma\varphi)^*\sigma=\tau\varphi\sigma\varphi\sigma
+    =\tau\varphi\sigma,
+  \end{align*}
+  另一方面，有
+  \begin{align*}
+    \tau&=\tau\varphi\tau=\tau(\varphi\tau)^*=\tau\tau^*\varphi^*=\tau\tau^*(\varphi\sigma\varphi)^*
+    =\tau\tau^*\varphi^*\sigma^*\varphi^* \\
+    &=\tau(\varphi\tau)^*(\varphi\sigma)^*=\tau\varphi\tau\varphi\sigma=\tau\varphi\sigma,
+  \end{align*}
+  所以 $\sigma=\tau$。
+\end{proof}
+
+\begin{theorem}[最小二乘解]
+  $\varphi:V\to W$ 是线性映射，给定 $w\in W$，那么
+  \begin{enumerate}
+    \item 任取 $v\in V$，有
+    \[
+      \norm{\varphi(\varphi^\dagger(w))-w}\leq\norm{\varphi(v)-w},  
+    \]
+    等号成立当且仅当 $v\in\varphi^\dagger(w)+\ker\varphi$。
+    \item 如果 $v\in\varphi^\dagger(w)+\ker\varphi$，那么
+    \[
+      \norm{\varphi^\dagger(w)}\leq\norm{v},  
+    \]
+    等号成立当且仅当 $v=\varphi^\dagger(w)$。
+  \end{enumerate}
+  这些性质表明 $\varphi^\dagger(w)$ 就是方程 $\varphi(v)=w$ 的最小二乘解。
+\end{theorem}
+\begin{proof}
+  (1) 我们有
+  \[
+    \varphi(v)-w=(\varphi(v)-\varphi\varphi^\dagger(w))+(\varphi\varphi^\dagger(w)-w),  
+  \]
+  第一项 $\varphi(v)-\varphi\varphi^\dagger(w)\in\im\varphi$。第二项
+  \[
+    \varphi\varphi^\dagger(w)-w=P_{\im\varphi}(w)-w\in(\im\varphi)^\bot,  
+  \]
+  根据勾股定理，就得到了
+  \[
+    \norm{\varphi(v)-w}^2=\norm{\varphi(v)-\varphi\varphi^\dagger(w)}^2
+    +\norm{\varphi\varphi^\dagger(w)-w}^2\geq \norm{\varphi\varphi^\dagger(w)-w}^2.
+  \]
+  等号成立当且仅当 $\varphi(v)=\varphi\varphi^\dagger(w)$，当且仅当 $v-\varphi^\dagger(w)\in\ker\varphi$。
+
+  (2) 由于
+  \[
+    v=(v-\varphi^\dagger(w))+\varphi^\dagger(w),  
+  \]
+  其中 $v-\varphi^\dagger(w)\in\ker\varphi$，$\varphi^\dagger(w)\in(\ker\varphi)^\bot$，
+  所以
+  \[
+    \norm{v}^2=\norm{v-\varphi^\dagger(w)}^2+\norm{\varphi^\dagger(w)}^2\geq\norm{\varphi^\dagger(w)}^2.  
+  \]
+  等号成立当且仅当 $v=\varphi^\dagger(w)$。
+\end{proof}
+
+下面我们研究广义逆的具体表达形式。
+
+\begin{theorem}\label{thm:Moore-Penrose of linear map}
+  令 $V$ 是 $n$ 维内积空间，$W$ 是 $m$ 维内积空间，$\varphi:V\to W$ 是线性映射，
+  设 $\varphi$ 的所有正奇异值为 $s_1,\dots,s_k$，
+  根据奇异值分解 \ref{thm:SVD of linear map}，存在 $V$ 的一个正交向量组 $e_1,\dots,e_k$ 和 $W$ 的一个正交向量组
+  $f_1,\dots,f_k$ 使得
+  \[
+    \varphi(v)=s_1\inn{v,e_1}f_1+\cdots+s_k\inn{v,e_k}f_k,  
+  \]
+  其中 $v\in V$。那么
+  \[
+    \varphi^\dagger(w)=\frac{\inn{w,f_1}}{s_1}e_1+\cdots+\frac{\inn{w,f_k}}{s_k}e_k,  
+  \]
+  其中 $w\in W$。
+\end{theorem}
+\begin{proof}
+  奇异值分解告诉我们 $\im\varphi=\spa{f_1,\dots,f_k}$ 以及
+  $\ker\varphi=\spa{e_1,\dots,e_k}^\bot$。故
+  \[
+    P_{\im\varphi}(w)=\inn{w,f_1}f_1+\cdots+\inn{w,f_k}f_k,  
+  \]
+  又因为 $\varphi(e_i)=s_if_i$，所以
+  \begin{align*}
+    P_{\im\varphi}(w)&=\frac{\inn{w,f_1}}{s_1}\varphi(e_1)+\cdots+\frac{\inn{w,f_k}}{s_k}\varphi(e_k)\\
+    &=\varphi\left(\frac{\inn{w,f_1}}{s_1}e_1+\cdots+\frac{\inn{w,f_k}}{s_k}e_k\right),
+  \end{align*}
+  故
+  \[
+    \varphi^{-1}(P_{\im\varphi}(v))=\frac{\inn{w,f_1}}{s_1}e_1+\cdots+\frac{\inn{w,f_k}}{s_k}e_k+\ker\varphi
+    \in (\ker\varphi)^\bot+\ker\varphi,
+  \]
+  所以
+  \[
+    \varphi^\dagger(w)=\frac{\inn{w,f_1}}{s_1}e_1+\cdots+\frac{\inn{w,f_k}}{s_k}e_k.
+    \qedhere
+  \]
+\end{proof}
+
+\begin{theorem}[矩阵的广义逆]
+  矩阵 $A\in M_{m,n}(\mathbb{F})$，设 $A$ 的奇异值分解为
+  $A=PDQ^*$，其中 $D\in M_{m,n}(\mathbb{F})$ 且对角线依次为 $A$ 的非零奇异值 $s_1,\dots,s_k$。那么
+  \[
+    A^\dagger=QD^\dagger P^*\in M_{n,m}(\mathbb{F}),  
+  \] 
+  其中 $D^\dagger\in M_{n,m}(\mathbb{F})$ 是 $D$ 广义逆，容易发现其对角线依次为 $1/s_1,\dots,1/s_k$。
+\end{theorem}
+\begin{proof}
+  直接验证可知其满足 \autoref{thm:character of Moore-Penrose} 的四条性质，根据唯一性，
+  所以这就是 $A$ 的广义逆。我们也可以从 \autoref{thm:Moore-Penrose of linear map} 直接
+  构造 $A^\dagger$。
+
+  令 $\varphi:\mathbb{F}^n\to\mathbb{F}^m$ 为矩阵 $A$ 相对于标准基表示的线性映射。
+  设 $\varphi$ 的奇异值为 $s_1,\dots,s_n$，前 $k$ 个不为零。根据 \autoref{thm:Moore-Penrose of linear map}，
+  存在 $\mathbb{F}^n$ 的正交向量组 $e_1,\dots,e_k$ 和 $\mathbb{F}^m$ 的正交向量组
+  $f_1,\dots,f_k$ 使得
+  \[
+    \varphi^\dagger(w)=\frac{\inn{w,f_1}}{s_1}e_1+\cdots+\frac{\inn{w,f_k}}{s_k}e_k,  
+  \]
+  将 $e_1,\dots,e_k$ 扩充为 $\mathbb{F}^n$ 的标准正交基 $e_1,\dots,e_n$，
+   $f_1,\dots,f_k$ 扩充为 $\mathbb{F}^m$ 的标准正交基 $f_1,\dots,f_m$。
+  令 $Q$ 为 $e_1,\dots,e_n$ 按列拼成的矩阵，$P$ 为 $f_1,\dots,f_m$ 拼成的矩阵。
+  设 $u_1,\dots,u_m$ 为 $\mathbb{F}^m$ 的标准基，那么
+  $1\leq i\leq k$ 时有
+  \[
+    (A^\dagger P-QD^\dagger)(u_i)=A^\dagger f_i-Qu_i/s_i=e_i/s_i-e_i/s_i=0,
+  \]
+  $k+1\leq i\leq m$ 时有
+  \[
+    (A^\dagger P-QD^\dagger)(u_i)=A^\dagger f_i-0=0-0=0,
+  \]
+  所以 $A^\dagger=QD^\dagger P^*$。
+\end{proof}
+
+最后我们介绍广义逆的另一种重要表达形式。
+
+\begin{lemma}\label{lemma:proj of Hermite matrix}
+  对于任意 $n$ 阶 Hermite (实对称) 矩阵 $A$，有
+  \[
+    P_{\im A}=\lim_{\epsilon\to 0}(A+\epsilon I_n)^{-1}A=\lim_{\epsilon\to 0}A(A+\epsilon I_n)^{-1}.
+  \]
+\end{lemma}
+\begin{proof}
+  我们知道 $A$ 的特征值都是实数，设 $A$ 绝对值最小的非零特征值为 $\lambda$，
+  那么 $0<|\epsilon|<|\lambda|$ 的时候，$A+\epsilon I_n$ 的特征值非零，
+  所以此时 $A+\epsilon I_n$ 可逆。任取 $x\in\mathbb{F}^n$，设
+  $x=x_1+x_2$，其中 $x_1\in\im A$，$x_2\in(\im A)^\bot$。$A$ 正规
+  表明 $\ker A=(\im A)^\bot$，所以 $x_2\in\ker A$，所以 $Ax=Ax_1$。
+  设 $x_1=Ay$，那么
+  \[
+    (A+\epsilon I_n)^{-1}Ax=(A+\epsilon I_n)^{-1}A^2 y,  
+  \]
+  根据谱定理，存在正交矩阵 $P$ 使得 $A=PDP^{-1}$，其中
+  $D=\diag(\lambda_1,\dots,\lambda_n)$ 是 $A$ 的全部特征值。
+  所以
+  \[
+    (A+\epsilon I_n)^{-1}Ax=(A+\epsilon I_n)^{-1}A^2 y=P(D+\epsilon I)^{-1}
+    D^2P^{-1}y,
+  \]
+  因此
+  \[
+    \lim_{\epsilon\to 0} (A+\epsilon I_n)^{-1}Ax=\lim_{\epsilon\to 0}
+    P(D+\epsilon I_n)^{-1}D^2P^{-1}y=PDP^{-1}y=Ay=x_1=P_{\im A}x,  
+  \]
+  这就表明
+  \[
+    P_{\im A}=  \lim_{\epsilon\to 0} (A+\epsilon I_n)^{-1}A.
+  \]
+  另一边同理。
+\end{proof}
+
+\begin{theorem}
+  对于 $A\in M_{m,n}(\mathbb{F})$，有
+  \[
+    A^\dagger=\lim_{\epsilon\to 0}(A^*A+\epsilon^2 I_n)^{-1}A^*=
+    \lim_{\epsilon\to 0}A^*  (AA^*+\epsilon^2 I_m)^{-1}.
+  \]
+\end{theorem}
+\begin{proof}
+  由于
+  \[
+    A^*(AA^*+\epsilon^2 I_m)=A^*AA^*+\epsilon^2A^*=(A^*A+\epsilon^2 I_n)A^*,
+  \]
+  并且 $AA^*$ 和 $A^*A$ 都是半正定矩阵，所以 $AA^*+\epsilon^2 I_m$
+  和 $A^*A+\epsilon^2I_n$ 一定可逆，所以
+  \[
+    (A^*A+\epsilon^2 I_n)^{-1}A^*=A^*  (AA^*+\epsilon^2 I_m)^{-1},
+  \]
+  故若极限存在则二者一定相等。
+
+  任取 $x\in\mathbb{F}^m$，那么 $x=x_1+x_2$，其中 $x_1\in\im A$，
+  $x_2\in (\im A)^\bot=\ker A^*$，所以 $A^*x=A^*x_1$，
+  设 $x_1=Ay$，所以
+  \[
+    (A^*A+\epsilon^2 I_n)^{-1}A^*x=  (A^*A+\epsilon^2 I_n)^{-1}A^*Ay,
+  \]
+  根据 \autoref{lemma:proj of Hermite matrix}，
+  \[
+    P_{\im A^*A}=  \lim_{\epsilon\to 0} (A^*A+\epsilon^2 I_n)^{-1}A^*A,
+  \]
+  又因为 $\im A^*A=\im A^*=(\ker A)^\bot$，所以
+  \[
+    P_{(\ker A)^\bot}y=\lim_{\epsilon\to 0}(A^*A+\epsilon^2 I_n)^{-1}A^*x\in (\ker A)^\bot,
+  \]
+  所以
+  \[
+    AA^\dagger x=P_{\im A}x=x_1=Ay=AP_{(\ker A)^\bot}y,  
+  \]
+  这就表明
+  \[
+    A^\dagger x=P_{(\ker A)^\bot}y=  \lim_{\epsilon\to 0}(A^*A+\epsilon^2 I_n)^{-1}A^*x,
+  \]
+  即
+  \[
+    A^\dagger=\lim_{\epsilon\to 0}(A^*A+\epsilon^2 I_n)^{-1}A^*.\qedhere  
+  \]
+\end{proof}
+
+\begin{corollary}
+  给定矩阵 $A\in M_{m,n}(\mathbb{F})$。
+  \begin{enumerate}
+    \item 若 $A$ 列满秩，即 $\rank A=n\le m$，那么
+    \[
+      A^\dagger=(A^*A)^{-1}A^*.  
+    \]
+    \item 若 $A$ 行满秩，即 $\rank A=m\leq n$，那么
+    \[
+      A^\dagger =A^*(AA^*)^{-1}.  
+    \]
+  \end{enumerate}
+\end{corollary}
+\begin{proof}
+  (1) $A$ 列满秩表明 $A$ 作为 $\mathbb{F}^n\to\mathbb{F}^m$ 的线性映射是单射，
+  故 $\ker A^*A=\ker A=0$，所以 $A^*A$ 可逆，所以
+  \[
+    A^\dagger =\lim_{\epsilon\to 0}(A^*A+\epsilon^2 I_n)^{-1}A^*=(A^*A)^{-1}A^*.  
+  \]
+  当然，也可以直接利用 \autoref{thm:character of Moore-Penrose} 来证明
+  $(A^*A)^{-1}A^*$ 是 $A$ 的广义逆。
+
+  (2) 同理。
+\end{proof}
+
+\begin{corollary}
+  给定矩阵 $A\in M_{m,n}(\mathbb{F})$，那么
+  \[
+    (A^*)^\dagger=(A^\dagger)^*.  
+  \]
+\end{corollary}
+\begin{proof}
+  注意到 $AA^*+\epsilon^2 I_m$ 是 Hermite 矩阵，所以
+  \[
+    (A^*)^\dagger=\lim_{\epsilon\to 0}(AA^*+\epsilon^2 I_m)^{-1}A
+    =\lim_{\epsilon\to 0} \bigl(A^*(AA^*+\epsilon^2 I_m)^{-1}\bigr)^*=
+    (A^\dagger)^*.\qedhere
+  \]
+\end{proof}
+
+\section{QR 分解和 Cholesky 分解}
+
+我们首先回顾 Gram-Schmidt 正交化方法。
+
+\begin{theorem}[Gram-Schmidt 正交化]
+  设 $e_1,\dots,e_n$ 是内积空间 $V$ 的一组基，那么存在两两正交的
+  非零向量 $f_1,\dots,f_n$ 使得对于 $1\leq k\leq n$，有
+  \[
+    \spa{f_1,\dots,f_k}=\spa{e_1,\dots,e_k}.  
+  \]
+\end{theorem}
+\begin{proof}
+  取 $f_1=e_1$。假设已经选好 $f_1,\dots,f_{k-1}$，由于我们希望
+  $f_k\in\spa{e_1,\dots,e_k}$ 并且 $f_k\notin\spa{e_1,\dots,e_{k-1}}$，所以
+  待到系数
+  \[
+    f_k=e_k+c_{k-1}f_{k-1}+\cdots+c_1f_1,  
+  \]
+  对于 $1\leq i\leq k-1$，令 $\inn{f_k,f_i}=0$，即
+  \[
+    \inn{e_k,f_i}+c_i\inn{f_i,f_i}=0,  
+  \]
+  解得
+  \[
+      c_i=-\frac{\inn{e_k,f_i}}{\norm{f_i}^2}.
+  \]
+  所以
+  \[
+    f_k=e_k-\frac{\inn{e_k,f_{k-1}}}{\norm{f_{k-1}}^2}f_{k-1}-\cdots-\frac{\inn{e_k,f_1}}{\norm{f_1}^2}f_1  
+  \]
+  即满足条件。
+\end{proof}
+
+\begin{theorem}[QR 分解]
+  设 $A$ 是 $\mathbb{F}$ 上的可逆矩阵，那么存在唯一的酉（正交）矩阵
+  $Q$ 和对角线为正数的上三角矩阵 $R$ 使得
+  \[
+    A=QR.  
+  \]
+\end{theorem}
+\begin{proof}
+  令 $v_1,\dots,v_n\in\mathbb{F}^n$ 为 $A$ 的列向量组，$A$ 可逆表明
+  $v_1,\dots,v_n$ 组成 $\mathbb{F}^n$ 的一组基。
+  采用 Gram-Schmidt 正交化，得到 $\mathbb{F}^n$ 的一组正交基 $f_1,\dots,f_n$
+  使得
+  \[
+    \spa{f_1,\dots,f_k}=\spa{v_1,\dots,v_k}\quad \forall 1\leq k\leq n.  
+  \]
+  其中
+  \[
+    f_k=v_k-\frac{\inn{v_k,f_{k-1}}}{\norm{f_{k-1}}^2}f_{k-1}-\cdots-\frac{\inn{v_k,f_1}}{\norm{f_1}^2}f_1  ,
+  \]
+  即
+  \[
+    v_k=f_k+  \frac{\inn{v_k,f_{k-1}}}{\norm{f_{k-1}}^2}f_{k-1}+\cdots+\frac{\inn{v_k,f_1}}{\norm{f_1}^2}f_1  .
+  \]
+  写成矩阵的形式，即
+  \[
+    \begin{pmatrix}
+      v_1 & v_2 & \cdots & v_n 
+    \end{pmatrix}=
+    \begin{pmatrix}
+      \dfrac{f_1}{\norm{f_1}} & \dfrac{f_2}{\norm{f_2}} & \cdots & \dfrac{f_n}{\norm{f_n}}
+    \end{pmatrix}
+    \begin{pmatrix}
+      \norm{f_1} & \dfrac{\inn{v_2,f_1}}{\norm{f_1}} & \cdots & 
+      \dfrac{\inn{v_n,f_1}}{\norm{f_1}} \\[15pt]
+      & \norm{f_2} & \cdots & \dfrac{\inn{v_n,f_2}}{\norm{f_2}} \\[5pt]
+      & & \ddots & \vdots \\
+      & & & \norm{f_n}
+    \end{pmatrix}  ,
+  \]
+  记 $e_i=f_i/\norm{f_i}$，那么 $e_1,\dots,e_n$ 是 $V$ 的标准正交基，
+  此时 $\norm{f_i}=\inn{v_i,e_i}$，所以
+  \[
+    \begin{pmatrix}
+      v_1 & v_2 & \cdots & v_n 
+    \end{pmatrix}=
+    \begin{pmatrix}
+      e_1 & e_2 & \cdots & e_n
+    \end{pmatrix}
+    \begin{pmatrix}
+      \inn{v_1,e_1} & \inn{v_2,e_1} & \cdots & \inn{v_n,e_1} \\
+      & \inn{v_2,e_2} & \cdots & \inn{v_n,e_2} \\
+      & & \ddots & \vdots \\
+      & & & \inn{v_n,e_n}
+    \end{pmatrix}  ,
+  \]
+  上式右端即为所求的 $Q$ 和 $R$。
+
+  假设另一对酉（正交）矩阵 $Q'$ 和对角线为正数的上三角矩阵 $R'$ 也满足
+  $A=Q'R'$。那么 $Q'R'=QR$，由于 $R$ 可逆，所以 $R'R^{-1}=Q'^{-1}Q$，
+  此时 $R'R^{-1}$ 仍然是对角线为正数的上三角矩阵，$Q'^{-1}Q$ 仍然是
+  酉（正交）矩阵。对于一个对角线为正数的上三角矩阵
+  \[
+    \begin{pmatrix}
+      a_{11} & a_{12} & \cdots & a_{1n} \\
+      & a_{22} & \cdots & a_{2n} \\
+      & & \ddots & \vdots \\
+      & & & a_{nn}
+    \end{pmatrix} , 
+  \]
+  其同时为正交矩阵表明行向量和列向量的模长均为 $1$，故 $a_{11}=1$，
+  进而 $a_{12}=\cdots=a_{1n}=0$，进而 $a_{22}=1$，进而 $a_{23}=\cdots=a_{2n}=0$，
+  以此类推，所以这样的矩阵必为单位阵。故 $R'R^{-1}=I_n$，即 $R'=R$，
+  进而 $Q'=Q$。
+\end{proof}
+
+\begin{theorem}[Cholesky 分解]
+  设 $A$ 是 $\mathbb{F}$ 上的正定矩阵，那么存在唯一的对角线全为正数的上三角
+  矩阵 $R$ 使得
+  \[
+    A=R^*R.  
+  \]
+\end{theorem}
+\begin{proof}
+  根据 \autoref{thm:property of semipositive}，存在矩阵 $B$ 使得
+  $A=B^*B$，$A$ 可逆表明 $B$ 也可逆。根据 QR 分解，存在酉（正交）矩阵
+  $Q$ 和对角线为正数的上三角矩阵 $R$ 使得 $B=QR$，所以
+  \[
+    A=B^*B=R^*Q^*QR=R^*R,  
+  \]
+  这就是我们想要的。
+
+  假设对角线为正数的上三角矩阵
+  $S$ 也使得 $A=S^*S$，那么 $R^*R=S^*S$，即 $(S^{-1})^*R^*RS^{-1}=I_n$，即
+  $(RS^{-1})^*(RS^{-1})=I_n$，所以 $RS^{-1}$ 是酉（正交）矩阵。
+  但 $RS^{-1}$ 仍为对角线为正数的上三角矩阵，所以 $RS^{-1}=I_n$，即 $R=S$。
+\end{proof}
+
+
+\begin{thebibliography}{99}
+  \bibitem{LADR}  Axler S. Linear Algebra Done Right. Springer Nature; 2024.
+  \bibitem{Albert} Albert A. Regression and the Moore-Penrose Pseudoinverse.
+  \bibitem{Roman} Roman S, Axler S, Gehring FW. Advanced Linear Algebra. New York: Springer; 2005 Mar 22.
+  \bibitem{LTS} 李烔生, 查建国. 线性代数. 中国科学技术大学出版社; 1989.
+  \bibitem{XQH} 姚慕生, 吴泉水, 谢启鸿. 高等代数学. 复旦大学出版社; 2014.
+\end{thebibliography}
+
+
+
+
+\end{document}

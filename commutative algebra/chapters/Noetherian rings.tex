@@ -1,0 +1,285 @@
+\chapter{Noether 环}
+
+\section{Noether 环}
+
+在上一章，我们已经得到一个环 $A$ 是 Noether 环的三个等价条件：
+\begin{enumerate}
+  \item $A$ 的每个非空的理想集合都有极大元。
+  \item $A$ 的每个理想升链都是稳定的。
+  \item $A$ 的每个理想都是有限生成的。
+\end{enumerate}
+
+\begin{proposition}
+  如果 $A$ 是 Noether 环，$\phi:A\to B$ 是满同态，那么 $B$ 是 Noether 环。
+\end{proposition}
+\begin{proof}
+  $B\simeq A/\ker\phi$ 是 $A$ 的商环，所以是 Noether 环。
+\end{proof}
+
+\begin{proposition}\label{prop:Noether module is Noether ring}
+  令 $A$ 是 $B$ 的子环，若 $A$ 是 Noether 环，$B$ 是有限生成 $A$-模，那么 $B$
+  是 Noether 环。
+\end{proposition}
+\begin{proof}
+  \autoref{prop:f.g. module is Noether} 告诉我们 $B$ 是 Noether $A$-模。
+  由于 $B$ 的理想也是 $A$-子模，所以 $B$ 的理想升链也是 $B$ 的 $A$-子模升链，
+  所以是稳定的，所以 $B$ 是 Noether 环。
+\end{proof}
+
+\begin{example}
+  $\mathbb{Z}[i]$ 是 Noether 环。更一般地，回到 \autoref{prop:basis of integral closure}，
+  如果 $A$ 是 Noether 的整闭整环，$L$ 是 $K=\Frac(A)$ 的有限可分扩张，$B$ 是 $A$
+  在 $L$ 中的整闭包，那么存在 $L$ 的一组基 $v_1,\dots,v_n$ 使得 $A\subseteq B\subseteq Av_1+\cdots+Av_n$，
+  而 $Av_1+\cdots+Av_n$ 是有限生成 $A$-模，从而是 Noether $A$-模，所以 $B$ 也是 Noether $A$-模，
+  根据 \autoref{prop:Noether module is Noether ring}，$B$ 是 Noether 环。
+  若 $L/\mathbb{Q}$ 是有限扩张，记 $\mathcal{O}_L$ 为 $\mathbb{Z}$ 在 $L$ 中的整闭包，
+  我们称 $\mathcal{O}_L$ 是 $L$ 的\emph{整数环}。根据上面的叙述，我们知道 $\mathcal{O}_L$
+  是 Noether 环以及 Noether $\mathbb{Z}$-模。根据 ED 上有限生成模的结构定理，由于
+  $\mathcal{O}_L$ 是无扭模，所以 $\mathcal{O}_L\simeq\mathbb{Z}^n$，
+  这证明了整基的存在性，是代数数论中一个非常重要的基本结果。
+\end{example}
+
+\begin{proposition}
+  如果 $A$ 是 Noether 环，$S$ 是 $A$ 的乘性子集，那么 $S^{-1}A$ 是 Noether 环。
+\end{proposition}
+\begin{proof}
+  $S^{-1}A$ 的理想都是 $A$ 中理想的扩张，所以若 $(S^{-1}\ideal a_i)$ 是 $S^{-1}A$ 的一个理想升链，
+  那么 $(\ideal a_i)$ 是 $A$ 的一个理想升链，从而是稳定的，所以 $S^{-1}A$ 是 Noether 环。
+\end{proof}
+
+\begin{theorem}[Hilbert 基定理]
+  若 $A$ 是 Noether 环，那么 $A[x]$ 是 Noether 环。
+\end{theorem}
+\begin{proof}
+  令 $\ideal a $ 为 $A[x]$ 的理想。对于多项式 $f(x)=a_0x^n+a_1x^{n-1}+\cdots+a_n\in A[x]\ (a_0\neq 0)$，
+  定义首项系数 $\mathrm{LC}(f(x))=a_0$。定义 $\mathrm{LC}(0)=0$。记
+  \[
+    \mathrm{LC}(\ideal a)=\bigl\{\mathrm{LC}(f(x)) \bigm| f(x)\in\ideal a\bigr\}.
+  \]
+  
+  我们首先说明 $\mathrm{LC}(\ideal a)$ 是 $A$ 的理想。任取 $a,b\in\mathrm{LC}(\ideal a)$，
+  即存在 $f(x),g(x)\in\ideal a$ 使得 $f(x)=ax^n+\cdots$ 以及 $g(x)=bx^m+\cdots$。设
+  $n\geq m$，若 $a-b\neq 0$，那么 $f(x)-x^{n-m}g(x)=(a-b)x^n+\cdots$，所以
+  $a-b=\mathrm{LC}(f(x)-x^{n-m}g(x))\in\mathrm{LC}(\ideal a)$。否则 $a-b=0$，
+  显然有 $a-b=0=\mathrm{LC}(0)\in\mathrm{LC}(\ideal a)$。任取 $c\in A,a\in\mathrm{LC}(\ideal a)$。
+  即存在 $f(x)\in\ideal a$ 使得 $f(x)=ax^n+\cdots$，那么 $ca=\mathrm{LC}(cf(x))\in\mathrm{LC}(\ideal a)$。
+  这就表明 $\mathrm{LC}(\ideal a)$ 是 $A$ 的理想。
+
+  因为 $A$ 是 Noether 环，所以 $\mathrm{LC}(\ideal a)=(a_1,\dots,a_n)$。设 $a_i=\mathrm{LC}(f_i(x))$，
+  其中 $f_i(x)=a_ix^{r_i}+\cdots\in\ideal a$。取 $r=\max\{r_1,\dots,r_n\}$。令 
+  $\ideal a'=(f_1,\dots,f_n)\subseteq\ideal a$。对于任意的 $f(x)\in\ideal a$，
+  设 $f(x)=bx^m+\cdots$，如果 $m\geq r$，由于 $b\in\mathrm{LC}(\ideal a)$，所以
+  $b=c_1a_1+\cdots+c_na_n$，其中 $c_i\in A$，所以
+  $f(x)=\sum_{i=1}^n c_ix^{m-r_i}f_i(x)+g(x)$，$\deg g(x)<m$。若 $\deg g(x)\geq r$，
+  重复上述操作，直到得到
+  \[
+    f(x)=q_1(x)f_1(x)+\cdots+q_n(x)f_n(x)+h(x),
+  \]
+  其中 $\deg h(x)<r$。定义子模 $M=A+Ax+\cdots+Ax^{r-1}\subseteq A[x]$，那么 $M$ 是有限生成
+  $A$-模，所以是 Noether $A$-模。上式表明 $\ideal a=\ideal a'+\ideal a\cap M$，
+  其中 $\ideal a\cap M$ 是 $M$ 的子模，从而是有限生成 $A$-模，设 
+  $\ideal a\cap M=Ag_1(x)+\cdots+Ag_m(x)$。那么此时有
+  $\ideal a=(f_1,\dots,f_n,g_1,\dots,g_m)$，
+  故 $\ideal a$ 为有限生成的理想，所以 $A[x]$ 是 Noether 环。
+\end{proof}
+
+\begin{corollary}
+  如果 $A$ 是 Noether 环，那么 $A[x_1,\dots,x_n]$ 也是 Noether 环。
+\end{corollary}
+
+\begin{remark}
+  类比上述证明，可以证明如果 $A$ 是 Noether 环，那么 $A[[x]]$ 是 Noether 环。
+\end{remark}
+
+\begin{corollary}\label{coro:f.g. algebra is Noether}
+  令 $B$ 是有限生成 $A$-代数，如果 $A$ 是 Noether 环，那么 $B$ 也是 Noether 环。
+  特别地，任意有限生成环（有限生成 $\mathbb{Z}$-代数）和域上的有限生成代数都是 Noether 环。
+\end{corollary}
+\begin{proof}
+  存在环的满同态 $f:A[x_1,\dots,x_n]\to B$，由于 $A[x_1,\dots,x_n]$ 是 Noether 环，所以
+  $B$ 作为 $A[x_1,\dots,x_n]$ 的商环是 Noether 环。
+\end{proof}
+
+\begin{proposition}[Artin-Tate]\label{prop:Artin-Tate}
+  令 $A\subseteq B\subseteq C$ 是环，假设 $A$ 是 Noether 环，$C$ 是有限生成 $A$-代数，
+  并且 $C$ 满足下面两个等价条件：
+  \begin{enumerate}
+    \item $C$ 是有限生成 $B$-模；
+    \item $C$ 在 $B$ 上是整的。
+  \end{enumerate}
+  那么 $B$ 是有限生成 $A$-代数。
+\end{proposition}
+\begin{proof}
+  若 $C$ 是有限生成 $B$-模，任取 $c\in C$，根据 \autoref{prop:integral dependence} 的 (3)，
+  $c$ 在 $B$ 上是整的，所以 $C$ 在 $B$ 上是整的。若 $C$ 在 $B$ 上是整的，由于 $C$ 是有限生成 $A$-代数，
+  自然也是有限生成 $B$-代数，根据 \autoref{coro:f.g. algebra is f.g. module}，所以 $C$
+  是有限生成 $B$-模。这就说明了这两个条件等价，我们使用条件 (1)。
+
+  令 $x_1,\dots,x_m\in C$ 是 $C$ 作为 $A$-代数的生成元，$y_1,\dots,y_n\in C$ 是 $C$ 作为
+  $B$-模的生成元。那么
+  \[
+    x_i=\sum_j b_{ij}y_j\ (b_{ij}\in B),\quad y_iy_j=\sum_k b_{ijk}y_k\ (b_{ijk}\in B).
+  \]
+  令 $B_0$ 是 $b_{ij}$ 和 $b_{ijk}$ 生成的 $A$-代数。因为 $A$ 是 Noether 环，
+  根据 \autoref{coro:f.g. algebra is Noether}，$B_0$ 是 Noether 环。并且我们有
+  $A\subseteq B_0\subseteq B$。
+
+  $C$ 的元素都可以写为 $A$-系数的 $x_1,\dots,x_m$ 组成的多元多项式，将 $x_i$
+  按照上式替换为 $y_1,\dots,y_n$，即 $C$ 的元素都可以写为 $B_0$-系数的
+  $y_1,\dots,y_n$ 组成的多元多项式。通过上式又可以把 $y_1,\dots,y_n$ 的多元多项式
+  写为 $y_1,\dots,y_n$ 的 $B_0$-线性组合，所以 $C$ 是有限生成 $B_0$-模。
+  因为 $B_0$ 是 Noether 环，所以 $C$ 是 Noether $B_0$-模，所以 $B$ 作为 $C$
+  的子模也是 Noether $B_0$-模，所以 $B$ 是有限生成 $B_0$-模。又因为 $B_0$
+  是有限生成 $A$-代数，所以 $B$ 是有限生成 $A$-代数。
+\end{proof}
+
+
+\begin{proposition}[Zariski 引理]\label{prop:Zariski lemma 2}
+  $k$ 是域，$E$ 是有限生成 $k$-代数，如果 $E$ 是域，那么 $E$ 是 $k$
+  的有限（代数）扩张。
+\end{proposition}
+\begin{proof}
+  令 $E=k[x_1,\dots,x_n]$。假设 $E/k$ 是超越扩张，那么通过调整生成元的顺序，将其中的
+  $k$ 上的超越元挑出来，我们可以假设 $F=k(x_1,\dots,x_r)$，其中 $r\geq 1$。
+  此时 $E/F$ 是有限代数扩张，$F/k$ 是超越扩张。
+  
+  根据 \autoref{prop:Artin-Tate}，$F$ 是有限生成 $k$-代数，所以存在 
+  $f_1/g_1,\dots,f_m/g_m\in F$ 使得 $F=k[f_1/g_1,\dots,f_m/g_m]$，其中
+  $f_i,g_i\in k[x_1,\dots,x_r]$。由于 $k[x_1,\dots,x_r]$ 是 UFD，所以
+  我们可以选取 $g_1\cdots g_m+1$ 的一个素因子 $h$，显然 $h$ 不会整除
+  任意 $g_i$，这就表明 $1/h\notin k[f_1/g_1,\dots,f_m/g_m]=F$，这与
+  $h\in k(x_1,\dots,x_r)=F$ 是矛盾的。所以 $E/k$ 只能是代数扩张。
+\end{proof}
+
+\section{Hilbert's Nullstellensatz}
+
+根据 Zariski 引理可以立即得到两个推论。
+
+\begin{corollary}
+  $k$ 是域，$A$ 是有限生成 $k$-代数，$\ideal m$ 是 $A$ 的极大理想，那么通过
+  $k\to A\to A/\ideal m$（注意这一定是单射），$A/\ideal m$ 可以视为 $k$
+  的扩域，此时 $[A/\ideal m:k]<\infty$。特别地，如果 $k$ 是代数闭域，那么此时
+  $A/\ideal m\simeq k$。
+\end{corollary}
+
+\begin{corollary}\label{coro:max ideal of polynomial ring over algebraically closed field}
+  若 $k$ 是代数闭域，那么多项式环 $A=k[x_1,\dots,x_n]$ 的极大理想 $\ideal m$
+  必然形如
+  \[
+    \ideal m=(x_1-a_1,\dots,x_n-a_n),  
+  \]
+  其中 $a_1,\dots,a_n\in k$。
+\end{corollary}
+\begin{proof}
+  此时 $A/\ideal m\simeq k$，设 $\varphi:A/\ideal m\to k$ 是同构，记 $a_i=\varphi(\bar{x}_i)$。
+  又因为 $\varphi(\bar{a}_i)=a_i$，所以 $\bar{x}_i=\bar{a}_i$，即 $x_i-a_i\in\ideal m$，
+  所以 $(x_1-a_1,\dots,x_n-a_n)\subseteq\ideal m$。而 $(x_1-a_1,\dots,x_n-a_n)$
+  是 $A$ 的极大理想，所以只可能 $\ideal m=(x_1-a_1,\dots,x_n-a_n)$。
+\end{proof}
+
+\autoref{coro:max ideal of polynomial ring over algebraically closed field} 告诉我们
+$k^n$ 中的点和 $k[x_1,\dots,x_n]$ 的极大理想之间存在一一对应。实际上，我们可以导出更一般地对应关系，
+即 Hilbert 零点定理（Hilbert's Nullstellensatz）。
+
+对于一个域 $k$，令 $\Sigma\subseteq k[x_1,\dots,x_n]$。定义 $\Sigma$ 的\emph{零点集}为
+\[
+  V(\Sigma)=\bigl\{z\in k^n\bigm| f(z)=0,\forall f\in\Sigma\bigr\}.
+\]
+子集 $S\subseteq k^n$ 被称为\emph{代数集}，如果存在 $\Sigma\subseteq k[x_1,\dots,x_n]$ 使得
+$S=V(\Sigma)$。
+
+\begin{example}
+  $\Sigma=\{xy\}\subseteq\mathbb{R}[x,y]$ 的零点集 $V(\Sigma)$ 是 $x$ 轴与 $y$ 轴。
+  $\mathbb{Z}\subseteq\mathbb{C}$ 不是代数集。因为如果 $\Sigma_1\subseteq\Sigma_2\subseteq\mathbb{C}[x]$，
+  那么显然有 $V(\Sigma_1)\supseteq V(\Sigma_2)$，所以如果 $\mathbb{Z}=V(\Sigma)$，
+  那么 $V(\Sigma)\subseteq V(f)$，其中 $f\in\mathbb{C}[x]$。但是 $V(f)$ 一定是有限集，所以这不可能。
+\end{example}
+
+\begin{proposition}[零点集的性质]
+  $k$ 是域，令 $\Sigma\subseteq k[x_1,\dots,x_n]$，那么
+  $V(\Sigma)=V((\Sigma))=V\bigl(\sqrt{(\Sigma)}\bigr)$，其中 $(\Sigma)$ 为 $\Sigma$ 生成的理想。
+\end{proposition}
+\begin{remark}
+  这个命题告诉我们，即使我们考虑无限多项式集合 $\Sigma$ 的零点集，那么我们有
+  $V(\Sigma)=V((\Sigma))$，而 $k[x_1,\dots,x_n]$ 是 Noether 环，所以 $(\Sigma)$
+  是有限生成的，即 $(\Sigma)=(f_1,\dots,f_n)$，那么 $V(\Sigma)=V((f_1,\dots,f_n))=V(f_1,\dots,f_n)$，
+  所以考虑无限多个多项式集合的零点集本质上还是考虑有限多个多项式集合的零点集。
+\end{remark}
+\begin{proof}
+  显然有 $V((\Sigma))\subseteq V(\Sigma)$。令 $z\in V(\Sigma)$，即对于任意的 $f\in\Sigma$，
+  有 $f(z)=0$。任取 $g\in (\Sigma)$，即 $g=\sum h_if_i$，其中 $h_i\in k[x_1,\dots,x_n]$，
+  $f_i\in\Sigma$，所以 $g(z)=0$，即 $z\in V((\Sigma))$。所以 $V(\Sigma)=V((\Sigma))$。
+  由于 $(\Sigma)\subseteq \sqrt{(\Sigma)}$，所以 $V\bigl(\sqrt{(\Sigma)}\bigr)\subseteq V((\Sigma))$。
+  任取 $z\in V((\Sigma))$，即对于任意的 $f\in (\Sigma)$ 有 $f(z)=0$，那么任取 $g\in\sqrt{(\Sigma)}$，
+  存在 $n$ 使得 $g^n\in (\Sigma)$，故 $g^n(z)=0$，故 $g(z)=0$，
+  所以 $V((\Sigma))=V\bigl(\sqrt{(\Sigma)}\bigr)$。
+\end{proof}
+
+对于子集 $S\subseteq k^n$，定义
+\[
+  I(S)=\bigl\{f\in k[x_1,\dots,x_n]\bigm| f(x)=0,\forall x\in S\bigr\}.
+\]
+
+\begin{proposition}
+  上述 $I(S)$ 是一个根理想，即 $I(S)$ 是 $k[x_1,\dots,x_n]$ 的一个理想，并且
+  $\sqrt{I(S)}=I(S)$。
+\end{proposition}
+\begin{proof}
+  按定义不难验证 $I(S)$ 是理想。任取 $f\in \sqrt{I(S)}$，即存在 $n$ 使得 $f^n(x)=0$ 对于任意 $x\in S$
+  成立，那么 $f(x)=0$ 对任意 $x\in S$ 成立，所以 $f\in I(S)$，故 $\sqrt{I(S)}=I(S)$。
+\end{proof}
+
+\begin{proposition}[$I$ 和 $V$ 的基本性质]
+  令 $k$ 是域，$I$ 和 $V$ 给出了 $k^n$ 的代数集和 $k[x_1,\dots,x_n]$ 的理想之间的映射：
+  \[
+    \begin{tikzcd}
+      \bigl\{\text{$k^n$ 的代数集}\bigr\} \arrow[r,shift left,"I"]
+      \arrow[r,leftarrow,shift right,"V"']
+      & \bigl\{\text{$k[x_1,\dots,x_n]$ 的理想}\bigr\}.
+    \end{tikzcd}
+  \]
+  那么
+  \begin{enumerate}
+    \item $V(\ideal a)=V(\sqrt{\ideal a})$。
+    \item $V(0)=k^n$，$V(k[x_1,\dots,x_n])=\emptyset$。
+    \item $\ideal a\subseteq\ideal b$ 表明 $V(\ideal b)\subseteq V(\ideal a)$。
+    \item $V\left(\sum_{i\in\Gamma}\ideal a_i\right)=\bigcap_{i\in\Gamma} V(\ideal a_i)$。
+    \item $V(\ideal{ab})=V(\ideal a\cap\ideal b)=V(\ideal a)\cup V(\ideal b)$。
+    \item $V(I(S))=S$ 当且仅当存在某个理想 $\ideal a$ 使得 $S=V(\ideal a)$。
+  \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+  
+\end{proposition}
+
+
+
+
+% \begin{theorem}[Hilbert's Nullstellensatz]
+%   令 $k$ 是代数闭域，那么存在一一对应：
+%   \[
+%     \begin{tikzcd}
+%       \bigl\{\text{$k^n$ 的代数集}\bigr\} \arrow[r,shift left,"I"]
+%       \arrow[r,leftarrow,shift right,"V"']
+%       & \bigl\{\text{$k[x_1,\dots,x_n]$ 的根理想}\bigr\},
+%     \end{tikzcd}
+%   \]
+%   并且
+%   \begin{enumerate}
+%     \item $V(0)=k^n$，$V(k[x_1,\dots,x_n])=\emptyset$。
+%     \item 若 $\ideal a$ 和 $\ideal b$ 是根式理想，那么
+%     $\ideal a\subseteq\ideal b$ 等价于 $V(\ideal a)\supseteq V(\ideal b)$。
+%     这表明若 $\ideal a$ 和 $\ideal b$ 是理想，那么 $V(\ideal a)=V(\ideal b)$ 
+%     等价于 $\sqrt{\ideal a}=\sqrt{\ideal b}$。
+%     \item $V\left(\sum_{i\in \Gamma} \ideal a_i\right)=\bigcap_{i\in \Gamma}  V(\ideal a_i)$，
+%     $I\left(\bigcap_{i\in\Gamma} S_i\right)=\sqrt{\sum_{i\in\Gamma}I(S_i)}$。
+%     \item $V(\ideal{ab})=V(\ideal a\cap\ideal b)=V(\ideal a)\cap V(\ideal b)$，
+%     $I(S_1\cup S_2)=I(S_1)\cap I(S_2)$。
+%     \item $V(I(S))=S$ 当且仅当存在某个理想 $\ideal a$ 使得 $S=V(\ideal a)$。
+%   \end{enumerate}
+% \end{theorem}
+
+
+
+

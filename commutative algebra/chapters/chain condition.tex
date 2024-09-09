@@ -1,0 +1,349 @@
+\chapter{链条件}
+
+\section{Noether 模和 Artin 模}
+
+令 $\Sigma$ 是集合，有偏序 $\leq$。
+
+\begin{proposition}\label{prop:maximal condition}
+  下面的说法是等价的：
+  \begin{enumerate}
+    \item $\Sigma$ 中的每个上升序列 $x_1\leq x_2\leq\cdots$ 是稳定的（即存在 $n$ 使得 $x_n=x_{n+1}=\cdots$）。
+    \item $\Sigma$ 的任意非空子集都有极大元。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 设 $S\subseteq\Sigma$ 是非空子集，假设其没有极大元。
+  任取 $x_1\in S$，那么存在 $x_2\in S$ 并且 $x_1\neq x_2$ 使得 $x_1\leq x_2$，
+  否则 $x_1$ 就是 $S$ 的极大元。同理，存在 $x_3\in S$ 并且 $x_3\neq x_2$
+  使得 $x_2\leq x_3$。那么我们得到非稳定的上升序列 $x_1\leq x_2\leq \cdots$，
+  矛盾。
+
+  $(2)\Rightarrow (1)$ 对于上式序列 $x_1\leq x_2\leq \cdots$，考虑集合
+  $(x_i)_{i\geq 1}$，这个集合有极大元 $x_n$，但是在 $i\geq n$ 时有 $x_n\leq x_i$，
+  所以只可能 $x_n=x_i$，所以 $x_1\leq x_2\leq \cdots$ 是稳定的。
+\end{proof}
+
+对于一个模 $M$ 来说，令 $\Sigma$ 是 $M$ 的子模的集合，上面有偏序 $\subseteq$。
+那么 \autoref{prop:maximal condition} 中的 (1) 被称为\emph{升链条件}，
+简写为 a.c.c.。(2) 被称为\emph{极大条件}。一个模 $M$ 如果满足这两个等价条件，
+那么我们说 $M$ 是\emph{Noether 模}。一个环 $A$ 作为 $A$-模如果是 Noether 模，
+那么我们说 $A$ 是\emph{Noether 环}。如果 $\Sigma$ 上面有偏序 $\supseteq$，
+那么 (1) 被称为\emph{降链条件}，简写为 d.c.c.。(2) 被称为\emph{极小条件}。
+一个模 $M$ 如果满足这两个等价条件，
+那么我们说 $M$ 是\emph{Artin 模}。一个环 $A$ 作为 $A$-模如果是 Artin 模，
+那么我们说 $A$ 是\emph{Artin 环}。
+
+\begin{example} 下面我们列举一些满足或者不满足 a.c.c.\ 和 d.c.c.\ 的例子。
+  \begin{enumerate}
+    \item 有限交换群（作为 $\mathbb{Z}$-模）同时满足 a.c.c.\ 和 d.c.c.，
+    这是显然的，因为其只有有限个元素。$k$ 是域，$V$ 是有限维 $k$-向量空间，
+    那么 $V$ 也同时满足 a.c.c\ 和 d.c.c.，因为 $V$ 的子空间都是有限维的。
+    \item 假设 $A$ 是 PID，那么 $A$-子模相当于 $A$ 的理想。 
+    令 $(a_1)\subseteq (a_2)\subseteq \cdots$ 是理想的升链，那么容易验证
+    $\bigcup_i(a_i)$ 仍然是 $A$ 的理想，所以 $\bigcup_i (a_i)=(a)$。
+    那么存在 $(a_n)$ 使得 $a\in (a_n)$，所以 $(a)\subseteq (a_n)$，那么
+    对于 $i\geq n$，有 $(a_n)\subseteq (a_i)\subseteq \bigcup_i(a_i)=(a)\subseteq (a_n)$，
+    所以 $(a_i)=(a_n)$。故 $A$ 满足 a.c.c.，即 PID 都满足 a.c.c.。
+    \item 假设 $A$ 是整环但是不是域，任取 $a\in A- A^\times$ 并且 $a\neq 0$，考虑
+    $(a)\supseteq (a^2)\supseteq (a^3)\supseteq \cdots$，如果 $(a^n)=(a^{n+1})$，
+    那么存在 $b\in A$ 使得 $a^n=a^{n+1}b=a^nab$，所以 $ab=1$，与 $a$ 不可逆矛盾。所以
+    上述降链是不稳定的。这表明非域的整环不满足 d.c.c.。结合 (2)，我们知道
+    $\mathbb{Z}$ 和域上的多项式环 $k[x]$ 是 Noether 环但不是 Artin 环。
+    \item 考虑 $\mathbb{Z}$-模
+    \[
+      G=\left\{\bar x\in\mathbb{Q}/\mathbb{Z}\,\middle\vert\, x=\frac{a}{p^n}
+      ,a\in\mathbb{Z},p\nmid a\right\}=\mathbb{Z}[1/p]/\mathbb{Z},
+    \]
+    令 $G_n=\frac{1}{p^n}\mathbb{Z}/\mathbb{Z}$ 是 $G$ 的子群（$\mathbb{Z}$-子模）。
+    那么 $G_0\subseteq G_1\subseteq G_2\subseteq \cdots$ 是严格上升的子模序列，
+    所以 $G$ 不满足 a.c.c.。下面我们说明 $G$ 满足 d.c.c.。我们说明 $G$ 的恰当子群必为有限群，
+    从而满足 d.c.c.。设 $H$ 是 $G$ 的子群。对于任意 $h=a/p^n\in H$，显然 $h$ 的阶 $|h|=p^n$。
+    令 $p^n=\max\{|h|\,|\, h\in H\}$，其中 $n$ 可以为无穷。若 $n$ 有限，
+    任取 $\overline{a/p^m}\in H$，因为 $|\overline{a/p^m}|=p^m\leq p^n$，所以
+    $m\leq n$，所以 $\overline{a/p^m}=\overline{ap^{n-m}/p^n}\in G_n$。所以 $\langle h\rangle\subseteq H\subseteq G_n$，其中 $|h|=p^n$。由于 $G_n$ 是 $p^n$ 阶循环群，$\langle h\rangle$ 也是 $p^n$
+    阶循环群，所以 $H=G_n$。若 $n$ 无穷，也就是说对于任意的 $m>0$，存在 $h_m=c/p^{n_m}\in H$，使得
+    $|h_m|=p^{n_m}>p^m$，那么对于 $\overline{a/p^m}\in G_m$，有 
+    $\overline{a/p^m}=\overline{ap^{n_m-m}/p^{n_m}}=ap^{n_m-m}\cdot \overline{1/p^{n_m}}$，
+    所以 $\langle \overline{1/p^{n_m}}\rangle\supseteq G_m$，所以 $H\supseteq \bigcup_{m=1}^{\infty} G_m=G$，
+    即 $H=G$。这就说明了 $G$ 的恰当子群必为有限群。所以 $G$ 作为 $\mathbb{Z}$-模是 Artin 模，但不是
+    Noether 模。
+    \item 域上无穷多个未定元的多项式环 $k[x_1,x_2,\dots]$ 既不满足 a.c.c.\ 又不满足 d.c.c.。
+    因为 $(x_1)\subset (x_1,x_2)\subset (x_1,x_2,x_3)\subset\cdots$ 是不稳定的理想升链，
+    $(x_1)\supset (x_1^2)\supset (x_1^3)\supset\cdots$ 是不稳定的理想降链。
+    \item 我们后面将会证明对于环来说，满足 d.c.c.\ 必须满足 a.c.c.，即 Artin 环必为 Noether 环。
+    对于模来说，(4) 表明模可以满足 d.c.c.\ 但是不满足 a.c.c.。
+  \end{enumerate}
+\end{example}
+
+\begin{proposition}\label{prop:equiv condition of Noether}
+  $M$ 是 Noether $A$-模当且仅当 $M$ 的每个子模都是有限生成的。
+\end{proposition}
+\begin{proof}
+  若 $M$ 是 Noether $A$-模。设 $N$ 是 $M$ 的子模。令 $\Sigma$ 是 $N$ 的所有有限生成的子模
+  的集合。由于 $(0)\in \Sigma$，所以 $\Sigma$ 非空。由于 $\Sigma$ 也是 $M$ 的有限生成子模的集合，
+  所以存在极大元 $N'=(x_1,\dots,x_n)$。如果 $N'\neq N$，取 $x\in N-N'$，那么 $N'+(x)=(x_1,\dots,x_n,x)$
+  是 $N$ 的有限生成子模，所以 $N'+(x)\in\Sigma$，但是 $N'+(x)\neq N'$，与 $N'$ 极大矛盾。所以
+  $N=N'$ 是有限生成的。
+
+  若 $M$ 的每个子模都是有限生成的。设 $N_1\subseteq N_2\subseteq \cdots$ 是 $M$ 的子模序列，
+  令 $N=\bigcup_{i=1}^\infty N_i$。容易验证 $N$ 是 $M$ 的子模，所以是有限生成的。
+  设 $N=(x_1,\dots,x_n)$。那么存在足够大的 $n$ 使得 $x_1,\dots,x_n\in N_n$，所以
+  $N\subseteq N_n\subseteq N$，所以 $N_n=N$，于是 $i\geq n$ 时有 $N_i=N$。
+  故 $M$ 满足 a.c.c.，即 $M$ 是 Noether 模。
+\end{proof}
+  
+\begin{proposition}\label{prop:Noether of exact sequence}
+  令
+  $
+    \begin{tikzcd}[cramped,column sep=small]
+      0\arrow[r] & M'\arrow[r,"\alpha"] & M\arrow[r,"\beta"] & M''\arrow[r] & 0
+    \end{tikzcd}
+  $
+  是 $A$-模的正合列，那么
+  \begin{enumerate}
+    \item $M$ 是 Noether 模当且仅当 $M'$ 和 $M''$ 是 Noether 模。
+    \item $M$ 是 Artin 模当且仅当 $M'$ 和 $M''$ 是 Artin 模。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  我们只证明 Noether 的情况，Artin 的情况完全类似。若 $M$ 是 Noether 模。
+  设 $N_1'\subseteq N_2'\subseteq \cdots$ 是 $M'$ 的子模序列，那么 
+  $\alpha(N_1')\subseteq \alpha(N_2')\subseteq\cdots$ 是 $M$ 的子模序列，
+  从而是稳定的，$\alpha$ 是单射表明 $N_1'\subseteq N_2'\subseteq \cdots$ 是稳定的，
+  所以 $M'$ 是 Noether 模。由于 $M''\simeq M/\alpha(M')$，所以 $M''$ 的子模一一对应到
+  $M$ 的包含 $\alpha(M')$ 的子模。设 $\beta(N_1)\subseteq\beta(N_2)\subseteq\cdots$
+  是 $M''$ 的子模序列，其中 $N_1\subseteq N_2\subseteq \cdots$ 是 $M$ 的子模序列，
+  从而是稳定的，所以 $\beta(N_1)\subseteq\beta(N_2)\subseteq\cdots$ 是稳定的，
+  所以 $M''$ 是 Noether 模。
+
+  若 $M'$ 和 $M''$ 都是 Noether 模。设 $N_1\subseteq N_2\subseteq\cdots$ 是 $M$ 的子模序列，
+  那么 $\alpha^{-1}(N_1)\subseteq\alpha^{-1}(N_2)\subseteq\cdots$ 是 $M'$ 的子模序列，
+  $\beta(N_1)\subseteq \beta(N_2)\subseteq\cdots$ 是 $M''$ 的子模序列。那么存在足够大的
+  $n$ 使得 $\alpha^{-1}(N_n)=\alpha^{-1}(N_{n+1})=\cdots$ 以及 $\beta(N_n)=\beta(N_{n+1})=\cdots$。
+  由于 $\alpha(\alpha^{-1}(N_i))=N_i\cap \alpha(M')$，$\beta^{-1}(\beta(N_i))=N_i+\alpha(M')$，所以
+  $i\geq n$ 的时候有 $N_i\cap\alpha(M')=N_n\cap\alpha(M')$ 以及 $N_i+\alpha(M')=N_n+\alpha(M')$。
+  根据同构定理，有
+  \begin{align*}
+    N_i/N_n&\simeq (N_i/(N_i\cap\alpha(M')))\big/(N_n/(N_n\cap\alpha(M')))\\
+    &\simeq \bigl((N_i+\alpha(M'))/\alpha(M')\bigr)\big/\bigl((N_n+\alpha(M'))/\alpha(M')\bigr)\\
+    &\simeq (N_i+\alpha(M'))/(N_n+\alpha(M'))=0,
+  \end{align*}
+  所以 $N_i=N_n$，即 $M$ 满足 a.c.c.，$M$ 是 Noether 模。
+\end{proof}
+
+\begin{corollary}\label{coro:direct sum of Noether}
+  如果 $M_i\ (1\leq i\leq n)$ 是 Noether 模（Artin 模），那么 $\bigoplus_{i=1}^n M_i$
+  也是 Noether 模（Artin 模）。
+\end{corollary}
+\begin{proof}
+  对 $n$ 归纳，我们有正合列
+  \[
+    \begin{tikzcd}
+      0\arrow[r] & M_n\arrow[r] & \displaystyle\bigoplus_{i=1}^n M_i\arrow[r] & \displaystyle\bigoplus_{i=1}^{n-1} M_i\arrow[r]
+      & 0.
+    \end{tikzcd}
+    \qedhere
+  \]
+\end{proof}
+
+\begin{example}
+  \mbox{}
+  \begin{enumerate}
+    \item 若 $A$ 为 Noether 环（Artin 环），$\ideal a$ 是 $A$ 的理想，那么 $A/\ideal a$ 是 Noether 
+    环（Artin 环）。
+    这是因为根据 \autoref{prop:Noether of exact sequence}，$A/\ideal a$ 是 Noether $A$-模。
+    $A/\ideal a$ 的理想一一对应到 $A$ 的包含 $\ideal a$ 的理想（$A$ 的包含 $\ideal a$ 的子模），所以
+    $A/\ideal a$ 的理想序列也是 $A/\ideal a$ 的 $A$-子模序列，从而是稳定的，所以 $A/\ideal a$ 
+    是 Noether 环（Artin 环）。
+    \item 若 $A$ 为 Noether 环，$B\subseteq A$ 是子环，注意 $B$ 不一定是 Noether 环。
+    例如 $k[x_1,x_2,\dots]$ 不是 Noether 环，但是其分式域当然是 Noether 环。
+  \end{enumerate}
+\end{example}
+
+\begin{lemma}\label{lemma:finite generated module}
+  $M$ 是有限生成 $A$-模当且仅当对于某个整数 $n$，存在满的 $A$-模同态 
+  $\varphi:A^n\to M$。
+\end{lemma}
+\begin{proof}
+  若 $M$ 是有限生成的，设 $x_1,\dots,x_n$ 是一组生成元，考虑映射 $\varphi:A^n\to M$ 为
+  \[
+    (a_1,\dots,a_n)\mapsto a_1x_1+\cdots+a_nx_n,
+  \]
+  容易验证这是一个模同态，并且由于 $x_1,\dots,x_n$ 是生成元，所以 $\varphi$ 是满同态。
+
+  反过来，记 $e_i=(0,\dots,0,1,0,\dots,0)\in A^n$，其中第 $i$ 个分量为 $1$。那么
+  任取 $m\in M$，存在 $(a_1,\dots,a_n)\in A^n$ 使得 $\varphi(a_1,\dots,a_n)=m$，
+  即
+  \[
+    m=\varphi(a_1,\dots,a_n)=\varphi(a_1e_1+\cdots+a_ne_n)
+    =a_1\varphi(e_1)+\cdots+a_n\varphi(e_n),  
+  \]
+  故 $M$ 由 $\varphi(e_1),\dots,\varphi(e_n)$ 生成。
+\end{proof}
+
+\begin{proposition}\label{prop:f.g. module is Noether}
+  $A$ 是 Noether 环（Artin 环），$M$ 是有限生成 $A$-模，那么 $M$ 是 Noether 模（Artin 模）。
+\end{proposition}
+\begin{proof}
+  根据 \autoref{lemma:finite generated module}，$M$ 是 $A^n$ 的一个商模，
+  根据 \autoref{coro:direct sum of Noether}，$A^n$ 是 Noether(Artin) $A$-模，
+  所以 $M$ 是 Noether 模（Artin 模）。
+\end{proof}
+
+模 $M$ 的一个\emph{子模链} $(M_i)\ (0\leq i\leq n)$ 指的是
+\[
+  M=M_0\supset M_1\supset \cdots\supset M_n=0,
+\]
+其中 $\supset$ 表示严格包含。我们说上述链的\emph{长度}是 $n$（即 $\supset$ 的个数）。
+我们说上述链是\emph{合成列}，如果上述链的长度是极大的，也就是说无法在其中插入额外的子模。
+等价地说，每个商模 $M_{i-1}/M_i\ (1\leq i\leq n)$ 是\emph{单模}（即子模只有 $0$ 和自身）。
+上述概念完全类似群的此正规列和合成列。
+
+\begin{proposition}
+  假设 $M$ 有长度为 $n$ 的合成列，那么 $M$ 的每个合成列的长度都是 $n$，并且
+  $M$ 的每个链都可以被扩充为一条合成列。
+\end{proposition}
+\begin{proof}
+  记 $l(M)=m$ 为 $M$ 的所有合成列长度的最小值。
+
+  我们首先证明：若 $N\subseteq M$ 是子模，那么 $l(N)\leq l(M)$，并且 $l(N)=l(M)$
+  当且仅当 $N=M$。设 $(M_i)\ (0\leq i\le m)$ 是 $M$ 的最小长度的合成列。
+  那么 $N_i=N\cap M_i$ 是 $N$ 的子模，此时同态 $N_{i-1}\hookrightarrow M_{i-1}\to M_{i-1}/M_i$
+  的核为 $N_{i-1}\cap M_i=N\cap M_i=N_i$，所以 $N_{i-1}/N_i$ 同构于 $M_{i-1}/M_i$
+  的子模。而 $M_{i-1}/M_i$ 是单模，所以 $N_{i-1}/N_i=M_{i-1}/M_i$ 是单模或者 $N_{i-1}/N_i=0$。
+  若 $N_{i-1}/N_i=0$，那么 $N_{i-1}=N_i$，那么可以在 $(N_i)$ 中删去其中一个。
+  所以 $(N_i)$ 中删去重复的子模后就是一个合成列，故 $l(N)\leq l(M)$。如果 $l(N)=l(M)$，
+  这表明上述序列 $(N_i)$ 中没有任何重复项，即 $N_{i-1}/N_i=M_{i-1}/M_i$ 对于所有 $1\leq i\leq m$
+  成立。那么 $N_{m-1}=N_{m-1}/N_m\simeq M_{m-1}/M_m=M_{m-1}$，进而 
+  \[
+    M_{m-2}/N_{m-2}\simeq (M_{m-2}/N_{m-1})\big/(N_{m-2}/N_{m-1})
+    =(M_{m-2}/M_{m-1})\big/(M_{m-2}/M_{m-1})=0,
+  \]
+  即 $N_{m-2}=M_{m-2}$，重复这个过程，得到 $N_i=M_i$，故 $N=M$。
+
+  然后我们说明：$M$ 的任意链的长度都小于等于 $l(M)$。设 $(M_i)\ (0\leq i\leq k)$ 是长度为 $k$
+  的链。根据上面的叙述，有 $l(M_0)>l(M_1)>\cdots>l(M_k)=0$，这就表明 $l(M)=l(M_0)\geq k$。
+
+  对于 $M$ 的任意合成列 $(M_i)\ (1\leq i\leq k)$，根据上面的叙述有 $k\leq l(M)=m$，
+  而 $l(M)$ 的最小性表明 $k=l(M)$。所以任意合成列都有同样的长度 $l(M)$。
+  最后，对于 $M$ 的任意一条链，如果其长度等于 $l(M)$，那么其就是合成列（否则插入子模后长度会超出 $l(M)$），
+  如果其长度小于 $l(M)$，那么我们可以在其中插入一些子模直到无法插入为止。
+\end{proof}
+
+\begin{proposition}
+  $M$ 有一条合成列当且仅当 $M$ 同时满足 a.c.c.\ 和 d.c.c.。
+\end{proposition}
+\begin{proof}
+  若 $M$ 有一条合成列，那么 $M$ 的任意链都是有限长的，所以 $M$ 自然满足 a.c.c.\ 和 d.c.c.。
+
+  若 $M$ 同时满足 a.c.c.\ 和 d.c.c.。令 $M_0=M$。对于 $M_0$ 的真子模的集合，$M_0$ 满足极大条件
+  表明其有极大元 $M_1\subset M_0$，类似地，$M_1$ 有一个极大子模 $M_2\subset M_1$。那么我们得到
+  子模序列 $M=M_0\supset M_1\supset M_2\supset\cdots$，$M$ 满足 d.c.c.\ 表明这个序列是有限长的，
+  设 $M=M_0\supset M_1\supset M_2\supset\cdots\supset M_n=M_{n+1}=\cdots$，此时必有 $M_n=0$，否则 $M_n$
+  有极大子模 $M_{n+1}$，矛盾。所以我们得到子模序列
+  \[
+    M=M_0\supset M_1\supset M_2\supset\cdots\supset M_n=0,
+  \]
+  $M_{i}$ 是 $M_{i-1}$ 的极大子模表明 $M_{i-1}/M_i$ 是单模，所以上述序列就是一条合成列。
+\end{proof}
+
+一个同时满足 a.c.c.\ 和 d.c.c.\ 的模被称为\emph{有限长的}。由于 $M$ 的合成列拥有相同的长度
+$l(M)$，我们把 $l(M)$ 称为\emph{$M$ 的长度}。类似有限群，模的合成列也有 Jordan-H\"older 定理，
+这里就不叙述了，证明是完全一致的。
+
+\begin{proposition}
+  长度 $l(M)$ 是所有有限长 $A$-模的类上的一个加性函数。
+\end{proposition}
+\begin{proof}
+  设
+  $
+    \begin{tikzcd}[cramped,column sep=small]
+      0\arrow[r] & M'\arrow[r,"\alpha"] & M\arrow[r,"\beta"] & M''\arrow[r] & 0
+    \end{tikzcd}
+  $
+  是正合列，其中 $M',M,M''$ 都是有限长的 $A$-模。我们需要证明 $l(M)=l(M')+l(M'')$。
+
+  由于有同构 $M/\alpha(M')\simeq M''$，所以 $M''$ 的子模都形如 $\beta(N)$，其中 $N$ 是 $M$ 的包含
+  $\alpha(M')$ 的子模。设 $M'$ 的一条合成列为 $(M_i')\ (0\leq i\leq n)$，$M''$ 的一条
+  合成列为 $(\beta(M_i))\ (0\leq i\leq m)$，其中 $M_i$ 是 $M$ 的包含 $\alpha(M')$ 的子模。
+  注意到 $\beta^{-1}(\beta(M_0))=\beta^{-1}(M'')=M$，
+  $\beta^{-1}(\beta(M_m))=\beta^{-1}(0)=\ker\beta=\alpha(M')$。所以我们可以将
+  $(\beta^{-1}(\beta(M_i)))$ 和 $(\alpha(M_i'))$ 首尾相接得到 $M$ 的链
+  \begin{align*}
+    M&=\beta^{-1}(\beta(M_0))\supset \beta^{-1}(\beta(M_1))\supset\cdots\supset
+    \beta^{-1}(\beta(M_m))=\alpha(M')\\
+    &=\alpha(M_0')\supset \alpha(M_1')\supset \cdots\supset
+    \alpha(M_n')=0,
+  \end{align*}
+  根据同构第二定理，$\beta:M\to M''$ 给出了同构
+  \begin{align*}
+    \beta^{-1}(\beta(M_{i-1}))/\beta^{-1}(\beta(M_i))
+    &\simeq \beta(\beta^{-1}(\beta(M_{i-1})))/\beta(\beta^{-1}(\beta(M_{i})))\\
+    &=\beta(M_{i-1})/\beta(M_i),
+  \end{align*}
+  所以 $\beta^{-1}(\beta(M_{i-1}))/\beta^{-1}(\beta(M_i))$ 是单模。另一方面，
+  $\alpha:M'\to M$ 给出了同构
+  \[
+    M_{i-1}'/M_i'\simeq \alpha(M_{i-1}')/\alpha(M_i'),
+  \]
+  所以 $\alpha(M_{i-1}')/\alpha(M_i')$ 是单模。故上述链是 $M$ 的一条合成列，
+  所以 $l(M)=m+n=l(M')+l(M'')$。
+\end{proof}
+
+\begin{proposition}\label{prop:TFAE of vector space}
+  对于 $k$-向量空间 $V$，下面的说法是等价的：
+  \begin{enumerate}
+    \item $V$ 是有限维的；
+    \item $V$ 是有限长的 $k$-模；
+    \item $V$ 满足 a.c.c.；
+    \item $V$ 满足 d.c.c.。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  $(1)\Rightarrow (2)$ $V$ 有限维表明 $V$ 的子空间序列必然满足 a.c.c.\ 和 d.c.c.，所以
+  $V$ 是有限长的。$(2)\Rightarrow (3)$ 和 $(2)\Rightarrow (4)$ 是有限长的定义。
+  
+  $(3)\Rightarrow (1)$ 假设 $V$ 不是有限维的，那么存在无限多个 $V$ 中的线性无关的元素
+  $(x_i)_{i\geq 1}$，令 $V_i$ 为子空间 $\mathrm{span}(x_1,\dots,x_i)$，
+  那么 $(V_i)$ 是 $V$ 的一个子空间升链，但是其不是稳定的，与 $V$ 满足 a.c.c.\ 矛盾。
+
+  $(4)\Rightarrow (1)$ 假设 $V$ 不是有限维的，那么存在无限多个 $V$ 中的线性无关的元素
+  $(x_i)_{i\geq 1}$，令 $V_i$ 为子空间 $\mathrm{span}(x_i,x_{i+1},\dots)$，
+  那么 $(V_i)$ 是 $V$ 的一个子空间降链，但是其不是稳定的，与 $V$ 满足 d.c.c.\ 矛盾。
+\end{proof}
+
+\begin{lemma}\label{lemma:acc dcc}
+  $M$ 是 $A$-模，有一条链
+  \[
+    M=M_0\supset M_1\supset M_2\supset \cdots\supset M_n=0,
+  \]
+  那么 $M$ 满足 a.c.c.\ (d.c.c.) 当且仅当
+  对于所有 $1\leq i\leq n$，$M_{i-1}/M_i$ 满足 a.c.c.\ (d.c.c.)。
+\end{lemma}
+\begin{proof}
+  若 $M$ 满足 a.c.c.\ (d.c.c.)，$M_i$ 作为 $M$ 的子模满足 a.c.c.\ (d.c.c.)，
+  所以 $M_{i-1}/M_i$ 作为 $M_{i-1}$ 的商模 a.c.c.\ (d.c.c.)。
+
+  若 $M_{i-1}/M_i$ 满足 a.c.c.\ (d.c.c.)。那么 $M_{n-1}=M_{n-1}/M_n$ 满足 a.c.c.\ (d.c.c.)，
+  又因为 $M_{n-2}/M_{n-1}$ 也满足 a.c.c.\ (d.c.c.)，考虑正合列
+  $
+    \begin{tikzcd}[cramped,column sep=small]
+      0\arrow[r] & M_{n-1}\arrow[r] & M_{n-2}\arrow[r] & M_{n-2}/M_{n-1}\arrow[r] & 0
+    \end{tikzcd}
+  $，所以 $M_{n-2}$ 满足 a.c.c.\ (d.c.c.)。以此类推，得到 $M$ 满足 a.c.c.\ (d.c.c.)。
+\end{proof}
+
+\begin{corollary}
+  令 $A$ 是环，其零理想是一些极大理想的乘积 $\ideal m_1\cdots\ideal m_n$，
+  那么 $A$ 是 Noether 环当且仅当 $A$ 是 Artin 环。
+\end{corollary}
+\begin{proof}
+  考虑 $A$ 的理想链 
+  $A\supset\ideal m_1\supseteq\ideal m_1\ideal m_2\supseteq\cdots\supseteq \ideal m_1\cdots\ideal m_n=0$。
+  $\ideal m_1\cdots\ideal m_{i-1}/\ideal m_1\cdots\ideal m_{i}$ 作为 $A$-模来说零化子包含 $\ideal m_i$，
+  所以其可以视为 $A/\ideal m_i$ 上的向量空间，\autoref{prop:TFAE of vector space} 表明
+  对于 $\ideal m_1\cdots\ideal m_{i-1}/\ideal m_1\cdots\ideal m_{i}$ 而言 a.c.c.\ 等价于 d.c.c.。
+  再根据 \autoref{lemma:acc dcc}，$A$ 满足 a.c.c.\ 等价于 $\ideal m_1\cdots\ideal m_{i-1}/\ideal m_1\cdots\ideal m_{i}$ 都满足 a.c.c.，等价于 $\ideal m_1\cdots\ideal m_{i-1}/\ideal m_1\cdots\ideal m_{i}$ 都满足 d.c.c.，等价于 $A$ 满足 d.c.c.。
+\end{proof}
+
+

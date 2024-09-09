@@ -1,0 +1,944 @@
+\documentclass[fontset=none,zihao=-4]{Notes}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\usepackage{tikz-cd,wrapstuff}
+\usepackage{siunitx,tikz,nicematrix}
+
+\usetikzlibrary{hobby,calc,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.pathreplacing}
+
+\input{font.def}
+
+\DeclareMathOperator\Int{Int}
+\DeclareMathOperator\supp{supp}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Ann{Ann}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\diag{diag}
+\DeclareMathOperator\Or{O}
+\DeclareMathOperator\Sp{Sp}
+\DeclareMathOperator\cha{char}
+\DeclareMathOperator\rad{rad}
+\DeclareMathOperator\rank{rank}
+
+\newcommand{\inn}[1]{\left\langle#1\right\rangle}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\spa}[1]{\operatorname{span}\left(#1\right)}
+\DeclareMathSymbol{\bot}{\mathrel}{symbols}{"3F}
+
+\tikzcdset{
+  arrow style=tikz,
+  diagrams={>={Straight Barb[scale=0.8]}}
+}
+
+\tikzset{
+  point/.style={
+    circle,fill,inner sep=0pt,minimum width=5pt
+  }
+}
+
+\usepackage[subscriptcorrection,nofontinfo,mtpbb]{mtpro2}
+
+
+
+\setlist[enumerate]{nosep,label=(\arabic*)}
+\setlist[itemize]{nosep}
+
+\title{\sffamily 多元函数微分学}
+\author{Eliauk}
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{微分}
+
+令 $E$ 是 $\mathbb{R}^n$ 中的开集，函数 $f:E\to\mathbb{R}^m$，$x_0\in E$，
+如果存在线性映射 $L:\mathbb{R}^n\to\mathbb{R}^m$ 使得
+\[
+  \lim_{x\to x_0}\frac{\abs{f(x)-(f(x_0)+L(x-x_0))}}{\abs{x-x_0}}=0,
+\]
+那么我们说 $f$ 在 $x_0$ 处\emph{可微}，线性映射 $L$ 被称为 $f$ 在 $x_0$ 处的\emph{微分}。
+若 $f$ 在任意 $x_0\in E$ 处都可微，那么我们说 $f$ 在 $E$ 中\emph{可微}。
+
+\begin{theorem}[微分的唯一性]
+  沿用上面的记号，设 $L_1:\mathbb{R}^n\to\mathbb{R}^m$ 和 $L_2:\mathbb{R}^n\to\mathbb{R}^m$
+  都是线性映射且都为 $f$ 在 $x_0$ 处的微分，那么 $L_1=L_2$。
+\end{theorem}
+\begin{proof}
+  假设 $L_1\neq L_2$，那么存在非零向量 $v$ 使得 $L_1(v)\neq L_2(v)$，令
+  $x=x_0+tv$，那么 $t\to 0$ 的时候 $x\to x_0$。又因为
+  \begin{align*}
+    \abs{L_1(tv)-L_2(tv)}&=\abs{\bigl(f(x)-f(x_0)-L_2(tv)\bigr)-\bigl(f(x)-f(x_0)-L_1(tv)\bigr)}\\
+    &\leq\abs{f(x)-f(x_0)-L_2(tv)}+\abs{f(x)-f(x_0)-L_1(tv)},
+  \end{align*}
+  所以
+  \[
+    \lim_{t\to 0}\frac{\abs{L_1(tv)-L_2(tv)}}{\abs{tv}}=0,  
+  \]
+  $L_1,L_2$ 是线性映射表明
+  \[
+    \lim_{t\to 0}\frac{|t|\abs{L_1(v)-L_2(v)}}{|t|\abs{v}}=\frac{\abs{L_1(v)-L_2(v)}}{\abs{v}}=0,  
+  \]
+  这与 $L_1(v)\neq L_2(v)$ 矛盾，所以 $L_1=L_2$。
+\end{proof}
+
+我们一般把微分 $L$ 记为 $f'(x_0)$。有时我们也会用余项的形式叙述微分，即 $f$ 在 $x_0$ 处可微当且仅当
+存在线性映射 $L:\mathbb{R}^n\to\mathbb{R}^m$ 使得
+\[
+  f(x)=f(x_0)+f'(x_0)(x-x_0)+r(x),
+\]
+其中 $r(x)$ 满足 
+\[
+  \lim_{x\to x_0}\frac{\abs{r(x)}}{\abs{x-x_0}}=0.  
+\]
+此时 $f'(x_0)$ 通常被称为 $f$ 在 $x_0$ 处的\emph{全导数}。
+若 $f$ 在 $E$ 中可微，那么我们可以把 $f'$ 视为映射 $f':E\to\Hom(\mathbb{R}^n,\mathbb{R}^m)$，
+其将 $x\in E$ 送到线性映射 $f'(x)$。此外，我们会用到矩阵范数，即
+$f'(x_0)$ 可以视为 $m\times n$ 矩阵，那么我们用 $\norm{f'(x_0)}$
+表示 $f'(x_0)$ 的算子 2-范数，即其最大的奇异值。
+根据定义，一个显然的结果是可微必连续。
+
+\begin{proposition}
+  $E\subseteq\mathbb{R}^n$ 是开集，若 $f:E\to\mathbb{R}^m$ 在 $x_0\in E$ 处可微，
+  那么 $f$ 在 $x_0$ 处连续。
+\end{proposition}
+\begin{proof}
+  $f$ 在 $x_0$ 处可微表明
+  \[
+    \abs{f(x)-f(x_0)}\leq \norm{f'(x_0)}\abs{x-x_0}+\abs{r(x)},  
+  \]
+  于是在 $x\to x_0$ 的时候 $f(x)\to f(x_0)$，即 $f$ 在 $x_0$ 处连续。
+\end{proof}
+
+\begin{theorem}[链式法则]
+  设 $E\subseteq\mathbb{R}^n$ 是开集，函数 $f:E\to\mathbb{R}^m$ 在 $x_0\in E$
+  处可微。$F\subseteq\mathbb{R}^m$ 是开集且包含 $f(E)$，函数 $g:F\to\mathbb{R}^k$
+  在 $f(x_0)$ 处可微，那么复合函数 $g\circ f:E\to\mathbb{R}^k$ 在 $x_0$ 处可微，并且
+  \[
+    (g\circ f)'(x_0)=g'(f(x_0)) f'(x_0).  
+  \]
+\end{theorem}
+\begin{proof}
+  根据定义，我们有
+  \begin{align*}
+    f(x)-f(x_0)&=f'(x_0)(x-x_0)+r_1(x),\\
+    g(f(x))-g(f(x_0))&=g'(f(x_0))(f(x)-f(x_0))+r_2(f(x)),
+  \end{align*}
+  $f$ 在 $x_0$ 处连续表明 $x\to x_0$ 时 $f(x)\to f(x_0)$，所以 $x\to x_0$ 时有
+  $r_1(x)=o(|x-x_0|)$ 以及 $r_2(f(x))=o(\abs{f(x)-f(x_0)})$。因此
+  \begin{align*}
+    g(f(x))-g(f(x_0))&=g'(f(x_0))(f(x)-f(x_0))+r_2(f(x))\\
+    &=g'(f(x_0))f'(x_0)(x-x_0)+r_2(f(x))+g'(f(x_0))r_1(x),
+  \end{align*}
+  记 $r(x)=r_2(f(x))+g'(f(x_0))r_1(x)$，那么
+  \[
+    \abs{r(x)}\leq\abs{r_2(f(x))}+\norm{g'(f(x_0))}\abs{r_1(x)},
+  \]
+  所以
+  \[
+    \lim_{x\to x_0}\frac{\abs{r(x)}}{\abs{x-x_0}}=0,  
+  \]
+  这就表明 $g\circ f$ 在 $x_0$ 处可微并且 $(g\circ f)'(x_0)=g'(f(x_0)) f'(x_0)$。
+\end{proof}
+
+\section{偏导数和方向导数}
+
+令 $E\subseteq\mathbb{R}^n$ 是开集，函数 $f:E\to\mathbb{R}^m$，$x_0\in E$。
+任取向量 $v\in\mathbb{R}^n$，如果极限
+\[
+  \lim_{t\to 0^+}\frac{f(x_0+tv)-f(x_0)}{t}  
+\]
+存在，那么我们说 $f$ 在 $x_0$ 处\emph{沿着 $v$ 方向可微}，此时我们将上述极限记为
+$D_vf(x_0)$，称为 $f$ 在 $x_0$ 处沿 $v$ 方向的\emph{方向导数}。注意，上述极限中 $t$ 为正向趋于 $0$，并且 $D_vf(x_0)\in\mathbb{R}^m$。
+
+\begin{lemma}\label{lemma:derivative lead to directional derivative}
+  沿用上面的记号，如果 $f$ 在 $x_0$ 处可微，那么对于任意 $v\in\mathbb{R}^n$，
+  都有 $f$ 在 $x_0$ 处沿着 $v$ 方向可微，并且
+  \[
+    D_vf(x_0)=f'(x_0)(v).  
+  \]
+\end{lemma}
+\begin{proof}
+  $f$ 在 $x_0$ 处可微表明
+  \[
+    f(x_0+tv)-f(x_0)=f'(x_0)(tv)+r(x_0+tv),  
+  \]
+  其中 $t\to 0^+$ 时有 $r(x_0+tv)=o(\abs{tv})=o(t)$，那么
+  \[
+    D_vf(x_0)=  \lim_{t\to 0^+}\frac{tf'(x_0)(v)+r(x_0+tv)}{t}
+    =f'(x_0)(v).\qedhere
+  \]
+\end{proof}
+
+\autoref{lemma:derivative lead to directional derivative} 告诉我们全导数
+$f'(x_0)$ 可以通过方向导数来表示，即考虑 $\mathbb{R}^n$ 的标准基 $e_1,\dots,e_n$，
+那么
+\[
+  f'(x_0)(e_i)=D_{e_i}f(x_0),  
+\]
+于是对于任意 $v=v_1e_1+\cdots+v_ne_n\in\mathbb{R}^n$，有
+\[
+  D_vf(x_0)=f'(x_0)(v)=\sum_{i=1}^n v_if'(x_0)(e_i)=\sum_{i=1}^nv_i D_{e_i}f(x_0),  
+\]
+所以我们只要知道了基向量方向的方向导数 $D_{e_i}f(x_0)$，就相当于知道了
+任意方向的方向导数，这引出了偏导数的定义。
+
+令 $E\subseteq\mathbb{R}^n$ 是开集，函数 $f:E\to\mathbb{R}^m$，$x_0\in E$。
+$e_1,\dots,e_n$ 是 $\mathbb{R}^n$ 的标准基。定义 $f$ 在 $x_0$
+处相对于变量 $x_i\ (1\leq i\leq n)$ 的\emph{偏导数}为
+\[
+  \frac{\partial f}{\partial x_i}(x_0)=\lim_{t\to 0}\frac{f(x_0+te_i)-f(x_0)}{t}=
+  \left.\frac{d}{dt}\right|_{t=0}f(x_0+te_i),
+\]
+注意，在偏导数的定义中是 $t\to 0$ 而不是 $t\to 0^+$。
+当 $n=2$ 的时候，我们一般用 $(x,y)$ 表示 $\mathbb{R}^2$
+中的点，所以此时偏导数一般记为 $\partial f/\partial  x$ 和 $\partial f/\partial y$。
+
+如果 $f$ 在 $x_0\in E$ 处可微，\autoref{lemma:derivative lead to directional derivative}
+告诉我们
+\[
+  D_{e_i}f(x_0)=f'(x_0)(e_i)=-f'(x_0)(-e_i)=-D_{-e_i}f(x_0),
+\]
+所以此时偏导数存在且
+\[
+  \frac{\partial f}{\partial x_i}(x_0)=D_{e_i}f(x_0)=-D_{-e_i}f(x_0)
+  =f'(x_0)e_i,
+\]
+此时沿 $v$ 方向的方向导数可以表示为
+\[
+  D_vf(x_0)=\sum_{i=1}^n v_i\frac{\partial f}{\partial x_i}(x_0).
+\]
+我们也可以写出 $f'(x_0)$ 在标准基下的表示矩阵，记 $f=(f_1,\dots,f_m)$，
+其中 $f_i:E\to\mathbb{R}$ 是实值函数，那么按定义可知
+\[
+  \frac{\partial f}{\partial x_i}(x_0)=\left(
+    \frac{\partial f_1}{\partial x_i}(x_0),\dots
+    \frac{\partial f_m}{\partial x_i}(x_0)
+  \right),
+\]
+所以 $f'(x_0)$ 在标准基下的表示矩阵为
+\[
+  Jf(x_0)=\left(\frac{\partial f_i}{\partial x_j}(x_0)\right)=\begin{pmatrix}
+    \frac{\partial f_1}{\partial x_1}(x_0) &
+    \frac{\partial f_1}{\partial x_2}(x_0) & \cdots &
+    \frac{\partial f_1}{\partial x_n}(x_0) \\[2mm]
+    \frac{\partial f_2}{\partial x_1}(x_0) &
+    \frac{\partial f_2}{\partial x_2}(x_0) & \cdots &
+    \frac{\partial f_2}{\partial x_n}(x_0) \\[2mm]
+    \vdots & \vdots & \ddots & \vdots \\[2mm]
+    \frac{\partial f_m}{\partial x_1}(x_0) &
+    \frac{\partial f_m}{\partial x_2}(x_0) & \cdots &
+    \frac{\partial f_m}{\partial x_n}(x_0) 
+  \end{pmatrix}  \in M_{m,n}(\mathbb{R}).
+\]
+矩阵 $Jf(x_0)$ 被称为 $f$ 在 $x_0$ 处的\emph{Jacobi 矩阵}。
+
+对于实值函数 $f:\mathbb{R}^n\to\mathbb{R}$，我们也把它的 Jacobi 矩阵称作
+\emph{梯度}，记为
+\[
+  \nabla f(x)=Jf(x)=\begin{pmatrix}
+    \frac{\partial f}{\partial x_1}(x_0) &
+    \frac{\partial f}{\partial x_2}(x_0) & \cdots &
+    \frac{\partial f}{\partial x_n}(x_0)
+  \end{pmatrix}  ,
+\]
+此时 $f$ 在 $x$ 处沿 $v=v_1e_1+\cdots+v_ne_n$ 方向的方向导数为 
+\[
+  D_vf(x)=\sum_{i=1}^n v_i\frac{\partial f}{\partial x_i}(x)=v\cdot\nabla f(x).
+\]
+
+\begin{example}
+  \autoref{lemma:derivative lead to directional derivative} 的逆命题不成立，
+  即若 $f$ 在 $x_0$ 的任意方向上都可微，也不能说明 $f$ 在 $x_0$ 处可微。
+  考虑 $f:\mathbb{R}^2\to\mathbb{R}$ 为
+  \[
+    f(x,y)=\begin{cases}
+      x^3/(x^2+y^2) & (x,y)\neq (0,0),\\
+      0 & (x,y)=(0,0).
+    \end{cases}  
+  \]
+  任取 $v=(v_1,v_2)\in\mathbb{R}^2$，那么
+  \[
+    D_vf(0,0)=\lim_{t\to 0^+}\frac{f(tv_1,tv_2)-f(0,0)}{t}=
+    \lim_{t\to 0^+}\frac{v_1^3}{v_1^2+v_2^2}=\frac{v_1^3}{v_1^2+v_2^2},
+  \]
+  所以 $D_vf(0,0)$ 都存在。另一方面，我们有
+  \begin{align*}
+    \frac{\partial f}{\partial x}(0,0)&=\lim_{t\to 0}
+    \frac{f(t,0)-f(0,0)}{t}=\lim_{t\to 0}\frac{t^2}{t^2}=1,\\
+    \frac{\partial f}{\partial y}(0,0)&=\lim_{t\to 0}\frac{f(0,t)-f(0,0)}{t}
+    =\lim_{t\to 0} \frac{0}{t}=0,
+  \end{align*}
+  如果 $f$ 在 $(0,0)$ 处可微，那么
+  \[
+    Jf(0,0)=\begin{pmatrix}
+      \frac{\partial f}{\partial x}(0,0) & \frac{\partial f}{\partial y}(0,0)
+    \end{pmatrix}=\begin{pmatrix}
+      1 & 0
+    \end{pmatrix}.
+  \]
+  此时
+  \begin{align*}
+    &\lim_{(x,y)\to(0,0)}\frac{\abs{f(x,y)-f(0,0)-Jf(0,0)(x,y)^T}}{\abs{(x,y)}}\\
+    =&\lim_{(x,y)\to(0,0)}\frac{x^3/(x^2+y^2)-x}{\sqrt{x^2+y^2}}
+    =\lim_{(x,y)\to(0,0)}\frac{-xy^2}{(x^2+y^2)^{3/2}},
+  \end{align*}
+  当 $y=x$ 的时候极限值为 $-\sqrt{2}/4$，当 $y=0$ 的时候极限值为 $0$，所以上述极限
+  不存在，这与 $f$ 在 $(0,0)$ 处可微矛盾。
+  此外，该例也告诉我们，若 $f:E\to\mathbb{R}^m$ 在 $x_0\in E$ 处偏导数都存在，
+  也不意味着 $f$ 在 $x_0$ 处可微。
+\end{example}
+
+令开集 $E\subseteq\mathbb{R}^n$，函数 $f:E\to\mathbb{R}^m$，如果
+$f$ 在 $E$ 中可微，并且 $f':E\to\Hom(\mathbb{R}^n,\mathbb{R}^m)$ 是连续映射，
+那么我们说 $f$ 在 $E$ 中\emph{连续可微}，记为 $f\in C^1$。更准确地说，$f\in C^1$ 
+当且仅当对于每个 $x\in E$，任取 $\varepsilon>0$，都存在 $\delta>0$，使得 
+$\abs{y-x}<\delta$ 的时候有
+\[
+  \norm{f'(y)-f'(x)}<\varepsilon.  
+\]
+
+\begin{theorem}
+  $f\in C^1$ 当且仅当对于任意 $1\leq i\leq m,1\leq j\leq n$，
+  偏导数 $\partial f_i/\partial x_j:E\to\mathbb{R}$ 都存在且在
+  $E$ 上连续。
+\end{theorem}
+\begin{proof}
+  $(\Rightarrow)$ 若 $f\in C^1$，那么任取 $x\in E$，有
+  \[
+    \frac{\partial f}{\partial x_j}(x)=f'(x)(e_j), 
+  \]
+  其中 $e_j\in\mathbb{R}^n$ 是标准基向量。那么
+  \begin{align*}
+    \abs{\frac{\partial f}{\partial x_j}(y)-\frac{\partial f}{\partial x_j}(x)}
+    &=\abs{f'(y)(e_j)-f'(x)(e_j)}=\abs{\bigl(f'(y)-f'(x)\bigr)(e_j)}\\
+    &\leq \norm{f'(y)-f'(x)}\abs{e_j}=\norm{f'(y)-f'(x)},
+  \end{align*}
+  而 $f'$ 连续，所以 $\partial f/\partial x_j:E\to\mathbb{R}^m$ 连续，故每个分量 
+  $\partial f_i/\partial x_j$ 连续。
+
+  $(\Leftarrow)$ 只需证明 $m=1$ 的情况即可。因为如果 $m=1$ 的时候结论成立，那么对于 $1\leq i\leq m$，
+  $\partial f_i/\partial x_j$ 都连续表明 $f'_i:E\to \Hom(\mathbb{R}^n,\mathbb{R})$ 连续，
+  进而 $f':E\to\Hom(\mathbb{R}^n,\mathbb{R}^m)=\Hom(\mathbb{R}^n,\mathbb{R})^m$ 连续。
+  故下面假设 $m=1$。任取 $x\in E$，我们先说明 $f$ 在 $x$ 处可微，此时 Jacobi 矩阵必须为
+  \[
+    Jf(x)=\begin{pmatrix}
+      \frac{\partial f}{\partial x_1}(x) & \cdots & \frac{\partial f}{\partial x_n}(x)
+    \end{pmatrix},
+  \]
+  故需要证明任取 $\varepsilon$，都存在 $\delta>0$，使得 $\abs{y-x}<\delta$ 的时候有
+  \[
+    \abs{f(y)-f(x)-Jf(x)(y-x)^T}<\varepsilon\abs{y-x}.  
+  \]
+  
+  $\partial f/\partial x_j(x)$ 连续表明存在 $\delta_j>0$ 使得
+  $\abs{y-x}<\delta_j$ 的时候有
+  \[
+    \abs{\frac{\partial f}{\partial x_j}(y)-\frac{\partial f}{\partial x_j}(x)}<\varepsilon,  
+  \]
+  取 $\delta=\min\{\delta_1,\dots,\delta_n\}$。
+  设 $y-x=(v_1,\dots,v_n)=v_1e_1+\cdots+v_ne_n\in\mathbb{R}^n$，那么 $\abs{y-x}<\delta$ 表明 $|v_j|<\delta$。
+  此时
+  \begin{align*}
+    \abs{f(y)-f(x)-Jf(x)(y-x)^T}&=\abs{f(x+v_1e_1+\cdots+v_ne_n)-f(x)-\sum_{j=1}^nv_j\frac{\partial f}{\partial x_j}(x)}\\
+    &=\abs{\sum_{j=1}^n [f(x+w_j)-f(x+w_{j-1})]-\sum_{j=1}^nv_j\frac{\partial f}{\partial x_j}(x)}\\
+    &\leq \sum_{j=1}^n\abs{f(x+w_j)-f(x+w_{j-1})-v_j\frac{\partial f}{\partial x_j }(x)},
+  \end{align*}
+  其中 $w_0=0$，$w_j=v_1e_1+\cdots+v_je_j$。记函数 $g_j:[0,v_j]\to\mathbb{R}$ 为
+  \[
+    g_j(t)=f(x+w_{j-1}+te_j),  
+  \]
+  那么 $g_j$ 在 $[0,v_j]$ 中连续且在 $(0,v_j)$ 中可微，根据中值定理，存在 $\theta_j\in (0,v_j)$
+  使得
+  \[
+    g_j(v_j)-g_j(0)=g_j'(\theta_j)v_j=v_j\frac{\partial f}{\partial x_j}(x+w_{j-1}+\theta_je_j),
+  \]
+  此时 $\abs{x+w_{j-1}+\theta_je_j-x}<\abs{y-x}<\delta$，所以
+  \begin{align*}
+    \abs{f(x+w_j)-f(x+w_{j-1})-v_j\frac{\partial f}{\partial x_j }(x)}&=
+    \abs{v_j\frac{\partial f}{\partial x_j}(x+w_{j-1}+\theta_je_j)-v_j\frac{\partial f}{\partial x_j }(x)}\\
+    &<\varepsilon\abs{v_j}\leq \varepsilon\abs{y-x},
+  \end{align*}
+  因此
+  \[
+    \abs{f(y)-f(x)-Jf(x)(y-x)^T}<n\varepsilon\abs{y-x},
+  \]
+  这就表明 $f$ 在 $x\in E$ 处可微。
+
+  然后我们说明 $f':E\to \Hom(\mathbb{R}^n,\mathbb{R})$ 连续。由于
+  \[
+    f'(x)=\begin{pmatrix}
+      \frac{\partial f}{\partial x_1}(x) & \cdots & \frac{\partial f}{\partial x_n}(x)
+    \end{pmatrix},
+  \]
+  所以
+  \[
+    \norm{f'(y)-f'(x)}\leq \sum_{j=1}^n\abs{\frac{\partial f}{\partial x_j}(y)-\frac{\partial f}{\partial x_j}(x)},
+  \]
+  所以 $f'$ 连续。
+\end{proof}
+
+\section{高阶导数}
+
+令 $E\subseteq\mathbb{R}^n$ 是开集，函数 $f:E\to\mathbb{R}^m$，
+偏导数 $\partial f/\partial x_i:E\to\mathbb{R}^m$ 在 $E$ 中可微，那么我们
+定义 $f$ 的\emph{二阶偏导数}为
+\[
+  \frac{\partial^2 f}{\partial x_i\partial x_j}=\frac{\partial}{\partial x_i}
+  \left(\frac{\partial f}{\partial x_j}\right).
+\]
+如果所有的 $\partial f/\partial x_i\in C^1$，即所有的二阶偏导数
+$\partial^2 f/\partial x_i\partial x_j$ 都连续，那么我们说 $f$ \emph{二阶连续可微}，
+记为 $f\in C^2$。类似的，我们可以定义高阶偏导数和 $C^n$。
+
+\begin{example}
+  一般而言，$\partial^2f/\partial x_i\partial x_j\neq \partial^2f/\partial x_j\partial x_i$。
+  考虑 $f:\mathbb{R}^2\to\mathbb{R}$ 为
+  \[
+    f(x,y)=\begin{cases}
+      xy^3/(x^2+y^2) & (x,y)\neq (0,0),\\
+      0 & (x,y)=(0,0).
+    \end{cases}  
+  \]
+  容易算得
+  \[
+    \frac{\partial f}{\partial x}=\begin{dcases}
+      \frac{y^3(y^2-x^2)}{(x^2+y^2)^2} & (x,y)\neq (0,0),\\
+      0 & (x,y)=(0,0),
+    \end{dcases}  \quad 
+    \frac{\partial f}{\partial y}=\begin{dcases}
+      \frac{x(y^4+3x^2y^2)}{(x^2+y^2)^2} & (x,y)\neq (0,0),\\
+      0 & (x,y)=(0,0),
+    \end{dcases}  
+  \]
+  故
+  \begin{align*}
+    \frac{\partial^2 f}{\partial x\partial y}(0,0)&=
+    \lim_{t\to 0}\frac{\partial f/\partial y(t,0)-\partial f/\partial y(0,0)}{t}=0,\\
+    \frac{\partial^2 f}{\partial y\partial x}(0,0)&=
+    \lim_{t\to 0}\frac{\partial f/\partial x(0,t)-\partial f/\partial x(0,0)}{t}=1,
+  \end{align*}
+  此时 $\partial^2 f/\partial x\mathord{\partial} y(0,0)\neq \partial^2 f/\partial y\mathord{\partial} x(0,0)$。
+\end{example}
+
+\begin{theorem}
+  令 $E\subseteq\mathbb{R}^n$ 是开集，$f:E\to \mathbb{R}^m$ 在 $E$ 中二阶连续可微，那么
+  对于任意 $1\leq i,j\leq n$，有
+  \[
+    \frac{\partial^2 f }{\partial x_i\partial x_j}=\frac{\partial^2 f}{\partial x_j\partial x_i}.  
+  \]
+\end{theorem}
+\begin{proof}
+  任取 $x=x_1e_1+\cdots+x_ne_n\in E$，
+  考虑
+  \[
+    \Delta =f(x+te_i+se_j)-f(x+te_i)-f(x+se_j)+f(x),  
+  \]
+  由于 $E$ 是开集，我们总是可以令 $t,s$ 足够小使得 $\Delta$ 有意义。
+  令 
+  \[ 
+    g(u)=f(x+ue_i+se_j)-f(x+u e_i),
+  \]
+  对 $g:[0,t]\to\mathbb{R}$ 使用中值定理，存在 $\theta\in (0,t)$ 使得
+  \begin{align*}
+    \Delta&=g(t)-g(0)=g'(\theta)t\\
+    &=t\left[\frac{\partial f}{\partial x_i}(x+\theta e_i+se_j)-
+    \frac{\partial f}{\partial x_i}(x+\theta e_i)\right],
+  \end{align*}
+  令
+  \[
+    h(u)=  \frac{\partial f}{\partial x_i}(x+\theta e_i+ue_j),
+  \]
+  $f\in C^2$ 保证了 $h:[0,s]\to\mathbb{R}$ 在 $(0,s)$ 中可微，
+  再次使用中值定理，存在 $\eta\in(0,s)$ 使得
+  \[
+    \Delta=tsh'(\eta)=ts\frac{\partial^2 f}{\partial x_j\partial x_i}(x+\theta e_i+\eta e_j).
+  \]
+  固定 $t$，令 $s\to 0$，有
+  \[
+    \frac{\partial f}{\partial x_j}(x+te_i)
+    -\frac{\partial f}{\partial x_j}(x)=\lim_{s\to 0}\frac{\Delta}{s}=
+    t \frac{\partial^2 f}{\partial x_j\partial x_i}(x+\theta e_i),  
+  \]
+  然后令 $t\to 0$，就得到了
+  \[
+    \frac{\partial^2 f}{\partial x_i\partial x_j}(x)=\lim_{t\to 0}
+    \frac{\partial f /\partial x_j(x+te_i)-\partial f/\partial x_i(x)}{t}
+    =\frac{\partial^2 f}{\partial x_j\partial x_i}(x).\qedhere
+  \]
+\end{proof}
+
+\section{压缩映射原理}
+
+令 $(X,d)$ 是度量空间，$f:X\to X$ 是映射，如果存在 $c\in(0,1)$，
+使得对于任意 $x,y\in X$ 都有
+\[
+  d(f(x),f(y))\leq cd(x,y),  
+\]
+那么我们说 $f$ 是一个\emph{压缩映射}。显然压缩映射一定是连续映射，并且
+压缩映射与自身的复合也是压缩映射。
+
+\begin{theorem}[压缩映射原理]
+  $(X,d)$ 是度量空间，$f:X\to X$ 是压缩映射，那么 $f$ 最多只有一个不动点。
+  此外，如果 $(X,d)$ 是完备度量空间，那么 $f$ 有唯一的不动点。
+\end{theorem}
+\begin{proof}
+  我们先说明 $f$ 如果有不动点，那么一定唯一。若 $x,y\in X$ 使得 $f(x)=x$ 以及
+  $f(y)=y$，那么
+  \[
+    d(x,y)=d(f(x),f(y))\leq cd(x,y)  ,
+  \]
+  这就表明 $d(x,y)=0$，故 $x=y$。
+
+  现在假设 $X$ 是完备度量空间。任取 $x_0\in X$，令序列 $x_n=f(x_{n-1})$，
+  那么
+  \begin{align*}
+    d(x_{n+1},x_n)&=d(f(x_{n}),f(x_{n-1}))\le  c d(x_{n},x_{n-1})\\
+    &\leq c^2d(x_{n-1},x_{n-2})\leq\cdots\leq c^{n} d(x_1,x_0),
+  \end{align*}
+  所以对于 $m>n$，有
+  \begin{align*}
+    d(x_m,x_n)&\leq d(x_m,x_{m-1})+d(x_{m-1},x_{m-2})+\cdots+d(x_{n+1},x_n)  \\
+    &\leq (c^{m-1}+c^{m-2}+\cdots+c^n)d(x_1,x_0)\\
+    &<\frac{c^{n}}{1-c}d(x_1,x_0)\to 0,
+  \end{align*}
+  故 $\{x_n\}$ 是 Cauchy 列，从而收敛，设 $x_n\to x$。又因为 $f$ 是连续映射，所以
+  \[
+    f(x)=\lim_{n\to\infty} f(x_n)=\lim_{n\to\infty} x_{n+1}=x,  
+  \]
+  即 $x$ 是 $f$ 唯一的不动点。
+\end{proof}
+
+
+\section{反函数定理}
+
+我们先介绍两个中值定理。
+
+\begin{theorem}[实值函数的微分中值定理]
+  设 $E\subseteq\mathbb{R}^n$ 为凸开集，$f:E\to\mathbb{R}$ 是可微函数，
+  那么任给 $x,y\in E$，存在 $\xi=x+\theta(y-x)\in E,\theta\in (0,1)$ 使得
+  \[
+    f(y)-f(x)=f'(\xi)(y-x).  
+  \]
+\end{theorem}
+\begin{proof}
+  考虑曲线 $\gamma:[0,1]\to E$ 为 $\gamma(t)=x+t(y-x)$。那么
+  复合映射 $f\circ\gamma:[0,1]\to \mathbb{R}$ 可微，且
+  \[
+      (f\circ\gamma)'(t)=f'(\gamma(t))\gamma'(t)=f'(\gamma(t))(y-x).
+  \]
+  根据中值定理，存在 $\theta\in(0,1)$ 使得
+  \[
+    f\circ \gamma(1)-f\circ\gamma(0)=(f\circ\gamma)'(\theta),  
+  \]
+  即
+  \[
+    f(y)-f(x)=f'(\xi)(y-x).\qedhere  
+  \]
+\end{proof}
+
+对于向量值函数而言，没有这么好的结果，但是下述结论依旧是有用的。
+
+\begin{theorem}[拟微分中值定理]\label{thm:mean-value 2}
+  设 $E\subseteq\mathbb{R}^n$ 是凸开集，$f:E\to\mathbb{R}^m$ 可微，那么任取
+  $x,y\in E$，存在 $\xi=x+\theta(y-x)\in E,\theta\in(0,1)$ 使得
+  \[
+    \abs{f(y)-f(x)}\leq\norm{f'(\xi)} \abs{y-x}. 
+  \]
+\end{theorem}
+\begin{proof}
+  令曲线 $\gamma:[0,1]\to E$ 为 $\gamma(t)=x+t(y-x)$。考虑函数
+  $\varphi:[0,1]\to\mathbb{R}$ 为
+  \[
+    \varphi(t)=f(\gamma(t))\cdot (f(y)-f(x))  ,
+  \]
+  这里 $\cdot$ 表示向量的点乘。那么 $\varphi$ 在 $(0,1)$ 中可微，
+  根据中值定理，存在 $\theta\in(0,1)$ 使得
+  \[
+    \abs{f(y)-f(x)}^2=\varphi(1)-\varphi(0)=\varphi'(\theta)=
+    \bigl(f'(\gamma(\theta))(y-x)\bigr)\cdot (f(y)-f(x)), 
+  \]
+  所以
+  \[
+    \abs{f(y)-f(x)}^2\leq \abs{\varphi'(\theta)}\leq
+    \abs{f'(\gamma(\theta))(y-x)}\abs{f(y)-f(x)},
+  \]
+  故
+  \[
+    \abs{f(y)-f(x)}\leq \norm{f'(\xi)}\abs{y-x}.\qedhere  
+  \]
+\end{proof}
+\begin{corollary}\label{coro:constant}
+  $E\subseteq\mathbb{R}^n$ 是凸开集，如果 $f:E\to\mathbb{R}^m$ 在任意 $x\in E$ 处的微分 $f'(x)\equiv 0$，
+  那么 $f$ 是常值映射，即存在 $y_0\in\mathbb{R}^m$ 使得 $f(x)\equiv y_0$。
+\end{corollary}
+% \begin{proof}
+  
+% \end{proof}
+
+\begin{theorem}[反函数定理]
+  令 $E\subseteq\mathbb{R}^n$ 是开集，函数 $f:E\to\mathbb{R}^n$
+  且 $f\in C^1$，对于某个 $x_0\in E$，记 $y_0=f(x_0)$，如果 $f'(x_0)$ 可逆，那么
+  \begin{enumerate}
+    \item 存在包含 $x_0$ 的开集 $U$ 和包含 $y_0$ 的开集 $V$，使得 $f(U)=V$ 并且
+    $f:U\to V$ 是双射。
+    \item 设 $g:V\to U$ 是 $f:U\to V$ 的逆映射，那么 $g\in C^1$ 并且
+    对于任意 $y\in V$ 有
+    \[
+      g'(y)=(f'(g(y)))^{-1}.  
+    \]
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  (1) 令 $\lambda=1/\left(2\norm{f'(x_0)}\right)$，$f'$ 连续表明存在
+  开球 $U\subseteq E$ 使得 $x\in U$ 时有
+  \[
+    \norm{f'(x)-f'(x_0)}\leq \lambda.  
+  \]
+  令 $V=f(U)$，我们先说明 $f:U\to V$ 是双射，再说明 $V$ 是开集。
+
+  对于任意 $y\in\mathbb{R}^n$，定义函数 $\varphi_y:E\to\mathbb{R}^n$ 为
+  \[
+    \varphi_y(x)=x+f'(x_0)^{-1}(y-f(x)),  
+  \]
+  这样定义是因为 $y=f(x)$ 当且仅当 $\varphi_y(x)=x$，即 $\varphi_y$ 有不动点，
+  那么 $x$ 的唯一性便可以由压缩映射原理保证。下面先说明 $\varphi_y$ 是
+  $U\to\mathbb{R}^n$ 的压缩映射。由于
+  \[
+    \varphi_y'(x)=I-f'(x_0)^{-1}f'(x)=f'(x_0)^{-1}\bigl(f'(x_0)-f'(x)\bigr),  
+  \]
+  所以
+  \[
+    \norm{\varphi_y'(x)}\leq \norm{f'(x_0)^{-1}}\norm{f'(x_0)-f'(x)},
+  \]
+  所以 $x\in U$ 时有
+  \[
+    \norm{\varphi_y'(x)}\leq \lambda\norm{f'(x_0)^{-1}} =\frac{1}{2},
+  \]
+  根据 \autoref{thm:mean-value 2}，所以对于任意 $x,x'\in U$，有
+  \begin{equation}\label{eq:contraction of varphi_y}
+    \abs{\varphi_y(x')-\varphi_y(x)}\leq \frac{1}{2}\abs{x'-x}  ,
+  \end{equation}
+  故 $\varphi_y:U\to\mathbb{R}^n$ 是压缩映射。回到函数 $f:U\to V$，
+  任取 $y\in V=f(U)$，设 $y=f(x)$，那么 $\varphi_y(x)=x$，
+  即 $x$ 是 $\varphi_y$ 的不动点，根据压缩映射原理，这样的 $x$ 是唯一的，
+  所以 $f:U\to V$ 是双射。
+
+  接下来说明 $V=f(U)$ 是开集。任取 $y=f(x)\in V$，由于 $U$ 是开集，所以存在
+  $r>0$ 使得开球 $B_r(x)\subseteq U$，我们可以让 $r$ 足够小使得闭球
+  $\bar B_r(x)\subseteq U$。下面我们说明 $B_{\lambda r}(y)\subseteq V$，
+  从而表明 $V$ 是开集。对于 $y'\in B_{\lambda r}(y)$，即 $\abs{y'-y}<\lambda r$。
+  $y\in V$ 当且仅当存在 $x'\in U$ 使得 $y'=f(x')$，这启发我们构造 $\varphi_{y'}$
+  的压缩映射。注意到
+  \[
+    \abs{\varphi_{y'}(x)-x}=\abs{f'(x_0)^{-1}\bigl(y'-f(x)\bigr)}  
+    < \norm{f'(x_0)^{-1}}\lambda r=\frac{r}{2},
+  \]
+  所以对于任意 $x'\in \bar B_{r}(x)\subseteq U$，有
+  \begin{align*}
+    \abs{\varphi_{y'}(x')-x}&\leq\abs{\varphi_{y'}(x')-\varphi_{y'}(x)}+\abs{\varphi_{y'}(x)-x}\\
+    &< \frac{1}{2}\abs{x'-x}+\frac{r}{2}\leq r,
+  \end{align*}
+  这表明 $\varphi_{y'}(x')\in B_r(x)$，也即 $\varphi_{y'}\bigl(\bar B_r(x)\bigr)\subseteq B_r(x)$。
+  $\bar B_r(x)$ 作为 $\mathbb{R}^n$ 的闭子集是完备的，所以 $\varphi_{y'}:\bar B_r(x)\to B_r(x)$
+  是压缩映射，故存在唯一的不动点 $x'\in\bar B_r(x)$，因此 $y'=f(x')\in f\bigl(\bar B_r(x)\bigr)\subseteq f(U)=V$。
+  这就证明了 $V$ 是开集。
+
+  (2) 任取 $y=f(x)\in V$，我们需要说明 $g$ 在 $y$ 处可微。
+  注意到 $f'(x_0)\bigl[I-\varphi_y'(x)\bigr]=f'(x)$，
+  由于 $\norm{\varphi_y'(x)}\leq 1/2$，所以 $I-\varphi_y'(x)$ 可逆，所以
+  $f'(x)$ 可逆。对于 $y'=f(x')\in V$，有
+  \begin{equation}\label{eq:differentive of g}
+    \begin{aligned}
+      g(y')-g(y)-f'(x)^{-1}  (y'-y)&=x'-x-f'(x)^{-1}(f(x')-f(x))\\
+      &=-f'(x)^{-1}\bigl[f(x')-f(x)-f'(x)(x'-x)\bigr].
+    \end{aligned}
+  \end{equation}
+  根据 \eqref{eq:contraction of varphi_y} 式，我们有
+  \[
+    \abs{\varphi_y(x')-\varphi_y(x)}= \abs{x'-x-f'(x_0)^{-1}(y'-y)}\leq \frac{1}{2}\abs{x'-x} ,
+  \]
+  所以  
+  \begin{equation}\label{eq:ineq 1}
+    \norm{f'(x_0)^{-1}}\abs{y'-y}\geq \abs{f'(x_0)^{-1}(y'-y)}\geq \frac{1}{2}\abs{x'-x},   
+  \end{equation}
+  结合 \eqref{eq:differentive of g} 式，得到
+  \[
+    \frac{\abs{g(y')-g(y)-f'(x)^{-1}  (y'-y)}}{\abs{y'-y}}\leq
+    \frac{\norm{f'(x)^{-1}}}{\lambda} \frac{\abs{f(x')-f(x)-f'(x)(x'-x)}}{\abs{x'-x}},
+  \]
+  当 $y'\to y$ 的时候，\eqref{eq:ineq 1} 表明 $x'\to x$，而 $f$ 在 $x$ 处可微，
+  所以上式表明 $g$ 在 $y$ 处可微，并且
+  \[
+    g'(y)=f'(x)^{-1}=f'(g(y))^{-1}.  
+  \]
+  由于 $f',g$ 以及矩阵求逆映射是连续的，所以 $g'(y)=f'(g(y))^{-1}$ 是连续映射，
+  故 $g\in C^1$。
+\end{proof}
+
+\begin{corollary}\label{coro:coro of ift}
+  令 $E\subseteq\mathbb{R}^n$ 是开集，$f:E\to\mathbb{R}^n$ 连续可微，如果
+  对于任意 $x\in E$，$f'(x)$ 都可逆，那么 $f$ 是开映射，即对于任意开集
+  $W\subseteq E$，$f(W)$ 也是开集。
+\end{corollary}
+\begin{proof}
+  任取 $f(x)\in f(W)$，那么 $f$ 在 $x$ 的某个邻域 $U\subseteq W$ 上是 
+  $U\to f(U)$ 的双射，且 $f(U)\subseteq f(W)$ 是开集，所以 $f(W)$ 是开集。
+\end{proof}
+
+反函数定理告诉我们，对于方程组
+\[
+  f_i(x_1,\dots,x_n)=y_i\quad (1\leq i\leq n),  
+\]
+如果 $f$ 连续可微且 $f'(x_0)$ 可逆，那么只要将 $(y_1,\dots,y_n)$ 
+和 $(x_1,\dots,x_n)$ 分别限制在 $f(x_0)$ 和 $x_0$ 的足够小的邻域中，这个
+方程组总是有唯一解，并且解连续可微。
+
+\section{隐函数定理}
+
+我们先规定一些记号。若点 $x=(x_1,\dots,x_n)\in\mathbb{R}^n$ 
+和 $y=(y_1,\dots,y_m)\in \mathbb{R}^m$，记
+\[
+  (x,y)=(x_1,\dots,x_n,y_1,\dots,y_m)\in\mathbb{R}^{n+m}.  
+\]
+任意线性映射 $L:\mathbb{R}^{n+m}\to\mathbb{R}^m$ 可以分成两个部分
+$L_1:\mathbb{R}^n\to\mathbb{R}^m$ 和 $L_2:\mathbb{R}^m\to\mathbb{R}^m$，定义为
+\[
+  L_1(x)=L(x,0),\quad L_2(y)=L(0,y).
+\]
+于是
+\[
+  L(x,y)=L_1(x)+L_2(y).  
+\]
+
+\begin{lemma}\label{lemma:implic lemma}
+  如果 $L:\mathbb{R}^{n+m}\to\mathbb{R}^m$ 是线性映射，$L_2$ 可逆。
+  那么对于每个 $x\in\mathbb{R}^n$，存在唯一的 $y\in\mathbb{R}^m$
+  使得 $L(x,y)=0$。并且
+  \[
+    y=-L_2^{-1}(L_1(x)).  
+  \]
+\end{lemma}
+\begin{proof}
+  $L(x,y)=0$ 表明 $L_1(x)+L_2(y)=0$，所以 $L_2$ 可逆表明
+  $y=-L_2^{-1}(L_1(x))$ 是唯一解。
+\end{proof}
+
+\begin{theorem}[隐函数定理]
+  令 $E\subseteq\mathbb{R}^{n+m}$ 是开集，$f:E\to\mathbb{R}^m$ 是连续可微映射，
+  如果某个点 $(x_0,y_0)\in E$ 使得 $f(x_0,y_0)=0$ 且 $f'_2(x_0,y_0):\mathbb{R}^{m}\to\mathbb{R}^m$ 
+  可逆，那么存在 $(x_0,y_0)$ 的邻域 $U\subseteq\mathbb{R}^{n+m}$ 和
+  $x_0$ 的邻域 $W\subseteq\mathbb{R}^n$，使得：
+  \begin{enumerate}
+    \item 对于每个 $x\in W$，存在唯一的 $y$ 满足 $(x,y)\in U$ 以及 $f(x,y)=0$。
+    \item 记上述 $y=g(x)$，那么函数 $g:W\to \mathbb{R}^m$ 是连续可微映射，并且使得
+    \[
+      f(x,g(x))=0,  
+    \]
+    $g$ 在 $x\in W$ 处的微分为
+    \[
+      g'(x)=-(f_2'(x,g(x)))^{-1}f_1'(x,g(x)).  
+    \]
+  \end{enumerate}
+  我们把 $g$ 称为 $f$ 定义的\emph{隐函数}。
+\end{theorem}
+\begin{proof}
+  定义 $F:E\to\mathbb{R}^{n+m}$ 为
+  \[
+    F(x,y)=(x,f(x,y)).  
+  \]
+  那么 $F$ 是连续可微映射。其在 $(x_0,y_0)$ 处的 Jacobi 矩阵为
+  \[
+    JF(x_0,y_0)=\begin{pmatrix}
+      I_n &  \\
+      Jf_1(x_0,y_0) & Jf_2(x_0,y_0)
+    \end{pmatrix}  ,
+  \]
+  其中 $Jf_1,Jf_2$ 分别表示微分 $f_1'(x_0,y_0),f_2'(x_0,y_0)$ 的表示矩阵。$f_2'(x_0,y_0)$ 可逆表明
+  矩阵 $Jf_2(x_0,y_0)$ 可逆，所以 $JF(x_0,y_0)$ 可逆。对 $F$ 应用反函数定理，
+  存在包含 $(x_0,y_0)$ 的开集 $U\subseteq\mathbb{R}^{n+m}$，包含
+  $(x_0,0)=(x_0,f(x_0,y_0))$ 的开集 $V\subseteq\mathbb{R}^{n+m}$，使得
+  $F:U\to V$ 是双射。令
+  \[
+    W=\{x\in\mathbb{R}^n\,|\, (x,0)\in V\}  ,
+  \]
+  那么 $x_0\in W$，且 $V$ 是开集表明 $W$ 是开集。
+
+  (1) 对于每个 $x\in W$，$(x,0)\in V$，所以存在唯一的 $(x',y)\in U$
+  使得 $(x,0)=F(x',y)=(x',f(x',y))$，这表明 $x'=x$，$f(x',y)=0$，故
+  $f(x,y)=0$，这就证明了 (1)。
+
+  (2) 任取 $x\in W$，那么 $f(x,g(x))=0$，所以 $F(x,g(x))=(x,0)$。记
+  $G:V\to U$ 是 $F$ 的逆映射，于是
+  \[
+    (x,g(x))=G(x,0),
+  \]
+  由于 $G$ 连续可微，所以 $g$ 连续可微。
+  
+  记 $\Phi(x)=(x,g(x))$，那么 $f(\Phi(x))=0$，求 $x$ 处的微分，根据链式法则，所以
+  \[
+    f'(x,g(x))\Phi'(x)=f'(\Phi(x))\Phi'(x)=0,  
+  \]
+  任取 $v\in\mathbb{R}^n$，有
+  \[
+    \Phi'(x)(v)=(v,g'(x)(v)),
+  \]
+  所以
+  \[
+    f'(x,g(x))\bigl(v,g'(x)(v)\bigr)  =0,
+  \]
+  根据 \autoref{lemma:implic lemma}，就有
+  \[
+    g'(x)(v)=-(f_2'(x,y))  ^{-1} f_1'(x,y)(v).\qedhere
+  \]
+\end{proof}
+
+\begin{example}
+  取 $n=3$，$m=2$。考虑映射 $f:\mathbb{R}^{3+2}\to\mathbb{R}^2$ 为
+  \[
+    f(x_1,x_2,x_3,y_1,y_2)=(2e^{y_1}+x_1y_2-4x_2+3,y_2\cos y_1-6y_1+2x_1-x_3),  
+  \]
+  取 $(x_0,y_0)=(3,2,7,0,1)$，那么 $f(x_0,y_0)=0$。Jacobi 矩阵为
+  \[
+    Jf(x_0,y_0)=\begin{pmatrix}
+      1 & -4 & 0 & 2 & 3 \\
+      2 & 0 & -1 & -6 & 1
+    \end{pmatrix}  ,
+  \]
+  所以 $f_1'(x_0,y_0)$ 和 $f_2'(x_0,y_0)$ 的表示矩阵分别为
+  \[
+    Jf_1(x_0,y_0)=\begin{pmatrix}
+      1 & -4 & 0 \\
+      2 & 0 & -1
+    \end{pmatrix},\quad
+    Jf_2(x_0,y_0)=\begin{pmatrix}
+      2 & 3 \\ -6 & 1
+    \end{pmatrix}  .
+  \]
+  故 $f_2'(x_0,y_0)$ 可逆。这表明在 $(3,2,7)$ 的某个邻域 $W$ 上存在连续可微函数
+  $g:W\to\mathbb{R}^2$，其满足 $g(3,2,7)=(0,1)$ 以及 $f(x,g(x))=0$，并且
+  \[
+    Jg(x_0)=-(Jf_2(x_0,y_0))^{-1}Jf_1(x_0,y_0)=
+    -\frac{1}{20}\begin{pmatrix}
+      1 & -3 \\
+      6 & 2
+    \end{pmatrix}\begin{pmatrix}
+      1 & -4 & 0 \\
+      2 & 0 & -1
+    \end{pmatrix} =\begin{pmatrix}
+      \frac{1}{4} & \frac{1}{5} & -\frac{3}{20} \\[2mm]
+      -\frac{1}{2} & \frac{6}{5} & \frac{1}{10}
+    \end{pmatrix}.
+  \]
+\end{example}
+
+\begin{example}[隐式曲面]
+  设 $f:\mathbb{R}^{3}\to\mathbb{R}$ 连续可微，对于 $c\in\mathbb{R}$，记
+  \[
+    S=f^{-1}(c)=\{(x,y,z)\in\mathbb{R}^3\,|\, f(x,y,z)=c\}  ,
+  \]
+  $S$ 称为 $f$ 在 $c$ 处的水平集。如果对于任意 $(x,y,z)\in S$，均有
+  $\nabla f(x,y,z)\neq 0$，那么 $S$ 称为 $f$ 确定的\emph{隐式曲面}。
+
+  设 $(x_0,y_0,z_0)\in S$，不妨设 $\partial f/\partial z(x_0,y_0,z_0)\neq 0$，
+  根据隐函数定理，在 $(x_0,y_0,z_0)$ 附近，存在连续可微函数 $g$
+  使得
+  \[
+    f(x,y,g(x,y))=c,  
+  \]
+  此时 $S$ 可以用 $z=g(x,y)$ 表示，并且
+  \[
+    \frac{\partial g}{\partial x}(x,y)
+    =-\frac{\partial f/\partial x(x,y,z)}{\partial f/\partial z(x,y,z)},\quad
+    \frac{\partial g}{\partial y}(x,y)
+    =-\frac{\partial f/\partial y(x,y,z)}{\partial f/\partial z(x,y,z)}.
+  \]
+\end{example}
+
+\section{秩定理}
+
+秩定理可以视为反函数定理的进一步推广，秩定理表明一个连续可微映射 $f$
+在点 $x$ 附近的行为类似于线性映射 $f'(x)$。
+
+首先我们简单介绍一下线性代数中的投影映射。设 $P:V\to V$ 是线性变换，
+如果 $P^2=P$，那么我们说 $P$ 是\emph{投影变换}。
+假设 $V$ 是有限维向量空间，我们有 $V=\ker P+\im P$。
+任取 $P(x)\in\ker P \cap\im P$，那么
+$P(x)=P^2(x)=0$，所以 $\ker P\cap\im P=0$，因此 $V=\ker P\oplus\im P$。
+给定 $V$ 的一个子空间 $U$，设子空间 $W$ 使得 $V=U\oplus W$，那么
+任意 $x\in V$ 可以唯一写为 $x=x_1+x_2$，其中 $x_1\in U$，$x_2\in W$。
+定义 $P_U:V\to V$ 为 $P_U(x)=x_1$，显然 $P$ 是线性变换并且 $\im P_U=U$，并且
+$P_U^2(x)=P_U(x_1)=x_1=P_U(x)$，所以此时 $P_U$ 称为\emph{$V$ 在 $U$ 上的投影}。
+
+\begin{theorem}[秩定理]
+  设 $E\subseteq\mathbb{R}^n$ 是开集，$f:E\to\mathbb{R}^m$ 是连续可微映射，
+  并且对于任意 $x\in E$，线性映射 $f'(x)$ 的秩恒为 $r$，此时 $0\leq r\leq \min(m,n)$。
+  给定 $x_0\in E$，记 $S=\im f'(x_0)$，$P_{S}$ 表示 $\mathbb{R}^m$ 在 $S$
+  上的投影。那么存在连续可微的双射 $G:U\to V$ (并且逆映射也连续可微)，其中 $U$ 是包含 $x_0$
+  的开集，$V$ 是 $\mathbb{R}^n$ 的开集，使得 $x\in V$ 时有
+  \[
+    f(G^{-1}(x))=f'(x_0)(x)+ \varphi(f'(x_0)(x)),
+  \]
+  其中 $\varphi$ 是 $S$ 的开集 $f'(x_0)(V)$ 到 $\ker P_S=S^\bot$ 的连续可微映射。
+\end{theorem}
+\begin{proof}
+  如果 $r=0$，根据 \autoref{coro:constant}，可以取 $U$ 为 $x_0$ 处的一个开球，
+  $V=U$，$G(x)=x$，$\varphi(0)=f(x_0)$，那么 $f$ 在 $U$ 上为常值映射，
+  故 $f(G^{-1}(x))=x_0=f'(x_0)(x)+\varphi(f'(x_0)(x))$。
+
+  下面假设 $r>0$。
+  定义 $G:E\to\mathbb{R}^n$ 为
+  \[
+    G(x)=x+f'(x_0)^\dagger (f(x)-f'(x_0)x),
+  \]
+  $f'(x_0)^\dagger$ 表示 $f'(x_0)$ 的 Moore-Penrose 广义逆，其满足
+  $f'(x_0)f'(x_0)^\dagger=P_S$ 以及 $f'(x_0)^\dagger f'(x_0)=P_W$，
+  $W=\ker f'(x_0)^\bot$。此时 $G'(x_0)=I_n$ 为 $\mathbb{R}^n$ 上的恒等映射。
+  根据反函数定理，存在包含 $x_0$ 的开集 $U$ 和 $\mathbb{R}^n$ 的开集 $V$
+  使得 $G:U\to V$ 是连续可微的双射。此外，通过缩小 $U,V$，我们可以使得
+  $V$ 是凸开集。
+
+  任取 $x\in V$，那么
+  \[
+    x=G(G^{-1}(x))=G^{-1}(x)+f'(x_0)^\dagger f(G^{-1}(x))-f'(x_0)^\dagger f'(x_0)(G^{-1}(x)),  
+  \]
+  将 $f'(x_0)$ 作用于上式两边，所以
+  \[
+    P_Sf(G^{-1}(x))=f'(x_0)(x)-f'(x_0)(G^{-1}(x))+f'(x_0)(G^{-1}(x))=f'(x_0)(x).
+  \]
+\end{proof}
+
+
+
+
+
+
+% \begin{example}
+%   \autoref{coro:coro of ift} 中，反函数定理表明 $f$ 在任意 $x\in E$ 的局部都是可逆的，
+%   但是 $f$ 未必是整体可逆的。
+% \end{example}
+
+
+
+
+\begin{thebibliography}{99}
+  \bibitem{Rudin}  Axler S. Linear Algebra Done Right. Springer Nature; 2024.
+\end{thebibliography}
+
+
+
+
+\end{document}

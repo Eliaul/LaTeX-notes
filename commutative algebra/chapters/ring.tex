@@ -1,0 +1,1293 @@
+\chapter{环和理想}
+
+\begin{theorem}[Jumping's typology theorem]
+  令 $\mathcal{W}$ 是手写求和符号范畴。$\mathcal{W}$ 中存在唯一的对象 $\frac{\infty}{2}$
+  （Jumping 符号）和一族 typo 态射 $\sum^{(\cdot)}\to\frac{\infty}{2}$。对于每个 $\mathcal{W}$
+  中对象到正确求和符号的态射 $\sum^{(\cdot)}\to\sum^\infty$（称为反 typo 态射），存在
+  唯一的从 Jumping 符号 $\frac{\infty}{2}$ 到正确求和符号 $\sum^{\infty}$ 的态射使得下面的
+  图表交换：
+  \[
+    \begin{tikzcd}[column sep=huge,row sep=huge]
+      \sum^{(\cdot)} \arrow[dr,"\mathrm{anti-typo}"',sloped]\arrow[r,"\mathrm{typo}"]
+      &
+      \frac{\infty}{2} \arrow[d,"\mathrm{correct}",sloped] \\
+      &
+      \sum^{\infty}
+    \end{tikzcd}
+  \]
+\end{theorem}
+
+\section{素理想和极大理想}
+
+在本课程中，“环”一词始终指的是一个有单位元 $1$ 的交换环。
+
+\begin{definition}
+  $A$ 是一个环，$A$ 的所有素理想的集合称为 $A$ 的\emph{谱}，记为 $\Spec(A)$。
+  $A$ 的所有极大理想的集合称为 $A$ 的\emph{极大谱}，记为 $\Omega(A)$。
+\end{definition}
+
+$f:A\to B$ 是一个环同态，对于每个 $\ideal{q}\in\Spec(B)$，考虑复合同态
+$g=\pi\circ f:A\to B/\ideal{q}$，那么 $\ker g=f^{-1}(\ideal{q})$，故
+$A/f^{-1}(\ideal q)\simeq \im g\subset B/\ideal q$ 是整环，所以
+$f^{-1}(\ideal q)\in\Spec(A)$，故 $f$ 诱导出了映射 $f^*:\Spec(B)\to\Spec(A)$，
+$f^*(\ideal q)=f^{-1}(\ideal q)$。对于极大理想并没有类似的结果，
+例如 $A=\mathbb{Z},B=\mathbb{Q}$，映射 $f:A\to B$ 为嵌入映射，取 $B$ 的极大理想 $0$，
+但是 $f^{-1}(0)=0$ 不是 $A$ 的极大理想。
+
+再提一下理想 $\ideal p$ 是素理想的三个重要等价条件，这三种后面都会用到：
+\begin{enumerate}
+  \item 定义：若 $ab\in\ideal p$，则 $a\in\ideal p$ 或者 $b\in\ideal p$；
+  \item 逆否命题：若 $a\notin\ideal p$ 且 $b\notin\ideal p$，则 $ab\notin\ideal p$；
+  \item 写为理想的形式：若理想 $\ideal a,\ideal b$ 满足 $\ideal a\ideal b\subseteq\ideal p$，
+  则 $\ideal a\subseteq\ideal p$ 或者 $\ideal b\subseteq\ideal p$。
+\end{enumerate}
+
+\begin{theorem}
+  任意非零环 $A$ 至少有一个极大理想。
+\end{theorem}
+\begin{proof}
+  令 $S$ 为 $A$ 中所有不等于 $(1)$ 的理想的集合。由于 $(0)\in S$，所以 $S$ 非空。
+  在集合的包含关系下 $S$ 成为一个偏序集。对于 $S$ 中的每个链 $T$，考虑
+  \[
+    I=\bigcup_{\ideal a\in T}\ideal a , 
+  \]
+  容易验证 $I$ 是不等于 $(1)$ 的理想，所以 $I\in S$ 是 $T$ 的上界。那么
+  根据 Zorn 引理，$S$ 存在一个极大元 $\ideal{m}$。若理想 $J$ 满足，
+  $\ideal m\subseteq J\subseteq A$，如果 $J\neq A$，那么 $J\in S$，由于
+  $\ideal m$ 是极大元，所以 $J=\ideal m$，故 $\ideal m$ 就是一个极大理想。
+\end{proof}
+
+\begin{corollary}\label{coro:non-zero ideal is contained in a maximal ideal}
+  如果 $\ideal a\neq (1)$ 是 $A$ 的一个理想，那么存在一个包含 $\ideal a$ 的极大理想。
+\end{corollary}
+\begin{proof}
+  $A/\ideal a$ 是非零环，从而至少有一个极大理想，对应于 $A$ 的包含 $\ideal a$ 的极大理想。
+\end{proof}
+
+\begin{corollary}
+  $A$ 的任意非单位元素 $a$ 都被包含在一个极大理想中。
+\end{corollary}
+
+\begin{definition}
+  若环 $A$ 只有一个极大理想 $\ideal m$，那么 $A$ 被称为\emph{局部环}。
+  对应的域 $A/\ideal m$ 被称为\emph{$A$ 的剩余域}。
+\end{definition}
+
+\begin{example}
+  \mbox{}
+  \begin{enumerate}
+    \item 任意域都是局部环，其只有一个极大理想 $0$。
+    \item $p$ 是素数，$\mathbb{Z}/p^n\mathbb{Z}$ 是局部环，其极大理想
+    为 $p\mathbb{Z}/p^n\mathbb{Z}$。这是因为 $\mathbb{Z}/p^n\mathbb{Z}$ 的极大理想
+    一一对应到 $\mathbb{Z}$ 中包含 $(p^n)$ 的极大理想 $(a)$，
+    那么 $a\mid p^n$，由于 $\mathbb{Z}$ 是主理想整环，所以 $(a)$ 是极大理想当且仅当
+    $a$ 是不可约元，故只有 $a=p$，对应于 $p\mathbb{Z}/p^n\mathbb{Z}$。
+    \item 域 $F$ 上的形式幂级数环 $F[[x]]$ 是局部环，其极大理想为
+    $(x)$。注意到如果 $a_0+a_1x+a_2x^2+\cdots \notin (x)$，即 $a_0\neq 0$，
+    那么
+    \[
+      \frac{1}{a_0+a_1x+a_2x^2+\cdots}  
+      =
+      \frac{1}{a_0}\frac{1}{1+(a_1/a_0x+a_2/a_0x^2+\cdots)}
+      =\frac{1}{a_0}(1-a_1/a_0x+\cdots),
+    \]
+    这表明 $a_0+a_1x+a_2x^2+\cdots$ 是单位。另一方面，
+    因为 $x$ 不可逆，所以 $(x)$ 中的元素都不可逆。故 $F[[x]]$ 的单位群
+    就是 $F[[x]]\backslash (x)$。这表明若 $\ideal a\neq (1)$ 是理想，那么
+    必然有 $\ideal a\subseteq (x)$。这就表明 $(x)$ 是唯一的极大理想。
+  \end{enumerate}
+\end{example}
+
+上述例 3 可以进行一般化，即下面的命题。
+
+\begin{proposition}
+  \mbox{}
+  \begin{enumerate}
+    \item $A$ 是一个环，$\ideal m\neq (1)$ 是一个理想，并且任意 $x\in A\backslash\ideal m$
+    都是 $A$ 中的单位，那么 $A$ 是局部环，且 $\ideal m$ 为 $A$ 的极大理想。
+    \item $A$ 是一个环，$\ideal m$ 是一个极大理想，使得 $1+\ideal m$ 中的每个元素
+    都是 $A$ 中的单位，那么 $A$ 是局部环。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 任意 $x\in A\backslash\ideal m$ 都是 $A$ 中的单位表明若 $\ideal a\neq (1)$
+  是任意理想，那么 $\ideal a\subseteq \ideal m$，所以 $\ideal m$ 是唯一的极大理想。
+
+  (2) 任取 $x\in A\backslash\ideal m$，那么 $x+\ideal m\in A/\ideal m$ 是非零元，所以
+  存在 $y+\ideal m\in A/\ideal m$ 使得 $(x+\ideal m)(y+\ideal m)=1+\ideal m$，
+  即 $xy-1\in\ideal m$，故 $xy\in 1+\ideal m$ 是单位，所以 $x$ 是单位，由 (1)
+  可知 $A$ 是局部环。
+\end{proof}
+
+\section{幂零根和 Jacobson 根}
+
+\begin{proposition}
+  环 $A$ 的所有幂零元的集合 $\nil(A)$ 是一个理想，并且
+  $A/\nil(A)$ 没有非零的幂零元。
+\end{proposition}
+\begin{proof}
+  任取 $x\in\nil(A)$，显然对于所有的 $a\in A$，$ax$ 仍然是幂零元。
+  任取 $x,y\in\nil(A)$，即存在 $m,n$ 使得 $x^m=0,y^n=0$，那么
+  \[
+    (x-y)^{m+n}=\sum_{i=0}^{m+n}\binom{m+n}{i}x^i(-y)^{m+n-i}  
+    =\left(\sum_{i=0}^m +\sum_{i=m+1}^{m+n}\right)\binom{m+n}{i}x^i(-y)^{m+n-i}  ,
+  \]
+  前一个和式的每一项中 $m+n-i\geq n$，故 $x^i(-y)^{m+n-i}=0$，
+  后一个和式的每一项中 $i\geq m$，故 $x^i(-y)^{m+n-i}=0$，
+  所以 $x-y\in\nil(A)$，即 $\nil(A)$ 是一个理想。
+
+  若 $a+\nil(A)$ 是幂零元，即存在 $m$ 使得 $a^m+\nil(A)=0$，
+  即 $a^m\in\nil(A)$，这表明 $a\in\nil(A)$。
+\end{proof}
+
+\begin{definition}
+  理想 $\nil(A)$ 被称为 $A$ 的\emph{幂零根}。
+\end{definition}
+
+\begin{proposition}
+  $A$ 的幂零根是所有素理想的交集。
+\end{proposition}
+\begin{proof}
+  令 $\nil'(A)$ 是 $A$ 的所有素理想的交集。如果 $a\in A$ 是幂零元，
+  那么存在 $m$ 使得 $a^m=0\in\ideal p$，$\ideal p$ 是任意素理想。根据素理想的定义，
+  这表明 $a\in\ideal p$，故 $a\in\nil'(A)$。
+
+  另一方面，如果 $a\in A$ 不是幂零元，令 $S$ 是理想 $\ideal a$ 的集合，
+  $\ideal a$ 满足对于任意的 $n>0$，$a^n\notin\ideal a$。由于 $0\in S$，
+  所以 $S$ 非空。容易验证 $S$ 满足 Zorn 引理使用条件，所以存在极大元 $\ideal p$。
+  我们证明 $\ideal p$ 是素理想。若 $x,y\notin\ideal p$，那么
+  $\ideal p+(x)$ 和 $\ideal p+(y)$ 严格包含 $\ideal p$，因此它们不属于
+  $S$，于是存在 $m,n$ 使得
+  \[
+    a^m\in\ideal p+(x),\quad a^n\in\ideal p+(y).
+  \]
+  这表明 $a^{m+n}\in (\ideal p+(x))(\ideal p+(y))\subseteq \ideal p+(xy)$，
+  故 $\ideal p+(xy)\notin S$，所以 $xy\notin\ideal p$。这表明 $\ideal p$
+  是素理想。所以存在一个素理想 $\ideal p$ 使得 $a\notin\ideal p$，故
+  $a\notin\nil'(A)$。
+\end{proof}
+
+\begin{definition}
+  环 $A$ 的所有极大理想的交集被称为 $A$ 的\emph{Jacobson 根}，记为 $\rad(A)$。
+\end{definition}
+
+\begin{proposition}\label{prop:Jacobson radical}
+  $x\in \rad(A)$ 当且仅当对于任意的 $y\in A$，$1-xy$ 是单位。
+\end{proposition}
+\begin{proof}
+  若 $x\in \rad(A)$，那么对于任意的 $y\in A$ 有 $xy\in \rad(A)$。 
+  如果 $1-xy$ 不是单位，那么存在一个极大理想 $\ideal m\ni 1-xy$，
+  注意到 $xy\in \rad(A)\subseteq \ideal m$，所以 $1=(1-xy)+xy\in \ideal m$，
+  这与 $\ideal m$ 是极大理想矛盾，所以 $1-xy$ 是单位。
+
+  若对于任意的 $y\in A$， $1-xy$ 是单位。假设存在一个极大理想 $\ideal m$
+  使得 $x\notin\ideal m$，故 $\ideal m+(x)$ 严格包含 $\ideal m$，
+  所以 $(1)=\ideal m+(x)$，即存在 $y\in A$ 使得 $1=m+xy$，其中 $m\in\ideal m$，
+  那么 $1-xy=m$ 不是单位，推出矛盾。故 $x\in \rad(A)$。
+\end{proof}
+
+\section{幂等元与环的分解}
+
+这部分是上课的内容，书中没有。
+环 $A$ 中满足 $x^2=x$ 的元素被称为幂等元。$0$ 和 $1$ 显然是幂等元，被称为平凡幂等元。
+关于幂等元可以注意到下面的两个简单事实：如果 $x$ 是幂等元，那么 $(1-x)^2=1-2x+x^2=1-x$，
+所以 $1-x$ 也是幂等元，并且 $x(1-x)=0$。如果 $x\in A^\times$ 是幂等元，那么 $x=x^2x^{-1}=xx^{-1}=1$，
+所以 $A^\times$ 中的幂等元只有 $1$。
+
+\begin{definition}
+  一个环 $A$ 如果不能同构于两个非零环 $A_1$ 和 $A_2$ 的直积，那么称
+  $A$ 是\emph{不可分解的}。
+\end{definition}
+
+幂等元实际上和环的可分解性联系紧密，体现在下面的引理。
+
+\begin{lemma}
+  $A$ 是一个环，那么下面的说法是等价的：
+  \begin{enumerate}
+    \item 存在两个非零环 $A_1,A_2$ 使得 $A\simeq A_1\times A_2$；
+    \item $A$ 存在非平凡幂等元；
+    \item 存在两个非零理想 $\ideal a_1,\ideal a_2$ 使得 $A=\ideal a_1\oplus\ideal a_2$。
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 如果存在两个非零环 $A_1,A_2$ 使得 $A\simeq A_1\times A_2$，
+  那么 $(0,0),(1,0),(0,1)$ 是 $A_1\times A_2$ 的三个幂等元，所以 $A_1\times A_2$ 一定有
+  非平凡幂等元，即 $A$ 存在非平凡幂等元。
+
+  $(2)\Rightarrow (3)$ 如果 $A$ 存在非平凡幂等元 $e$，注意到任意的 $x\in A$ 满足
+  $x=xe+x(1-e)$，所以 $A=(e)+(1-e)$。取 $x\in (e)\cap (1-e)$，那么存在
+  $a,b\in A$ 使得 $x=ae=b(1-e)$，那么 $ae=ae^2=b(1-e)e=0$，所以 $x=0$。
+  这就表明 $A=(e)\oplus (1-e)$。
+
+  $(3)\Rightarrow (1)$ 考虑同态 $\phi:A\to A/\ideal a_1\times A/\ideal a_2$，
+  $\phi(x)=(x+\ideal a_1,x+\ideal a_2)$，由于 $\ker\phi=\ideal a_1\cap\ideal a_2=0$，
+  所以 $\phi$ 是单射。任取 $(x+\ideal a_1,y+\ideal a_2)\in A/\ideal a_1\times A/\ideal a_2$，
+  设 $1=a_1+a_2$，其中 $a_1\in \ideal a_1,a_2\in\ideal a_2$，那么
+  令 $a=xa_2+ya_1$，就有
+  \[
+    \phi(a)=(xa_2+\ideal a_1,ya_1+\ideal a_2)  
+    =(x+\ideal a_1,y+\ideal a_2),
+  \]
+  所以 $\phi$ 是满射，故 $A\simeq A/\ideal a_1\times A/\ideal a_2$。
+\end{proof}
+
+\begin{example}
+  \mbox{}
+  \begin{enumerate}
+    \item 整环都是不可分解的，因为 $x^2-x=x(x-1)=0$ 的解只有 $0$ 和 $1$。
+    \item 局部环是不可分解的，若 $x$ 是一个非平凡幂等元，那么 $1-x$ 可逆，从而 $1-x=1$，
+    即 $x=0$，这与 $x$ 非平凡矛盾。
+  \end{enumerate}
+\end{example}
+
+
+
+\section{理想的操作}
+
+对于环 $A$ 的两个理想 $\ideal a,\ideal b$，有 
+$(\ideal a+\ideal b)(\ideal a\cap\ideal b)
+=\ideal a(\ideal a\cap\ideal b)+\ideal b(\ideal a\cap \ideal b)\subseteq \ideal 
+a\ideal b\subseteq\ideal a\cap\ideal b$，这表明 $\ideal a+\ideal b=(1)$ 的时候，
+有 $\ideal a\cap\ideal b=\ideal a\ideal b$，我们将这种情况称为 $\ideal a$ 与 $\ideal b$
+互素。
+
+$A$ 是环，$\ideal a_1,\dots,\ideal a_n$ 是 $A$ 的理想，定义同态
+\[
+  \phi:A\to\prod_{i=1}^n (A/\ideal a_i)
+\]
+为 $\phi(x)=(x+\ideal a_1,\dots,x+\ideal a_n)$。
+
+下面的命题实际上就是中国剩余定理的证明。
+
+\begin{proposition}
+  \mbox{}
+  \begin{enumerate}
+    \item 若 $\ideal a_i,\ideal a_j$ 互素（$i\neq j$），那么 $\prod\ideal a_i=\bigcap \ideal a_i$。
+    \item $\phi$ 是满射当且仅当 $i\neq j$ 的时候总有 $\ideal a_i,\ideal a_j$ 互素。
+    \item $\phi$ 是单射当且仅当 $\bigcap\ideal a_i=(0)$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 对 $n$ 归纳即可。$n=2$ 的时候上面已经说明，假设结论在 $n-1$ 的时候成立。
+  我们证明 $\ideal a_i$ 和 $\prod_{j\neq i}\ideal a_j$ 互素即可。这实际上是证明
+  若理想 $\ideal a_1,\ideal a_2$ 都和 $\ideal b$ 互素，那么 $\ideal a_1\ideal a_2$
+  也和 $\ideal b$ 互素。注意到
+  \[
+    (1)=(\ideal a_1+\ideal b)(\ideal a_2+\ideal b)
+    \subseteq \ideal a_1\ideal a_2+\ideal a_1\ideal b
+    +\ideal b\ideal a_2+\ideal b  \subseteq
+    \ideal a_1\ideal a_2+\ideal b,
+  \]
+  这就表明 $\ideal a_1\ideal a_2$ 与 $\ideal b$ 互素。
+  回到这个命题，重复上述步骤就可以得到 $\ideal a_i$ 和 $\prod_{j\neq i}\ideal a_j$ 互素，
+  根据假设，$\prod_{j\neq i}\ideal a_j=\bigcap_{j\neq i}\ideal a_j$，
+  故
+  \[
+    \prod_{i=1}^n \ideal a_i
+    =\ideal a_i\left(\prod_{j\neq i} \ideal a_j\right)  
+    =\ideal a_i\cap\left(\prod_{j\neq i} \ideal a_j\right)  
+    =\ideal a_i\cap\left(\bigcap_{j\neq i}\ideal a_j\right)
+    =\bigcap_{i=1}^n\ideal a_i.
+  \]
+
+  (2) 若 $\phi$ 是满射，对于 $(0,\dots,1+\ideal a_i,\dots,0)$，
+  存在 $a\in A$，使得 $\phi(a)=(0,\dots,1+\ideal a_i,\dots,0)$，
+  这表明 $1-a\in\ideal a_i$，并且 $a\in\ideal a_j\ (j\neq i)$，故
+  \[
+    1=  (1-a)+a\in \ideal a_i+\ideal a_j,
+  \]
+  这就表明 $\ideal a_i$ 和 $\ideal a_j$ 互素。
+
+  反之，若 $\ideal a_i$ 和 $\ideal a_j$ 互素。令 $\ideal b_i=\prod_{j\neq i}\ideal a_j$，
+  那么 $\ideal b_1+\ideal b_2=(\ideal a_2+\ideal a_1)\ideal a_3\cdots\ideal a_n=\ideal a_3\cdots\ideal a_n$，
+  进一步的，$\ideal{b}_1+\ideal b_2+\ideal b_3=(\ideal a_3+\ideal a_1\ideal a_2)\ideal a_4\cdots\ideal a_n$，
+  根据 (1) 的证明我们知道 $\ideal a_1\ideal a_2$ 与 $\ideal a_3$ 互素，所以
+  $\ideal{b}_1+\ideal b_2+\ideal b_3=\ideal a_4\cdots\ideal a_n$，重复这个步骤，
+  就得到 $\ideal b_1+\cdots+\ideal b_n=(1)$。这表明存在 $b_i\in\ideal b_i$，
+  使得 $b_1+\cdots +b_n=1$，此时 $b_i\in \prod_{j\neq i}\ideal a_j\subseteq \ideal a_j$
+  以及 $1-b_i=\sum_{j\neq i}b_j\in\ideal a_i$，故
+  $\phi(b_i)$ 的第 $i$ 个分量是 $1+\ideal a_i$，其余分量都是 $0$。
+  这就足以证明 $\phi$ 是满射。
+
+  (3) 注意到 $\bigcap \ideal a_i= \ker\phi$ 即可。
+\end{proof}
+
+\begin{proposition}
+  \mbox{}
+  \begin{enumerate}
+    \item 令 $\ideal p_1,\dots\ideal p_n$ 是素理想，理想 $\ideal a$ 包含于 $\bigcup_{i=1}^n\ideal p_i$，
+    那么存在某个 $i$ 使得 $\ideal a\subseteq\ideal p_i$。
+    \item 令 $\ideal a_1,\dots\ideal a_n$ 是理想，素理想 $\ideal p$ 包含 $\bigcap_{i=1}^n \ideal a_i$，
+    那么存在某个 $i$ 使得 $\ideal p\supseteq \ideal a_i$。如果 $\ideal p=\bigcap \ideal a_i$，
+    那么存在某个 $i$ 使得 $\ideal p=\ideal a_i$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 证明逆否命题：如果对于任意的 $1\leq i\leq n$ 都有 $\ideal a\nsubseteq\ideal p_i$，那么
+  $\ideal a\nsubseteq\bigcup_{i=1}^n\ideal p_i$。对 $n$ 使用归纳法，$n=1$ 时显然成立。
+  假设结论在 $n-1$ 时成立。在 $n$ 的时候，那么根据假设，对于任意的 $1\leq i\leq n$，有
+  $\ideal a\nsubseteq\bigcup_{j\neq i} \ideal p_j$，即存在 $x_i\in\ideal a$，使得
+  $x_i\notin\bigcup_{j\neq i}\ideal p_j$，此时有两种情况。
+  \begin{itemize}[nosep]
+    \item 存在某个 $i_0$ 使得 $x_{i_0}\notin\ideal p_{i_0}$。此时 $x_{i_0}\notin \bigcup_{i=1}^n\ideal p_i$，
+    故 $\ideal a\nsubseteq\bigcup_{i=1}^n\ideal p_i$，结论成立。
+    \item 对于任意的 $i$，都有 $x_i\in\ideal p_i$。考虑元素
+    \[
+      y=\sum_{i=1}^n\prod_{j\neq i}x_j=x_2x_3\cdots x_n+x_1x_3\cdots x_n+\cdots+x_1\cdots x_{n-2}x_{n-1},  
+    \]
+    根据假设 $x_2,x_3,\dots,x_n\notin\ideal p_1$，所以 $x_2x_3\cdots x_n\notin\ideal p_1$，
+    同时 $\prod_{j\neq i,i>1}x_j\in\ideal p_1$，所以
+    $y\notin\ideal p_1$。同理，对于任意的 $i$ 都有 $y\notin \ideal p_i$，所以
+    $y\notin \bigcup_{i=1}^n\ideal p_i$，故 $\ideal a\nsubseteq\bigcup_{i=1}^n\ideal p_i$，结论成立。
+  \end{itemize}
+
+  (2) 由于
+  \[
+    \ideal a_1\ideal a_2\cdots\ideal a_n\subseteq
+    \bigcap_{i=1}^n\ideal a_i\subseteq\ideal p,
+  \]
+  所以存在某个 $i$ 使得 $\ideal p\supseteq \ideal a_i$。
+\end{proof}
+
+如果 $\ideal a,\ideal b$ 是环 $A$ 的两个理想，定义它们的\emph{商}为
+\[
+(\ideal a:\ideal b)=\{x\in A\,|\, x\ideal b\subseteq\ideal a\},  
+\]
+容易验证这是一个理想。注意到 $\ideal {ab}\subseteq\ideal a$，所以 $\ideal a\subseteq(\ideal a:\ideal b)$。
+特别地，$(0:\ideal b)$ 被称为 $\ideal b$ 的\emph{零化子}，记为 $\Ann(\ideal b)$。
+由于 $(\ideal a:\ideal b)$ 是包含 $\ideal a$ 的理想，根据对应定理，所以其对应到
+$A/\ideal a$ 的理想 $\overline{(\ideal a:\ideal b)}=\Ann(\bar{\ideal b})$。
+如果 $\ideal b$ 是主理想 $(x)$，我们用 $(\ideal a:x)$ 代表 $(\ideal a:(x))$。
+
+\begin{proposition}
+  \mbox{}
+  \begin{enumerate}
+    \item $\ideal a\subseteq (\ideal a:\ideal b)$；
+    \item $(\ideal a:\ideal b)\ideal b\subseteq \ideal a$；
+    \item $\bigl((\ideal a:\ideal b):\ideal c\bigr)=\bigl(\ideal a:\ideal b\ideal c\bigr)
+    =\bigl((\ideal a:\ideal c):\ideal b\bigr)$；
+    \item $\left(\bigcap_i\ideal a_i:\ideal b\right)=\bigcap_i(\ideal a_i:\ideal b)$；
+    \item $\left(\ideal a:\sum_i\ideal b_i\right)=\bigcap_i(\ideal a:\ideal b_i)$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 和 (2) 是显然的。
+
+  (3) $x\in\bigl((\ideal a:\ideal b):\ideal c\bigr)$ 当且仅当 $x\ideal c\subseteq(\ideal a:\ideal b)$，
+  当且仅当 $x\ideal c\ideal b\subseteq\ideal a$，当且仅当 $x\in(\ideal a:\ideal{bc})$，
+  所以 $\bigl((\ideal a:\ideal b):\ideal c\bigr)=\bigl(\ideal a:\ideal b\ideal c\bigr)$。
+  另一个同理。
+
+  (4) $x\in\left(\bigcap_i\ideal a_i:\ideal b\right)$ 当且仅当 $x\ideal b\subseteq\bigcap_i\ideal a_i$，
+  当且仅当 $x\ideal b\subseteq \ideal a_i\ (\forall i)$，当且仅当 $x\in(\ideal a_i:\ideal b)\ (\forall i)$，
+  所以 $\left(\bigcap_i\ideal a_i:\ideal b\right)=\bigcap_i(\ideal a_i:\ideal b)$。
+
+  (5) $x\in\left(\ideal a:\sum_i\ideal b_i\right)$ 当且
+  仅当 $x\left(\sum_i\ideal b_i\right)\subseteq\ideal a$，由于
+  $x\left(\sum_i\ideal b_i\right)=\sum_i x\ideal b_i$，所以
+  这相当于 $x\ideal b_i\subseteq \ideal a\ (\forall i)$，所以
+  $\left(\ideal a:\sum_i\ideal b_i\right)=\bigcap_i(\ideal a:\ideal b_i)$。
+\end{proof}
+
+对于环 $A$ 的理想 $\ideal a$，定义 $\ideal a$ 的\emph{根}为
+\[
+  \sqrt{\ideal a}=\{x\in A\,|\, \exists n>0, x^n\in \ideal a\}  .
+\]
+显然 $\ideal a\subseteq\sqrt{\ideal a}$。对于自然同态 $\pi:A\to A/\ideal a$，注意到
+$\sqrt{\ideal a}=\pi^{-1}\bigl(\nil(A/\ideal a)\bigr)$，所以 $\sqrt{\ideal a}$ 是包含
+$\ideal a$ 的一个理想。
+
+\begin{proposition}
+  理想 $\ideal a$ 的根是所有包含 $\ideal a$ 的素理想的交集。
+\end{proposition}
+\begin{proof}
+  我们有
+  \[
+    \sqrt{\ideal a}=\pi^{-1}\bigl(\nil(A/\ideal a)\bigr)  
+    =\pi^{-1}\left(\bigcap_{\text{$\bar{\ideal p}$ prime}}\bar{\ideal p}\right)
+    =\bigcap_{\text{$\bar{\ideal p}$ prime}}\pi^{-1}(\bar{\ideal p})
+    =\bigcap_{\substack{\text{$\ideal p$ prime}\\\ideal p\supseteq\ideal a}}
+    \ideal p.\qedhere
+  \]
+\end{proof}
+
+\begin{proposition}
+  \mbox{}
+  \begin{enumerate}
+    \item $\sqrt{\ideal a}\supseteq\ideal a$；
+    \item $\sqrt{\sqrt{\ideal a}}=\sqrt{\ideal a}$；
+    \item $\sqrt{\ideal{ab}}=\sqrt{\ideal a\cap\ideal b}=\sqrt{\ideal a\vphantom{b}}\cap\sqrt{\ideal b}$；
+    \item $\sqrt{\ideal a}=(1)$ 当且仅当 $\ideal a=(1)$；
+    \item $\sqrt{\ideal a+\ideal b}=\sqrt{\sqrt{\ideal a\vphantom{b}}+\sqrt{\ideal b}}$；
+    \item 如果 $\ideal p$ 是素理想，那么 $\sqrt{\ideal p^n}=\ideal p\ (\forall n>0)$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 显然。
+
+  (2) 已经有 $\sqrt{\ideal a}\subseteq\sqrt{\sqrt{\ideal a}}$。任取 $x\in\sqrt{\sqrt{\ideal a}}$，那么
+  存在 $n$ 使得 $x^n\in\sqrt{\ideal a}$，进而存在 $m$ 使得 $x^{nm}=(x^n)^m\in\ideal a$，
+  所以 $x\in\sqrt{\ideal a}$，所以 $\sqrt{\sqrt{\ideal a}}=\sqrt{\ideal a}$。
+
+  (3) 由于 $\ideal a\ideal b\subseteq\ideal a\cap\ideal b$，
+  所以 $\sqrt{\ideal{ab}}\subseteq\sqrt{\ideal a\cap\ideal b}$。任取 $x\in\sqrt{\ideal a\cap\ideal b}$，
+  那么存在 $n$ 使得 $x^n\in\ideal a\cap\ideal b$，那么 $x^{2n}=x^nx^n\in\ideal a\ideal b$，所以
+  $x\in\sqrt{\ideal{ab}}$。所以 $\sqrt{\ideal{ab}}=\sqrt{\ideal a\cap\ideal b}$。
+
+  显然 $\sqrt{\ideal a\cap\ideal b}\subseteq\sqrt{\ideal a\vphantom{b}}\cap\sqrt{\ideal b}$。
+  任取 $x\in\sqrt{\ideal a\vphantom{b}}\cap\sqrt{\ideal b}$，那么存在 $n,m$ 使得
+  $x^n\in\ideal a,x^m\in\ideal b$，所以 $x^{n+m}=x^nx^m\in\ideal a\cap\ideal b$，所以
+  $x\in\sqrt{\ideal a\cap\ideal b}$，
+  所以 $\sqrt{\ideal a\cap\ideal b}=\sqrt{\ideal a\vphantom{b}}\cap\sqrt{\ideal b}$。
+
+  (4) $\sqrt{\ideal a}=(1)$当且仅当 $1\in\ideal a$。
+
+  (5) 显然 $\sqrt{\ideal a+\ideal b}\subseteq\sqrt{\sqrt{\ideal a\vphantom{b}}+\sqrt{\ideal b}}$。
+  由于 $\sqrt{\ideal a}\subseteq\sqrt{\ideal a+\ideal b}$ 以及
+  $\sqrt{\ideal b}\subseteq\sqrt{\ideal a+\ideal b}$，所以
+  $\sqrt{\ideal a\vphantom{b}}+\sqrt{\ideal b}\subseteq\sqrt{\ideal a+\ideal b}$，所以
+  $\sqrt{\sqrt{\ideal a\vphantom{b}}+\sqrt{\ideal b}}\subseteq\sqrt{\sqrt{\ideal a+\ideal b}}
+  =\sqrt{\ideal a+\ideal b}$，所以
+  $\sqrt{\ideal a+\ideal b}=\sqrt{\sqrt{\ideal a\vphantom{b}}+\sqrt{\ideal b}}$。
+
+  (6) 对 $n$ 归纳。$n=1$ 的时候，任取 $x\in\sqrt{\ideal p}$，那么存在 $m$ 使得
+  $x^m\in\ideal p$，故 $x\in\ideal p$，所以 $\sqrt{\ideal p}=\ideal p$。假设
+  结论在 $n-1$ 时成立，那么 $\sqrt{\ideal p^n}=\sqrt{\ideal p\ideal p^{n-1}}
+  =\sqrt{\ideal p}\cap \sqrt{\ideal p^{n-1}}=\ideal p\cap \ideal p=\ideal p$。
+\end{proof}
+
+\section{理想的扩张和收缩}
+
+$f:A\to B$ 是环同态。如果 $\ideal a$ 是 $A$ 的一个理想，$f(\ideal a)$ 不一定是理想，
+我们定义 $f(\ideal a)$ 在 $B$ 中生成的理想 $Bf(\ideal a)$ 为 $\ideal a$ 的\emph{扩张}，
+记作 $\ideal a^e$，更准确地说，$\ideal a^e$ 中的元素形如 $\sum y_if(x_i)$，其中
+$x_i\in\ideal a,y_i\in B$。
+
+如果 $\ideal b$ 是 $B$ 的理想，那么 $f^{-1}(\ideal b)$ 总是 $A$ 的理想，我们称为
+$\ideal b$ 的\emph{收缩}，记为 $\ideal b^c$。在一开始我们就提过，如果 $\ideal b$
+是素理想，那么 $\ideal b^c$ 也是素理想。但是 $\ideal a$ 是素理想，$\ideal a^e$ 不一定是素理想。
+
+当 $A\subseteq B$，$f$ 是嵌入的时候，可以观察到：$\ideal a^e=\ideal aB$ 以及
+$\ideal b^c=\ideal b\cap A$。
+
+\begin{example}
+  考虑嵌入 $\mathbb{Z}\to\mathbb{Z}[i]$。$\mathbb{Z}$ 的素理想 $(p)$ 扩张到
+    $\mathbb{Z}[i]$ 中可能是也可能不再是素理想。$\mathbb{Z}[i]$ 是主理想整环，那么实际上
+    有下面的情况：
+    \begin{enumerate}
+      \item $(2)^e=((1+i)^2)$ 是 $\mathbb{Z}[i]$ 中两个素理想的平方。
+      \item 如果 $p\equiv 1\pmod{4}$，那么 $(p)^e$ 是两个不同的素理想之积，例如
+      $(5)^e=(2+i)(2-i)$。
+      \item 如果 $p\equiv 3\pmod{4}$，那么 $(p)^e$ 仍然是 $\mathbb{Z}[i]$ 中的素理想。
+    \end{enumerate}
+    第二种情况并不是一个平凡的结果，这来源于 Fermat 二平方和定理：一个素数 $p\equiv 1\pmod{4}$
+    当且仅当能够写为 $p=a^2+b^2$ 的形式。进一步的，在代数数论中，上述三种情况分别被称为
+    分歧、分裂和惯性。
+\end{example}
+
+\begin{proposition}\label{prop:property of extension and contraction}
+  \mbox{}
+  \begin{enumerate}
+    \item $\ideal a\subseteq\ideal a^{ec}$，$\ideal b\supseteq\ideal b^{ce}$。
+    \item $\ideal b^c=\ideal b^{cec}$，$\ideal a^e=\ideal a^{ece}$。
+    \item 如果 $C$ 所有理想的收缩组成的 $A$ 的子集，$E$ 是所有理想的扩张组成的 $B$ 的子集，
+    即
+    \[
+      C=\left\{\ideal b^c\,\middle|\, \ideal b\subseteq B\right\}  ,\quad 
+      E=\left\{\ideal a^e\,\middle|\, \ideal a\subseteq A\right\}  ,
+    \]
+    那么 $C=\{\ideal a\subseteq A\,|\, \ideal a^{ec}=\ideal a\}$，
+    $E=\{\ideal b\subseteq B\,|\, \ideal b^{ce}=\ideal b\}$。这表明 $C$ 和
+    $E$ 之间存在一一对应，即 $\ideal a\mapsto \ideal a^e$ 以及 $\ideal b\mapsto \ideal b^c$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 直接按定义验证即可。
+
+  (2) 已经有 $\ideal b^c\subseteq\ideal b^{cec}$。另一方面，有
+  $\ideal b^{cec}=(\ideal b^{ce})^{c}\subseteq \ideal b^c$。
+
+  (3) 如果 $\ideal a\in C$，那么 $\ideal a^{ec}=\ideal b^{cec}=\ideal b^c=\ideal a$。
+  反之，若 $\ideal a^{ec}=\ideal a$，那么 $\ideal a=(\ideal a^e)^c$，所以
+  $\ideal a\in C$。
+\end{proof}
+
+\begin{proposition}\label{prop:rule of extension and contraction}
+  如果 $\ideal a_1,\ideal a_2$ 是 $A$ 的理想，$\ideal b_1,\ideal b_2$ 是 $B$
+  的理想，那么
+  \begin{align*}
+    &(\ideal a_1+\ideal a_2)^e=\ideal a_1^e+\ideal a_2^e ,
+    & &(\ideal b_1+\ideal b_2)^c\supseteq \ideal b_1^c+\ideal b_2^c,\\
+    &(\ideal a_1\cap\ideal a_2)^e\subseteq\ideal a_1^e\cap\ideal a_2^e,
+    &&(\ideal b_1\cap\ideal b_2)^c=\ideal b_1^c\cap\ideal b_2^c,\\
+    &(\ideal a_1\ideal a_2)^e=\ideal a_1^e\ideal a_2^e,
+    &&(\ideal b_1\ideal b_2)^c\supseteq\ideal b_1^c\ideal b_2^c,\\
+    &(\ideal a_1:\ideal a_2)^e\subseteq(\ideal a_1^e:\ideal a_2^e),
+    &&(\ideal b_1:\ideal b_2)^c\subseteq (\ideal b_1^c:\ideal b_2^c), \\
+    &\sqrt{\ideal a}^e\subseteq\sqrt{\ideal a^e},
+    &&\sqrt{\ideal b}^c=\sqrt{\ideal b^c}.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  \begin{itemize}[nosep]
+    \item $(\ideal a_1+\ideal a_2)^e=\ideal a_1^e+\ideal a_2^e $。
+    根据环同态的性质，我们有
+    \[
+      (\ideal a_1+\ideal a_2)^e=Bf(\ideal a_1+\ideal a_2)
+      =B(f(\ideal a_1)+f(\ideal a_2))
+      =Bf(\ideal a_1)+Bf(\ideal a_2)=
+      \ideal a_1^e+\ideal a_2^e.
+    \]
+    \item $(\ideal b_1+\ideal b_2)^c\supseteq \ideal b_1^c+\ideal b_2^c$。
+    任取 $a_1+a_2\in \ideal b_1^c+\ideal b_2^c$，即 $f(a_1)\in\ideal b_1,f(a_2)\in\ideal b_2$，
+    所以 $f(a_1+a_2)=f(a_1)+f(a_2)\in \ideal b_1+\ideal b_2$，所以
+    $a_1+a_2\in (\ideal b_1+\ideal b_2)^c$，
+    即 $(\ideal b_1+\ideal b_2)^c\supseteq \ideal b_1^c+\ideal b_2^c$。
+    \item $(\ideal a_1\cap\ideal a_2)^e\subseteq\ideal a_1^e\cap\ideal a_2^e$。
+    \[
+      (\ideal a_1\cap\ideal a_2)^e=Bf(\ideal a_1\cap\ideal a_2)
+      \subseteq B\bigl(f(\ideal a_1)\cap f(\ideal a_2)\bigr)
+      =Bf(\ideal a_1)\cap Bf(\ideal a_2)=\ideal a_1^e\cap\ideal a_2^e.
+    \]
+    \item $(\ideal b_1\cap\ideal b_2)^c=\ideal b_1^c\cap\ideal b_2^c$。
+    \[
+      (\ideal b_1\cap\ideal b_2)^c=f^{-1}(\ideal b_1\cap\ideal b_2)
+      =f^{-1}(\ideal b_1)\cap f^{-1}(\ideal b_2)=  \ideal b_1^c\cap\ideal b_2^c.
+    \]
+    \item $(\ideal a_1\ideal a_2)^e=\ideal a_1^e\ideal a_2^e$。
+    \[ 
+      (\ideal a_1\ideal a_2)^e=Bf(\ideal a_1\ideal a_2)
+      =Bf(\ideal a_1)f(\ideal a_2)
+      =Bf(\ideal a_1)Bf(\ideal a_2)=\ideal a_1^e\ideal a_2^e.
+    \]
+    \item $(\ideal b_1\ideal b_2)^c\supseteq\ideal b_1^c\ideal b_2^c$。任取
+    $a_1\in\ideal b_1^c,a_2\in\ideal b_2^c$，那么
+    $f(a_1a_2)=f(a_1)f(a_2)\in\ideal b_1\ideal b_2$，是哟
+    $a_1a_2\in (\ideal b_1\ideal b_2)^c$，
+    即 $(\ideal b_1\ideal b_2)^c\supseteq\ideal b_1^c\ideal b_2^c$。
+    \item $(\ideal a_1:\ideal a_2)^e\subseteq(\ideal a_1^e:\ideal a_2^e)$。
+    \[
+      (\ideal a_1:\ideal a_2)^e\ideal a_2^e=\bigl((\ideal a_1:\ideal a_2)\ideal a_2\bigr)^e
+      \subseteq \ideal a_1^e.
+    \]
+    \item $(\ideal b_1:\ideal b_2)^c\subseteq (\ideal b_1^c:\ideal b_2^c)$。
+    \[
+      (\ideal b_1^c:\ideal b_2^c)\ideal b_2^c
+      \subseteq \bigl((\ideal b_1:\ideal b_2)\ideal b_2\bigr)^c
+      \subseteq\ideal b_1^c.
+    \]
+    \item $\sqrt{\ideal a}^e\subseteq\sqrt{\ideal a^e}$。
+    任取 $\sum_i b_i f(a_i)\in \sqrt{\ideal a}^e$，其中 $a_i\in\sqrt{\ideal a}$，
+    那么存在 $n_i$ 使得 $a_i^{n_i}\in\ideal a$，所以
+    $f(a_i)^{n_i}=f(a_i^{n_i})\in f(\ideal a)\subseteq\ideal a^e$，故
+    $f(a_i)\in\sqrt{\ideal a^e}$，所以 $\sum_i b_if(a_i)\in\sqrt{\ideal a^e}$，
+    即 $\sqrt{\ideal a}^e\subseteq\sqrt{\ideal a^e}$。
+    \item $\sqrt{\ideal b}^c=\sqrt{\ideal b^c}$。
+    \[
+        a\in\sqrt{\ideal b}^c\Leftrightarrow
+        f(a)\in\sqrt{\ideal b}\Leftrightarrow\exists n,\ 
+        f(a)^n=f(a^n)\in\ideal b
+        \Leftrightarrow a\in\sqrt{\ideal b^c}.\qedhere
+    \]
+  \end{itemize}
+\end{proof}
+
+\section{EXERCISES}
+
+\begin{problem}
+  $A$ 是一个环， $A[x]$ 是 $A$ 上的多项式环，令
+  $f=a_0+a_1x+\cdots+a_nx^n\in A[x]$。证明
+  \begin{enumerate}
+    \item $f$ 是 $A[x]$ 中的单位当且仅当 $a_0$ 是 $A$ 中的单位并且
+    $a_1,\dots,a_n$ 是幂零元。
+    \item $f$ 是幂零元当且仅当 $a_0,a_1,\dots,a_n$ 都是幂零元。
+    \item $f$ 是零因子当且仅当存在 $a\neq 0$ 使得 $af=0$。
+    \item 如果 $(a_0,a_1,\dots,a_n)=(1)$，那么称 $f$ 是本原的。证明
+    如果 $f,g\in A[x]$，那么 $fg$ 是本原的当且仅当 $f$ 和 $g$ 都是本原的。
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  (1) 若 $f$ 是单位，那么存在 $g=b_0+b_1x+\cdots+b_mx^m\in A[x]$ 使得
+  $fg=1$，设 $fg=c_0+c_1x+\cdots+c_{n+m}x^{n+m}$，那么
+  $c_0=a_0b_0=1$，故 $a_0$ 是单位。接下来证明对于 $0\leq r\leq m$ 有
+  $a_n^{r+1}b_{m-r}=0$。对 $r$ 归纳，$r=0$ 的时候，$x^{n+m}$ 的系数为
+  $a_nb_m=0$。假设 $k<r$ 的时候都有 $a_n^{k+1}b_{m-k}=0$，
+  那么
+  \begin{gather*}
+    f(g-b_mx^m-b_{m-1}x^{m-1}-\cdots-b_{m-r+1}x^{m-r+1})\\
+    =1-b_mx^m f-b_{m-1}x^{m-1}f-\cdots-b_{m-r+1}x^{m-r+1}f, 
+  \end{gather*}
+  两边对比 $x^{n+m-r}$ 的系数，有
+  \[
+    a_nb_{m-r}=-a_{n-r}b_m-a_{n-r+1}b_{m-1}-\cdots-a_{n-1}b_{m-r+1},
+  \]
+  故
+  \[
+    a_n^{r+1}b_{m-r}=-a_{n-r}a_n^rb_m-a_{n-r+1}a_n^rb_{m-1}-\cdots-a_{n-1}a_n^rb_{m-r+1},
+  \]
+  根据假设，有 $a_nb_m=a_n^2b_{m-1}=\cdots=a_n^rb_{m-r+1}=0$，
+  所以 $a_n^{r+1}b_{m-r}=0$，结论成立。
+  那么 $a_n^{m+1}b_0=0$，由于 $b_0$ 是单位，故 $a_n^{m+1}=0$，即 $a_n$
+  是幂零元。那么 $f-a_nx^n$ 是单位减去一个幂零元，所以 $f-a_nx^n$ 是单位，
+  重复上面的论证，得到 $a_{n-1}$ 是幂零元，继续这个步骤，可知
+  $a_1,\dots,a_n$ 都是幂零元。
+
+  对于这种多项式的命题还可以采用类似模 $p$ 约化的方法：对于任意素理想 $\ideal p$，考虑自然的同态
+  $A[x]\to A/\ideal p[x]$，整环上的多项式环依然是整环，并且单位群不变。
+  那么 $f\in A[x]^\times $ 表明 $\bar{f}\in A/\ideal p[x]^\times $，所以 $\bar{f}$
+  为常系数多项式，这就表明 $f$ 的非常数项的系数 $a_1,\dots,a_n\in\ideal p$，故
+  $a_i\in\nil(A)\ (i\geq 1)$ 是幂零元。 
+
+  若 $a_0$ 是单位且 $a_1,\dots,a_n$ 都是幂零元，那么 $f$ 是单位加上一些幂零元，
+  故 $f$ 是单位。
+
+  (2) 若 $f$ 是幂零元，那么存在 $m> 0$ 使得 $f^m=0$，对比最高次项系数可知 $a_n^m=0$，
+  故 $a_n$ 是幂零元。由于所有幂零元构成一个理想，所以 $f-a_nx^n$ 是幂零元，
+  所以最高次项系数 $a_{n-1}$ 是幂零元，以此类推，可知 $a_0,a_1,\dots,a_n$
+  都是幂零元。
+
+  若 $a_0,a_1,\dots,a_n$ 都是幂零元，那么 $f$ 是幂零元的和，所以也是幂零元。
+
+  (3) 若 $f$ 是零因子，那么取次数最小的非零 $g=b_0+b_1x+\cdots+b_mx^m\in A[x]$ 使得
+  $fg=0$。于是 $a_nb_m=0$，那么 $a_ng$ 是次数小于 $g$ 的多项式，并且 $f(a_ng)=0$，
+  根据 $g$ 的最小性，所以 $a_ng=0$。接下来我们证明 $0\leq r\leq n$ 时有
+  $a_{n-r}g=0$。对 $r$ 归纳，$r=0$ 的时候已经证明。假设 $k<r$ 的时候都有
+  $a_{n-k}g=0$，那么类似 (1) 的操作，有
+  \[
+    a_nb_{m-r}=-a_{n-r}b_m-a_{n-r+1}b_{m-1}-\cdots-a_{n-1}b_{m-r+1},
+  \]
+  即
+  \[
+    a_{n-r}b_m=-a_{n-r+1}b_{m-1}-\cdots-a_{n-1}b_{m-r+1}-a_nb_{m-r},
+  \]
+  $a_{n-k}g=0$ 表明 $a_{n}b_{m-r}=a_{n-1}b_{m-r+1}=\cdots=a_{n-r+1}b_{m-1}=0$，
+  故 $a_{n-r}b_m=0$，那么 $a_{n-r}g$ 是次数小于 $g$ 的多项式且 $f(a_{n-r}g)=0$，
+  根据 $g$ 的最小性，所以 $a_{n-r}g=0$，结论成立。由于 $g$ 非零，取一个非零系数
+  $b_s$，那么 $a_0b_s=a_1b_s=\cdots=a_nb_s=0$，故 $b_sf=b_sa_0+b_sa_1x+\cdots+b_sa_nx^n=0$，
+  即存在 $a=b_s\neq 0$ 使得 $af=0$。反过来是显然的。
+
+  (4) 取 $A$ 的一个极大理想 $\ideal m$，考虑满同态 $\varphi:A[x]\to A/\ideal m[x]$，
+  $\varphi(\sum_i a_ix^i)=\sum_i(a_i+\ideal m)x^i$，容易验证 $\ker\varphi=\ideal m[x]$，
+  故 $A[x]/\ideal m[x]\simeq A/\ideal m[x]$。
+  根据 \autoref{coro:non-zero ideal is contained in a maximal ideal}，
+  $f$ 不是本原多项式当且仅当存在某个极大理想 $\ideal m$ 
+  使得 $(a_0,a_1,\dots,a_n)\subseteq \ideal m$ 当且仅当 $f\in\ideal m[x]$，
+  故 $f$ 是本原多项式当且仅当对于任意的极大理想 $\ideal m$ 都有 $f\notin\ideal m[x]$。
+  又因为
+  \[
+    f,g\notin\ideal m[x]\Longleftrightarrow
+    \bar{f},\bar{g}\neq 0\Longleftrightarrow
+    \overline{fg}\neq 0\Longleftrightarrow
+    fg\notin\ideal m[x],  
+  \]
+  其中 $\bar f=\varphi(f)\in A/\ideal m[x]$，所以 $f,g$ 是本原多项式当且仅当 $fg$ 是本原多项式。
+\end{proof}
+
+\begin{problem}
+  在环 $A[x]$ 中，Jacobson 根等于幂零根。
+\end{problem}
+\begin{proof}
+  首先总是有 $\nil(A[x])\subseteq \rad(A[x])$。若
+  $f\in \rad(A[x])$，根据 \autoref{prop:Jacobson radical}，
+  $1+xf$ 是单位，再根据上一道习题，$1+xf$ 的常数项是单位，其他项的系数都是幂零元，
+  即 $f$ 的系数都是幂零元，即 $f$ 是幂零元，故 $\rad(A[x])\subseteq \nil(A[x])$。
+\end{proof}
+
+\begin{problem}
+  令 $A$ 是环，$A[[x]]$ 表示 $A$ 上的形式幂级数环。$f=\sum_{n=0}^\infty a_nx^n\in A[[x]]$，证明
+  \begin{enumerate}
+    \item $f$ 是 $A[[x]]$ 中的单位当且仅当 $a_0$ 是 $A$ 中的单位。
+    \item 如果 $f$ 幂零，那么对于所有的 $n\geq 0$，$a_n$ 幂零。反过来成立吗？
+    \item $f$ 属于 $A[[x]]$ 的 Jacobson 根当且仅当 $a_0$ 属于 $A$ 的 Jacobson 根。
+    \item $A[[x]]$ 的极大理想 $\ideal m$ 的收缩是 $A$ 的极大理想，并且 $\ideal m$
+    由 $\ideal m^c$ 和 $x$ 生成。
+    \item $A$ 的每个素理想都是 $A[[x]]$ 的某个素理想的收缩。
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  (1) 若 $f$ 是 $A[[x]]$ 的单位，显然 $a_0$ 是 $A$ 的单位。
+  若 $a_0$ 是 $A$ 的单位，设 $g=\sum_{m=0}^\infty b_mx^m$，我们希望
+  $fg=\sum_{i=0}^\infty c_ix^i=1$，显然 $c_0=a_0b_0=1$，故 $b_0=a_0^{-1}$。
+  当 $i\geq 1$ 的时候，有 $c_i=\sum_{n=0}^i a_nb_{i-n}=0$。假设我们已经得到了
+  $b_0,\dots,b_i$。那么我们可以按照下面的步骤解出 $b_{i+1}$：首先我们需要
+  $c_{i+1}=\sum_{n=0}^{i+1} a_nb_{i+1-n}=0$，从这里可以得到
+  $-a_0b_{i+1}=\sum_{n=1}^{i+1} a_nb_{i+1-n}$，右边的每一项我们都是已知的，故
+  \[
+    b_{i+1}=-a_0^{-1}\left(\sum_{n=1}^{i+1} a_nb_{i+1-n}\right)  .
+  \]
+  此时 $g$ 就是 $f$ 的逆元，故 $f$ 是 $A[[x]]$ 的单位。
+
+  (2) 如果 $f$ 幂零，观察常数项可知 $a_0$ 幂零，所以 $f-a_0$ 幂零，
+  观察一次项，又可以得到 $a_1$ 幂零，所以 $f-a_0-a_1x$ 幂零，以此类推，
+  所以所有的系数 $a_n$ 都幂零。
+
+  (3) $f\in \rad(A[[x]])$ 当且仅当对于任意的 $g\in A[[x]]$，$1-fg$ 都是 $A[[x]]$
+  中的单位，由 (1)，这当且仅当对于任意的 $b_0\in A$，$1-a_0b_0$ 是 $A$ 中的单位，
+  当且仅当 $a_0\in \rad(A)$。
+
+  (4) 注意到 $\ideal m^c=\ideal m\cap A$，根据环的同构定理，有
+  \[
+    A/(\ideal m\cap A)\simeq (A+\ideal m)/\ideal m,  
+  \]
+  任取 $f=\sum a_ix^i\in A[[x]]$，那么 $f=a_0+g$，其中 $g\in (x)$，
+  由 (3) 可知 $g\in \rad(A[[x]])\subseteq\ideal m$，所以 $A[[x]]=A+\ideal m$，
+  故 $A/\ideal m^c\simeq (A+\ideal m)/\ideal m=A[[x]]/\ideal m$ 是域，
+  $\ideal m^c$ 是 $A$ 的极大理想。类似地，任取 $f=\sum a_ix^i\in \ideal m$，
+  都有 $f=a_0+g\in \ideal m^c+(x)$，所以 $\ideal m\subseteq \ideal m^c+(x)$。反之，
+  由于 $(x)\subseteq\rad(A[[x]])\subseteq \ideal m$，所以 $\ideal m^c+(x)\subseteq\ideal m$，
+  故 $\ideal m=\ideal m^c+(x)$。
+
+  (5) 令 $\ideal p$ 是 $A$ 的素理想，类比 (4)，考虑 $\ideal q=\ideal p^e+(x)$，
+  此时 $\ideal q^c=\ideal q\cap A=\ideal p$，根据同构定理，有
+  \[
+    A/\ideal p=A/(\ideal q\cap A)\simeq (A+\ideal q)/\ideal q,  
+  \]
+  而 $A+\ideal q\supseteq A+(x)=A[[x]]$，所以 $A[[x]]/\ideal q\simeq A/\ideal p$
+  是整环，$\ideal q$ 是 $A[[x]]$ 的素理想。
+\end{proof}
+
+\begin{problem}
+  令 $A$ 是非零环，证明 $A$ 的素理想的集合相对于包含关系有极小元。
+\end{problem}
+\begin{proof}
+  设 $\{\ideal p_i\}_{i\in I}$ 是 $\Spec(A)$ 中的一条链，令 $\ideal p=\bigcap_{i\in I}\ideal p_i$，
+  我们证明 $\ideal p$ 是一个素理想。假设 $xy\in\ideal p$ 以及 $x\notin\ideal p$，
+  那么对于任意的 $i\in I$，有 $xy\in\ideal p_i$，且存在 $j\in I$，使得 $x\notin\ideal p_j$。
+  当 $\ideal p_i\subseteq \ideal p_j$ 的时候，都有 $x\notin\ideal p_i$，所以此时
+  $y\in\ideal p_j$。当 $\ideal p_i\supseteq \ideal p_j$ 的时候，$y\in\ideal p_j$
+  自然也表明 $y\in\ideal p_i$。所以必有 $y\in\ideal p$，故 $\ideal p$ 是素理想。
+  最后根据 Zorn 引理就能得出结论。
+\end{proof}
+
+\begin{problem}
+  令 $\ideal a\neq (1)$ 是环 $A$ 的理想，证明 $\ideal a=\sqrt{\ideal a}$ 当且仅当
+  $\ideal a$ 是某些素理想的交。
+\end{problem}
+\begin{proof}
+  已经有 $\ideal a\subseteq \sqrt{\ideal a}$。
+  如果 $\ideal a=\bigcap_{i\in I} \ideal p_i$ 是某些素理想的交，那么每个 $\ideal p_i$ 都是
+  包含 $\ideal a$ 的素理想，所以 $\sqrt{\ideal a}\subseteq \ideal a$，故 $\ideal a=\sqrt{\ideal a}$。
+  反方向是显然的。
+\end{proof}
+
+\begin{problem}
+  环 $A$ 如果对于任意 $x\in A$ 都满足 $x^2=x$，那么称 $A$ 是\emph{布尔环}。在一个布尔环
+  $A$ 中，证明
+  \begin{enumerate}
+    \item 对于任意 $x\in A$ 有 $2x=0$；
+    \item 每个素理想 $\ideal p$ 都是极大理想，并且 $A/\ideal p$ 是有两个元素的域；
+    \item 每个有限生成的理想都是主理想。
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  (1) $2x=(x+1)^2-x^2-1=x+1-x-1=0$。
+
+  (2) 任取 $x+\ideal p\in A/\ideal p$ 且 $x\notin\ideal p$，那么 $x^2+\ideal p=x+\ideal p$，
+  即 $x(x-1)\in\ideal p$，$x\notin\ideal p$ 表明 $x-1\in\ideal p$，故 $x+\ideal p=1+\ideal p$，
+  所以 $A/\ideal p$ 只有两个元素 $\ideal p$ 与 $1+\ideal p$，这表明 $A/\ideal p$
+  是域，$\ideal p$ 是极大理想。
+
+  (3) 注意到 $(x_1,x_2)=(x_1+x_2-x_1x_2)$，若 $\ideal a=(x_1,\dots,x_n)$，对 $n$
+  归纳，$n=2$ 的时候已经成立，设结论对 $n-1$ 成立。那么 $\ideal a=(x_1,\dots,x_{n-1})+(x_n)
+  =(x)+(x_n)=(x,x_n)$ 是主理想。
+\end{proof}
+
+\begin{problem}
+  证明：局部环没有非平凡的幂等元。
+\end{problem}
+\begin{proof}
+  若 $x$ 是局部环 $A$ 的非平凡幂等元，那么 $x$ 包含于 $A$ 的极大理想，所以 $1-x\in A^\times$，从而 $1-x=1$，
+  $x=0$，矛盾。
+\end{proof}
+
+\begin{problem}
+  在环 $A$ 中，令 $\Sigma$ 为理想的集合，里面的每个理想的元素均为零因子。
+  证明 $\Sigma$ 有一个极大元，并且 $\Sigma$ 的每个极大元都是素理想。
+  因此 $A$ 中零因子的集合是这些作为极大元的素理想的并集。
+\end{problem}
+\begin{proof}
+  由于 $(0)\in\Sigma$，所以 $\Sigma$ 非空。设 $\{\ideal a\}_{i\in I}$ 是
+  $\Sigma$ 的一条链。令 $\ideal a=\bigcup_{i\in I}\ideal a_i$，容易验证这仍然是
+  一个理想，并且其元素显然都是零因子，所以 $\{\ideal a\}_{i\in I}$ 有上界
+  $\ideal a$，根据 Zorn 引理可知 $\Sigma$ 有极大元。
+
+  设 $\ideal p$ 是 $\Sigma$ 的一个极大元，若 $a\notin\ideal p$ 以及 $b\notin\ideal p$，
+  那么 $\ideal p+(a)$ 和 $\ideal p+(b)$ 严格包含 $\ideal p$，因此它们不属于
+  $\Sigma$，所以存在 $x\in \ideal p+(a)$ 与 $y\in\ideal p+(b)$ 但是 $x,y$ 都不是零因子，
+  那么 $xy$ 也不是零因子，但是 $xy\in( \ideal p+(a))( \ideal p+(b))\subseteq \ideal p+(ab)$，
+  所以 $\ideal p+(ab)$ 也严格包含 $\ideal p$，故 $ab\notin\ideal p$，所以 $\ideal p$ 是素理想。
+
+  由于 $A$ 中每个零因子生成的主理想都属于 $\Sigma$，所以每个零因子都属于 $\Sigma$ 的一个极大元，
+  故零因子的集合包含于所有极大元的并集。反之，$\Sigma$ 的所有极大元的并集当然都是零因子，所以
+  $A$ 的零因子的集合就是 $\Sigma$ 的极大元的并集。
+\end{proof}
+
+\begin{problem}
+  $A$ 是一个环，$X$ 是 $A$ 的所有素理想的集合。对于 $A$ 的每个子集 $E$，令 $V(E)$
+  为所有 $A$ 的包含 $E$ 的素理想的集合，证明
+  \begin{enumerate}
+    \item 如果 $\ideal a$ 是由 $E$ 生成的理想，那么 $V(E)=V(\ideal a)=V(\sqrt{\ideal a})$。
+    \item $V(0)=X$，$V(1)=\emptyset$。
+    \item 如果 $(E_i)_{i\in I}$ 是 $A$ 的一族子集，那么
+    \[
+      V\left(\bigcup_{i\in I}E_i\right)  =\bigcap_{i\in I}V(E_i).
+    \]
+    \item 对于任意理想 $\ideal a,\ideal b$，有
+    $V(\ideal a\cap\ideal b)=V(\ideal{ab})=V(\ideal a)\cup V(\ideal b)$。
+  \end{enumerate}
+  这些结果表明 $V(E)$ 满足拓扑空间的闭集公理，所以定义 $\Spec(A)$ 的子集为闭集
+  当且仅当存在 $A$ 的理想 $\ideal a$ 使得其能够写为 $V(\ideal a)$ 的形式，这给出了
+  $\Spec(A)$ 上的一个拓扑，称为\emph{Zariski 拓扑}。
+\end{problem}
+\begin{proof}
+  (1) 显然有 $V(\ideal a)\subseteq  V(E)$。任取 $\ideal p\in V(E)$，那么
+  $E\subseteq \ideal p$，自然有 $\ideal a=(E)\subseteq \ideal p$，所以 $\ideal p\in V(\ideal a)$，
+  故 $V(E)\subseteq V(\ideal a)$。这就表明 $V(E)=V(\ideal a)$。
+  由于 $\ideal a\subseteq\sqrt{\ideal a}$，所以 $V(\sqrt{\ideal a})\subseteq V(\ideal a)$。
+  任取 $\ideal p\in V(\ideal a)$，那么 $\ideal a\subseteq \ideal p$，任取 $x\in\sqrt{\ideal a}$，
+  则存在 $n$ 使得 $x^n\in\ideal a\subseteq \ideal p$，这表明 $x\in\ideal p$，所以
+  $\sqrt{\ideal a}\subseteq \ideal p$，所以 $\ideal p\in V(\sqrt{\ideal a})$。
+  这就表明 $V(\ideal a)=V(\sqrt{\ideal a})$。
+
+  (3) 我们有关系
+  \begin{align*}
+    \ideal{p}\in V\left(\bigcup_{i\in I}E_i\right)&\Leftrightarrow
+    \forall i\in I,\ \bigcup_{i\in I} E_i\subseteq \ideal p\Leftrightarrow
+    \forall i\in I,\ E_i\subseteq \ideal p\\
+    &\Leftrightarrow \forall i\in I,\ \ideal p\in V(E_i)\Leftrightarrow
+    \ideal p\in\bigcap_{i\in I}V(E_i).
+  \end{align*}
+
+  (4) 由于 $\ideal{ab}\subseteq \ideal a\cap\ideal b$，所以 $V(\ideal a\cap\ideal b)\subseteq V(\ideal{ab})$。
+  任取 $\ideal p\in V(\ideal{ab})$，那么 $\ideal{ab}\subseteq \ideal p$，所以
+  $\ideal a\subseteq \ideal p$ 或者 $\ideal b\subseteq\ideal p$，所以
+  $\ideal a\cap\ideal b\subseteq \ideal p$，所以 $\ideal p\in V(\ideal a\cap\ideal b)$，
+  故 $V(\ideal a\cap\ideal b)=V(\ideal{ab})$。
+
+  显然有 $V(\ideal a)\subseteq V(\ideal{ab})$ 以及 $V(\ideal b)\subseteq V(\ideal{ab})$，
+  所以 $V(\ideal a)\cup V(\ideal b)\subseteq V(\ideal{ab})$。若 $\ideal p\in V(\ideal{ab})$，
+  那么 $\ideal{ab}\subseteq \ideal p$，所以
+  $\ideal a\subseteq \ideal p$ 或者 $\ideal b\subseteq\ideal p$，所以 $\ideal p\in V(\ideal a)$
+  或者 $\ideal p\in V(\ideal b)$，所以 $\ideal p\in V(\ideal a)\cup V(\ideal b)$，
+  故 $V(\ideal{ab})=V(\ideal a)\cup V(\ideal b)$。
+\end{proof}
+
+\begin{problem}
+  对于每个 $f\in A$，令 $X_f$ 表示 $V(f)$ 在 $X=\Spec(A)$ 中的补集，那么
+  $X_f$ 是开集。证明它们组成了 Zariski 拓扑的一组拓扑基，并且
+  \begin{enumerate}
+    \item $X_f\cap X_g=X_{fg}$；
+    \item $X_f=\emptyset$ 当且仅当 $f$ 是幂零元；
+    \item $X_f=X$ 当且仅当 $f$ 是单位；
+    \item $X_f=X_g$ 当且仅当 $\sqrt{(f)}=\sqrt{(g)}$；
+    \item $X$ 是紧致空间；
+    \item 更一般地，每个 $X_f$ 是紧致子集；
+    \item $X$ 的一个开子集是紧致的当且仅当它是形如 $X_f$ 的集合的有限并。
+  \end{enumerate}
+  $X_f$ 被称为 $X=\Spec(A)$ 的\emph{基本开集}。
+\end{problem}
+\begin{proof}
+  我们说明任意一个开集都能表示为这些基本开集的并。
+  对于任意开集 $X-V(E)$，我们有
+  \[
+    X-V(E)=X-V\left(\bigcup_{f\in E}\{f\}\right)  
+    =X-\bigcap_{f\in E}V(\{f\})
+    =\bigcup_{f\in E} (X-V(\{f\}))
+    =\bigcup_{f\in E}X_f.
+  \]
+  所以所有的 $X_f$ 组成 Zariski 拓扑的一组拓扑基。
+
+  (1) 我们已经知道 $V(fg)=V(f)\cup V(g)$，两边取补集，所以
+  $X_f\cap X_g=X_{fg}$。
+
+  (2) $X_f=\emptyset$ 当且仅当 $V(f)=X$，当且仅当 $f$ 属于任意素理想，
+  当且仅当 $f\in\nil(A)$，即 $f$ 是幂零元。
+
+  (3) $X_f=X$ 当且仅当 $V(f)=\emptyset$，当且仅当 $f$ 不属于任意素理想，
+  当且仅当 $f$ 不属于任意极大理想，当且仅当 $f$ 是单位。
+
+  (4) $X_f=X_g$ 当且仅当 $V(f)=V(g)$，即 $V((f))=V((g))$。若 $V((f))=V((g))$，注意到
+  \[
+    \sqrt{(f)}=\bigcap_{\ideal p\in V((f))}\ideal{p},  
+  \]
+  所以 $\sqrt{(f)}=\sqrt{(g)}$。若 $\sqrt{(f)}=\sqrt{(g)}$，任取
+  $\ideal p\in V((f))$，有 $(f)\subseteq \ideal p$，所以 
+  $\sqrt{(f)}\subseteq \ideal p$，所以 $(g)\subseteq \sqrt{(g)}=\sqrt{(f)}\subseteq\ideal p$，
+  所以 $\ideal p\in V((g))$，反之同理，故 $V((f))=V((g))$。
+
+  (5) 见 (6)。
+
+  (6) 任取 $X_f$ 的一个基本开集的开覆盖 $\{X-V(g_i)\}_{i\in I}$，那么
+  \[
+    X_f\subseteq\bigcup_{i\in I}(X-V(g_i))  \Leftrightarrow
+    V(f)\supseteq \bigcap_{i\in I} V(g_i),
+  \]
+  根据 1.15 题，这相当于
+  \[
+    V((f))=V(f)\supseteq \bigcap_{i\in I} V(g_i)=V\left(\bigcup_{i\in I}\{g_i\}\right)
+    =V\left((g_i)_{i\in I}\right),
+  \]
+  根据 (4) 的证明，这当且仅当
+  \[
+    \sqrt{(f)}\subseteq \sqrt{(g_i)_{i\in I}},  
+  \]
+  当且仅当存在 $n$ 使得 $f^n\in(g_i)_{i\in I}$，由 $\{g_i\}_{i\in I}$
+  生成的理想中的元素均为有限个 $g_i$ 的线性组合的形式，所以
+  存在有限子集 $J\subseteq I$，使得 $f^n=\sum_{j\in J} x_jg_j$，其中
+  $x_j\in A$，故 $\{X-V(g_j)\}_{j\in J}$ 就是一族有限子覆盖，$X_f$ 是紧致子集。
+
+  (7) 若 $X$ 的一个开子集是紧致的，$X_f$ 是拓扑基，那么其可以表示为一些 $X_f$ 的并集，紧致性表明其
+  可以表示为有限个 $X_f$ 的并集。反之，有限个紧致子集的并集还是紧致子集。
+\end{proof}
+
+\begin{problem}
+  出于心理上的原因，将 $A$ 的一个素理想视为 $X=\Spec(A)$ 中的一个点的时候，
+  使用一个字母（例如 $x$ 或者 $y$）来表示这个素理想是更方便的。当将 $x$
+  视为 $A$ 的一个素理想的时候，我们也写为 $\ideal p_x$（这只是两个不同的记号）。
+  证明：
+  \begin{enumerate}
+    \item 集合 $\{x\}$ 是 $X$ 中的闭集当且仅当 $\ideal p_x$ 是极大理想。
+    \item $\overline{\{x\}}=V(\ideal p_x)$。
+    \item $y\in\overline{\{x\}}$ 当且仅当 $\ideal p_x\subseteq\ideal p_y$。
+    \item $X$ 是 $T_0$-空间（这意味着对于 $X$ 中的不同的两点 $x,y$，要么存在 $x$ 的一个邻域
+    不包含 $y$，要么存在 $y$ 的一个邻域不包含 $x$）。
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  (1) 若 $\{x\}$ 是 $X$ 中的闭集，那么存在集合 $E\subseteq A$ 使得 $\{x\}=V(E)$，即
+  $\ideal p_x$ 是包含 $E$ 的唯一的素理想，若 $\ideal p_x$ 不是极大理想，那么 $V(E)$
+  至少有两个元素（因为极大理想都是素理想），所以 $\ideal p_x$ 是极大理想。
+
+  反之，若 $\ideal p_x$ 是极大理想，那么 $\{x\}=V(\ideal p_x)$ 是闭集。
+
+  (2) 显然有 $\overline{\{x\}}\subseteq V(\ideal p_x)$。下面我们说明任意
+  $y\in V(\ideal p_x)$，如果 $y\neq x$，那么 $y$ 是 $\{x\}$ 的极限点。
+  即任取 $y$ 的邻域 $X-V(E)$，$y\in X-V(E)$ 表明 $y\notin V(E)$，即 $\ideal p_y$
+  不是包含 $E$ 的素理想。假设 $x\in V(E)$，那么 $\ideal p_x$ 是包含 $E$
+  的素理想，由于 $y$ 是包含 $\ideal p_x$ 的素理想，所以此时 $y\in V(E)$，矛盾。
+  故 $x\notin V(E)$，所以 $x\in X-V(E)$，所以 $(X-V(E))\cap\{x\}\neq\emptyset$，
+  这就说明 $y$ 是 $\{x\}$ 的极限点，从而 $\overline{\{x\}}=V(\ideal p_x)$。
+
+  (3) 由 (2)，$y\in\overline{\{x\}}$ 当且仅当 $y\in V(\ideal p_x)$，当且仅当 
+  $\ideal p_y\supseteq \ideal p_x$。
+  
+  (4) 使用反证法。任取 $X$ 中不同的两点 $x,y$，如果 $x$ 的任意邻域都包含 $y$ 并且
+  $y$ 的任意邻域都包含 $x$，那么 $x\in\overline{\{y\}}$ 以及 $y\in\overline{\{x\}}$，
+  由 (3)，这表明 $\ideal p_x\subseteq\ideal p_y\subseteq\ideal p_x$，
+  这与 $\ideal p_x\neq\ideal p_y$ 矛盾。
+\end{proof}
+
+\begin{problem}
+  一个拓扑空间 $X$ 被称为\emph{不可约的}，如果 $X\neq\emptyset$ 并且 $X$
+  中的每一对非空开集都相交，等价地说，$X$ 中的每个非空开集都在 $X$ 中稠密。
+  证明 $\Spec(A)$ 是不可约的当且仅当 $A$ 的幂零根是一个素理想。
+\end{problem}
+\begin{proof}
+  $X$ 中的每一对非空开集都相交等价于 $X$ 的每一对恰当闭集的并都不是整个空间。
+  若 $\Spec(A)$ 不可约，假设 $\ideal{ab}\subseteq\nil(A)=E$，
+  \[
+    V(\ideal a)\cup V(\ideal b)=V(\ideal{ab})= V(E)=X,  
+  \]
+  $X$ 不可约表明 $V(\ideal a)=\emptyset$ 或者 $V(\ideal b)=\emptyset$，
+  不妨设 $V(\ideal a)=\emptyset$，那么 $V(\ideal b)=X$，所以
+  $\ideal b\subseteq E=\nil(A)$，这就表明 $\nil(A)$ 是素理想。
+
+  反之，若 $\nil(A)$ 是素理想，设 $X=V(\ideal a_1)\cup V(\ideal a_2)=V(\ideal{\ideal a_1\ideal a_2})$，
+  这表明 $\ideal{\ideal a_1\ideal a_2}\subseteq\nil(A)$，从而 $\ideal a_1\subseteq \nil(A)$ 或者
+  $\ideal a_2\subseteq\nil(A)$，不妨设 $\ideal a_1\subseteq \nil(A)$，那么 
+  $\ideal a_1=X$。这就表明 $\ideal a_1$ 和 $\ideal a_2$ 至少有一个是整个空间 $X$，
+  所以 $X$ 不可约。
+\end{proof}
+
+\begin{problem}
+  $X$ 是一个拓扑空间。
+  \begin{enumerate}
+    \item 如果 $Y$ 是 $X$ 的不可约子空间，那么闭包 $\bar{Y}$ 也是不可约的。
+    \item $X$ 的每个不可约子空间都被包含在一个极大的不可约子空间中。
+    \item $X$ 的极大不可约子空间是闭集并且所有的极大不可约子空间覆盖 $X$。它们被称为 $X$
+    的\emph{不可约分支}。Hausdorff 空间的不可约分支是什么？
+    \item 如果 $A$ 是一个环，$X=\Spec(A)$，那么 $X$ 的不可约分支是
+    闭集 $V(\ideal p)$，其中 $\ideal p$ 是 $A$ 的一个极小素理想。
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  (1) 设 $U,V$ 是 $\bar{Y}$ 的两个非空开集，即存在 $X$ 的两个开集
+  $U_1,V_1$ 使得 $U=U_1\cap \bar{Y},V=V_1\cap\bar{Y}$，那么
+  $U\cap Y=U_1\cap Y$ 和 $V\cap Y=V_1\cap Y$ 是 $Y$ 的两个非空开集，
+  $Y$ 不可约表明 $(U\cap Y)\cap (V\cap Y)\neq\emptyset$，故
+  $U\cap V\neq\emptyset$，所以 $\bar{Y}$ 不可约。
+
+  (2) 设 $Y$ 是 $X$ 的一个不可约子空间，令 $\Sigma$ 为所有包含 $Y$
+  的不可约子空间的集合。设 $\{Y_i\}_{i\in I}$ 是 $\Sigma$ 的一条链，
+  令 $Z=\bigcup_{i\in I}Y_i$，我们需要证明 $Z$ 不可约。任取
+  $Z$ 的两个非空开集 $U,V$，那么存在 $i_1,i_2\in I$ 使得
+  $U\cap Y_{i_1}$ 和 $V\cap Y_{i_2}$ 非空，不妨设 $Y_{i_1}\subseteq Y_{i_2}$，
+  那么 $U\cap Y_{i_2}$ 和 $V\cap Y_{i_2}$ 是 $Y_{i_2}$ 的两个非空开集，
+  所以 $(U\cap Y_{i_2})\cap (V\cap Y_{i_2})\neq\emptyset$，即
+  $U\cap V\neq\emptyset$，所以 $Z$ 不可约，$\Sigma$ 存在极大元。
+
+  (3) 假设 $Y$ 是一个极大不可约子空间，由 (1)，那么 $\bar{Y}$ 是包含 $Y$
+  的不可约子空间，故 $Y=\bar{Y}$，所以 $Y$ 是闭集。任取 $x\in X$，
+  单点集 $\{x\}$ 都是不可约子空间，所以包含于一个不可约分支，
+  故所有的不可约分支覆盖 $X$。
+
+  Hausdorff 空间中任意两个不同的点都可以找到分别覆盖住这两点的不相交开集，
+  所以任意多于一个点的子空间都不是不可约子空间，故 Hausdorff 空间的
+  不可约分支就是所有的单点集。
+
+  (4) 根据 1.21 的 (4)，$X$ 的闭集 $V(\ideal a)$ 同胚于 $\Spec(A/\ideal a)$，所以
+  $V(\ideal a)$ 不可约当且仅当 $\Spec(A/\ideal a)$ 不可约，再根据 1.19，
+  这当且仅当 $\nil(A/\ideal a)$ 是素理想，根据对应定理，当且仅当 $\sqrt{\ideal a}$
+  是素理想，故 $V(\ideal a)=V(\sqrt{\ideal a})$ 不可约当且仅当 $\sqrt{\ideal a}$
+  是素理想，这表明 $X$ 的不可约分支必为 $V(\ideal p)$ 的形式，其中 $\ideal p$ 是素理想。
+  $V(\ideal p)$ 极大表明如果 $V(\ideal p)\subseteq V(\ideal q)$，那么只能严格相等。
+  $V(\ideal p)\subseteq V(\ideal q)$ 当且仅当
+  \[
+    \ideal q=\sqrt{\ideal q}=\bigcap_{\ideal q'\in V(\ideal q)}\ideal q'
+    \subseteq  \bigcap_{\ideal q'\in V(\ideal p)}\ideal q'=\sqrt{\ideal p}=\ideal p,
+  \]
+  所以 $V(\ideal p)$ 是不可约分支当且仅当 $\ideal p$ 是极小的。
+\end{proof}
+
+\begin{problem}
+  令 $\phi:A\to B$ 是环同态，$X=\Spec(A)$，$Y=\Spec(B)$。如果 $\ideal q\in Y$，
+  那么 $\phi^{-1}(\ideal q)$ 是 $A$ 的素理想，所以 $\phi$ 诱导了映射
+  $\phi^*:Y\to X$。证明
+  \begin{enumerate}
+    \item 如果 $f\in A$，那么 ${\phi^*}^{-1}(X_f)=Y_{\phi(f)}$，因此
+    $\phi^*$ 是连续映射。
+    \item 如果 $\ideal a$ 是 $A$ 的理想，那么 ${\phi^*}^{-1}(V(\ideal a))=V(\ideal a^e)$。
+    \item 如果 $\ideal b$ 是 $B$ 的理想，那么 $\overline{\phi^*(V(\ideal b))}=V(\ideal b^c)$。
+    \item 如果 $\phi$ 是满射，那么 $\phi^*$ 是 $Y$ 到 $X$ 的闭子集 $V(\ker\phi)$ 的同胚。
+    （特别地，$\Spec(A)$ 和 $\Spec(A/\nil(A))$ 是同胚的。）
+    \item 如果 $\phi$ 是单射，那么 $\phi^*(Y)$ 在 $X$ 中稠密。更准确地，$\phi^*(Y)$
+    在 $X$ 中稠密当且仅当 $\ker\phi\subseteq\nil(A)$。
+    \item 令 $\psi:B\to C$ 是另一个环同态，那么 $(\psi\circ\phi)^*=\phi^*\circ\psi^*$。
+    \item 令 $A$ 是整环，并且只有一个非零素理想 $\ideal p$，$K$ 是 $A$ 的分式域。
+    令 $B=(A/\ideal p)\times K$。定义 $\phi:A\to B$ 为 $\phi(x)=(\bar x,x)$，
+    其中 $\bar x$ 是 $x$ 在 $A/\ideal p$ 中的像。证明 $\phi^*$ 是双射但是
+    不是同胚。
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  (1) 按照定义，有
+  \[
+    \ideal q\in {\phi^*}^{-1}(X_f)\Leftrightarrow
+    \phi^*(\ideal q)\in X_f \Leftrightarrow
+    \phi^*(\ideal q)\notin V(f)  \Leftrightarrow
+    f\notin\phi^{-1}(\ideal q) \Leftrightarrow
+    \ideal q\in Y_{\phi(f)}.
+  \]
+
+  (2) 按照定义，有
+  \begin{align*}
+    \ideal q\in {\phi^*}^{-1}(V(\ideal a))&\Leftrightarrow\phi^*(\ideal q)\in V(\ideal a)
+    \Leftrightarrow\phi^{-1}(\ideal q)\in V(\ideal a)\Leftrightarrow
+    \ideal a\subseteq\phi^{-1}(\ideal q)\\
+    &\Leftrightarrow\phi(\ideal a)\subseteq \ideal q\Leftrightarrow
+    \ideal q\in V(\phi(\ideal a))=V(\ideal a^e).
+  \end{align*}
+
+  (3) 对于 $S\subseteq X$，我们有
+  \begin{align*}
+    \bar{S}&=\bigcap\left\{V(E)\,\middle|\, S\subseteq V(E)\right\}  
+    =\bigcap\left\{V(E)\,\middle|\, E\subseteq \bigcap_{s\in S}\ideal p_s\right\}  \\
+    &=V\left(\bigcup\left\{E\,\middle|\, E\subseteq \bigcap_{s\in S}\ideal p_s\right\}\right)
+    =V\left(\bigcap_{s\in S}\ideal p_s\right).
+  \end{align*}
+  所以
+  \[
+    \overline{\phi^*(V(\ideal b))}  =
+    V\left(\bigcap_{\ideal p\in \phi^*(V(\ideal b))}\ideal p\right),
+  \]
+  又因为
+  \[
+    \bigcap_{\ideal p\in \phi^*(V(\ideal b))}\ideal p
+    =\bigcap \left\{\ideal q^c\,\middle|\, \ideal q\in V(\ideal b)\right\}
+    =\left(\bigcap_{\ideal b\subseteq\ideal q}\ideal q\right)^c
+    =\left(\sqrt{\ideal b}\right)^c=\sqrt{\ideal b^c},
+  \]
+  所以
+  \[
+    \overline{\phi^*(V(\ideal b))} =V(\sqrt{\ideal b^c})=V(\ideal b^c).
+  \]
+
+  (4) 若 $\phi^*(\ideal q_1)=\phi^*(\ideal q_2)$，
+  那么 $\phi^{-1}(\ideal q_1)=\phi^{-1}(\ideal q_2)$，$\phi$ 是满射表明 $\ideal q_1=\ideal q_2$，
+  所以 $\phi^*$ 是单射。任取 $\ideal p\in \im\phi^*=\phi^*(Y)$，即
+  存在 $\ideal q\in Y$ 使得 $\ideal p=\phi^*(\ideal q)=\phi^{-1}(\ideal q)$，
+  显然 $\ker\phi\subseteq\phi^{-1}(\ideal q)=\ideal p$，故 $\ideal p\in V(\ker\phi)$，
+  所以 $\im\phi^*\subseteq V(\ker\phi)$。
+  任取 $\ideal p\in V(\ker\phi)$，我们希望证明 $\ideal p\in\im\phi^*$，注意到总是有
+  $\ideal p\subseteq \phi^{-1}(\phi(\ideal p))$，
+  所以我们分两步：首先说明 $\phi^{-1}(\phi(\ideal p))\subseteq \ideal p$，
+  从而 $\ideal p=\phi^{-1}(\phi(\ideal p))$；再说明 $\phi(\ideal p)$
+  是 $B$ 的素理想，从而得出 $\ideal p=\phi^*(\phi(\ideal p))\in\im\phi^*$。
+  \begin{enumerate}
+    \item 任取
+    $x\in\phi^{-1}(\phi(\ideal p))$，那么 $\phi(x)\in\phi(\ideal p)$，
+    故存在 $a\in\ideal p$ 使得 $\phi(x)=\phi(a)$，那么 $x-a\in\ker\phi\subseteq\ideal p$，
+    所以 $x\in\ideal p$，所以 $\phi^{-1}(\phi(\ideal p))\subseteq\ideal p$。
+    \item 假设
+    $xy\in\phi(\ideal p)$，那么存在 $a\in \ideal p$ 使得 $xy=\phi(a)$，$\phi$ 是满射
+    还表明存在 $x',y'\in A$ 使得 $x=\phi(x')$ 以及 $y=\phi(y')$，那么
+    $\phi(a)=xy=\phi(x'y')$，所以 $a-x'y'\in\ker\phi\subseteq\ideal p$，
+    所以 $x'y'\in\ideal p$，所以 $x'\in\ideal p$ 或者 $y'\in\ideal p$，所以
+    $x\in\phi(\ideal p)$ 或者 $y\in\phi(\ideal p)$，这表明 $\phi(\ideal p)$ 
+    确实是 $B$ 的素理想。
+  \end{enumerate}
+  于是我们证明了 $\im\phi^*=V(\ker\phi)$。
+  所以 $\phi^*$ 诱导出的映射 $\tilde{\phi}:Y\to V(\ker\phi)$ 是双射，且
+  由 (1) 可知 $\tilde{\phi}$ 是连续映射。
+
+  接下来证明 $\tilde{\phi}^{-1}:V(\ker\phi)\to Y$ 是连续映射。任取 $Y$ 的基本
+  开集 $Y_g$，其中 $g\in B$，由于 $\tilde{\phi}(Y_g)=\phi^*(Y_g)=X_f\cap V(\ker\phi)$
+  ，其中 $f\in A$ 满足 $\phi(f)=g$，$X_f$ 是 $X$ 的开集，故
+  $X_f\cap V(\ker\phi)$ 是 $V(\ker\phi)$ 的开集，所以 $\tilde{\phi}^{-1}$
+  是连续映射。进而 $\tilde{\phi}:Y\to V(\ker\phi)$ 是同胚。令 
+  $\phi$ 为 $A\to A/\nil(A)$ 的自然同态便可以得出 $\Spec(A)$ 和 $\Spec(A/\nil(A))$ 是同胚的。
+
+  (5) 根据 (3)，我们有
+  \[
+    \overline{\phi^*(Y)}=\overline{\phi^*(V(0))}
+    =V(\phi^*(0))=V(\ker\phi),
+  \]
+  $\phi^*(Y)$ 在 $X$ 中稠密当且仅当 $V(\ker\phi)=X$，当且仅当
+  $\ker\phi\subseteq\nil(A)$。
+
+  (6) 任取 $C$ 的素理想 $\ideal p_c$，那么
+  \begin{align*}
+    a\in (\psi\circ\phi)^*(\ideal p_c)&\Leftrightarrow 
+    a\in (\psi\circ \phi)^{-1}(\ideal p_c)  
+    \Leftrightarrow (\psi\circ\phi)(a)\in\ideal p_c \\
+    &\Leftrightarrow
+    \phi(a)\in\psi^*(\ideal p_c)
+    \Leftrightarrow a\in(\phi^*\circ \psi^*)(\ideal p_c),
+  \end{align*}
+  所以 $ (\psi\circ\phi)^*(\ideal p_c)=(\phi^*\circ \psi^*)(\ideal p_c)$，即
+  $(\psi\circ\phi)^*=\phi^*\circ \psi^*$。
+
+  (7) 由于 $B$ 的理想必然形如 $A/\ideal p$ 的理想与 $K$ 的理想的直积，并且
+  $A/\ideal p$ 和 $K$ 都是域，所以 $B$ 的素理想实际上只有
+  $\ideal q_1=\{\bar{0}\}\times K$ 以及 $\ideal q_2=A/\ideal p\times\{0\}$（注意 $B$ 的零理想不是素理想）。
+  按定义有 $\phi^*(\ideal q_1)=\ideal p$，$\phi^*(\ideal q_2)=0$，所以 $\phi^*$ 是双射。
+  那么 ${\phi^*}^{-1}:\Spec(A)\to \Spec(B)$ 定义为 ${\phi^*}^{-1}(\ideal p)=\ideal q_1$，
+  ${\phi^*}^{-1}(0)=\ideal q_2$。$\{\ideal q_2\}=V(\ideal q_2)$ 的原像为
+  $\phi^*(\{\ideal q_2\})=\{0\}$，而 $\overline{\{0\}}=V(0)=\Spec(A)\neq\{0\}$，
+  所以 $\{0\}$ 不是闭集，故 ${\phi^*}^{-1}$ 不连续，从而 $\phi^*$ 不是同胚。
+\end{proof} 
+
+\begin{problem}
+  令 $A=\prod_{i=1}^n A_i$ 是环 $A_i$ 的直积。证明 $\Spec(A)$ 是开（或者闭）子空间
+  $X_i$ 的无交并，其中 $X_i$ 典范同胚于 $\Spec(A_i)$。
+
+  反之，令 $A$ 是任意环，证明下面的说法是等价的：
+  \begin{enumerate}
+    \item $X=\Spec(A)$ 是不连通的。
+    \item $A\simeq A_1\times A_2$ 是两个非零环的直积。
+    \item $A$ 存在非平凡的幂等元。
+  \end{enumerate}
+  特别地，我们知道局部环的谱总是连通的。
+\end{problem}
+\begin{proof}
+  考虑投影 $\pi_i:A\to A_i$，这是一个满同态，$\ker\pi_i=\prod_{j\neq i} A_j$。
+  根据 1.21 的 (4)，我们知道 $\Spec(A_i)$ 同胚于 $V(\ker\pi_i)$。我们有
+  \[
+    \bigcup_{i=1}^n V(\ker\pi_i)  
+    =V\left(\bigcap_{i=1}^n\ker\pi_i\right)
+    =V(0)=\Spec(A),
+  \]
+  同时 $V(\ker\pi_i)\cap V(\ker\pi_j)=V(\ker\pi_i+ \ker\pi_j)=V(1)=\emptyset$，所以
+  $\Spec(A)$ 是闭子空间 $V(\ker\pi_i)$ 的无交并，并且每个 $V(\ker\pi_i)$ 同胚于 $\Spec(A_i)$。
+
+  下面的命题 (2) 和 (3) 的等价性我们已经证明。$(2)\Rightarrow (1)$ 就是前一问，此时
+  $X$ 为两个不相交非空开集 $\Spec(A_1)$ 和 $\Spec(A_2)$ 的并集，所以 $X$ 不连通。
+
+  $(1)\Rightarrow (3)$ $X$ 不连通表明 $X=(X-V(\ideal a))\cup (X-V(\ideal b))$ 是两个不相交非空开集
+  的并集，即 $\emptyset=V(\ideal a)\cap V(\ideal b)=V(\ideal a+\ideal b)$，
+  并且 $(X-V(\ideal a))\cap (X-V(\ideal b))=\emptyset$ 
+  表明 $X=V(\ideal a)\cup V(\ideal b)=V(\ideal{ab})$。所以我们得到
+  $\ideal a+\ideal b=(1)$ 以及 $\ideal{ab}\subseteq\nil(A)$。取 $a\in\ideal a,b\in\ideal b$，
+  使得 $a+b=1$，并且存在 $n$ 使得 $(ab)^n=0$。故 $(a)+(b)=(1)$，这也表明 $(a^n)+(b^n)=(1)$，
+  所以存在 $e\in (a^n)$ 使得 $1-e\in (b^n)$，此时 $e(1-e)\in (ab)^n=0$，故 $e$
+  是幂等元。如果 $e=1$，那么 $(1)= (a^n)\subseteq (a)$，这不可能，
+  同理 $e=0$ 表明 $(1)=(b^n)\subseteq (b)$ 也不可能，所以 $e$ 就是非平凡的幂等元。
+\end{proof}
+
+\begin{problem}
+  $k$ 是代数闭域，令
+  \[
+    f_\alpha(t_1,\dots,t_n)=0  
+  \]
+  是 $k$ 上 $n$ 元多项式方程的集合。所有满足这些方程的点 $x=(x_1,\dots,x_n)\in k^n$
+  的集合 $X$ 被称为一个\emph{仿射代数簇}。
+
+  考虑多项式 $g\in k[t_1,\dots,t_n]$ 的集合，其中每个 $g$ 满足 $g(x)=0\ (\forall x\in X)$。
+  这个集合是多项式环中的一个理想 $I(X)$，被称为簇 $X$ 的理想。商环
+  \[
+    P(X)=k[t_1,\dots,t_n]/I(X)  
+  \]
+  是 $X$ 上的多项式函数环，因为两个多项式 $g,h$ 对应同一个 $X$ 上的多项式函数
+  当且仅当 $g-h\in I(X)$，即 $g-h$ 以 $X$ 中的点为零点。
+
+  令 $\xi_i$ 是 $t_i$ 在 $P(X)$ 中的像。$\xi_i\ (1\leq i\leq n)$ 称为 $X$ 上的\emph{坐标函数}：
+  如果 $x\in X$，那么 $\xi_i(x)$ 是 $x$ 的第 $i$ 个坐标。$P(X)$ 作为 $k$-代数由坐标函数生成，
+  称为 $X$ 的\emph{坐标环}（或者仿射代数）。
+
+  对于每个 $x\in X$，令 $\ideal m_x$ 是 $f\in P(X)$ 组成的理想，其中每个 $f$
+  满足 $f(x)=0$，这是 $P(X)$ 的一个极大理想。因此，如果 $\tilde{X}=\Max(P(X))$，那么
+  我们定义了一个映射 $\mu:X\to\tilde{X}$ 为 $x\mapsto \ideal m_x$。
+
+  容易证明 $\mu$ 是单射：如果 $x\neq y$，那么存在某个 $i$ 使得 $x_i\neq y_i$，因此
+  $\xi_i-x_i$ 在 $\ideal m_i$ 中但不在 $\ideal m_y$ 中，所以 $\ideal m_x\neq\ideal m_y$。
+  不那么显然的一点是 \emph{$\mu$ 是满射}。这是 Hilbert 零点定理（Hilbert's Nullstellensatz）的一种形式。
+\end{problem}
+
+\begin{problem}
+  令 $f_1,\dots,f_m$ 是 $k[t_1,\dots,t_n]$ 的元素。它们确定了一个多项式映射 $\phi:k^n\to k^m$：
+  如果 $x\in k^n$，则 $\phi(x)=(f_1(x),\dots,f_m(x))$。
+
+  令 $X,Y$ 分别是 $k^n,k^m$ 中的仿射代数簇。一个映射 $\phi:X\to Y$ 被称为\emph{正则的}，
+  如果 $\phi$ 是一个从 $k^n$ 到 $k^m$ 的多项式映射在 $X$ 上的限制。
+
+  如果 $\eta$ 是 $Y$ 上的多项式函数，那么 $\eta\circ\phi$ 是 $X$ 上的多项式函数。
+  因此 $\phi$ 诱导了 $k$-代数同态 $P(Y)\to P(X)$：$\eta\mapsto\eta\circ\phi$。
+  证明通过这种方式，我们得到了正则映射 $X\to Y$ 和 $k$-代数同态 $P(Y)\to P(X)$
+  的一一对应。
+\end{problem}
+\begin{proof}
+  我们需要证明
+  \begin{align*}
+    \{\text{regular maps $X\to Y$}\}&\to
+    \{\text{$k$-algebra homomorphisms $P(Y)\to P(X)$}\}\\
+    \phi&\mapsto \tilde{\phi}
+  \end{align*}
+  是双射，其中 $\tilde{\phi}(\eta)=\eta\circ \phi$。
+
+  若 $\tilde{\phi}_1=\tilde{\phi}_2$，令 $\xi_i\ (1\leq i\leq m)$ 是 $Y$
+  上的坐标函数，那么
+  \[
+    \xi_i\circ\phi_1=\tilde{\phi}_1(\xi_i)=\tilde{\phi}_2(\xi_i)
+    =\xi_i\circ\phi_2,  
+  \]
+  而 $\phi_1(x)=(\xi_1\circ\phi_1(x),\dots,\xi_m\circ\phi_m(x))$，$\phi_2$ 同理。
+  这就表明 $\phi_1=\phi_2$，所以 $\phi\mapsto \tilde{\phi}$ 是单射。
+
+  若 $\psi:P(Y)\to P(X)$ 是 $k$-代数同态，
+  定义 $\phi:k^n\to k^m$ 为
+  \[
+    \phi(x)=\bigl(\psi(\xi_1)(x),\dots,\psi(\xi_m)(x)\bigr)  ,
+  \]
+  那么我们有
+  \[
+    \tilde{\phi}(\xi_i)=\xi_i\circ\phi=\xi_i\circ
+    \bigl(\psi(\xi_1),\dots,\psi(\xi_m)\bigr)
+    =\psi(\xi_i),
+  \]
+  这就表明 $\tilde{\phi}=\psi$。下面我们验证 $\phi$ 是正则映射，
+  即 $\im\phi|_X\subseteq Y$。任取 $x\in X$，
+  我们需要说明 $\phi(x)\in Y$，即 $\phi(x)$ 是 $I(Y)$ 中多项式的零点，即
+  任取 $h\in I(Y)$，有 $h(\phi(x))=0$。$h\in I(Y)$ 作为 $Y$ 上的多项式函数是
+  零函数，所以 $h\circ\phi=\tilde{\phi}(h)=\psi(h)=\psi(0)=0$，故 
+  $\im\phi|_X\subseteq Y$。所以我们证明了 $\phi\mapsto \tilde{\phi}$ 是满射。
+\end{proof}

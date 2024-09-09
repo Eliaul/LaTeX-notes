@@ -1,0 +1,488 @@
+\chapter{分式环和分式模}
+
+\section{分式环、分式模与局部化}
+
+给定一个环 $A$，$A$ 的一个\emph{乘性子集} $S$ 指的是一个对乘法封闭的子集 $S$，并且
+$1\in S$。定义 $A\times S$ 上的一个等价关系为
+\[
+  (a,s)\sim (b,t)  \Longleftrightarrow
+  (at-bs)u=0\ (\exists u\in S).
+\]
+可以验证这确实是一个等价关系。即 $a/s$ 为 $(a,s)$ 所在的等价类，$S^{-1}A$
+为等价类的集合，我们在 $S^{-1}A$ 上定义一个环结构，即：
+\[
+  a/s+b/t=(at+bs)/st,\quad (a/s)(b/t)=ab/st.  
+\]
+可以验证这两个运算是良定义的，并且满足环的运算法则。这使得
+$S^{-1}A$ 成为一个有单位元 $1/1$ 的交换环，称为 $A$ 相对于 $S$
+的\emph{分式环}。此时，我们有一个自然的环同态 $f:A\to S^{-1}A$ 为
+$f(x)=x/1$，一般而言这并不是单射，容易验证 $A$ 是整环并且 $0\notin S$ 的时候 $f$ 是单射。
+
+我们也可以用泛性质刻画分式环。
+
+\begin{proposition}\label{prop:universal property of fraction ring}
+  令 $g:A\to B$ 是环同态并且对于所有的 $s\in A$ 有 $g(s)\in B^\times$。那么存在
+  唯一的环同态 $h:S^{-1}A\to B$ 使得 $g=h\circ f$。
+\end{proposition}
+\begin{proof}
+  （唯一性）若这样的 $h$ 存在，那么对于任意的 $a/s\in S^{-1}A$，有
+  \[
+    h(a/s)=h((a/1)(1/s))=h(a/1)h(1/s)=h(f(a))h(1/s)=g(a)h(1/s),  
+  \]
+  另一方面有
+  \[
+    h(1/s)=h(s/1)^{-1}=h(f(s))^{-1}=g(s)^{-1},  
+  \]
+  所以这样的 $h$ 如果存在，那么一定满足 $h(a/s)=g(a)g(s)^{-1}$。
+
+  （存在性）令 $h(a/s)=g(a)g(s)^{-1}$。若 $a/s=a'/s'$，那么存在 $u\in S$
+  使得 $(as'-a's)u=0$，那么
+  \[
+    (g(a)g(s')-g(a')g(s))g(u)=0,  
+  \]
+  $g(u)\in B^\times $ 表明 $g(a)g(s')=g(a')g(s)$，即 $g(a)g(s)^{-1}=g(a')g(s')^{-1}$，
+  所以 $h(a/s)=h(a'/s')$，$h$ 是良定义的。$h$ 显然是群同态且满足 $g=h\circ f$。
+\end{proof}
+
+环 $S^{-1}A$ 和同态 $f:A\to S^{-1}A$ 有下面的性质：
+\begin{enumerate}
+  \item $s\in S$ 表明 $f(s)\in (S^{-1}A)^\times$，因为此时
+  $(s/1)(1/s)=1/1$。
+  \item $f(a)=0$ 表明存在某个 $s\in S$ 使得 $as=0$，因为此时 $a/1=0/1$。
+  \item $S^{-1}A$ 的每个元素都形如 $f(a)f(s)^{-1}$，其中 $a\in A,s\in S$。
+  因为 $a/s=(a/1)(1/s)=f(a)f(s)^{-1}$。
+\end{enumerate}
+
+\begin{example}
+  \mbox{}
+  \begin{enumerate}
+    \item 
+    令 $\ideal p$ 是 $A$ 的素理想，那么 $S=A-\ideal p$ 是 $A$ 的一个乘性子集，
+    我们记 $A_{\ideal p}=S^{-1}A$，称为 $A$ 在 $\ideal p$ 处的\emph{局部化}。
+    下面我们说明 $A_{\ideal p}$ 是一个局部环。令 $\ideal m$ 为所有
+    $a/s$ 的集合，其中 $a\in\ideal p,s\in S$。容易验证这是一个理想。
+    如果 $b/t\notin\ideal m$，即 $b\notin\ideal p$，那么 $b\in S$，此时
+    $(b/t)(t/b)=1/1$，所以 $b/t\in A_{\ideal p}^\times $，这表明
+    $A_{\ideal p}^\times=A_{\ideal p}-\ideal m$，所以 $A_{\ideal p}$ 是局部环，
+    $\ideal m$ 是唯一的极大理想，剩余域 $A_{\ideal p}/\ideal m$ 记为 $k(\ideal p)$。
+    \item $S^{-1}A$ 是零环当且仅当 $0\in S$。
+    \item 令 $f\in A$，$S=\{f^n\}_{n\geq 0}$，此时 $S$ 也是乘性子集，
+    我们记 $A_f=S^{-1}A$。
+  \end{enumerate}
+\end{example}
+
+$S^{-1}A$ 的构造过程可以复制到一个 $A$-模 $M$ 上。定义 $M\times S$ 上的等价关系为
+\[
+  (m,s)\sim (m',s')\Longleftrightarrow  t(sm'-s'm)=0\ (\exists t\in S).
+\]
+同样记 $m/s$ 为 $(m,s)$ 所在的等价类，记 $S^{-1}M$ 为这些等价类的集合。
+通过定义
+\[
+  m/s+m'/s'=(sm'+s'm)/ss',\quad (a/t)\cdot (m/s)=am/st,  
+\]
+$S^{-1}M$ 成为一个 $S^{-1}A$-模。正如上面的例子提到的，当 $S=A-\ideal p$
+的时候，我们记 $S^{-1}M$ 为 $M_{\ideal p}$，当 $S=\{f^n\}_{n\geq 0}$
+的时候，我们记 $S^{-1}M$ 为 $M_f$。
+
+令 $u:M\to N$ 是 $A$-模同态，那么诱导出一个 $S^{-1}A$-模同态 $S^{-1}u:S^{-1}M\to S^{-1}N$，
+定义为 $S^{-1}u(m/s)=u(m)/s$。我们有 $S^{-1}(v\circ u)=S^{-1}v\circ S^{-1}u$。
+这表明 $S^{-1}$ 可以视为 $\text{$A$-\textsf{Mod}}\to \text{$S^{-1}A$-\textsf{Mod}}$ 的函子。
+
+\begin{proposition}\label{prop:fraction is exact}
+  函子 $S^{-1}$ 是正合函子，也就是说，如果
+  $
+    \begin{tikzcd}[cramped,column sep=small]
+      M'\arrow[r,"f"] & M\arrow[r,"g"] & M''
+    \end{tikzcd}
+  $
+  是正合列，那么
+  $
+    \begin{tikzcd}[cramped]
+      S^{-1}M'\arrow[r,"S^{-1}f"] & S^{-1}M\arrow[r,"S^{-1}g"] & S^{-1}M''
+    \end{tikzcd}
+  $
+  是正合列。
+\end{proposition}
+\begin{proof}
+  由于 $g\circ f =0$，所以 $S^{-1}g\circ S^{-1}f=S^{-1}(g\circ f)=0$，故
+  $\im S^{-1}f\subseteq\ker S^{-1}g$。任取 $m/s\in \ker S^{-1}g$，即
+  $g(m)/s=0$，即存在 $u\in S$ 使得 $g(um)=ug(m)=0$，即 $um\in\ker g=\im f$，
+  所以存在 $m'\in M'$ 使得 $um=f(m')$，此时
+  \[
+    S^{-1}f(m'/us)=f(m')/us=um/us=m/s,  
+  \]
+  故 $m/s\in\im S^{-1}f$，所以 $\ker S^{-1}g\subseteq \im S^{-1}f$。
+\end{proof}
+
+特别地，\autoref{prop:fraction is exact} 告诉我们，如果 $M'$ 是 $M$
+的子模，那么 $S^{-1}M'\to S^{-1}M$ 是单射，因此 $S^{-1}M'$ 可以视为 $S^{-1}M$
+的子模。
+
+\begin{corollary}\label{coro:rule of fraction}
+  分式化的操作可以与有限和、有限交和商交换。准确地说，如果 $N,P$ 是 $A$-模 $M$
+  的子模，那么
+  \begin{enumerate}
+    \item $S^{-1}(N+P)=S^{-1}(N)+S^{-1}(P)$
+    \item $S^{-1}(N\cap P)=S^{-1}(N)\cap S^{-1}(P)$
+    \item 有 $S^{-1}A$-模同构 $S^{-1}(M/N)\simeq (S^{-1}M)/(S^{-1}N)$。
+  \end{enumerate}
+\end{corollary}
+\begin{proof}
+  (1) 显然 $S^{-1}(N+P)\subseteq S^{-1}(N)+S^{-1}(P)$。任取 $x/s+y/t\in S^{-1}(N)+S^{-1}(P)$，
+  那么
+  \[
+    x/s+y/t=(tx+sy)/st\in S^{-1}(N+P),  
+  \]
+  所以 $S^{-1}(N)+S^{-1}(P)\subseteq S^{-1}(N+P)$。
+
+  (2) 显然 $S^{-1}(N\cap P)\subseteq S^{-1}(N)\cap S^{-1}(P)$。任取 $x/s\in S^{-1}(N)\cap S^{-1}(P)$，
+  其中 $x\in M$，那么存在 $n\in N,t\in S$ 以及 $p\in P,r\in S$ 使得 $x/s=n/t=p/r$，即存在
+  $u\in S$ 使得 $u(rn-tp)=0$，所以 $urn=utp\in N\cap P$，于是
+  \[
+    x/s=n/t=urn/urt\in S^{-1}(N\cap P),  
+  \]
+  所以 $ S^{-1}(N)\cap S^{-1}(P)\subseteq S^{-1}(N\cap P)$。
+
+  (3) 考虑正合列
+  $
+  \begin{tikzcd}[cramped,column sep=small]
+    0\arrow[r] & N\arrow[r] & M\arrow[r] & M/N\arrow[r] & 0
+  \end{tikzcd}
+  $，根据 $S^{-1}$ 的正合性质，我们有正合列 
+  $
+  \begin{tikzcd}[cramped,column sep=small]
+    0\arrow[r] & S^{-1}N\arrow[r] & S^{-1}M\arrow[r] & S^{-1}(M/N)\arrow[r] & 0
+  \end{tikzcd}
+  $。 
+\end{proof}
+
+通过同态 $a\mapsto a/1$，$S^{-1}A$ 可以视为一个 $A$-代数，
+同理 $S^{-1}M$ 可以视为 $(A,S^{-1}A)$-双模。
+
+\begin{proposition}\label{prop:isomorphism of fraction}
+  令 $M$ 是 $A$-模，那么有 $S^{-1}A$-模或者 $A$-模同构
+  \[
+    S^{-1}A\otimes_AM\simeq S^{-1}M.  
+  \]
+  更准确地说，存在同构映射 $f:S^{-1}A\otimes_AM\to S^{-1}M$ 为
+  \[
+    f((a/s)\otimes m)=am/s.  
+  \]
+\end{proposition}
+\begin{proof}
+  令 $g:S^{-1}A\times M\to S^{-1}M$ 为
+  \[
+    g(a/s,m)=am/s .
+  \]
+  容易验证 $g$ 是良定义的 $A$-双线性映射，所以诱导出 $A$-模同态
+  $f:S^{-1}A\otimes_AM\to S^{-1}M$。容易验证 $f$ 也是 $S^{-1}A$-模同态。
+  显然 $f$ 是满射。
+
+  令 $\sum_i (a_i/s_i)\otimes m_i\in S^{-1}A\otimes_AM$。令
+  $s=\prod_i s_i$，$t_i=\prod_{j\neq i}s_j$，那么
+  \[
+    \sum_i \frac{a_i}{s_i}\otimes m_i=
+    \sum_i \frac{t_ia_i}{t_is_i}\otimes m_i
+    =\sum_i \frac{t_ia_i}{s}\otimes m_i
+    =\sum_i \frac{1}{s}\otimes t_ia_im_i
+    =\frac{1}{s}\otimes\left(\sum_i t_ia_i m_i\right),
+  \]
+  所以若 $f(\sum_i (a_i/s_i)\otimes m_i)=0$，那么存在 $u\in S$ 使得
+  \[
+    u\left(\sum_i t_ia_i m_i\right)=0,
+  \]
+  即
+  \[
+    \sum_i \frac{a_i}{s_i}\otimes m_i=\frac{u}{su}\otimes\left(\sum_i t_ia_i m_i\right)
+    =\frac{1}{su}\otimes u\left(\sum_i t_ia_i m_i\right)=0,
+  \]
+  所以 $f$ 是单射。
+\end{proof}
+
+\begin{corollary}
+  给定任意环 $A$，$S^{-1}A$ 是平坦 $A$-模。
+\end{corollary}
+\begin{proof}
+  假设 $f:M\to N$ 是 $A$-模的单同态，$S^{-1}$ 的正合性质表明 $S^{-1}f:S^{-1}M\to S^{-1}N$ 是 $S^{-1}A$-模
+  的单同态，由于有 $S^{-1}A$-模同构 $S^{-1}M\simeq S^{-1}A\otimes_AM$ 和 $S^{-1}N\simeq S^{-1}A\otimes_AN$，
+  所以导出 $S^{-1}A\otimes_AM\to S^{-1}A\otimes_AN$ 的 $S^{-1}A$-模的单同态：
+  \[
+    (a/s)\otimes m\mapsto am/s\mapsto f(am)/s\mapsto   1/s\otimes f(am)=(a/s)\otimes f(m),
+  \]
+  这就是 $\mathbb{1}_{S^{-1}A}\otimes f$，容易验证这也是 $A$-模同态，所以 $S^{-1}A$ 是平坦 $A$-模。
+\end{proof}
+
+\begin{proposition}\label{prop:isomorphism of tensor and fraction}
+  若 $M,N$ 是 $A$-模，那么有 $S^{-1}A$-模同构 
+  $f:S^{-1}M\otimes_{S^{-1}A}S^{-1}N\to S^{-1}(M\otimes_AN)$，同构映射为
+  \[
+    f\bigl((m/s)\otimes (n/t)\bigr)=(m\otimes n)/st  .
+  \]
+  特别地，如果 $\ideal p$ 是素理想，那么有 $A_{\ideal p}$-模同构
+  \[
+    M_{\ideal p}\otimes_{A_{\ideal p}} N_{\ideal p}\simeq
+    (M\otimes_AN)_{\ideal p}.  
+  \]
+\end{proposition}
+\begin{proof}
+  我们有一系列 $S^{-1}A$-模同构：
+  \begin{align*}
+    S^{-1}(M\otimes_AN)&\simeq S^{-1}A \otimes_A(M\otimes_AN)\simeq
+    (S^{-1}A\otimes_AM)\otimes_AN \\
+    &\simeq S^{-1}M\otimes_AN\simeq (S^{-1}M\otimes_{S^{-1}A}S^{-1}A)\otimes_AN\\
+    &\simeq S^{-1}M\otimes_{S^{-1}A}(S^{-1}A\otimes_AN)\simeq
+    S^{-1}M\otimes_{S^{-1}A}S^{-1}N,
+  \end{align*}
+  同构映射为
+  \begin{align*}
+    (m\otimes n)/s&\mapsto 1/s\otimes (m\otimes n)\mapsto
+    (1/s\otimes m)\otimes n \\
+    &\mapsto m/s\otimes n\mapsto (m/s\otimes 1/1)\otimes n\\
+    &\mapsto m/s\otimes(1/1\otimes n)\mapsto m/s\otimes n/1.\qedhere
+  \end{align*}
+\end{proof}
+
+\section{局部性质}
+
+环 $A$ 或者 $A$-模 $M$ 拥有局部性质 $P$ 指的是：
+$A$ 或者 $M$ 有性质 $P$ 当且仅当对于每个素理想 $\ideal p\in\Spec(A)$，
+局部化 $A_{\ideal p}$ 或者 $M_{\ideal p}$ 拥有性质 $P$。
+
+\begin{proposition}[零模是局部性质]\label{prop:zero is local}
+  令 $M$ 是 $A$-模，那么下面的说法是等价的：
+  \begin{enumerate}
+    \item $M=0$；
+    \item 对于任意素理想 $\ideal p$，有 $M_{\ideal p}=0$；
+    \item 对于任意极大理想 $\ideal m$，有 $M_{\ideal m}=0$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 是因为 $M=0$ 则任意分式模 $S^{-1}M=0$。
+  $(2)\Rightarrow (3)$ 是因为极大理想都是素理想。
+  
+  $(3)\Rightarrow (1)$ 如果对于任意极大理想 $\ideal m$，有 $M_{\ideal m}=0$，
+  假设 $M\neq 0$，那么取非零元 $x\in M$，$\Ann(x)$ 是一个恰当理想，
+  故存在极大理想 $\ideal m$ 包含 $\Ann(x)$，由于 $x/1\in M_{\ideal m}=0$，
+  所以 $x/1=0/1$，故存在 $a\in A-\ideal m$ 使得 $ax=0$，那么
+  $a\in\Ann(x)$，这与 $\Ann(x)\subseteq\ideal m$ 矛盾，所以
+  $M=0$。
+\end{proof}
+
+\begin{proposition}\label{prop:injective is local}
+  令 $\phi:M\to N$ 是 $A$-模同态，那么下面的说法是等价的：
+  \begin{enumerate}
+    \item $\phi$ 是单射；
+    \item 对于每个素理想 $\ideal p$，$\phi_{\ideal p}:M_{\ideal p}\to N_{\ideal p}$ 是单射；
+    \item 对于每个极大理想 $\ideal m$，$\phi_{\ideal m}:M_{\ideal m}\to N_{\ideal m}$ 是单射。
+  \end{enumerate}
+  将单射替换为满射也正确。
+\end{proposition}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 由分式化的正合性质即得。$(2)\Rightarrow (3)$
+  极大理想都是素理想。
+
+  $(3)\Rightarrow (1)$ 对于任意极大理想 $\ideal m$，有 $\ker\phi_{\ideal m}=0$。
+  将 $(\ker\phi)_{\ideal m}$ 视为 $M_{\ideal m}$ 的子集。
+  若 $x/a\in \ker\phi_{\ideal m}$，故 $\phi(x)/a=0/1$，即存在 $u\in A-\ideal m$
+  使得 $\phi(ux)=u\phi(x)=0$，故 $x/a=ux/ua\in (\ker\phi)_{\ideal m}$。
+  反之，若 $x/a\in(\ker\phi)_{\ideal m}$，那么 $\phi_{\ideal m}(x/a)=\phi(x)/a=0$，
+  故 $x/a\in \ker\phi_{\ideal m}$。所以 $(\ker\phi)_{\ideal m}=\ker\phi_{\ideal m}=0$，
+  根据 \autoref{prop:zero is local}，所以 $\ker\phi=0$，即 $\phi$ 是单射。
+
+  对于满射的情况类似。
+\end{proof}
+
+\begin{proposition}[平坦性是局部性质]
+  对于任意 $A$-模 $M$，下面的说法是等价的：
+  \begin{enumerate}
+    \item $M$ 是平坦 $A$-模；
+    \item 对于每个素理想 $\ideal p$，$M_{\ideal p}$ 是平坦 $A_{\ideal p}$-模；
+    \item 对于每个极大理想 $\ideal m$，$M_{\ideal m}$ 是平坦 $A_{\ideal m}$-模。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 根据 \autoref{prop:fraction is exact}，
+  有 $A_{\ideal p}$-模同构 $M_{\ideal p}\simeq A_{\ideal p}\otimes_AM$，
+  而 $A_{\ideal p}\otimes_AM$ 是平坦 $A_{\ideal p}$-模（平坦模进行标量扩张仍然是平坦模）。
+  $(2)\Rightarrow (3)$ 极大理想都是素理想。
+
+  $(3)\Rightarrow (1)$ 令 $f:N\to N'$ 是 $A$-模的单同态。对于任意极大理想 $\ideal m$，
+  根据 \autoref{prop:injective is local}，我们知道 $f_{\ideal m}:N_{\ideal m}\to N'_{\ideal m}$
+  是单同态，所以 $f_{\ideal m}\otimes\mathbb{1}_{M_{\ideal m}}:
+  N_{\ideal m}\otimes_{A_{\ideal p}}M_{\ideal m}\to N'_{\ideal m}\otimes_{A_{\ideal p}}M_{\ideal m}$
+  是单同态，根据 \autoref{prop:isomorphism of tensor and fraction}，所以
+  $(f\otimes\mathbb{1})_{\ideal m}:(N\otimes_AM)_{\ideal m}\to (N'\otimes_AM)_{\ideal m}$ 是单同态，
+  根据 \autoref{prop:injective is local}，所以 $f\otimes\mathbb{1}:N\otimes_AM\to N'\otimes_AM$
+  是单同态，故 $M$ 是平坦 $A$-模。
+\end{proof}
+
+\section{分式环中理想的扩张和收缩}
+
+$A$ 是环，$S$ 是 $A$ 的乘性子集，$f:A\to S^{-1}A$ 是自然同态。
+回顾 \autoref{prop:property of extension and contraction}，
+令 $C$ 为所有理想的收缩构成的 $A$ 中理想的集合，$E$ 为所有理想的扩张构成的 $S^{-1}A$
+中理想的集合。如果 $\ideal a$ 是 $A$ 的理想，那么 $\ideal a^e$ 
+为所有 $a/1\ (a\in\ideal a)$ 生成的理想，实际上就是 $S^{-1}\ideal a$。
+
+\begin{proposition}
+  (1) $S^{-1}A$ 中的每个理想都是 $A$ 中某个理想的扩张。
+
+  (2) 如果 $\ideal a$ 是 $A$ 的理想，那么 $\ideal a^{ec}=\bigcup_{s\in S}(\ideal a:s)$，
+  所以 $\ideal a^e=(1)$ 当且仅当 $\ideal a\cap S\neq\emptyset$。
+
+  (3) $\ideal a\in C$ 当且仅当 $S$ 的元素在 $A/\ideal a$ 中都不是零因子。
+
+  (4) $S^{-1}A$ 的素理想一一对应到 $A$ 的与 $S$ 不相交的素理想，
+  对应关系为 $\ideal p\leftrightarrow S^{-1}\ideal p$。
+
+  (5) $S^{-1}$ 操作与理想的有限和、积、交和根式操作交换。
+\end{proposition}
+\begin{proof}
+  (1) 设 $\ideal b$ 是 $S^{-1}A$ 的理想，根据 \autoref{prop:property of extension and contraction}，
+  有 $\ideal b^{ce}\subseteq \ideal b$。任取 $x/s\in\ideal b$，那么
+  $f(x)=x/1=(x/s)(s/1)\in\ideal b$，所以 $x\in\ideal b^c$，所以
+  $x/s=f(x)\cdot (1/s)\in\ideal b^{ce}$，所以
+  $\ideal b=\ideal b^{ce}$。
+
+  (2) 若 $x\in\ideal a^{ec}$，那么 $x/1\in\ideal a^e=S^{-1}\ideal a$，所以存在
+  $x'\in\ideal a$ 和 $s\in S$ 使得 $x/1=x'/s$，所以存在 $t\in S$ 使得
+  $t(sx-x')\in\ideal a$，即 $(ts)x\in\ideal a$，
+  所以 $x\in (\ideal a:st)\subseteq\bigcup_{s\in S}(\ideal a:s)$。
+  另一方面，若 $x\in\bigcup_{s\in S}(\ideal a:s)$，即存在 $s\in S$
+  使得 $sx\in\ideal a$，那么 $x/1=sx/s\in S^{-1}\ideal a$，即
+  $x\in\ideal a^{ec}$。这就证明了 $\ideal a^{ec}=\bigcup_{s\in S}(\ideal a:s)$。
+  $\ideal a^e=(1)$ 当且仅当 $\ideal a^{ec}=A$，那么存在 $s\in S$ 使得 $s=s\cdot 1\in\ideal a$，
+  即 $s\in S\cap\ideal a$。反之，若 $s\in S\cap\ideal a$，那么任意的 $x\in A$ 都有
+  $sx\in\ideal a$，即 $x\in\ideal a^{ec}$，所以 $\ideal a^{ec}=A$。
+
+  (3) 若 $\ideal a\in C$，根据 \autoref{prop:property of extension and contraction}，那么 
+  $\ideal a^{ec}=\ideal a$，令 $s\in S$ 使得 $(s+\ideal a)(x+\ideal a)=0$，那么
+  $sx\in\ideal a$，于是 $x\in\ideal a^{ec}=\ideal a$，即 $x+\ideal a=0$，故 $s+\ideal a $
+  不是零因子。若任意 $s\in S$ 在 $A/\ideal a$ 中都不是零因子，那么任取
+  $x\in\ideal a^{ec}$，那么存在 $t\in S$ 使得 $tx\in\ideal a$，即在 $A/\ideal a$ 中有
+  $(t+\ideal a)(x+\ideal a)=0$，$t+\ideal a$ 不是零因子，所以 $x\in\ideal a$，即
+  $\ideal a=\ideal a^{ec}\in C$。
+
+  (4) 若 $\ideal q$ 是 $S^{-1}A$ 的素理想，由 (1)，那么 $\ideal q=\ideal q^{ce}$，
+  所以 $\ideal q$ 对应到 $A$ 的素理想 $\ideal q^c$，并且 $\ideal q\neq (1)$
+  表明 $\ideal q^c\cap S=\emptyset$。反过来，若 $\ideal p$ 是 $A$ 的与
+  $S$ 不相交的素理想，有环同构 $S^{-1}A/S^{-1}\ideal p\simeq S^{-1}(A/\ideal p)$，
+  由于 $\ideal p\cap S=\emptyset$，所以 $S^{-1}(A/\ideal p)\neq 0$ 以及 $S^{-1}(A/\ideal p)$ 是整环，
+  所以 $S^{-1}\ideal p$ 是 $S^{-1}A$ 的素理想。
+
+  (5) 由 \autoref{prop:rule of extension and contraction}，可知 
+  $S^{-1}(\ideal a+\ideal b)=S^{-1}\ideal a+S^{-1}\ideal b$ 以及
+  $S^{-1}(\ideal a\ideal b)=(S^{-1}\ideal a)(S^{-1}\ideal b)$。
+  由 \autoref{coro:rule of fraction} 
+  可知 $S^{-1}(\ideal a\cap\ideal b)=(S^{-1}\ideal a)\cap (S^{-1}\ideal b)$。
+  下面我们证明 $\sqrt{S^{-1}\ideal a}=S^{-1}\sqrt{\ideal a}$。
+  由 \autoref{prop:rule of extension and contraction}，总是有
+  $S^{-1}\sqrt{\ideal a}\subseteq \sqrt{S^{-1}\ideal a}$。任取 $x/s\in\sqrt{S^{-1}\ideal a}$，
+  即存在 $n$ 使得 $x^n/s^n\in S^{-1}\ideal a$，即存在 $x'\in\ideal a$ 以及 $t\in S$
+  使得 $x^n/s^n=x'/t$，即存在 $u\in S$ 使得 $u(tx^n-s^nx')\in\ideal a$，
+  故 $utx^n\in\ideal a$，所以 $(utx)^n=(ut)^{n-1}utx^n\in\ideal a$，所以
+  $utx\in\sqrt{\ideal a}$，所以 $x/s=utx/uts\in S^{-1}\sqrt{\ideal a}$，所以
+  $\sqrt{S^{-1}\ideal a}\subseteq S^{-1}\sqrt{\ideal a}$。
+\end{proof}
+
+\begin{corollary}
+  $\nil(S^{-1}A)=S^{-1}(\nil A)$。
+\end{corollary}
+\begin{proof}
+  注意到 $\nil A=\sqrt{(0)}$，所以
+  \[
+    \nil(S^{-1}A)=\sqrt{(0/1)}=\sqrt{S^{-1}(0)}=S^{-1}\sqrt{(0)}=S^{-1}(\nil A).\qedhere
+  \]
+\end{proof}
+
+\begin{corollary}
+  如果 $\ideal p$ 是 $A$ 的素理想，那么局部环 $A_{\ideal p}$ 的素理想一一对应到
+  $A$ 的被 $\ideal p$ 包含的素理想。
+\end{corollary}
+\begin{proof}
+  局部环 $A_{\ideal p}$ 的素理想一一对应到 $A$ 的与 $A-\ideal p$ 不相交的素理想。
+\end{proof}
+
+回顾同态对应定理，可以看出对于一个素理想 $\ideal p$，我们有
+\begin{itemize}[nosep]
+  \item 局部环 $A_{\ideal p}$ 的构造搜集了 $A$ 的所有被 $\ideal p$ 的素理想。
+  \item 商环 $A/\ideal p$ 的构造搜集了 $A$ 的所有包含 $\ideal p$ 的素理想。
+\end{itemize}
+假设 $\ideal p,\ideal q$ 是素理想并且 $\ideal p\supseteq \ideal q$，那么
+$A_{\ideal p}/\ideal q_{\ideal p}\simeq (A/\ideal q)_{\bar{\ideal p}}$，
+此时 $A_{\ideal p}/\ideal q_{\ideal p}$ 的素理想一一对应到 $A_{\ideal p}$ 的包含 $\ideal q_{\ideal p}$
+的素理想，又一一对应到 $A$ 的被 $\ideal p$ 包含且包含 $\ideal q$ 的素理想。
+特别地，如果 $\ideal p=\ideal q$，那么 $A_{\ideal p}$
+的包含 $\ideal q_{\ideal p}$ 的素理想只有一个，即 $\ideal q_{\ideal p}$ 本身，
+所以 $A_{\ideal p}$ 的极大理想必须为 $\ideal q_{\ideal p}$，
+故 $A_{\ideal p}/\ideal q_{\ideal p}$ 实际上是 $A_{\ideal p}$ 的剩余域，
+右端 $(A/\ideal q)_{\bar{\ideal p}}$ 刚好是整环 $A/\ideal q$ 的分式域，
+所以这告诉我们 $A_{\ideal p}$ 的剩余域同构于 $A/\ideal p$ 的分式域！
+此时 $A_{\ideal p}$ 的剩余域或者 $A/\ideal p$ 的分式域我们都记为 $k(\ideal p)$。
+
+
+\begin{proposition}
+  令 $M$ 是有限生成 $A$-模，$S$ 是 $A$ 的乘性子集，那么 $S^{-1}(\Ann(M))=\Ann(S^{-1}M)$。
+\end{proposition}
+\begin{proof}
+  首先假设 $M$ 由一个元素生成，即 $M=(x)$。考虑 $A$-模同态 $f:A\to M$，满足 $f(a)=ax$。
+  $f$ 是满同态，并且 $\ker f=\Ann(M)$，所以有 $A$-模同构 $A/\Ann(M)\simeq M$，
+  所以有 $S^{-1}A$-模同构 $S^{-1}M\simeq S^{-1}A/S^{-1}(\Ann(M))$，
+  故 $\Ann(S^{-1}M)=S^{-1}(\Ann(M))$。
+
+  此时，对于任意两个循环 $A$-模 $N,P$，有
+  \begin{align*}
+    S^{-1}(\Ann(N+P))&=S^{-1}(\Ann(N)\cap\Ann(P))=S^{-1}(\Ann(N))\cap S^{-1}(\Ann(P))\\
+    &=\Ann(S^{-1}N)\cap \Ann(S^{-1}P)=\Ann(S^{-1}N+S^{-1}P)\\
+    &=\Ann(S^{-1}(N+P)).
+  \end{align*}
+  所以 $M$ 有限生成的时候均成立。
+\end{proof}
+
+\begin{corollary}
+  若 $N,P$ 是 $A$-模 $M$ 的子模，并且 $P$ 是有限生成的，那么
+  $S^{-1}(N:P)=(S^{-1}N:S^{-1}P)$。
+\end{corollary}
+\begin{proof}
+  注意到 $(N:P)=\Ann((N+P)/N)$ 即可。
+\end{proof}
+
+\begin{proposition}\label{prop:condition of contraction}
+  令 $f:A\to B$ 是环同态，$\ideal p$ 是 $A$ 的素理想，那么 $\ideal p$ 是 $B$
+  中素理想的收缩当且仅当 $\ideal p^{ec}=\ideal p$。
+\end{proposition}
+\begin{proof}
+  若 $\ideal p=\ideal q^c$，$\ideal q$ 是 $B$ 的素理想，那么 
+  $\ideal p^{ec}=\ideal q^{cec}=\ideal q^c=\ideal p$。
+
+  反过来，若 $\ideal p^{ec}=\ideal p$，记 $S=f(A-\ideal p)$，那么 $S$
+  是 $B$ 的乘性子集。$\ideal p^e$ 与 $S$ 不相交，所以 $S^{-1}(\ideal p^e)$
+  是恰当理想，所以 $S^{-1}(\ideal p^e)$ 被 $S^{-1}B$ 的极大理想 $\ideal m$ 包含，
+  记 $\ideal q$ 是 $\ideal m$ 在 $B$ 中的收缩，那么 $\ideal q$ 是 $B$ 的素理想，
+  并且 $\ideal q\supseteq \ideal p^e$，所以 $f^{-1}(\ideal q)\supseteq \ideal p^{ec}=\ideal p$。
+  又因为 $\ideal q\cap S=\emptyset$，所以 $\ideal q\subseteq f(\ideal p)\subseteq\ideal p^e$，所以
+  $f^{-1}(\ideal q)\subseteq \ideal p^{ec}=\ideal p$。所以我们有
+  $\ideal p=\ideal q^c$。
+\end{proof}
+
+\section{EXERCISES}
+
+\begin{problem}
+  令 $S$ 是环 $A$ 的乘性子集，$M$ 是有限生成 $A$-模，证明 $S^{-1}M=0$ 当且仅当
+  存在 $s\in S$ 使得 $sM=0$。
+\end{problem}
+\begin{proof}
+  若 $S^{-1}M=0$，设 $M$ 由 $x_1,\dots,x_n$ 生成，
+  那么 $x_i/1=0/1$，即存在 $s_i\in S$ 使得 $s_ix_i=0$。
+  令 $s=s_1\cdots s_n$，那么对于任意的 $x\in M$，有 $x=a_1x_1+\cdots+a_nx_n$，
+  从而 $sx=0$，所以 $sM=0$。
+
+  若存在 $s\in S$ 使得 $sM=0$，那么任取 $x\in M,t\in S$，有 $x/t=0/1$，所以 $S^{-1}M=0$。
+\end{proof}
+
+\begin{problem}
+  令 $\ideal a$ 是环 $A$ 的理想，令 $S=1+\ideal a$。证明 $S^{-1}\ideal a$ 被
+  $S^{-1}A$ 的 Jacobson 根包含。
+\end{problem}
+
+

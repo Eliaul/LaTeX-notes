@@ -1,0 +1,693 @@
+\documentclass[fontset=none,zihao=-4]{Notes}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\usepackage{tikz-cd,wrapstuff}
+\usepackage{fixdif,siunitx,tikz,nicematrix}
+
+\usetikzlibrary{hobby,calc,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.pathreplacing}
+
+\input{font.def}
+
+\DeclareMathOperator\Int{Int}
+\DeclareMathOperator\supp{supp}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Ann{Ann}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\diag{diag}
+\DeclareMathOperator\Or{O}
+\DeclareMathOperator\Sp{Sp}
+\DeclareMathOperator\cha{char}
+\DeclareMathOperator\rad{rad}
+\DeclareMathOperator\rank{rank}
+
+\newcommand{\inn}[1]{\left\langle#1\right\rangle}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\spa}[1]{\operatorname{span}\left(#1\right)}
+\DeclareMathSymbol{\bot}{\mathrel}{symbols}{"3F}
+
+\tikzcdset{
+  arrow style=tikz,
+  diagrams={>={Straight Barb[scale=0.8]}}
+}
+
+\tikzset{
+  point/.style={
+    circle,fill,inner sep=0pt,minimum width=5pt
+  }
+}
+
+\usepackage[subscriptcorrection,nofontinfo,mtpbb]{mtpro2}
+
+
+
+\setlist[enumerate]{nosep,label=(\arabic*)}
+\setlist[itemize]{nosep}
+
+\title{\sffamily 双线性型}
+\author{Eliauk}
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{定义与基本理论}
+
+设 $V$ 是域 $\mathbb{F}$ 上的向量空间，映射 $\inn{,}:V\times V\to \mathbb{F}$
+如果在每个分量上的都是线性的，即满足
+\[
+  \inn{ax+by,z}=a\inn{x,z}+b\inn{y,z}  
+\]
+以及
+\[
+  \inn{z,ax+by}=a\inn{z,x}+b\inn{z,y},  
+\]
+那么我们说 $\inn{,}$ 是一个\emph{双线性型}。如果双线性型满足
+\[
+  \inn{x,y}=\inn{y,x} \quad\forall x,y\in V,  
+\]
+那么我们说这个双线性型是\emph{对称型}。如果双线性型满足
+\[
+  \inn{x,y}=-\inn{y,x}  \quad\forall x,y\in V,  
+\]
+那么我们说这个双线性型是\emph{反对称型}。如果双线性满足
+\[
+  \inn{x,x}=0\quad \forall x\in V,  
+\]
+那么我们说这个双线性型是\emph{交错型}。
+
+本文所指的向量空间 $V$ 均表示其附带一个双线性型 $\inn{,}$。
+如果 $V$ 配备对称型，那么我们说 $V$ 是 $\mathbb{F}$ 上的\emph{正交几何}。
+如果 $V$ 配备交错型，那么我们说 $V$ 是 $\mathbb{F}$ 上的\emph{辛几何}。
+显然，Euclid 内积空间是 $\mathbb{R}$ 上的正交几何。
+此外，本文出现的“$V$ 的子空间”均配备和 $V$ 一样的双线性型。
+
+\begin{example}
+  \emph{Minkowski 空间} $M_4$ 指的就是一个四维的正交几何 $\mathbb{R}^4$，
+  其配备的对称型定义为
+  \begin{align*}
+    \inn{e_1,e_1}&=\inn{e_2,e_2}=\inn{e_3,e_3}=1 ,\\
+    \inn{e_4,e_4}&=-1,\\
+    \inn{e_i,e_j}&=0  \ (i\neq j).
+  \end{align*}
+  其中 $e_1,\dots,e_4$ 是 $\mathbb{R}^4$ 的标准基。
+\end{example}
+
+上述定义的对称型、反对称型和交错型的概念并不是相互独立的，它们取决于基域
+$\mathbb{F}$ 的性质。
+
+\begin{theorem}
+  $V$ 是域 $\mathbb{F}$ 上的向量空间。
+  \begin{enumerate}
+    \item 若 $\cha(\mathbb{F})=2$，那么
+    交错型都是对称型，并且对称型和反对称型等价。
+    \item 若 $\cha(\mathbb{F})\neq 2$，那么
+    交错型和反对称型等价。此时唯一的既是交错型又是对称型的双线性型是
+    零型：对于任意的 $x,y\in V$ 都有 $\inn{x,y}=0$。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  首先注意到交错型满足
+  \[
+    0=\inn{x+y,x+y}=\inn{x,y}+\inn{y,x},  
+  \]
+  即 $\inn{x,y}=-\inn{y,x}$，所以交错型总是为反对称型。
+
+  若 $\cha(\mathbb{F})=2$，那么对于交错型而言，有 $\inn{x,y}=-\inn{y,x}=\inn{y,x}$，
+  所以交错型总是为对称型。又因为此时 $-1=1$，所以对称型和反对称型等价。
+  若 $\cha(\mathbb{F})\neq 2$，对于反对称型而言，有 $\inn{x,x}=-\inn{x,x}$，
+  所以 $\inn{x,x}=0$，故反对称型总是为交错型。
+\end{proof}
+
+设 $e_1,\dots,e_n$ 是向量空间 $V$ 的一组基，任取 $x=\sum x_ie_i$ 以及
+$y\in\sum y_je_j$，那么
+\[
+  \inn{x,y}=\sum_{i=1}^n\sum_{j=1}^n x_iy_j\inn{e_i,e_j}
+  =
+  \begin{pmatrix}
+    x_1 & x_2 & \cdots & x_n
+  \end{pmatrix}A
+  \begin{pmatrix}
+    y_1 \\ y_2 \\ \vdots \\ y_n
+  \end{pmatrix},
+\]
+其中矩阵
+\[
+  A=\bigl(\inn{e_i,e_j}\bigr)=\begin{pmatrix}
+    \inn{e_1,e_1} & \inn{e_1,e_2} & \cdots & \inn{e_1,e_n} \\
+    \inn{e_2,e_1} & \inn{e_2,e_2} & \cdots & \inn{e_2,e_n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \inn{e_n,e_1} & \inn{e_n,e_2} & \cdots & \inn{e_n,e_n}
+  \end{pmatrix}  .
+\]
+这表明这个双线性型由矩阵 $A$ 唯一确定，所以我们将 $A$ 称为
+双线性型相对于这组基下的表示矩阵。我们说矩阵 $A$ 是\emph{交错矩阵}
+当且仅当其是反对称矩阵并且对角线全为零（在特征不为 $2$ 的域上显然等价于反对称矩阵）。由此我们可以看出，一个双线性型
+是对称型当且仅当其表示矩阵是对称矩阵，是反对称型当且仅当其表示矩阵
+是反对称矩阵，是交错型当且仅当其表示矩阵是交错矩阵。
+
+下面我们观察改变基对表示矩阵的影响。设 $f_1,\dots,f_n$ 是另一组基，
+记 $e_1,\dots,e_n$ 到 $f_1,\dots,f_n$ 的过渡矩阵为 $P$，即
+\[
+  (f_1,\dots,f_n)=(e_1,\dots,e_n)P.  
+\]
+设双线性型在 $f_1,\dots,f_n$ 下的表示矩阵是 $B$。任取 $x=\sum x_if_i$，
+$y=\sum y_jf_j$，那么
+\[
+  \inn{x,y}= \left[P\begin{pmatrix}
+    x_1 \\x_2 \\ \vdots \\ x_n
+  \end{pmatrix}\right]^T A\left[
+    P  \begin{pmatrix}
+      y_1 \\ y_2 \\ \vdots \\ y_n
+    \end{pmatrix}
+  \right]=  \begin{pmatrix}
+    x_1 & x_2 & \cdots & x_n
+  \end{pmatrix}P^TAP
+  \begin{pmatrix}
+    y_1 \\ y_2 \\ \vdots \\ y_n
+  \end{pmatrix},
+\]
+所以 $B=P^TAP$。因此，给定矩阵 $A,B\in M_n(\mathbb{F})$，如果存在可逆矩阵
+$P$ 使得
+\[
+  A=P^TBP,  
+\]
+那么我们说 $A$ 和 $B$ 是\emph{合同的}。容易验证合同是一个等价关系。
+
+设向量空间 $V$ 有一组基 $e_1,\dots,e_n$。给定一个矩阵 $A$，
+任取 $x=\sum x_ie_i$ 以及 $y=\sum y_je_j$，那么我们可以定义
+\[
+  \inn{x,y}=    \begin{pmatrix}
+    x_1 & x_2 & \cdots & x_n
+  \end{pmatrix}A
+  \begin{pmatrix}
+    y_1 \\ y_2 \\ \vdots \\ y_n
+  \end{pmatrix},
+\]
+不难验证这给出了 $V$ 上的一个双线性型。所以在给定一组基的前提下，$V$
+上的双线性型和 $\mathbb{F}$ 上的 $n$ 阶矩阵是一一对应的。
+若 $B$ 和 $A$ 合同，即 $B=P^TAP$，此时考虑 $V$ 的另一组基
+$f_1,\dots,f_n$，满足
+\[
+  (f_1,\dots,f_n)=(e_1,\dots,e_n)P,
+\]
+那么对于上述 $x,y$，有
+\[
+  \inn{x,y}=  \left[P^{-1}\begin{pmatrix}
+    x_1 \\x_2 \\ \vdots \\ x_n
+  \end{pmatrix}\right]^T P^TAP\left[
+    P^{-1} \begin{pmatrix}
+      y_1 \\ y_2 \\ \vdots \\ y_n
+    \end{pmatrix}\right]=\begin{pmatrix}
+      x_1 & x_2 & \cdots & x_n
+    \end{pmatrix}A
+    \begin{pmatrix}
+      y_1 \\ y_2 \\ \vdots \\ y_n
+    \end{pmatrix},
+\]
+所以合同的矩阵表示相同的双线性型。综合起来，
+两个矩阵合同当且仅当它们表示相同的双线性型。
+
+\section{二次型}
+
+向量空间 $V$ 上的函数 $Q:V\to\mathbb{F}$ 如果满足：
+\begin{enumerate}
+  \item 对于任意的 $a\in\mathbb{F}$ 和 $x\in V$，有
+  \[
+    Q(ax)=a^2Q(x),  
+  \]
+  \item 映射
+  \[
+    \inn{x,y}_Q=Q(x+y)-Q(x)-Q(y)
+  \]
+  是一个（对称）双线性型，
+\end{enumerate}
+那么我们说 $Q$ 是一个\emph{二次型}。根据定义，每个二次型 $Q$ 都定义了一个对应的
+对称型 $\inn{x,y}_Q$。反之，如果 $\cha(\mathbb{F})\neq 2$，$\inn{,}$ 是一个对称型，
+那么
+\[
+  Q(x)=\frac{1}{2}\inn{x,x}  
+\]
+是 $V$ 上的一个二次型。此时 $Q$ 定义的对称型就是 $\inn{,}$。
+这表明 $V$ 上的对称双线性型和二次型之间存在一一对应。故知道了 $V$ 上
+的二次型就相当于知道了对应的对称双线性型。
+
+假设 $\cha(\mathbb{F})\neq 2$，设 $e_1,\dots,e_n$ 是正交几何 $V$ 上的一组基，
+$V$ 上的对称型在这组基下的表示矩阵为 $A=(a_{ij})$，那么对于
+$x=\sum x_ie_i$，有
+\[
+  Q(x)=\frac{1}{2}\inn{x,x}=\frac{1}{2}\sum_{i,j=1}^n a_{ij}x_ix_j.  
+\]
+所以二次型 $Q$ 是 $x_1,\dots,x_n$ 的二次齐次多项式。
+
+\section{正交性}
+
+下面我们拓宽内积空间的一些定义。令 $V$ 是向量空间，对于 $x,y\in V$，
+如果 $\inn{x,y}=0$，那么我们说 $x,y$ \emph{正交}，记作 $x\bot y$。
+对于 $V$ 的子集 $S$，如果任取 $s\in S$ 有 $x\bot s$，那么我们说
+$x$ 正交于子集 $S$，记作 $x\bot S$。对于两个子集 $S,T$，如果任取 $s\in S$
+和 $t\in T$ 有 $s\bot t$，那么我们说 $S,T$ 正交，记作 $S\bot T$。
+对于子集 $X\subseteq V$，定义\emph{正交补}为
+\[
+  X^\bot =\{v\in V\,|\, v\bot X\}.  
+\]
+时刻注意，本文中的 $\inn{,}$ 仅仅表示双线性型而未必是内积。
+对于一般的双线性型而言，正交不一定具有对称型，即 $x\bot y$ 并不一定推出
+$y\bot x$。对于对称型和交错型而言，$x\bot y$ 和 $y\bot x$ 才是等价的。
+这也是为什么我们主要研究对称型和交错型的原因。
+
+对于一个向量 $x\in V$ 而言，有一种退化的情况，即自己与自己正交，此时
+我们给出下面的术语。令 $V$ 是一个向量空间，向量 $x\in V$ 如果满足
+$\inn{x,x}=0$，那么我们说 $x$ 是\emph{迷向向量}，否则称之为\emph{非迷向向量}。
+如果 $V$ 至少包含一个非零迷向向量，那么我们说 $V$ 是\emph{迷向空间}，否则称之为\emph{非迷向空间}。
+如果 $V$ 中每个向量都是迷向向量，那么我们说 $V$ 是\emph{完全迷向空间}（即辛几何）。
+
+注意到，如果 $x\in V$ 是迷向向量，那么对于任意 $a\in\mathbb{F}$，$ax$ 都是迷向向量。
+这表明 $V$ 中的迷向向量集合对标量乘法封闭，这样的子集称为 $V$ 中的\emph{锥体}。
+
+进一步的，我们考虑更严重的退化情况，即下面的术语。
+令 $V$ 是一个向量空间，向量 $x$ 如果满足 $x\bot V$，那么我们说 $x$ 是\emph{退化向量}。
+$V$ 中所有退化向量的集合 $V^\bot$ 我们称之为 $V$ 的\emph{根}，记为 $\rad(V)$。
+如果 $\rad(V)=\{0\}$，那么我们说 $V$ 是\emph{非退化的}，否则我们说
+$V$ 是\emph{退化的}。如果 $\rad(V)=V$，那么
+我们说 $V$ 是\emph{完全退化的}。
+
+\begin{theorem}
+  向量空间 $V$ 是非退化的当且仅当双线性型 $\inn{,}$ 在任意基下的表示矩阵是可逆的。
+\end{theorem}
+\begin{proof}
+  $(\Rightarrow)$ 设 $V$ 的一组基为 $e_1,\dots,e_n$，$\inn{,}$ 在这组基下
+  的表示矩阵为 $A$，令 $Ay=0$，设 $y=(y_1,\dots,y_n)$，记 $y'=\sum_i y_ie_i\in V$。
+  任取 $x'=\sum x_ie_i\in V$，记 $x=(x_1,\dots,x_n)$，那么 
+  \[
+    \inn{x',y'}=x^TAy=0,  
+  \]
+  所以 $y'\bot V$，$V$ 非退化表明 $y'=0$，所以 $y=0$，所以 $A$ 可逆。
+
+  $(\Leftarrow)$ 继续采用上述记号。若 $A$ 可逆，令 $y'=\sum_iy_ie_i\in\rad(V)$，
+  那么任取 $x'=\sum x_ie_i\in V$，有 $\inn{x',y'}=x^TAy=0$，特别地，令
+  $x=Ay$，那么 $y^TA^TAy=0$，即 $\norm{Ay}^2=(Ay)^T(Ay)=0$，故 $Ay=0$，
+  $A$ 可逆表明 $y=0$，故 $y'=0$，所以 $\rad(V)=\{0\}$，即 $V$ 是非退化的。
+\end{proof}
+
+\begin{example}
+  非退化空间的子空间可能是退化的。考虑有限域 $\mathbb{F}_2$ 上的向量空间
+  $\mathbb{F}_2^4$，配备标准内积，即
+  \[
+    (x_1,\dots,x_4)\cdot(y_1,\dots,y_4)=x_1y_1+\cdots+x_4y_4,  
+  \]
+  这个双线性型的表示矩阵为单位阵，所以 $\mathbb{F}_2^4$ 是非退化的。
+  考虑子空间
+  \[
+    U=\{(0,0,0,0),(1,1,0,0),(0,0,1,1),(1,1,1,1)\},  
+  \]
+  不难验证这里面任意向量都是退化向量，所以 $U$ 甚至是完全退化空间。
+\end{example}
+
+若 $U\subseteq V$ 是子空间，那么 $\rad(U)$ 表示 $U$ 中与 $U$ 正交的向量集合，
+故
+\[
+  \rad(U)=U\cap U^\bot.  
+\]
+此外，还可以发现
+\[
+  \rad(U)=U\cap U^\bot\subseteq (U^\bot)^\bot\cap U^\bot=\rad(U^\bot),  
+\]
+所以如果 $U$ 是退化的，那么 $U^\bot$ 也是退化的。
+
+\begin{theorem}
+  令 $V$ 是向量空间，那么下面的说法是等价的：
+  \begin{enumerate}
+    \item 两个向量正交满足对称性，即 
+    \[
+      x\bot y\Rightarrow y\bot x;  
+    \]
+    \item $V$ 上的双线性型是对称型或者交错型。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  $(2)\Rightarrow (1)$ 交错型都是反对称型，此时 $x\bot y$ 表明 $\inn{x,y}=0$，
+  故 $\inn{y,x}=\pm\inn{x,y}=0$，故 $y\bot x$。
+
+  $(1)\Rightarrow (2)$ 为了方便起见，定义
+  $x\bowtie y$ 表示 $\inn{x,y}=\inn{y,x}$，$x\bowtie V$ 表示
+  对于任意的 $y\in V$ 有 $\inn{x,y}=\inn{y,x}$。如果对于所有的 $x\in V$
+  都有 $x\bowtie V$，即 $\inn{,}$ 是对称型。所以假设存在 $x\in V$ 使得
+  $x\not\bowtie V$。
+
+  我们首先说明 $x\bowtie y$ 表明 $x\bot y$。$x\not\bowtie V$ 表明存在 $z\in V$
+  使得 $\inn{x,z}\neq\inn{z,x}$。注意到
+  \begin{align*}
+    \inn{x,y}\bigl(\inn{x,z}-\inn{z,x}\bigr)&=\inn{x,y}\inn{x,z}-\inn{x,y}\inn{z,x}\\
+    &=\inn{y,x}\inn{x,z}-\inn{x,y}\inn{z,x}\\
+    &=\inn{x,\inn{y,x}z-\inn{z,x}y}.
+  \end{align*}
+  又因为
+  \[
+    \inn{\inn{y,x}z-\inn{z,x}y,x}=\inn{y,x}\inn{z,x}-\inn{z,x}\inn{y,x}=0,
+  \]
+  根据正交的对称性，所以 
+  \[
+    \inn{x,y}\bigl(\inn{x,z}-\inn{z,x}\bigr)=  \inn{x,\inn{y,x}z-\inn{z,x}y}=0,
+  \]
+  故 $\inn{x,y}=0$。由于 $x\bowtie x$，所以 $x\bot x$，这表明 $x$ 是迷向向量。
+
+  假设 $V$ 不是正交几何，我们证明 $V$ 中向量都是迷向向量，从而说明 $V$ 是辛几何。
+  $V$ 不是正交几何表明存在 $u,v\in V$ 使得 $u\not\bowtie v$，所以 $u\not\bowtie V$
+  以及 $v\not\bowtie V$，根据上面的叙述，$u,v$ 都是迷向向量。
+  任取 $w\in V$，若 $w\not\bowtie V$，则 $w$ 是迷向向量。若 $w\bowtie V$，
+  那么 $w\bowtie v$ 以及 $w\bowtie u$，根据上面的叙述，有 $w\bot v$ 以及 $w\bot u$。
+  注意到 $w-u\bot u$ 以及 $w=(w-u)+u$，所以
+  \[
+    \inn{w,w}=\inn{w-u,w-u}+\inn{w-u,u}+\inn{u,w-u}+\inn{u,u}=
+    \inn{w-u,w-u},  
+  \]
+  所以我们说明 $w-u$ 是迷向向量。注意到
+  \[
+    \inn{w-u,v}=-\inn{u,v}\neq-\inn{v,u}=\inn{v,w-u},  
+  \]
+  所以 $w-u\not\bowtie V$，所以 $w-u$ 是迷向向量，这就表明 $w$ 是迷向向量。
+
+  故正交性是对称的表明 $V$ 必然为正交几何或者辛几何。
+\end{proof}
+
+如果一个向量空间既是正交的又是辛的，那么这个双线性型既是对称型又是反对称型，因此
+\[
+  \inn{x,y}=\inn{y,x}=-\inn{x,y}.
+\]
+故 $\cha(\mathbb{F})\neq 2$ 的时候，$V$ 既是正交几何又是辛几何当且仅当
+$\rad(V)=V$，即 $V$ 是完全退化空间。
+但是，当 $\cha(\mathbb{F})=2$ 的时候，存在非退化的正交辛几何。例如，
+令 $V=\mathbb{F}_2^2$ 是 $\mathbb{F}_2$ 上的二维向量空间。考虑基 $e_1=(1,0),e_2=(0,1)$，
+在这组基下的矩阵
+\[
+  A=\begin{pmatrix}
+    0 & 1 \\
+    1 & 0
+  \end{pmatrix}  
+\]
+导出的双线性型既是对称型又是交错型，但是 $A$ 可逆，所以此时 $V$ 非退化。
+
+\section{线性泛函}
+
+对于有限维实或者复的内积空间 $V$，我们知道有 Riesz 表示定理，即若 $f\in V^*$
+是一个线性泛函（即 $V\to\mathbb{F}$ 的线性映射），那么存在唯一的 $u\in V$，使得对于任意的
+$v\in V$，有
+\[
+  f(v)=\inn{v,u}.  
+\]
+下面我们说明，对于非退化的向量空间，有类似的结果。
+
+令 $V$ 是 $\mathbb{F}$ 上的有限维向量空间，给定 $x\in V$，定义线性映射 $\inn{\cdot,x}:V\to\mathbb{F}$
+为
+\[
+  \inn{\cdot,x}v=\inn{v,x}.  
+\]
+然后定义线性映射 $\tau:V\to V^*$ 为 
+\[
+  \tau(x)=\inn{\cdot, x}.  
+\]
+$\inn{,}$ 是双线性型就表明 $\tau$ 是线性映射，并且
+\[
+  \ker\tau=\bigl\{\,x\in V \bigm| \inn{\cdot,x}=0\,\bigr\}  
+  =V^\bot=\rad(V).
+\]
+所以 $\tau$ 是单射（从而是同构）当且仅当 $V$ 是非退化的。
+
+\begin{theorem}[Riesz 表示定理]
+  令 $V$ 是有限维非退化向量空间，那么映射
+  \[
+    \tau:V\to V^*\quad \tau(x)=\inn{\cdot,x}  
+  \]
+  是同构。所以对于每个 $f\in V^*$，都存在唯一的 $x\in V$ 使得
+  \[
+    f(v)=\tau(x)(v)=\inn{v, x}  \quad \forall v\in V.
+  \]
+\end{theorem}
+\begin{proof}
+  $V$ 非退化当且仅当 $\tau$ 是单射，所以 $\tau$ 是同构，故存在
+  唯一的 $x\in V$ 使得 $f=\tau(x)$。
+\end{proof}
+
+\begin{theorem}[关于子空间的 Riesz 表示定理]\label{thm:Riesz for subspace}
+  令 $U$ 是有限维向量空间 $V$ 的子空间，如果 $V$ 和 $U$ 至少有一个非退化，那么
+  线性映射
+  \[
+      \tau:V\to U^*\quad \tau(x)=\inn{\cdot, x}|_U
+  \]
+  是满射并且 $\ker\tau=U^\bot$。因此，对于任意线性泛函 $f\in U^*$，存在（可能不唯一）
+  向量 $x\in V$ 使得对于任意 $u\in U$ 有 $f(u)=\inn{u,x}$。此外，如果 $U$
+  是非退化的，那么 $x$ 可以唯一地从 $U$ 中选取。
+\end{theorem}
+\begin{proof}
+  若 $V$ 非退化。对于任意的 $f\in U^*$，我们可以将其延拓为 $\bar f\in V^*$，这只需要扩充一组基，
+  然后令 $\bar f$ 在扩充基上取值为零即可。根据 Riesz 表示定理，存在 $x\in V$ 使得
+  $\bar f=\inn{\cdot,x}$，此时 $f=\inn{\cdot,x}|_U$，所以 $\tau$ 是满射。
+  令 $\inn{\cdot,x}|_U=0$，即对于任意的 $u\in U$ 有 $\inn{u,x}=0$，
+  所以 $\ker\tau=U^\bot$。
+
+  若 $U$ 非退化，将同构 $\tau:U\to U^*$ 延拓为 $\bar\tau:V\to U^*$ 即可。
+\end{proof}
+
+
+\section{正交补与正交直和}
+
+对于向量空间 $V$ 的子空间 $U,W$，如果 $U\bot W$ 并且 $U\oplus W=V$，那么
+我们说 $V$ 是 $U$ 和 $W$ 的\emph{正交直和}。如果 $V$ 是内积空间，那么我们知道
+$V=U\oplus U^\bot$。然而，在一般的向量空间中，正交补也不一定是向量空间补，例如，
+如果 $v$ 是退化向量，那么 $\spa{v}^\bot=V$，所以 $\spa{v}+\spa{v}^\bot$ 并不是直和。
+
+\begin{theorem}\label{thm:rad decomposition of V}
+  $V$ 是向量空间，那么
+  \[
+    V=\rad(V)\oplus U,  
+  \]
+  其中 $U$ 非退化，$\rad(V)$ 完全退化。
+\end{theorem}
+\begin{proof}
+  令 $U$ 为 $\rad(V)$ 的向量空间补，显然 $\rad(V)\bot U$。注意到此时有
+  $\rad(U)\subseteq\rad (V)$，所以 $\rad(U)=0$，故 $U$ 非退化。
+\end{proof}
+
+
+\begin{theorem}\label{thm:property of direct complements}
+  令 $U$ 是有限维向量空间 $V$ 的子空间。
+  \begin{enumerate}
+    \item 若 $U,V$ 至少有一个非退化，那么
+    \[
+      \dim U+\dim U^\bot=\dim V,  
+    \]
+    这表明 $V=U+U^\bot$，所以此时 $V=U\oplus U^\bot$ 当且仅当 $U\cap U^\bot=0$。
+    \item 若 $V$ 非退化，那么
+    \begin{enumerate}
+      \item $(U^\bot)^\bot=U$；
+      \item $\rad(U)=\rad(U^\bot)$；
+      \item $U$ 非退化当且仅当 $U^\bot$ 非退化。
+    \end{enumerate}
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  (1) 根据 \autoref{thm:Riesz for subspace}，映射 $\tau:V\to U^*$ 是满射，且
+  $\ker\tau=U^\bot$，故 $V/ U^\bot\simeq U^*\simeq U$，所以 
+  \[
+    \dim V-\dim U^\bot=\dim V/U^\bot=\dim U.
+  \]
+
+  (2) 显然 $U\subseteq (U^\bot)^\bot$。由 (1)，有
+  \[
+    \dim U+\dim U^\bot=\dim V, \quad \dim U^\bot+\dim(U^\bot)^\bot=\dim V,
+  \]
+  所以 $\dim U=\dim (U^\bot)^\bot$，故 $U=(U^\bot)^\bot$。因此
+  \[
+    \rad(U)=U\cap U^\bot=(U^\bot)^\bot\cap U^\bot=\rad(U^\bot).\qedhere
+  \]
+\end{proof}
+
+\section{等距}
+
+令 $V,W$ 是向量空间，我们使用同一个记号 $\inn{,}$ 分别表示 $V$ 和 $W$ 上的双线性型。
+一个线性映射 $\varphi:V\to W$ 如果是双射并且满足
+\[
+  \inn{\varphi(v),\varphi(u)}=\inn{v,u}\quad \forall v,u\in V,
+\]
+那么 $\varphi$ 被称为\emph{等距同构}。注意等号两边是不同的双线性型。
+显然所有 $V\to V$ 的等距同构全体构成一个群。
+若 $V$ 是非退化的正交几何，那么 $V$ 上的等距同构被称为\emph{正交变换}，
+所有正交变换构成的群被称为\emph{$V$ 上的正交群}，记为 $\Or(V)$。
+若 $V$ 是非退化的辛几何，那么 $V$ 上的等距同构被称为\emph{辛变换}，
+所有辛变换构成的群被称为\emph{$V$ 上的辛群}，记为 $\Sp(V)$。
+
+\begin{theorem}
+  设 $\varphi:V\to W$ 是有限维向量空间之间的线性映射。
+  \begin{enumerate}
+    \item 设 $V$ 的一组基为 $e_1,\dots,e_n$，那么 $\varphi$ 是等距同构当且仅当
+    \[
+      \inn{\varphi(e_i),\varphi(e_j)}=\inn{e_i,e_j}.
+    \]
+    \item 若 $V$ 是正交几何并且 $\cha(\mathbb{F})\neq 2$，那么 $\varphi$ 是等距同构
+    当且仅当 $\varphi$ 是双射并且
+    \[
+      \inn{\varphi(v),\varphi(v)}=\inn{v,v}\quad \forall v\in V.  
+    \]
+    \item 设 $\varphi$ 是等距同构并且
+    \[
+      V=U\oplus U^\bot,\quad W=T\oplus T^\bot,  
+    \]
+    如果 $\varphi(U)=T$，那么 $\varphi(U^\bot)=T^\bot$。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  (1) 是显然的。(2) 必要性显然，对于充分性，任取 $u,v\in V$，那么
+  \begin{align*}
+    \inn{u,u}+2\inn{u,v}+\inn{v,v}&=\inn{u+v,u+v}\\
+    &=\inn{\varphi(u+v),\varphi(u+v)}  \\
+    &=
+    \inn{\varphi(u),\varphi(u)}+2\inn{\varphi(u),\varphi(v)}+\inn{\varphi(v),\varphi(v)}\\
+    &=\inn{u,u}+2\inn{\varphi(u),\varphi(v)}+\inn{v,v},\\
+  \end{align*}
+  这就表明 $\inn{\varphi(u),\varphi(v)}=\inn{u,v}$，即 $\varphi$ 是等距同构。
+
+  (3) 任取 $v\in U^\bot$，$t\in T$，那么存在 $u\in U$ 使得 $t=\varphi(u)$，所以
+  \[
+    \inn{\varphi(v),t}=\inn{\varphi(v),\varphi(u)}=\inn{v,u}=0,  
+  \]
+  所以 $\varphi(v)\in T^\bot$，故 $\varphi(U^\bot)\subseteq T^\bot$。
+  又因为 $\dim V=\dim W$，$\dim U=\dim T$，所以 $\dim\varphi(U^\bot)=\dim U^\bot=\dim T^\bot$，
+  所以 $\varphi(U^\bot)=T^\bot$。
+\end{proof}
+
+\section{双曲空间}
+
+令 $V$ 是向量空间，两个向量 $u,v\in V$ 如果满足
+\[
+  \inn{u,u}=\inn{v,v}=0,\quad \inn{u,v}=1,  
+\]
+那么我们说 $u,v$ 是一个\emph{双曲对}。
+注意到如果 $V$ 是正交几何，那么 $\inn{v,u}=1$，如果 $V$ 是辛几何，那么
+$\inn{v,u}=-1$。现在假设 $V$ 是正交几何或者辛几何。
+双曲对 $u,v$ 张成的子空间 $\spa{u,v}$
+被称为\emph{双曲平面}。若子空间
+\[
+  H=H_1\oplus H_2\oplus\cdots\oplus H_k,  
+\]
+其中 $H_i$ 是双曲平面并且两两正交，那么我们说 $H$ 是一个\emph{双曲空间}。
+如果 $u_i,v_i$ 是 $H_i$ 的双曲对，那么我们说 $u_1,v_1,\dots,u_k,v_k$
+是 $H$ 的\emph{双曲基}（在辛几何的情况下一般被称为辛基）。
+根据定义，不难验证双曲空间都是非退化的。
+
+\section{子空间的非退化完备化}
+
+令 $U$ 是非退化向量空间 $V$ 的子空间，如果 $U$ 是退化的，那么寻找
+$V$ 中包含 $U$ 的最小非退化子空间是有用的。若 $V$ 的子空间 $S$
+包含 $U$，那么我们说 $S$ 是 $U$ 的一个\emph{扩张}。$U$ 的\emph{非退化完备化}
+是 $U$ 的所有非退化扩张中最小的子空间。
+
+\begin{theorem}
+  $V$ 是非退化的有限维向量空间，当 $V$ 是正交几何的时候我们假设
+  $\cha(\mathbb{F})\neq 2$。
+  \begin{enumerate}
+    \item 令 $S$ 是 $V$ 的子空间。如果 $v$ 是迷向向量并且 $\spa{v}\oplus S$
+    是正交直和，那么存在双曲平面 $H=\spa{v,z}$ 使得 $H\oplus S$ 是正交直和。
+    特别地，如果 $v$ 是迷向向量，那么存在包含 $v$ 的双曲平面。
+    \item 令 $U$ 是 $V$ 的子空间，根据 \autoref{thm:rad decomposition of V}，
+    可设
+    \[
+      U=\spa{v_1,\dots,v_k}\oplus W,  
+    \]
+    其中 $v_1,\dots,v_k$ 是 $\rad(U)$ 的一组基，$W$ 是非退化的。那么存在双曲空间
+    $H=H_1\oplus\cdots\oplus H_k$，其双曲基为 $v_1,z_1,\dots,v_k,z_k$，
+    使得
+    \[
+      \bar U=H\oplus W
+    \]
+    是正交直和，并且 $\bar U$ 是 $U$ 的非退化扩张。此时有
+    \[
+      \dim\bar U=\dim U+\dim(\rad(U)),
+    \]
+    我们把 $\bar U$ 称为 $U$ 的一个\emph{双曲扩张}。如果 $U$ 是非退化的，
+    那么 $\bar U=U$，即 $U$ 是自身的双曲扩张。 
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  (1) 根据 \autoref{thm:property of direct complements}，$V$ 非退化表明 $(S^\bot)^\bot=S$。
+  $v\notin S=(S^\bot)^\bot$ 表明存在 $x\in S^\bot$ 使得 $\inn{v,x}\neq 0$。
+  如果 $V$ 是辛几何，令 $z=(1/\inn{v,x})x$，此时 $\inn{v,z}=1$，所以 $v,z$
+  是双曲对。如果 $V$ 是正交几何，设 $z=rv+sx\in S^\bot$，那么
+  \[
+    \inn{v,z}=  r\inn{v,v}+s\inn{v,x}=s\inn{v,x}=1,
+  \]
+  解得 $s=1/\inn{v,x}$。另一方面，
+  \[
+    \inn{z,z}=r^2\inn{v,v}+2rs\inn{v,x}+s^2\inn{x,x}=2r+s^2\inn{x,x}=0,  
+  \]
+  表明 $r=-\inn{x,x}/(2\inn{v,x}^2)$，所以此时 $v,z$ 是双曲对。故总存在
+  $z\in S^\bot$ 使得 $H=\spa{v,z}$ 是双曲平面。此时 $H\subseteq S^\bot$，所以
+  $S=(S^\bot)^\bot\subseteq H^\bot$，因为 $H$ 非退化，所以 
+  \[
+    H\cap S\subseteq H\cap H^\bot =0,  
+  \]
+  所以 $H\oplus S$ 是正交直和。
+
+  (2) 对 $k$ 归纳。$k=1$ 时就是 (1)。假设结论对 $1,\dots,k-1$ 都成立。
+  因为
+  \[
+    U=\spa{v_k}\oplus\bigl(\spa{v_1,\dots,v_{k-1}}\oplus W\bigr),  
+  \]
+  由 (1)，存在双曲平面 $H_k=\spa{v_k,z_k}$ 使得 $H_k\oplus \bigl(\spa{v_1,\dots,v_{k-1}}\oplus W\bigr)$
+  是正交直和，根据假设，存在双曲空间 $H'=H_1\oplus\cdots\oplus H_{k-1}$，其
+  双曲基为 $v_1,z_1,\dots,v_{k-1},z_{k-1}$，使得 $H'\oplus W$ 是正交直和。
+  令 $H=H_k\oplus H'$，那么 $H\oplus W$ 就是正交直和。
+\end{proof}
+
+\begin{theorem}[非退化完备化定理]
+  令 $U$ 是非退化有限维向量空间 $V$ 的子空间，设 $U=\rad(U)\oplus W$ 是正交直和，
+  那么下面的说法是等价的：
+  \begin{enumerate}
+    \item $\bar U=H\oplus W$ 是 $U$ 的双曲扩张；
+    \item $\bar U$ 是 $U$ 的最小非退化扩张；
+    \item $\bar U$ 是 $U$ 的非退化扩张并且
+    \[
+      \dim\bar U=\dim U+\dim(\rad(U)).  
+    \]
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  设 $X$ 是 $U$ 的非退化扩张，考虑 $U$ 在 $X$ 中的双曲扩张
+  $H'\oplus W$，所以 $U$ 的任意非退化扩张都包含一个双曲扩张。又因为
+  \[
+    \dim(H'\oplus W)=  \dim U+\dim(\rad(U)),
+  \]
+  所以 $U$ 的双曲扩张都拥有同样的维数，这表明它们不可能互相恰当包含，故 $\bar U$ 是 $U$ 的最小非退化扩张。
+  这表明 $(1)\Rightarrow (2)\Rightarrow (3)$。
+
+  $(3)\Rightarrow (1)$ 若 $\bar U$ 是 $U$ 的非退化扩张并且
+  $\dim\bar U=\dim U+\dim(\rad(U))$，那么可以考虑 $U$ 在 $\bar{U}$ 中
+  的双曲扩张 $\tilde{U}$，此时 $\dim\tilde{ U}$ 的维数也为
+  $\dim U+\dim(\rad(U))$，所以 $\bar U=\tilde{U}$ 是 $U$ 的双曲扩张。
+\end{proof}
+
+
+
+\begin{thebibliography}{99}
+  \bibitem{LADR}  Axler S. Linear Algebra Done Right. Springer Nature; 2024.
+  \bibitem{Albert} Albert A. Regression and the Moore-Penrose Pseudoinverse.
+  \bibitem{Roman} Roman S, Axler S, Gehring FW. Advanced Linear Algebra. New York: Springer; 2005 Mar 22.
+  \bibitem{LTS} 李烔生, 查建国. 线性代数. 中国科学技术大学出版社; 1989.
+  \bibitem{XQH} 姚慕生, 吴泉水, 谢启鸿. 高等代数学. 复旦大学出版社; 2014.
+\end{thebibliography}
+
+
+
+
+\end{document}

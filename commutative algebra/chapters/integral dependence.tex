@@ -1,0 +1,985 @@
+\chapter{整相关和赋值}
+
+\section{整相关}
+
+令 $B$ 是环，$A$ 是 $B$ 的子环，$x\in B$ 在 $A$ 上是\emph{整的}，指的是
+$x$ 是某个 $A$ 中系数的首一多项式的根。显然 $A$ 的每个元素在 $A$ 上都是整的。
+
+\begin{proposition}\label{prop:integral dependence}
+  下面的说法是等价的：
+  \begin{enumerate}
+    \item $b\in B$ 在 $A$ 上是整的；
+    \item $A[b]$ 是有限生成 $A$-模；
+    \item $A[b]$ 被包含在 $B$ 的一个子环 $C$ 中，其中 $C$ 是有限生成 $A$-模；
+    \item 存在一个忠实的 $A[b]$-模 $M$（即 $\Ann(M)=0$），其作为 $A$-模是有限生成的。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 设 $b$ 满足方程
+  \[
+    x^n+a_{1}x^{n-1}+\cdots+  a_{n-1}x+a_n=0,
+  \]
+  那么 $b^{n+k}\ (k\geq 0)$ 都可以写为 $1,b,\dots,b^{n-1}$ 的 $A$-线性组合，
+  所以 $A[b]$ 是有限生成 $A$-模。
+
+  $(2)\Rightarrow (3)$ 取 $C=A[b]$ 即可。
+
+  $(3)\Rightarrow (4)$ 取 $M=C$，若 $f(b)\in A[b]$ 使得 $f(b)M=0$，特别地，
+  有 $f(b)=f(b)\cdot 1=0$，故 $\Ann(M)=0$，所以 $M$ 是忠实的 $A[b]$-模。
+
+  $(4)\Rightarrow (1)$ 根据 \autoref{prop:cayley}，取 $\phi:M\to M$
+  为 $\phi(x)=bx$，那么存在 $a_i\in A$ 使得
+  \[
+    \phi^n+a_1\phi^{n-1}+\cdots+a_n=0,  
+  \]
+  任取非零的 $x\in M$，那么 $\phi^k(x)=b^k x$，所以
+  \[
+    (b^n+a_1b^{n-1}+\cdots+a_n)x=0,  
+  \]
+  $M$ 是忠实的 $A[b]$-模表明 $b^n+a_1b^{n-1}+\cdots+a_n=0$，即 $b\in B$ 在 $A$ 上是整的。
+\end{proof}
+
+\begin{corollary}\label{coro:f.g. algebra is f.g. module}
+  令 $b_i\ (1\leq i\leq n)$ 是 $B$ 的元素，并且在 $A$ 上是整的。那么环
+  $A[b_1,\dots,b_n]$ 是有限生成 $A$-模。
+\end{corollary}
+\begin{proof}
+  对 $n$ 归纳，$n=1$ 的时候成立。设 $n=k$ 的时候成立，那么
+  $A[b_1,\dots,b_{k+1}]=A[b_1,\dots,b_k][b_{k+1}]$，并且 $b_{k+1}$
+  显然在 $A[b_1,\dots,b_k]$ 上是整的，所以 $A[b_1,\dots,b_{k+1}]$
+  是有限生成 $A$-模。
+\end{proof}
+
+\begin{corollary}
+  $B$ 中所有在 $A$ 上整的元素的集合 $C$ 是 $B$ 的包含 $A$ 的子环。
+\end{corollary}
+\begin{proof}
+  如果 $c_1,c_2\in C$，那么 $A[c_1,c_2]$ 是有限生成 $A$-模，此时
+  $A[c_1+c_2]\subseteq A[c_1,c_2]$，根据 \autoref{prop:integral dependence}
+  的 $(3)$，所以 $c_1+c_2$ 在 $A$ 上是整的，故 $c_1+c_2\in C$。
+  同理 $c_1-c_2,c_1c_2\in C$，故 $C$ 是子环。显然 $C$ 包含 $A$。
+\end{proof}
+
+上述推论中的 $C$ 被称为 $A$ 在 $B$ 中的\emph{整闭包}。如果 $C=A$，那么说
+$A$ 在 $B$ 中是\emph{整闭的}。如果 $C=B$，那么说 $B$ 在 $A$ 上是整的。
+
+\begin{corollary}
+  若 $A\subseteq B\subseteq C$ 是环，$B$ 在 $A$ 上是整的，$C$ 在 $B$ 上是
+  整的，那么 $C$ 在 $A$ 上是整的。
+\end{corollary}
+\begin{proof}
+  任取 $c\in C$，那么 $c$ 满足方程
+  \[
+    x^n+b_1x^{n-1}+\cdots+b_n=0\quad (b_i\in B),  
+  \]
+  由于 $b_i$ 在 $A$ 上是整的，所以 $A[b_1,\dots,b_n]$ 是有限生成 $A$-模，
+  此时 $c$ 在 $A[b_1,\dots,b_n]$ 上是整的，故 $A[b_1,\dots,b_n,c]$ 是
+  有限生成 $A[b_1,\dots,b_n]$-模，所以 $A[b_1,\dots,b_n,c]$ 是
+  有限生成 $A$-模，故 $c$ 在 $A$ 上是整的。
+\end{proof}
+
+\begin{corollary}
+  令 $A\subseteq B$ 是环，$C$ 为 $A$ 在 $B$ 中的整闭包，那么 $C$ 在 
+  $B$ 中是整闭的。
+\end{corollary}
+\begin{proof}
+  假设 $b\in B$ 在 $C$ 上是整的，那么 $b$ 在 $A$ 上是整的，所以 $b\in C$。
+\end{proof}
+
+下面的命题表明商和分式化的操作保持整相关性质。
+
+\begin{proposition}\label{prop:quotient preserve integral dependence}
+  令 $A\subseteq B$ 是环，$B$ 在 $A$ 上是整的。
+  \begin{enumerate}
+    \item 如果 $\ideal b$ 是 $B$ 的理想，$\ideal a=\ideal b^c=A\cap\ideal b$，
+    那么 $B/\ideal b$ 在 $A/\ideal a$ 上是整的。
+    \item 如果 $R$ 是平坦 $A$-代数，那么 $B\otimes_AR$ 在 $R$ 上是整的。
+    \item 如果 $S$ 是 $A$ 的乘性子集，那么 $S^{-1}B$ 在 $S^{-1}A$ 上是整的。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 对于环同态 $f:A\to B/\ideal b$，显然 $\ideal a=\ker f$，故
+  $f$ 诱导出单的环同态 $\bar f:A/\ideal a\to B/\ideal b$，
+  故 $A/\ideal a$ 可以视为 $B/\ideal b$ 的子环。
+  任取 $b+\ideal b\in B/\ideal b$，由于 $b$ 在 $A$ 上是整的，所以
+  \[
+    b^n+a_{1}b^{n-1}+\cdots+a_n=0\quad (a_i\in A),  
+  \]
+  那么
+  \begin{align*}
+    (b+\ideal b)^n+\bar f(a_1+\ideal a)(b+\ideal b)^{n-1}+\cdots+\bar f(a_n+\ideal a)=
+    (b^n+a_{1}b^{n-1}+\cdots+a_n)+\ideal b=0,
+  \end{align*}
+  所以 $b+\ideal b$ 在 $A/\ideal a$ 上是整的。
+
+  (2) $R$ 平坦表明 $R\simeq A\otimes_AR\to B\otimes_AR$ 是单射，
+  故通过 $r\mapsto 1\otimes r$，$R$ 可以视为 $B\otimes_AR$ 的子环。任取 $b\otimes r\in B\otimes_AR$，
+  由于 $b$ 在 $A$ 上是整的，所以
+  \[
+    b^n+a_{1}b^{n-1}+\cdots+a_n=0\quad (a_i\in A),  
+  \]
+  故
+  \begin{gather*}
+    (b\otimes r)^n+(a_1r)(b\otimes r)^{n-1}+\cdots+(a_{n-1}r^{n-1})(b\otimes r)+a_nr^n\\
+    =b^n\otimes r^n+(a_1b^{n-1})\otimes r^n+\cdots+(a_{n-1}b)\otimes r^n+a_n\otimes r^n=0,
+  \end{gather*}
+  所以 $b\otimes r$ 在 $R$ 上是整的。所以任意有限和 $\sum b_i\otimes r_i$ 在 $R$ 上是整的，
+  故 $B\otimes_AR$ 在 $R$ 上是整的。
+  
+  (3) 在 (2) 中取 $R=S^{-1}A$ 即可，注意到 $S^{-1}A$ 是平坦 $A$-模，以及
+  $B\otimes_A S^{-1}A\simeq S^{-1}B$。
+\end{proof}
+      
+\section{上行定理}
+
+\begin{proposition}
+  令 $A\subseteq B$ 是整环，$B$ 在 $A$ 上是整的。那么 $B$ 是域当且仅当 $A$ 是域。
+\end{proposition}
+\begin{proof}
+  假设 $A$ 是域，任取非零的 $b\in B$，取以 $b$ 为零点的 $A[x]$ 中的最低次多项式，即
+  \[
+    b^n+a_1b^{n-1}+\cdots+a_{n-1}b+a_n=0,  
+  \]
+  那么 $a_n\neq 0$，否则 $B$ 是整环表明 $b^{n-1}+a_1b^{n-2}+\cdots+a_{n-1}=0$，违背了
+  最低次的假设。于是
+  \[
+    -b(b^{n-1}+a_1b^{n-2}+\cdots+a_{n-1})a_n^{-1}=1,
+  \]
+  所以 $b$ 可逆，逆元为 $-a_n^{-1}(b^{n-1}+a_1b^{n-2}+\cdots+a_{n-1})$，故 $B$ 是域。
+
+  假设 $B$ 是域，任取非零的 $a\in A\subseteq B$，那么 $a^{-1}\in B$ 在 $A$ 上是整的，所以存在
+  \[
+    a^{-m}+a_1'a^{-m+1}+\cdots+a_m'=0,  
+  \]
+  两边乘以 $a^{m-1}$，这表明
+  \[
+     a^{-1}=-(a_1'+\cdots+a_m'a^{m-1})\in A,
+  \]
+  故 $a$ 可逆，$A$ 为域。
+\end{proof}
+
+\begin{corollary}\label{coro:maximal ideal of integral}
+  令 $A\subseteq B$ 是环，$B$ 在 $A$ 上是整的，令 $\ideal q$ 是 $B$ 是素理想，
+  $\ideal p=\ideal q^c=A\cap\ideal q$，那么 $\ideal q$ 是极大理想当且仅当
+  $\ideal p$ 是极大理想。
+\end{corollary}
+\begin{proof}
+  根据 \autoref{prop:quotient preserve integral dependence}，$B/\ideal q$ 
+  在 $A/\ideal p$ 上是整的，并且二者都是整环，故 $\ideal q$ 是极大理想当且仅当
+  $B/\ideal q$ 是域当且仅当 $A/\ideal p$ 是域当且仅当 $\ideal p$ 是极大理想。
+\end{proof}
+
+\begin{corollary}\label{coro:contraction of prime ideal}
+  令 $A\subseteq B$ 是环，$B$ 在 $A$ 上是整的，令 $\ideal q,\ideal q'$ 是 $B$
+  的素理想并且满足 $\ideal q\subseteq\ideal q'$ 以及 $\ideal q^c=\ideal q'^c=\ideal p$，
+  那么 $\ideal q=\ideal q'$。
+\end{corollary}
+\begin{proof}
+  根据 \autoref{prop:quotient preserve integral dependence}，$B_{\ideal p}$
+  在 $A_{\ideal p}$ 上是整的，令 $\ideal m$ 为 $\ideal p$ 在 $A_{\ideal p}$ 中的扩张，
+  $\ideal n,\ideal n'$ 分别为 $\ideal q,\ideal q'$ 在 $B_{\ideal p}$ 中的扩张。
+  那么 $\ideal m$ 是 $A_{\ideal p}$ 的极大理想，$\ideal n\subseteq\ideal n'$，并且
+  $\ideal n^c=\ideal n'^c=\ideal m$，根据上面的推论，所以
+  $\ideal n,\ideal n'$ 是极大理想，故 $\ideal n=\ideal n'$，所以 $\ideal q=\ideal q'$。
+\end{proof}
+
+\begin{theorem}\label{thm:lying over}
+  令 $A\subseteq B$ 是环，$B$ 在 $A$ 上是整的，$\ideal p$ 是 $A$ 的素理想，
+  那么存在 $B$ 的素理想 $\ideal q$ 使得 $\ideal q\cap A=\ideal p$。
+\end{theorem}
+\begin{proof}
+  根据 \autoref{prop:quotient preserve integral dependence}，$B_{\ideal p}$
+  在 $A_{\ideal p}$ 上是整的，我们有交换图
+  \[
+    \begin{tikzcd}
+      A\arrow[r,"j"]\arrow[d,"\alpha"'] & B\arrow[d,"\beta"] \\
+      A_{\ideal p}\arrow[r,"j_{\ideal p}"] & B_{\ideal p}
+    \end{tikzcd}  
+  \]
+  $j$ 和 $j_{\ideal p}$ 都是单射。取 $B_{\ideal p}$ 的一个极大理想 $\ideal n$，
+  根据 \autoref{coro:maximal ideal of integral}，$\ideal n^c=\ideal n\cap A_{\ideal p}$
+  是极大理想，$A_{\ideal p}$ 是局部环，所以 $\ideal m=\ideal n^c$ 是 $A_{\ideal p}$
+  的唯一的极大理想，所以 $\alpha^{-1}(\ideal m)=\ideal p$。令 $\ideal q=\beta^{-1}(\ideal n)$，那么
+  \[
+    \ideal q\cap A=j^{-1}(\ideal q)=(\beta\circ j)^{-1}(\ideal n)=
+    (j_{\ideal p}\circ \alpha)^{-1}(\ideal n)=\alpha^{-1}(\ideal m)=\ideal p.\qedhere
+  \]
+\end{proof}
+
+\begin{theorem}[上行定理]
+  令 $A\subseteq B$ 是环，$B$ 在 $A$ 上是整的，$\ideal p_1\subseteq\cdots\subseteq\ideal p_n$
+  是 $A$ 的素理想链，$\ideal q_1\subseteq\cdots\subseteq\ideal q_m\ (m< n)$ 是 
+  $B$ 的素理想链，并且 $\ideal q_i\cap A=\ideal p_i\ (1\leq i\leq m)$，
+  那么 $\ideal q_1\subseteq\cdots\subseteq\ideal q_m$ 可以被扩张到链
+  $\ideal q_1\subseteq\cdots\subseteq\ideal q_n$ 使得 $\ideal q_i\cap A=\ideal p_i\ (1\leq i\leq n)$。
+  如 \autoref{fig:going-up} 所示。
+\end{theorem}
+
+\begin{figure}[htb]
+    \centering
+    \begin{tikzpicture}[
+      compare/.code n args={4}{%
+        \ifnum#1>#2
+          \pgfkeysalso{#3}
+        \else
+          \pgfkeysalso{#4}
+        \fi
+      }
+    ]
+      \matrix (M) [matrix of math nodes,row sep=2.4em,column sep=1em]
+      {
+        B\vphantom{\ideal q_1} &[5mm] \ideal q_1 & \ideal q_2 & \cdots & \ideal q_m & |[red]|\ideal q_{m+1} &
+        |[red]|\cdots & |[red]|\ideal q_n \\
+        A & \ideal p_1 & \ideal p_2 & \cdots & \ideal p_m & \ideal p_{m+1} &
+        \cdots & \ideal p_n \\
+      };
+      \foreach \i [evaluate=\i as \j using int(\i+1)] in {2,...,7}
+      {
+        \node [compare={\i}{4}{red}{black}] at ($(M-1-\i)!0.5!(M-1-\j)$) {$\subseteq$};
+        \node at ($(M-2-\i)!0.5!(M-2-\j)$) {$\subseteq$};
+        \ifnum\i=4
+        \else
+          \ifnum\i=7
+          \else
+            \draw [compare={\i}{5}{red}{black}] (M-1-\i) -- (M-2-\i);
+          \fi
+        \fi
+      }
+      \draw [red] (M-1-8) -- (M-2-8);
+      \draw (M-1-1) -- (M-2-1);
+    \end{tikzpicture}
+    \caption{上行定理}\label{fig:going-up}
+\end{figure}
+
+\begin{proof}
+  我们只需要证明存在 $\ideal q_{m+1}$
+  使得 $\ideal q_{m+1}\cap A=\ideal p_{m+1}$ 即可。
+  根据 \autoref{prop:quotient preserve integral dependence}，$\bar B=B/\ideal q_{m}$
+  在 $\bar A=A/\ideal p_m$ 上是整的，我们有交换图
+  \[
+    \begin{tikzcd}
+      A\arrow[r,"j"]\arrow[d,"\pi_1"'] & B\arrow[d,"\pi_2"] \\
+      \bar A\arrow[r,"\bar j"] & \bar B
+    \end{tikzcd}  
+  \]
+  $\bar{\ideal p}_{m+1}$ 是 $\bar A$ 的素理想，
+  根据 \autoref{thm:lying over}，存在 $\bar B$ 的素理想 $\bar{\ideal q}_{m+1}$
+  使得 $\bar j^{-1}(\bar{\ideal q}_{m+1})=\bar{\ideal p}_{m+1}$，
+  $\bar{\ideal q}_{m+1}$ 对应到 $B$ 的素理想 $\ideal q_{m+1}$，此时
+  \[
+    \ideal q_{m+1}\cap A=j^{-1}(\ideal q_{m+1})
+    =(\pi_2\circ j)^{-1}(\bar{\ideal q}_{m+1})=(\bar j\circ\pi_1)^{-1}(\bar{\ideal q}_{m+1})
+    =\ideal p_{m+1}.\qedhere
+  \]
+\end{proof}
+
+\section{整闭整环和下行定理}
+
+\begin{proposition}\label{prop:integrally closed in fraction}
+  令 $A\subseteq B$ 是环，$C$ 是 $A$ 在 $B$ 中的整闭包，令 $S$ 是 $A$ 的乘性子集，
+  那么 $S^{-1}C$ 是 $S^{-1}A$ 在 $S^{-1}B$ 中的整闭包。
+\end{proposition}
+\begin{proof}
+  根据 \autoref{prop:quotient preserve integral dependence}，$S^{-1}C$ 在 $S^{-1}A$ 
+  上是整的。任取 $b/s\in S^{-1}B$，若 $b/s$ 在 $S^{-1}A$ 上是整的，
+  则 $b/s$ 满足某个 $S^{-1}A$ 为系数的方程
+  \[
+    (b/s)^n+(a_1/s_1)(b/s)^{n-1}+\cdots+(a_n/s_n)=0,  
+  \]
+  令 $t=s_1\cdots s_n$，两边同时乘以 $(st)^n/1$，那么
+  \[
+    (bt)^n/1+(a_1st/s_1)(bt)^{n-1}/1+\cdots+(a_ns^nt^n/s_n)=0,
+  \]
+  所以存在 $u\in S$ 使得
+  \[
+    u(bt)^n+ua_1' (bt)^{n-1}+\cdots+ua_n'=0,
+  \] 
+  两边同时乘以 $u^{n-1}$，那么
+  \[
+    (btu)^n+ua_1'(btu)^{n-1}  +\cdots+u^na_n'=0,
+  \]
+  这表明 $btu\in C$，所以 $b/s=btu/stu\in S^{-1}C$，所以 $S^{-1}C$ 是 $S^{-1}A$ 在 $S^{-1}B$ 中的整闭包。
+\end{proof}
+
+一个整环被称为\emph{整闭的}，如果它在它的分式域中是整闭的。
+例如，$\mathbb{Z}$ 是整闭的。
+
+\begin{example}
+  UFD 都是整闭的。设 $R$ 是 UFD，任取 $x/y\in \Frac(R)$，$y\neq 0$，
+  利用唯一因子分解，可以假设 $x,y$ 互素。若 $x/y$ 在 $R$ 上是整的，
+  那么 $x/y$ 满足
+  \[
+    (x/y)^n+r_1(x/y)^{n-1}+\cdots+r_n=0\quad (r_i\in R),
+  \]
+  两边乘以 $y^n$，那么
+  \[
+    x^n+r_1yx^{n-1}  +\cdots+r_ny^n=0,
+  \]
+  这表明 $y\mid x^n$，$x,y$ 互素表明 $y\in R^\times$，所以 $x/y=xy^{-1}/1\in R$，
+  故 $R$ 在 $\Frac(R)$ 中整闭。
+\end{example}
+
+整闭是局部性质。
+
+\begin{proposition}
+  令 $A\subseteq B$ 是环，那么下面的说法是等价的：
+  \begin{enumerate}
+    \item $A$ 在 $B$ 中整闭；
+    \item 对于每个素理想 $\ideal p\subseteq A$，$A_{\ideal p}$ 在 $B_{\ideal p}$
+    中是整闭的；
+    \item 对于每个极大理想 $\ideal m\subseteq A$，$A_{\ideal m}$ 在 $B_{\ideal m}$
+    中是整闭的。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  $(1)\Rightarrow (2)$ \autoref{prop:integrally closed in fraction}。
+  $(2)\Rightarrow (3)$ 极大理想都是素理想。
+
+  $(3)\Rightarrow (1)$ 令 $C$ 为 $A$ 在 $B$ 中的整闭包，证明单位映射 $f:A\to C$ 是满射即可。
+  根据 \autoref{prop:injective is local}，等价于证明 $f_{\ideal m}:A_{\ideal m}\to C_{\ideal m}$
+  是满射。根据 \autoref{prop:integrally closed in fraction}，$C_{\ideal m}$ 是 $A_{\ideal m}$
+  在 $B_{\ideal m}$ 中的整闭包，所以 $f_{\ideal m}$ 满射。
+\end{proof}
+
+\begin{corollary}
+  令 $A$ 是整环，那么下面的说法是等价的：
+  \begin{enumerate}
+    \item $A$ 是整闭的；
+    \item 对于每个素理想 $\ideal p\subseteq A$，$A_{\ideal p}$ 是整闭的；
+    \item 对于每个极大理想 $\ideal m\subseteq A$，$A_{\ideal m}$ 是整闭的。
+  \end{enumerate}
+\end{corollary}
+
+令 $A\subseteq B$ 是环，$\ideal a$ 是 $A$ 的理想。元素 $b\in B$ 如果满足
+首一的以 $\ideal a$ 中元素为系数的多项式，那么我们说 $b$ \emph{在 $\ideal a$ 上是整的}。
+$\ideal a$ \emph{在 $B$ 中的整闭包}指的是 $B$ 中所有在 $\ideal a$ 上整的元素的集合。
+
+\begin{lemma}\label{lemma:closure of ideal}
+  令 $C$ 是 $A$ 在 $B$ 中的整闭包，$\ideal aC$ 为 $\ideal a$ 在 $C$ 中的扩张。
+  那么 $\ideal a$ 在 $B$ 中的整闭包是根式理想 $\sqrt{\ideal aC}$（从而对加减乘封闭）。
+\end{lemma}
+\begin{proof}
+  若 $x\in B$ 在 $\ideal a$ 上是整的（自然在 $A$ 上也是整的），那么 $x$ 满足
+  \[
+    x^n+a_1x^{n-1}+\cdots+a_n=0\quad (a_i\in\ideal a),  
+  \]
+  所以 $x^n\in\ideal aC$，所以 $x\in\sqrt{\ideal aC}$。
+
+  反过来，若 $x\in\sqrt{\ideal aC}$，那么存在 $n$ 使得 $x^n=\sum_{i=1}^m a_ic_i$，
+  其中 $a_i\in\ideal a,c_i\in C$。因为 $c_1,\dots,c_m$ 在 $A$ 上是整的，
+  所以 $M=A[c_1,\dots,c_m]$ 是有限生成 $A$-模。考虑 $\phi:M\to M$ 为
+  $\phi(f(c_1,\dots,c_m))=x^nf(c_1,\dots,c_m)$，那么 $\phi$ 是 $A$-模同态，
+  并且 $\phi(M)=x^nM\subseteq\ideal aM$，
+  根据 Cayley-Hamilton 定理，存在 $a_i'\in \ideal a$ 使得
+  \[
+    \phi^k+a_1'\phi^{k-1}+\cdots+a_k'=0,  
+  \]
+  由于 $\phi(1)=x^n$，所以 
+  \[
+    x^{kn}+a_1'x^{(k-1)n}+\cdots+a_k'=0,
+  \]
+  即 $x$ 在 $\ideal a$ 上是整的。
+\end{proof}
+
+若 $A\subseteq B$ 是整环，$x\in B$ 在 $A$ 上是整的，$x$ 在 $\Frac(A)$ 上当然是代数的，
+但是一般情况下，$x$ 在 $\Frac(A)$ 上的极小多项式不一定处于 $A[x]$ 中。例如，
+记 $\omega=e^{2\pi i/3}$，$A=\mathbb{Z}[\sqrt{-3}]$，
+$B=\mathbb{Z}[\omega]=\mathbb{Z}[\frac{1+\sqrt{-3}}{2}]$，$F=\Frac(A)=\mathbb{Q}(\sqrt{-3})$。
+$\omega$ 在 $F$ 上的极小多项式显然为 $x-\omega$，但是 $\omega\notin A$。如果
+$A$ 是整闭的，那么这个结论是正确的，即下面的命题。这个例子中，$B$
+在 $A$ 上是整的，并且 $B$ 是 ED，从而是 UFD，从而是整闭的，所以 $A$ 在 $F$
+中的整闭包是 $B$。
+
+\begin{proposition}\label{prop:minimal polynominal of x}
+  令 $A\subseteq B$ 是整环，$A$ 是整闭的，$x\in B$ 在 $A$ 的某个理想 $\ideal a$ 
+  上是整的。那么 $x$ 在分式域 $K=\Frac(A)$ 上是代数的。此外，设 $x$ 在 $K$ 上的极小多项式
+  为 $t^n+a_1t^{n-1}+\cdots+a_n$，那么 $a_1,\dots,a_n\in\sqrt{\ideal a}$。
+\end{proposition}
+\begin{proof}
+  显然 $x$ 在 $K$ 上是代数的。记 $L$ 为 $f(t)=t^n+a_1t^{n-1}+\cdots+a_n$ 的分裂域，
+  $f(t)$ 在 $L$ 上分裂为 $f(t)=(t-\alpha_1)\cdots(t-\alpha_n)$，不妨设 $\alpha_1=x$。
+  那么我们有 $K(\alpha_i)\simeq K[t]/(f(t))\simeq K(x)$。
+  设 $x$ 满足
+  \[
+    x^m+a_1'x^{m-1}+\cdots +a_m'=0\quad (a_i'\in \ideal a),  
+  \]
+  将上式放到 $L$ 中，由于 $K(\alpha_i)\simeq K(x)$，那么对于 $\alpha_i$，同样有 
+  \[
+    \alpha_i^m+a_1'\alpha_i^{m-1}+\cdots +a_m'=0,  
+  \]
+  所以 $\alpha_i$ 在 $\ideal a$ 上是整的。由 Vieta 定理，$a_i$ 可以表示为 $\alpha_1,\dots,\alpha_n$
+  的对称多项式，考虑 $A\subseteq L$，根据 \autoref{lemma:closure of ideal}，
+  所以 $a_i$ 在 $\ideal a$ 上是整的（封闭性）。
+  由于 $a_i\in K$，考虑 $A\subseteq K$，
+  再根据 \autoref{lemma:closure of ideal}，$a_i\in\sqrt{\ideal a^e}=\sqrt{\ideal a}$。
+\end{proof}
+
+\begin{theorem}[下行定理]
+  令 $A\subseteq B$ 是整环，$A$ 是整闭的，$B$ 在 $A$ 上是整的。令 
+  $\ideal p_1\supseteq \cdots\supseteq\ideal p_n$ 是 $A$ 的素理想链，
+  $\ideal q_1\supseteq\cdots\supseteq \ideal q_m\ (m< n)$ 是 $B$ 的素理想链，
+  并且 $\ideal q_i\cap A=\ideal p_i\ (1\leq i\leq m)$。那么 
+  $\ideal q_1\supseteq\cdots\supseteq \ideal q_m$ 可以被扩张到链
+  $\ideal q_1\supseteq\cdots\supseteq \ideal q_n$ 使得 $\ideal q_i\cap A=\ideal p_i\ (1\leq i\leq n)$。
+  如 \autoref{fig:going-down} 所示。
+\end{theorem}
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzpicture}[
+    compare/.code n args={4}{%
+      \ifnum#1>#2
+        \pgfkeysalso{#3}
+      \else
+        \pgfkeysalso{#4}
+      \fi
+    }
+  ]
+    \matrix (M) [matrix of math nodes,row sep=2.4em,column sep=1em]
+    {
+      B\vphantom{\ideal q_1} &[5mm] \ideal q_1 & \ideal q_2 & \cdots & \ideal q_m & |[red]|\ideal q_{m+1} &
+      |[red]|\cdots & |[red]|\ideal q_n \\
+      A & \ideal p_1 & \ideal p_2 & \cdots & \ideal p_m & \ideal p_{m+1} &
+      \cdots & \ideal p_n \\
+    };
+    \foreach \i [evaluate=\i as \j using int(\i+1)] in {2,...,7}
+    {
+      \node [compare={\i}{4}{red}{black}] at ($(M-1-\i)!0.5!(M-1-\j)$) {$\supseteq$};
+      \node at ($(M-2-\i)!0.5!(M-2-\j)$) {$\supseteq$};
+      \ifnum\i=4
+      \else
+        \ifnum\i=7
+        \else
+          \draw [compare={\i}{5}{red}{black}] (M-1-\i) -- (M-2-\i);
+        \fi
+      \fi
+    }
+    \draw [red] (M-1-8) -- (M-2-8);
+    \draw (M-1-1) -- (M-2-1);
+  \end{tikzpicture}
+  \caption{下行定理}\label{fig:going-down}
+\end{figure}
+
+\begin{proof}
+  我们只需要证明存在 $\ideal q_{m+1}\subseteq\ideal q_m$ 使得 $\ideal q_{m+1}\cap A=\ideal p_{m+1}$ 即可，
+  我们有交换图
+  \[
+    \begin{tikzcd}
+      A\arrow[r,"j"]\arrow[d,"\alpha"'] & B\arrow[d,"\beta"]\\
+      A_{\ideal p_{m}}\arrow[r,"j'"] & B_{\ideal q_{m}}
+    \end{tikzcd}  
+  \]
+  注意由于 $A-\ideal p_{m}\subseteq B-\ideal q_m$，所以 $A_{\ideal p_m}\to B_{\ideal q_m}$
+  的映射是良定义的。考虑 $\beta\circ j:A\to B_{\ideal q_m}$，注意 $A,B$
+  是整环表明 $\alpha,\beta$ 是单射。由于 $B$ 的被 $\ideal q_m$ 包含的素理想一一
+  对应到 $B_{\ideal q_m}$ 的素理想，
+  所以等价于证明 $\ideal p_{m+1}$ 是 $B_{\ideal q_m}$ 的某个素理想的收缩。根据
+  \autoref{prop:condition of contraction}，等价于证明
+  $\bigl(\ideal p_{m+1}B_{\ideal q_m}\bigr)\cap A=\ideal p_{m+1}$（由于 $\beta\circ j$
+  是单射，所以可以将 $A$ 视为 $B_{\ideal q_m}$ 的子环）。
+  由于我们总是有 $\bigl(\ideal p_{m+1}B_{\ideal q_m}\bigr)\cap A\supseteq \ideal p_{m+1}$，
+  所以只需要证明 $\bigl(\ideal p_{m+1}B_{\ideal q_m}\bigr)\cap A\subseteq\ideal p_{m+1}$。
+
+  任取 $y/s\in\bigl(\ideal p_{m+1}B_{\ideal q_m}\bigr)\cap A$，其中 $y\in \ideal p_{m+1}B$，
+  $s\in B-\ideal q_m$，根据 \autoref{lemma:closure of ideal}，所以 $y$ 在 $\ideal p_{m+1}$
+  上是整的。根据 \autoref{prop:minimal polynominal of x}，$y$ 在 $\Frac(A)$ 上的极小多项式
+  为
+  \[
+    y^n+u_1y^{n-1}+\cdots+u_n=0\quad (u_i\in\sqrt{\ideal p_{m+1}}=\ideal p_{m+1}).  
+  \]
+
+  $y/s\in A$ 说明存在 $x\in A$ 使得 $y/s=x/1$，即存在 $t\in B-\ideal q_m$ 使得
+  $t(y-sx)=0$，$t\neq 0$ 表明 $y=sx$，那么在 $\Frac(B)\supseteq \Frac(A)$ 中有 $s=yx^{-1}$。
+  那么 $s$ 在 $\Frac(A)$ 上的极小多项式为
+  \[
+    s^n+v_1s^{n-1}+\cdots+s_n=0,  
+  \]
+  其中 $v_i=u_i/x^i$。所以，我们有 $x^iv_i=u_i\in\ideal p_{m+1}$。
+
+  因为 $s$ 在 $A$ 上是整的，根据 \autoref{prop:minimal polynominal of x}，
+  所以 $s$ 在 $\Frac(A)$ 上的极小多项式的系数在 $A$ 中，即 $v_i\in A$。
+  假设 $x\notin \ideal p_{m+1}$，那么 $x^iv_i\in\ideal p_{m+1}$ 表明 $v_i\in\ideal p_{m+1}$，
+  所以 $s^n\in\ideal p_{m+1}B\subseteq \ideal p_mB\subseteq \ideal q_m$，所以 $s\in\ideal q_m$，
+  矛盾。故 $x\in\ideal p_{m+1}$，即 $\bigl(\ideal p_{m+1}B_{\ideal q_m}\bigr)\cap A\subseteq\ideal p_{m+1}$。
+\end{proof}
+
+下面我们简要回顾双线性型的一些内容。令 $V$ 是有限维 $F$-向量空间，$B:V\times V\to F$
+是一个双线性型（$F$-双线性映射）。用张量积的性质来说，$B$ 对应一个 $V\otimes_F V\to F$
+的线性映射，即 $B\in (V\otimes_F V)^*$。$B$ 诱导出两个 $V\to V^*$ 的线性映射，即
+\[
+  B_l:x\mapsto (B(x,\uline{}):y\mapsto B(x,y)) ,\quad
+  B_r:x\mapsto (B(\uline{},x):y\mapsto B(y,x)) .
+\]
+如果上述两个线性映射是单射，那么我们说 $B$ 是\emph{非退化的}。
+由于 $\dim V=\dim V^*$，所以 $B$ 是非退化的当且仅当 $B_l$ 和 $B_r$
+是同构。设 $V$ 的一组基为 $e_1,\dots,e_n$。记矩阵 $\mathbold B=\bigl(B(e_i,e_j)\bigr)_{n\times n}$，
+对于 $u,v\in V$，设 $u=u_1e_1+\cdots+u_ne_n$ 以及 $v=v_1e_1+\cdots+v_ne_n$，
+那么
+\[
+  B(u,v)=B\left(\sum_i u_ie_i,\sum_j v_je_j\right)  =
+  \sum_i\sum_j u_iv_jB(e_i,e_j)=\mathbold u^\top\mathbold B\mathbold v,
+\]
+其中 $\mathbold u=(u_1,\dots,u_n)$ 以及 $\mathbold v=(v_1,\dots,v_n)$。
+不难证明 $B$ 非退化当且仅当 $\mathbold B$ 可逆。
+
+现在假设 $B$ 是对称双线性型。如果 $B$ 非退化，那么 $B_l:V\to V^*$
+是同构。设 $V$ 的一组基为 $e_1,\dots,e_n$，那么 $V^*$ 的基为 $e_1^*,\dots,e_n^*$，满足
+$e_i^*(e_j)=\delta_{ij}$。于是存在基 $v_1,\dots,v_n\in V$ 使得 $B(v_i,\uline)=e_i^*$，
+即 $B(v_i,e_j)=\delta_{ij}$。
+
+然后我们简要介绍一下关于域扩张中迹的概念。令 $K/F$ 是有限扩张，$[K:F]=n$。对于 $a\in K$，
+定义映射 $L_a:K\to K$ 为 $L_a(x)=ax$。容易验证 $L_a$ 为 $F$-线性映射，那么我们可以定义
+元素 $a$ 的迹为线性映射 $L_a$ 的迹，即
+\[
+  \Tr_{K/F}(a)=\Tr(L_a).  
+\]
+这诱导了 $F$-线性映射 $\Tr_{K/F}:K\to F$。当 $c\in F$ 的时候，设 $K$ 的一组基
+为 $v_1,\dots,v_n$，那么 $L_c$ 在这组基下的表示矩阵为 $cI_n$，所以
+$\Tr_{K/F}(c)=cn$。
+
+$\Tr_{K/F}$ 也诱导了一个 $F$-双线性映射 $\Tr_{K/F}:K\times K\to F$，即
+$\Tr_{K/F}(a,b)=\Tr_{K/F}(ab)$。容易验证 $\Tr_{K/F}$ 是对称双线性型。
+我们不加证明地给出结论：$K/F$ 是可分扩张当且仅当 $\Tr_{K/F}$ 是非退化的。
+
+\begin{proposition}\label{prop:basis of integral closure}
+  $A$ 是任意整闭整环，$K$ 是 $A$ 的分式域，$L$ 是 $K$ 的有限可分扩张，$B$ 是 $A$ 
+  在 $L$ 中的整闭包。那么存在 $K$-向量空间 $L$ 的一组基 $v_1,\dots,v_n$
+  使得 $B\subseteq \sum_{j=1}^n Av_j$。
+\end{proposition}
+\begin{proof}
+  设 $[L:K]=n$。首先我们断言：存在 $L$ 的一组基 $u_1,\dots,u_n$ 使得 $u_i\in B$。
+  任取 $L$ 的一组基 $u_1',\dots,u_n'$，那么 $u_i'$ 在 $K$ 上是代数的，所以满足方程
+  （总是可以乘以公分母使得系数处于 $A$ 中）
+  \[
+    a_m(u_i')^m+a_{m-1}(u_i')^{m-1}+\cdots+  a_0=0\quad (a_m\neq 0, a_j\in A).
+  \]
+  两边乘以 $a_m^{m-1}$，所以
+  \[
+    (a_mu_i')^m+a_{m-1}a_m(a_mu_i')^{m-1}+\cdots+a_0 a_m^{m-1}=0,  
+  \]
+  令 $u_i=a_mu_i'$，那么 $u_i$ 在 $A$ 上是整的，并且仍然是 $L$ 的一组基。
+
+  根据上面的叙述，$L/K$ 可分表明 $\Tr_{L/K}$ 是非退化的，所以存在 $L$ 的一组基 $v_1,\dots,v_n$
+  使得 $\Tr_{L/K}(u_iv_j)=\delta_{ij}$。任取 $x\in B$，设 $x=\sum_j x_jv_j$，其中 $x_j\in K$，
+  那么
+  \[
+    x_j=\sum_i\delta_{ji}x_i=\sum_i\Tr_{L/K}(u_jv_i)x_i
+    =\Tr_{L/K}(xu_j),
+  \]
+  所以 $x=\sum_j \Tr_{L/K}(xu_j)v_j$。下面我们说明，对于任意的 $y\in B$，都有
+  $\Tr_{L/K}(y)\in A$ 即可。由于
+  \begin{align*}
+    \Tr_{L/K}(y)&=\Tr_{K(y)/K}\circ \Tr_{L/K(y)}(y)=\Tr_{K(y)/K}\bigl([L:K(y)]\cdot y\bigr)\\
+    &=[L:K(y)]\cdot \Tr_{K(y)/K}(y).
+  \end{align*}
+  设 $[K(y):K]=m$，那么 $K(y)$ 的一组基为 $1,y,\dots,y^{m-1}$。设 $y$ 在 $K$
+  上的极小多项式为
+  \[
+    y^m+a_{m-1}  y^{m-1}+\cdots+a_0=0,
+  \]
+  根据 \autoref{prop:minimal polynominal of x}，$a_i\in A$。线性映射 $L_y:K(y)\to K(y)$
+  在上述基下的表示矩阵为
+  \[
+    \begin{pmatrix*}
+      0 & & & & -a_0\\
+      1 & 0 & && -a_1\\
+      & 1 & \ddots & & \vdots\\
+      & & \ddots& 0 &-a_{m-1}\\
+      & & & 1 & -a_m\\
+    \end{pmatrix*}  ,
+  \]
+  所以 $\Tr_{L/K}(y)=[L:K(y)]\cdot (-a_{m})\in A$。
+\end{proof}
+
+\section{赋值环}
+
+$K$ 是一个域，$K$ 的一个\emph{离散赋值}指的是一个映射 $v:K^\times\to\mathbb{Z}$，
+其满足
+\begin{enumerate}
+  \item $v(xy)=v(x)+v(y)$，即 $v$ 是群同态；
+  \item $v(x+y)\geq\min(v(x),v(y))$。
+\end{enumerate}
+为了方便起见，定义 $v(0)=+\infty$。容易观察到这蕴含着 $v(1)=v(-1)=0$ 以及
+$v(x)=v(-x)$。
+
+\begin{example}
+  \mbox{}
+  \begin{enumerate}
+    \item 固定素数 $p\in\mathbb{Z}$，任意的 $x\in\mathbb{Q}^\times$ 可以唯一地写为
+    $x=p^r\frac{a}{b}$，其中 $a,b$ 互素并且 $p\nmid a$ 以及 $p\nmid b$。定义
+    $v_p:\mathbb{Q}^\times \to\mathbb{Z}$ 为 $v_p(x)=r$。
+    对于 $x=p^r\frac{a}{b}$ 以及 $y=p^s\frac{c}{d}$，有 $xy=p^{r+s}\frac{ac}{bd}$，
+    此时 $p\nmid ac$ 以及 $p\nmid bd$，所以 $v_p(xy)=r+s=v_p(x)+v_p(y)$。
+    不妨设 $r\leq s$，我们有
+    \[
+      x+y=p^r\left(\frac{a}{b}+p^{s-r}\frac{c}{d}\right)=p^r\frac{ad+p^{s-r}bc}{bd}  ,
+    \]
+    此时 $p\nmid bd$，当 $r<s$ 时有 $p\nmid (ad+p^{s-r}bc)$，此时 $v_p(x+y)=r$。
+    当 $r=s$ 时 $ad+bc$ 可能含有 $p$ 作为因子，此时 $v_p(x+y)\geq r$。所以
+    $v_p$ 是 $\mathbb{Q}$ 的离散赋值。
+  \end{enumerate}
+\end{example}
+
+\begin{lemma}
+  $K$ 是一个域，有离散赋值 $v:K^\times\to\mathbb{Z}$，若 $v(x)\neq v(y)$，那么
+  $v(x+y)=\min(v(x),v(y))$。
+\end{lemma}
+\begin{proof}
+  不妨设 $v(x)>v(y)$，那么 $v(x+y)\geq \min(v(x),v(y))=v(y)$。
+  另一方面，我们有
+  \[
+    v(y)=v(x+y-x)\geq \min(v(x+y),v(-x))=  \min(v(x+y),v(x)),
+  \]
+  若 $v(x)\leq v(x+y)$，那么 $v(y)\geq v(x)$，与 $v(x)>v(y)$ 矛盾。所以只可能
+  $v(x)>v(x+y)$，故 $v(y)\geq v(x+y)$。所以 $v(x+y)=v(y)=\min(v(x),v(y))$。
+\end{proof}
+
+\begin{proposition}
+  $K$ 是一个域，有离散赋值 $v:K^\times\to\mathbb{Z}$，定义
+  \[
+    A=\{x\in K\,|\, v(x)\geq 0\},\quad \ideal m=\{x\in K\,|\, v(x)>0\},
+  \]
+  那么 
+  \begin{enumerate}
+    \item $A$ 是 $K$ 的一个子环，并且对于任意的 $x\in K^\times$，有 $x\in A$ 或者
+    $x^{-1}\in A$（或者均有）。
+    \item $\ideal m$ 是 $A$ 的唯一的极大理想。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) $v$ 是群同态表明 $v(1)=0$，故 $1\in A$。任取 $x,y\in A$，
+  那么 $v(x-y)\geq \min (v(x),v(-y))=\min(v(x),v(y))\geq 0$，
+  所以 $x-y\in A$。此外，$v(xy)=v(x)+v(y)\geq 0$，所以 $xy\in A$。这就表明 $A$ 是
+  $K$ 的子环。任取 $x\in K^\times$，如果 $x\notin A$，那么 $v(x)<0$，那么 $0=v(1)=v(x)+v(x^{-1})$，
+  故 $v(x^{-1})>0$，所以 $x^{-1}\in A$，所以必有 $x\in A$ 或者 $x^{-1}\in A$。
+
+  (2) 任取 $x\in\ideal m$，$a\in A$，那么 $v(ax)=v(a)+v(x)>0$，所以 $ax\in\ideal m$。
+  任取 $x,y\in\ideal m$，那么 $v(x-y)\geq \min(v(x),v(y))>0$，所以 $x-y\in\ideal m$。
+  这表明 $\ideal m$ 是 $A$ 的一个理想。任取 $x\in A-\ideal m$，那么
+  $v(x)=0$，所以 $0=v(1)=v(x)+v(x^{-1})$ 表明 $v(x^{-1})=0$，故 $x^{-1}\in A$，
+  所以 $x\in A^\times$。这就表明 $A-\ideal m=A^\times$，所以 $\ideal m$ 是 $A$
+  唯一的极大理想，$A$ 是局部环。
+\end{proof}
+
+令 $B$ 是整环，$K$ 是 $B$ 的分式域，如果对于 $x\neq 0$，总是有 $x\in B$ 或者 $x^{-1}\in B$（或者都有），
+那么称 $B$ 是 $K$ 的\emph{赋值环}。反之，如果 $K$ 的子环 $B$ 满足
+对于 $x\neq 0$，总是有 $x\in B$ 或者 $x^{-1}\in B$，那么 $x=1/x^{-1}\in\Frac(B)$，所以
+此时 $K$ 就是 $B$ 的分式域，即 $B$ 是 $K$ 的赋值环。
+
+\begin{proposition}
+  \mbox{}
+  \begin{enumerate}
+    \item $B$ 是局部环。
+    \item 如果 $B'$ 是环使得 $B\subseteq B'\subseteq K$，那么 $B'$ 也是 $K$ 的赋值环。
+    \item $B$ 是整闭的（在 $K$ 中）。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  令 $\ideal m$ 为 $B$ 中所有不是单位的元素的集合。若 $x\in\ideal m$，$b\in B$，
+  那么 $x^{-1}\notin B$，所以 $(bx)^{-1}=b^{-1}x^{-1}\notin B$，这就表明一定有
+  $bx\in B$ 且 $bx$ 在 $B$ 中不可逆，故 $bx\in\ideal m$。
+  若 $x,y\in\ideal m$，那么 $xy^{-1}\in B$ 或者 $x^{-1}y\in B$，所以
+  $x-y=x(1-x^{-1}y)=y(xy^{-1}-1)\in \ideal m$。这表明 $\ideal m$ 是理想，而
+  $B-\ideal m=B^\times$，所以 $\ideal m$ 是 $B$ 的唯一的极大理想。
+
+  (2) 显然。
+
+  (3) 令 $x\in K$ 在 $B$ 上是整的。那么 $x$ 满足方程
+  \[
+    x^n+b_1x^{n-1}+\cdots+b_n=0\quad (b_i\in B).  
+  \]
+  如果 $x^{-1}\in B$，两边乘以 $x^{1-n}$，那么
+  \[
+    x=-(b_1+b_2x^{-1}+\cdots+b_nx^{1-n}) \in B. 
+  \]
+  如果 $x^{-1}\notin B$，根据定义必有 $x\in B$。所以总是有 $x\in B$，
+  即 $B$ 是整闭的。
+\end{proof}
+
+\begin{proposition}
+  $B$ 是域 $K$ 的赋值环当且仅当存在 $K$ 的离散赋值 $v:K^\times\to \mathbb{Z}$，
+  使得
+  \[
+    B=\{x\in K\,|\, v(x)\geq 0\}  .
+  \]
+\end{proposition}
+
+对于两个局部环 $(A,\ideal m)$ 和 $(B,\ideal n)$，我们说 $B$ 控制 $A$ 当且仅当
+$A\subseteq B$ 并且 $\ideal m\subseteq\ideal n$。
+
+\begin{theorem}\label{thm:existence of valuation ring}
+  令 $K$ 是一个域，$A\subseteq K$ 是子环，$\ideal p$ 是 $A$ 的素理想，$\Omega$
+  是包含剩余域 $k(\ideal p)$ 的代数闭域，那么存在 $K$ 的一个赋值环 $(B,\ideal m)$
+  并且其控制 $(A_{\ideal p},\ideal pA_{\ideal p})$，此外，存在环同态 $g:B\to\Omega$
+  使得 $\ker g=\ideal m$。
+\end{theorem}
+\begin{remark}
+  若取 $\Omega$ 为 $k(\ideal p)$ 的代数闭包，该定理的含义为如下交换图：
+  \[
+    \begin{tikzcd}[row sep=2.4em]
+      A\arrow[r] & A_{\ideal p}\arrow[r]\arrow[d,dashed,hookrightarrow,red] 
+      & k(\ideal p)\arrow[r,hookrightarrow] \arrow[d,dashed,hookrightarrow,red] 
+      & \overline{k(\ideal p)} \\
+      & |[red]|B\arrow[r,red] & |[red]|B/\ideal m\arrow[ur,dashed,hookrightarrow,red]  & 
+    \end{tikzcd}  
+  \]
+  也就是说：令 $K$ 是一个域，$A\subseteq K$ 是子环，$\ideal p$ 是 $A$ 的素理想，
+  那么存在 $K$ 的一个赋值环 $(B,\ideal m)$ 并且其控制 $(A_{\ideal p},\ideal pA_{\ideal p})$，
+  此外，$B/\ideal m$ 是 $k(\ideal p)$ 的代数扩张。
+\end{remark}
+\begin{proof}
+  对于环 $A$，诱导出映射 $f:A\to A_{\ideal p}\to k(\ideal p)\hookrightarrow\Omega$。
+  记集合 $\Sigma$ 是二元组 $(A',f')$ 的集合，其中 $A'$ 是满足 $A\subseteq A'\subseteq K$
+  的子环，映射 $f':A'\to\Omega$ 满足 $f'|_A=f$。首先 $(A,f)\in\Omega$，所以 $\Omega\neq\emptyset$。
+  定义 $\Omega$ 上的偏序：$(A',f')\leq (A'',f'')$ 当且仅当 $A'\subseteq A''$ 以及 $f''|_{A'}=f'$。
+
+  上述偏序的含义如下：记 $\ideal p'=\ker f'$，由于 $f':A'\to\Omega$ 表明 $A'/\ideal p'$
+  同构于 $\Omega$ 的子环是整环，所以 $\ideal p'$ 是素理想。类似地，记素理想 $\ideal p''=\ker f''$。
+  那么 $f''|_{A'}=f'$ 表明 $\ideal p''\cap A'=\ideal p'$，即对于 $A'\hookrightarrow A''$ 有
+  $\ideal p''^{c}=\ideal p'$。也就是说我们有如下交换图：
+  \[
+    \begin{tikzcd}[row sep=2.4em]
+      A'\arrow[r]\arrow[d,hookrightarrow]
+      & A'/\ideal p'\arrow[r]\arrow[d,hookrightarrow] 
+      & k(\ideal p')\arrow[r,hookrightarrow]\arrow[d,hookrightarrow] 
+      & \Omega \\
+      A''\arrow[r] & A''/\ideal p''\arrow[r] & k(\ideal p'')\arrow[ur,hookrightarrow] & 
+    \end{tikzcd}  
+  \]
+
+  令 $\{(A_i,f_i)\}_{i\in I}$ 是 $\Sigma$ 的一条链。令 $A_0=\bigcup_{i\in I}A_i$，对于 $x\in A_0$，
+  那么存在 $i\in I$ 使得 $x\in A_i$，定义 $f_0:A_0\to\Omega$ 为 $f_0(x)=f_i(x)$。$f_0$
+  是良定义的，因为若同时有 $x\in A_i$ 以及 $x\in A_j$，设 $(A_i,f_i)\leq (A_j,f_j)$，那么
+  $f_i(x)=f_j(x)$。此时 $(A_0,f_0)$ 为这条链的上界，根据 Zorn 引理，$\Sigma$ 有极大元，
+  记为 $(B,g)$。下面我们分三步证明 $B$ 就是我们要找的赋值环。
+
+  Step 1. 证明 $B$ 是局部环，有极大理想 $\ideal m=\ker g$。首先 $\ideal m$ 是素理想，
+  并且 $g(B-\ideal m)\neq 0$，所以 $g(B-\ideal m)\in\Omega^\times$，根据分式环的泛性质
+  \ref{prop:universal property of fraction ring}，存在交换图
+  \[
+    \begin{tikzcd}
+      B\arrow[r,"g"]\arrow[d] & \Omega \\
+      B_{\ideal m}\arrow[ur,dashed,"g'"'] &
+    \end{tikzcd}  
+  \]
+  $B$ 是整环，所以 $B\to B_{\ideal m}$ 是单射，所以 $(B,g)\leq (B_{\ideal m},g')$，
+  $(B,g)$ 是极大元表明 $B=B_{\ideal m}$。
+
+  Step 2. 证明若 $x\notin B$，则 $\ideal mB[x]=B[x]$。这里 $B[x]$ 是 $K$ 中同时包含 $B$
+  和 $x$ 的最小的子环。反证法，假设 $\ideal mB[x]\neq B[x]$，那么存在 $B[x]$ 的极大理想 $\ideal m'$
+  包含 $\ideal mB[x]$，那么对于 $B\hookrightarrow B[x]$ 有 $\ideal m\subseteq\ideal m'\cap B$，
+  同时注意到 $\ideal m'\cap B\neq B$，所以 $\ideal m$ 是 $B$ 的极大理想表明 $\ideal m'\cap B=\ideal m$。
+  于是我们有如下交换图：
+  \[
+    \begin{tikzcd}[row sep=2.4em]
+      B\arrow[r]\arrow[d,hookrightarrow] 
+      & B/\ideal m\arrow[r,hookrightarrow]\arrow[d,hookrightarrow] 
+      & \Omega \\
+      B[x]\arrow[r]\arrow[urr,dashed,red,bend right=60,"g'"'] 
+      & B[x]/\ideal m'\arrow[ur,dashed,hookrightarrow] &
+    \end{tikzcd}  
+  \]
+  \vskip-10pt \noindent
+  也就是说，通过 $b+\ideal m\mapsto b+\ideal m'$，$B/\ideal m$ 可以视为
+  $B[x]/\ideal m'$ 的子域。注意到 $B[x]/\ideal m'$ 的元素都可以写为
+  $h(x)+\ideal m'=\bar h(\bar x)=\bar h(x+\ideal m')$ 的形式（其中 $h\in B[t],\bar h\in B/\ideal m[t]$），
+  所以 $B[x]/\ideal m'$ 可以视为 $B/\ideal m[\bar x]$，而 $B/\ideal m[\bar x]$ 是域，所以
+  $\bar x$ 在 $B/\ideal m$ 上是代数的，那么就存在嵌入 $B[x]/\ideal m'\hookrightarrow\Omega$。
+  那么可以令 $g':B[x]\to\Omega$ 为上述交换图中的复合映射 $B[x]\to B[x]/\ideal m'\to\Omega$，
+  此时有 $(B,g)\leq (B[x],g')$，所以 $B=B[x]$，这与 $x\notin B$ 矛盾。这就证明了 $\ideal mB[x]=B[x]$。
+
+  Step 3. 证明 $B$ 是 $K$ 的赋值环。若 $x\notin B$，那么 $\ideal mB[x]=B[x]$，所以存在
+  $u_i\in\ideal m$ 使得
+  \[
+    u_0+u_1x+\cdots+u_nx^n=1,  
+  \]
+  即 $1-u_0-u_1x-\cdots-u_nx^n=0$，因为 $1-u_0\in B-\ideal m=B^\times$，所以
+  \[
+    x^{-n}-(1-u_0)^{-1}u_1x^{1-n}-\cdots-(1-u_0)^{-1}u_n=0, 
+  \]
+  所以 $x^{-1}$ 在 $B$ 上是整的，$B[x^{-1}]$ 在 $B$ 上是整的。根据 \autoref{thm:lying over}，
+  存在 $B[x^{-1}]$ 的素理想 $\ideal m'$ 使得 $\ideal m'\cap B=\ideal m$。实际上 $\ideal m'$
+  必为极大理想，否则存在 $B[x^{-1}]$ 的极大理想 $\ideal n'$ 使得 $\ideal m'\subseteq\ideal n'$，
+  于是 $\ideal m=\ideal m'\cap B\subseteq\ideal n'\cap B$，那么 $\ideal n'\cap B=\ideal m$，
+  根据 \autoref{coro:contraction of prime ideal}，有 $\ideal m'=\ideal n'$。再重复上面的叙述，
+  我们可以得到 $g':B[x^{-1}]\to\Omega$ 使得 $(B,g)\leq (B[x^{-1}],g')$，所以 $B[x^{-1}]=B$，
+  故 $x^{-1}\in B$，所以 $B$ 是 $K$ 的赋值环。此外，$(B,g)\in\Sigma$ 就表明
+  $A\subseteq B$ 以及 $\ideal pA_{\ideal p}\subseteq\ideal m=\ker g$。
+\end{proof}
+
+\begin{corollary}\label{coro:integral closure is intersection of valuation ring}
+  令 $A$ 是域 $K$ 的子环，那么 $A$ 在 $K$ 中的整闭包 $\bar A$ 是 $K$ 的所有包含 $A$
+  的赋值环的交。
+\end{corollary}
+\begin{proof}
+  令 $B$ 是 $K$ 的赋值环且 $A\subseteq B$。因为 $B$ 是整闭的，所以 $\bar A\subseteq B$。
+  故 $\bar A$ 被 $K$ 的所有包含 $A$ 的赋值环的交包含。
+
+  反之，令 $x\notin\bar A$，那么 $x\notin A[x^{-1}]=A'$，否则存在 $a_0,\dots,a_n\in A$
+  使得
+  \[
+    x=a_0+ a_1x^{-1}+\cdots+a_nx^{-n},
+  \]
+  即 $x^{n+1}-a_0x^n-a_1x^{n-1}-\cdots-a_n=0$，这与 $x\notin\bar A$ 矛盾。所以 $x^{-1}$
+  在 $A'$ 中不可逆，因此存在 $A'$ 的极大理想 $\ideal m'$ 使得 $x^{-1}\in\ideal m'$。
+  那么存在 $K$ 的赋值环 $(B,\ideal m)$ 控制 $(A',\ideal m')$，注意 $\ideal m$ 为 $B$
+  中不可逆元的集合，所以 $x^{-1}\in A'\subseteq B$ 表明 $x\notin B$。
+  
+  综上，这就表明 $\bar A$ 是 $K$ 的所有包含 $A$ 的赋值环的交。
+\end{proof}
+
+\begin{proposition}
+  令 $A\subseteq B$ 是整环，$B$ 是有限生成 $A$-代数。令 $v$ 是 $B$ 中的非零元，那么存在
+  $A$ 中的非零元 $u$ 使得：任取代数闭域 $\Omega$，任意同态 $f:A\to\Omega$ 如果满足
+  $f(u)\neq 0$，那么 $f$ 可以被延拓为同态 $g:B\to\Omega$ 使得 $g(v)\neq 0$。
+\end{proposition}
+\begin{remark}
+  记 $\ideal p=\ker f$ 和 $\ideal q=\ker g$ 是素理想，那么
+  $g|_A=f$ 表明 $\ideal q\cap A=\ideal p$，并且 $f$
+  可以通过商环分解为 $f:A\to A/\ideal p\to\Omega$，$g$ 同理，所以此时有交换图
+  \[
+    \begin{tikzcd}
+      A\arrow[r]\arrow[d,hookrightarrow] 
+      & A/\ideal p\arrow[r]\arrow[d,hookrightarrow]  & \Omega \\
+      B\arrow[r] & B/\ideal q\arrow[ur,dashed,red] &
+    \end{tikzcd}  
+  \]
+\end{remark}
+\begin{proof}
+  对 $B$ 的生成元的个数归纳，只需要证明 $B=A[x]$ 的情况即可。
+
+  若 $x$ 在 $A$ 上是超越的（即 $x$ 不是任何 $A$ 中系数多项式的根）。对于非零元 $v\in B$，
+  存在 $a_0,\dots,a_n\in A$ 使得 $v=a_0x^n+a_1x^{n-1}+\cdots+a_n$，其中 $a_0\neq 0$。
+  取 $u=a_0$。如果同态 $f:A\to\Omega$ 满足 $f(u)\neq 0$，考虑 $\Omega[t]$ 中的多项式
+  $f(a_0)t^n+f(a_1)t^{n-1}+\cdots+f(a_n)$，$\Omega$ 为代数闭域表明 $\Omega$ 为无限域，
+  所以一定存在 $\xi\in\Omega$ 使得 $f(a_0)\xi^n+f(a_1)\xi^{n-1}+\cdots+f(a_n)\neq 0$。
+  定义 $g:B\to\Omega$ 满足 $g(x)=\xi$ 以及 $g|_A=f$，那么 $g(v)\neq 0$ 满足条件。
+
+  若 $x$ 在 $A$ 上是代数的（即 $x$ 是某个 $A$ 中系数多项式的根）。
+  那么 $v^{-1}\in \Frac(B)$ 也是 $A[x]$ 中多项式的根，所以我们有
+  \begin{gather*}
+    a_0x^m+a_1x^{m-1}+\cdots+a_m=0\quad (a_i\in A),\\
+    a_0'v^{-n}+a_1'v^{1-n}+\cdots+a_n'=0\quad (a_j'\in A).
+  \end{gather*}
+  令 $u=a_0a_0'$，若 $f:A\to\Omega$ 满足 $f(u)\neq 0$，那么 $f$ 可以延拓为
+  $f_1:A[u^{-1}]\to\Omega$，满足 $f_1(u^{-1})=f(u)^{-1}$。根据 \autoref{thm:existence of valuation ring}，
+  存在 $\Frac(B)$ 的赋值环 $C$ 使得 $C\supseteq A[u^{-1}]$ 以及同态 $h:C\to\Omega$ 满足 $h|_A=f_1$。
+  由于 $a_0x^m+a_1x^{m-1}+\cdots+a_m=0$，所以 $ux^m+a_1a_0'x^{m-1}+\cdots+a_ma_0'=0$，所以
+  在 $A[u^{-1}]$ 中有
+  \[
+    x^m+a_1a_0'u^{-1}x^{m-1}+\cdots+a_ma_0'u^{-1}=0,
+  \]
+  即 $x$ 在 $A[u^{-1}]$ 上是整的。根据 \autoref{coro:integral closure is intersection of valuation ring}，
+  $x\in C$，所以 $B\subseteq C$。特别地，有 $v\in C$。另一方面，可以证明 $v^{-1}\in\Frac(B)$
+  在 $A[u^{-1}]$ 上也是整的，所以 $v^{-1}\in C$。故 $v\in C^\times$，所以 $h(v)\neq 0$。
+  令 $g=h|_B$ 即满足要求。
+\end{proof}
+
+\begin{corollary}[Zariski 引理]\label{coro:Zariski lemma}
+  令 $k$ 是域，$B$ 是有限生成 $k$-代数，如果 $B$ 是域，那么 $B$ 是 $k$
+  的有限（代数）扩张。
+\end{corollary}
+\begin{proof}
+  取 $A=k$，$v=1$，$\Omega=\bar k$，那么嵌入 $j:k\to\bar k$ 可以延拓为同态
+  $g:B\to\bar k$，$g(1)\neq 0$ 表明 $g$ 是非零同态，$B$ 是域进而表明 $g$
+  是单同态，所以 $B$ 是 $k$ 的代数扩张。
+\end{proof}
+
+\autoref{coro:Zariski lemma} 是 Hilbert 零点定理（Hilbert's Nullstellensatz）的一种形式。
+后面我们会介绍另一种证明方法（\autoref{prop:Zariski lemma 2}）。
+
+\section{EXERCISES}
+
+\begin{problem}
+  令 $f:A\to B$ 是环的整同态（即 $B$ 在 $ f(A)$ 上是整的），证明 $f^*:\Spec(B)\to\Spec(A)$
+  是闭映射。
+\end{problem}
+\begin{proof}
+  
+\end{proof}
+
+\begin{problem}
+  令 $A$ 是 $B$ 的子环，$C$ 是 $A$ 在 $B$ 中的整闭包，证明 $C[x]$ 是 $A[x]$
+  在 $B[x]$ 中的整闭包。
+\end{problem}
+\begin{proof}
+  
+\end{proof}
+
+\begin{problem}
+  $A,B$ 是两个局部环，如果 $A$ 是 $B$ 的子环并且 $A$ 的极大理想 $\ideal m$
+  被 $B$ 的极大理想 $\ideal n$ 包含（等价地说，$\ideal m=\ideal n\cap A$），
+  那么称 $B$ \emph{控制} $A$。令 $K$ 是域，$\Sigma$ 是 $K$ 的局部子环的集合，
+  控制构成了 $\Sigma$ 上的一个偏序，证明 $\Sigma$ 有极大元，并且 $A\in\Sigma$
+  是极大元当且仅当 $A$ 是 $K$ 的赋值环。
+\end{problem}
+
+\begin{problem}
+  $A$ 是整环，$K$ 是 $A$ 的分式域，证明下面的说法是等价的：
+  \begin{enumerate}
+    \item $A$ 是 $K$ 的赋值环；
+    \item 如果 $\ideal a,\ideal b$ 是 $A$ 的两个理想，那么 $\ideal a\subseteq \ideal b$
+    或者 $\ideal b\subseteq\ideal a$。
+  \end{enumerate}
+  由此推断出，如果 $A$ 是一个赋值环，$\ideal p$ 是 $A$ 的一个素理想，那么 $A_{\ideal p}$
+  和 $A/\ideal p$ 都是它们分式域的赋值环。
+\end{problem}
+\begin{proof}
+  若 $A$ 是 $K$ 的赋值环，令 $\ideal a,\ideal b$ 是 $A$ 的两个不相同的理想，
+  假设 $\ideal a\not\subseteq \ideal b$，我们证明 $\ideal b\subseteq\ideal a$。
+  任取 $b\in\ideal b$，$\ideal a\not\subseteq\ideal b$ 表明存在 $a\in\ideal a-\ideal b$。
+  $A$ 是赋值环表明 $a^{-1}b$ 或者 $ab^{-1}$ 在 $A$ 中。
+  若 $ab^{-1}\in A$，那么 $a=b(ab^{-1})\in\ideal b$，这与
+  $a\notin\ideal b$ 矛盾，所以 $a^{-1}b\in A$，所以
+  $b=a(a^{-1}b)\in\ideal a$，故 $\ideal b\subseteq \ideal a$。
+
+  反过来，令 $x\in K^\times$，假设 $x\notin A$。设 $x=a/b$，其中 $a,b\neq 0$，
+  那么 $(a)\subseteq (b)$ 或者 $(b)\subseteq (a)$，即 $b\mid a$ 或者 $a\mid b$，
+  即存在非零的 $c\in A$ 使得 $a=bc$ 或者 $b=ac$，如果 $a=bc$，那么 $x=c/1\in A$，
+  所以有 $b=ac$，所以 $x^{-1}=b/a=c/1\in A$，所以 $A$ 是赋值环。
+
+  $A_{\ideal p}$ 的理想都形如 $\ideal a_{\ideal p}$，其中 $\ideal a$ 是 $A$ 的被 $\ideal p$ 包含的理想。
+  所以若 $\ideal a_{\ideal p},\ideal b_{\ideal p}$ 是 $A_{\ideal p}$ 的两个理想，
+  那么 $\ideal a$ 和 $\ideal b$ 是 $A$ 的两个理想，所以 $\ideal a\subseteq \ideal b$
+  或者 $\ideal b\subseteq \ideal a$，所以 $\ideal a_{\ideal p}\subseteq\ideal b_{\ideal p}$
+  或者 $\ideal b_{\ideal p}\subseteq \ideal a_{\ideal p}$，即 $A_{\ideal p}$
+  是赋值环。$A/\ideal p$ 的理想都形如 $\ideal a/\ideal p$，其中 $\ideal a$ 是包含 $\ideal p$ 的理想。
+  剩余的叙述同理。
+\end{proof}
+
+\begin{problem}
+  $A$ 是域 $K$ 的赋值环，$A$ 的单位群 $A^\times$ 是 $K$ 的乘法群 $K^\times$ 的子群。
+  
+  令 $\Gamma=K^\times/A^\times$，如果 $\bar x,\bar y\in\Gamma$，定义 $\bar x\geq \bar y$
+  为 $xy^{-1}\in A$。证明这定义了 $\Gamma$ 上的一个全序，并且与群结构相容
+  （即 $\bar x\geq \bar y\Rightarrow \bar x\bar w\geq \bar y\bar w\ (\forall\bar w\in\Gamma)$）。
+  换句话说，$\Gamma$ 是一个全序的交换群，被称为 $A$ 的\emph{值群}。
+
+  令 $v:K^\times \to\Gamma$ 是自然同态，证明 $v(x+y)\geq\min(v(x),v(y))$。
+\end{problem}
+\begin{proof}
+  若 $\bar x_1=\bar x_2$ 以及 $\bar y_1=\bar y_2$，那么 $x_1^{-1}x_2\in A^\times$ 以及
+  $y_1^{-1}y_2\in A^\times$。如果 $\bar x_1\geq \bar y_1$，那么
+  $x_1y_1^{-1}\in A$，所以
+  \[
+    x_2y_2^{-1}=(x_2x_1^{-1})(x_1y_1^{-1})(y_1y_2^{-1})\in A,
+  \]
+  所以 $\bar x_2\geq \bar y_2$，所以 $\geq$ 是良定义的。
+  
+  对于任意的 $\bar x\in\Gamma$，由于 $xx^{-1}=1\in A$，所以 $\bar x\geq \bar x$。
+  若 $\bar x\geq\bar y$ 以及 $\bar y\geq \bar z$，那么 $xy^{-1}\in A$ 以及
+  $yz^{-1}\in A$，所以 $xz^{-1}=(xy^{-1})(yz^{-1})\in A$，所以 $\bar x\geq\bar z$。
+  若 $\bar x\geq\bar y$ 以及 $\bar y\geq \bar x$，那么 $xy^{-1}\in A$ 以及
+  $yx^{-1}\in A$，所以 $y^{-1}x=xy^{-1}\in A^\times$，所以 $x A^\times=yA^\times$，
+  即 $\bar x=\bar y$。这表明 $\geq$ 是 $\Gamma$ 上的一个偏序。
+  任取 $\bar x,\bar y\in\Gamma$，$A$ 是赋值环表明 $xy^{-1}\in A$ 或者 $yx^{-1}\in A$，
+  即 $x\geq y$ 或者 $y\geq x$，所以 $\geq$ 是 $\Gamma$ 上的一个全序。
+
+  若 $\bar x\geq \bar y$，任取 $\bar w\in\Gamma$，那么 $xw(yw)^{-1}=xy^{-1}\in A$，即
+  $\bar x\bar w\geq \bar y\bar w$，所以 $\ge$ 与群结构相容。
+
+  不妨设 $v(x)\geq v(y)$，即 $xy^{-1}\in A$，那么 $(x+y)y^{-1}=xy^{-1}+1\in A$，所以
+  $v(x+y)\geq v(y)=\min(v(x),v(y))$。
+\end{proof}
+
+
