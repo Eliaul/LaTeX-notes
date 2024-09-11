@@ -1,0 +1,185 @@
+\documentclass[fontset=none]{Notes}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\usepackage{tikz-cd,wrapstuff}
+\usepackage{fixdif,siunitx,tikz,nicematrix}
+\usetikzlibrary{matrix,calc}
+
+\input{font.def}
+
+\usepackage[subscriptcorrection,nofontinfo,mtpbb,mtpfrak]{mtpro2}
+
+\tikzcdset{
+  arrow style=tikz,
+  diagrams={>={Straight Barb[scale=0.8]}}
+}
+
+\allowdisplaybreaks[1]
+
+\newlength{\mymathln}
+\newcommand{\aligninside}[2]{
+  \settowidth{\mymathln}{#2}
+  \mathmakebox[\mymathln]{#1}
+}
+
+\DeclareMathOperator\Spec{Spec}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\nil{nil}
+\DeclareMathOperator\rad{rad}
+\DeclareMathOperator\Ann{Ann}
+\DeclareMathOperator\Max{Max}
+\DeclareMathOperator\GL{GL}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Int{Int}
+\DeclareMathOperator\Tor{Tor}
+\DeclareMathOperator\Frac{Frac}
+\DeclareMathOperator\Tr{Tr}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\supp{supp}
+\DeclareMathOperator\Id{Id}
+\DeclareMathOperator\rk{rank}
+\DeclareMathOperator\coker{coker}
+
+\newcommand{\ideal}[1]{\mathfrak{#1}}
+\newcommand{\mat}[1]{\mathbold{#1}}
+\newcommand{\uline}{\underline{\hphantom{X}}}
+\newcommand{\abs}[1]{\left|#1\right|}
+
+\usepackage{enumitem}
+
+\setlist[enumerate]{nosep}
+
+%\DeclareMathAlphabet\mathcal{OMS}{cmsy}{m}{n}
+
+\newlength\stextwidth
+\newcommand\makesamewidth[3][c]{%
+  \settowidth{\stextwidth}{#2}%
+  \makebox[\stextwidth][#1]{#3}%
+}
+
+
+
+\begin{document}
+
+\frontmatter
+
+\tableofcontents
+
+\mainmatter
+
+\chapter{测度和积分}
+
+\section{测度空间}
+
+令 $E$ 是集合，$\mathcal{E}$ 是 $E$ 的一个子集族。若对于任意 $A,B\in\mathcal{E}$ 有
+$A\cap B\in\mathcal{E}$，那么我们说 $\mathcal{E}$ \emph{对交封闭}。如果 $\mathcal{E}$
+中任意可数个集合的交还在 $\mathcal{E}$ 中，那么我们说 $\mathcal{E}$ 对可数交封闭。
+类似地，我们可以定义对补封闭、对并封闭和对可数并封闭的概念。
+
+\subsubsection{$\sigma$-代数}
+
+如果 $E$ 的非空子集族 $\mathcal{E}$ 对补和有限并封闭，那么我们说 $\mathcal{E}$
+是 $E$ 上的\emph{代数}。如果其对补和可数并封闭，那么我们说 $\mathcal{E}$
+是 $E$ 上的\emph{$\sigma$-代数}，即：
+\begin{alphenum}
+  \item $A\in\mathcal{E}\Rightarrow E\smallsetminus A\in\mathcal{E}$，
+  \item $A_1,A_2,\dotsc\in \mathcal{E}\Rightarrow\bigcup_n A_n\in\mathcal{E}$。
+\end{alphenum}
+由于 $\left(\bigcup_n A_n\right)^c=\bigcap_n A_n^c\in\mathcal{E}$，所以对补和可数并封闭
+可以自然导出对可数交封闭，即 $\sigma$-代数对可数交也封闭。
+
+任取 $A\in \mathcal{E}$，那么 $E=A\cup(E \smallsetminus A)\in \mathcal{E}$，所以 $E$ 上
+任意 $\sigma$-代数都至少包含 $E$ 和 $\emptyset$。事实上，$\mathcal{E}=\{E,\emptyset\}$
+是 $E$ 上的最简单的 $\sigma$-代数，被称为\emph{平凡 $\sigma$-代数}。$E$ 上最大的
+$\sigma$-代数当然是 $\mathcal{E}=2^E$，即 $\mathcal{E}$ 就是 $E$ 的幂集，被
+称为\emph{离散 $\sigma$-代数}。
+
+不难看出，$E$ 上一族 $\sigma$-代数的任意交(不一定可数)还是 $E$ 上的 $\sigma$-代数。
+给定 $E$ 的一个子集族 $\mathcal{C}$，我们可以考虑所有包含 $\mathcal{C}$ 
+的 $\sigma$-代数(总是存在至少一个这样的 $\sigma$-代数，即 $2^E$)，将这些
+$\sigma$-代数取交集，我们便得到了包含 $\mathcal{C}$ 的最小的 $\sigma$-代数，
+被称为\emph{由 $\mathcal{C}$ 生成的} $\sigma$-代数，记为 $\sigma\mathcal{C}$。
+
+如果 $E$ 是拓扑空间，由 $E$ 的所有开集族生成的 $\sigma$-代数被称为 $E$ 上的
+\emph{Borel $\sigma$-代数}，记为 $\mathcal{B}(E)$ 或者 $\mathcal{B}_E$，
+其元素被称为\emph{Borel 集}。
+
+\subsubsection{p-系和 d-系}
+
+对于 $E$ 的子集族 $\mathcal{C}$，如果其对交封闭，那么我们说 $\mathcal{C}$
+是一个 p-系，这里 p 代表 product，是“交”的另一种说法。
+$E$ 的子集族 $\mathcal{D}$ 被称为 d-系，如果其满足：
+\begin{alphenum}
+  \item $E\in\mathcal{D}$，
+  \item $\text{$A,B\in \mathcal{D}$ and $A\supseteq B\Rightarrow A \smallsetminus B\in \mathcal{D}$}$，
+  \item $\text{$(A_n)\subseteq \mathcal{D}$ and $A_n\nearrow A\Rightarrow A\in \mathcal{D}$}$。
+\end{alphenum}
+其中 $(A_n)\subseteq D$ 表明 $(A_n)$ 是 $D$ 中的集合序列，$A_n\nearrow A$ 表明这个序列
+递增于极限 $A$：
+\[
+  A_1\subseteq A_2\subseteq\cdots,\quad \bigcup_{n=1}^\infty A_n=A.
+\]
+
+显然一个 $\sigma$-代数既是 p-系又是 d-系，其反面也是成立的。所以 p-系和 d-系是产生
+$\sigma$-代数的原始结构。
+
+\begin{proposition}
+  $E$ 的子集族是 $\sigma$-代数当且仅当其既是 p-系又是 d-系。
+\end{proposition}
+\begin{proof}
+  $(\Rightarrow)$ 若 $\mathcal{E}$ 是 $\sigma$-代数，其显然是 p-系并且满足 d-系的条件 (a) 和 (c)。
+  下面我们验证其满足 d-系的条件 (b)。任取 $A,B\in\mathcal{E}$ 且 $A\supseteq B$，
+  那么 $A \smallsetminus B=A\cap (E \smallsetminus B)\in \mathcal{E}$，
+  所以 $\mathcal{E}$ 是 d-系。
+
+  $(\Leftarrow)$ 若 $\mathcal{E}$ 既是 p-系又是 d-系。任取 $A\in \mathcal{E}$，
+  根据 d-系的 (a) 和 (b)，我们有 $E \smallsetminus A\in \mathcal{E}$。
+  所以 $\mathcal{E}$ 对补封闭。然后我们说明对并封闭。任取 $A,B\in \mathcal{E}$， 
+  由于
+  \[
+    A\cup B=E \smallsetminus (A\cup B)^c=E \smallsetminus (A^c\cap B^c),
+  \]
+  结合 p-系对交封闭，所以 $A\cup B\in \mathcal{E}$。最后我们说明对可数并封闭。
+  如果 $(A_n)\subseteq \mathcal{E}$，令 $B_n=A_1\cup\cdots\cup A_n$，
+  那么 $(B_n)\subseteq \mathcal{E}$ 且 $B_n\nearrow A$，根据 d-系的 (c)，所以
+  $A\in \mathcal{E}$，故 $\mathcal{E}$ 对可数并封闭。
+\end{proof}
+
+下面的引理为本节的主要定理做准备。
+
+\begin{lemma}
+  令 $\mathcal{D}$ 是 $E$ 上的 d-系，固定 $D\in \mathcal{D}$，令
+  \[
+    \hat{\mathcal{D}}=\{A\in \mathcal{D}: A\cap D\in \mathcal{D}\},
+  \]
+  那么 $\hat{\mathcal{D}}$ 仍然是 d-系。
+\end{lemma}
+
+\subsubsection{单调类定理}
+
+这是一个非常有用的工具来证明某些集族是 $\sigma$-代数。
+
+\begin{theorem}
+  如果一个 d-系包含一个 p-系，那么其包含这个 p-系生成的 $\sigma$-代数。
+\end{theorem}
+\begin{proof}
+  
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

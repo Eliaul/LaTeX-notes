@@ -2368,6 +2368,16 @@ $F$ 是\emph{李群同态}。如果 $F$ 还是微分同胚，那么我们说 $F$
   是李群。
 \end{proof}
 
+\begin{lemma}
+  设 $G$ 是李群，$H\subseteq G$ 是开子群。那么 $H$ 是嵌入李子群并且是闭集，故 $H$
+  是 $G$ 的连通分支的并。
+\end{lemma}
+\begin{proof}
+  $H$ 是开子流形表明 $H$ 是嵌入李子群。对于任意 $g\in G$，陪集 $gH=L_g(H)$ 是开集，所以
+  $G\smallsetminus H$ 作为陪集的并是开集，所以 $H$ 是闭集。$H$ 既开又闭表明 $H$
+  是连通分支的并集。
+\end{proof}
+
 
 \begin{proposition}
   设 $G$ 是李群，$W\subseteq G$ 是单位元处的任意邻域。
@@ -2378,19 +2388,39 @@ $F$ 是\emph{李群同态}。如果 $F$ 还是微分同胚，那么我们说 $F$
   \end{enumerate}
 \end{proposition}
 \begin{proof}
-  (1) 任取 $g\in\langle W\rangle$，那么 $g=g_1\cdots g_k$，其中
-  $g_i\in W\cup W^{-1}$，那么
+  (1) 记 $W_1=W\cup W^{-1}$，对于 $k\geq 2$，递归地定义 $W_k=W_1W_{k-1}$，那么
   \[
-    g=L_{g_1\cdots g_{k-1}}(g_k)\in L_{g_1\cdots g_{k-1}}(W\cup W^{-1})\subseteq \langle W\rangle,
+    \langle W\rangle=\bigcup_{k=1}^\infty W_k,
   \]
-  由于 $W\cup W^{-1}$ 是开集并且左平移是微分同胚，所以 $L_{g_1\cdots g_{k-1}}(W\cup W^{-1})$
-  是开集。这表明 $\langle W\rangle$ 是开集。
+  由于求逆映射 $g\mapsto g^{-1}$ 是微分同胚，所以 $W^{-1}$ 是开集，所以 $W_1$ 是开集。
+  假设 $W_{k-1}$ 是开集，那么
+  \[
+    W_k=\bigcup_{g\in W_1}L_g(W_{k-1})
+  \]
+  是开集的并，所以 $W_k$ 是开集。故 $\langle W\rangle$ 是开集。
 
-  (2) $W$ 连通表明 $W^{-1}$ 连通(求逆是微分同胚)，进而 $W\cup W^{-1}$ 连通(二者有公共点 $e$)。
-  若 $\langle W\rangle=U\cup V$，其中 $U,V$ 是 $\langle W\rangle$ 的不相交非空开集。设 $e\in U$，任取 $g\in V$，那么
-  $L_g(U)$ 
+  (2) 由于 $W$ 和 $W^{-1}$ 都是连通的，且 $e\in W\cap W^{-1}$，所以 $W_1$ 是连通的。
+  假设 $W_{k-1}$ 是连通的，那么 $W_k=m(W_1\times W_{k-1})$ 是连通空间在连续映射下的像，所以是连通的。
+  又因为 $e\in W_k$，所以 $\langle W\rangle$ 是连通的。
+
+  (3) $\langle W\rangle$ 是开子群表明 $\langle W\rangle$ 是连通分支的并，$G$ 连通表明 $\langle W\rangle=G$。
 \end{proof}
 
+若 $G$ 是李群，则 $G$ 的包含单位元的连通分支被称为 $G$ 的\emph{单位分支}。
+
+\begin{proposition}
+  令 $G$ 是李群，$G_0$ 是单位分支。那么 $G_0$ 是 $G$ 的正规子群，并且是唯一的连通开子群。
+  $G$ 的任意连通分支都微分同胚于 $G_0$。
+\end{proposition}
+\begin{proof}
+  任取 $g\in G$，那么 $gG_0g^{-1}=L_g\left(R_{g^{-1}}(G_0)\right)$ 是连通的，并且 $e\in gG_0g^{-1}$，所以
+  $gG_0g^{-1}\subseteq G_0$，这就表明 $G_0$ 是正规子群。设 $G_0'$ 是连通开子群，那么 $G_0'$ 是开子群表明
+  $G_0'$ 是连通分支的并集，$G_0'$ 是连通的表明 $G_0'$ 是某一个连通分支，又因为 $e\in G_0'$，所以 $G_0'=G_0$
+  是单位分支。设 $G_0'$ 是任意连通分支，任取 $g\in G_0'$，$g^{-1}G_0'=L_{g^{-1}}(G_0')$ 是连通的且包含
+  单位元，故 $g^{-1}G_0'$ 被单位分支 $G_0$ 包含，那么 $L_{g}(G_0)=gG_0\supseteq G_0'$ 是连通的，所以
+  $G_0'=gG_0=L_g(G_0)$ 微分同胚于 $G_0$。
+\end{proof}
+ 
 
 
 
