@@ -226,7 +226,8 @@ $(E,\mathcal{E})\times (F,\mathcal{F})$ 来表示。
     的每个元素都是 $\mathcal{C}$ 中元素的可数并。
     \item 令 $E=\mathbb{R}$，$\mathcal{C}$ 是 $\mathbb{R}$ 的所有单点子集
     构成的子集族。证明 $\sigma \mathcal{C}$ 的元素要么是可数集要么
-    是可数集的补集。
+    是可数集的补集。这表明从直观上来看，$\sigma \mathcal{C}$ 要比 $\mathcal{B}(\mathbb{R})$
+    小得多，例如开区间 $(0,1)$ 属于后者但是不属于前者。
   \end{alphenum}
 \end{exercise}
 \begin{solution}
@@ -246,8 +247,92 @@ $(E,\mathcal{E})\times (F,\mathcal{F})$ 来表示。
   的可数并，所以 $E \smallsetminus \left(\bigcup_k A_{n_k}\right)\in \mathcal{E}$，
   即 $\mathcal{E}$ 对补封闭，所以 $\mathcal{E}$ 是 $\sigma$-代数，
   所以 $\mathcal{E}=\sigma \mathcal{C}$。
+
+  (c) 令 $\mathcal{E}$ 为 $\mathbb{R}$ 的可数子集和补集可数的子集构成的子集族。
+  显然 $\mathcal{E}\subseteq \sigma \mathcal{C}$ 且不难验证 $\mathcal{E}$
+  是一个 $\sigma$-代数(可数个可数集的并是可数集)，所以 $\mathcal{E}=\sigma \mathcal{C}$。
 \end{solution}
 
+\begin{exercise}{$\mathbb{R}$ 上的 Borel $\sigma$-代数}{}
+  $\mathbb{R}=(-\infty,+\infty)$ 的任意开子集都是开区间的可数并。使用这一事实证明
+  $\mathcal{B}(\mathbb{R})$ 由所有开区间构成的子集族生成。
+\end{exercise}
+\begin{proof}
+  设 $\mathcal{C}$ 为所有开区间构成的子集族，$\mathcal{T}$ 为所有开集构成的子集族(即 $\mathbb{R}$ 上的拓扑)。
+  显然 $\mathcal{C}\subseteq \mathcal{T}$，
+  所以 $\sigma \mathcal{C}\subseteq \sigma \mathcal{T}=\mathcal{B}(\mathbb{R})$。由于
+  $\mathcal{T}$ 中集合都是 $\mathcal{C}$ 中集合的可数并，所以 $\mathcal{T}\subseteq \sigma \mathcal{C}$，
+  这表明 $\mathcal{B}(\mathbb{R})=\sigma \mathcal{T}\subseteq \sigma \mathcal{C}$。
+  所以 $\mathcal{B}(\mathbb{R})=\sigma \mathcal{C}$ 由所有开区间构成的子集族生成。
+\end{proof}
+
+\begin{exercise}{$\mathbb{R}$ 上的 Borel $\sigma$-代数}{}
+  证明：$\mathbb{R}$ 中的任意区间都是 Borel 集。特别的，$(-\infty,x),(-\infty,x],(x,y],[x,y]$ 都是 Borel 集。
+  对于每个 $x$，单点集 $\{x\}$ 也是 Borel 集。 
+\end{exercise}
+\begin{proof}
+  只需注意到
+  \begin{gather*}
+    (-\infty,x)=\bigcup_{n=1}^\infty \left(-n+x,x\right), 
+    (-\infty, x]=\bigcap_{n=1}^\infty \left(-\infty,x+\frac{1}{n}\right),\\
+    (x,y]=\bigcap_{n=1}^\infty \left(x,y+\frac{1}{n}\right),
+    [x,y]=\bigcap_{n=1}^\infty\left(x-\frac{1}{n},y\right],
+    \{x\}=\bigcap_{n=1}^\infty\left(x-\frac{1}{n},x\right].
+  \end{gather*}
+  所以上述集合都是 Borel 集，对于其他的区间同理。
+\end{proof}
+
+\begin{exercise}{$\mathbb{R}$ 上的 Borel $\sigma$-代数}{}
+  证明 $\mathcal{B}(\mathbb{R})$ 可以由以下任意一种集族生成(实际上还有很多可能)：
+  \begin{alphenum}[nosep]
+    \item 所有形如 $(-\infty, x]$ 的区间构成的子集族。
+    \item 所有形如 $(x,y]$ 的区间构成的子集族。
+    \item 所有形如 $[x,y]$ 的区间构成的子集族。
+    \item 所有形如 $(x,+\infty)$ 的区间构成的子集族。
+  \end{alphenum}
+  此外，在每种情况中 $x,y$ 可以被限制为有理数。
+\end{exercise}
+\begin{proof}
+  (a) 记该集族为 $\mathcal{C}$，由上题，这样的区间已经是 Borel 集，
+  所以 $\sigma\mathcal{C}\subseteq \mathcal{B}(\mathbb{R})$。任取 $\mathbb{R}$
+  的开区间 $(x,y)$，有
+  \[
+    (x,y)=(-\infty,x]^c\cap (-\infty, y)=
+    (-\infty,x]^c\cap\bigcup_{n=1}^\infty \left(-\infty,y-\frac{1}{n}\right]\in\sigma \mathcal{C},
+  \]
+  而 $\mathcal{B}(\mathbb{R})$ 由所有开区间生成，所以 $\mathcal{B}(\mathbb{R})\subseteq \sigma \mathcal{C}$。
+  所以 $\mathcal{B}(\mathbb{R})=\sigma \mathcal{C}$。
+
+  (b) (c) (d) 完全同理。
+\end{proof}
+
+
+
+\section{可测函数}
+
+\subsubsection{可测函数}
+
+令 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 是可测空间，映射 $f:E\to F$ 如果使得任取 $B\in \mathcal{F}$，有
+$f^{-1}B\in \mathcal{E}$，那么我们说 $f$ 相对于 $\mathcal{E}$ 和 $\mathcal{F}$ \emph{可测}。
+
+\begin{proposition}
+  映射 $f:E\to F$ 相对于 $\mathcal{E}$ 和 $\mathcal{F}$ 可测当且仅当对于任意生成 $\mathcal{F}$ 的子集族
+  $\mathcal{F}_0$，任取 $B\in \mathcal{F}_0$，有 $f^{-1}B\in \mathcal{E}$。
+\end{proposition}
+\begin{proof}
+  必要性显然。下证充分性。设 $\mathcal{F}_0$ 使得 $\mathcal{F}=\sigma \mathcal{F}_0$，且
+  对于任意的 $B\in \mathcal{F}_0$ 有 $f^{-1}B\in \mathcal{E}$。记
+  \[
+    \mathcal{F}_1=\{A\in \mathcal{F}: f^{-1}A\in \mathcal{E}\},
+  \]
+  显然 $\mathcal{F}_0\subseteq \mathcal{F}_1\subseteq \mathcal{F}$。由于
+  \[
+    f^{-1}\left(F \smallsetminus A\right)=E \smallsetminus(f^{-1}A),\quad
+    f^{-1}\left(\bigcup_{i\in I}A_i\right)=\bigcup_{i\in I} f^{-1}A_i,
+  \]
+  所以 $\mathcal{F}_1$ 是 $\sigma$-代数，所以 $\mathcal{F}=\mathcal{F}_1$，即 $f$ 
+  相对于 $\mathcal{E}$ 和 $\mathcal{F}$ 可测。
+\end{proof}
 
 
 
