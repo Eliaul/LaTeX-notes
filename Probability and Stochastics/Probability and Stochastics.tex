@@ -128,7 +128,7 @@ $E$ 的子集族 $\mathcal{D}$ 被称为 d-系，如果其满足：
 显然一个 $\sigma$-代数既是 p-系又是 d-系，其反面也是成立的。所以 p-系和 d-系是产生
 $\sigma$-代数的原始结构。
 
-\begin{proposition}
+\begin{proposition}\label{prop:equivalent condition of sigma algebra}
   $E$ 的子集族是 $\sigma$-代数当且仅当其既是 p-系又是 d-系。
 \end{proposition}
 \begin{proof}
@@ -152,7 +152,7 @@ $\sigma$-代数的原始结构。
 
 下面的引理为本节的主要定理做准备。
 
-\begin{lemma}
+\begin{lemma}\label{lemma:hat D}
   令 $\mathcal{D}$ 是 $E$ 上的 d-系，固定 $D\in \mathcal{D}$，令
   \[
     \hat{\mathcal{D}}=\{A\in \mathcal{D}: A\cap D\in \mathcal{D}\},
@@ -168,14 +168,85 @@ $\sigma$-代数的原始结构。
   如果一个 d-系包含一个 p-系，那么其包含这个 p-系生成的 $\sigma$-代数。
 \end{theorem}
 \begin{proof}
-  
+  设 $\mathcal{C}$ 是一个 p-系。令 $\mathcal{D}$ 是包含 $\mathcal{C}$
+  的最小的 d-系，即包含 $\mathcal{C}$ 的所有 d-系的交(不难看出 d-系的任意交是 d-系)。
+  我们证明 $\mathcal{D}$ 实际上是一个 $\sigma$-代数，这样包含 $\mathcal{C}$
+  的任意 d-系都包含 $\mathcal{D}$，而 $\mathcal{D}$ 作为包含 $\mathcal{C}$
+  的 $\sigma$-代数，其包含 $\sigma \mathcal{C}$。
+  根据 \autoref{prop:equivalent condition of sigma algebra}，只需要说明 
+  $\mathcal{D}$ 既是 p-系又是 d-系，而 $\mathcal{D}$ 已经是 d-系，所以只需要
+  说明 $\mathcal{D}$ 是 p-系。
+
+  我们首先说明对于任意的 $D\in \mathcal{D}$ 和 $C\in \mathcal{C}$，
+  有 $D\cap C\in \mathcal{D}$。令
+  \[
+    \mathcal{D}_1=\{A\in \mathcal{D}: A\cap C\in \mathcal{D}\},  
+  \]
+  根据 \autoref{lemma:hat D}，$\mathcal{D}_1$ 是 d-系。由于 $\mathcal{C}$
+  是 p-系，所以 $\mathcal{C}\subseteq \mathcal{D}_1$，即 $\mathcal{D}_1$
+  是包含 $\mathcal{C}$ 的 d-系，所以 $\mathcal{D}\subseteq \mathcal{D}_1$。
+  这就表明 $D\in \mathcal{D}_1$，即 $D\cap C\in \mathcal{D}$。
+
+  下面说明对于任意的 $D,B\in \mathcal{D}$，有 $D\cap B\in \mathcal{D}$。
+  令
+  \[
+    \mathcal{D}_2=\{A\in \mathcal{D}: A\cap D\in \mathcal{D}\} .
+  \]
+  同样根据 \autoref{lemma:hat D}，$\mathcal{D}_2$ 是 d-系。根据上面的叙述，
+  有 $\mathcal{C}\subseteq \mathcal{D}_2$，即 $\mathcal{D}_2$ 是包含 
+  $\mathcal{C}$ 的 d-系，所以 $\mathcal{D}\subseteq \mathcal{D}_2$，
+  这就表明 $B\in \mathcal{D}_2$，即 $D\cap B\in \mathcal{D}$。
+  这就证明了 $\mathcal{D}$ 是 p-系。
 \end{proof}
 
+\subsubsection{可测空间}
 
+一个\emph{可测空间}指的是二元组 $(E,\mathcal{E})$，其中 $E$ 是集合，
+$\mathcal{E}$ 是 $E$ 上的 $\sigma$-代数。此时，$\mathcal{E}$
+的元素被称为\emph{可测集}。当 $E$ 是拓扑空间，$\mathcal{E}=\mathcal{B}_E$
+的时候，可测集也被称为\emph{Borel 集}。
 
+\subsubsection{可测空间的积}
 
+令 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 是可测空间。
+如果 $A\in \mathcal{E}$ 和 $B\in \mathcal{F}$，那么 $A\times B$
+被称为\emph{可测矩形}。我们用 $\mathcal{E}\otimes \mathcal{F}$
+表示 $E\times F$ 上的由可测矩形集族生成的 $\sigma$-代数，
+被称为\emph{乘积 $\sigma$-代数}。可测空间 $(E\times F,\mathcal{E}\otimes \mathcal{F})$
+被称为 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 的积，我们通常使用
+$(E,\mathcal{E})\times (F,\mathcal{F})$ 来表示。
 
+\subsubsection{Exercises}
 
+\begin{exercise}{划分生成 $\sigma$-代数}{}
+  \begin{alphenum}[nosep]
+    \item 令 $\mathcal{C}=\{A,B,C\}$ 是 $E$ 的一个划分，列出
+    $\sigma \mathcal{C}$ 的元素。
+    \item 令 $\mathcal{C}$ 是 $E$ 的(可数)划分。证明 $\sigma \mathcal{C}$
+    的每个元素都是 $\mathcal{C}$ 中元素的可数并。
+    \item 令 $E=\mathbb{R}$，$\mathcal{C}$ 是 $\mathbb{R}$ 的所有单点子集
+    构成的子集族。证明 $\sigma \mathcal{C}$ 的元素要么是可数集要么
+    是可数集的补集。
+  \end{alphenum}
+\end{exercise}
+\begin{solution}
+  (a) 令
+  \[
+    \mathcal{E}=\{A,B,C,A\cup B,A\cup C,B\cup C,E\},
+  \]
+  显然 $\mathcal{E}$ 是一个 $\sigma$-代数。对于任意包含 $\mathcal{C}$
+  的 $\sigma$-代数，由于其对并封闭，所以其必须包含 $\mathcal{E}$，
+  所以 $\mathcal{E}=\sigma \mathcal{C}$。
+
+  (b) 令 $\mathcal{E}$ 为 $\mathcal{C}$ 中元素的所有可数并构成的
+  集族。根据 $\sigma$-代数对可数并的封闭性，所以 $\sigma \mathcal{C}\supseteq \mathcal{E}$。
+  设 $(A_n)$ 构成 $E$ 的可数划分，即 $(A_n)$ 两两不相交且 $E=\bigcup_n A_n$。
+  任取 $\bigcup_k A_{n_k}\in \mathcal{E}$，那么
+  $E \smallsetminus \left(\bigcup_k A_{n_k}\right)$ 依然是某些 $(A_n)$
+  的可数并，所以 $E \smallsetminus \left(\bigcup_k A_{n_k}\right)\in \mathcal{E}$，
+  即 $\mathcal{E}$ 对补封闭，所以 $\mathcal{E}$ 是 $\sigma$-代数，
+  所以 $\mathcal{E}=\sigma \mathcal{C}$。
+\end{solution}
 
 
 

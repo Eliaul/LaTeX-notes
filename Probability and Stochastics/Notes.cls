@@ -19,8 +19,11 @@
   enumitem,
   subcaption,
   mathtools,
-  zhlineskip
+  zhlineskip,
+  tcolorbox
 }
+\tcbuselibrary{theorems}
+\tcbuselibrary{skins}
 %\RequirePackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
 
 \RequirePackage[colorlinks]{hyperref}
@@ -180,18 +183,32 @@
   name=例,
   style=examplestyle
 ]{example}
-\declaretheoremstyle[
-  bodyfont={\upshape},
-  headformat=\NAME~\NUMBER
-]{problemstyle}
-\declaretheorem[
-  numberwithin=chapter,
-  name={练习},
-  style=problemstyle,
-  refname={练习}
-]{exercise}
+% \declaretheoremstyle[
+%   bodyfont={\upshape},
+%   headformat=\NUMBER \NOTE,
+%   notefont={\sffamily\mdseries},
+%   headfont={\mdseries\sffamily}
+% ]{problemstyle}
+% \declaretheorem[
+%   numberwithin=section,
+%   name={},
+%   style=problemstyle,
+%   refname={练习}
+% ]{exercise}
 
-
+\newtcbtheorem[
+  auto counter,number within=section,
+  number freestyle={%
+  \noexpand\arabic{section}.\noexpand\arabic{\tcbcounter}.
+}]{exercise}{}{%
+  theorem style=plain,
+  coltitle=black,
+  fonttitle=\sffamily,
+  terminator sign={},
+  fontupper=\sffamily,
+  %description delimiters={}{},
+  title=\thetcbcounter
+}{exercise} 
 
 % \tcbset{
 %   common/.style={
@@ -285,7 +302,7 @@
 \renewcommand{\figurename}{Fig}
 
 \newlist{problemize}{enumerate}{1}
-\setlist[problemize,1]{label=(\alph*),nosep}
+\setlist[problemize,1]{label=\arabic{section}-\arabic*,nosep}
 \newlist{romanenum}{enumerate}{1}
 \setlist[romanenum]{label=(\roman*),noitemsep}
 \newlist{alphenum}{enumerate}{1}
