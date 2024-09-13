@@ -74,7 +74,7 @@
 
 \chapter{测度和积分}
 
-\section{测度空间}
+\section{可测空间}
 
 令 $E$ 是集合，$\mathcal{E}$ 是 $E$ 的一个子集族。若对于任意 $A,B\in\mathcal{E}$ 有
 $A\cap B\in\mathcal{E}$，那么我们说 $\mathcal{E}$ \emph{对交封闭}。如果 $\mathcal{E}$
@@ -315,7 +315,7 @@ $(E,\mathcal{E})\times (F,\mathcal{F})$ 来表示。
 令 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 是可测空间，映射 $f:E\to F$ 如果使得任取 $B\in \mathcal{F}$，有
 $f^{-1}B\in \mathcal{E}$，那么我们说 $f$ 相对于 $\mathcal{E}$ 和 $\mathcal{F}$ \emph{可测}。
 
-\begin{proposition}
+\begin{proposition}\label{prop:equivalent condition of measurable}
   映射 $f:E\to F$ 相对于 $\mathcal{E}$ 和 $\mathcal{F}$ 可测当且仅当对于任意生成 $\mathcal{F}$ 的子集族
   $\mathcal{F}_0$，任取 $B\in \mathcal{F}_0$，有 $f^{-1}B\in \mathcal{E}$。
 \end{proposition}
@@ -333,6 +333,135 @@ $f^{-1}B\in \mathcal{E}$，那么我们说 $f$ 相对于 $\mathcal{E}$ 和 $\mat
   所以 $\mathcal{F}_1$ 是 $\sigma$-代数，所以 $\mathcal{F}=\mathcal{F}_1$，即 $f$ 
   相对于 $\mathcal{E}$ 和 $\mathcal{F}$ 可测。
 \end{proof}
+
+\begin{proposition}
+  给定可测空间 $(E,\mathcal{E}),(F,\mathcal{F}),(G,\mathcal{G})$，如果 $f$ 相对于 $\mathcal{E}$ 和 
+  $\mathcal{F}$ 可测，$g$ 相对于 $\mathcal{F}$ 和 $\mathcal{G}$ 可测，那么复合
+  $g\circ f$ 相对于 $\mathcal{E}$ 和 $\mathcal{G}$ 可测。
+\end{proposition}
+\begin{proof}
+  任取 $C\in \mathcal{G}$，有
+  \[
+    (g\circ f)^{-1}(C)=f^{-1}\left(g^{-1}(C)\right),  
+  \]
+  $g$ 可测表明 $g^{-1}(C)\in \mathcal{F}$，$f$ 可测表明 $f^{-1}\left(g^{-1}(C)\right)\in \mathcal{E}$，
+  所以 $g\circ f$ 相对于 $\mathcal{E}$ 和 $\mathcal{G}$ 可测。
+\end{proof}
+
+\subsubsection{数值函数}
+
+令 $(E,\mathcal{E})$ 是可测空间。回顾实数及扩充实数 $\mathbb{R}=(-\infty,+\infty)$，
+$\bar{\mathbb{R}}=[-\infty,+\infty]$，$\mathbb{R}_+=[0,+\infty)$，
+$\bar{\mathbb{R}}_+=[0,+\infty]$。$E$ 上的\emph{数值函数}指的是
+从 $E$ 到 $\bar{\mathbb{R}}$ 或者 $\bar{\mathbb{R}}$ 的子集的映射。
+如果这个映射的值在 $\mathbb{R}$ 中，那么我们一般称其为\emph{实值函数}。
+
+$E$ 上的数值函数如果相对于 $\mathcal{E}$ 和 $\mathcal{B}(\bar{\mathbb{R}})$
+可测，那么我们说其是 $\mathcal{E}$-可测的。如果 $E$
+是拓扑空间且 $\mathcal{E}=\mathcal{B}(E)$，那么 $\mathcal{E}$-可测函数
+被称为\emph{Borel 函数}。
+下面的命题是 \autoref{prop:equivalent condition of measurable} 的直接结果。
+
+\begin{proposition}
+  映射 $f:E\to\bar{\mathbb{R}}$ 是 $\mathcal{E}$-可测的当且仅当
+  对于每个 $r\in \mathbb{R}$，$f^{-1}[-\infty,r]\in \mathcal{E}$。
+\end{proposition}
+
+上述命题中的 $[-\infty,r]$ 可以改为 $[-\infty,r)$，$[r,\infty]$，
+$(r,\infty]$ 中的任意一种。
+
+\subsubsection{函数的正部分和负部分}
+
+对于 $a,b\in\bar{\mathbb{R}}$，我们记 $a\vee b$ 为 $a$ 和 $b$
+中的最大者，$a\wedge b$ 为 $a$ 和 $b$ 中的最小者。
+对于函数 $f,g$，用 $f\vee g$ 表示函数 $x\mapsto f(x)\vee g(x)$。
+令 $(E,\mathcal{E})$ 是可测空间，$f$ 是 $E$ 上的数值函数。
+那么
+\[
+  f^+=f\vee 0,\quad f^-=-(f\wedge 0)  
+\]
+都是正值函数并且 $f=f^+-f^-$。函数 $f^+$ 被称为 $f$ 的\emph{正部分}，
+$f^-$ 被称为 $f$ 的\emph{负部分}。
+
+\begin{proposition}
+  函数 $f$ 是 $\mathcal{E}$-可测的当且仅当 $f^+$ 和 $f^-$
+  都是 $\mathcal{E}$-可测的。
+\end{proposition}
+\begin{proof}
+  若 $f$ 是 $\mathcal{E}$-可测的。任取 $r\in \mathbb{R}$，
+若 $r< 0$，则 $\left(f^+\right)^{-1}[-\infty,r]=\emptyset\in \mathcal{E}$。
+  若 $r\geq 0$，则
+  \[
+    \left(f^+\right)^{-1}[-\infty,r]=E \smallsetminus \left(f^+\right)^{-1}(r,\infty]
+    =E \smallsetminus f^{-1}(r,\infty],
+  \]
+  由于 $(r,\infty]$ 是 Borel 集，所以 $\left(f^+\right)^{-1}[-\infty,r]\in \mathcal{E}$。
+  综合起来，$f^+$ 是 $\mathcal{E}$-可测的。同理可证 $f^-$ 是 $\mathcal{E}$-可测的。
+
+  若 $f^+$ 和 $f^-$ 都是 $\mathcal{E}$-可测的。任取 $r\in \mathbb{R}$，若 $r<0$，那么
+  \[
+    f^{-1}[-\infty,r]=  \left(f^-\right)^{-1}[-r,\infty]\in \mathcal{E}.
+  \]
+  若 $r\geq 0$，那么
+  \[
+    f^{-1}[-\infty,r]= E \smallsetminus f^{-1}(r,\infty]
+    =E \smallsetminus \left(f^+\right)^{-1}(r,\infty]\in \mathcal{E}.
+  \]
+  所以 $f$ 是 $\mathcal{E}$-可测的。
+\end{proof}
+
+\subsubsection{指示函数和简单函数}
+
+令 $A\subseteq E$，定义 $A$ 的指示函数为 $1_A$：
+\[
+  1_A(x)=\begin{cases}
+    1 & x\in A,\\
+    0 & x\notin A.
+  \end{cases}  
+\]
+对于 $1_E$，我们简记为 $1$。显然，$1_A$ 是 $\mathcal{E}$-可测的当且仅当
+$A\in \mathcal{E}$。
+
+$E$ 上的函数 $f$ 如果形如
+\[
+  f=\sum_{i=1}^n a_i 1_{A_i},  
+\]
+其中 $n\geq 1$，$a_1,\dots,a_n\in \mathbb{R}$，$A_1,\dots,A_n$ 是可测集，
+那么我们说 $f$ 是\emph{简单函数}。
+在这个定义中，若 $A_i\cap A_j\ne\emptyset$，那么我们可以将
+$a_i1_{A_i}+a_j1_{A_j}$ 拆为
+\[ 
+  a_i1_{A_i \smallsetminus (A_i\cap A_j)}+(a_i+a_j)1_{A_i\cap A_j}+a_j 1_{A_j \smallsetminus (A_i\cap A_j)},
+\]
+所以我们可以假设 $A_i$ 两两不相交。此外，如果 $\bigcup_i A_i\neq E$，记
+$B=E \smallsetminus\bigcup_i A_i\in \mathcal{E}$，那么
+\[
+  f=  \sum_{i=1}^n a_i 1_{A_i}+0\cdot 1_{B},
+\]
+所以我们还可以假设 $\bigcup_i A_i=E$。这意味着对于一个简单函数 $f$，
+总存在整数 $m$，不同的实数 $b_1,\dots,b_m$ 和 $E$ 的可测划分
+$\{B_1,\dots,B_m\}$ 使得 $f=\sum_{i=1}^m b_i 1_{B_i}$，
+这种表示被称为简单函数 $f$ 的\emph{标准型}。
+
+利用简单函数的标准型，很容易验证简单函数都是 $\mathcal{E}$-可测的。
+反之，若 $f$ 是 $\mathcal{E}$-可测的，只有有限个取值且值为实数，那么
+$f$ 为简单函数。特别地，任意常值函数是简单函数。最后，如果 $f,g$
+是简单函数，那么
+\[
+  f+g,\quad f-g,\quad fg,\quad f/g,\quad f\vee g,\quad f\wedge g  
+\]
+都是简单函数，其中 $f/g$ 要求 $g$ 的值始终非零。
+
+\subsubsection{函数列的极限}
+
+
+
+
+
+
+
+
+
 
 
 
