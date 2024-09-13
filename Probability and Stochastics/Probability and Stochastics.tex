@@ -164,7 +164,7 @@ $\sigma$-代数的原始结构。
 
 这是一个非常有用的工具来证明某些集族是 $\sigma$-代数。
 
-\begin{theorem}
+\begin{theorem}\label{thm:monotone class theorem}
   如果一个 d-系包含一个 p-系，那么其包含这个 p-系生成的 $\sigma$-代数。
 \end{theorem}
 \begin{proof}
@@ -516,7 +516,7 @@ $f$ 为简单函数。特别地，任意常值函数是简单函数。最后，�
   综上，$d_n(r)$ 随着 $n$ 的增大是的单调递增的。
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}\label{thm:approximation of measurable function}
   $E$ 上的正值函数是 $\mathcal{E}$-可测的当且仅当其是一列单调递增的正值简单函数序列
   的极限。
 \end{theorem}
@@ -544,6 +544,45 @@ $f$ 为简单函数。特别地，任意常值函数是简单函数。最后，�
   $f\in \mathcal{M}$。
 \end{alphenum}
 
+下面的定理通常被用于证明所有 $\mathcal{E}$-可测函数拥有的某一性质。
+
+\begin{theorem}
+  令 $\mathcal{M}$ 是 $E$ 上函数的单调类。假设对于某个生成 $\mathcal{E}$
+  的 p-系 $\mathcal{C}$，任取 $A\in \mathcal{C}$，有 $1_A\in \mathcal{M}$。那么，
+  $\mathcal{M}$ 包含所有的正值 $\mathcal{E}$-可测函数以及所有的有界 $\mathcal{E}$-可测函数。
+\end{theorem} 
+\begin{proof}
+  首先证明对于任意的 $A\in \mathcal{E}$ 有 $1_A\in \mathcal{M}$。记
+  \[
+    \mathcal{D}=\{A\in \mathcal{E}:1_A\in \mathcal{M}\}.
+  \]
+  由于 $1=1_E\in \mathcal{M}$，所以 $E\in \mathcal{D}$。任取 $A,B\in \mathcal{D}$ 且 $A\supseteq B$，
+  那么 $1_{A \smallsetminus B}=1_A-1_B\in \mathcal{M}$，这表明 $A \smallsetminus B\in \mathcal{D}$。
+  设 $(A_n)\subseteq \mathcal{D}$ 且 $A_n\nearrow A$，那么 $(1_{A_n})\subseteq \mathcal{M}_+$
+  且 $1_{A_n}\nearrow 1_A$，所以 $1_A\in \mathcal{M}$，这表明 $A\in \mathcal{D}$。
+  这表明 $\mathcal{D}$ 是 d-系。由于 $\mathcal{C}$ 是 p-系且 $\mathcal{C}\subseteq \mathcal{D}$，
+  根据单调类定理 \ref{thm:monotone class theorem}，$\mathcal{D}$ 包含 $\sigma \mathcal{C}=\mathcal{E}$，
+  所以对于任意的 $A\in \mathcal{E}$ 有 $A\in \mathcal{D}$，即 $1_A\in \mathcal{M}$。
+
+  再根据单调类的定义 (b)，$\mathcal{M}$ 包含所有的简单函数。
+
+  令 $f$ 是正值 $\mathcal{E}$-可测函数，根据 \autoref{thm:approximation of measurable function}，
+  $f$ 是函数序列 $(f_n)$ 的极限，其中 $f_n$ 是递增的正值简单函数，即 $(f_n)\subseteq \mathcal{M}_+$。
+  根据单调类的定义 (c)，有 $f\in \mathcal{M}$。
+
+  令 $g$ 是有界 $\mathcal{E}$-可测函数，那么 $g^+$ 和 $g^-$ 都是正值 $\mathcal{E}$-可测函数，所以
+  $g^+,g^-\in \mathcal{M}$。显然 $g^+,g^-$ 也都是有界的，根据单调类的定义 (b)，所以
+  $g=g^+-g^-\in \mathcal{M}$。
+\end{proof}
+
+\subsubsection{标准可测空间}
+
+令 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 是可测空间。如果 $f:E\to F$ 是双射的
+相对于 $\mathcal{E}$ 和 $\mathcal{F}$ 的可测函数，并且其逆映射 $f^{-1}:F\to E$
+是相对于 $\mathcal{F}$ 和 $\mathcal{E}$ 的可测函数，那么我们说 $f$ 是\emph{同构}。
+
+如果可测空间 $(E,\mathcal{E})$ 同构于 $(F,\mathcal{B}_F)$，其中 $F$ 是 $\mathbb{R}$
+的某个 Borel 子集，那么我们说 $(E,\mathcal{E})$ 是\emph{标准可测空间}。
 
 
 
