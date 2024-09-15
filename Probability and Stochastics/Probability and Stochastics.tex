@@ -834,6 +834,26 @@ $(E,\mathcal{E},\mu)$ 的\emph{完备化}。当 $E=\mathbb{R}$，$\mathcal{E}=\m
     $\mu$ 在 $D$ 上的限制。
   \end{alphenum}
 \end{exercise}
+\begin{proof}
+  (a) $\nu(\emptyset)=\mu(\emptyset)=0$。设 $(A_n)\subseteq \mathcal{E}$ 是不相交
+  的子集列，那么 $(A_n\cap D)\subseteq \mathcal{E}$ 仍然不相交，所以
+  \[
+    \nu\left(\bigcup_{n=1}^\infty A_n\right)=\mu\left(\bigcup_{n=1}^\infty (A_n\cap D)\right)
+    =\sum_{n=1}^\infty \mu(A_n\cap D)=\sum_{n=1}^\infty \nu(A_n),
+  \]
+  即 $\nu$ 是 $(E,\mathcal{E})$ 上的测度。
+
+  (b) $\nu(\emptyset)=\mu(\emptyset)=0$。设 $(A_n)\subseteq \mathcal{D}$
+  是不相交的子集列，于是
+  \[
+    \nu\left(\bigcup_{n=1}^\infty A_n\right)=\mu\left(\bigcup_{n=1}^\infty A_n\right)
+    =\sum_{n=1}^\infty\mu(A_n)=\sum_{n=1}^\infty\nu(A_n).\qedhere
+  \]
+\end{proof}
+
+\section{积分}
+
+
 
 
 
