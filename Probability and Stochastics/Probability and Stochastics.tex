@@ -784,6 +784,58 @@ $\mu$ 被称为\emph{$\sigma$-有限测度}。如果存在一列有限测度 $\m
   $\mu[-\infty,r]=\nu[-\infty, r]$。
 \end{corollary}
 
+\subsubsection{原子，纯原子测度和非原子测度}
+
+令 $(E,\mathcal{E})$ 是可测空间，假设对于每个 $x\in E$，单点集 $\{x\}\in \mathcal{E}$，
+这一点对于所有的标准可测空间都是成立的。令 $\mu$ 是 $(E,\mathcal{E})$ 上的测度，
+如果点 $x$ 使得 $\mu\{x\}>0$，那么 $x$ 被称为 $\mu$ 的一个\emph{原子}。如果 $\mu$
+没有任何原子，那么 $\mu$ 被称为\emph{非原子测度}。如果 $\mu$ 的原子的集合 $D$
+是可数集并且 $\mu(E \smallsetminus D)=0$，那么 $\mu$ 被称为\emph{纯原子测度}。
+例如，Lebesgue 测度是非原子测度，Dirac 测度是纯原子测度(其只有一个原子)，离散测度
+是纯原子测度。
+
+\begin{proposition}
+  令 $\mu$ 是 $(E,\mathcal{E})$ 上的 $\Sigma$-有限测度，那么
+  \[
+    \mu=\lambda+\nu,
+  \]
+  其中 $\lambda$ 是非原子测度，$\nu$ 是纯原子测度。
+\end{proposition}
+
+
+\subsubsection{完备性，零测集}
+
+令 $(E,\mathcal{E},\mu)$ 是测度空间，如果可测集 $B$ 使得 $\mu(B)=0$，那么 $B$
+被称为\emph{零测集}。$E$ 的任意子集如果被一个可测的零测集包含，那么也被称为\emph{零测集}。
+如果 $E$ 的每个零测集都是可测集，那么我们说这个测度空间是\emph{完备的}。对于不完备的
+测度空间，下面的结果表明可以通过包含所有的零测集来扩大 $\mathcal{E}$ 以及
+$\mu$ 来得到一个完备测度空间。测度空间 $(E,\bar{\mathcal{E}},\bar\mu)$ 被称为
+$(E,\mathcal{E},\mu)$ 的\emph{完备化}。当 $E=\mathbb{R}$，$\mathcal{E}=\mathcal{B}_{\mathbb{R}}$
+和 $\mu=\Leb$ 的时候，$\bar{\mathcal{E}}$ 的元素被称为\emph{Lebesgue 可测集}。
+
+\begin{proposition}
+  令 $\mathcal{N}$ 是 $E$ 的所有零测子集的集合族，$\bar{\mathcal{E}}$ 为 $\mathcal{E}\cup \mathcal{N}$
+  生成的 $\sigma$-代数，那么
+  \begin{alphenum}[nosep]
+    \item 每个 $B\in\bar{\mathcal{E}}$ 都形如 $B=A\cup N$，其中 $A\in \mathcal{E}$ 以及 $N\in \mathcal{N}$，
+    \item 定义 $\bar\mu(A\cup N)=\mu(A)$，这给出了 $\bar{\mathcal{E}}$ 上的测度 $\bar\mu$，并且
+    是唯一的满足 $\bar\mu(A)=\mu(A)\ (A\in \mathcal{E})$ 的测度，此时测度空间 $(E,\mathcal{E},\mu)$
+    是完备的。
+  \end{alphenum}
+\end{proposition}
+
+\begin{exercise}{限制和迹}{}
+  令 $(E,\mathcal{E})$ 是可测空间，$\mu$ 是测度。令 $D\in \mathcal{E}$。
+  \begin{alphenum}[nosep]
+    \item 定义 $\nu(A)=\mu(A\cap D)$，证明 $\nu$ 是 $(E,\mathcal{E})$ 上的测度，
+    被称为 $\mu$ 在 $D$ 上的迹。
+    \item 令 $\mathcal{D}$ 为 $\mathcal{E}$ 在 $D$ 上的迹，对于 $A\in \mathcal{D}$，
+    定义 $\nu(A)=\mu(A)$，证明 $\nu$ 是 $(D,\mathcal{D})$ 上的测度，被称为
+    $\mu$ 在 $D$ 上的限制。
+  \end{alphenum}
+\end{exercise}
+
+
 
 
 
