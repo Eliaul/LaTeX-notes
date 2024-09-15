@@ -40,6 +40,7 @@
 \DeclareMathOperator\Frac{Frac}
 \DeclareMathOperator\Tr{Tr}
 \DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\Leb{Leb}
 \DeclareMathOperator\supp{supp}
 \DeclareMathOperator\Id{Id}
 \DeclareMathOperator\rk{rank}
@@ -306,6 +307,51 @@ $(E,\mathcal{E})\times (F,\mathcal{F})$ 来表示。
   (b) (c) (d) 完全同理。
 \end{proof}
 
+\begin{exercise}{迹空间}{}
+  令 $(E,\mathcal{E})$ 是可测空间，固定 $D\subseteq E$，令
+  \[
+    \mathcal{D}=\mathcal{E}\cap D=\{A\cap D:A\in \mathcal{E}\}.  
+  \]
+  证明 $\mathcal{D}$ 是 $D$ 上的 $\sigma$-代数，被称为 $\mathcal{E}$
+  在 $D$ 上的\emph{迹}。$(D,\mathcal{D})$ 也被称为 $(E,\mathcal{E})$
+  在 $D$ 上的迹。
+\end{exercise}
+\begin{proof}
+  任取 $A\cap D\in \mathcal{D}$，其中 $A\in \mathcal{E}$，那么
+  \[
+    D \smallsetminus (A\cap D)= (E \smallsetminus A)\cap D\in \mathcal{D},
+  \]
+  所以 $\mathcal{D}$ 对补封闭。任取 $(A_n\cap D)\subseteq \mathcal{D}$，那么
+  \[
+    \bigcup_{n=1}^\infty  (A_n\cap D)=\left(\bigcup_{n=1}^\infty A_n\right)\cap D\in \mathcal{D},
+  \]
+  所以 $\mathcal{D}$ 对可数并封闭。
+\end{proof}
+
+\begin{exercise}{子集的 Borel $\sigma$-代数是迹}{}
+  设 $(E,\mathcal{T})$ 是拓扑空间，$(D,\mathcal{T}_D)$ 是
+  子空间。证明 $D$ 上的 Borel $\sigma$-代数 $\mathcal{B}_D$
+  与 $D$ 在 $E$ 上的迹 $\mathcal{B}_E\cap D$ 相同。
+\end{exercise}
+\begin{proof}
+  由于 $\mathcal{T}_D=\mathcal{T}\cap D\subseteq \mathcal{B}_E\cap D$，
+  由上题 $\mathcal{B}_E\cap D$ 是 $\sigma$-代数，所以 $\mathcal{B}_D\subseteq\mathcal{B}_E\cap D$。
+  记
+  \[
+    \mathcal{C}=\{A\subseteq E: A\cap D\in \mathcal{B}_D\},  
+  \]
+  那么 $\mathcal{T}\subseteq \mathcal{C}$。我们只需要证明 $\mathcal{C}$
+  是 $E$ 上的 $\sigma$-代数，那么就有 $\mathcal{C}\supseteq \sigma \mathcal{T}=\mathcal{B}_E$，即
+  $\mathcal{B}_D\supseteq \mathcal{C}\cap D\supseteq \mathcal{B}_E\cap D$。
+  任取 $A\in \mathcal{C}$，那么 $(E \smallsetminus A)\cap D=D \smallsetminus (A\cap D)\in \mathcal{B}_D$，
+  所以 $E \smallsetminus A\in \mathcal{C}$。任取 $(A_n)\subseteq \mathcal{C}$，那么
+  \[
+    \left(\bigcup_{n=1}^\infty A_n\right)\cap D=\bigcup_{n=1}^\infty (A_n\cap D)
+    \in \mathcal{B}_D,  
+  \]
+  所以 $\bigcup_n A_n\in \mathcal{C}$。这就表明 $\mathcal{C}$
+  是 $E$ 上的 $\sigma$-代数。
+\end{proof}
 
 
 \section{可测函数}
@@ -583,11 +629,160 @@ $f$ 为简单函数。特别地，任意常值函数是简单函数。最后，�
 
 如果可测空间 $(E,\mathcal{E})$ 同构于 $(F,\mathcal{B}_F)$，其中 $F$ 是 $\mathbb{R}$
 的某个 Borel 子集，那么我们说 $(E,\mathcal{E})$ 是\emph{标准可测空间}。
+标准可测空间有非常多。如果 $E$ 是完备度量空间，那么 $(E,\mathcal{B}_E)$
+是标准可测空间。如果 $E$ 是波兰空间，即可分的可完备度量化的拓扑空间，那么
+$(E,\mathcal{B}_E)$ 是标准可测空间。如果 $E$ 是可分的 Banach 空间，
+那么 $(E,\mathcal{B}_E)$ 是标准可测空间。
+
+显然，$[0,1]$ 和它的 Borel $\sigma$-代数构成标准可测空间。
+$\{1,2,\dots,n\}$ 和它的离散 $\sigma$-代数构成标准可测空间。
+$\mathbb{N}=\{0,1,2,\dots\}$ 和它的离散 $\sigma$-代数构成标准可测空间。
+一个深刻的结果是，任意标准可测空间都同构于上述三者之一。
 
 
+\section{测度}
 
+令 $(E,\mathcal{E})$ 是可测空间，$(E,\mathcal{E})$ 上的\emph{测度}
+指的是一个映射 $\mu:\mathcal{E}\to\bar{\mathbb{R}}_+$，其满足：
+\begin{alphenum}
+  \item $\mu(\emptyset)=0$，
+  \item 对于不相交的子集列 $(A_n)\subseteq \mathcal{E}$，有 
+  $\mu(\bigcup_n A_n)=\sum_n \mu(A_n)$。
+\end{alphenum}
+条件 (b) 被称为\emph{可列可加性}。需要注意 $\mu(A)$ 总是为正数且可以
+为 $+\infty$。数 $\mu(A)$ 被称为 $A$ 的\emph{测度}，也简记为 $\mu A$。
 
+一个\emph{测度空间}指的是三元组 $(E,\mathcal{E},\mu)$，其中 $(E,\mathcal{E})$
+是可测空间，$\mu$ 是 $(E,\mathcal{E})$ 上的测度。
 
+\subsubsection{例子}
+
+\begin{example}[Dirac 测度]
+  令 $(E,\mathcal{E})$ 是可测空间，固定 $x\in E$。对于每个 $A\in \mathcal{E}$，
+  令
+  \[
+    \delta_x(A)=\begin{cases}
+      1 & x\in A,\\
+      0 & x\notin A.
+    \end{cases}  
+  \]
+  那么 $\delta_x$ 是 $(E,\mathcal{E})$ 上的测度，被称为\emph{Dirac 测度}。
+  直观来看，其基于一个集合 $A$ 是否含有特定元素 $x$ 来给出这个集合的“大小”。
+\end{example}
+
+\begin{example}[计数测度]
+  令 $(E,\mathcal{E})$ 是可测空间，固定 $D\subseteq E$。对于每个
+  $A\in \mathcal{E}$，令 $\nu(A)$ 是 $A\cap D$ 中点的个数，
+  此时 $\nu$ 是 $(E,\mathcal{E})$ 上的测度，被称为\emph{计数测度}。
+  通常，集合 $D$ 被选取为可数集，在这种情况下
+  \[
+    \nu(A)=\sum_{x\in D}\delta_x(A),\quad A\in \mathcal{E}.  
+  \]
+\end{example}
+
+\begin{example}[离散测度]
+  令 $(E,\mathcal{E})$ 是可测空间，固定可数子集 $D\subseteq E$。
+  对于每个 $x\in D$，分配一个正数 $m(x)$。定义
+  \[
+    \mu(A)=\sum_{x\in D} m(x)\delta_x(A),\quad A\in \mathcal{E}.  
+  \]
+  那么 $\mu$ 是 $(E,\mathcal{E})$ 上的测度，被称为\emph{离散测度}。
+  我们可能会把 $m(x)$ 理解为点 $x$ 的质量，那么 $\mu(A)$ 就是集合 $A$
+  的质量。特别地，如果 $(E,\mathcal{E})$ 是离散可测空间，那么
+  每个测度 $\mu$ 都有这种形式。
+\end{example}
+
+\begin{example}[Lebesgue 测度]
+  $(\mathbb{R},\mathcal{B}_{\mathbb{R}})$ 上的测度 $\mu$ 如果对于每个
+  区间 $A$ 都满足 $\mu(A)$ 为 $A$ 的长度，那么我们说 $\mu$ 是\emph{Lebesgue 测度}。
+  类似地，$\mathbb{R}^2$ 上的 Lebesgue 测度是“面积”测度，
+  $\mathbb{R}^3$ 上的 Lebesgue 测度是“体积”测度等等。
+  我们将它们记作 $\Leb$。
+\end{example}
+
+\subsubsection{测度的性质}
+
+\begin{proposition}
+  令 $\mu$ 是可测空间 $(E,\mathcal{E})$ 上的测度，那么对于任意
+  可测集 $A,B$ 和 $A_1,A_2,\dots$，有：
+  \begin{description}[nosep,font=\sffamily\mdseries,itemindent=0pt]
+    \item[有限可加性] $A\cap B=\emptyset\Rightarrow \mu(A\cup B)=\mu(A)+\mu(B)$。
+    \item[单调性] $A\subseteq B\Rightarrow \mu(A)\leq \mu(B)$。
+    \item[连续性] $A_n\nearrow A\Rightarrow \mu(A_n)\nearrow \mu(A)$。
+    \item[Boole 不等式]  $\mu(\bigcup_n A_n)\leq \sum_n \mu(A_n)$。  
+  \end{description}
+\end{proposition}
+\begin{proof}
+  有限可加性是可列可加性的特殊情况，取 $A_1=A,A_2=B,A_3=A_4=\cdots=\emptyset$
+  即可。若 $A\subseteq B$，由于 $\mathcal{E}$ 是 d-系，所以 $B \smallsetminus A\in \mathcal{E}$，
+  所以
+  \[
+    \mu(B)=\mu(A\cup(B \smallsetminus A))= \mu(A)+\mu(B \smallsetminus A)
+    \geq \mu(A).
+  \]
+  若 $A_n\nearrow A$，令 $B_1=A_1$，$B_n=A_{n}\smallsetminus A_{n-1}$，那么
+  $B_n$ 互不相交且 $\bigcup_{k=1}^n B_k=A_n$，所以
+  \[
+    \lim \mu(A_n)=\lim\mu\left(\bigcup_{k=1}^n B_k\right)  
+    =\lim \sum_{k=1}^n \mu(B_k)=\sum_{k=1}^\infty \mu(B_k)
+    =\mu(A).
+  \]
+  对于 Boole 不等式，注意到
+  \[
+    \mu(A\cup B)=\mu(A\cup (B \smallsetminus A))=\mu(A)+\mu(B \smallsetminus A) 
+    \leq \mu(A)+\mu (B), 
+  \]
+  所以归纳可得
+  \[
+    \mu\left(\bigcup_{k=1}^n A_k\right)\leq \sum_{k=1}^n\mu(A_k),  
+  \]
+  令 $n\to\infty$，左边根据连续性即可得到 Boole 不等式。
+\end{proof}
+
+\subsubsection{有限测度}
+
+令 $\mu$ 是可测空间 $(E,\mathcal{E})$ 上的测度，如果 $\mu(E)<\infty$，
+那么 $\mu$ 被称为\emph{有限测度}，根据单调性，此时对于任意 $A\in \mathcal{E}$，
+都有 $\mu(A)<\infty$。如果 $\mu(E)=1$，那么 $\mu$ 被称为\emph{概率测度}。
+如果存在 $E$ 的可测划分 $(E_n)$ 使得 $\mu(E_n)<\infty$，那么
+$\mu$ 被称为\emph{$\sigma$-有限测度}。如果存在一列有限测度 $\mu_n$
+使得 $\mu=\sum_n \mu_n$，那么 $\mu$ 被称为\emph{$\Sigma$-有限测度}。
+有限测度都是 $\sigma$-有限的，$\sigma$-有限测度都是 $\Sigma$-有限的。
+
+\begin{proposition}
+  令 $(E,\mathcal{E})$ 是可测空间，$\mu,\nu$ 是两个有限测度且 $\mu(E)=\nu(E)$，如果
+  $\mu,\nu$ 在生成 $\mathcal{E}$ 的某个 p-系上取值相同，那么
+  $\mu=\nu$。
+\end{proposition}
+\begin{proof}
+  设 $\mathcal{C}$ 是 p-系且 $\mathcal{E}=\sigma \mathcal{C}$，
+  任取 $A\in \mathcal{C}$ 有 $\mu(A)=\nu(A)$。令
+  \[
+    \mathcal{D}=\{A\in \mathcal{E}:\mu(A)=\nu(A)\},  
+  \]
+  那么 $\mathcal{C}\subseteq \mathcal{D}$。如果我们证明 $\mathcal{D}$
+  是 d-系，那么根据单调类定理，就有 $\mathcal{E}=\sigma \mathcal{C}\subseteq \mathcal{D}$，
+  即任取 $A\in \mathcal{E}$ 有 $\mu(A)=\nu(A)$。下面我们证明 $\mathcal{D}$
+  是 d-系。由于 $\mu(E)=\nu(E)$，所以 $E\in \mathcal{D}$。
+  若 $A,B\in \mathcal{D}$ 且 $A\supseteq B$，那么
+  \[
+    \mu(B)+\mu(A \smallsetminus B)= \mu(A)=\nu(A)=\nu(B)+\mu(A \smallsetminus B),
+  \]
+  由于 $\mu(B)=\nu(B)$，所以 $\mu(A \smallsetminus B)=\nu (A \smallsetminus B)$，
+  即 $A \smallsetminus B\in \mathcal{D}$。
+  任取 $(A_n)\subseteq \mathcal{D}$ 且 $A_n\nearrow A$，根据连续性，所以
+  $\mu(A_n)\nearrow \mu(A)$ 以及 $\nu(A_n)\nearrow \nu(A)$，所以
+  \[
+    \mu(A)=\lim \mu(A_n)=\lim \nu(A_n)=\nu(A),  
+  \]
+  所以 $A\in \mathcal{D}$。这就证明了 $\mathcal{D}$ 是 d-系。
+\end{proof}
+
+\begin{corollary}
+  令 $\mu,\nu$ 是 $\left(\bar{\mathbb{R}},\mathcal{B}\left(\bar{\mathbb{R}}\right)\right)$
+  上的概率测度，那么 $\mu=\nu$ 当且仅当对于任意的 $r\in \mathbb{R}$ 有
+  $\mu[-\infty,r]=\nu[-\infty, r]$。
+\end{corollary}
 
 
 

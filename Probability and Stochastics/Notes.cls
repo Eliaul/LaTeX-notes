@@ -199,7 +199,7 @@
 \newtcbtheorem[
   auto counter,number within=section,
   number freestyle={%
-  \noexpand\arabic{section}.\noexpand\arabic{\tcbcounter}.
+  \noexpand\arabic{section}-\noexpand\arabic{\tcbcounter}
 }]{exercise}{}{%
   theorem style=plain,
   coltitle=black,
