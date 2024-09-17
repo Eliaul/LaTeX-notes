@@ -426,7 +426,7 @@ $(r,\infty]$ 中的任意一种。
 \[
   f^+=f\vee 0,\quad f^-=-(f\wedge 0)  
 \]
-都是正值函数并且 $f=f^+-f^-$。函数 $f^+$ 被称为 $f$ 的\emph{正部分}，
+都是非负函数并且 $f=f^+-f^-$。函数 $f^+$ 被称为 $f$ 的\emph{正部分}，
 $f^-$ 被称为 $f$ 的\emph{负部分}。
 
 \begin{proposition}
@@ -540,7 +540,7 @@ $f$ 为简单函数。特别地，任意常值函数是简单函数。最后，�
 
 \subsubsection{可测函数的逼近}
 
-\begin{lemma}
+\begin{lemma}\label{lemma:dn}
   对于 $n\in \mathbb{N}^*$，令
   \[
     d_n(r)=\sum_{k=1}^{n2^n}\frac{k-1}{2^n}1_{\left[\frac{k-1}{2^n},\frac{k}{2^n}\right)}(r)
@@ -563,13 +563,13 @@ $f$ 为简单函数。特别地，任意常值函数是简单函数。最后，�
 \end{proof}
 
 \begin{theorem}\label{thm:approximation of measurable function}
-  $E$ 上的正值函数是 $\mathcal{E}$-可测的当且仅当其是一列单调递增的正值简单函数序列
+  $E$ 上的非负函数是 $\mathcal{E}$-可测的当且仅当其是一列单调递增的非负简单函数序列
   的极限。
 \end{theorem}
 \begin{proof}
   充分性来源于 \autoref{thm:lim of measurable function is measurable}。
-  对于必要性，设 $f:E\to\bar{\mathbb{R}}_+$ 是 $\mathcal{E}$-可测的正值函数。
-  记 $d_n$ 为上述引理中的函数，令 $f_n=d_n\circ f$。那么 $f_n$ 是正值的 $\mathcal{E}$-可测函数，
+  对于必要性，设 $f:E\to\bar{\mathbb{R}}_+$ 是 $\mathcal{E}$-可测的非负函数。
+  记 $d_n$ 为上述引理中的函数，令 $f_n=d_n\circ f$。那么 $f_n$ 是非负的 $\mathcal{E}$-可测函数，
   并且其取值只有有限个，所以是简单函数。由于 $(d_n)$ 单调递增，所以 $(f_n)$ 单调递增。
   对于任意 $x\in E$，由于 $f_n(x)=d_n(f(x))$，所以 $n\to\infty$ 的时候
   $f_n(x)\to f(x)$，故 $f=\lim f_n$。
@@ -578,7 +578,7 @@ $f$ 为简单函数。特别地，任意常值函数是简单函数。最后，�
 \subsubsection{函数的单调类}
 
 令 $\mathcal{M}$ 为 $E$ 上数值函数的一个集合，记 $\mathcal{M}_+$ 为 $\mathcal{M}$
-中正值函数组成的子集，$\mathcal{M}_b$ 为 $\mathcal{M}$ 中有界函数组成的子集。
+中非负函数组成的子集，$\mathcal{M}_b$ 为 $\mathcal{M}$ 中有界函数组成的子集。
 
 如果 $\mathcal{M}$ 包含常值函数 $1$，$\mathcal{M}_b$ 构成 $\mathbb{R}$ 上的向量空间
 以及 $\mathcal{M}_+$ 在递增极限下封闭，那么我们说 $\mathcal{M}$ 是一个\emph{单调类}。
@@ -595,7 +595,7 @@ $f$ 为简单函数。特别地，任意常值函数是简单函数。最后，�
 \begin{theorem}
   令 $\mathcal{M}$ 是 $E$ 上函数的单调类。假设对于某个生成 $\mathcal{E}$
   的 p-系 $\mathcal{C}$，任取 $A\in \mathcal{C}$，有 $1_A\in \mathcal{M}$。那么，
-  $\mathcal{M}$ 包含所有的正值 $\mathcal{E}$-可测函数以及所有的有界 $\mathcal{E}$-可测函数。
+  $\mathcal{M}$ 包含所有的非负 $\mathcal{E}$-可测函数以及所有的有界 $\mathcal{E}$-可测函数。
 \end{theorem} 
 \begin{proof}
   首先证明对于任意的 $A\in \mathcal{E}$ 有 $1_A\in \mathcal{M}$。记
@@ -612,11 +612,11 @@ $f$ 为简单函数。特别地，任意常值函数是简单函数。最后，�
 
   再根据单调类的定义 (b)，$\mathcal{M}$ 包含所有的简单函数。
 
-  令 $f$ 是正值 $\mathcal{E}$-可测函数，根据 \autoref{thm:approximation of measurable function}，
-  $f$ 是函数序列 $(f_n)$ 的极限，其中 $f_n$ 是递增的正值简单函数，即 $(f_n)\subseteq \mathcal{M}_+$。
+  令 $f$ 是非负 $\mathcal{E}$-可测函数，根据 \autoref{thm:approximation of measurable function}，
+  $f$ 是函数序列 $(f_n)$ 的极限，其中 $f_n$ 是递增的非负简单函数，即 $(f_n)\subseteq \mathcal{M}_+$。
   根据单调类的定义 (c)，有 $f\in \mathcal{M}$。
 
-  令 $g$ 是有界 $\mathcal{E}$-可测函数，那么 $g^+$ 和 $g^-$ 都是正值 $\mathcal{E}$-可测函数，所以
+  令 $g$ 是有界 $\mathcal{E}$-可测函数，那么 $g^+$ 和 $g^-$ 都是非负 $\mathcal{E}$-可测函数，所以
   $g^+,g^-\in \mathcal{M}$。显然 $g^+,g^-$ 也都是有界的，根据单调类的定义 (b)，所以
   $g=g^+-g^-\in \mathcal{M}$。
 \end{proof}
@@ -852,6 +852,229 @@ $(E,\mathcal{E},\mu)$ 的\emph{完备化}。当 $E=\mathbb{R}$，$\mathcal{E}=\m
 \end{proof}
 
 \section{积分}
+
+令 $(E,\mathcal{E},\mu)$ 是测度空间。我们同时用 $\mathcal{E}$ 表示
+$E$ 上的 $\mathcal{E}$-可测函数的集合，$\mathcal{E}_+$ 表示非负
+$\mathcal{E}$-可测函数构成的子集。下面对于所有合理的 $f\in \mathcal{E}$，
+我们定义“$f$ 相对于 $\mu$ 的积分”，我们将记为：
+\[
+  \mu f=\mu(f)=\int_E f(x) \mu(\d x)  =\int_E f \d\mu.
+\]
+并且我们将证明我们定义的积分蕴含下面的性质：对于任意 $a,b\in \mathbb{R}_+$
+和 $f,g,f_n\in \mathcal{E}_+$，有：
+\begin{description}[nosep,font=\sffamily\mdseries,itemindent=0pt]
+  \item[非负性] $\mu f\geq 0$，若 $f=0$，则 $\mu f=0$。
+  \item[线性性] $\mu(af+bg)=a\mu f+b\mu g$。
+  \item[单调收敛定理] 若 $f_n\nearrow f$，则 $\mu f_n\nearrow \mu f$。  
+\end{description}
+
+\begin{definition}
+  我们从简单函数开始逐步定义积分的概念。
+  \begin{alphenum}
+    \item 令 $f$ 是简单非负函数，设其标准型为 $f=\sum_i a_i 1_{A_i}$，
+    定义
+    \[
+      \mu f=\sum_{i=1}^n a_i\mu(A_i).  
+    \]
+    \item 令 $f\in \mathcal{E}_+$，记 $f_n=d_n\circ f$，其中 $d_n$
+    为 \autoref{lemma:dn} 中的简单函数，那么每个 $f_n$ 是简单非负函数。
+    此时 $\mu f_n$ 是单调递增的，于是我们定义
+    \[
+      \mu f=\lim \mu f_n.  
+    \]
+    \item 令 $f\in \mathcal{E}$，那么 $f^+,f^-\in \mathcal{E}_+$。
+    由于 $f=f^+-f^-$，于是我们定义
+    \[
+      \mu f=\mu(f^+)-\mu (f^-).  
+    \]
+    上述定义中我们要求等式右端至少有一项是有限的。
+  \end{alphenum}
+\end{definition}
+\begin{remark}
+  令 $f,g$ 是简单非负函数。
+  \begin{alphenum}
+    \item 设 $f=\sum_i a_i 1_{A_i}$，这里我们不要求是标准型。若 $\bigcup_i A_i\neq E$，
+    那么我们可以添加零项，所以我们假设 $\bigcup_i A_i=E$。若 $A_i\cap A_j\neq \emptyset$，
+    那么
+    \[
+      a_i1_{A_i}+a_j1_{A_j}=
+      a_i1_{A_i \smallsetminus (A_i\cap A_j)}+(a_i+a_j)1_{A_i\cap A_j}+a_j 1_{A_j \smallsetminus (A_i\cap A_j)},
+    \]
+    于是这两项的积分为
+    \begin{align*}
+      &a_i\mu(A_i \smallsetminus (A_i\cap A_j))+(a_i+a_j)\mu(A_i\cap A_j)+
+      a_j\mu(A_j \smallsetminus (A_i\cap A_j))\\
+      ={}& a_i\mu(A_i)-a_i\mu(A_i\cap A_j)+(a_i+a_j)\mu(A_i\cap A_j)+a_j\mu(A_j)
+      -a_j\mu(A_i\cap A_j)\\
+      ={}& a_i\mu(A_i)+a_j\mu(A_j),
+    \end{align*}
+    所以对于简单函数的非标准形式而言，其积分依然形如 $\mu f=\sum_i a_i\mu(A_i)$。
+    \item 若 $a,b\in \mathbb{R}_+$，那么 $af+bg$ 依然是简单非负函数，再根据
+    (a)，就有
+    \[
+      \mu(af+bg)=a\mu f+b\mu g.  
+    \]
+    \item 如果 $f\leq g$，那么
+    \[
+      \mu f\leq \mu f+\mu(g-f)=\mu(f+g-f)=\mu g.
+    \]
+    \item 若 $f_1\leq f_2\leq\cdots$，根据 (c)，有 $\mu f_1\leq\mu f_2\leq \cdots$，
+    所以定义中的 $\lim \mu f_n$ 存在(可以为 $+\infty$)。
+  \end{alphenum}
+\end{remark}
+
+\subsubsection{示例}
+
+\begin{example}[离散测度]
+  固定 $x_0\in E$，考虑 Dirac 测度 $\delta_{x_0}$。任取 $f\in \mathcal{E}_+$，
+  所以
+  \[
+    \delta_{x_0}f=\lim \delta_{x_0}(d_n\circ f)=  f(x_0).
+  \]
+  那么对于任意 $f\in \mathcal{E}$，就有
+  \[
+    \delta_{x_0}f=\delta_{x_0}(f^+)-\delta_{x_0}(f^-)=f(x_0).  
+  \]
+  设 $\mu=\sum_{x\in D} m(x)\delta_x$ 是离散测度，其中 $D\in \mathcal{E}$ 是可数集，
+  $m(x)> 0$，那么
+  \[
+    \mu f=\sum_{x\in D}m(x) f(x).  
+  \]
+\end{example}
+
+\begin{example}[离散空间]
+  设 $(E,\mathcal{E})$ 是离散可测空间，即 $E$ 可数且 $\mathcal{E}=2^E$。此时
+  $E$ 上的任意数值函数都是 $\mathcal{E}$-可测的，且 $E$ 上的任意测度 $\mu$ 都满足
+  $\mu=\sum_{x\in E}\mu\{x\}\delta_x$，所以对于任意 $E$ 上的函数 $f$，有
+  \[
+    \mu f=\sum_{x\in E}\mu\{x\} f(x).
+  \]
+\end{example}
+
+\begin{example}[Lebesgue 积分]
+  设 $E$ 是 $\mathbb{R}^d$ 的 Borel 子集，$\mathcal{E}=\mathcal{B}(E)$。
+  设 $\mu$ 是 Lebesgue 测度在 $(E,\mathcal{E})$ 上的限制，对于 $f\in \mathcal{E}$，
+  我们使用下面的记号表示积分 $\mu f$：
+  \[
+    \mu f=\Leb_E f=\int_E f(x)\Leb(\d x)=\int_E f(x)\d x.  
+  \]
+\end{example}
+
+\subsubsection{可积性}
+
+对于一个函数 $f\in \mathcal{E}$，如果 $\mu f$ 存在且为实数，
+那么 $f$ 被称为\emph{可积的}。也就是说，$f$ 可积当且仅当 
+$\mu f^+<\infty$ 以及 $\mu f^-<\infty$。
+
+\subsubsection{在可测集上的积分}
+
+令 $f\in \mathcal{E}$，$A$ 是可测集，那么 $f1_A\in \mathcal{E}$，
+此时我们把 $f$ 在 $A$ 上的积分定义为 $f1_A$ 的积分，使用下面的记号：
+\[
+  \mu(f1_A)=\int_A f(x)\mu(\d x)=\int_A f \d\mu.  
+\]
+
+\begin{lemma}
+  令 $f\in \mathcal{E}_+$，$A,B\in \mathcal{E}$ 不相交且 $C=A\cup B$，
+  那么
+  \[
+    \mu(f1_A)+\mu(f1_B)=\mu(f1_C).  
+  \]
+\end{lemma}
+\begin{proof}
+  令 $f_n=d_n\circ f$，由于 $f_n$ 是简单函数，所以
+  \[
+    \mu(f_n1_A)+\mu(f_n1_B)=\mu(f_n1_C),  
+  \]
+  注意到 $f_n1_A=d_n\circ(f1_A)$，对 $B,C$ 同理。令 $n\to\infty$ 即得结论。
+\end{proof}
+
+\subsubsection{非负性和单调性}
+
+\begin{proposition}
+  若 $f\in \mathcal{E}_+$，那么 $\mu f\geq 0$。如果 $f,g\in \mathcal{E}_+$
+  且 $f\leq g$，那么 $\mu f\leq \mu g$。
+\end{proposition}
+\begin{proof}
+  $f\in \mathcal{E}_+$ 表明 $f_n\geq 0$，从而 $\mu f_n\geq 0$，
+  所以 $\mu f=\lim\mu f_n\geq 0$。如果 $f\leq g$，由于 $d_n$ 是单调递增函数，
+  所以 $f_n\leq g_n$，所以 $\mu f_n\leq \mu g_n$，所以 $\mu f\leq \mu g$。
+\end{proof}
+
+\subsubsection{单调收敛定理}
+
+该定理是交换积分和极限次序的关键工具。该定理表明映射
+\[
+  \mathcal{E}_+\to\bar{\mathbb{R}}_+,\quad f\mapsto \mu f  
+\]
+在递增极限下是连续的。
+
+\begin{theorem}
+  令 $(f_n)$ 是 $\mathcal{E}_+$ 中的递增序列，那么
+  \[
+    \mu(\lim f_n)=\lim\mu f_n.  
+  \]
+\end{theorem}
+\begin{proof}
+  令 $f=\lim f_n\in \mathcal{E}_+$，由于 $f_n\leq f$，根据单调性，有
+  $\mu f_n\leq \mu f$，故
+  \[
+    \lim \mu f_n\leq \mu f.  
+  \]
+
+  任取满足 $0\leq s\leq f$ 的非负简单函数 $s$，给定 $0<\alpha <1$，
+  定义
+  \[
+    A_n=\{x\in E:f_n(x)\geq \alpha s(x)\},
+  \]
+  那么 $A_n=(f_n-\alpha s)^{-1}[0,\infty]\in \mathcal{E}$。不难验证
+  $A_n\subseteq A_{n+1}$。对于任意 $x\in E$，由于 $f_n\nearrow f$
+  且 $f(x)\geq s(x)$，所以总存在足够大的 $n$ 使得 $f_n(x)\geq s(x)>\alpha s(x)$，
+  即 $x\in A_n$，所以 $A_n\nearrow E$。定义 $(E,\mathcal{E})$ 上的测度
+  $\nu$ 为
+  \[
+    \nu(A)=\mu(s1_A)=\int_A s\d \mu,  
+  \]
+  不难验证这确实是一个测度。此时我们有
+  \[
+    \mu f_n\geq \mu(f_n1_{A_n})\geq \mu(\alpha s1_{A_n})=\alpha\mu(s1_{A_n})
+    =\alpha\nu(A_n),  
+  \]
+  令 $n\to\infty$，由于 $A_n\nearrow E$，所以 $\nu(A_n)\nearrow \nu(E)=\mu s$，
+  所以
+  \[
+    \lim \mu f_n\geq \alpha\mu s.  
+  \]
+  特别地，取 $s=d_k\circ f$，有 $\lim \mu f_n\geq \alpha\mu(d_k\circ f)$，
+  令 $k\to\infty$，所以 $\lim \mu f_n\geq \alpha\mu f$。再取
+  $\alpha=1-1/k$，令 $k\to\infty$，即得
+  \[
+    \lim\mu f_n\geq \mu f.  \qedhere
+  \]
+\end{proof}
+
+\subsubsection{积分的线性性}
+
+\begin{proposition}
+  对于 $f,g\in \mathcal{E}_+$ 和 $a,b\in \mathbb{R}_+$，有
+  \[
+    \mu(af+bg)=a\mu f+b\mu g.  
+  \]
+  对于 $f,g\in \mathcal{E}$ 和 $a,b\in \mathbb{R}$ 也是正确的。
+\end{proposition}
+\begin{proof}
+  已知对于简单函数 $f_n=d_n\circ f$ 和 $g_n=d_n\circ g$，有
+  \[
+    \mu(af_n+bg_n)=a\mu f_n+b\mu g_n,  
+  \]
+  而 $f_n\nearrow f$，$g_n\nearrow g$，根据单调收敛定理，就有
+  \[
+    \mu(af+bg)=a\mu f+b\mu g.  
+  \]
+  对于一般的 $f,g$，只需将其拆为正部分和负部分即可验证。
+\end{proof}
+
+\subsubsection{积分的不敏感性}
 
 
 
