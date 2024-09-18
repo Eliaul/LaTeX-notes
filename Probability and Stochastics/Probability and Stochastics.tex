@@ -1076,7 +1076,77 @@ $\mu f^+<\infty$ 以及 $\mu f^-<\infty$。
 
 \subsubsection{积分的不敏感性}
 
+\begin{proposition}
+  如果 $A\in \mathcal{E}$ 是零测集，那么对于任意 $f\in \mathcal{E}$，有 $\mu(f1_A)=0$。
+  如果 $f,g\in \mathcal{E}_+$ 且几乎处处有 $f=g$，那么 $\mu f=\mu g$。
+  如果 $f\in \mathcal{E}_+$ 并且 $\mu f=0$，那么几乎处处 $f=0$。
+\end{proposition}
+\begin{proof}
+  先假设 $f$ 是简单非负函数，其标准型为 $f=\sum_i a_i 1_{A_i}$，那么
+  \[
+    f1_A=\sum_{i=1}^n a_i 1_{A_i\cap A},
+  \]
+  所以 $\mu(f1_A)=\sum_i a_i\mu(A_i\cap A)$。根据单调性有 $\mu(A_i\cap A)\leq \mu(A)=0$，
+  所以 $\mu(f1_A)=0$。然后假设 $f\in \mathcal{E}_+$，那么 $\mu((d_n\circ f)1_A)=0$，所以
+  $\mu(f1_A)=0$。最后，设 $f\in \mathcal{E}_+$，那么 $\mu(f1_A)=\mu(f^+1_A)-\mu (f^-1_A)=0$。
 
+  记 $A=\{x\in E:f(x)\neq g(x)\}$，那么 $A=E \smallsetminus(f-g)^{-1}(0)$ 可测，
+  几乎处处 $f=g$ 表明 $A$ 是零测集。于是 $\mu(f1_A)=\mu(g1_A)=0$，所以
+  \begin{align*}
+    \mu f&=\mu(f1_A)+\mu(f1_{E \smallsetminus A})=\mu(f1_{E \smallsetminus A})
+    =
+    \mu(g1_{E \smallsetminus A})\\&=\mu(g1_{E \smallsetminus A})+\mu(g1_A)=\mu g.
+  \end{align*}
+
+  记 $N=\{x\in E: f(x)>0\}$，$N_k=\{x\in E:f(x)>1/k\}$，显然 $N_k\nearrow N$，故
+  $\mu(N_k)\nearrow \mu(N)$。此时 $f> 1/k1_{N_k}$，所以 $0=\mu f\geq 1/k\mu(N_k)$，
+  这表明 $\mu(N_k)=0$，所以 $\mu(N)=\lim\mu(N_k)=0$。
+\end{proof}
+
+
+\subsubsection{Fatou 引理}
+
+\begin{lemma}
+  令 $(f_n)\subseteq \mathcal{E}_+$，那么 $\mu(\liminf f_n)\leq \liminf\mu f_n$。
+\end{lemma}
+\begin{proof}
+  记 $g_m=\inf_{n\geq m}f_n$，那么 $g_m\in \mathcal{E}_+$ 且递增，根据单调收敛定理，有
+  \[
+    \mu(\liminf f_n)=\mu(\lim g_m)=\lim\mu g_m.
+  \]
+  又因为 $n\geq m$ 的时候 $g_m\leq f_n$，所以 $\mu g_m\leq \mu f_n$，所以
+  $\mu g_m\leq \inf_{n\geq m} \mu f_n$，令 $m\to\infty$，即得
+  \[
+    \mu(\liminf f_n)=\lim\mu g_m\leq \liminf \mu f_n.\qedhere
+  \]
+\end{proof}
+
+\begin{corollary}
+  令 $(f_n)\subseteq \mathcal{E}$，如果存在可积函数 $g$ 使得 $f_n\geq g$，那么
+  \[
+    \mu(\liminf f_n)\leq\liminf \mu f_n.
+  \]
+  如果存在可积函数 $g$ 使得 $f_n\leq g$，那么
+  \[
+    \mu(\limsup f_n)\geq \limsup \mu f_n.
+  \]
+\end{corollary}
+\begin{proof}
+  若可积函数 $g$ 使得 $f_n\geq g$，那么 $A=\{x\in E:g(x)\in \mathbb{R}\}$ 的补集是零测集(练习)。
+  那么几乎处处 $f_n1_A=f_n$ 以及 $g1_A=g$。由于 $g1_A$ 是实值函数，所以
+  $f_n1_A-g1_A$ 是有意义的，故 $f_n1_A-g1_A\in \mathcal{E}_+$ 且可积，根据uFatou 引理，有
+  \begin{align*}
+    \mu\bigl(\liminf (f_n1_A)\bigr)-\mu(g1_A)&=\mu\bigl(\liminf (f_n1_A)- g1_A\bigr)
+    =\mu\bigl(\liminf (f_n1_A-g1_A)\bigr)\\
+    &\leq \liminf\mu(f_n1_A-g1_A)=\liminf \mu(f_n1_A)-\mu(g1_A),
+  \end{align*}
+  由于几乎处处 $f_n1_A=f_n$，故几乎处处 $\liminf (f_n1_A)=\liminf f_n$，
+  故 $\mu(f_n1_A)=\mu f_n$ 以及 $\mu\bigl(\liminf (f_n1_A)\bigr)=\mu(\liminf f_n)$，这就表明
+  \[
+    \mu(\liminf f_n)\leq\liminf \mu f_n.
+  \]
+  对于第二点，考虑 $g1_A-f_n1_A\in \mathcal{E}_+$ 并且 $\limsup r_n=-\liminf(-r_n)$ 即可。
+\end{proof}
 
 
 
