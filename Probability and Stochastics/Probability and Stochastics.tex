@@ -980,6 +980,7 @@ $\mu f^+<\infty$ 以及 $\mu f^-<\infty$。
   \[
     \mu(f1_A)+\mu(f1_B)=\mu(f1_C).  
   \]
+  对于一般的 $f\in \mathcal{E}$ 也成立。
 \end{lemma}
 \begin{proof}
   令 $f_n=d_n\circ f$，由于 $f_n$ 是简单函数，所以
@@ -999,6 +1000,13 @@ $\mu f^+<\infty$ 以及 $\mu f^-<\infty$。
   $f\in \mathcal{E}_+$ 表明 $f_n\geq 0$，从而 $\mu f_n\geq 0$，
   所以 $\mu f=\lim\mu f_n\geq 0$。如果 $f\leq g$，由于 $d_n$ 是单调递增函数，
   所以 $f_n\leq g_n$，所以 $\mu f_n\leq \mu g_n$，所以 $\mu f\leq \mu g$。
+\end{proof}
+\begin{corollary}
+  若 $f,g\in \mathcal{E}$ 且 $f\leq g$，那么 $\mu f\leq \mu g$.
+\end{corollary}
+\begin{proof}
+  $f\leq g$ 表明 $f^+\leq g^+$ 以及 $f^-\geq g^-$，所以
+  $\mu f=\mu(f^+)-\mu(f^-)\leq \mu(g^+)-\mu (g^-)\leq \mu g$。
 \end{proof}
 
 \subsubsection{单调收敛定理}
@@ -1078,7 +1086,7 @@ $\mu f^+<\infty$ 以及 $\mu f^-<\infty$。
 
 \begin{proposition}
   如果 $A\in \mathcal{E}$ 是零测集，那么对于任意 $f\in \mathcal{E}$，有 $\mu(f1_A)=0$。
-  如果 $f,g\in \mathcal{E}_+$ 且几乎处处有 $f=g$，那么 $\mu f=\mu g$。
+  如果 $f,g\in \mathcal{E}$ 且几乎处处有 $f=g$，那么 $\mu f=\mu g$。
   如果 $f\in \mathcal{E}_+$ 并且 $\mu f=0$，那么几乎处处 $f=0$。
 \end{proposition}
 \begin{proof}

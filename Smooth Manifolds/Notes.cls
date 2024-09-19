@@ -19,8 +19,11 @@
   enumitem,
   subcaption,
   mathtools,
-  zhlineskip
+  zhlineskip,
+  tcolorbox
 }
+\tcbuselibrary{theorems}
+\tcbuselibrary{skins}
 %\RequirePackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
 
 \RequirePackage[colorlinks]{hyperref}
@@ -188,7 +191,19 @@
   refname={练习}
 ]{exercise}
 
-
+\newtcbtheorem[
+  auto counter,number within=chapter,
+  number freestyle={%
+  \noexpand\arabic{chapter}-\noexpand\arabic{\tcbcounter}
+}]{problem}{}{%
+  theorem style=plain,
+  coltitle=black,
+  fonttitle=\sffamily,
+  terminator sign={},
+  fontupper=\sffamily,
+  %description delimiters={}{},
+  title=\thetcbcounter
+}{prob} 
 
 % \tcbset{
 %   common/.style={

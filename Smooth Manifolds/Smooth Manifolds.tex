@@ -416,7 +416,7 @@ $f\circ\varphi^{-1}$ 在 $\hat U=\varphi(U)\subseteq\mathbb{R}^n$ 上是光滑�
 那么我们说 $f$ 是\emph{光滑函数}。流形 $M$ 上所有光滑实值函数 $f:M\to\mathbb{R}$
 的集合记为 $C^\infty(M)$，构成了 $\mathbb{R}$ 上的一个向量空间。
 
-\begin{exercise}
+\begin{exercise}{}{}
 $M$ 是光滑流形，设 $f:M\to\mathbb{R}^k$ 是光滑函数，证明对于\emph{任意}
 光滑坐标卡 $(U,\varphi)$，函数 $f\circ\varphi^{-1}:\varphi(U)\to\mathbb{R}^k$
 是光滑的。
@@ -1414,7 +1414,7 @@ $dF_p$。对于切向量 $v\in T_pM$，我们会混用记号 $dF_p(v)$ 和 $dF(v
     &=\tilde{\psi}\circ dF\left(p,v^i\!\left.\frac{\partial}{\partial x^i}\right|_{p}\right)\\
     &=\tilde\psi \circ dF_{p}\left(v^i\!\left.\frac{\partial}{\partial x^i}\right|_{p}\right)\\
     &=\tilde{\psi}\left(
-      F(p),v^i\frac{\partial\hat F^j}{\partial x^i}(x)\left.\frac{\partial}{\partial y^i}\right|_{F(p)}
+      F(p),v^i\frac{\partial\hat F^j}{\partial x^i}(x)\left.\frac{\partial}{\partial y^j}\right|_{F(p)}
     \right)
     \\
     &=\left(
@@ -1512,6 +1512,43 @@ $\gamma(t_0)\in U$，记 $\gamma$ 的坐标表示为 $\gamma(t)=\left(\gamma^1(t
   \]
   其中 $\gamma:J\to M$ 是满足 $\gamma(0)=p$ 以及 $\gamma'(0)=v$ 的任意光滑曲线。
 \end{corollary}
+
+\section{Problems}
+
+\begin{problem}{}{}
+  设 $M,N$ 是带边或者无边光滑流形，$F:M\to N$ 是光滑映射，证明对于任意 $p\in M$
+  有 $dF_p:T_pM\to T_{F(p)}N$ 是零映射当且仅当 $F$ 在 $M$ 的每个连通分支上是常值映射。
+\end{problem}
+\begin{proof}
+  若任取 $p\in M$，$dF_p$ 是零映射。取 $p$ 处的一个光滑坐标卡 $(U,\varphi)$ 和
+  $F(p)$ 处的光滑坐标卡 $(V,\psi)$，通过缩小 $U$，我们可以假设 $U$ 被 $p$ 所在的连通分支包含。
+  此时 $dF_p$ 满足
+  \[
+    dF_p\left(\left.\frac{\partial}{\partial x^i}\right|_p\right)=\frac{\partial F^j}{\partial x^i}(\hat p)
+    \left.\frac{\partial}{\partial x^j}\right|_{F(p)}=0,
+  \]
+  所以对于任意的 $i,j$，有 $\partial F^j/\partial x^i(\hat p)=0$。此时任取 $q\in U$，都有
+  $\partial F^j/\partial x^i(\hat q)=0$，所以 $\partial F^j/\partial x^i:\varphi(U)\to\mathbb{R}$
+  恒为零。这表明 $\psi\circ F\circ\varphi^{-1}:\varphi(U)\to \psi(V)$ 是常值函数，
+  所以 $F$ 在 $U$ 上是常值函数。于是 $F$ 在 $p$ 所在的连通分支上是常值函数。
+\end{proof}
+
+\begin{problem}{}{}
+  证明 $T \mathbb{S}^1$ 微分同胚于 $\mathbb{S}^1\times \mathbb{R}$。
+\end{problem}
+\begin{proof}
+  令 $F:T \mathbb{S}^1\to \mathbb{S}^1\times \mathbb{R}$ 为
+  \[
+    F\left(p, v\left.\frac{d}{dt}\right|_p\right)=(p,v),
+  \]
+  那么 $F$ 在标准光滑结构下的坐标表示为
+  \[
+    (x,v)\mapsto (x,v)
+  \]
+  是光滑映射。同理不难验证 $F^{-1}$ 也是光滑映射。
+\end{proof}
+
+
 
 \chapter{浸没、浸入和嵌入}
 
@@ -2230,7 +2267,7 @@ $\varPhi^{-1}(c)$ 中的每个点都是正则点，否则被称为\emph{$\varPhi
   所以 $S\hookrightarrow M$ 是光滑浸入，即 $S$ 是 $M$ 的光滑子流形。
 \end{proof}
 
-\begin{exercise}
+\begin{exercise}{}{}
   设 $M$ 是光滑流形，$S\subseteq M$ 是浸入子流形。证明：
   $S$ 的子空间拓扑下的开集在上述子流形拓扑下也是开的。
   此外，$S$ 在子流形拓扑下的开集是子空间拓扑下的开集当且仅当
