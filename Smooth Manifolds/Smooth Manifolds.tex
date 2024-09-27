@@ -2218,7 +2218,7 @@ $\left(x^1,\dots,x^n\right)$ 被称为\emph{切片坐标}。
 如果 $\varPhi:M\to N$ 是光滑映射，点 $p\in M$ 使得 $d\varPhi_p:T_pM\to T_{\varPhi(p)}N$
 是满射，那么 $p$ 被称为\emph{$\varPhi$ 的正则点}，否则被称为\emph{$\varPhi$ 的临界点}。
 我们有以下两个简单的观察：如果 $\dim M<\dim N$，那么 $M$ 的每个点都是临界点；
-$M$ 的每个点都是正则点当且仅当 $\varPhi$ 的浸没。
+$M$ 的每个点都是正则点当且仅当 $\varPhi$ 是浸没。
 根据 \autoref{prop:regular points is open}，我们知道 $\varPhi$ 的正则点的集合
 是 $M$ 的开集。一个点 $c\in N$ 被称为\emph{$\varPhi$ 的正则值}，如果水平集
 $\varPhi^{-1}(c)$ 中的每个点都是正则点，否则被称为\emph{$\varPhi$ 的临界值}。
@@ -2342,6 +2342,44 @@ $\varPhi^{-1}(c)$ 中的每个点都是正则点，否则被称为\emph{$\varPhi
   是光滑映射并且 $F(N)\subseteq S$，如果 $F:N\to S$ 是连续映射，那么
   $F:N\to S$ 光滑。
 \end{theorem}
+\begin{proof}
+  任取 $p\in N$，记 $q=F(p)\in S$。根据局部嵌入定理，存在 $q$ 在 $S$ 中的某个邻域 $V$
+  使得 $V$ 是 $M$ 的嵌入子流形，所以存在 $V$ 在 $M$ 中的切片坐标卡 $(W,\psi)$，
+  令 $V_0=W\cap V$，设 $\psi(V_0)$ 是 $\psi(W)$ 的 $k$-切片。令 $\pi:\mathbb{R}^n\to \mathbb{R}^k$
+  为前 $k$ 个分量的投影，$\tilde{\psi}=\pi\circ\psi$。由于 $V_0$ 是 $V$ 中的开集，
+  $V$ 是 $S$ 的开集，所以 $V_0$ 是 $S$ 的开集，所以 $(V_0,\tilde\psi)$ 是 $S$ 的光滑坐标卡。
+
+  令 $U=F^{-1}(V_0)$，$F:N\to S$ 连续表明 $U$ 是 $N$ 的开集，取 $p$ 处的光滑坐标卡 $(U_0,\varphi)$
+  使得 $U_0\subseteq U$，那么 $F:N\to S$ 的坐标表示为
+  \[
+    \tilde{\psi}\circ F\circ \varphi^{-1}=\pi\circ(\psi\circ F\circ\varphi^{-1}),
+  \] 
+  右端的 $F:N\to M$，所以这是光滑映射，故 $F:N\to S$ 光滑。
+\end{proof}
+
+\begin{corollary}
+  令 $M$ 是光滑流形，$S\subseteq M$ 是嵌入子流形，那么光滑映射 $F:N\to M$ 只要 $F(N)\subseteq S$，
+  那么 $F:N\to S$ 就是光滑映射。
+\end{corollary}
+\begin{proof}
+  $S$ 配备子空间拓扑，所以 $F:N\to S$ 作为连续映射的限制是连续映射。
+\end{proof}
+
+\section{子流形的切空间}
+
+令 $M$ 是带边或者无边光滑流形，$S\subseteq M$ 是嵌入或者浸入子流形，由于 $\iota:S\hookrightarrow M$
+是光滑浸入，所以任取 $p\in S$ 微分 $d\iota_p:T_pS\to T_pM$ 是单射，这意味着我们可以把 $T_pS$ 视为
+$T_pM$ 的子空间，此时对于任意切向量 $v\in T_pS$，它的像 $\tilde v=d\iota_p(v)\in T_pM$ 为
+\[
+  \tilde{v}f=d\iota_p(v)(f)=v(f\circ\iota)=v(f|_S),
+\]
+其中 $f\in C^\infty(M)$，我们将 $v$ 和 $\tilde v$ 等同。注意这种等同与嵌入或者浸入无关。
+
+\begin{proposition}
+  
+\end{proposition}
+
+
 
 
 
