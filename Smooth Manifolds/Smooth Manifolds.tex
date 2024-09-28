@@ -1469,7 +1469,7 @@ $\gamma(t_0)\in U$，记 $\gamma$ 的坐标表示为 $\gamma(t)=\left(\gamma^1(t
 这给出了一种更加几何的方式去理解切丛：切丛仅仅是 $M$ 中所有光滑曲线的
 速度向量的集合。
 
-\begin{proposition}
+\begin{proposition}\label{prop:velocity}
   设 $M$ 是带边或者无边光滑流形，$p\in M$。每个 $v\in T_pM$
   都是 $M$ 中某个光滑曲线的速度向量。
 \end{proposition}
@@ -2408,8 +2408,61 @@ $T_pM$ 的子空间，此时对于任意切向量 $v\in T_pS$，它的像 $\tild
   $0\in J$，$\gamma(0)=p$ 以及 $\gamma'(0)=v$。
 \end{proposition}
 \begin{proof}
-  
+  $v\in T_pS$ 意味着存在 $w\in T_pS$ 使得 $v=d\iota_p(w)$，
+  根据 \autoref{prop:velocity}，存在光滑曲线 $\tilde\gamma:J\to S$
+  使得 $\tilde\gamma(0)=p$，$\tilde\gamma'(0)=w$，令
+  $\gamma=\iota\circ\tilde{\gamma}$，那么 $\gamma'(0)=d\iota_p(\gamma'(0))=v$。
+  反之，由于 $\tilde{\gamma}:J\to S$ 是光滑映射，所以
+  $\gamma=\iota\circ\tilde{\gamma}$，所以
+  \[
+    v=\gamma'(0)=d\iota_p(\tilde \gamma'(0))  \in \im d\iota_p.\qedhere
+  \]
 \end{proof}
+
+\begin{proposition}
+  设 $M$ 是光滑流形，$S\subseteq M$ 是嵌入子流形，$p\in S$。
+  切空间 $T_pS$ 作为 $T_pM$ 的子空间可以刻画为
+  \[
+    T_pS=\bigl\{v\in T_pM\,|\, \forall f\in C^\infty(M), f|_S=0,vf=0\bigr\}  .
+  \]
+\end{proposition}
+\begin{proof}
+  任取 $v=d\iota_p(w)\in T_p S\subseteq T_pM$，那么对于任意 $f\in C^\infty(M)$ 且 $f|_S=0$，有
+  \[
+    vf=d\iota_p(w)f=w(f\circ\iota_p)=w(f|_S)=0.
+  \]
+
+  反之，若 $v\in T_pM$ 满足 $f|_S=0$ 的时候 $vf=0$。
+  假设 $(U,\varphi=(x^1,\dots,x^n))$ 是 $S$ 在 $M$ 中的切片坐标卡，
+  那么 $T_pM$ 的一组基为 $\partial/\partial x^i|_p$。
+  设 $\varphi(S\cap U)$ 是 $\varphi(U)$ 的 $k$-切片，那么
+  $\iota:S\cap U\hookrightarrow M$ 的坐标表示为
+  \[
+    \varphi\circ\iota\circ\tilde\varphi^{-1}:\left(x^1,\dots,x^k\right)\mapsto
+    \left(x^1,\dots,x^k,0,\dots,0\right)  ,
+  \]
+  这表明
+  \[
+    d\iota_p\left(\left.\frac{\partial}{\partial x^i}\right|_p\right)
+    =  \left.\frac{\partial}{\partial x^i}\right|_p,\quad i=1,\dots,k.
+  \]
+  所以 $d\iota_p(T_pS)$ 是由 $\partial/\partial x^1|_p,\dots,\partial/\partial x^k|_p$
+  张成的 $T_pM$ 的子空间。设
+  \[
+    v=v^i \left.\frac{\partial}{\partial x^i}\right|_p\in T_pM,  
+  \]
+  所以 $v\in T_pS$ 当且仅当 $v^j=0\ (j>k)$。
+
+  令 $\psi:M\to \mathbb{R}$ 是关于 $\{p\}$ 的支在 $U$ 中的光滑鼓包函数，
+  对于每个 $j>k$，考虑函数 $f(q)=\psi(q)x^j$，其中 $q\in M$。
+  显然 $f|_S=0$，所以
+  \[
+    0=vf= v^i\frac{\partial (f\circ\varphi^{-1})}{\partial x^i}(\varphi(p))
+    =v^j.\qedhere  
+  \]
+\end{proof}
+
+
 
 
 
