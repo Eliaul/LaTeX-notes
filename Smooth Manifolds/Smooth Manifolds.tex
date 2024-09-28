@@ -2245,6 +2245,32 @@ $\varPhi^{-1}(c)$ 中的每个点都是正则点，否则被称为\emph{$\varPhi
   是 $\mathbb{R}^{n+1}$ 的余维数为 $1$ 的嵌入子流形。
 \end{example}
 
+\begin{proposition}
+  令 $S$ 为光滑 $m$-流形 $M$ 的子集，那么 $S$ 是 $M$ 的嵌入 $k$-子流形当且仅当
+  $S$ 的每个点都有 $M$ 中的邻域 $U$ 使得 $U\cap S$ 是某个光滑浸没 $\varPhi:U\to \mathbb{R}^{m-k}$
+  的水平集。
+\end{proposition}
+\begin{proof}
+  若 $S$ 是嵌入 $k$-子流形，任取 $p\in S$，存在 $S$ 在 $M$ 中的切片坐标卡 $(U,\varphi)$，
+  使得 $\varphi(U\cap S)$ 是 $\varphi(U)$ 的 $k$-切片，令 $\varPhi:U\to \mathbb{R}^{m-k}$
+  为 $\varPhi=\pi\circ\varphi$，其中 $\pi:\mathbb{R}^m\to \mathbb{R}^{m-k}$
+  是后 $m-k$ 个坐标的投影，显然 $\varPhi$ 是光滑浸没，且 
+  $U\cap S$ 是 $\varPhi$ 的某个水平集。反之，若任取 $p\in S$
+  都存在 $M$ 中的邻域 $U$ 使得 $U\cap S$ 是光滑浸没 $\varPhi:U\to \mathbb{R}^{m-k}$
+  的水平集，根据浸没水平集定理，$U\cap S$ 是 $U$ 的嵌入 $k$-子流形，从而是
+  $M$ 的嵌入 $k$-子流形，这表明 $S$ 满足局部 $k$-切片条件，所以
+  $S$ 是 $M$ 的嵌入 $k$-子流形。
+\end{proof}
+
+若 $S\subseteq M$ 是嵌入子流形，光滑映射 $\varPhi:M\to N$ 使得 $S$ 是 $\varPhi$
+的正则水平集，那么 $\varPhi$ 被称为 $S$ 的\emph{定义映射}。特别地，在 $N=\mathbb{R}^{m-k}$
+的情况下，$\varPhi$ 被称为 $S$ 的\emph{定义函数}。若 $U$ 是 $M$ 的开子集，
+$\varPhi:U\to N$ 是使得 $S\cap U$ 为正则水平集的光滑映射，那么 $\varPhi$
+被称为 $S$ 的\emph{局部定义映射}。
+
+
+
+
 \section{浸入子流形}
 
 设 $M$ 是带边或者无边光滑流形，一个子集 $S\subseteq M$ 如果
@@ -2376,8 +2402,14 @@ $T_pM$ 的子空间，此时对于任意切向量 $v\in T_pS$，它的像 $\tild
 其中 $f\in C^\infty(M)$，我们将 $v$ 和 $\tilde v$ 等同。注意这种等同与嵌入或者浸入无关。
 
 \begin{proposition}
-  
+  设 $M$ 是带边或者无边光滑流形，$S\subseteq M$ 是浸入或者嵌入子流形，$p\in S$。
+  切向量 $v\in T_pM$ 在 $T_pS$ 中当且仅当存在光滑曲线 $\gamma:J\to M$，
+  其像集 $\gamma(J)\subseteq S$，并且作为 $J\to S$ 的映射是光滑映射，使得
+  $0\in J$，$\gamma(0)=p$ 以及 $\gamma'(0)=v$。
 \end{proposition}
+\begin{proof}
+  
+\end{proof}
 
 
 
