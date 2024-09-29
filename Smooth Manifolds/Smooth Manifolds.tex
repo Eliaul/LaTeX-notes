@@ -735,7 +735,7 @@ $\psi$ 是\emph{关于 $A$ 的支在 $U$ 中的鼓包函数}。
 在每个点 $p\in A$ 处都存在一个邻域 $W$ 以及一个光滑映射 $\tilde{F}:W\to N$
 使得 $\tilde{F}\big|_{W\cap A}=F$，那么我们说 $F$ 在 $A$ 上是光滑的。
 
-\begin{lemma}[光滑函数的延拓引理]
+\begin{lemma}[光滑函数的延拓引理]\label{lemma:extension for smooth map}
   设 $M$ 是带边或者无边光滑流形，$A\subseteq M$ 是闭子集，$f:A\to\mathbb{R}^k$
   是光滑函数。对于任意包含 $A$ 的开子集 $U$，存在光滑函数 $\tilde{f}:M\to\mathbb{R}^k$
   使得 $\tilde{f}\big|_A=f$ 以及 $\supp\tilde{f}\subseteq U$。
@@ -1842,7 +1842,7 @@ $dF_p$ 的秩等于 $\min\{\dim M,\dim N\}$，那么我们说\emph{$F$ 在 $p$ �
   并且是拓扑嵌入，但是其不是光滑嵌入，因为 $\gamma'(0)=(0,0)$ 不满秩。
 \end{example}
 
-\begin{example}[八字曲线]
+\begin{example}[八字曲线]\label{exa:eight-curve}
   考虑曲线 $\beta:(-\pi,\pi)\to\mathbb{R}^2$ 为
   \[
     \beta(t)=(\sin 2t,\sin t) . 
@@ -2462,9 +2462,44 @@ $T_pM$ 的子空间，此时对于任意切向量 $v\in T_pS$，它的像 $\tild
   \]
 \end{proof}
 
+\begin{proposition}
+  假设 $M$ 是光滑流形，$S\subseteq M$ 是嵌入子流形，如果 $\varPhi:U\to N$
+  是 $S$ 的局部定义映射，那么 $T_pS=\ker d\varPhi_p:T_pM\to T_{\varPhi(p)}N$，
+  其中 $p\in S\cap U$。
+\end{proposition}
+\begin{proof}
+  根据定义，$S\cap U$ 是 $\varPhi$ 的正则水平集，令 $\iota:S\cap U\hookrightarrow U$，
+  那么 $\varPhi\circ\iota:S\cap U\to N$ 是常值映射，所以
+  $d(\varPhi\circ\iota)_p:T_pS\to T_{\varPhi(p)}N$ 是零映射，所以
+  \[
+    d\varPhi_p\circ d\iota_p=d(\varPhi\circ\iota)_p=0,
+  \]
+  这表明 $T_pS=\im d\iota_p\subseteq \ker d\varPhi_p$。另一方面，$\varPhi$ 是定义映射表明
+  $d\varPhi_p$ 是满射，故
+  \[
+    \dim\ker d\varPhi_p=\dim T_pM-\dim T_{\varPhi(p)}N=\dim S\cap U=
+    \dim T_pS,
+  \]
+  这就表明 $T_pS=\ker d\varPhi_p$。
+\end{proof}
 
+\begin{corollary}
+  设 $S\subseteq M$ 是光滑浸没 $\varPhi=(\varPhi^1,\dots,\varPhi^k):M\to \mathbb{R}^k$
+  的水平集，切向量 $v\in T_pM$ 在 $T_pS$ 中当且仅当 $v\varPhi^1=\cdots=v\varPhi^k=0$。
+\end{corollary}
 
-
+\begin{exercise}
+  设 $S\subseteq M$ 是常秩映射 $\varPhi:M\to N$ 的水平集，证明对于每个 $p\in S$
+  有 $T_pS=\ker d\varPhi_p$。
+\end{exercise}
+\begin{proof}
+  根据常秩水平集定理，有 $\dim S=\dim M-\dim N$，故
+  \[
+    \dim T_pS=\dim T_pM-\dim T_{\varPhi(p)}N=\dim \ker d\varPhi_p.
+  \]
+  记 $\iota:S\hookrightarrow M$，那么 $\varPhi\circ\iota:S\to N$ 是常值映射，
+  所以 $d(\varPhi\circ \iota)_p=0$，这就表明 $T_pS=\ker d\varPhi_p$。
+\end{proof}
 
 
 
@@ -2524,7 +2559,7 @@ $F$ 是\emph{李群同态}。如果 $F$ 还是微分同胚，那么我们说 $F$
 设 $G$ 的李群，$G$ 的\emph{李子群}指的是 $G$ 的一个子群，配备了一个拓扑
 和光滑结构使得其成为一个李群以及 $G$ 的浸入子流形。
 
-\begin{proposition}
+\begin{proposition}\label{prop:embedding and subgroup is lie subgroup}
   令 $G$ 是李群，设 $H\subseteq G$ 是子群同时是嵌入子流形，那么 $H$ 是李子群。
 \end{proposition}
 \begin{proof}
@@ -2587,6 +2622,306 @@ $F$ 是\emph{李群同态}。如果 $F$ 还是微分同胚，那么我们说 $F$
   $G_0'=gG_0=L_g(G_0)$ 微分同胚于 $G_0$。
 \end{proof}
  
+\begin{proposition}
+  令 $F:G\to H$ 是李群同态，那么 $\ker F$ 是 $G$ 的恰当嵌入李子群，其余维数
+  为 $\rk F$。
+\end{proposition}
+\begin{proof}
+  根据常秩水平集定理，$\ker F$ 是 $G$ 的余维数为 $\rk F$ 的嵌入子流形。
+  再根据 \autoref{prop:embedding and subgroup is lie subgroup}，$\ker F$
+  是李子群。
+\end{proof}
+
+一般情况下，光滑子流形可以同时是非嵌入的以及闭的，例如八字曲线
+\ref{exa:eight-curve}，但是下面的定理表明对于李子群而言，
+闭和嵌入性并不是独立的，即嵌入性和闭等价。
+
+\begin{theorem}
+  设 $G$ 是李群，$H\subseteq G$ 是李子群，那么 $H$ 是闭集当且仅当
+  $H$ 是嵌入李子群。
+\end{theorem}
+
+\section{群作用和等变映射}
+
+如果 $M$ 是光滑流形，$G$ 是李群，群作用 $G\times M\to M$ 是光滑映射，
+那么这个群作用被称为\emph{光滑作用}。
+对于光滑作用 $\theta:G\times M\to M$，任取 $g\in G$，记 
+$\theta_g:M\to M$ 为 $\theta_g(p)=g\cdot p$。由于 $\theta_{g^{-1}}$
+是其光滑逆映射，所以 $\theta_g$ 一定是微分同胚。
+
+
+\chapter{向量场}
+
+\section{流形上的向量场}
+
+设 $M$ 是带边或者无边光滑流形，$M$ 上的\emph{向量场}指的是映射 $\pi:TM\to M$
+的一个截面。确切地说，一个向量场是连续映射 $X:M\to TM$，通常记为 $p\mapsto X_p$，
+其满足
+\[
+  \pi\circ X=\Id_M.
+\]
+等价地说，对于每个 $p\in M$，有 $X_p\in T_pM$。
+
+我们主要对光滑向量场感兴趣，即其作为 $M\to TM$ 的映射是光滑的，其中 $TM$
+赋予 \autoref{prop:smooth structure of tangent bundle} 定义的光滑结构。
+如果 $X$ 是 $M$ 上的向量场，$X$ 的支集被定义为集合 $\{p\in M\,|\, X_p\neq 0\}$
+的闭包。如果 $X$ 的支集是紧集，那么我们说 $X$ 是\emph{紧支的}。
+
+设 $M$ 是光滑 $n$-流形，如果 $X:M\to TM$ 是 $M$ 上的向量场，$(U,(x^i))$
+是 $M$ 的一个光滑坐标卡，那么对于点 $p\in U$，我们可以将 $X_p$
+表示为基向量的线性组合：
+\begin{equation}\label{eq:value of vector field}
+  X_p=X^i(p)\left.\frac{\partial}{\partial x^i}\right|_p.
+\end{equation}
+其中我们定义函数 $X^i:U\to \mathbb{R}$，被称为 $X$ 在给定坐标卡下的\emph{分量}。
+
+\begin{proposition}[向量场的光滑性判别]
+  令 $M$ 是带边或者无边光滑流形，$X:M\to TM$ 是向量场，如果 $(U,(x^i))$
+  是 $M$ 的一个光滑坐标卡，那么 $X|_U$ 是光滑的当且仅当其在这个坐标卡下
+  的每个分量函数是光滑的。
+\end{proposition}
+\begin{proof}
+  若 $X|_U$ 是光滑映射，那么任取 $p\in U$，$X|_U:U\to TM$ 的坐标表示为
+  \[
+    \left(x^1,\dots,x^n\right)\mapsto \left(X^1(x),\dots,X^n(x),x^1,\dots,x^n\right),
+  \]
+  所以 $X|_U$ 光滑等价于 $X^i$ 都是光滑函数。
+\end{proof}
+
+\begin{example}[坐标向量场]
+  如果 $(U,(x^i))$ 是 $M$ 的一个光滑坐标卡，那么
+  \[
+    p\mapsto \left.\frac{\partial}{\partial x^i}\right|_p
+  \]
+  是 $U$ 上的一个向量场，被称为第 $i$ 个\emph{坐标向量场}，记为 $\partial/\partial x^i$。
+  由于其分量是常数，所以这当然是一个光滑向量场。
+\end{example}
+
+如果 $U\subseteq M$ 是开集，那么我们知道 $T_pU$ 同构于 $T_pM$，这允许我们将
+$TU$ 视为开子集 $\pi^{-1}(U)\subseteq TM$。因此，一个 $U$ 上的向量场可以被视为
+$U\to TU$ 的映射也可以被视为 $U\to TM$ 的映射。如果 $X$ 是 $M$ 上的光滑向量场，
+那么限制 $X|_U$ 是 $U$ 上的光滑向量场。
+
+下面的引理是 \autoref{lemma:extension for smooth map} 的推广，其证明也是完全类似的。
+如果 $M$ 是带边或者无边光滑流形，$A\subseteq M$ 是任意子集，一个\emph{沿 $A$ 的向量场}
+指的是连续映射 $X:A\to TM$ 满足 $\pi\circ X=\Id_A$。如果对于每个 $p\in A$，
+都存在 $M$ 中的邻域 $V$ 和 $V$ 上的光滑向量场 $\tilde X$，使得 $\tilde X$
+在 $V\cap A$ 上和 $X$ 重合，那么我们说 $X$ 是\emph{沿 $A$ 的光滑向量场}。
+
+\begin{lemma}[向量场的延拓引理]
+  $M$ 是带边或者无边光滑流形，$A\subseteq M$ 是闭子集。假设 $X$ 是沿 $A$ 的向量场。给定
+  包含 $A$ 的开集 $U$，存在 $M$ 上的全局光滑向量场 $\tilde X$ 使得 $\tilde X|_A=X$
+  以及 $\supp \tilde X\subseteq U$。
+\end{lemma}
+
+作为一个重要的特例，这表明一个点上的任意切向量都可以延拓为整个光滑流形上的光滑向量场。
+
+\begin{proposition}
+  $M$ 是带边或者无边光滑流形，给定 $p\in M$ 和 $v\in T_pM$，存在 $M$ 上的光滑向量场 $X$
+  使得 $X_p=v$。
+\end{proposition}
+\begin{proof}
+  我们只需要说明向量场 $p\mapsto v$ 是光滑的。任取 $p$ 处的光滑坐标卡 $(U,\varphi)$，
+  令 $U$ 上的向量场为常系数的向量场，此时便可以使用延拓引理。
+\end{proof}
+ 
+$M$ 是带边或者无边光滑流形，使用记号 $\mathfrak{X}(M)$ 来表示 $M$ 上的光滑向量场全体。
+定义逐点的加法和数乘为：
+\[
+  (aX+bY)_p=aX_p+bY_p,
+\]
+这使得 $\mathfrak X(M)$ 成为一个向量空间。此外，光滑向量场还可以与光滑实值函数做乘法：
+如果 $f\in C^\infty(M)$，我们定义 $fX:M\to TM$ 为
+\[
+  (fX)_p=f(p)X_p.
+\]
+下面的命题表明这些操作生成的确实都是光滑向量场。
+
+\begin{proposition}
+  $M$ 是带边或者无边光滑流形。
+  \begin{enumerate}
+    \item 如果 $X$ 和 $Y$ 是 $M$ 上的光滑向量场，$f,g\in C^\infty(M)$，那么
+    $fX+gY$ 是光滑向量场。
+    \item $\mathfrak X(M)$ 是光滑函数环 $C^\infty(M)$ 上的模。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) $fX:X\to TM$ 在给定坐标卡下的分量函数 $(fX)^i:M\to \mathbb{R}$ 为：
+  \[
+    (fX)^i(p)=f(p)X^i(p),
+  \]
+  也就是说 $(fX)^i=fX^i$ 是光滑函数，所以 $fX$ 是光滑向量场。
+\end{proof}
+
+利用这种记号，向量场 $X$ 的基表达式 \eqref{eq:value of vector field} 也可以写为
+向量场之间的等式而不是切向量的等式：
+\[
+  X=X^i\frac{\partial }{\partial x^i}.
+\]
+其中 $\partial/\partial x^i$ 是坐标向量场。
+
+\subsection{局部和全局标架}
+
+光滑坐标卡给出的坐标向量场提供了一种表示向量场的简洁方式，因为它们的值构成了切空间
+的一组基。然而，这并不是唯一的选择。
+
+假设 $M$ 是光滑 $n$-流形，定义在子集 $A\subseteq M$ 上的 $k$ 个向量场 $(X_1,\dots,X_k)$
+被称为\emph{线性无关的}，如果对于每个 $p\in A$，$\left(X_1|_p,\dots,X_k|_p\right)$
+在 $T_pM$ 中是线性无关的。如果对于每个 $p\in A$，切向量组 $\left(X_1|_p,\dots,X_k|_p\right)$
+都张成 $T_pM$，那么我们说它们\emph{张成切丛}。如果开子集 $U\subseteq M$ 上的
+$n$ 个向量场 $(E_1,\dots,E_n)$ 是线性无关的且张成切丛，那么我们说它们是
+关于 $M$ 的\emph{局部标架}。此时对于每个 $p\in U$，切向量 $\left(E_1|_p,\dots,E_n|_p\right)$
+都构成 $T_pM$ 的一组基。如果 $U=M$，那么它们被称为\emph{全局标架}。如果
+$E_i$ 都是光滑向量场，那么被称为\emph{光滑标架}。我们使用缩写 $(E_i)$ 来表示
+标架 $(E_1,\dots,E_n)$。如果 $M$ 是 $n$ 维的，那么检验 $n$ 元组
+$(E_1,\dots,E_n)$ 是局部标架只需要说明线性无关或者张成切丛中的一个即可。
+
+\begin{example}[局部和全局标架]\mbox{}
+  \begin{enumerate}
+    \item 标准坐标向量场构成了 $\mathbb{R}^n$ 的一个光滑全局标架。
+    \item 如果 $(U,(x^i))$ 是光滑流形 $M$ 的光滑坐标卡，那么坐标向量场
+    $\left(\partial/\partial x^i\right)$ 构成了一个光滑局部标架，被称为\emph{坐标标架}。
+  \end{enumerate}
+\end{example}
+
+\subsection{向量场作为 $C^\infty(M)$ 的导子}
+
+向量场的一个基本性质是它们在光滑实值函数空间上定义算子。
+如果 $X\in \mathfrak X(M)$ 以及 $f$ 是定义在开子集 $U\subseteq M$ 上的光滑实值函数，
+那么我们可以定义一个新的函数 $Xf:U\to \mathbb{R}$：
+\[
+  (Xf)(p)=X_pf.
+\]
+（注意区分 $fX$ 和 $Xf$ 的区别。）由于切向量对函数的作用只与函数在该点的任意小的邻域中的行为有关，所以
+$Xf$ 也是由局部确定的。特别地，对于任意开子集 $V\subseteq U$，有
+\[
+  (Xf)|_V=X(f|_V).
+\]
+
+\begin{proposition}
+  $M$ 是带边或者无边光滑流形，$X:M\to TM$ 是向量场，那么下面的说法等价：
+  \begin{enumerate}
+    \item $X$ 是光滑向量场。
+    \item 对于每个 $f\in C^\infty(M)$，函数 $Xf$ 都是光滑函数。
+    \item 对于每个开集 $U\subseteq M$ 和 $f\in C^\infty(U)$，函数 $Xf$ 在 $U$ 上是光滑的。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 任取 $p\in M$ 以及 $p$ 处的光滑坐标卡 $(U,(x^i))$，那么 
+  $Xf:M\to \mathbb{R}$ 的坐标表示为
+  \[
+    \left(x^1,\dots,x^n \right)\mapsto 
+    X_x f=\left(X^i(x)\left.\frac{\partial}{\partial x^i}\right|_x\right)f=
+    X^i(x)\frac{\partial f}{\partial x^i}(x),
+  \]
+  $X$ 光滑表明分量函数 $X^i$ 光滑，所以 $Xf$ 是光滑函数。
+
+  $(2)\Rightarrow (3)$ 对于 $f\in C^\infty(U)$，任取 $p\in U$，令 $\psi$
+  为关于 $p$ 的某个邻域的支在 $U$ 中的光滑鼓包函数，定义 $\tilde f=\psi f$。
+  那么 $\tilde f\in C^\infty(M)$，根据假设 $X\tilde f$ 是光滑函数，
+  并且 $X\tilde f$ 在 $p$ 的某个邻域上等于 $Xf$，这表明 $Xf$ 在 $p$ 的某个邻域上
+  是光滑的，所以在 $U$ 上是光滑的。
+
+  $(3)\Rightarrow (1)$ 设 $(U,(x^i))$ 是任意光滑坐标卡，那么
+  \[
+    Xx^i=\left(X^j\frac{\partial }{\partial x^j}\right)x^i
+    =X^j\frac{\partial x^i}{\partial x^j}=X^i,
+  \]
+  根据假设，$Xx^i$ 是光滑的，所以 $X^i$ 是光滑的，这就表明 $X$ 的每个分量函数是光滑的，
+  即 $X$ 是光滑向量场。
+\end{proof}
+
+上述命题的结果是一个光滑向量场 $X\in \mathfrak X(M)$ 定义了 $C^\infty(M)$
+上的映射为 $f\mapsto Xf$，这显然是一个线性映射。此外，切向量的乘积法则导出了向量场的乘积法则：
+\begin{equation}\label{eq:product rule of vector field}
+  X(fg)=fXg+gXf.
+\end{equation}
+我们只需要逐点验证两端相等即可。一般来说，满足 $\mathbb{R}$-线性和
+乘积法则 \eqref{eq:product rule of vector field} 式的映射 $X:C^\infty(M)\to C^\infty(M)$
+被称为\emph{导子}。与切空间类似，下面的命题表明 $C^\infty(M)$ 的导子可以等同于光滑向量场。
+
+\begin{proposition}
+  $M$ 是带边或者无边光滑流形，映射 $D:C^\infty(M)\to C^\infty(M)$ 是导子当且仅当
+  其形如 $Df=Xf$，其中 $X\in \mathfrak X(M)$。
+\end{proposition}
+\begin{proof}
+  我们已经说明了向量场都是导子。反过来，假设 $D$ 是导子，我们要说明存在 $X\in \mathfrak X(M)$
+  使得 $Df=Xf$。任取 $p\in M$，那么这样的向量场 $X$ 必须满足
+  \[
+    X_pf=(Df)(p),
+  \]
+  容易验证这样的 $X_p$ 确实是 $p$ 处的切向量。又因为任取 $f\in C^\infty(M)$，$Xf=Df$
+  都是光滑的，所以 $X$ 确实是光滑向量场。
+\end{proof}
+
+出于这个结果，我们将 $M$ 上的光滑向量场和 $C^\infty(M)$ 的导子视为同一个对象，
+使用同一个字母。
+
+\section{向量场和光滑映射}
+
+如果 $F:M\to N$ 是光滑映射，$X$ 是 $M$ 上的向量场，那么对于每个 $p\in M$，我们得到
+一个切向量 $dF_p(X_p)\in T_{F(p)}N$，但是这并不能定义 $N$ 上的向量场。
+例如，若 $F$ 不是满射，那么对于点 $q\in N \smallsetminus F(M)$，我们无法分配切向量。
+若 $F$ 不是单射，那么 $N$ 中同一个点可能有多种不同的切向量定义方式。
+所以我们研究下面的定义。
+
+如果 $F:M\to N$ 是光滑映射，$X$ 是 $M$ 上的向量场，$Y$ 是 $N$ 上的向量场。
+对于每个 $p\in M$，如果有 $dF_p(X_p)=Y_{F(p)}$，那么我们说 $X$ 和 $Y$
+是\emph{$F$-相关的}。下面的命题说明了 $F$-相关的向量场如何作用在光滑函数上。
+
+\begin{proposition}
+  设 $F:M\to N$ 是光滑映射，$X\in \mathfrak X(M)$ 和 $Y\in \mathfrak X(N)$。
+  那么 $X$ 和 $Y$ 是 $F$-相关的当且仅当对于每个定义在 $N$ 的某个开子集上的光滑
+  实值函数 $f$，有
+  \[
+    X(f\circ F)=(Yf)\circ F.
+  \]
+\end{proposition}
+\begin{proof}
+  设 $f:U\to \mathbb{R}$ 是光滑函数，任取 $p\in U$，那么
+  \[
+    X(f\circ F)(p)=X_p(f\circ F)=dF_p(X_p)f,
+  \]
+  另一方面，有
+  \[
+    (Yf)\circ F(p)=Yf(F(p))=Y_{F(p)}f,
+  \]
+  所以 $X(f\circ F)=(Yf)\circ F$ 对于任意的 $f$ 成立当且仅当
+  $dF_p(X_p)=Y_{F(p)}$，即 $X$ 和 $Y$ 是 $F$-相关的。
+\end{proof}
+
+需要注意的是对于一个光滑映射 $F:M\to N$ 和向量场 $X\in \mathfrak X(M)$，
+可能出现 $N$ 上的任意向量场都不与 $X$ 是 $F$-相关的情况。然而， 
+当微分同胚的时候，这样的向量场总是存在的。
+
+\begin{proposition}
+  设 $M,N$ 是带边或者无边光滑流形，$F:M\to N$ 是微分同胚。对于每个 $X\in \mathfrak X(M)$，
+  都存在唯一的 $F$-相关于 $X$ 的 $N$ 上的光滑向量场。
+\end{proposition}
+\begin{proof}
+  设向量场 $Y\in \mathfrak X(N)$ $F$-相关于 $X$，那么其必须满足 $dF_p(X_p)=Y_{F(p)}$。
+  于是我们定义 $Y:N\to TN$ 为
+  \[
+    Y_q=dF_{F^{-1}(q)}\left(X_{F^{-1}(q)}\right).
+  \]
+  根据定义 $X$ 和 $Y$ 是 $F$-相关的。任取 $f\in C^\infty(N)$，那么
+  \[
+    Y_qf=dF_{F^{-1}(q)}\left(X_{F^{-1}(q)}\right)f=
+    X_{F^{-1}(q)}(f\circ F)=\bigl(X(f\circ F)\bigr)(F^{-1}(q)),
+  \]
+  所以 $Yf=\bigl(X(f\circ F)\bigr)\circ F^{-1}$ 是光滑映射，
+  这表明 $Y$ 是光滑向量场。
+\end{proof}
+
+在上述命题的情况下，我们将这个唯一的 $F$-相关于 $X$ 的向量场记为 $F_*X$，
+称为\emph{$X$ 通过 $F$ 的推前}。需要注意只有 $F$ 是微分同胚的时候 $F_*X$
+才有定义。上面的证明告诉我们，$F_*X$ 的定义为：
+\begin{equation}
+  (F_*X)_q=dF_{F^{-1}(q)}\left(X_{F^{-1}(q)}\right).
+\end{equation}
+
+
+
 
 
 
