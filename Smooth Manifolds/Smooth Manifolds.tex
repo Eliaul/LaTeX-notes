@@ -2920,6 +2920,41 @@ $Xf$ 也是由局部确定的。特别地，对于任意开子集 $V\subseteq U$
   (F_*X)_q=dF_{F^{-1}(q)}\left(X_{F^{-1}(q)}\right).
 \end{equation}
 
+\begin{example}[向量场推前的计算]
+  令 $M,N$ 是 $\mathbb{R}^2$ 的开子流形：
+  \begin{align*}
+    M&=\{(x,y)\,|\, y>0,x+y>0\},\\
+    N&=\{(u,v)\,|\, u>0,v>0\},
+  \end{align*}
+  定义 $F:M\to N$ 为 $F(x,y)=(x+y,x/y+1)$。那么 $F$ 是微分同胚，
+  因为其有光滑逆映射 $F^{-1}(u,v)=(u-u/v,u/v)$。定义 $M$
+  上的光滑向量场为：
+  \[
+    X_{(x,y)}=y^2\left.\frac{\partial}{\partial x}\right|_{(x,y)}  ,
+  \]
+  我们计算推前 $F_*X$。$F$ 在 $(x,y)$ 处的 Jacobi 矩阵为
+  \[
+    DF(x,y)=\begin{pmatrix}
+      1 & 1 \\ 
+      1/y & -x/y^2
+    \end{pmatrix} ,
+  \]
+  所以
+  \[
+    dF_{(x,y)}(a,b)=\left(a+b,a/y-bx/y^2\right),  
+  \]
+  所以
+  \[
+    dF_{F^{-1}(u,v)}\left(X_{F^{-1}(u,v)}\right)=  
+    dF_{F^{-1}(u,v)}(u^2/v^2,0)=
+    \left(u^2/v^2,u/v\right),
+  \]
+  所以
+  \[
+    (F_*X)_{(u,v)}=\frac{u^2}{v^2}\left.\frac{\partial}{\partial u}\right|_{(u,v )}  
+    +\frac{u}{v}\left.\frac{\partial}{\partial v}\right|_{(u,v)} .
+  \]
+\end{example}
 
 
 
