@@ -44,6 +44,7 @@
 \DeclareMathOperator\supp{supp}
 \DeclareMathOperator\Id{Id}
 \DeclareMathOperator\rk{rank}
+\DeclareMathOperator\card{card}
 \DeclareMathOperator\coker{coker}
 
 \newcommand{\ideal}[1]{\mathfrak{#1}}
@@ -73,1088 +74,1322 @@
 
 \mainmatter
 
-\chapter{测度和积分}
-
-\section{可测空间}
-
-令 $E$ 是集合，$\mathcal{E}$ 是 $E$ 的一个子集族。若对于任意 $A,B\in\mathcal{E}$ 有
-$A\cap B\in\mathcal{E}$，那么我们说 $\mathcal{E}$ \emph{对交封闭}。如果 $\mathcal{E}$
-中任意可数个集合的交还在 $\mathcal{E}$ 中，那么我们说 $\mathcal{E}$ 对可数交封闭。
-类似地，我们可以定义对补封闭、对并封闭和对可数并封闭的概念。
-
-\subsubsection{$\sigma$-代数}
-
-如果 $E$ 的非空子集族 $\mathcal{E}$ 对补和有限并封闭，那么我们说 $\mathcal{E}$
-是 $E$ 上的\emph{代数}。如果其对补和可数并封闭，那么我们说 $\mathcal{E}$
-是 $E$ 上的\emph{$\sigma$-代数}，即：
-\begin{alphenum}
-  \item $A\in\mathcal{E}\Rightarrow E\smallsetminus A\in\mathcal{E}$，
-  \item $A_1,A_2,\dotsc\in \mathcal{E}\Rightarrow\bigcup_n A_n\in\mathcal{E}$。
-\end{alphenum}
-由于 $\left(\bigcup_n A_n\right)^c=\bigcap_n A_n^c\in\mathcal{E}$，所以对补和可数并封闭
-可以自然导出对可数交封闭，即 $\sigma$-代数对可数交也封闭。
-
-任取 $A\in \mathcal{E}$，那么 $E=A\cup(E \smallsetminus A)\in \mathcal{E}$，所以 $E$ 上
-任意 $\sigma$-代数都至少包含 $E$ 和 $\emptyset$。事实上，$\mathcal{E}=\{E,\emptyset\}$
-是 $E$ 上的最简单的 $\sigma$-代数，被称为\emph{平凡 $\sigma$-代数}。$E$ 上最大的
-$\sigma$-代数当然是 $\mathcal{E}=2^E$，即 $\mathcal{E}$ 就是 $E$ 的幂集，被
-称为\emph{离散 $\sigma$-代数}。
-
-不难看出，$E$ 上一族 $\sigma$-代数的任意交(不一定可数)还是 $E$ 上的 $\sigma$-代数。
-给定 $E$ 的一个子集族 $\mathcal{C}$，我们可以考虑所有包含 $\mathcal{C}$ 
-的 $\sigma$-代数(总是存在至少一个这样的 $\sigma$-代数，即 $2^E$)，将这些
-$\sigma$-代数取交集，我们便得到了包含 $\mathcal{C}$ 的最小的 $\sigma$-代数，
-被称为\emph{由 $\mathcal{C}$ 生成的} $\sigma$-代数，记为 $\sigma\mathcal{C}$。
-
-如果 $E$ 是拓扑空间，由 $E$ 的所有开集族生成的 $\sigma$-代数被称为 $E$ 上的
-\emph{Borel $\sigma$-代数}，记为 $\mathcal{B}(E)$ 或者 $\mathcal{B}_E$，
-其元素被称为\emph{Borel 集}。
-
-\subsubsection{p-系和 d-系}
-
-对于 $E$ 的子集族 $\mathcal{C}$，如果其对交封闭，那么我们说 $\mathcal{C}$
-是一个 p-系，这里 p 代表 product，是“交”的另一种说法。
-$E$ 的子集族 $\mathcal{D}$ 被称为 d-系，如果其满足：
-\begin{alphenum}
-  \item $E\in\mathcal{D}$，
-  \item $\text{$A,B\in \mathcal{D}$ and $A\supseteq B\Rightarrow A \smallsetminus B\in \mathcal{D}$}$，
-  \item $\text{$(A_n)\subseteq \mathcal{D}$ and $A_n\nearrow A\Rightarrow A\in \mathcal{D}$}$。
-\end{alphenum}
-其中 $(A_n)\subseteq D$ 表明 $(A_n)$ 是 $D$ 中的集合序列，$A_n\nearrow A$ 表明这个序列
-递增于极限 $A$：
-\[
-  A_1\subseteq A_2\subseteq\cdots,\quad \bigcup_{n=1}^\infty A_n=A.
-\]
-
-显然一个 $\sigma$-代数既是 p-系又是 d-系，其反面也是成立的。所以 p-系和 d-系是产生
-$\sigma$-代数的原始结构。
-
-\begin{proposition}\label{prop:equivalent condition of sigma algebra}
-  $E$ 的子集族是 $\sigma$-代数当且仅当其既是 p-系又是 d-系。
-\end{proposition}
-\begin{proof}
-  $(\Rightarrow)$ 若 $\mathcal{E}$ 是 $\sigma$-代数，其显然是 p-系并且满足 d-系的条件 (a) 和 (c)。
-  下面我们验证其满足 d-系的条件 (b)。任取 $A,B\in\mathcal{E}$ 且 $A\supseteq B$，
-  那么 $A \smallsetminus B=A\cap (E \smallsetminus B)\in \mathcal{E}$，
-  所以 $\mathcal{E}$ 是 d-系。
-
-  $(\Leftarrow)$ 若 $\mathcal{E}$ 既是 p-系又是 d-系。任取 $A\in \mathcal{E}$，
-  根据 d-系的 (a) 和 (b)，我们有 $E \smallsetminus A\in \mathcal{E}$。
-  所以 $\mathcal{E}$ 对补封闭。然后我们说明对并封闭。任取 $A,B\in \mathcal{E}$， 
-  由于
-  \[
-    A\cup B=E \smallsetminus (A\cup B)^c=E \smallsetminus (A^c\cap B^c),
-  \]
-  结合 p-系对交封闭，所以 $A\cup B\in \mathcal{E}$。最后我们说明对可数并封闭。
-  如果 $(A_n)\subseteq \mathcal{E}$，令 $B_n=A_1\cup\cdots\cup A_n$，
-  那么 $(B_n)\subseteq \mathcal{E}$ 且 $B_n\nearrow A$，根据 d-系的 (c)，所以
-  $A\in \mathcal{E}$，故 $\mathcal{E}$ 对可数并封闭。
-\end{proof}
-
-下面的引理为本节的主要定理做准备。
-
-\begin{lemma}\label{lemma:hat D}
-  令 $\mathcal{D}$ 是 $E$ 上的 d-系，固定 $D\in \mathcal{D}$，令
-  \[
-    \hat{\mathcal{D}}=\{A\in \mathcal{D}: A\cap D\in \mathcal{D}\},
-  \]
-  那么 $\hat{\mathcal{D}}$ 仍然是 d-系。
-\end{lemma}
-
-\subsubsection{单调类定理}
-
-这是一个非常有用的工具来证明某些集族是 $\sigma$-代数。
-
-\begin{theorem}\label{thm:monotone class theorem}
-  如果一个 d-系包含一个 p-系，那么其包含这个 p-系生成的 $\sigma$-代数。
-\end{theorem}
-\begin{proof}
-  设 $\mathcal{C}$ 是一个 p-系。令 $\mathcal{D}$ 是包含 $\mathcal{C}$
-  的最小的 d-系，即包含 $\mathcal{C}$ 的所有 d-系的交(不难看出 d-系的任意交是 d-系)。
-  我们证明 $\mathcal{D}$ 实际上是一个 $\sigma$-代数，这样包含 $\mathcal{C}$
-  的任意 d-系都包含 $\mathcal{D}$，而 $\mathcal{D}$ 作为包含 $\mathcal{C}$
-  的 $\sigma$-代数，其包含 $\sigma \mathcal{C}$。
-  根据 \autoref{prop:equivalent condition of sigma algebra}，只需要说明 
-  $\mathcal{D}$ 既是 p-系又是 d-系，而 $\mathcal{D}$ 已经是 d-系，所以只需要
-  说明 $\mathcal{D}$ 是 p-系。
-
-  我们首先说明对于任意的 $D\in \mathcal{D}$ 和 $C\in \mathcal{C}$，
-  有 $D\cap C\in \mathcal{D}$。令
-  \[
-    \mathcal{D}_1=\{A\in \mathcal{D}: A\cap C\in \mathcal{D}\},  
-  \]
-  根据 \autoref{lemma:hat D}，$\mathcal{D}_1$ 是 d-系。由于 $\mathcal{C}$
-  是 p-系，所以 $\mathcal{C}\subseteq \mathcal{D}_1$，即 $\mathcal{D}_1$
-  是包含 $\mathcal{C}$ 的 d-系，所以 $\mathcal{D}\subseteq \mathcal{D}_1$。
-  这就表明 $D\in \mathcal{D}_1$，即 $D\cap C\in \mathcal{D}$。
-
-  下面说明对于任意的 $D,B\in \mathcal{D}$，有 $D\cap B\in \mathcal{D}$。
-  令
-  \[
-    \mathcal{D}_2=\{A\in \mathcal{D}: A\cap D\in \mathcal{D}\} .
-  \]
-  同样根据 \autoref{lemma:hat D}，$\mathcal{D}_2$ 是 d-系。根据上面的叙述，
-  有 $\mathcal{C}\subseteq \mathcal{D}_2$，即 $\mathcal{D}_2$ 是包含 
-  $\mathcal{C}$ 的 d-系，所以 $\mathcal{D}\subseteq \mathcal{D}_2$，
-  这就表明 $B\in \mathcal{D}_2$，即 $D\cap B\in \mathcal{D}$。
-  这就证明了 $\mathcal{D}$ 是 p-系。
-\end{proof}
-
-\subsubsection{可测空间}
-
-一个\emph{可测空间}指的是二元组 $(E,\mathcal{E})$，其中 $E$ 是集合，
-$\mathcal{E}$ 是 $E$ 上的 $\sigma$-代数。此时，$\mathcal{E}$
-的元素被称为\emph{可测集}。当 $E$ 是拓扑空间，$\mathcal{E}=\mathcal{B}_E$
-的时候，可测集也被称为\emph{Borel 集}。
-
-\subsubsection{可测空间的积}
-
-令 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 是可测空间。
-如果 $A\in \mathcal{E}$ 和 $B\in \mathcal{F}$，那么 $A\times B$
-被称为\emph{可测矩形}。我们用 $\mathcal{E}\otimes \mathcal{F}$
-表示 $E\times F$ 上的由可测矩形集族生成的 $\sigma$-代数，
-被称为\emph{乘积 $\sigma$-代数}。可测空间 $(E\times F,\mathcal{E}\otimes \mathcal{F})$
-被称为 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 的积，我们通常使用
-$(E,\mathcal{E})\times (F,\mathcal{F})$ 来表示。
-
-\subsubsection{Exercises}
-
-\begin{exercise}{划分生成 $\sigma$-代数}{}
-  \begin{alphenum}[nosep]
-    \item 令 $\mathcal{C}=\{A,B,C\}$ 是 $E$ 的一个划分，列出
-    $\sigma \mathcal{C}$ 的元素。
-    \item 令 $\mathcal{C}$ 是 $E$ 的(可数)划分。证明 $\sigma \mathcal{C}$
-    的每个元素都是 $\mathcal{C}$ 中元素的可数并。
-    \item 令 $E=\mathbb{R}$，$\mathcal{C}$ 是 $\mathbb{R}$ 的所有单点子集
-    构成的子集族。证明 $\sigma \mathcal{C}$ 的元素要么是可数集要么
-    是可数集的补集。这表明从直观上来看，$\sigma \mathcal{C}$ 要比 $\mathcal{B}(\mathbb{R})$
-    小得多，例如开区间 $(0,1)$ 属于后者但是不属于前者。
-  \end{alphenum}
-\end{exercise}
-\begin{solution}
-  (a) 令
-  \[
-    \mathcal{E}=\{A,B,C,A\cup B,A\cup C,B\cup C,E\},
-  \]
-  显然 $\mathcal{E}$ 是一个 $\sigma$-代数。对于任意包含 $\mathcal{C}$
-  的 $\sigma$-代数，由于其对并封闭，所以其必须包含 $\mathcal{E}$，
-  所以 $\mathcal{E}=\sigma \mathcal{C}$。
-
-  (b) 令 $\mathcal{E}$ 为 $\mathcal{C}$ 中元素的所有可数并构成的
-  集族。根据 $\sigma$-代数对可数并的封闭性，所以 $\sigma \mathcal{C}\supseteq \mathcal{E}$。
-  设 $(A_n)$ 构成 $E$ 的可数划分，即 $(A_n)$ 两两不相交且 $E=\bigcup_n A_n$。
-  任取 $\bigcup_k A_{n_k}\in \mathcal{E}$，那么
-  $E \smallsetminus \left(\bigcup_k A_{n_k}\right)$ 依然是某些 $(A_n)$
-  的可数并，所以 $E \smallsetminus \left(\bigcup_k A_{n_k}\right)\in \mathcal{E}$，
-  即 $\mathcal{E}$ 对补封闭，所以 $\mathcal{E}$ 是 $\sigma$-代数，
-  所以 $\mathcal{E}=\sigma \mathcal{C}$。
-
-  (c) 令 $\mathcal{E}$ 为 $\mathbb{R}$ 的可数子集和补集可数的子集构成的子集族。
-  显然 $\mathcal{E}\subseteq \sigma \mathcal{C}$ 且不难验证 $\mathcal{E}$
-  是一个 $\sigma$-代数(可数个可数集的并是可数集)，所以 $\mathcal{E}=\sigma \mathcal{C}$。
-\end{solution}
-
-\begin{exercise}{$\mathbb{R}$ 上的 Borel $\sigma$-代数}{}
-  $\mathbb{R}=(-\infty,+\infty)$ 的任意开子集都是开区间的可数并。使用这一事实证明
-  $\mathcal{B}(\mathbb{R})$ 由所有开区间构成的子集族生成。
-\end{exercise}
-\begin{proof}
-  设 $\mathcal{C}$ 为所有开区间构成的子集族，$\mathcal{T}$ 为所有开集构成的子集族(即 $\mathbb{R}$ 上的拓扑)。
-  显然 $\mathcal{C}\subseteq \mathcal{T}$，
-  所以 $\sigma \mathcal{C}\subseteq \sigma \mathcal{T}=\mathcal{B}(\mathbb{R})$。由于
-  $\mathcal{T}$ 中集合都是 $\mathcal{C}$ 中集合的可数并，所以 $\mathcal{T}\subseteq \sigma \mathcal{C}$，
-  这表明 $\mathcal{B}(\mathbb{R})=\sigma \mathcal{T}\subseteq \sigma \mathcal{C}$。
-  所以 $\mathcal{B}(\mathbb{R})=\sigma \mathcal{C}$ 由所有开区间构成的子集族生成。
-\end{proof}
-
-\begin{exercise}{$\mathbb{R}$ 上的 Borel $\sigma$-代数}{}
-  证明：$\mathbb{R}$ 中的任意区间都是 Borel 集。特别的，$(-\infty,x),(-\infty,x],(x,y],[x,y]$ 都是 Borel 集。
-  对于每个 $x$，单点集 $\{x\}$ 也是 Borel 集。 
-\end{exercise}
-\begin{proof}
-  只需注意到
-  \begin{gather*}
-    (-\infty,x)=\bigcup_{n=1}^\infty \left(-n+x,x\right), 
-    (-\infty, x]=\bigcap_{n=1}^\infty \left(-\infty,x+\frac{1}{n}\right),\\
-    (x,y]=\bigcap_{n=1}^\infty \left(x,y+\frac{1}{n}\right),
-    [x,y]=\bigcap_{n=1}^\infty\left(x-\frac{1}{n},y\right],
-    \{x\}=\bigcap_{n=1}^\infty\left(x-\frac{1}{n},x\right].
-  \end{gather*}
-  所以上述集合都是 Borel 集，对于其他的区间同理。
-\end{proof}
-
-\begin{exercise}{$\mathbb{R}$ 上的 Borel $\sigma$-代数}{}
-  证明 $\mathcal{B}(\mathbb{R})$ 可以由以下任意一种集族生成(实际上还有很多可能)：
-  \begin{alphenum}[nosep]
-    \item 所有形如 $(-\infty, x]$ 的区间构成的子集族。
-    \item 所有形如 $(x,y]$ 的区间构成的子集族。
-    \item 所有形如 $[x,y]$ 的区间构成的子集族。
-    \item 所有形如 $(x,+\infty)$ 的区间构成的子集族。
-  \end{alphenum}
-  此外，在每种情况中 $x,y$ 可以被限制为有理数。
-\end{exercise}
-\begin{proof}
-  (a) 记该集族为 $\mathcal{C}$，由上题，这样的区间已经是 Borel 集，
-  所以 $\sigma\mathcal{C}\subseteq \mathcal{B}(\mathbb{R})$。任取 $\mathbb{R}$
-  的开区间 $(x,y)$，有
-  \[
-    (x,y)=(-\infty,x]^c\cap (-\infty, y)=
-    (-\infty,x]^c\cap\bigcup_{n=1}^\infty \left(-\infty,y-\frac{1}{n}\right]\in\sigma \mathcal{C},
-  \]
-  而 $\mathcal{B}(\mathbb{R})$ 由所有开区间生成，所以 $\mathcal{B}(\mathbb{R})\subseteq \sigma \mathcal{C}$。
-  所以 $\mathcal{B}(\mathbb{R})=\sigma \mathcal{C}$。
-
-  (b) (c) (d) 完全同理。
-\end{proof}
-
-\begin{exercise}{迹空间}{}
-  令 $(E,\mathcal{E})$ 是可测空间，固定 $D\subseteq E$，令
-  \[
-    \mathcal{D}=\mathcal{E}\cap D=\{A\cap D:A\in \mathcal{E}\}.  
-  \]
-  证明 $\mathcal{D}$ 是 $D$ 上的 $\sigma$-代数，被称为 $\mathcal{E}$
-  在 $D$ 上的\emph{迹}。$(D,\mathcal{D})$ 也被称为 $(E,\mathcal{E})$
-  在 $D$ 上的迹。
-\end{exercise}
-\begin{proof}
-  任取 $A\cap D\in \mathcal{D}$，其中 $A\in \mathcal{E}$，那么
-  \[
-    D \smallsetminus (A\cap D)= (E \smallsetminus A)\cap D\in \mathcal{D},
-  \]
-  所以 $\mathcal{D}$ 对补封闭。任取 $(A_n\cap D)\subseteq \mathcal{D}$，那么
-  \[
-    \bigcup_{n=1}^\infty  (A_n\cap D)=\left(\bigcup_{n=1}^\infty A_n\right)\cap D\in \mathcal{D},
-  \]
-  所以 $\mathcal{D}$ 对可数并封闭。
-\end{proof}
-
-\begin{exercise}{子集的 Borel $\sigma$-代数是迹}{}
-  设 $(E,\mathcal{T})$ 是拓扑空间，$(D,\mathcal{T}_D)$ 是
-  子空间。证明 $D$ 上的 Borel $\sigma$-代数 $\mathcal{B}_D$
-  与 $D$ 在 $E$ 上的迹 $\mathcal{B}_E\cap D$ 相同。
-\end{exercise}
-\begin{proof}
-  由于 $\mathcal{T}_D=\mathcal{T}\cap D\subseteq \mathcal{B}_E\cap D$，
-  由上题 $\mathcal{B}_E\cap D$ 是 $\sigma$-代数，所以 $\mathcal{B}_D\subseteq\mathcal{B}_E\cap D$。
-  记
-  \[
-    \mathcal{C}=\{A\subseteq E: A\cap D\in \mathcal{B}_D\},  
-  \]
-  那么 $\mathcal{T}\subseteq \mathcal{C}$。我们只需要证明 $\mathcal{C}$
-  是 $E$ 上的 $\sigma$-代数，那么就有 $\mathcal{C}\supseteq \sigma \mathcal{T}=\mathcal{B}_E$，即
-  $\mathcal{B}_D\supseteq \mathcal{C}\cap D\supseteq \mathcal{B}_E\cap D$。
-  任取 $A\in \mathcal{C}$，那么 $(E \smallsetminus A)\cap D=D \smallsetminus (A\cap D)\in \mathcal{B}_D$，
-  所以 $E \smallsetminus A\in \mathcal{C}$。任取 $(A_n)\subseteq \mathcal{C}$，那么
-  \[
-    \left(\bigcup_{n=1}^\infty A_n\right)\cap D=\bigcup_{n=1}^\infty (A_n\cap D)
-    \in \mathcal{B}_D,  
-  \]
-  所以 $\bigcup_n A_n\in \mathcal{C}$。这就表明 $\mathcal{C}$
-  是 $E$ 上的 $\sigma$-代数。
-\end{proof}
-
-
-\section{可测函数}
-
-\subsubsection{可测函数}
-
-令 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 是可测空间，映射 $f:E\to F$ 如果使得任取 $B\in \mathcal{F}$，有
-$f^{-1}B\in \mathcal{E}$，那么我们说 $f$ 相对于 $\mathcal{E}$ 和 $\mathcal{F}$ \emph{可测}。
-
-\begin{proposition}\label{prop:equivalent condition of measurable}
-  映射 $f:E\to F$ 相对于 $\mathcal{E}$ 和 $\mathcal{F}$ 可测当且仅当对于任意生成 $\mathcal{F}$ 的子集族
-  $\mathcal{F}_0$，任取 $B\in \mathcal{F}_0$，有 $f^{-1}B\in \mathcal{E}$。
-\end{proposition}
-\begin{proof}
-  必要性显然。下证充分性。设 $\mathcal{F}_0$ 使得 $\mathcal{F}=\sigma \mathcal{F}_0$，且
-  对于任意的 $B\in \mathcal{F}_0$ 有 $f^{-1}B\in \mathcal{E}$。记
-  \[
-    \mathcal{F}_1=\{A\in \mathcal{F}: f^{-1}A\in \mathcal{E}\},
-  \]
-  显然 $\mathcal{F}_0\subseteq \mathcal{F}_1\subseteq \mathcal{F}$。由于
-  \[
-    f^{-1}\left(F \smallsetminus A\right)=E \smallsetminus(f^{-1}A),\quad
-    f^{-1}\left(\bigcup_{i\in I}A_i\right)=\bigcup_{i\in I} f^{-1}A_i,
-  \]
-  所以 $\mathcal{F}_1$ 是 $\sigma$-代数，所以 $\mathcal{F}=\mathcal{F}_1$，即 $f$ 
-  相对于 $\mathcal{E}$ 和 $\mathcal{F}$ 可测。
-\end{proof}
-
-\begin{proposition}
-  给定可测空间 $(E,\mathcal{E}),(F,\mathcal{F}),(G,\mathcal{G})$，如果 $f$ 相对于 $\mathcal{E}$ 和 
-  $\mathcal{F}$ 可测，$g$ 相对于 $\mathcal{F}$ 和 $\mathcal{G}$ 可测，那么复合
-  $g\circ f$ 相对于 $\mathcal{E}$ 和 $\mathcal{G}$ 可测。
-\end{proposition}
-\begin{proof}
-  任取 $C\in \mathcal{G}$，有
-  \[
-    (g\circ f)^{-1}(C)=f^{-1}\left(g^{-1}(C)\right),  
-  \]
-  $g$ 可测表明 $g^{-1}(C)\in \mathcal{F}$，$f$ 可测表明 $f^{-1}\left(g^{-1}(C)\right)\in \mathcal{E}$，
-  所以 $g\circ f$ 相对于 $\mathcal{E}$ 和 $\mathcal{G}$ 可测。
-\end{proof}
-
-\subsubsection{数值函数}
-
-令 $(E,\mathcal{E})$ 是可测空间。回顾实数及扩充实数 $\mathbb{R}=(-\infty,+\infty)$，
-$\bar{\mathbb{R}}=[-\infty,+\infty]$，$\mathbb{R}_+=[0,+\infty)$，
-$\bar{\mathbb{R}}_+=[0,+\infty]$。$E$ 上的\emph{数值函数}指的是
-从 $E$ 到 $\bar{\mathbb{R}}$ 或者 $\bar{\mathbb{R}}$ 的子集的映射。
-如果这个映射的值在 $\mathbb{R}$ 中，那么我们一般称其为\emph{实值函数}。
-
-$E$ 上的数值函数如果相对于 $\mathcal{E}$ 和 $\mathcal{B}(\bar{\mathbb{R}})$
-可测，那么我们说其是 $\mathcal{E}$-可测的。如果 $E$
-是拓扑空间且 $\mathcal{E}=\mathcal{B}(E)$，那么 $\mathcal{E}$-可测函数
-被称为\emph{Borel 函数}。
-下面的命题是 \autoref{prop:equivalent condition of measurable} 的直接结果。
-
-\begin{proposition}
-  映射 $f:E\to\bar{\mathbb{R}}$ 是 $\mathcal{E}$-可测的当且仅当
-  对于每个 $r\in \mathbb{R}$，$f^{-1}[-\infty,r]\in \mathcal{E}$。
-\end{proposition}
-
-上述命题中的 $[-\infty,r]$ 可以改为 $[-\infty,r)$，$[r,\infty]$，
-$(r,\infty]$ 中的任意一种。
-
-\subsubsection{函数的正部分和负部分}
-
-对于 $a,b\in\bar{\mathbb{R}}$，我们记 $a\vee b$ 为 $a$ 和 $b$
-中的最大者，$a\wedge b$ 为 $a$ 和 $b$ 中的最小者。
-对于函数 $f,g$，用 $f\vee g$ 表示函数 $x\mapsto f(x)\vee g(x)$。
-令 $(E,\mathcal{E})$ 是可测空间，$f$ 是 $E$ 上的数值函数。
-那么
-\[
-  f^+=f\vee 0,\quad f^-=-(f\wedge 0)  
-\]
-都是非负函数并且 $f=f^+-f^-$。函数 $f^+$ 被称为 $f$ 的\emph{正部分}，
-$f^-$ 被称为 $f$ 的\emph{负部分}。
-
-\begin{proposition}
-  函数 $f$ 是 $\mathcal{E}$-可测的当且仅当 $f^+$ 和 $f^-$
-  都是 $\mathcal{E}$-可测的。
-\end{proposition}
-\begin{proof}
-  若 $f$ 是 $\mathcal{E}$-可测的。任取 $r\in \mathbb{R}$，
-若 $r< 0$，则 $\left(f^+\right)^{-1}[-\infty,r]=\emptyset\in \mathcal{E}$。
-  若 $r\geq 0$，则
-  \[
-    \left(f^+\right)^{-1}[-\infty,r]=E \smallsetminus \left(f^+\right)^{-1}(r,\infty]
-    =E \smallsetminus f^{-1}(r,\infty],
-  \]
-  由于 $(r,\infty]$ 是 Borel 集，所以 $\left(f^+\right)^{-1}[-\infty,r]\in \mathcal{E}$。
-  综合起来，$f^+$ 是 $\mathcal{E}$-可测的。同理可证 $f^-$ 是 $\mathcal{E}$-可测的。
-
-  若 $f^+$ 和 $f^-$ 都是 $\mathcal{E}$-可测的。任取 $r\in \mathbb{R}$，若 $r<0$，那么
-  \[
-    f^{-1}[-\infty,r]=  \left(f^-\right)^{-1}[-r,\infty]\in \mathcal{E}.
-  \]
-  若 $r\geq 0$，那么
-  \[
-    f^{-1}[-\infty,r]= E \smallsetminus f^{-1}(r,\infty]
-    =E \smallsetminus \left(f^+\right)^{-1}(r,\infty]\in \mathcal{E}.
-  \]
-  所以 $f$ 是 $\mathcal{E}$-可测的。
-\end{proof}
-
-\subsubsection{指示函数和简单函数}
-
-令 $A\subseteq E$，定义 $A$ 的指示函数为 $1_A$：
-\[
-  1_A(x)=\begin{cases}
-    1 & x\in A,\\
-    0 & x\notin A.
-  \end{cases}  
-\]
-对于 $1_E$，我们简记为 $1$。显然，$1_A$ 是 $\mathcal{E}$-可测的当且仅当
-$A\in \mathcal{E}$。
-
-$E$ 上的函数 $f$ 如果形如
-\[
-  f=\sum_{i=1}^n a_i 1_{A_i},  
-\]
-其中 $n\geq 1$，$a_1,\dots,a_n\in \mathbb{R}$，$A_1,\dots,A_n$ 是可测集，
-那么我们说 $f$ 是\emph{简单函数}。
-在这个定义中，若 $A_i\cap A_j\ne\emptyset$，那么我们可以将
-$a_i1_{A_i}+a_j1_{A_j}$ 拆为
-\[ 
-  a_i1_{A_i \smallsetminus (A_i\cap A_j)}+(a_i+a_j)1_{A_i\cap A_j}+a_j 1_{A_j \smallsetminus (A_i\cap A_j)},
-\]
-所以我们可以假设 $A_i$ 两两不相交。此外，如果 $\bigcup_i A_i\neq E$，记
-$B=E \smallsetminus\bigcup_i A_i\in \mathcal{E}$，那么
-\[
-  f=  \sum_{i=1}^n a_i 1_{A_i}+0\cdot 1_{B},
-\]
-所以我们还可以假设 $\bigcup_i A_i=E$。这意味着对于一个简单函数 $f$，
-总存在整数 $m$，不同的实数 $b_1,\dots,b_m$ 和 $E$ 的可测划分
-$\{B_1,\dots,B_m\}$ 使得 $f=\sum_{i=1}^m b_i 1_{B_i}$，
-这种表示被称为简单函数 $f$ 的\emph{标准型}。
-
-利用简单函数的标准型，很容易验证简单函数都是 $\mathcal{E}$-可测的。
-反之，若 $f$ 是 $\mathcal{E}$-可测的，只有有限个取值且值为实数，那么
-$f$ 为简单函数。特别地，任意常值函数是简单函数。最后，如果 $f,g$
-是简单函数，那么
-\[
-  f+g,\quad f-g,\quad fg,\quad f/g,\quad f\vee g,\quad f\wedge g  
-\]
-都是简单函数，其中 $f/g$ 要求 $g$ 的值始终非零。
-
-\subsubsection{函数列的极限}
-
-令 $(f_n)$ 是 $E$ 上的一列数值函数，我们可以逐点定义
-\begin{equation}\label{eq:inf and sup}
-  \inf f_n,\quad \sup f_n,\quad \liminf f_n,\quad \limsup f_n,
-\end{equation}
-例如，$\inf f_n$ 将 $x\in E$ 送到实数列 $(f_n(x))$ 的下确界。
-如果
-\[
-  \liminf f_n=\limsup f_n=f,
-\]
-那么我们说 $(f_n)$ 有逐点极限 $f$，记为 $f=\lim f_n$ 或者 $f_n\to f$。
-
-如果 $(f_n)$ 单调递增，即 $f_1\leq f_2\leq \cdots$，那么根据单调有界定理，$\lim f_n$
-存在且等于 $\sup f_n$。此时我们用 $f_n\nearrow f$ 来表示 $(f_n)$ 单调递增且有极限 $f$。
-类似地，用 $f_n\searrow f$ 来表示 $(f_n)$ 单调递减且有极限 $f$。
-
-下面的定理表明可测函数类对极限操作是封闭的。
-\begin{theorem}\label{thm:lim of measurable function is measurable}
-  令 $(f_n)$ 是一列 $\mathcal{E}$-可测函数，那么 \eqref{eq:inf and sup} 中的四个函数都是
-  $\mathcal{E}$-可测的。此外，如果 $\lim f_n$ 存在，那么 $\lim f_n$ 也是 $\mathcal{E}$-可测的。
-\end{theorem}
-\begin{proof}
-  记 $g=\sup f_n$。任取 $r\in \mathbb{R}$，注意到 $g(x)\leq r$ 当且仅当对于所有 $n$ 有 $f_n(x)\leq r$。
-  所以
-  \[
-    g^{-1}[-\infty,r]=\bigcap_{n=1}^\infty f_n^{-1}[-\infty,r],
-  \]
-  $f_n$ 可测表明 $f_n^{-1}[-\infty,r]\in \mathcal{E}$，所以 $g^{-1}[-\infty,r]\in \mathcal{E}$，即
-  $g$ 可测。
-
-  对于 $\inf f_n$，我们有 $\inf f_n=-\sup (-f_n)$，所以 $\inf f_n$ 也可测。
-  最后，注意到
-  \[
-    \liminf f_n=\sup\limits_m \mathop{\vphantom{\sup}\inf}_{n\geq m} f_n,\quad
-    \limsup f_n=\mathop{\vphantom{\sup}\inf}_{m}\sup_{n\geq m} f_n,
-  \] 
-  所以 $\liminf f_n$ 和 $\limsup f_n$ 可测。若二者相等，那么 $\lim f_n$ 也可测。
-\end{proof}
-
-\subsubsection{可测函数的逼近}
-
-\begin{lemma}\label{lemma:dn}
-  对于 $n\in \mathbb{N}^*$，令
-  \[
-    d_n(r)=\sum_{k=1}^{n2^n}\frac{k-1}{2^n}1_{\left[\frac{k-1}{2^n},\frac{k}{2^n}\right)}(r)
-    +n1_{[n,\infty]}(r),\quad r\in \bar{\mathbb{R}}_+.
-  \]
-  那么，$d_n(r)$ 是 $\bar{\mathbb{R}}_+$ 上单调递增的简单函数，并且对于每个 $r\in\bar{\mathbb{R}}_+$，
-  $d_n(r)$ 随着 $n$ 的增大是的单调递增的。
-\end{lemma}
-\begin{proof}
-  显然 $d_n(r)$ 是单调递增的简单函数，我们证明任取 $r\in \bar{\mathbb{R}}_+$，$d_n(r)$
-  是单调递增的。若 $r=\infty$，那么 $d_n(r)=n$ 是单调递增的。现在假设 $r\in \mathbb{R}_+$，
-  那么存在正整数 $m$ 使得 $m\leq r<m+1$，所以当 $n\leq m$ 的时候，$d_n(r)=n$ 单调递增。
-  当 $n>m$ 的时候，直观来看，$d_n$ 将区间 $[0,n]$ 等分为 $n2^{n}$ 份，$r\in [0,n]$
-  表明一定存在唯一的 $k_n$ 使得 $(k_n-1)/2^n\leq r <k_n/2^n$，可以发现 $k_{n}$ 满足 
-  递推关系 $k_{n+1}=2k_n-1$ 或者 $k_{n+1}=2k_n$，这表明
-  \[
-    d_{n+1}(r)= \frac{k_{n+1}-1}{2^{n+1}}\geq\frac{2k_n-2}{2^{n+1}}=\frac{k_n-1}{2^n}=d_n(r).
-  \]
-  综上，$d_n(r)$ 随着 $n$ 的增大是的单调递增的。
-\end{proof}
-
-\begin{theorem}\label{thm:approximation of measurable function}
-  $E$ 上的非负函数是 $\mathcal{E}$-可测的当且仅当其是一列单调递增的非负简单函数序列
-  的极限。
-\end{theorem}
-\begin{proof}
-  充分性来源于 \autoref{thm:lim of measurable function is measurable}。
-  对于必要性，设 $f:E\to\bar{\mathbb{R}}_+$ 是 $\mathcal{E}$-可测的非负函数。
-  记 $d_n$ 为上述引理中的函数，令 $f_n=d_n\circ f$。那么 $f_n$ 是非负的 $\mathcal{E}$-可测函数，
-  并且其取值只有有限个，所以是简单函数。由于 $(d_n)$ 单调递增，所以 $(f_n)$ 单调递增。
-  对于任意 $x\in E$，由于 $f_n(x)=d_n(f(x))$，所以 $n\to\infty$ 的时候
-  $f_n(x)\to f(x)$，故 $f=\lim f_n$。
-\end{proof}
-
-\subsubsection{函数的单调类}
-
-令 $\mathcal{M}$ 为 $E$ 上数值函数的一个集合，记 $\mathcal{M}_+$ 为 $\mathcal{M}$
-中非负函数组成的子集，$\mathcal{M}_b$ 为 $\mathcal{M}$ 中有界函数组成的子集。
-
-如果 $\mathcal{M}$ 包含常值函数 $1$，$\mathcal{M}_b$ 构成 $\mathbb{R}$ 上的向量空间
-以及 $\mathcal{M}_+$ 在递增极限下封闭，那么我们说 $\mathcal{M}$ 是一个\emph{单调类}。
-更准确地说，$\mathcal{M}$ 是单调类当且仅当：
-\begin{alphenum}
-  \item $1\in \mathcal{M}$，
-  \item 若 $f,g\in \mathcal{M}_b$ 且 $a,b\in \mathbb{R}$，则 $af+bg\in \mathcal{M}$，
-  \item 若 $(f_n)\subseteq \mathcal{M}_+$ 且 $f_n\nearrow f$，那么
-  $f\in \mathcal{M}$。
-\end{alphenum}
-
-下面的定理通常被用于证明所有 $\mathcal{E}$-可测函数拥有的某一性质。
-
-\begin{theorem}
-  令 $\mathcal{M}$ 是 $E$ 上函数的单调类。假设对于某个生成 $\mathcal{E}$
-  的 p-系 $\mathcal{C}$，任取 $A\in \mathcal{C}$，有 $1_A\in \mathcal{M}$。那么，
-  $\mathcal{M}$ 包含所有的非负 $\mathcal{E}$-可测函数以及所有的有界 $\mathcal{E}$-可测函数。
-\end{theorem} 
-\begin{proof}
-  首先证明对于任意的 $A\in \mathcal{E}$ 有 $1_A\in \mathcal{M}$。记
-  \[
-    \mathcal{D}=\{A\in \mathcal{E}:1_A\in \mathcal{M}\}.
-  \]
-  由于 $1=1_E\in \mathcal{M}$，所以 $E\in \mathcal{D}$。任取 $A,B\in \mathcal{D}$ 且 $A\supseteq B$，
-  那么 $1_{A \smallsetminus B}=1_A-1_B\in \mathcal{M}$，这表明 $A \smallsetminus B\in \mathcal{D}$。
-  设 $(A_n)\subseteq \mathcal{D}$ 且 $A_n\nearrow A$，那么 $(1_{A_n})\subseteq \mathcal{M}_+$
-  且 $1_{A_n}\nearrow 1_A$，所以 $1_A\in \mathcal{M}$，这表明 $A\in \mathcal{D}$。
-  这表明 $\mathcal{D}$ 是 d-系。由于 $\mathcal{C}$ 是 p-系且 $\mathcal{C}\subseteq \mathcal{D}$，
-  根据单调类定理 \ref{thm:monotone class theorem}，$\mathcal{D}$ 包含 $\sigma \mathcal{C}=\mathcal{E}$，
-  所以对于任意的 $A\in \mathcal{E}$ 有 $A\in \mathcal{D}$，即 $1_A\in \mathcal{M}$。
-
-  再根据单调类的定义 (b)，$\mathcal{M}$ 包含所有的简单函数。
-
-  令 $f$ 是非负 $\mathcal{E}$-可测函数，根据 \autoref{thm:approximation of measurable function}，
-  $f$ 是函数序列 $(f_n)$ 的极限，其中 $f_n$ 是递增的非负简单函数，即 $(f_n)\subseteq \mathcal{M}_+$。
-  根据单调类的定义 (c)，有 $f\in \mathcal{M}$。
-
-  令 $g$ 是有界 $\mathcal{E}$-可测函数，那么 $g^+$ 和 $g^-$ 都是非负 $\mathcal{E}$-可测函数，所以
-  $g^+,g^-\in \mathcal{M}$。显然 $g^+,g^-$ 也都是有界的，根据单调类的定义 (b)，所以
-  $g=g^+-g^-\in \mathcal{M}$。
-\end{proof}
-
-\subsubsection{标准可测空间}
-
-令 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 是可测空间。如果 $f:E\to F$ 是双射的
-相对于 $\mathcal{E}$ 和 $\mathcal{F}$ 的可测函数，并且其逆映射 $f^{-1}:F\to E$
-是相对于 $\mathcal{F}$ 和 $\mathcal{E}$ 的可测函数，那么我们说 $f$ 是\emph{同构}。
-
-如果可测空间 $(E,\mathcal{E})$ 同构于 $(F,\mathcal{B}_F)$，其中 $F$ 是 $\mathbb{R}$
-的某个 Borel 子集，那么我们说 $(E,\mathcal{E})$ 是\emph{标准可测空间}。
-标准可测空间有非常多。如果 $E$ 是完备度量空间，那么 $(E,\mathcal{B}_E)$
-是标准可测空间。如果 $E$ 是波兰空间，即可分的可完备度量化的拓扑空间，那么
-$(E,\mathcal{B}_E)$ 是标准可测空间。如果 $E$ 是可分的 Banach 空间，
-那么 $(E,\mathcal{B}_E)$ 是标准可测空间。
-
-显然，$[0,1]$ 和它的 Borel $\sigma$-代数构成标准可测空间。
-$\{1,2,\dots,n\}$ 和它的离散 $\sigma$-代数构成标准可测空间。
-$\mathbb{N}=\{0,1,2,\dots\}$ 和它的离散 $\sigma$-代数构成标准可测空间。
-一个深刻的结果是，任意标准可测空间都同构于上述三者之一。
-
-
-\section{测度}
-
-令 $(E,\mathcal{E})$ 是可测空间，$(E,\mathcal{E})$ 上的\emph{测度}
-指的是一个映射 $\mu:\mathcal{E}\to\bar{\mathbb{R}}_+$，其满足：
-\begin{alphenum}
-  \item $\mu(\emptyset)=0$，
-  \item 对于不相交的子集列 $(A_n)\subseteq \mathcal{E}$，有 
-  $\mu(\bigcup_n A_n)=\sum_n \mu(A_n)$。
-\end{alphenum}
-条件 (b) 被称为\emph{可列可加性}。需要注意 $\mu(A)$ 总是为正数且可以
-为 $+\infty$。数 $\mu(A)$ 被称为 $A$ 的\emph{测度}，也简记为 $\mu A$。
-
-一个\emph{测度空间}指的是三元组 $(E,\mathcal{E},\mu)$，其中 $(E,\mathcal{E})$
-是可测空间，$\mu$ 是 $(E,\mathcal{E})$ 上的测度。
-
-\subsubsection{例子}
-
-\begin{example}[Dirac 测度]
-  令 $(E,\mathcal{E})$ 是可测空间，固定 $x\in E$。对于每个 $A\in \mathcal{E}$，
-  令
-  \[
-    \delta_x(A)=\begin{cases}
-      1 & x\in A,\\
-      0 & x\notin A.
-    \end{cases}  
-  \]
-  那么 $\delta_x$ 是 $(E,\mathcal{E})$ 上的测度，被称为\emph{Dirac 测度}。
-  直观来看，其基于一个集合 $A$ 是否含有特定元素 $x$ 来给出这个集合的“大小”。
-\end{example}
-
-\begin{example}[计数测度]
-  令 $(E,\mathcal{E})$ 是可测空间，固定 $D\subseteq E$。对于每个
-  $A\in \mathcal{E}$，令 $\nu(A)$ 是 $A\cap D$ 中点的个数，
-  此时 $\nu$ 是 $(E,\mathcal{E})$ 上的测度，被称为\emph{计数测度}。
-  通常，集合 $D$ 被选取为可数集，在这种情况下
-  \[
-    \nu(A)=\sum_{x\in D}\delta_x(A),\quad A\in \mathcal{E}.  
-  \]
-\end{example}
-
-\begin{example}[离散测度]
-  令 $(E,\mathcal{E})$ 是可测空间，固定可数子集 $D\subseteq E$。
-  对于每个 $x\in D$，分配一个正数 $m(x)$。定义
-  \[
-    \mu(A)=\sum_{x\in D} m(x)\delta_x(A),\quad A\in \mathcal{E}.  
-  \]
-  那么 $\mu$ 是 $(E,\mathcal{E})$ 上的测度，被称为\emph{离散测度}。
-  我们可能会把 $m(x)$ 理解为点 $x$ 的质量，那么 $\mu(A)$ 就是集合 $A$
-  的质量。特别地，如果 $(E,\mathcal{E})$ 是离散可测空间，那么
-  每个测度 $\mu$ 都有这种形式。
-\end{example}
-
-\begin{example}[Lebesgue 测度]
-  $(\mathbb{R},\mathcal{B}_{\mathbb{R}})$ 上的测度 $\mu$ 如果对于每个
-  区间 $A$ 都满足 $\mu(A)$ 为 $A$ 的长度，那么我们说 $\mu$ 是\emph{Lebesgue 测度}。
-  类似地，$\mathbb{R}^2$ 上的 Lebesgue 测度是“面积”测度，
-  $\mathbb{R}^3$ 上的 Lebesgue 测度是“体积”测度等等。
-  我们将它们记作 $\Leb$。
-\end{example}
-
-\subsubsection{测度的性质}
-
-\begin{proposition}
-  令 $\mu$ 是可测空间 $(E,\mathcal{E})$ 上的测度，那么对于任意
-  可测集 $A,B$ 和 $A_1,A_2,\dots$，有：
-  \begin{description}[nosep,font=\sffamily\mdseries,itemindent=0pt]
-    \item[有限可加性] $A\cap B=\emptyset\Rightarrow \mu(A\cup B)=\mu(A)+\mu(B)$。
-    \item[单调性] $A\subseteq B\Rightarrow \mu(A)\leq \mu(B)$。
-    \item[连续性] $A_n\nearrow A\Rightarrow \mu(A_n)\nearrow \mu(A)$。
-    \item[Boole 不等式]  $\mu(\bigcup_n A_n)\leq \sum_n \mu(A_n)$。  
-  \end{description}
-\end{proposition}
-\begin{proof}
-  有限可加性是可列可加性的特殊情况，取 $A_1=A,A_2=B,A_3=A_4=\cdots=\emptyset$
-  即可。若 $A\subseteq B$，由于 $\mathcal{E}$ 是 d-系，所以 $B \smallsetminus A\in \mathcal{E}$，
-  所以
-  \[
-    \mu(B)=\mu(A\cup(B \smallsetminus A))= \mu(A)+\mu(B \smallsetminus A)
-    \geq \mu(A).
-  \]
-  若 $A_n\nearrow A$，令 $B_1=A_1$，$B_n=A_{n}\smallsetminus A_{n-1}$，那么
-  $B_n$ 互不相交且 $\bigcup_{k=1}^n B_k=A_n$，所以
-  \[
-    \lim \mu(A_n)=\lim\mu\left(\bigcup_{k=1}^n B_k\right)  
-    =\lim \sum_{k=1}^n \mu(B_k)=\sum_{k=1}^\infty \mu(B_k)
-    =\mu(A).
-  \]
-  对于 Boole 不等式，注意到
-  \[
-    \mu(A\cup B)=\mu(A\cup (B \smallsetminus A))=\mu(A)+\mu(B \smallsetminus A) 
-    \leq \mu(A)+\mu (B), 
-  \]
-  所以归纳可得
-  \[
-    \mu\left(\bigcup_{k=1}^n A_k\right)\leq \sum_{k=1}^n\mu(A_k),  
-  \]
-  令 $n\to\infty$，左边根据连续性即可得到 Boole 不等式。
-\end{proof}
-
-\subsubsection{有限测度}
-
-令 $\mu$ 是可测空间 $(E,\mathcal{E})$ 上的测度，如果 $\mu(E)<\infty$，
-那么 $\mu$ 被称为\emph{有限测度}，根据单调性，此时对于任意 $A\in \mathcal{E}$，
-都有 $\mu(A)<\infty$。如果 $\mu(E)=1$，那么 $\mu$ 被称为\emph{概率测度}。
-如果存在 $E$ 的可测划分 $(E_n)$ 使得 $\mu(E_n)<\infty$，那么
-$\mu$ 被称为\emph{$\sigma$-有限测度}。如果存在一列有限测度 $\mu_n$
-使得 $\mu=\sum_n \mu_n$，那么 $\mu$ 被称为\emph{$\Sigma$-有限测度}。
-有限测度都是 $\sigma$-有限的，$\sigma$-有限测度都是 $\Sigma$-有限的。
-
-\begin{proposition}
-  令 $(E,\mathcal{E})$ 是可测空间，$\mu,\nu$ 是两个有限测度且 $\mu(E)=\nu(E)$，如果
-  $\mu,\nu$ 在生成 $\mathcal{E}$ 的某个 p-系上取值相同，那么
-  $\mu=\nu$。
-\end{proposition}
-\begin{proof}
-  设 $\mathcal{C}$ 是 p-系且 $\mathcal{E}=\sigma \mathcal{C}$，
-  任取 $A\in \mathcal{C}$ 有 $\mu(A)=\nu(A)$。令
-  \[
-    \mathcal{D}=\{A\in \mathcal{E}:\mu(A)=\nu(A)\},  
-  \]
-  那么 $\mathcal{C}\subseteq \mathcal{D}$。如果我们证明 $\mathcal{D}$
-  是 d-系，那么根据单调类定理，就有 $\mathcal{E}=\sigma \mathcal{C}\subseteq \mathcal{D}$，
-  即任取 $A\in \mathcal{E}$ 有 $\mu(A)=\nu(A)$。下面我们证明 $\mathcal{D}$
-  是 d-系。由于 $\mu(E)=\nu(E)$，所以 $E\in \mathcal{D}$。
-  若 $A,B\in \mathcal{D}$ 且 $A\supseteq B$，那么
-  \[
-    \mu(B)+\mu(A \smallsetminus B)= \mu(A)=\nu(A)=\nu(B)+\mu(A \smallsetminus B),
-  \]
-  由于 $\mu(B)=\nu(B)$，所以 $\mu(A \smallsetminus B)=\nu (A \smallsetminus B)$，
-  即 $A \smallsetminus B\in \mathcal{D}$。
-  任取 $(A_n)\subseteq \mathcal{D}$ 且 $A_n\nearrow A$，根据连续性，所以
-  $\mu(A_n)\nearrow \mu(A)$ 以及 $\nu(A_n)\nearrow \nu(A)$，所以
-  \[
-    \mu(A)=\lim \mu(A_n)=\lim \nu(A_n)=\nu(A),  
-  \]
-  所以 $A\in \mathcal{D}$。这就证明了 $\mathcal{D}$ 是 d-系。
-\end{proof}
-
-\begin{corollary}
-  令 $\mu,\nu$ 是 $\left(\bar{\mathbb{R}},\mathcal{B}\left(\bar{\mathbb{R}}\right)\right)$
-  上的概率测度，那么 $\mu=\nu$ 当且仅当对于任意的 $r\in \mathbb{R}$ 有
-  $\mu[-\infty,r]=\nu[-\infty, r]$。
-\end{corollary}
-
-\subsubsection{原子，纯原子测度和非原子测度}
-
-令 $(E,\mathcal{E})$ 是可测空间，假设对于每个 $x\in E$，单点集 $\{x\}\in \mathcal{E}$，
-这一点对于所有的标准可测空间都是成立的。令 $\mu$ 是 $(E,\mathcal{E})$ 上的测度，
-如果点 $x$ 使得 $\mu\{x\}>0$，那么 $x$ 被称为 $\mu$ 的一个\emph{原子}。如果 $\mu$
-没有任何原子，那么 $\mu$ 被称为\emph{非原子测度}。如果 $\mu$ 的原子的集合 $D$
-是可数集并且 $\mu(E \smallsetminus D)=0$，那么 $\mu$ 被称为\emph{纯原子测度}。
-例如，Lebesgue 测度是非原子测度，Dirac 测度是纯原子测度(其只有一个原子)，离散测度
-是纯原子测度。
-
-\begin{proposition}
-  令 $\mu$ 是 $(E,\mathcal{E})$ 上的 $\Sigma$-有限测度，那么
-  \[
-    \mu=\lambda+\nu,
-  \]
-  其中 $\lambda$ 是非原子测度，$\nu$ 是纯原子测度。
-\end{proposition}
-
-
-\subsubsection{完备性，零测集}
-
-令 $(E,\mathcal{E},\mu)$ 是测度空间，如果可测集 $B$ 使得 $\mu(B)=0$，那么 $B$
-被称为\emph{零测集}。$E$ 的任意子集如果被一个可测的零测集包含，那么也被称为\emph{零测集}。
-如果 $E$ 的每个零测集都是可测集，那么我们说这个测度空间是\emph{完备的}。对于不完备的
-测度空间，下面的结果表明可以通过包含所有的零测集来扩大 $\mathcal{E}$ 以及
-$\mu$ 来得到一个完备测度空间。测度空间 $(E,\bar{\mathcal{E}},\bar\mu)$ 被称为
-$(E,\mathcal{E},\mu)$ 的\emph{完备化}。当 $E=\mathbb{R}$，$\mathcal{E}=\mathcal{B}_{\mathbb{R}}$
-和 $\mu=\Leb$ 的时候，$\bar{\mathcal{E}}$ 的元素被称为\emph{Lebesgue 可测集}。
-
-\begin{proposition}
-  令 $\mathcal{N}$ 是 $E$ 的所有零测子集的集合族，$\bar{\mathcal{E}}$ 为 $\mathcal{E}\cup \mathcal{N}$
-  生成的 $\sigma$-代数，那么
-  \begin{alphenum}[nosep]
-    \item 每个 $B\in\bar{\mathcal{E}}$ 都形如 $B=A\cup N$，其中 $A\in \mathcal{E}$ 以及 $N\in \mathcal{N}$，
-    \item 定义 $\bar\mu(A\cup N)=\mu(A)$，这给出了 $\bar{\mathcal{E}}$ 上的测度 $\bar\mu$，并且
-    是唯一的满足 $\bar\mu(A)=\mu(A)\ (A\in \mathcal{E})$ 的测度，此时测度空间 $(E,\mathcal{E},\mu)$
-    是完备的。
-  \end{alphenum}
-\end{proposition}
-
-\begin{exercise}{限制和迹}{}
-  令 $(E,\mathcal{E})$ 是可测空间，$\mu$ 是测度。令 $D\in \mathcal{E}$。
-  \begin{alphenum}[nosep]
-    \item 定义 $\nu(A)=\mu(A\cap D)$，证明 $\nu$ 是 $(E,\mathcal{E})$ 上的测度，
-    被称为 $\mu$ 在 $D$ 上的迹。
-    \item 令 $\mathcal{D}$ 为 $\mathcal{E}$ 在 $D$ 上的迹，对于 $A\in \mathcal{D}$，
-    定义 $\nu(A)=\mu(A)$，证明 $\nu$ 是 $(D,\mathcal{D})$ 上的测度，被称为
-    $\mu$ 在 $D$ 上的限制。
-  \end{alphenum}
-\end{exercise}
-\begin{proof}
-  (a) $\nu(\emptyset)=\mu(\emptyset)=0$。设 $(A_n)\subseteq \mathcal{E}$ 是不相交
-  的子集列，那么 $(A_n\cap D)\subseteq \mathcal{E}$ 仍然不相交，所以
-  \[
-    \nu\left(\bigcup_{n=1}^\infty A_n\right)=\mu\left(\bigcup_{n=1}^\infty (A_n\cap D)\right)
-    =\sum_{n=1}^\infty \mu(A_n\cap D)=\sum_{n=1}^\infty \nu(A_n),
-  \]
-  即 $\nu$ 是 $(E,\mathcal{E})$ 上的测度。
-
-  (b) $\nu(\emptyset)=\mu(\emptyset)=0$。设 $(A_n)\subseteq \mathcal{D}$
-  是不相交的子集列，于是
-  \[
-    \nu\left(\bigcup_{n=1}^\infty A_n\right)=\mu\left(\bigcup_{n=1}^\infty A_n\right)
-    =\sum_{n=1}^\infty\mu(A_n)=\sum_{n=1}^\infty\nu(A_n).\qedhere
-  \]
-\end{proof}
-
-\section{积分}
-
-令 $(E,\mathcal{E},\mu)$ 是测度空间。我们同时用 $\mathcal{E}$ 表示
-$E$ 上的 $\mathcal{E}$-可测函数的集合，$\mathcal{E}_+$ 表示非负
-$\mathcal{E}$-可测函数构成的子集。下面对于所有合理的 $f\in \mathcal{E}$，
-我们定义“$f$ 相对于 $\mu$ 的积分”，我们将记为：
-\[
-  \mu f=\mu(f)=\int_E f(x) \mu(\d x)  =\int_E f \d\mu.
-\]
-并且我们将证明我们定义的积分蕴含下面的性质：对于任意 $a,b\in \mathbb{R}_+$
-和 $f,g,f_n\in \mathcal{E}_+$，有：
-\begin{description}[nosep,font=\sffamily\mdseries,itemindent=0pt]
-  \item[非负性] $\mu f\geq 0$，若 $f=0$，则 $\mu f=0$。
-  \item[线性性] $\mu(af+bg)=a\mu f+b\mu g$。
-  \item[单调收敛定理] 若 $f_n\nearrow f$，则 $\mu f_n\nearrow \mu f$。  
-\end{description}
+% \chapter{测度和积分}
+
+% \section{可测空间}
+
+% 令 $E$ 是集合，$\mathcal{E}$ 是 $E$ 的一个子集族。若对于任意 $A,B\in\mathcal{E}$ 有
+% $A\cap B\in\mathcal{E}$，那么我们说 $\mathcal{E}$ \emph{对交封闭}。如果 $\mathcal{E}$
+% 中任意可数个集合的交还在 $\mathcal{E}$ 中，那么我们说 $\mathcal{E}$ 对可数交封闭。
+% 类似地，我们可以定义对补封闭、对并封闭和对可数并封闭的概念。
+
+% \subsubsection{$\sigma$-代数}
+
+% 如果 $E$ 的非空子集族 $\mathcal{E}$ 对补和有限并封闭，那么我们说 $\mathcal{E}$
+% 是 $E$ 上的\emph{代数}。如果其对补和可数并封闭，那么我们说 $\mathcal{E}$
+% 是 $E$ 上的\emph{$\sigma$-代数}，即：
+% \begin{alphenum}
+%   \item $A\in\mathcal{E}\Rightarrow E\smallsetminus A\in\mathcal{E}$，
+%   \item $A_1,A_2,\dotsc\in \mathcal{E}\Rightarrow\bigcup_n A_n\in\mathcal{E}$。
+% \end{alphenum}
+% 由于 $\left(\bigcup_n A_n\right)^c=\bigcap_n A_n^c\in\mathcal{E}$，所以对补和可数并封闭
+% 可以自然导出对可数交封闭，即 $\sigma$-代数对可数交也封闭。
+
+% 任取 $A\in \mathcal{E}$，那么 $E=A\cup(E \smallsetminus A)\in \mathcal{E}$，所以 $E$ 上
+% 任意 $\sigma$-代数都至少包含 $E$ 和 $\emptyset$。事实上，$\mathcal{E}=\{E,\emptyset\}$
+% 是 $E$ 上的最简单的 $\sigma$-代数，被称为\emph{平凡 $\sigma$-代数}。$E$ 上最大的
+% $\sigma$-代数当然是 $\mathcal{E}=2^E$，即 $\mathcal{E}$ 就是 $E$ 的幂集，被
+% 称为\emph{离散 $\sigma$-代数}。
+
+% 不难看出，$E$ 上一族 $\sigma$-代数的任意交(不一定可数)还是 $E$ 上的 $\sigma$-代数。
+% 给定 $E$ 的一个子集族 $\mathcal{C}$，我们可以考虑所有包含 $\mathcal{C}$ 
+% 的 $\sigma$-代数(总是存在至少一个这样的 $\sigma$-代数，即 $2^E$)，将这些
+% $\sigma$-代数取交集，我们便得到了包含 $\mathcal{C}$ 的最小的 $\sigma$-代数，
+% 被称为\emph{由 $\mathcal{C}$ 生成的} $\sigma$-代数，记为 $\sigma\mathcal{C}$。
+
+% 如果 $E$ 是拓扑空间，由 $E$ 的所有开集族生成的 $\sigma$-代数被称为 $E$ 上的
+% \emph{Borel $\sigma$-代数}，记为 $\mathcal{B}(E)$ 或者 $\mathcal{B}_E$，
+% 其元素被称为\emph{Borel 集}。
+
+% \subsubsection{p-系和 d-系}
+
+% 对于 $E$ 的子集族 $\mathcal{C}$，如果其对交封闭，那么我们说 $\mathcal{C}$
+% 是一个 p-系，这里 p 代表 product，是“交”的另一种说法。
+% $E$ 的子集族 $\mathcal{D}$ 被称为 d-系，如果其满足：
+% \begin{alphenum}
+%   \item $E\in\mathcal{D}$，
+%   \item $\text{$A,B\in \mathcal{D}$ and $A\supseteq B\Rightarrow A \smallsetminus B\in \mathcal{D}$}$，
+%   \item $\text{$(A_n)\subseteq \mathcal{D}$ and $A_n\nearrow A\Rightarrow A\in \mathcal{D}$}$。
+% \end{alphenum}
+% 其中 $(A_n)\subseteq D$ 表明 $(A_n)$ 是 $D$ 中的集合序列，$A_n\nearrow A$ 表明这个序列
+% 递增于极限 $A$：
+% \[
+%   A_1\subseteq A_2\subseteq\cdots,\quad \bigcup_{n=1}^\infty A_n=A.
+% \]
+
+% 显然一个 $\sigma$-代数既是 p-系又是 d-系，其反面也是成立的。所以 p-系和 d-系是产生
+% $\sigma$-代数的原始结构。
+
+% \begin{proposition}\label{prop:equivalent condition of sigma algebra}
+%   $E$ 的子集族是 $\sigma$-代数当且仅当其既是 p-系又是 d-系。
+% \end{proposition}
+% \begin{proof}
+%   $(\Rightarrow)$ 若 $\mathcal{E}$ 是 $\sigma$-代数，其显然是 p-系并且满足 d-系的条件 (a) 和 (c)。
+%   下面我们验证其满足 d-系的条件 (b)。任取 $A,B\in\mathcal{E}$ 且 $A\supseteq B$，
+%   那么 $A \smallsetminus B=A\cap (E \smallsetminus B)\in \mathcal{E}$，
+%   所以 $\mathcal{E}$ 是 d-系。
+
+%   $(\Leftarrow)$ 若 $\mathcal{E}$ 既是 p-系又是 d-系。任取 $A\in \mathcal{E}$，
+%   根据 d-系的 (a) 和 (b)，我们有 $E \smallsetminus A\in \mathcal{E}$。
+%   所以 $\mathcal{E}$ 对补封闭。然后我们说明对并封闭。任取 $A,B\in \mathcal{E}$， 
+%   由于
+%   \[
+%     A\cup B=E \smallsetminus (A\cup B)^c=E \smallsetminus (A^c\cap B^c),
+%   \]
+%   结合 p-系对交封闭，所以 $A\cup B\in \mathcal{E}$。最后我们说明对可数并封闭。
+%   如果 $(A_n)\subseteq \mathcal{E}$，令 $B_n=A_1\cup\cdots\cup A_n$，
+%   那么 $(B_n)\subseteq \mathcal{E}$ 且 $B_n\nearrow A$，根据 d-系的 (c)，所以
+%   $A\in \mathcal{E}$，故 $\mathcal{E}$ 对可数并封闭。
+% \end{proof}
+
+% 下面的引理为本节的主要定理做准备。
+
+% \begin{lemma}\label{lemma:hat D}
+%   令 $\mathcal{D}$ 是 $E$ 上的 d-系，固定 $D\in \mathcal{D}$，令
+%   \[
+%     \hat{\mathcal{D}}=\{A\in \mathcal{D}: A\cap D\in \mathcal{D}\},
+%   \]
+%   那么 $\hat{\mathcal{D}}$ 仍然是 d-系。
+% \end{lemma}
+
+% \subsubsection{单调类定理}
+
+% 这是一个非常有用的工具来证明某些集族是 $\sigma$-代数。
+
+% \begin{theorem}\label{thm:monotone class theorem}
+%   如果一个 d-系包含一个 p-系，那么其包含这个 p-系生成的 $\sigma$-代数。
+% \end{theorem}
+% \begin{proof}
+%   设 $\mathcal{C}$ 是一个 p-系。令 $\mathcal{D}$ 是包含 $\mathcal{C}$
+%   的最小的 d-系，即包含 $\mathcal{C}$ 的所有 d-系的交(不难看出 d-系的任意交是 d-系)。
+%   我们证明 $\mathcal{D}$ 实际上是一个 $\sigma$-代数，这样包含 $\mathcal{C}$
+%   的任意 d-系都包含 $\mathcal{D}$，而 $\mathcal{D}$ 作为包含 $\mathcal{C}$
+%   的 $\sigma$-代数，其包含 $\sigma \mathcal{C}$。
+%   根据 \autoref{prop:equivalent condition of sigma algebra}，只需要说明 
+%   $\mathcal{D}$ 既是 p-系又是 d-系，而 $\mathcal{D}$ 已经是 d-系，所以只需要
+%   说明 $\mathcal{D}$ 是 p-系。
+
+%   我们首先说明对于任意的 $D\in \mathcal{D}$ 和 $C\in \mathcal{C}$，
+%   有 $D\cap C\in \mathcal{D}$。令
+%   \[
+%     \mathcal{D}_1=\{A\in \mathcal{D}: A\cap C\in \mathcal{D}\},  
+%   \]
+%   根据 \autoref{lemma:hat D}，$\mathcal{D}_1$ 是 d-系。由于 $\mathcal{C}$
+%   是 p-系，所以 $\mathcal{C}\subseteq \mathcal{D}_1$，即 $\mathcal{D}_1$
+%   是包含 $\mathcal{C}$ 的 d-系，所以 $\mathcal{D}\subseteq \mathcal{D}_1$。
+%   这就表明 $D\in \mathcal{D}_1$，即 $D\cap C\in \mathcal{D}$。
+
+%   下面说明对于任意的 $D,B\in \mathcal{D}$，有 $D\cap B\in \mathcal{D}$。
+%   令
+%   \[
+%     \mathcal{D}_2=\{A\in \mathcal{D}: A\cap D\in \mathcal{D}\} .
+%   \]
+%   同样根据 \autoref{lemma:hat D}，$\mathcal{D}_2$ 是 d-系。根据上面的叙述，
+%   有 $\mathcal{C}\subseteq \mathcal{D}_2$，即 $\mathcal{D}_2$ 是包含 
+%   $\mathcal{C}$ 的 d-系，所以 $\mathcal{D}\subseteq \mathcal{D}_2$，
+%   这就表明 $B\in \mathcal{D}_2$，即 $D\cap B\in \mathcal{D}$。
+%   这就证明了 $\mathcal{D}$ 是 p-系。
+% \end{proof}
+
+% \subsubsection{可测空间}
+
+% 一个\emph{可测空间}指的是二元组 $(E,\mathcal{E})$，其中 $E$ 是集合，
+% $\mathcal{E}$ 是 $E$ 上的 $\sigma$-代数。此时，$\mathcal{E}$
+% 的元素被称为\emph{可测集}。当 $E$ 是拓扑空间，$\mathcal{E}=\mathcal{B}_E$
+% 的时候，可测集也被称为\emph{Borel 集}。
+
+% \subsubsection{可测空间的积}
+
+% 令 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 是可测空间。
+% 如果 $A\in \mathcal{E}$ 和 $B\in \mathcal{F}$，那么 $A\times B$
+% 被称为\emph{可测矩形}。我们用 $\mathcal{E}\otimes \mathcal{F}$
+% 表示 $E\times F$ 上的由可测矩形集族生成的 $\sigma$-代数，
+% 被称为\emph{乘积 $\sigma$-代数}。可测空间 $(E\times F,\mathcal{E}\otimes \mathcal{F})$
+% 被称为 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 的积，我们通常使用
+% $(E,\mathcal{E})\times (F,\mathcal{F})$ 来表示。
+
+% \subsubsection{Exercises}
+
+% \begin{exercise}{划分生成 $\sigma$-代数}{}
+%   \begin{alphenum}[nosep]
+%     \item 令 $\mathcal{C}=\{A,B,C\}$ 是 $E$ 的一个划分，列出
+%     $\sigma \mathcal{C}$ 的元素。
+%     \item 令 $\mathcal{C}$ 是 $E$ 的(可数)划分。证明 $\sigma \mathcal{C}$
+%     的每个元素都是 $\mathcal{C}$ 中元素的可数并。
+%     \item 令 $E=\mathbb{R}$，$\mathcal{C}$ 是 $\mathbb{R}$ 的所有单点子集
+%     构成的子集族。证明 $\sigma \mathcal{C}$ 的元素要么是可数集要么
+%     是可数集的补集。这表明从直观上来看，$\sigma \mathcal{C}$ 要比 $\mathcal{B}(\mathbb{R})$
+%     小得多，例如开区间 $(0,1)$ 属于后者但是不属于前者。
+%   \end{alphenum}
+% \end{exercise}
+% \begin{solution}
+%   (a) 令
+%   \[
+%     \mathcal{E}=\{A,B,C,A\cup B,A\cup C,B\cup C,E\},
+%   \]
+%   显然 $\mathcal{E}$ 是一个 $\sigma$-代数。对于任意包含 $\mathcal{C}$
+%   的 $\sigma$-代数，由于其对并封闭，所以其必须包含 $\mathcal{E}$，
+%   所以 $\mathcal{E}=\sigma \mathcal{C}$。
+
+%   (b) 令 $\mathcal{E}$ 为 $\mathcal{C}$ 中元素的所有可数并构成的
+%   集族。根据 $\sigma$-代数对可数并的封闭性，所以 $\sigma \mathcal{C}\supseteq \mathcal{E}$。
+%   设 $(A_n)$ 构成 $E$ 的可数划分，即 $(A_n)$ 两两不相交且 $E=\bigcup_n A_n$。
+%   任取 $\bigcup_k A_{n_k}\in \mathcal{E}$，那么
+%   $E \smallsetminus \left(\bigcup_k A_{n_k}\right)$ 依然是某些 $(A_n)$
+%   的可数并，所以 $E \smallsetminus \left(\bigcup_k A_{n_k}\right)\in \mathcal{E}$，
+%   即 $\mathcal{E}$ 对补封闭，所以 $\mathcal{E}$ 是 $\sigma$-代数，
+%   所以 $\mathcal{E}=\sigma \mathcal{C}$。
+
+%   (c) 令 $\mathcal{E}$ 为 $\mathbb{R}$ 的可数子集和补集可数的子集构成的子集族。
+%   显然 $\mathcal{E}\subseteq \sigma \mathcal{C}$ 且不难验证 $\mathcal{E}$
+%   是一个 $\sigma$-代数(可数个可数集的并是可数集)，所以 $\mathcal{E}=\sigma \mathcal{C}$。
+% \end{solution}
+
+% \begin{exercise}{$\mathbb{R}$ 上的 Borel $\sigma$-代数}{}
+%   $\mathbb{R}=(-\infty,+\infty)$ 的任意开子集都是开区间的可数并。使用这一事实证明
+%   $\mathcal{B}(\mathbb{R})$ 由所有开区间构成的子集族生成。
+% \end{exercise}
+% \begin{proof}
+%   设 $\mathcal{C}$ 为所有开区间构成的子集族，$\mathcal{T}$ 为所有开集构成的子集族(即 $\mathbb{R}$ 上的拓扑)。
+%   显然 $\mathcal{C}\subseteq \mathcal{T}$，
+%   所以 $\sigma \mathcal{C}\subseteq \sigma \mathcal{T}=\mathcal{B}(\mathbb{R})$。由于
+%   $\mathcal{T}$ 中集合都是 $\mathcal{C}$ 中集合的可数并，所以 $\mathcal{T}\subseteq \sigma \mathcal{C}$，
+%   这表明 $\mathcal{B}(\mathbb{R})=\sigma \mathcal{T}\subseteq \sigma \mathcal{C}$。
+%   所以 $\mathcal{B}(\mathbb{R})=\sigma \mathcal{C}$ 由所有开区间构成的子集族生成。
+% \end{proof}
+
+% \begin{exercise}{$\mathbb{R}$ 上的 Borel $\sigma$-代数}{}
+%   证明：$\mathbb{R}$ 中的任意区间都是 Borel 集。特别的，$(-\infty,x),(-\infty,x],(x,y],[x,y]$ 都是 Borel 集。
+%   对于每个 $x$，单点集 $\{x\}$ 也是 Borel 集。 
+% \end{exercise}
+% \begin{proof}
+%   只需注意到
+%   \begin{gather*}
+%     (-\infty,x)=\bigcup_{n=1}^\infty \left(-n+x,x\right), 
+%     (-\infty, x]=\bigcap_{n=1}^\infty \left(-\infty,x+\frac{1}{n}\right),\\
+%     (x,y]=\bigcap_{n=1}^\infty \left(x,y+\frac{1}{n}\right),
+%     [x,y]=\bigcap_{n=1}^\infty\left(x-\frac{1}{n},y\right],
+%     \{x\}=\bigcap_{n=1}^\infty\left(x-\frac{1}{n},x\right].
+%   \end{gather*}
+%   所以上述集合都是 Borel 集，对于其他的区间同理。
+% \end{proof}
+
+% \begin{exercise}{$\mathbb{R}$ 上的 Borel $\sigma$-代数}{}
+%   证明 $\mathcal{B}(\mathbb{R})$ 可以由以下任意一种集族生成(实际上还有很多可能)：
+%   \begin{alphenum}[nosep]
+%     \item 所有形如 $(-\infty, x]$ 的区间构成的子集族。
+%     \item 所有形如 $(x,y]$ 的区间构成的子集族。
+%     \item 所有形如 $[x,y]$ 的区间构成的子集族。
+%     \item 所有形如 $(x,+\infty)$ 的区间构成的子集族。
+%   \end{alphenum}
+%   此外，在每种情况中 $x,y$ 可以被限制为有理数。
+% \end{exercise}
+% \begin{proof}
+%   (a) 记该集族为 $\mathcal{C}$，由上题，这样的区间已经是 Borel 集，
+%   所以 $\sigma\mathcal{C}\subseteq \mathcal{B}(\mathbb{R})$。任取 $\mathbb{R}$
+%   的开区间 $(x,y)$，有
+%   \[
+%     (x,y)=(-\infty,x]^c\cap (-\infty, y)=
+%     (-\infty,x]^c\cap\bigcup_{n=1}^\infty \left(-\infty,y-\frac{1}{n}\right]\in\sigma \mathcal{C},
+%   \]
+%   而 $\mathcal{B}(\mathbb{R})$ 由所有开区间生成，所以 $\mathcal{B}(\mathbb{R})\subseteq \sigma \mathcal{C}$。
+%   所以 $\mathcal{B}(\mathbb{R})=\sigma \mathcal{C}$。
+
+%   (b) (c) (d) 完全同理。
+% \end{proof}
+
+% \begin{exercise}{迹空间}{}
+%   令 $(E,\mathcal{E})$ 是可测空间，固定 $D\subseteq E$，令
+%   \[
+%     \mathcal{D}=\mathcal{E}\cap D=\{A\cap D:A\in \mathcal{E}\}.  
+%   \]
+%   证明 $\mathcal{D}$ 是 $D$ 上的 $\sigma$-代数，被称为 $\mathcal{E}$
+%   在 $D$ 上的\emph{迹}。$(D,\mathcal{D})$ 也被称为 $(E,\mathcal{E})$
+%   在 $D$ 上的迹。
+% \end{exercise}
+% \begin{proof}
+%   任取 $A\cap D\in \mathcal{D}$，其中 $A\in \mathcal{E}$，那么
+%   \[
+%     D \smallsetminus (A\cap D)= (E \smallsetminus A)\cap D\in \mathcal{D},
+%   \]
+%   所以 $\mathcal{D}$ 对补封闭。任取 $(A_n\cap D)\subseteq \mathcal{D}$，那么
+%   \[
+%     \bigcup_{n=1}^\infty  (A_n\cap D)=\left(\bigcup_{n=1}^\infty A_n\right)\cap D\in \mathcal{D},
+%   \]
+%   所以 $\mathcal{D}$ 对可数并封闭。
+% \end{proof}
+
+% \begin{exercise}{子集的 Borel $\sigma$-代数是迹}{}
+%   设 $(E,\mathcal{T})$ 是拓扑空间，$(D,\mathcal{T}_D)$ 是
+%   子空间。证明 $D$ 上的 Borel $\sigma$-代数 $\mathcal{B}_D$
+%   与 $D$ 在 $E$ 上的迹 $\mathcal{B}_E\cap D$ 相同。
+% \end{exercise}
+% \begin{proof}
+%   由于 $\mathcal{T}_D=\mathcal{T}\cap D\subseteq \mathcal{B}_E\cap D$，
+%   由上题 $\mathcal{B}_E\cap D$ 是 $\sigma$-代数，所以 $\mathcal{B}_D\subseteq\mathcal{B}_E\cap D$。
+%   记
+%   \[
+%     \mathcal{C}=\{A\subseteq E: A\cap D\in \mathcal{B}_D\},  
+%   \]
+%   那么 $\mathcal{T}\subseteq \mathcal{C}$。我们只需要证明 $\mathcal{C}$
+%   是 $E$ 上的 $\sigma$-代数，那么就有 $\mathcal{C}\supseteq \sigma \mathcal{T}=\mathcal{B}_E$，即
+%   $\mathcal{B}_D\supseteq \mathcal{C}\cap D\supseteq \mathcal{B}_E\cap D$。
+%   任取 $A\in \mathcal{C}$，那么 $(E \smallsetminus A)\cap D=D \smallsetminus (A\cap D)\in \mathcal{B}_D$，
+%   所以 $E \smallsetminus A\in \mathcal{C}$。任取 $(A_n)\subseteq \mathcal{C}$，那么
+%   \[
+%     \left(\bigcup_{n=1}^\infty A_n\right)\cap D=\bigcup_{n=1}^\infty (A_n\cap D)
+%     \in \mathcal{B}_D,  
+%   \]
+%   所以 $\bigcup_n A_n\in \mathcal{C}$。这就表明 $\mathcal{C}$
+%   是 $E$ 上的 $\sigma$-代数。
+% \end{proof}
+
+
+% \section{可测函数}
+
+% \subsubsection{可测函数}
+
+% 令 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 是可测空间，映射 $f:E\to F$ 如果使得任取 $B\in \mathcal{F}$，有
+% $f^{-1}B\in \mathcal{E}$，那么我们说 $f$ 相对于 $\mathcal{E}$ 和 $\mathcal{F}$ \emph{可测}。
+
+% \begin{proposition}\label{prop:equivalent condition of measurable}
+%   映射 $f:E\to F$ 相对于 $\mathcal{E}$ 和 $\mathcal{F}$ 可测当且仅当对于任意生成 $\mathcal{F}$ 的子集族
+%   $\mathcal{F}_0$，任取 $B\in \mathcal{F}_0$，有 $f^{-1}B\in \mathcal{E}$。
+% \end{proposition}
+% \begin{proof}
+%   必要性显然。下证充分性。设 $\mathcal{F}_0$ 使得 $\mathcal{F}=\sigma \mathcal{F}_0$，且
+%   对于任意的 $B\in \mathcal{F}_0$ 有 $f^{-1}B\in \mathcal{E}$。记
+%   \[
+%     \mathcal{F}_1=\{A\in \mathcal{F}: f^{-1}A\in \mathcal{E}\},
+%   \]
+%   显然 $\mathcal{F}_0\subseteq \mathcal{F}_1\subseteq \mathcal{F}$。由于
+%   \[
+%     f^{-1}\left(F \smallsetminus A\right)=E \smallsetminus(f^{-1}A),\quad
+%     f^{-1}\left(\bigcup_{i\in I}A_i\right)=\bigcup_{i\in I} f^{-1}A_i,
+%   \]
+%   所以 $\mathcal{F}_1$ 是 $\sigma$-代数，所以 $\mathcal{F}=\mathcal{F}_1$，即 $f$ 
+%   相对于 $\mathcal{E}$ 和 $\mathcal{F}$ 可测。
+% \end{proof}
+
+% \begin{proposition}
+%   给定可测空间 $(E,\mathcal{E}),(F,\mathcal{F}),(G,\mathcal{G})$，如果 $f$ 相对于 $\mathcal{E}$ 和 
+%   $\mathcal{F}$ 可测，$g$ 相对于 $\mathcal{F}$ 和 $\mathcal{G}$ 可测，那么复合
+%   $g\circ f$ 相对于 $\mathcal{E}$ 和 $\mathcal{G}$ 可测。
+% \end{proposition}
+% \begin{proof}
+%   任取 $C\in \mathcal{G}$，有
+%   \[
+%     (g\circ f)^{-1}(C)=f^{-1}\left(g^{-1}(C)\right),  
+%   \]
+%   $g$ 可测表明 $g^{-1}(C)\in \mathcal{F}$，$f$ 可测表明 $f^{-1}\left(g^{-1}(C)\right)\in \mathcal{E}$，
+%   所以 $g\circ f$ 相对于 $\mathcal{E}$ 和 $\mathcal{G}$ 可测。
+% \end{proof}
+
+% \subsubsection{数值函数}
+
+% 令 $(E,\mathcal{E})$ 是可测空间。回顾实数及扩充实数 $\mathbb{R}=(-\infty,+\infty)$，
+% $\bar{\mathbb{R}}=[-\infty,+\infty]$，$\mathbb{R}_+=[0,+\infty)$，
+% $\bar{\mathbb{R}}_+=[0,+\infty]$。$E$ 上的\emph{数值函数}指的是
+% 从 $E$ 到 $\bar{\mathbb{R}}$ 或者 $\bar{\mathbb{R}}$ 的子集的映射。
+% 如果这个映射的值在 $\mathbb{R}$ 中，那么我们一般称其为\emph{实值函数}。
+
+% $E$ 上的数值函数如果相对于 $\mathcal{E}$ 和 $\mathcal{B}(\bar{\mathbb{R}})$
+% 可测，那么我们说其是 $\mathcal{E}$-可测的。如果 $E$
+% 是拓扑空间且 $\mathcal{E}=\mathcal{B}(E)$，那么 $\mathcal{E}$-可测函数
+% 被称为\emph{Borel 函数}。
+% 下面的命题是 \autoref{prop:equivalent condition of measurable} 的直接结果。
+
+% \begin{proposition}
+%   映射 $f:E\to\bar{\mathbb{R}}$ 是 $\mathcal{E}$-可测的当且仅当
+%   对于每个 $r\in \mathbb{R}$，$f^{-1}[-\infty,r]\in \mathcal{E}$。
+% \end{proposition}
+
+% 上述命题中的 $[-\infty,r]$ 可以改为 $[-\infty,r)$，$[r,\infty]$，
+% $(r,\infty]$ 中的任意一种。
+
+% \subsubsection{函数的正部分和负部分}
+
+% 对于 $a,b\in\bar{\mathbb{R}}$，我们记 $a\vee b$ 为 $a$ 和 $b$
+% 中的最大者，$a\wedge b$ 为 $a$ 和 $b$ 中的最小者。
+% 对于函数 $f,g$，用 $f\vee g$ 表示函数 $x\mapsto f(x)\vee g(x)$。
+% 令 $(E,\mathcal{E})$ 是可测空间，$f$ 是 $E$ 上的数值函数。
+% 那么
+% \[
+%   f^+=f\vee 0,\quad f^-=-(f\wedge 0)  
+% \]
+% 都是非负函数并且 $f=f^+-f^-$。函数 $f^+$ 被称为 $f$ 的\emph{正部分}，
+% $f^-$ 被称为 $f$ 的\emph{负部分}。
+
+% \begin{proposition}
+%   函数 $f$ 是 $\mathcal{E}$-可测的当且仅当 $f^+$ 和 $f^-$
+%   都是 $\mathcal{E}$-可测的。
+% \end{proposition}
+% \begin{proof}
+%   若 $f$ 是 $\mathcal{E}$-可测的。任取 $r\in \mathbb{R}$，
+% 若 $r< 0$，则 $\left(f^+\right)^{-1}[-\infty,r]=\emptyset\in \mathcal{E}$。
+%   若 $r\geq 0$，则
+%   \[
+%     \left(f^+\right)^{-1}[-\infty,r]=E \smallsetminus \left(f^+\right)^{-1}(r,\infty]
+%     =E \smallsetminus f^{-1}(r,\infty],
+%   \]
+%   由于 $(r,\infty]$ 是 Borel 集，所以 $\left(f^+\right)^{-1}[-\infty,r]\in \mathcal{E}$。
+%   综合起来，$f^+$ 是 $\mathcal{E}$-可测的。同理可证 $f^-$ 是 $\mathcal{E}$-可测的。
+
+%   若 $f^+$ 和 $f^-$ 都是 $\mathcal{E}$-可测的。任取 $r\in \mathbb{R}$，若 $r<0$，那么
+%   \[
+%     f^{-1}[-\infty,r]=  \left(f^-\right)^{-1}[-r,\infty]\in \mathcal{E}.
+%   \]
+%   若 $r\geq 0$，那么
+%   \[
+%     f^{-1}[-\infty,r]= E \smallsetminus f^{-1}(r,\infty]
+%     =E \smallsetminus \left(f^+\right)^{-1}(r,\infty]\in \mathcal{E}.
+%   \]
+%   所以 $f$ 是 $\mathcal{E}$-可测的。
+% \end{proof}
+
+% \subsubsection{指示函数和简单函数}
+
+% 令 $A\subseteq E$，定义 $A$ 的指示函数为 $1_A$：
+% \[
+%   1_A(x)=\begin{cases}
+%     1 & x\in A,\\
+%     0 & x\notin A.
+%   \end{cases}  
+% \]
+% 对于 $1_E$，我们简记为 $1$。显然，$1_A$ 是 $\mathcal{E}$-可测的当且仅当
+% $A\in \mathcal{E}$。
+
+% $E$ 上的函数 $f$ 如果形如
+% \[
+%   f=\sum_{i=1}^n a_i 1_{A_i},  
+% \]
+% 其中 $n\geq 1$，$a_1,\dots,a_n\in \mathbb{R}$，$A_1,\dots,A_n$ 是可测集，
+% 那么我们说 $f$ 是\emph{简单函数}。
+% 在这个定义中，若 $A_i\cap A_j\ne\emptyset$，那么我们可以将
+% $a_i1_{A_i}+a_j1_{A_j}$ 拆为
+% \[ 
+%   a_i1_{A_i \smallsetminus (A_i\cap A_j)}+(a_i+a_j)1_{A_i\cap A_j}+a_j 1_{A_j \smallsetminus (A_i\cap A_j)},
+% \]
+% 所以我们可以假设 $A_i$ 两两不相交。此外，如果 $\bigcup_i A_i\neq E$，记
+% $B=E \smallsetminus\bigcup_i A_i\in \mathcal{E}$，那么
+% \[
+%   f=  \sum_{i=1}^n a_i 1_{A_i}+0\cdot 1_{B},
+% \]
+% 所以我们还可以假设 $\bigcup_i A_i=E$。这意味着对于一个简单函数 $f$，
+% 总存在整数 $m$，不同的实数 $b_1,\dots,b_m$ 和 $E$ 的可测划分
+% $\{B_1,\dots,B_m\}$ 使得 $f=\sum_{i=1}^m b_i 1_{B_i}$，
+% 这种表示被称为简单函数 $f$ 的\emph{标准型}。
+
+% 利用简单函数的标准型，很容易验证简单函数都是 $\mathcal{E}$-可测的。
+% 反之，若 $f$ 是 $\mathcal{E}$-可测的，只有有限个取值且值为实数，那么
+% $f$ 为简单函数。特别地，任意常值函数是简单函数。最后，如果 $f,g$
+% 是简单函数，那么
+% \[
+%   f+g,\quad f-g,\quad fg,\quad f/g,\quad f\vee g,\quad f\wedge g  
+% \]
+% 都是简单函数，其中 $f/g$ 要求 $g$ 的值始终非零。
+
+% \subsubsection{函数列的极限}
+
+% 令 $(f_n)$ 是 $E$ 上的一列数值函数，我们可以逐点定义
+% \begin{equation}\label{eq:inf and sup}
+%   \inf f_n,\quad \sup f_n,\quad \liminf f_n,\quad \limsup f_n,
+% \end{equation}
+% 例如，$\inf f_n$ 将 $x\in E$ 送到实数列 $(f_n(x))$ 的下确界。
+% 如果
+% \[
+%   \liminf f_n=\limsup f_n=f,
+% \]
+% 那么我们说 $(f_n)$ 有逐点极限 $f$，记为 $f=\lim f_n$ 或者 $f_n\to f$。
+
+% 如果 $(f_n)$ 单调递增，即 $f_1\leq f_2\leq \cdots$，那么根据单调有界定理，$\lim f_n$
+% 存在且等于 $\sup f_n$。此时我们用 $f_n\nearrow f$ 来表示 $(f_n)$ 单调递增且有极限 $f$。
+% 类似地，用 $f_n\searrow f$ 来表示 $(f_n)$ 单调递减且有极限 $f$。
+
+% 下面的定理表明可测函数类对极限操作是封闭的。
+% \begin{theorem}\label{thm:lim of measurable function is measurable}
+%   令 $(f_n)$ 是一列 $\mathcal{E}$-可测函数，那么 \eqref{eq:inf and sup} 中的四个函数都是
+%   $\mathcal{E}$-可测的。此外，如果 $\lim f_n$ 存在，那么 $\lim f_n$ 也是 $\mathcal{E}$-可测的。
+% \end{theorem}
+% \begin{proof}
+%   记 $g=\sup f_n$。任取 $r\in \mathbb{R}$，注意到 $g(x)\leq r$ 当且仅当对于所有 $n$ 有 $f_n(x)\leq r$。
+%   所以
+%   \[
+%     g^{-1}[-\infty,r]=\bigcap_{n=1}^\infty f_n^{-1}[-\infty,r],
+%   \]
+%   $f_n$ 可测表明 $f_n^{-1}[-\infty,r]\in \mathcal{E}$，所以 $g^{-1}[-\infty,r]\in \mathcal{E}$，即
+%   $g$ 可测。
+
+%   对于 $\inf f_n$，我们有 $\inf f_n=-\sup (-f_n)$，所以 $\inf f_n$ 也可测。
+%   最后，注意到
+%   \[
+%     \liminf f_n=\sup\limits_m \mathop{\vphantom{\sup}\inf}_{n\geq m} f_n,\quad
+%     \limsup f_n=\mathop{\vphantom{\sup}\inf}_{m}\sup_{n\geq m} f_n,
+%   \] 
+%   所以 $\liminf f_n$ 和 $\limsup f_n$ 可测。若二者相等，那么 $\lim f_n$ 也可测。
+% \end{proof}
+
+% \subsubsection{可测函数的逼近}
+
+% \begin{lemma}\label{lemma:dn}
+%   对于 $n\in \mathbb{N}^*$，令
+%   \[
+%     d_n(r)=\sum_{k=1}^{n2^n}\frac{k-1}{2^n}1_{\left[\frac{k-1}{2^n},\frac{k}{2^n}\right)}(r)
+%     +n1_{[n,\infty]}(r),\quad r\in \bar{\mathbb{R}}_+.
+%   \]
+%   那么，$d_n(r)$ 是 $\bar{\mathbb{R}}_+$ 上单调递增的简单函数，并且对于每个 $r\in\bar{\mathbb{R}}_+$，
+%   $d_n(r)$ 随着 $n$ 的增大是的单调递增的。
+% \end{lemma}
+% \begin{proof}
+%   显然 $d_n(r)$ 是单调递增的简单函数，我们证明任取 $r\in \bar{\mathbb{R}}_+$，$d_n(r)$
+%   是单调递增的。若 $r=\infty$，那么 $d_n(r)=n$ 是单调递增的。现在假设 $r\in \mathbb{R}_+$，
+%   那么存在正整数 $m$ 使得 $m\leq r<m+1$，所以当 $n\leq m$ 的时候，$d_n(r)=n$ 单调递增。
+%   当 $n>m$ 的时候，直观来看，$d_n$ 将区间 $[0,n]$ 等分为 $n2^{n}$ 份，$r\in [0,n]$
+%   表明一定存在唯一的 $k_n$ 使得 $(k_n-1)/2^n\leq r <k_n/2^n$，可以发现 $k_{n}$ 满足 
+%   递推关系 $k_{n+1}=2k_n-1$ 或者 $k_{n+1}=2k_n$，这表明
+%   \[
+%     d_{n+1}(r)= \frac{k_{n+1}-1}{2^{n+1}}\geq\frac{2k_n-2}{2^{n+1}}=\frac{k_n-1}{2^n}=d_n(r).
+%   \]
+%   综上，$d_n(r)$ 随着 $n$ 的增大是的单调递增的。
+% \end{proof}
+
+% \begin{theorem}\label{thm:approximation of measurable function}
+%   $E$ 上的非负函数是 $\mathcal{E}$-可测的当且仅当其是一列单调递增的非负简单函数序列
+%   的极限。
+% \end{theorem}
+% \begin{proof}
+%   充分性来源于 \autoref{thm:lim of measurable function is measurable}。
+%   对于必要性，设 $f:E\to\bar{\mathbb{R}}_+$ 是 $\mathcal{E}$-可测的非负函数。
+%   记 $d_n$ 为上述引理中的函数，令 $f_n=d_n\circ f$。那么 $f_n$ 是非负的 $\mathcal{E}$-可测函数，
+%   并且其取值只有有限个，所以是简单函数。由于 $(d_n)$ 单调递增，所以 $(f_n)$ 单调递增。
+%   对于任意 $x\in E$，由于 $f_n(x)=d_n(f(x))$，所以 $n\to\infty$ 的时候
+%   $f_n(x)\to f(x)$，故 $f=\lim f_n$。
+% \end{proof}
+
+% \subsubsection{函数的单调类}
+
+% 令 $\mathcal{M}$ 为 $E$ 上数值函数的一个集合，记 $\mathcal{M}_+$ 为 $\mathcal{M}$
+% 中非负函数组成的子集，$\mathcal{M}_b$ 为 $\mathcal{M}$ 中有界函数组成的子集。
+
+% 如果 $\mathcal{M}$ 包含常值函数 $1$，$\mathcal{M}_b$ 构成 $\mathbb{R}$ 上的向量空间
+% 以及 $\mathcal{M}_+$ 在递增极限下封闭，那么我们说 $\mathcal{M}$ 是一个\emph{单调类}。
+% 更准确地说，$\mathcal{M}$ 是单调类当且仅当：
+% \begin{alphenum}
+%   \item $1\in \mathcal{M}$，
+%   \item 若 $f,g\in \mathcal{M}_b$ 且 $a,b\in \mathbb{R}$，则 $af+bg\in \mathcal{M}$，
+%   \item 若 $(f_n)\subseteq \mathcal{M}_+$ 且 $f_n\nearrow f$，那么
+%   $f\in \mathcal{M}$。
+% \end{alphenum}
+
+% 下面的定理通常被用于证明所有 $\mathcal{E}$-可测函数拥有的某一性质。
+
+% \begin{theorem}
+%   令 $\mathcal{M}$ 是 $E$ 上函数的单调类。假设对于某个生成 $\mathcal{E}$
+%   的 p-系 $\mathcal{C}$，任取 $A\in \mathcal{C}$，有 $1_A\in \mathcal{M}$。那么，
+%   $\mathcal{M}$ 包含所有的非负 $\mathcal{E}$-可测函数以及所有的有界 $\mathcal{E}$-可测函数。
+% \end{theorem} 
+% \begin{proof}
+%   首先证明对于任意的 $A\in \mathcal{E}$ 有 $1_A\in \mathcal{M}$。记
+%   \[
+%     \mathcal{D}=\{A\in \mathcal{E}:1_A\in \mathcal{M}\}.
+%   \]
+%   由于 $1=1_E\in \mathcal{M}$，所以 $E\in \mathcal{D}$。任取 $A,B\in \mathcal{D}$ 且 $A\supseteq B$，
+%   那么 $1_{A \smallsetminus B}=1_A-1_B\in \mathcal{M}$，这表明 $A \smallsetminus B\in \mathcal{D}$。
+%   设 $(A_n)\subseteq \mathcal{D}$ 且 $A_n\nearrow A$，那么 $(1_{A_n})\subseteq \mathcal{M}_+$
+%   且 $1_{A_n}\nearrow 1_A$，所以 $1_A\in \mathcal{M}$，这表明 $A\in \mathcal{D}$。
+%   这表明 $\mathcal{D}$ 是 d-系。由于 $\mathcal{C}$ 是 p-系且 $\mathcal{C}\subseteq \mathcal{D}$，
+%   根据单调类定理 \ref{thm:monotone class theorem}，$\mathcal{D}$ 包含 $\sigma \mathcal{C}=\mathcal{E}$，
+%   所以对于任意的 $A\in \mathcal{E}$ 有 $A\in \mathcal{D}$，即 $1_A\in \mathcal{M}$。
+
+%   再根据单调类的定义 (b)，$\mathcal{M}$ 包含所有的简单函数。
+
+%   令 $f$ 是非负 $\mathcal{E}$-可测函数，根据 \autoref{thm:approximation of measurable function}，
+%   $f$ 是函数序列 $(f_n)$ 的极限，其中 $f_n$ 是递增的非负简单函数，即 $(f_n)\subseteq \mathcal{M}_+$。
+%   根据单调类的定义 (c)，有 $f\in \mathcal{M}$。
+
+%   令 $g$ 是有界 $\mathcal{E}$-可测函数，那么 $g^+$ 和 $g^-$ 都是非负 $\mathcal{E}$-可测函数，所以
+%   $g^+,g^-\in \mathcal{M}$。显然 $g^+,g^-$ 也都是有界的，根据单调类的定义 (b)，所以
+%   $g=g^+-g^-\in \mathcal{M}$。
+% \end{proof}
+
+% \subsubsection{标准可测空间}
+
+% 令 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 是可测空间。如果 $f:E\to F$ 是双射的
+% 相对于 $\mathcal{E}$ 和 $\mathcal{F}$ 的可测函数，并且其逆映射 $f^{-1}:F\to E$
+% 是相对于 $\mathcal{F}$ 和 $\mathcal{E}$ 的可测函数，那么我们说 $f$ 是\emph{同构}。
+
+% 如果可测空间 $(E,\mathcal{E})$ 同构于 $(F,\mathcal{B}_F)$，其中 $F$ 是 $\mathbb{R}$
+% 的某个 Borel 子集，那么我们说 $(E,\mathcal{E})$ 是\emph{标准可测空间}。
+% 标准可测空间有非常多。如果 $E$ 是完备度量空间，那么 $(E,\mathcal{B}_E)$
+% 是标准可测空间。如果 $E$ 是波兰空间，即可分的可完备度量化的拓扑空间，那么
+% $(E,\mathcal{B}_E)$ 是标准可测空间。如果 $E$ 是可分的 Banach 空间，
+% 那么 $(E,\mathcal{B}_E)$ 是标准可测空间。
+
+% 显然，$[0,1]$ 和它的 Borel $\sigma$-代数构成标准可测空间。
+% $\{1,2,\dots,n\}$ 和它的离散 $\sigma$-代数构成标准可测空间。
+% $\mathbb{N}=\{0,1,2,\dots\}$ 和它的离散 $\sigma$-代数构成标准可测空间。
+% 一个深刻的结果是，任意标准可测空间都同构于上述三者之一。
+
+
+% \section{测度}
+
+% 令 $(E,\mathcal{E})$ 是可测空间，$(E,\mathcal{E})$ 上的\emph{测度}
+% 指的是一个映射 $\mu:\mathcal{E}\to\bar{\mathbb{R}}_+$，其满足：
+% \begin{alphenum}
+%   \item $\mu(\emptyset)=0$，
+%   \item 对于不相交的子集列 $(A_n)\subseteq \mathcal{E}$，有 
+%   $\mu(\bigcup_n A_n)=\sum_n \mu(A_n)$。
+% \end{alphenum}
+% 条件 (b) 被称为\emph{可列可加性}。需要注意 $\mu(A)$ 总是为正数且可以
+% 为 $+\infty$。数 $\mu(A)$ 被称为 $A$ 的\emph{测度}，也简记为 $\mu A$。
+
+% 一个\emph{测度空间}指的是三元组 $(E,\mathcal{E},\mu)$，其中 $(E,\mathcal{E})$
+% 是可测空间，$\mu$ 是 $(E,\mathcal{E})$ 上的测度。
+
+% \subsubsection{例子}
+
+% \begin{example}[Dirac 测度]
+%   令 $(E,\mathcal{E})$ 是可测空间，固定 $x\in E$。对于每个 $A\in \mathcal{E}$，
+%   令
+%   \[
+%     \delta_x(A)=\begin{cases}
+%       1 & x\in A,\\
+%       0 & x\notin A.
+%     \end{cases}  
+%   \]
+%   那么 $\delta_x$ 是 $(E,\mathcal{E})$ 上的测度，被称为\emph{Dirac 测度}。
+%   直观来看，其基于一个集合 $A$ 是否含有特定元素 $x$ 来给出这个集合的“大小”。
+% \end{example}
+
+% \begin{example}[计数测度]
+%   令 $(E,\mathcal{E})$ 是可测空间，固定 $D\subseteq E$。对于每个
+%   $A\in \mathcal{E}$，令 $\nu(A)$ 是 $A\cap D$ 中点的个数，
+%   此时 $\nu$ 是 $(E,\mathcal{E})$ 上的测度，被称为\emph{计数测度}。
+%   通常，集合 $D$ 被选取为可数集，在这种情况下
+%   \[
+%     \nu(A)=\sum_{x\in D}\delta_x(A),\quad A\in \mathcal{E}.  
+%   \]
+% \end{example}
+
+% \begin{example}[离散测度]
+%   令 $(E,\mathcal{E})$ 是可测空间，固定可数子集 $D\subseteq E$。
+%   对于每个 $x\in D$，分配一个正数 $m(x)$。定义
+%   \[
+%     \mu(A)=\sum_{x\in D} m(x)\delta_x(A),\quad A\in \mathcal{E}.  
+%   \]
+%   那么 $\mu$ 是 $(E,\mathcal{E})$ 上的测度，被称为\emph{离散测度}。
+%   我们可能会把 $m(x)$ 理解为点 $x$ 的质量，那么 $\mu(A)$ 就是集合 $A$
+%   的质量。特别地，如果 $(E,\mathcal{E})$ 是离散可测空间，那么
+%   每个测度 $\mu$ 都有这种形式。
+% \end{example}
+
+% \begin{example}[Lebesgue 测度]
+%   $(\mathbb{R},\mathcal{B}_{\mathbb{R}})$ 上的测度 $\mu$ 如果对于每个
+%   区间 $A$ 都满足 $\mu(A)$ 为 $A$ 的长度，那么我们说 $\mu$ 是\emph{Lebesgue 测度}。
+%   类似地，$\mathbb{R}^2$ 上的 Lebesgue 测度是“面积”测度，
+%   $\mathbb{R}^3$ 上的 Lebesgue 测度是“体积”测度等等。
+%   我们将它们记作 $\Leb$。
+% \end{example}
+
+% \subsubsection{测度的性质}
+
+% \begin{proposition}
+%   令 $\mu$ 是可测空间 $(E,\mathcal{E})$ 上的测度，那么对于任意
+%   可测集 $A,B$ 和 $A_1,A_2,\dots$，有：
+%   \begin{description}[nosep,font=\sffamily\mdseries,itemindent=0pt]
+%     \item[有限可加性] $A\cap B=\emptyset\Rightarrow \mu(A\cup B)=\mu(A)+\mu(B)$。
+%     \item[单调性] $A\subseteq B\Rightarrow \mu(A)\leq \mu(B)$。
+%     \item[连续性] $A_n\nearrow A\Rightarrow \mu(A_n)\nearrow \mu(A)$。
+%     \item[Boole 不等式]  $\mu(\bigcup_n A_n)\leq \sum_n \mu(A_n)$。  
+%   \end{description}
+% \end{proposition}
+% \begin{proof}
+%   有限可加性是可列可加性的特殊情况，取 $A_1=A,A_2=B,A_3=A_4=\cdots=\emptyset$
+%   即可。若 $A\subseteq B$，由于 $\mathcal{E}$ 是 d-系，所以 $B \smallsetminus A\in \mathcal{E}$，
+%   所以
+%   \[
+%     \mu(B)=\mu(A\cup(B \smallsetminus A))= \mu(A)+\mu(B \smallsetminus A)
+%     \geq \mu(A).
+%   \]
+%   若 $A_n\nearrow A$，令 $B_1=A_1$，$B_n=A_{n}\smallsetminus A_{n-1}$，那么
+%   $B_n$ 互不相交且 $\bigcup_{k=1}^n B_k=A_n$，所以
+%   \[
+%     \lim \mu(A_n)=\lim\mu\left(\bigcup_{k=1}^n B_k\right)  
+%     =\lim \sum_{k=1}^n \mu(B_k)=\sum_{k=1}^\infty \mu(B_k)
+%     =\mu(A).
+%   \]
+%   对于 Boole 不等式，注意到
+%   \[
+%     \mu(A\cup B)=\mu(A\cup (B \smallsetminus A))=\mu(A)+\mu(B \smallsetminus A) 
+%     \leq \mu(A)+\mu (B), 
+%   \]
+%   所以归纳可得
+%   \[
+%     \mu\left(\bigcup_{k=1}^n A_k\right)\leq \sum_{k=1}^n\mu(A_k),  
+%   \]
+%   令 $n\to\infty$，左边根据连续性即可得到 Boole 不等式。
+% \end{proof}
+
+% \subsubsection{有限测度}
+
+% 令 $\mu$ 是可测空间 $(E,\mathcal{E})$ 上的测度，如果 $\mu(E)<\infty$，
+% 那么 $\mu$ 被称为\emph{有限测度}，根据单调性，此时对于任意 $A\in \mathcal{E}$，
+% 都有 $\mu(A)<\infty$。如果 $\mu(E)=1$，那么 $\mu$ 被称为\emph{概率测度}。
+% 如果存在 $E$ 的可测划分 $(E_n)$ 使得 $\mu(E_n)<\infty$，那么
+% $\mu$ 被称为\emph{$\sigma$-有限测度}。如果存在一列有限测度 $\mu_n$
+% 使得 $\mu=\sum_n \mu_n$，那么 $\mu$ 被称为\emph{$\Sigma$-有限测度}。
+% 有限测度都是 $\sigma$-有限的，$\sigma$-有限测度都是 $\Sigma$-有限的。
+
+% \begin{proposition}
+%   令 $(E,\mathcal{E})$ 是可测空间，$\mu,\nu$ 是两个有限测度且 $\mu(E)=\nu(E)$，如果
+%   $\mu,\nu$ 在生成 $\mathcal{E}$ 的某个 p-系上取值相同，那么
+%   $\mu=\nu$。
+% \end{proposition}
+% \begin{proof}
+%   设 $\mathcal{C}$ 是 p-系且 $\mathcal{E}=\sigma \mathcal{C}$，
+%   任取 $A\in \mathcal{C}$ 有 $\mu(A)=\nu(A)$。令
+%   \[
+%     \mathcal{D}=\{A\in \mathcal{E}:\mu(A)=\nu(A)\},  
+%   \]
+%   那么 $\mathcal{C}\subseteq \mathcal{D}$。如果我们证明 $\mathcal{D}$
+%   是 d-系，那么根据单调类定理，就有 $\mathcal{E}=\sigma \mathcal{C}\subseteq \mathcal{D}$，
+%   即任取 $A\in \mathcal{E}$ 有 $\mu(A)=\nu(A)$。下面我们证明 $\mathcal{D}$
+%   是 d-系。由于 $\mu(E)=\nu(E)$，所以 $E\in \mathcal{D}$。
+%   若 $A,B\in \mathcal{D}$ 且 $A\supseteq B$，那么
+%   \[
+%     \mu(B)+\mu(A \smallsetminus B)= \mu(A)=\nu(A)=\nu(B)+\mu(A \smallsetminus B),
+%   \]
+%   由于 $\mu(B)=\nu(B)$，所以 $\mu(A \smallsetminus B)=\nu (A \smallsetminus B)$，
+%   即 $A \smallsetminus B\in \mathcal{D}$。
+%   任取 $(A_n)\subseteq \mathcal{D}$ 且 $A_n\nearrow A$，根据连续性，所以
+%   $\mu(A_n)\nearrow \mu(A)$ 以及 $\nu(A_n)\nearrow \nu(A)$，所以
+%   \[
+%     \mu(A)=\lim \mu(A_n)=\lim \nu(A_n)=\nu(A),  
+%   \]
+%   所以 $A\in \mathcal{D}$。这就证明了 $\mathcal{D}$ 是 d-系。
+% \end{proof}
+
+% \begin{corollary}
+%   令 $\mu,\nu$ 是 $\left(\bar{\mathbb{R}},\mathcal{B}\left(\bar{\mathbb{R}}\right)\right)$
+%   上的概率测度，那么 $\mu=\nu$ 当且仅当对于任意的 $r\in \mathbb{R}$ 有
+%   $\mu[-\infty,r]=\nu[-\infty, r]$。
+% \end{corollary}
+
+% \subsubsection{原子，纯原子测度和非原子测度}
+
+% 令 $(E,\mathcal{E})$ 是可测空间，假设对于每个 $x\in E$，单点集 $\{x\}\in \mathcal{E}$，
+% 这一点对于所有的标准可测空间都是成立的。令 $\mu$ 是 $(E,\mathcal{E})$ 上的测度，
+% 如果点 $x$ 使得 $\mu\{x\}>0$，那么 $x$ 被称为 $\mu$ 的一个\emph{原子}。如果 $\mu$
+% 没有任何原子，那么 $\mu$ 被称为\emph{非原子测度}。如果 $\mu$ 的原子的集合 $D$
+% 是可数集并且 $\mu(E \smallsetminus D)=0$，那么 $\mu$ 被称为\emph{纯原子测度}。
+% 例如，Lebesgue 测度是非原子测度，Dirac 测度是纯原子测度(其只有一个原子)，离散测度
+% 是纯原子测度。
+
+% \begin{proposition}
+%   令 $\mu$ 是 $(E,\mathcal{E})$ 上的 $\Sigma$-有限测度，那么
+%   \[
+%     \mu=\lambda+\nu,
+%   \]
+%   其中 $\lambda$ 是非原子测度，$\nu$ 是纯原子测度。
+% \end{proposition}
+
+
+% \subsubsection{完备性，零测集}
+
+% 令 $(E,\mathcal{E},\mu)$ 是测度空间，如果可测集 $B$ 使得 $\mu(B)=0$，那么 $B$
+% 被称为\emph{零测集}。$E$ 的任意子集如果被一个可测的零测集包含，那么也被称为\emph{零测集}。
+% 如果 $E$ 的每个零测集都是可测集，那么我们说这个测度空间是\emph{完备的}。对于不完备的
+% 测度空间，下面的结果表明可以通过包含所有的零测集来扩大 $\mathcal{E}$ 以及
+% $\mu$ 来得到一个完备测度空间。测度空间 $(E,\bar{\mathcal{E}},\bar\mu)$ 被称为
+% $(E,\mathcal{E},\mu)$ 的\emph{完备化}。当 $E=\mathbb{R}$，$\mathcal{E}=\mathcal{B}_{\mathbb{R}}$
+% 和 $\mu=\Leb$ 的时候，$\bar{\mathcal{E}}$ 的元素被称为\emph{Lebesgue 可测集}。
+
+% \begin{proposition}
+%   令 $\mathcal{N}$ 是 $E$ 的所有零测子集的集合族，$\bar{\mathcal{E}}$ 为 $\mathcal{E}\cup \mathcal{N}$
+%   生成的 $\sigma$-代数，那么
+%   \begin{alphenum}[nosep]
+%     \item 每个 $B\in\bar{\mathcal{E}}$ 都形如 $B=A\cup N$，其中 $A\in \mathcal{E}$ 以及 $N\in \mathcal{N}$，
+%     \item 定义 $\bar\mu(A\cup N)=\mu(A)$，这给出了 $\bar{\mathcal{E}}$ 上的测度 $\bar\mu$，并且
+%     是唯一的满足 $\bar\mu(A)=\mu(A)\ (A\in \mathcal{E})$ 的测度，此时测度空间 $(E,\mathcal{E},\mu)$
+%     是完备的。
+%   \end{alphenum}
+% \end{proposition}
+
+% \begin{exercise}{限制和迹}{}
+%   令 $(E,\mathcal{E})$ 是可测空间，$\mu$ 是测度。令 $D\in \mathcal{E}$。
+%   \begin{alphenum}[nosep]
+%     \item 定义 $\nu(A)=\mu(A\cap D)$，证明 $\nu$ 是 $(E,\mathcal{E})$ 上的测度，
+%     被称为 $\mu$ 在 $D$ 上的迹。
+%     \item 令 $\mathcal{D}$ 为 $\mathcal{E}$ 在 $D$ 上的迹，对于 $A\in \mathcal{D}$，
+%     定义 $\nu(A)=\mu(A)$，证明 $\nu$ 是 $(D,\mathcal{D})$ 上的测度，被称为
+%     $\mu$ 在 $D$ 上的限制。
+%   \end{alphenum}
+% \end{exercise}
+% \begin{proof}
+%   (a) $\nu(\emptyset)=\mu(\emptyset)=0$。设 $(A_n)\subseteq \mathcal{E}$ 是不相交
+%   的子集列，那么 $(A_n\cap D)\subseteq \mathcal{E}$ 仍然不相交，所以
+%   \[
+%     \nu\left(\bigcup_{n=1}^\infty A_n\right)=\mu\left(\bigcup_{n=1}^\infty (A_n\cap D)\right)
+%     =\sum_{n=1}^\infty \mu(A_n\cap D)=\sum_{n=1}^\infty \nu(A_n),
+%   \]
+%   即 $\nu$ 是 $(E,\mathcal{E})$ 上的测度。
+
+%   (b) $\nu(\emptyset)=\mu(\emptyset)=0$。设 $(A_n)\subseteq \mathcal{D}$
+%   是不相交的子集列，于是
+%   \[
+%     \nu\left(\bigcup_{n=1}^\infty A_n\right)=\mu\left(\bigcup_{n=1}^\infty A_n\right)
+%     =\sum_{n=1}^\infty\mu(A_n)=\sum_{n=1}^\infty\nu(A_n).\qedhere
+%   \]
+% \end{proof}
+
+% \section{积分}
+
+% 令 $(E,\mathcal{E},\mu)$ 是测度空间。我们同时用 $\mathcal{E}$ 表示
+% $E$ 上的 $\mathcal{E}$-可测函数的集合，$\mathcal{E}_+$ 表示非负
+% $\mathcal{E}$-可测函数构成的子集。下面对于所有合理的 $f\in \mathcal{E}$，
+% 我们定义“$f$ 相对于 $\mu$ 的积分”，我们将记为：
+% \[
+%   \mu f=\mu(f)=\int_E f(x) \mu(\d x)  =\int_E f \d\mu.
+% \]
+% 并且我们将证明我们定义的积分蕴含下面的性质：对于任意 $a,b\in \mathbb{R}_+$
+% 和 $f,g,f_n\in \mathcal{E}_+$，有：
+% \begin{description}[nosep,font=\sffamily\mdseries,itemindent=0pt]
+%   \item[非负性] $\mu f\geq 0$，若 $f=0$，则 $\mu f=0$。
+%   \item[线性性] $\mu(af+bg)=a\mu f+b\mu g$。
+%   \item[单调收敛定理] 若 $f_n\nearrow f$，则 $\mu f_n\nearrow \mu f$。  
+% \end{description}
+
+% \begin{definition}
+%   我们从简单函数开始逐步定义积分的概念。
+%   \begin{alphenum}
+%     \item 令 $f$ 是简单非负函数，设其标准型为 $f=\sum_i a_i 1_{A_i}$，
+%     定义
+%     \[
+%       \mu f=\sum_{i=1}^n a_i\mu(A_i).  
+%     \]
+%     \item 令 $f\in \mathcal{E}_+$，记 $f_n=d_n\circ f$，其中 $d_n$
+%     为 \autoref{lemma:dn} 中的简单函数，那么每个 $f_n$ 是简单非负函数。
+%     此时 $\mu f_n$ 是单调递增的，于是我们定义
+%     \[
+%       \mu f=\lim \mu f_n.  
+%     \]
+%     \item 令 $f\in \mathcal{E}$，那么 $f^+,f^-\in \mathcal{E}_+$。
+%     由于 $f=f^+-f^-$，于是我们定义
+%     \[
+%       \mu f=\mu(f^+)-\mu (f^-).  
+%     \]
+%     上述定义中我们要求等式右端至少有一项是有限的。
+%   \end{alphenum}
+% \end{definition}
+% \begin{remark}
+%   令 $f,g$ 是简单非负函数。
+%   \begin{alphenum}
+%     \item 设 $f=\sum_i a_i 1_{A_i}$，这里我们不要求是标准型。若 $\bigcup_i A_i\neq E$，
+%     那么我们可以添加零项，所以我们假设 $\bigcup_i A_i=E$。若 $A_i\cap A_j\neq \emptyset$，
+%     那么
+%     \[
+%       a_i1_{A_i}+a_j1_{A_j}=
+%       a_i1_{A_i \smallsetminus (A_i\cap A_j)}+(a_i+a_j)1_{A_i\cap A_j}+a_j 1_{A_j \smallsetminus (A_i\cap A_j)},
+%     \]
+%     于是这两项的积分为
+%     \begin{align*}
+%       &a_i\mu(A_i \smallsetminus (A_i\cap A_j))+(a_i+a_j)\mu(A_i\cap A_j)+
+%       a_j\mu(A_j \smallsetminus (A_i\cap A_j))\\
+%       ={}& a_i\mu(A_i)-a_i\mu(A_i\cap A_j)+(a_i+a_j)\mu(A_i\cap A_j)+a_j\mu(A_j)
+%       -a_j\mu(A_i\cap A_j)\\
+%       ={}& a_i\mu(A_i)+a_j\mu(A_j),
+%     \end{align*}
+%     所以对于简单函数的非标准形式而言，其积分依然形如 $\mu f=\sum_i a_i\mu(A_i)$。
+%     \item 若 $a,b\in \mathbb{R}_+$，那么 $af+bg$ 依然是简单非负函数，再根据
+%     (a)，就有
+%     \[
+%       \mu(af+bg)=a\mu f+b\mu g.  
+%     \]
+%     \item 如果 $f\leq g$，那么
+%     \[
+%       \mu f\leq \mu f+\mu(g-f)=\mu(f+g-f)=\mu g.
+%     \]
+%     \item 若 $f_1\leq f_2\leq\cdots$，根据 (c)，有 $\mu f_1\leq\mu f_2\leq \cdots$，
+%     所以定义中的 $\lim \mu f_n$ 存在(可以为 $+\infty$)。
+%   \end{alphenum}
+% \end{remark}
+
+% \subsubsection{示例}
+
+% \begin{example}[离散测度]
+%   固定 $x_0\in E$，考虑 Dirac 测度 $\delta_{x_0}$。任取 $f\in \mathcal{E}_+$，
+%   所以
+%   \[
+%     \delta_{x_0}f=\lim \delta_{x_0}(d_n\circ f)=  f(x_0).
+%   \]
+%   那么对于任意 $f\in \mathcal{E}$，就有
+%   \[
+%     \delta_{x_0}f=\delta_{x_0}(f^+)-\delta_{x_0}(f^-)=f(x_0).  
+%   \]
+%   设 $\mu=\sum_{x\in D} m(x)\delta_x$ 是离散测度，其中 $D\in \mathcal{E}$ 是可数集，
+%   $m(x)> 0$，那么
+%   \[
+%     \mu f=\sum_{x\in D}m(x) f(x).  
+%   \]
+% \end{example}
+
+% \begin{example}[离散空间]
+%   设 $(E,\mathcal{E})$ 是离散可测空间，即 $E$ 可数且 $\mathcal{E}=2^E$。此时
+%   $E$ 上的任意数值函数都是 $\mathcal{E}$-可测的，且 $E$ 上的任意测度 $\mu$ 都满足
+%   $\mu=\sum_{x\in E}\mu\{x\}\delta_x$，所以对于任意 $E$ 上的函数 $f$，有
+%   \[
+%     \mu f=\sum_{x\in E}\mu\{x\} f(x).
+%   \]
+% \end{example}
+
+% \begin{example}[Lebesgue 积分]
+%   设 $E$ 是 $\mathbb{R}^d$ 的 Borel 子集，$\mathcal{E}=\mathcal{B}(E)$。
+%   设 $\mu$ 是 Lebesgue 测度在 $(E,\mathcal{E})$ 上的限制，对于 $f\in \mathcal{E}$，
+%   我们使用下面的记号表示积分 $\mu f$：
+%   \[
+%     \mu f=\Leb_E f=\int_E f(x)\Leb(\d x)=\int_E f(x)\d x.  
+%   \]
+% \end{example}
+
+% \subsubsection{可积性}
+
+% 对于一个函数 $f\in \mathcal{E}$，如果 $\mu f$ 存在且为实数，
+% 那么 $f$ 被称为\emph{可积的}。也就是说，$f$ 可积当且仅当 
+% $\mu f^+<\infty$ 以及 $\mu f^-<\infty$。
+
+% \subsubsection{在可测集上的积分}
+
+% 令 $f\in \mathcal{E}$，$A$ 是可测集，那么 $f1_A\in \mathcal{E}$，
+% 此时我们把 $f$ 在 $A$ 上的积分定义为 $f1_A$ 的积分，使用下面的记号：
+% \[
+%   \mu(f1_A)=\int_A f(x)\mu(\d x)=\int_A f \d\mu.  
+% \]
+
+% \begin{lemma}
+%   令 $f\in \mathcal{E}_+$，$A,B\in \mathcal{E}$ 不相交且 $C=A\cup B$，
+%   那么
+%   \[
+%     \mu(f1_A)+\mu(f1_B)=\mu(f1_C).  
+%   \]
+%   对于一般的 $f\in \mathcal{E}$ 也成立。
+% \end{lemma}
+% \begin{proof}
+%   令 $f_n=d_n\circ f$，由于 $f_n$ 是简单函数，所以
+%   \[
+%     \mu(f_n1_A)+\mu(f_n1_B)=\mu(f_n1_C),  
+%   \]
+%   注意到 $f_n1_A=d_n\circ(f1_A)$，对 $B,C$ 同理。令 $n\to\infty$ 即得结论。
+% \end{proof}
+
+% \subsubsection{非负性和单调性}
+
+% \begin{proposition}
+%   若 $f\in \mathcal{E}_+$，那么 $\mu f\geq 0$。如果 $f,g\in \mathcal{E}_+$
+%   且 $f\leq g$，那么 $\mu f\leq \mu g$。
+% \end{proposition}
+% \begin{proof}
+%   $f\in \mathcal{E}_+$ 表明 $f_n\geq 0$，从而 $\mu f_n\geq 0$，
+%   所以 $\mu f=\lim\mu f_n\geq 0$。如果 $f\leq g$，由于 $d_n$ 是单调递增函数，
+%   所以 $f_n\leq g_n$，所以 $\mu f_n\leq \mu g_n$，所以 $\mu f\leq \mu g$。
+% \end{proof}
+% \begin{corollary}
+%   若 $f,g\in \mathcal{E}$ 且 $f\leq g$，那么 $\mu f\leq \mu g$.
+% \end{corollary}
+% \begin{proof}
+%   $f\leq g$ 表明 $f^+\leq g^+$ 以及 $f^-\geq g^-$，所以
+%   $\mu f=\mu(f^+)-\mu(f^-)\leq \mu(g^+)-\mu (g^-)\leq \mu g$。
+% \end{proof}
+
+% \subsubsection{单调收敛定理}
+
+% 该定理是交换积分和极限次序的关键工具。该定理表明映射
+% \[
+%   \mathcal{E}_+\to\bar{\mathbb{R}}_+,\quad f\mapsto \mu f  
+% \]
+% 在递增极限下是连续的。
+
+% \begin{theorem}
+%   令 $(f_n)$ 是 $\mathcal{E}_+$ 中的递增序列，那么
+%   \[
+%     \mu(\lim f_n)=\lim\mu f_n.  
+%   \]
+% \end{theorem}
+% \begin{proof}
+%   令 $f=\lim f_n\in \mathcal{E}_+$，由于 $f_n\leq f$，根据单调性，有
+%   $\mu f_n\leq \mu f$，故
+%   \[
+%     \lim \mu f_n\leq \mu f.  
+%   \]
+
+%   任取满足 $0\leq s\leq f$ 的非负简单函数 $s$，给定 $0<\alpha <1$，
+%   定义
+%   \[
+%     A_n=\{x\in E:f_n(x)\geq \alpha s(x)\},
+%   \]
+%   那么 $A_n=(f_n-\alpha s)^{-1}[0,\infty]\in \mathcal{E}$。不难验证
+%   $A_n\subseteq A_{n+1}$。对于任意 $x\in E$，由于 $f_n\nearrow f$
+%   且 $f(x)\geq s(x)$，所以总存在足够大的 $n$ 使得 $f_n(x)\geq s(x)>\alpha s(x)$，
+%   即 $x\in A_n$，所以 $A_n\nearrow E$。定义 $(E,\mathcal{E})$ 上的测度
+%   $\nu$ 为
+%   \[
+%     \nu(A)=\mu(s1_A)=\int_A s\d \mu,  
+%   \]
+%   不难验证这确实是一个测度。此时我们有
+%   \[
+%     \mu f_n\geq \mu(f_n1_{A_n})\geq \mu(\alpha s1_{A_n})=\alpha\mu(s1_{A_n})
+%     =\alpha\nu(A_n),  
+%   \]
+%   令 $n\to\infty$，由于 $A_n\nearrow E$，所以 $\nu(A_n)\nearrow \nu(E)=\mu s$，
+%   所以
+%   \[
+%     \lim \mu f_n\geq \alpha\mu s.  
+%   \]
+%   特别地，取 $s=d_k\circ f$，有 $\lim \mu f_n\geq \alpha\mu(d_k\circ f)$，
+%   令 $k\to\infty$，所以 $\lim \mu f_n\geq \alpha\mu f$。再取
+%   $\alpha=1-1/k$，令 $k\to\infty$，即得
+%   \[
+%     \lim\mu f_n\geq \mu f.  \qedhere
+%   \]
+% \end{proof}
+
+% \subsubsection{积分的线性性}
+
+% \begin{proposition}
+%   对于 $f,g\in \mathcal{E}_+$ 和 $a,b\in \mathbb{R}_+$，有
+%   \[
+%     \mu(af+bg)=a\mu f+b\mu g.  
+%   \]
+%   对于 $f,g\in \mathcal{E}$ 和 $a,b\in \mathbb{R}$ 也是正确的。
+% \end{proposition}
+% \begin{proof}
+%   已知对于简单函数 $f_n=d_n\circ f$ 和 $g_n=d_n\circ g$，有
+%   \[
+%     \mu(af_n+bg_n)=a\mu f_n+b\mu g_n,  
+%   \]
+%   而 $f_n\nearrow f$，$g_n\nearrow g$，根据单调收敛定理，就有
+%   \[
+%     \mu(af+bg)=a\mu f+b\mu g.  
+%   \]
+%   对于一般的 $f,g$，只需将其拆为正部分和负部分即可验证。
+% \end{proof}
+
+% \subsubsection{积分的不敏感性}
+
+% \begin{proposition}
+%   如果 $A\in \mathcal{E}$ 是零测集，那么对于任意 $f\in \mathcal{E}$，有 $\mu(f1_A)=0$。
+%   如果 $f,g\in \mathcal{E}$ 且几乎处处有 $f=g$，那么 $\mu f=\mu g$。
+%   如果 $f\in \mathcal{E}_+$ 并且 $\mu f=0$，那么几乎处处 $f=0$。
+% \end{proposition}
+% \begin{proof}
+%   先假设 $f$ 是简单非负函数，其标准型为 $f=\sum_i a_i 1_{A_i}$，那么
+%   \[
+%     f1_A=\sum_{i=1}^n a_i 1_{A_i\cap A},
+%   \]
+%   所以 $\mu(f1_A)=\sum_i a_i\mu(A_i\cap A)$。根据单调性有 $\mu(A_i\cap A)\leq \mu(A)=0$，
+%   所以 $\mu(f1_A)=0$。然后假设 $f\in \mathcal{E}_+$，那么 $\mu((d_n\circ f)1_A)=0$，所以
+%   $\mu(f1_A)=0$。最后，设 $f\in \mathcal{E}_+$，那么 $\mu(f1_A)=\mu(f^+1_A)-\mu (f^-1_A)=0$。
+
+%   记 $A=\{x\in E:f(x)\neq g(x)\}$，那么 $A=E \smallsetminus(f-g)^{-1}(0)$ 可测，
+%   几乎处处 $f=g$ 表明 $A$ 是零测集。于是 $\mu(f1_A)=\mu(g1_A)=0$，所以
+%   \begin{align*}
+%     \mu f&=\mu(f1_A)+\mu(f1_{E \smallsetminus A})=\mu(f1_{E \smallsetminus A})
+%     =
+%     \mu(g1_{E \smallsetminus A})\\&=\mu(g1_{E \smallsetminus A})+\mu(g1_A)=\mu g.
+%   \end{align*}
+
+%   记 $N=\{x\in E: f(x)>0\}$，$N_k=\{x\in E:f(x)>1/k\}$，显然 $N_k\nearrow N$，故
+%   $\mu(N_k)\nearrow \mu(N)$。此时 $f> 1/k1_{N_k}$，所以 $0=\mu f\geq 1/k\mu(N_k)$，
+%   这表明 $\mu(N_k)=0$，所以 $\mu(N)=\lim\mu(N_k)=0$。
+% \end{proof}
+
+
+% \subsubsection{Fatou 引理}
+
+% \begin{lemma}
+%   令 $(f_n)\subseteq \mathcal{E}_+$，那么 $\mu(\liminf f_n)\leq \liminf\mu f_n$。
+% \end{lemma}
+% \begin{proof}
+%   记 $g_m=\inf_{n\geq m}f_n$，那么 $g_m\in \mathcal{E}_+$ 且递增，根据单调收敛定理，有
+%   \[
+%     \mu(\liminf f_n)=\mu(\lim g_m)=\lim\mu g_m.
+%   \]
+%   又因为 $n\geq m$ 的时候 $g_m\leq f_n$，所以 $\mu g_m\leq \mu f_n$，所以
+%   $\mu g_m\leq \inf_{n\geq m} \mu f_n$，令 $m\to\infty$，即得
+%   \[
+%     \mu(\liminf f_n)=\lim\mu g_m\leq \liminf \mu f_n.\qedhere
+%   \]
+% \end{proof}
+
+% \begin{corollary}
+%   令 $(f_n)\subseteq \mathcal{E}$，如果存在可积函数 $g$ 使得 $f_n\geq g$，那么
+%   \[
+%     \mu(\liminf f_n)\leq\liminf \mu f_n.
+%   \]
+%   如果存在可积函数 $g$ 使得 $f_n\leq g$，那么
+%   \[
+%     \mu(\limsup f_n)\geq \limsup \mu f_n.
+%   \]
+% \end{corollary}
+% \begin{proof}
+%   若可积函数 $g$ 使得 $f_n\geq g$，那么 $A=\{x\in E:g(x)\in \mathbb{R}\}$ 的补集是零测集(练习)。
+%   那么几乎处处 $f_n1_A=f_n$ 以及 $g1_A=g$。由于 $g1_A$ 是实值函数，所以
+%   $f_n1_A-g1_A$ 是有意义的，故 $f_n1_A-g1_A\in \mathcal{E}_+$ 且可积，根据 Fatou 引理，有
+%   \begin{align*}
+%     \mu\bigl(\liminf (f_n1_A)\bigr)-\mu(g1_A)&=\mu\bigl(\liminf (f_n1_A)- g1_A\bigr)
+%     =\mu\bigl(\liminf (f_n1_A-g1_A)\bigr)\\
+%     &\leq \liminf\mu(f_n1_A-g1_A)=\liminf \mu(f_n1_A)-\mu(g1_A),
+%   \end{align*}
+%   由于几乎处处 $f_n1_A=f_n$，故几乎处处 $\liminf (f_n1_A)=\liminf f_n$，
+%   故 $\mu(f_n1_A)=\mu f_n$ 以及 $\mu\bigl(\liminf (f_n1_A)\bigr)=\mu(\liminf f_n)$，这就表明
+%   \[
+%     \mu(\liminf f_n)\leq\liminf \mu f_n.
+%   \]
+%   对于第二点，考虑 $g1_A-f_n1_A\in \mathcal{E}_+$ 并且 $\limsup r_n=-\liminf(-r_n)$ 即可。
+% \end{proof}
+
+
+\part{测度论}
+
+\chapter{可测空间}
+
+\section{可测集}
 
 \begin{definition}
-  我们从简单函数开始逐步定义积分的概念。
-  \begin{alphenum}
-    \item 令 $f$ 是简单非负函数，设其标准型为 $f=\sum_i a_i 1_{A_i}$，
-    定义
-    \[
-      \mu f=\sum_{i=1}^n a_i\mu(A_i).  
-    \]
-    \item 令 $f\in \mathcal{E}_+$，记 $f_n=d_n\circ f$，其中 $d_n$
-    为 \autoref{lemma:dn} 中的简单函数，那么每个 $f_n$ 是简单非负函数。
-    此时 $\mu f_n$ 是单调递增的，于是我们定义
-    \[
-      \mu f=\lim \mu f_n.  
-    \]
-    \item 令 $f\in \mathcal{E}$，那么 $f^+,f^-\in \mathcal{E}_+$。
-    由于 $f=f^+-f^-$，于是我们定义
-    \[
-      \mu f=\mu(f^+)-\mu (f^-).  
-    \]
-    上述定义中我们要求等式右端至少有一项是有限的。
-  \end{alphenum}
+  集合 $E$ 上的 $\sigma$-域 $\mathcal{A}$ 指的是 $E$ 的一个子集族，
+  其满足下面的性质：
+  \begin{enumerate}
+    \item $E\in \mathcal{A}$；
+    \item $A\in \mathcal{A}\Rightarrow A^c\in \mathcal{A}$；
+    \item 如果一列子集 $A_n\in \mathcal{A}$，那么
+    $\bigcup_{n\in \mathbb{N}} A_n\in \mathcal{A}$。
+  \end{enumerate}
 \end{definition}
-\begin{remark}
-  令 $f,g$ 是简单非负函数。
-  \begin{alphenum}
-    \item 设 $f=\sum_i a_i 1_{A_i}$，这里我们不要求是标准型。若 $\bigcup_i A_i\neq E$，
-    那么我们可以添加零项，所以我们假设 $\bigcup_i A_i=E$。若 $A_i\cap A_j\neq \emptyset$，
-    那么
-    \[
-      a_i1_{A_i}+a_j1_{A_j}=
-      a_i1_{A_i \smallsetminus (A_i\cap A_j)}+(a_i+a_j)1_{A_i\cap A_j}+a_j 1_{A_j \smallsetminus (A_i\cap A_j)},
-    \]
-    于是这两项的积分为
-    \begin{align*}
-      &a_i\mu(A_i \smallsetminus (A_i\cap A_j))+(a_i+a_j)\mu(A_i\cap A_j)+
-      a_j\mu(A_j \smallsetminus (A_i\cap A_j))\\
-      ={}& a_i\mu(A_i)-a_i\mu(A_i\cap A_j)+(a_i+a_j)\mu(A_i\cap A_j)+a_j\mu(A_j)
-      -a_j\mu(A_i\cap A_j)\\
-      ={}& a_i\mu(A_i)+a_j\mu(A_j),
-    \end{align*}
-    所以对于简单函数的非标准形式而言，其积分依然形如 $\mu f=\sum_i a_i\mu(A_i)$。
-    \item 若 $a,b\in \mathbb{R}_+$，那么 $af+bg$ 依然是简单非负函数，再根据
-    (a)，就有
-    \[
-      \mu(af+bg)=a\mu f+b\mu g.  
-    \]
-    \item 如果 $f\leq g$，那么
-    \[
-      \mu f\leq \mu f+\mu(g-f)=\mu(f+g-f)=\mu g.
-    \]
-    \item 若 $f_1\leq f_2\leq\cdots$，根据 (c)，有 $\mu f_1\leq\mu f_2\leq \cdots$，
-    所以定义中的 $\lim \mu f_n$ 存在(可以为 $+\infty$)。
-  \end{alphenum}
-\end{remark}
 
-\subsubsection{示例}
+$\mathcal A$ 的元素被称为\emph{可测集}，$(E,\mathcal{A})$ 被称为\emph{可测空间}。
+根据定义，我们很容易得出下面的结果：
+\begin{itemize}[nosep]
+  \item $\emptyset=E^c\in \mathcal{A}$。
+  \item 如果一列子集 $A_n\in \mathcal{A}$，那么
+  \[
+    \bigcap_{n\in \mathbb{N}}A_n=\Bigl(\bigcup_{n\in \mathbb{N}}A_n\Bigr) ^c\in \mathcal{A}.
+  \]
+  \item $\mathcal{A}$ 对有限并和有限交也是封闭的，只需要从某一项 $A_n$ 开始
+  全部取空集即可。
+\end{itemize}
 
-\begin{example}[离散测度]
-  固定 $x_0\in E$，考虑 Dirac 测度 $\delta_{x_0}$。任取 $f\in \mathcal{E}_+$，
-  所以
+\begin{example}
+  根据可测集的定义，很容易构造出一些最简单的例子：
+  \begin{enumerate}
+    \item $\mathcal{A}=\mathcal{P}(E)$，当 $E$ 是有限集或者可数集的时候
+    我们通常会使用这样的 $\sigma$-域，其他情况则很少使用。
+    \item $\mathcal{A}=\{\emptyset,E\}$，平凡 $\sigma$-域。
+    \item $E$ 的所有至多可数的子集以及所有补集至多可数的子集构成
+    $E$ 上的一个 $\sigma$-域。
+  \end{enumerate}
+\end{example}
+
+为了产生更多的例子，我们注意到 $E$ 上任意 $\sigma$-域的交集仍然是
+$\sigma$-域，这导出了下面的定义。
+
+\begin{definition}
+  令 $\mathcal{C}$ 是 $\mathcal{P}(E)$ 的子集，$E$ 上包含 $\mathcal{C}$
+  的最小的 $\sigma$-域被记为 $\sigma(\mathcal{C})$，不难看出其是所有包含 $\mathcal{C}$
+  的 $\sigma$-域的交集。我们称 $\sigma(\mathcal{C})$ 是由 $\mathcal{C}$ 生成的
+  $\sigma$-域。
+\end{definition}
+
+\begin{definition}
+  设 $(E,\mathcal{O})$ 是拓扑空间，所有开集 $\mathcal{O}$ 生成的 $\sigma$-域
+  $\sigma(\mathcal{O})$ 被称为 $E$ 上的 Borel $\sigma$-域，记为 $\mathcal{B}(E)$。
+\end{definition}
+
+$E$ 上的 Borel $\sigma$-域是包含所有开集的最小的 $\sigma$-域。
+$\mathcal{B}(E)$ 的元素被称为 $E$ 的\emph{Borel 子集}。显然，
+$E$ 中的闭集也都是 Borel 子集。
+
+\begin{example}[$\mathbb{R}$ 上的 Borel $\sigma$-域]
+  记 $\mathcal{C}_1$ 为 $\mathbb{R}$ 中开区间的集合：
   \[
-    \delta_{x_0}f=\lim \delta_{x_0}(d_n\circ f)=  f(x_0).
+    \mathcal{C}_1=\{(a,b)\,|\, a,b\in \mathbb{R},a<b\}  ,
   \]
-  那么对于任意 $f\in \mathcal{E}$，就有
+  显然有 $\mathcal{C}_1\subseteq \mathcal{B}(\mathbb{R})$，于是
+  $\sigma(\mathcal{C}_1)\subseteq \mathcal{B}(\mathbb{R})$。
+  下面我们说明 $\mathcal{B}(\mathbb{R})\subseteq \sigma(\mathcal{C}_1)$。
+  我们不加证明地使用一个结论(Lindel\"of 定理)：$\mathbb{R}$ 的任意开子集 $U$ 都是开区间的可数并。
+  那么根据 $\sigma$-域的定义，任意开区间都在 $\sigma(\mathcal{C}_1)$ 中，
+  故 $\mathcal{B}(\mathbb{R})\subseteq \sigma(\mathcal{C}_1)$。
+  这表明 $\mathcal{B}(\mathbb{R})$ 可以由所有开区间生成。
+
+  此外，如果注意到
   \[
-    \delta_{x_0}f=\delta_{x_0}(f^+)-\delta_{x_0}(f^-)=f(x_0).  
+    (a,b)=(-\infty,b)\cap (-\infty,a)^c,  
   \]
-  设 $\mu=\sum_{x\in D} m(x)\delta_x$ 是离散测度，其中 $D\in \mathcal{E}$ 是可数集，
-  $m(x)> 0$，那么
+  还可以证明 $\mathcal{B}(\mathbb{R})$ 由 $\mathcal{C}_2$ 生成，其中
   \[
-    \mu f=\sum_{x\in D}m(x) f(x).  
+    \mathcal{C}_2=\{(-\infty,a)\,|\, a\in \mathbb{R}\}.
   \]
 \end{example}
 
-\begin{example}[离散空间]
-  设 $(E,\mathcal{E})$ 是离散可测空间，即 $E$ 可数且 $\mathcal{E}=2^E$。此时
-  $E$ 上的任意数值函数都是 $\mathcal{E}$-可测的，且 $E$ 上的任意测度 $\mu$ 都满足
-  $\mu=\sum_{x\in E}\mu\{x\}\delta_x$，所以对于任意 $E$ 上的函数 $f$，有
+在后文中，每当我们考虑拓扑空间(例如 $\mathbb{R}$ 或者 $\mathbb{R}^d$)时，
+除非有特别说明，否则我们总是假设它们配备 Borel $\sigma$-域。
+
+下一个非常重要的 $\sigma$-域是乘积 $\sigma$-域。
+
+\begin{definition}
+  令 $(E_1,\mathcal{A}_1)$ 和 $(E_2,\mathcal{A}_2)$ 是可测空间，定义
+  $E_1\times E_2$ 上的 $\sigma$-域 $\mathcal{A}_1\otimes \mathcal{A}_2$ 为
   \[
-    \mu f=\sum_{x\in E}\mu\{x\} f(x).
+    \mathcal{A}_1\otimes \mathcal{A}_2=\sigma\bigl(\{A_1\times A_2\,|\, A_1\in \mathcal{A}_1,A_2\in \mathcal{A}_2\}\bigr).
   \]
-\end{example}
-
-\begin{example}[Lebesgue 积分]
-  设 $E$ 是 $\mathbb{R}^d$ 的 Borel 子集，$\mathcal{E}=\mathcal{B}(E)$。
-  设 $\mu$ 是 Lebesgue 测度在 $(E,\mathcal{E})$ 上的限制，对于 $f\in \mathcal{E}$，
-  我们使用下面的记号表示积分 $\mu f$：
-  \[
-    \mu f=\Leb_E f=\int_E f(x)\Leb(\d x)=\int_E f(x)\d x.  
-  \]
-\end{example}
-
-\subsubsection{可积性}
-
-对于一个函数 $f\in \mathcal{E}$，如果 $\mu f$ 存在且为实数，
-那么 $f$ 被称为\emph{可积的}。也就是说，$f$ 可积当且仅当 
-$\mu f^+<\infty$ 以及 $\mu f^-<\infty$。
-
-\subsubsection{在可测集上的积分}
-
-令 $f\in \mathcal{E}$，$A$ 是可测集，那么 $f1_A\in \mathcal{E}$，
-此时我们把 $f$ 在 $A$ 上的积分定义为 $f1_A$ 的积分，使用下面的记号：
-\[
-  \mu(f1_A)=\int_A f(x)\mu(\d x)=\int_A f \d\mu.  
-\]
+\end{definition}
 
 \begin{lemma}
-  令 $f\in \mathcal{E}_+$，$A,B\in \mathcal{E}$ 不相交且 $C=A\cup B$，
-  那么
-  \[
-    \mu(f1_A)+\mu(f1_B)=\mu(f1_C).  
-  \]
-  对于一般的 $f\in \mathcal{E}$ 也成立。
+  设 $E$ 和 $F$ 是可分(有可数的稠密子集)的拓扑空间，$E\times F$ 配备积拓扑，那么
+  $\mathcal{B}(E\times F)=\mathcal{B}(E)\otimes \mathcal{B}(F)$。
 \end{lemma}
-\begin{proof}
-  令 $f_n=d_n\circ f$，由于 $f_n$ 是简单函数，所以
-  \[
-    \mu(f_n1_A)+\mu(f_n1_B)=\mu(f_n1_C),  
-  \]
-  注意到 $f_n1_A=d_n\circ(f1_A)$，对 $B,C$ 同理。令 $n\to\infty$ 即得结论。
-\end{proof}
 
-\subsubsection{非负性和单调性}
 
-\begin{proposition}
-  若 $f\in \mathcal{E}_+$，那么 $\mu f\geq 0$。如果 $f,g\in \mathcal{E}_+$
-  且 $f\leq g$，那么 $\mu f\leq \mu g$。
+\section{正测度}
+
+令 $(E,\mathcal{A})$ 是可测空间。
+
+\begin{definition}
+  $(E,\mathcal{A})$ 上的正测度指的是一个映射 $\mu:\mathcal{A}\to [0,\infty]$，
+  其满足下面的性质：
+  \begin{enumerate}
+    \item $\mu(\emptyset)=0$；
+    \item ($\sigma$-可加性) 对于任意可数个不相交的可测集序列 $(A_n)_{n\in \mathbb{N}}$，有
+    \[
+      \mu\Bigl(\bigcup_{n\in \mathbb{N}}A_n\Bigr) =\sum_{n\in \mathbb{N}}\mu(A_n).
+    \]
+  \end{enumerate}
+  此时，三元组 $(E,\mathcal{A},\mu)$ 被称为\emph{测度空间}。
+  值 $\mu(E)$ 被称为测度 $\mu$ 的总质量。
+\end{definition}
+
+需要注意的是，我们允许 $\mu$ 的值为 $+\infty$，此时级数
+$\sum_{n\in \mathbb{N}}\mu(A_n)$ 作为正向级数在 $[0,\infty]$
+中总是有意义的。
+根据 $\sigma$-可加性，如果我们令 $n>n_0$ 开始 $A_n=\emptyset$，
+便可以得到有限可加性。
+
+\begin{proposition}[测度的性质]
+  根据定义，测度 $\mu$ 满足下面的性质：
+  \begin{enumerate}
+    \item 如果 $A\subseteq B$，那么 $\mu(A)\leq\mu(B)$。此外，如果
+    还满足 $\mu(A)<\infty$，那么
+    \[
+        \mu(B \smallsetminus A)=\mu(B)-\mu(A).
+    \]
+    \item 如果 $A,B\in \mathcal{A}$，那么
+    \[
+      \mu(A)+\mu(B)=\mu(A\cup B)+\mu(A\cap B).  
+    \]
+    \item 如果 $A_n\in \mathcal{A}$ 且 $A_n\subseteq A_{n+1}$，那么
+    \[
+      \mu\Bigl(\bigcup_{n\in \mathbb{N}}A_n\Bigr)  
+      =\lim_{n\to\infty}\mu(A_n).
+    \]
+    \item 如果 $B_n\in \mathcal{A}$ 且 $B_{n+1}\subseteq B_n$，
+    $\mu(B_1)<\infty$，那么
+    \[
+      \mu\Bigl(\bigcap_{n\in \mathbb{N}}B_n\Bigr)  
+      =\lim_{n\to\infty}\mu(B_n).
+    \]
+    \item 如果 $A_n\in \mathcal{A}$，那么
+    \[
+      \mu\Bigl(\bigcup_{n\in \mathbb{N}}A_n\Bigr)\leq \sum_{n\in \mathbb{N}}\mu(A_n).
+    \]
+  \end{enumerate}
 \end{proposition}
 \begin{proof}
-  $f\in \mathcal{E}_+$ 表明 $f_n\geq 0$，从而 $\mu f_n\geq 0$，
-  所以 $\mu f=\lim\mu f_n\geq 0$。如果 $f\leq g$，由于 $d_n$ 是单调递增函数，
-  所以 $f_n\leq g_n$，所以 $\mu f_n\leq \mu g_n$，所以 $\mu f\leq \mu g$。
-\end{proof}
-\begin{corollary}
-  若 $f,g\in \mathcal{E}$ 且 $f\leq g$，那么 $\mu f\leq \mu g$.
-\end{corollary}
-\begin{proof}
-  $f\leq g$ 表明 $f^+\leq g^+$ 以及 $f^-\geq g^-$，所以
-  $\mu f=\mu(f^+)-\mu(f^-)\leq \mu(g^+)-\mu (g^-)\leq \mu g$。
-\end{proof}
-
-\subsubsection{单调收敛定理}
-
-该定理是交换积分和极限次序的关键工具。该定理表明映射
-\[
-  \mathcal{E}_+\to\bar{\mathbb{R}}_+,\quad f\mapsto \mu f  
-\]
-在递增极限下是连续的。
-
-\begin{theorem}
-  令 $(f_n)$ 是 $\mathcal{E}_+$ 中的递增序列，那么
+  (1) 若 $A\subseteq B$，那么 $B=A\bigcup (B \smallsetminus A)$ 是无交并，所以
   \[
-    \mu(\lim f_n)=\lim\mu f_n.  
-  \]
-\end{theorem}
-\begin{proof}
-  令 $f=\lim f_n\in \mathcal{E}_+$，由于 $f_n\leq f$，根据单调性，有
-  $\mu f_n\leq \mu f$，故
-  \[
-    \lim \mu f_n\leq \mu f.  
+    \mu(B)=\mu(A)+\mu(B \smallsetminus A)\geq \mu(A).  
   \]
 
-  任取满足 $0\leq s\leq f$ 的非负简单函数 $s$，给定 $0<\alpha <1$，
-  定义
-  \[
-    A_n=\{x\in E:f_n(x)\geq \alpha s(x)\},
-  \]
-  那么 $A_n=(f_n-\alpha s)^{-1}[0,\infty]\in \mathcal{E}$。不难验证
-  $A_n\subseteq A_{n+1}$。对于任意 $x\in E$，由于 $f_n\nearrow f$
-  且 $f(x)\geq s(x)$，所以总存在足够大的 $n$ 使得 $f_n(x)\geq s(x)>\alpha s(x)$，
-  即 $x\in A_n$，所以 $A_n\nearrow E$。定义 $(E,\mathcal{E})$ 上的测度
-  $\nu$ 为
-  \[
-    \nu(A)=\mu(s1_A)=\int_A s\d \mu,  
-  \]
-  不难验证这确实是一个测度。此时我们有
-  \[
-    \mu f_n\geq \mu(f_n1_{A_n})\geq \mu(\alpha s1_{A_n})=\alpha\mu(s1_{A_n})
-    =\alpha\nu(A_n),  
-  \]
-  令 $n\to\infty$，由于 $A_n\nearrow E$，所以 $\nu(A_n)\nearrow \nu(E)=\mu s$，
+  (2) 若 $\mu(A),\mu(B)$ 中有至少一个为无穷，那么根据 (1)，
+  $\mu(A\cup B)$ 为无穷，所以结论成立。下面假设
+  $\mu(A),\mu(B)$ 均有限，记 $C=A\cap B$，那么
+  $A\cup B=(A \smallsetminus C)\cup C\cup(B \smallsetminus C)$ 是无交并，
   所以
   \[
-    \lim \mu f_n\geq \alpha\mu s.  
+    \mu(A\cup B)=\mu(A \smallsetminus C)+\mu(C)+\mu(B \smallsetminus C)
+    =\mu(A)+\mu(B)-\mu(C),
   \]
-  特别地，取 $s=d_k\circ f$，有 $\lim \mu f_n\geq \alpha\mu(d_k\circ f)$，
-  令 $k\to\infty$，所以 $\lim \mu f_n\geq \alpha\mu f$。再取
-  $\alpha=1-1/k$，令 $k\to\infty$，即得
+  结论 (2) 成立。
+
+  (3) 令 $C_1=A_1$，对于 $n\geq 2$ 的时候，令
   \[
-    \lim\mu f_n\geq \mu f.  \qedhere
+    C_n=A_{n}  \smallsetminus A_{n-1},
   \]
+  那么 $A_n=\bigcup_{k\leq n}C_k$ 是无交并，所以
+  \[
+    \mu\Bigl(\bigcup_{n\in \mathbb{N}}A_n\Bigr)  
+    =\mu\Bigl(\bigcup_{n\in \mathbb{N}}C_n \Bigr)
+    =\sum_{n\in \mathbb{N}}\mu(C_n)=\lim_{n\to\infty}
+    \sum_{k=1}^n \mu(C_k)=\lim_{n\to\infty} \mu(A_n).
+  \]
+
+  (4)
 \end{proof}
 
-\subsubsection{积分的线性性}
+\begin{example}[常见的测度]
+  \mbox{}
+  \begin{enumerate}
+    \item 令 $E=\mathbb{N}$，$A=\mathcal{P}(\mathbb{N})$，定义%
+    \emph{计数测度}为
+    \[
+      \mu(A)=\card(A).  
+    \]
+    \item 如果 $A$ 是 $E$ 的子集，定义 $A$ 的指示函数 $\mathbf{1}_A:E\to\{0,1\}$
+    为
+    \[
+      \mathbf{1}_A(x)=\begin{cases}
+        1 & x\in A,\\
+        0 & x\notin A.
+      \end{cases}  
+    \]
+    令 $(E,\mathcal{A})$ 是可测空间，固定 $x\in E$。对于每个 $A\in \mathcal{A}$，令
+    $\delta_x(A)=\mathbf{1}_A(x)$，这给出了 $(E,\mathcal{A})$ 上的一个测度，被称为
+    \emph{$x$ 处的 Dirac 测度}。
+    \item 可以证明，在 $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ 上存在唯一的正测度 $\lambda$
+    使得：对于每个开区间 $[a,b]$，有 $\lambda\bigl([a,b]\bigr)=b-a$。这个
+    测度 $\lambda$ 被称为\emph{Lebesgue 测度}。
+  \end{enumerate}
+\end{example}
 
-\begin{proposition}
-  对于 $f,g\in \mathcal{E}_+$ 和 $a,b\in \mathbb{R}_+$，有
-  \[
-    \mu(af+bg)=a\mu f+b\mu g.  
-  \]
-  对于 $f,g\in \mathcal{E}$ 和 $a,b\in \mathbb{R}$ 也是正确的。
-\end{proposition}
-\begin{proof}
-  已知对于简单函数 $f_n=d_n\circ f$ 和 $g_n=d_n\circ g$，有
-  \[
-    \mu(af_n+bg_n)=a\mu f_n+b\mu g_n,  
-  \]
-  而 $f_n\nearrow f$，$g_n\nearrow g$，根据单调收敛定理，就有
-  \[
-    \mu(af+bg)=a\mu f+b\mu g.  
-  \]
-  对于一般的 $f,g$，只需将其拆为正部分和负部分即可验证。
-\end{proof}
+如果 $\mu$ 是 $(E,\mathcal{A})$ 上的正测度，$C\in \mathcal{A}$，
+那么可以定义 $\mu$ 在 $C$ 上的\emph{限制} $\nu$ 为：
+\[
+  \nu(A)=\mu(A\cap C),\quad \forall A\in \mathcal{A}.
+\]
+不难验证 $\nu$ 还是 $(E,\mathcal{A})$ 上的正测度。
+ 
 
-\subsubsection{积分的不敏感性}
+\part{概率论}
 
-\begin{proposition}
-  如果 $A\in \mathcal{E}$ 是零测集，那么对于任意 $f\in \mathcal{E}$，有 $\mu(f1_A)=0$。
-  如果 $f,g\in \mathcal{E}$ 且几乎处处有 $f=g$，那么 $\mu f=\mu g$。
-  如果 $f\in \mathcal{E}_+$ 并且 $\mu f=0$，那么几乎处处 $f=0$。
-\end{proposition}
-\begin{proof}
-  先假设 $f$ 是简单非负函数，其标准型为 $f=\sum_i a_i 1_{A_i}$，那么
-  \[
-    f1_A=\sum_{i=1}^n a_i 1_{A_i\cap A},
-  \]
-  所以 $\mu(f1_A)=\sum_i a_i\mu(A_i\cap A)$。根据单调性有 $\mu(A_i\cap A)\leq \mu(A)=0$，
-  所以 $\mu(f1_A)=0$。然后假设 $f\in \mathcal{E}_+$，那么 $\mu((d_n\circ f)1_A)=0$，所以
-  $\mu(f1_A)=0$。最后，设 $f\in \mathcal{E}_+$，那么 $\mu(f1_A)=\mu(f^+1_A)-\mu (f^-1_A)=0$。
+\chapter{概率论基础}
 
-  记 $A=\{x\in E:f(x)\neq g(x)\}$，那么 $A=E \smallsetminus(f-g)^{-1}(0)$ 可测，
-  几乎处处 $f=g$ 表明 $A$ 是零测集。于是 $\mu(f1_A)=\mu(g1_A)=0$，所以
-  \begin{align*}
-    \mu f&=\mu(f1_A)+\mu(f1_{E \smallsetminus A})=\mu(f1_{E \smallsetminus A})
-    =
-    \mu(g1_{E \smallsetminus A})\\&=\mu(g1_{E \smallsetminus A})+\mu(g1_A)=\mu g.
-  \end{align*}
+\section{一般定义}
 
-  记 $N=\{x\in E: f(x)>0\}$，$N_k=\{x\in E:f(x)>1/k\}$，显然 $N_k\nearrow N$，故
-  $\mu(N_k)\nearrow \mu(N)$。此时 $f> 1/k1_{N_k}$，所以 $0=\mu f\geq 1/k\mu(N_k)$，
-  这表明 $\mu(N_k)=0$，所以 $\mu(N)=\lim\mu(N_k)=0$。
-\end{proof}
+\subsection{概率空间}
+
+令 $(\Omega,\mathcal{A})$ 是可测空间，$\mathbb{P}$ 是 $(\Omega,\mathcal{A})$
+上的概率测度，我们说 $(\Omega,\mathcal{A},\mathbb{P})$ 是\emph{概率空间}。
 
 
-\subsubsection{Fatou 引理}
 
-\begin{lemma}
-  令 $(f_n)\subseteq \mathcal{E}_+$，那么 $\mu(\liminf f_n)\leq \liminf\mu f_n$。
-\end{lemma}
-\begin{proof}
-  记 $g_m=\inf_{n\geq m}f_n$，那么 $g_m\in \mathcal{E}_+$ 且递增，根据单调收敛定理，有
-  \[
-    \mu(\liminf f_n)=\mu(\lim g_m)=\lim\mu g_m.
-  \]
-  又因为 $n\geq m$ 的时候 $g_m\leq f_n$，所以 $\mu g_m\leq \mu f_n$，所以
-  $\mu g_m\leq \inf_{n\geq m} \mu f_n$，令 $m\to\infty$，即得
-  \[
-    \mu(\liminf f_n)=\lim\mu g_m\leq \liminf \mu f_n.\qedhere
-  \]
-\end{proof}
-
-\begin{corollary}
-  令 $(f_n)\subseteq \mathcal{E}$，如果存在可积函数 $g$ 使得 $f_n\geq g$，那么
-  \[
-    \mu(\liminf f_n)\leq\liminf \mu f_n.
-  \]
-  如果存在可积函数 $g$ 使得 $f_n\leq g$，那么
-  \[
-    \mu(\limsup f_n)\geq \limsup \mu f_n.
-  \]
-\end{corollary}
-\begin{proof}
-  若可积函数 $g$ 使得 $f_n\geq g$，那么 $A=\{x\in E:g(x)\in \mathbb{R}\}$ 的补集是零测集(练习)。
-  那么几乎处处 $f_n1_A=f_n$ 以及 $g1_A=g$。由于 $g1_A$ 是实值函数，所以
-  $f_n1_A-g1_A$ 是有意义的，故 $f_n1_A-g1_A\in \mathcal{E}_+$ 且可积，根据 Fatou 引理，有
-  \begin{align*}
-    \mu\bigl(\liminf (f_n1_A)\bigr)-\mu(g1_A)&=\mu\bigl(\liminf (f_n1_A)- g1_A\bigr)
-    =\mu\bigl(\liminf (f_n1_A-g1_A)\bigr)\\
-    &\leq \liminf\mu(f_n1_A-g1_A)=\liminf \mu(f_n1_A)-\mu(g1_A),
-  \end{align*}
-  由于几乎处处 $f_n1_A=f_n$，故几乎处处 $\liminf (f_n1_A)=\liminf f_n$，
-  故 $\mu(f_n1_A)=\mu f_n$ 以及 $\mu\bigl(\liminf (f_n1_A)\bigr)=\mu(\liminf f_n)$，这就表明
-  \[
-    \mu(\liminf f_n)\leq\liminf \mu f_n.
-  \]
-  对于第二点，考虑 $g1_A-f_n1_A\in \mathcal{E}_+$ 并且 $\limsup r_n=-\liminf(-r_n)$ 即可。
-\end{proof}
 
 
 

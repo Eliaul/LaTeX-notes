@@ -34,16 +34,20 @@
 \DeclareMathOperator\Ann{Ann}
 \DeclareMathOperator\Max{Max}
 \DeclareMathOperator\GL{GL}
+\DeclareMathOperator\Orth{O}
+\DeclareMathOperator\SO{SO}
+\DeclareMathOperator\SU{SU}
+\DeclareMathOperator\Lie{Lie}
 \DeclareMathOperator\End{End}
 \DeclareMathOperator\Int{Int}
 \DeclareMathOperator\Tor{Tor}
-\DeclareMathOperator\Frac{Frac}
+\DeclareMathOperator\LL{L}
 \DeclareMathOperator\Tr{Tr}
 \DeclareMathOperator\Hom{Hom}
 \DeclareMathOperator\supp{supp}
 \DeclareMathOperator\Id{Id}
 \DeclareMathOperator\rk{rank}
-\DeclareMathOperator\coker{coker}
+\DeclareMathOperator\grad{grad}
 
 \newcommand{\ideal}[1]{\mathfrak{#1}}
 \newcommand{\mat}[1]{\mathbold{#1}}
@@ -400,6 +404,13 @@ $(U,\varphi)$ 和 $(V,\psi)$ 光滑相容就表明 $f\circ\psi^{-1}$ 在 $\psi(U
   Hausdorff 的。根据条件 (4)，$M$ 是第二可数的。最后条件 (3) 保证了
   $\{(U_\alpha,\varphi_\alpha)\}$ 是光滑图册。所以 $M$ 成为一个光滑流形。
 \end{proof}
+\begin{remark}
+  总的来说，上述引理中 $M$ 的拓扑结构为：
+  所有形如 $\varphi_\alpha^{-1}(V)$ 的开集(其中 $V$ 是 $\mathbb{R}^n$ 的开集)
+  构成的拓扑基生成的拓扑。
+  光滑结构为：所有形如 $(U_\alpha,\varphi_\alpha)$ 的坐标卡构成一组
+  光滑坐标卡。
+\end{remark}
 
 
 
@@ -929,7 +940,7 @@ $p\in M$。一个线性映射 $v:C^\infty(M)\to\mathbb{R}$ 如果满足乘积法
 想象为与 $M$ 相切的、以 $p$ 为起点的一个“箭头”。当然，涉及切向量的定理必须
 基于上述切向量的抽象定义，但是我们的几何直觉应当尽可能的联系几何图像。
 
-\section{光滑映射的微分}
+\section{光滑映射的微分}\label{sec:differential of map}
 
 对于 Euclid 空间之间的光滑映射，我们知道映射在一个点上的全导数（微分）是一个线性映射，
 其代表了在该点附近对光滑映射的“最佳线性近似”。在流形的情况下，也有类似的线性映射，
@@ -1385,6 +1396,13 @@ $v$、$(p,v)$ 或者 $v_p$，这取决于我们有多强调点 $p$ 的存在。
   $\pi$ 的坐标表示为 $\hat\pi=\varphi\circ\pi\circ\tilde{\varphi}^{-1}$，满足
   $\hat\pi(x,v)=x$，所以 $\hat \pi$ 是光滑函数，$\pi$ 是光滑映射。
 \end{proof}
+
+\begin{remark}
+  总的来说，切丛 $TM$ 的拓扑结构为：设 $\{(U_i,\varphi_i)\}$ 是覆盖 $M$ 的一组
+  可数的光滑坐标卡，定义 $TM$ 的拓扑为  $\{\tilde\varphi_i^{-1}(V)\}$ 构成的拓扑基生成的拓扑，
+  其中 $V$ 是 $\mathbb{R}^{2n}$ 的开集。
+  $TM$ 的光滑结构为：$\{(\pi^{-1}(U_i),\tilde\varphi_i)\}$ 构成 $TM$ 的一组光滑坐标卡。
+\end{remark}
 
 \eqref{eq:coordinate of TM} 式中的坐标 $(x^i,v^i)$ 被称为\emph{$TM$ 上的自然坐标}。
 
@@ -2281,7 +2299,7 @@ $\varPhi:U\to N$ 是使得 $S\cap U$ 为正则水平集的光滑映射，那么 
 
 显然，每个嵌入子流形都是浸入子流形，因此浸入子流形是一种更一般的子流形。
 
-\begin{proposition}[浸入的像集作为子流形]
+\begin{proposition}[浸入的像集作为子流形]\label{prop:image of immersion}
   设 $M$ 是带边或者无边光滑流形，$N$ 是光滑流形，$F:N\to M$
   是单射的光滑浸入。令 $S=F(N)$，那么 $S$ 有唯一的拓扑结构和光滑结构
   使得 $S$ 是 $M$ 的一个光滑子流形并且 $F:N\to S$ 是微分同胚。
@@ -2488,7 +2506,7 @@ $T_pM$ 的子空间，此时对于任意切向量 $v\in T_pS$，它的像 $\tild
   的水平集，切向量 $v\in T_pM$ 在 $T_pS$ 中当且仅当 $v\varPhi^1=\cdots=v\varPhi^k=0$。
 \end{corollary}
 
-\begin{exercise}
+\begin{exercise}\label{exer:tangent space of submanifold}
   设 $S\subseteq M$ 是常秩映射 $\varPhi:M\to N$ 的水平集，证明对于每个 $p\in S$
   有 $T_pS=\ker d\varPhi_p$。
 \end{exercise}
@@ -2648,6 +2666,175 @@ $F$ 是\emph{李群同态}。如果 $F$ 还是微分同胚，那么我们说 $F$
 对于光滑作用 $\theta:G\times M\to M$，任取 $g\in G$，记 
 $\theta_g:M\to M$ 为 $\theta_g(p)=g\cdot p$。由于 $\theta_{g^{-1}}$
 是其光滑逆映射，所以 $\theta_g$ 一定是微分同胚。
+
+设 $G$ 是李群，$M,N$ 是带边或者无边光滑流形并且都配备一个光滑
+$G$-作用，映射 $F:M\to N$ 被称为\emph{等变的}，如果对于每个 $g\in G$
+都有
+\[
+  F(g\cdot p)=g\cdot F(p) \ (\text{left actions})  ,\quad
+  F(p\cdot g)=F(p)\cdot g \ (\text{right actions})  .
+\]
+等价地说，如果 $\theta$ 是 $G$ 在 $M$ 上的光滑作用，$\varphi$
+是 $G$ 在 $N$ 上的光滑作用，那么 $F$ 是等变的当且仅当
+\[
+  F\circ \theta_g=\varphi_g\circ F.  
+\]
+
+\begin{theorem}[等变秩定理]
+  设 $G$ 是李群，$M,N$ 是带边或者无边光滑流形，
+  $F:M\to N$ 是光滑映射，相对于 $M$ 上的传递的光滑 $G$-作用 $\theta$ 和
+  $N$ 上的任意光滑 $G$-作用 $\varphi$ 是等变的。那么 $F$ 是常值映射。
+  进而，若 $F$ 是满射，那么是一个光滑浸没；若 $F$ 是单射，那么
+  是一个光滑浸入；若 $F$ 是双射，那么是一个微分同胚。
+\end{theorem}
+\begin{proof}
+  任取 $p,q\in M$，$\theta$ 是传递的表明存在 $g\in G$ 使得
+  $q=\theta_g(p)$，那么 $F\circ\theta_g=\varphi_g\circ F$ 表明
+  \[
+    dF_{q}\circ d(\theta_g)_p=d(\varphi_g)_{F(p)}\circ dF_p,  
+  \]
+  $\theta_g$ 和 $\varphi_g$ 都是微分同胚表明 $dF_q$ 和 $dF_p$
+  的秩相同，所以 $F$ 是常秩映射。
+\end{proof}
+
+假设 $G$ 是李群，$M$ 是光滑流形，$\theta:G\times M\to M$ 是光滑左作用，
+对于每个 $p\in M$，定义\emph{轨道映射} $\theta^{(p)}:G\to M$ 为
+\[
+  \theta^{(p)}(g)=g\cdot p.  
+\]
+显然 $\theta^{(p)}$ 的像集就是 $p$ 所在的轨道。
+
+\begin{proposition}[轨道映射的性质]
+  假设 $\theta$ 是李群 $G$ 在光滑流形 $M$ 上的光滑左作用，对于每个
+  $p\in M$，轨道映射 $\theta^{(p)}:G\to M$ 是光滑常秩映射，
+  所以稳定化子 $G_p=\left(\theta^{(p)}\right)^{-1}(p)$
+  是 $G$ 的恰当嵌入李子群。如果 $G_p=\{e\}$，那么
+  $\theta^{(p)}$ 是单射的光滑浸入，所以轨道 $G\cdot p$
+  是 $M$ 的浸入子流形。
+\end{proposition}
+\begin{proof}
+  映射 $\theta^{(p)}$ 可以视为光滑映射的复合
+  \[
+    G\to G\times M\to M,  
+  \]
+  所以 $\theta^{(p)}$ 是光滑映射。考虑 $G$ 在自身上的作用为
+  $g\cdot g'=gg'$，这是一个传递的光滑作用，那么
+  \[
+    \theta^{(p)}(g\cdot g')=(gg')\cdot p=g\cdot \theta^{(p)}(g'),  
+  \]
+  所以 $\theta^{(p)}$ 是等变映射，从而是常秩映射。根据常秩水平集定理，
+  稳定化子 $G_p$ 是嵌入子流形，根据 \autoref{prop:embedding and subgroup is lie subgroup}，
+  $G_p$ 是恰当嵌入李子群。若 $G_p=\{e\}$，那么
+  \[
+    \theta^{(p)}(g)=\theta^{(p)}(g')\Rightarrow
+    p=(g^{-1}g')\cdot p\Rightarrow g^{-1}  g'\in G_p
+    \Rightarrow g=g',
+  \]
+  所以 $\theta^{(p)}$ 为单射。再根据全局秩定理，$\theta^{(p)}$
+  是浸入。根据 \autoref{prop:image of immersion}，轨道 $G\cdot p$
+  是浸入子流形。
+\end{proof}
+
+\begin{example}[正交群]\label{exa:orthogonal group}
+  由 $n\times n$ 正交矩阵构成的 $\GL(n,\mathbb{R})$ 的子群 
+  $\Orth(n)$ 被称为正交群。定义光滑映射 $\varPhi:\GL(n,\mathbb{R})\to M(n,\mathbb{R})$
+  为 $\varPhi(A)=A^TA$，那么 $\Orth(n)$ 是 $\varPhi$ 的水平集 $\varPhi^{-1}(I_n)$。
+  我们只要能说明 $\varPhi$ 是常秩映射就能够表明 $\Orth(n)$ 是 
+  $\GL(n,\mathbb{R})$ 的嵌入李子群。下面我们构造合适的群作用使得
+  $\varPhi$ 是等变映射。定义 $\theta$ 为 $\GL(n.\mathbb{R})$
+  在自身上的右乘作用，即 $A\cdot B=AB$。$\varphi$
+  为 $\GL(n,\mathbb{R})$ 在 $M(n,\mathbb{R})$ 上的右作用为：
+  \[
+    X\cdot B=B^TXB,  
+  \]
+  那么
+  \[
+    \varPhi(A\cdot B)=(AB)^T(AB)=B^TA^TAB=\varPhi(A)\cdot B ,
+  \]
+  这就表明 $\varPhi$ 是等变映射，根据等变秩定理，$\varPhi$
+  确实是常秩映射。因此，$\Orth(n)$ 是 $\GL(n,\mathbb{R})$
+  的嵌入李子群。此外，不难发现 $\Orth(n)$ 是紧的。
+
+  为了确定 $\Orth(n)$ 的维数，还需要确定 $\varPhi$ 的秩，即
+  微分 $d\varPhi_{I_n}$ 的像空间的维数。对于 $B\in T_{I_n}\GL(n,\mathbb{R})=M(n,\mathbb{R})$，
+  设 $\gamma:(-\varepsilon,\varepsilon)\to \GL(n,\mathbb{R})$ 
+  光滑曲线 $\gamma(t)=I_n+tB$，那么
+  \[
+    d\varPhi_{I_n}(B)=\left.\frac{d}{dt}\right|_{t=0}\varPhi(\gamma(t))
+    =\left.\frac{d}{dt}\right|_{t=0}(I_n+tB^T)(I_n+tB)
+    =B+B^T,
+  \]
+  所以 $\im d\varPhi_{I_n}$ 被对称矩阵空间包含。反之，任取对称矩阵 $B$，
+  有 $d\varPhi_{I_n}(B/2)=B$，所以 $\im d\varPhi_{I_n}$ 就是对称矩阵空间，
+  维数为 $(n^2+n)/2$，这就表明 $\rk \varPhi=(n^2+n)/2$，
+  故
+  \[
+    \dim\Orth(n)=\dim\GL(n,\mathbb{R})-\rk \varPhi
+    =\frac{n^2-n}{2}.
+  \]
+\end{example}
+
+\begin{example}[特殊正交群]
+  $n\times n$ 特殊正交群被定义为行列式为 $1$ 的正交矩阵构成的集合，
+  记为 $\SO(n)$。由于 $\det:\Orth(n)\to \mathbb{R}$ 为连续映射
+  且 $\SO(n)=\det^{-1}(0,\infty)$，所以 $\SO(n)$ 是 $\Orth(n)$
+  的开子集，故 $\SO(n)$ 是 $\Orth(n)$ 的嵌入李子群并且
+  $\dim \SO(n)=\dim\Orth(n)=(n^2-n)/2$。同时，$\SO(n)$
+  也是 $\Orth(n)$ 的闭子集，所以也是紧的。
+\end{example}
+
+
+\begin{problem}{}{}
+  令 $\mathbb{H}=\mathbb{C}\times \mathbb{C}$(视为实向量空间)，定义
+  双线性的乘法 $\mathbb{H}\times \mathbb{H}\to \mathbb{H}$ 为
+  \[
+    (a,b)(c,d)=\bigl(ac-b\bar d,ad+b\bar c\bigr),\quad a,b,c,d\in \mathbb{C}.  
+  \]
+  在这个乘法下，$\mathbb{H}$ 是 $\mathbb{R}$ 上的 $4$-维代数，
+  被称为\emph{四元数代数}。对于每个 $p=(a,b)\in \mathbb{H}$，定义
+  $p^*=\bigl(\bar a,-b\bigr)$。定义 $\mathbb{H}$ 的一组基为
+  $(\mathbb{1},\mathbb{i},\mathbb{j},\mathbb{k})$ 为
+  \[
+    \mathbb{1}=(1,0),\mathbb{i}=(i,0),\mathbb{j}=(0,1),\mathbb{k}=(0,i)  ,
+  \]
+  那么可以验证它们满足    
+  \begin{gather*}
+    \mathbb{i}^2=\mathbb{j}^2=\mathbb{k}^2=-1,\quad
+    \mathbb{1}q=q \mathbb{1}=q\ \forall q\in \mathbb{H},\\
+    \mathbb{ij}=-\mathbb{ji}=\mathbb{k},\quad \mathbb{jk}=-\mathbb{kj}=\mathbb{i},
+    \quad \mathbb{ki}=-\mathbb{ik}=\mathbb{j},\\ 
+    \mathbb{1}^*=\mathbb{1},\quad \mathbb{i}^*=-\mathbb{i},\quad \mathbb{j}^*=-\mathbb{j},
+    \quad \mathbb{k}^*=-\mathbb{k}.
+  \end{gather*}
+  如果 $p^*=p$，那么称 $p$ 为实四元数，如果 $p^*=-p$，那么称 $p$ 为纯虚四元数。
+  实四元数可以通过对应 $x\leftrightarrow x\mathbb{1}$ 等同为实数。
+  \begin{enumerate}
+    \item 证明四元数乘法是结合的但不是交换的。
+    \item 证明 $(pq)^*=q^*p^*$。
+    \item 证明 $\langle p,q\rangle=\frac{1}{2}(p^*q+q^*p)$ 是 $\mathbb{H}$
+    上的一个内积，其导出的范数满足 $|pq|=|p||q|$。
+    \item 证明任意非零四元数都有乘法逆元 $p^{-1}=p^*/|p|^2$。
+    \item 证明非零四元数集合 $\mathbb{H}^*$ 在四元数乘法下构成李群。
+  \end{enumerate} 
+\end{problem}
+\begin{proof}
+  (5) $\mathbb{H}^*$ 是乘法群。范数映射 $|\cdot|:\mathbb{H}\to \mathbb{R}$
+  是连续映射，所以 $\mathbb{H}^*$ 作为 $\mathbb{R}\smallsetminus\{0\}$
+  的原像是 $\mathbb{H}$ 的开子集，故 $\mathbb{H}^*$ 是开子流形，
+  且容易验证 $\mathbb{H}^*$ 的乘法的求逆都是光滑映射，所以 
+  $\mathbb{H}^*$ 是李群，维数为 $4$。
+\end{proof}
+
+\begin{problem}{}{}
+  令 $\mathbb{H}^*$ 是非零四元数李群，$\mathcal{S}\subseteq \mathbb{H}^*$
+  是单位四元数的集合，证明 $\mathcal{S}$ 是 $\mathbb{H}^*$ 的恰当嵌入李子群，
+  并且同构于 $\SU(2)$。
+\end{problem}
+\begin{proof}
+  记 $N:\mathbb{H}^*\to \mathbb{R}^*$ 为范数映射，显然这是一个李群同态，
+  所以是常秩映射，所以 $\mathcal{S}=\ker N$ 是恰当嵌入李子群。
+\end{proof}
+
 
 
 \chapter{向量场}
@@ -2840,7 +3027,7 @@ $Xf$ 也是由局部确定的。特别地，对于任意开子集 $V\subseteq U$
 乘积法则 \eqref{eq:product rule of vector field} 式的映射 $X:C^\infty(M)\to C^\infty(M)$
 被称为\emph{导子}。与切空间类似，下面的命题表明 $C^\infty(M)$ 的导子可以等同于光滑向量场。
 
-\begin{proposition}
+\begin{proposition}\label{prop:derivation and vector field}
   $M$ 是带边或者无边光滑流形，映射 $D:C^\infty(M)\to C^\infty(M)$ 是导子当且仅当
   其形如 $Df=Xf$，其中 $X\in \mathfrak X(M)$。
 \end{proposition}
@@ -2955,6 +3142,1176 @@ $Xf$ 也是由局部确定的。特别地，对于任意开子集 $V\subseteq U$
     +\frac{u}{v}\left.\frac{\partial}{\partial v}\right|_{(u,v)} .
   \]
 \end{example}
+
+\section{李括号}
+
+令 $X,Y$ 是光滑流形 $M$ 上的两个光滑向量场。给定光滑函数 $f:M\to \mathbb{R}$，
+我们可以将 $X$ 作用在 $f$ 上得到另一个光滑函数 $Xf$。进一步的，我们可以
+将向量场 $Y$ 作用在这个函数上得到光滑函数 $YXf=Y(Xf)$。然而，算子 $f\mapsto YXf$
+并不满足乘积法则，所以这样得到的 $YX$ 并不是 $C^\infty(M)$ 的导子。
+
+我们可以以相反的顺序进行上述操作，得到函数 $XYf$，将这两个算子相减，
+我们得到算子 $[X,Y]:C^\infty(M)\to C^\infty(M)$，被称为
+\emph{$X$ 和 $Y$ 的李括号}，定义为
+\[
+  [X,Y]f=XYf-YXf.  
+\]
+一个关键的事实是这个算子是一个向量场。
+
+\begin{lemma}
+  两个光滑向量场的李括号是一个光滑向量场。
+\end{lemma}
+\begin{proof}
+  \allowdisplaybreaks
+  根据 \autoref{prop:derivation and vector field}，我们只需要说明
+  $[X,Y]$ 是一个导子。任取 $f,g\in C^\infty(M)$，有
+  \begin{align*}
+    [X,Y](fg)&=X\bigl(Y(fg)\bigr)-Y\bigl(X(fg)\bigr)\\
+    &=X\bigl(fYg+gYf\bigr)-Y\bigl(fXg+gXf\bigr)\\
+    &=X(fYg)+X(gYf)-Y(fXg)-Y(gXf)\\
+    &=fXYg+(Yg)(Xf)+gXYf+(Yf)(Xg)\\
+    &\mathrel{-}fYXg-(Xg)(Yf)-gYXf-(Xf)(Yg)\\
+    &=fXYg+gXYf-fYXg-gYXf\\
+    &=f[X,Y]g+g[X,Y]f.\qedhere
+  \end{align*}
+\end{proof}
+
+向量场 $[X,Y]$ 在点 $p\in M$ 处的值是 $p$ 处的导子，其满足
+\[
+  [X,Y]_pf=X_p(Yf)-Y_p(Xf).  
+\]
+然而，这个公式对于计算的用处有限，因为其需要计算涉及 $f$ 的二阶导数
+的项，这些项里面总会相互抵消一部分，下一个命题给出了更有用的坐标公式。
+
+\begin{proposition}[李括号的坐标公式]\label{prop:coordinate formula for lie bracket}
+  令 $X,Y$ 是光滑流形 $M$ 上的光滑向量场，设 $X=X^i\partial/\partial x^i$
+  和 $Y=Y^j\partial /\partial x^j$ 是 $X,Y$ 在同一组光滑坐标卡
+  $(x^i)$ 下的分量表示。那么 $[X,Y]$ 可以表示为
+  \[
+    [X,Y]=\left(X^i\frac{\partial Y^j}{\partial x^i}-Y^i\frac{\partial X^j}{\partial x^i}\right)
+    \frac{\partial}{\partial x^j},  
+  \]
+  或者更简洁地写为
+  \[
+    [X,Y]=\left(XY^j-YX^j\right)  \frac{\partial}{\partial x^j}.
+  \]
+\end{proposition}
+\begin{proof}
+  由于 $([X,Y]f)|_U=[X,Y](f|_U)$，所以我们只需要在某个坐标卡中
+  计算即可。我们有
+  \begin{align*}
+    [X,Y]f&=X^i\frac{\partial (Yf)}{\partial x^i}-Y^j\frac{\partial (Xf)}{\partial x^j}\\
+    &=X^i\frac{\partial}{\partial x^i}\left(Y^j\frac{\partial f}{\partial x^j}\right)
+    -Y^j\frac{\partial}{\partial x^j}\left(X^i\frac{\partial f}{\partial x^i}\right)\\
+    &=X^iY^j\frac{\partial^2f}{\partial x^i\partial x^j}
+    +X^i\frac{\partial f}{\partial x^j}\frac{\partial Y^j}{\partial x^i}
+    -Y^jX^i\frac{\partial^2 f}{\partial x^j\partial x^i}
+    -Y^j\frac{\partial f}{\partial x^i}\frac{\partial X^i}{\partial x^j}\\
+    &=X^i\frac{\partial Y^j}{\partial x^i}\frac{\partial f}{\partial x^j}-
+    Y^j\frac{\partial X^i}{\partial x^j}\frac{\partial f}{\partial x^i},
+  \end{align*}
+  最后一步使用了光滑函数的高阶偏导数与次序无关。
+\end{proof}
+
+\autoref{prop:coordinate formula for lie bracket} 的一个直接应用是
+对于坐标向量场而言，任取 $i,j$，都有
+\[
+  \left[\frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j}\right]  
+  =0,
+\]
+这是因为其坐标函数都是常值函数。
+
+\begin{example}
+  定义光滑向量场 $X,Y\in \mathfrak{X}(\mathbb{R}^3)$ 为
+  \[
+    X=x\frac{\partial}{\partial x}+\frac{\partial}{\partial y}
+    +x(y+1)\frac{\partial }{\partial z},
+    \quad 
+    Y=\frac{\partial}{\partial x}+y\frac{\partial }{\partial z}.   
+  \]
+  那么它们的李括号为
+  \begin{align*}
+    [X,Y]&= \left(XY^1-YX^1\right)\frac{\partial}{\partial x}
+    +\left(XY^2-YX^2\right)\frac{\partial}{\partial y}
+    +\left(XY^3-YX^3\right)\frac{\partial}{\partial z}\\
+    &=-\frac{\partial}{\partial x}-y\frac{\partial}{\partial z}.
+  \end{align*}
+\end{example}
+
+\begin{proposition}[李括号的性质]
+  对于任意 $X,Y,Z\in \mathfrak{X}(M)$，李括号满足：
+  \begin{enumerate}
+    \item 双线性性：对于 $a,b\in \mathbb{R}$，有
+    \begin{align*}
+      [aX+bY,Z]&=a[X,Z]+b[Y,Z],\\
+      [Z,aX+bY]&=a[Z,X]+b[Z,Y].
+    \end{align*}
+    \item 反对称性：
+    \begin{align*}
+      [X,Y]=-[Y,X].
+    \end{align*}
+    \item Jacobi 恒等式：
+    \begin{align*}
+      [X,[Y,Z]]+[Y,[Z,X]]+[Z,[X,Y]]=0.
+    \end{align*}
+    \item 对于 $f,g\in C^\infty(M)$，有
+    \begin{align*}
+      [fX,gY]=fg[X,Y]+(fXg)Y-(gYf)X.
+    \end{align*}
+  \end{enumerate}
+\end{proposition}
+
+
+\begin{proposition}[李括号的自然属性]
+  令 $F:M\to N$ 是光滑映射，向量场 $X_1,X_2\in \mathfrak{X}(M)$
+  和 $Y_1,Y_2\in \mathfrak{X}(N)$，其中 $X_i,Y_i$ 是 $F$-相关的。
+  那么 $[X_1,X_2]$ 和 $[Y_1,Y_2]$ 是 $F$-相关的。
+\end{proposition}
+\begin{proof}
+  $X_i,Y_i$ 是 $F$-相关的表明对于任意的 $f\in C^\infty(N)$ 有
+  \[
+    X_i(f\circ F)=Y_if\circ F,  
+  \] 
+  所以
+  \begin{align*}
+    [X_1,X_2](f\circ F)&=X_1X_2(f\circ F)-X_2X_1(f\circ F)\\
+    &=X_1(Y_2f\circ F)-X_2(Y_1f\circ F)\\
+    &=(Y_1Y_2f)\circ F-(Y_2Y_1f)\circ F \\
+    &=\bigl([Y_1,Y_2]f\bigr)\circ F,
+  \end{align*}
+  这就表明 $[X_1,X_2]$ 和 $[Y_1,Y_2]$ 是 $F$-相关的。
+\end{proof}
+
+\begin{corollary}[李括号的推前]
+  设 $F:M\to N$ 是微分同胚，$X_1,X_2\in \mathfrak{X}(M)$，那么
+  $F_*[X_1,X_2]=[F_*X_1,F_*X_2]$。
+\end{corollary}
+\begin{proof}
+  由于 $X_i$ 和 $F_*X_i$ 是 $F$-相关的，所以
+  $[X_1,X_2]$ 和 $[F_*X_1,F_*X_2]$ 是 $F$-相关的，根据
+  唯一性，就有 $[F_*X_1,F_*X_2]=F_*[X_1,X_2]$。
+\end{proof}
+
+\section{李群的李代数}
+
+假设 $G$ 是李群，$G$ 上的向量场 $X$ 如果在任意左平移下保持不变，那么我们说
+$X$ 是\emph{左不变}的。确切地说，对于任意 $g\in G$，$X$ 与自身是
+$L_g$-相关的，即
+\[
+  \forall g,g'\in G,\quad X_{gg'}=d(L_g)_{g'}(X_{g'}).  
+\]
+由于 $L_g$ 是微分同胚，所以可以表述为任取 $g\in G$ 都有
+$(L_g)_*X=X$。
+
+由于 $(L_g)_*(aX+bY)=a(L_g)_*X+b(L_g)_*Y$，所以 $G$ 上所有左不变的光滑向量场
+构成 $\mathfrak{X}(G)$ 的一个子空间。更重要的是，这个子空间对于李括号是封闭的。
+
+\begin{proposition}
+  $G$ 是李群，设 $X,Y$ 是 $G$ 上的光滑左不变向量场，那么 $[X,Y]$
+  也是左不变的。
+\end{proposition}
+\begin{proof}
+  任取 $g\in G$，由于 $(L_g)_*X=X$ 以及 $(L_g)_*Y=Y$，所以 
+  \[
+    (L_g)_*[X,Y]=[(L_g)_*X,(L_g)_*Y]=[X,Y].\qedhere
+  \]
+\end{proof}
+
+($\mathbb{R}$ 上的)\emph{李代数}指的是一个实向量空间 $\mathfrak{g}$，
+其配备一个 $\mathfrak{g}\times \mathfrak{g}\to \mathfrak{g}$ 的\emph{李括号}，
+通常记为 $(X,Y)\mapsto [X,Y]$，其对于任意 $X,Y,Z\in \mathfrak{g}$，满足
+下面的性质：
+\begin{enumerate}
+  \item 双线性性：对于 $a,b\in \mathbb{R}$，有
+  \begin{align*}
+    [aX+bY,Z]&=a[X,Z]+b[Y,Z],\\
+    [Z,aX+bY]&=a[Z,X]+b[Z,Y].
+  \end{align*}
+  \item 反对称性：
+  \begin{align*}
+    [X,Y]=-[Y,X].
+  \end{align*}
+  \item Jacobi 恒等式：
+  \begin{align*}
+    [X,[Y,Z]]+[Y,[Z,X]]+[Z,[X,Y]]=0.
+  \end{align*}
+\end{enumerate}
+如果 $\mathfrak{g}$ 是李代数，子空间 $\mathfrak{h}\subseteq \mathfrak{g}$
+对李括号封闭，那么 $\mathfrak{h}$ 被称为\emph{$\mathfrak{g}$ 的李子代数}。
+在这种情况下，$\mathfrak{h}$ 的李括号就是 $\mathfrak{g}$ 的李括号的限制。
+
+如果 $\mathfrak{g}$ 和 $\mathfrak{h}$ 是两个李代数，线性映射
+$A:\mathfrak{g}\to \mathfrak{h}$ 保持李括号：$A[X,Y]=[AX,AY]$，
+那么我们说 $A$ 是\emph{李代数同态}。如果 $A$ 是同构，那么我们说
+$A$ 是\emph{李代数同构}。
+
+\begin{example}[李代数]\label{exa:lie algebra}
+  \mbox{}
+  \begin{enumerate}
+    \item 光滑流形 $M$ 上的所有光滑向量场 $\mathfrak{X}(M)$
+    在李括号下成为李代数。
+    \item 如果 $G$ 是李群，那么 $G$ 上所有光滑左不变向量场的集合
+    是 $\mathfrak{X}(G)$ 的李子代数。
+    \item 向量空间 $M(n,\mathbb{R})$ 在李括号(被称为\emph{换位子括号})
+    \[
+      [A,B]=AB-BA  
+    \]
+    下成为 $n^2$-维李代数。当我们将 $M(n,\mathbb{R})$ 视为李代数
+    的时候，我们使用 $\mathfrak{gl}(n,\mathbb{R})$ 表示。
+  \end{enumerate}
+\end{example}
+
+\ref{exa:lie algebra} 的 (2) 是最重要的例子，李群 $G$ 上所有光滑左不变向量场的集合
+被称为\emph{$G$ 的李代数}，记为 $\Lie(G)$。一个基本事实是 $\Lie(G)$
+是有限维的，并且维数与 $G$ 相同。
+
+\begin{theorem}\label{thm:dim of lie algebra}
+  $G$ 是李群，定义求值映射 $\varepsilon:\Lie(G)\to T_eG$ 为
+  $\varepsilon(X)=X_e$，那么 $\varepsilon$ 是向量空间同构。
+  这表明 $\Lie(G)$ 是维数为 $\dim G$ 的有限维向量空间。
+\end{theorem}
+\begin{proof}
+  不难验证 $\varepsilon$ 是线性映射。令 $\varepsilon(X)=X_e=0$，
+  那么任取 $g\in G$，$X$ 左不变表明
+  \[
+    X_g=d(L_g)_e(X_e)=0,
+  \]
+  所以 $X=0$，这表明 $\varepsilon$ 是单射。
+
+  任取 $v\in T_eG$，我们要构造一个光滑左不变向量场 $X$ 使得 $X_e=v$。
+  这样的 $X$ 必须满足 
+  \[
+    X_g=d(L_g)_e(X_e)=d(L_g)_e(v),  
+  \]
+  所以我们定义 $G$ 上的向量场 $v^{\mathrm{L}}$ 为
+  \[
+    v^{\mathrm{L}}\big|_g=d(L_g)_e(v).
+  \]
+  我们首先说明 $v^{\mathrm{L}}$ 是光滑的。任取 $f\in C^\infty(G)$，选取
+  光滑曲线 $\gamma:(-\delta,\delta)\to G$ 满足 $\gamma(0)=e$ 以及
+  $\gamma'(0)=v$，那么
+  \[
+    v^{\mathrm{L}}\big|_gf=d(L_g)_e\circ d\gamma_0\left(\left.\frac{d}{dt}\right|_0\right)f
+    =\left.\frac{d}{dt}\right|_{t=0}(f\circ L_g\circ\gamma)(t),
+  \]
+  定义 $\varphi:(-\delta,\delta)\times G\to \mathbb{R}$ 为
+  $\varphi(t,g)=f(L_g(\gamma(t)))$ 是光滑函数
+  \[
+    (-\delta,\delta)\times G\to G\times G\xrightarrow{m} G\xrightarrow{f} \mathbb{R}
+  \]
+  的复合，所以是光滑函数，
+  所以 $\bigl(v^{\mathrm{L}}f\bigr)(g)=v^{\mathrm{L}}\big|_gf=\partial\varphi/\partial t(0,g)$ 
+  是光滑函数，这就表明 $v^{\mathrm{L}}$ 是光滑向量场。
+
+  现在说明 $v^{\mathrm{L}}$ 是左不变向量场，对于任意 $h\in G$，有
+  \[
+      d(L_h)_{g}\left(v^{\mathrm{L}}\big|_g\right)
+      =d(L_h)_g\circ d(L_g)_e(v)=d(L_{hg})_e(v)=
+      v^{\mathrm{L}}\big|_{hg},
+  \]
+  这就表明 $v^{\mathrm{L}}$ 是左不变的。所以 $v=\varepsilon(v^{\mathrm{L}})$，
+  故 $\varepsilon$ 是满射。
+\end{proof}
+
+根据上面的证明，我们还可以发现 $G$ 上任意左不变向量场都自动是
+光滑向量场。
+
+\begin{corollary}
+  李群上的任意左不变向量场都是光滑向量场。
+\end{corollary}
+\begin{proof}
+  设 $X$ 是左不变向量场，那么
+  \[
+    X_g=d(L_g)(X_e)=(X_e)^{\mathrm{L}}\big|_g,
+  \]
+  所以 $X=(X_e)^{\mathrm{L}}$ 是光滑向量场。
+\end{proof}
+
+全局左不变向量场的存在性也导出了李群的另一个重要性质。回顾，
+如果光滑流形有一个光滑的全局标架，那么我们说这个流形是\emph{可平行化的}。
+如果 $G$ 是李群，左不变向量场构成的局部或者全局的标架被称为\emph{左不变标架}。
+
+\begin{corollary}
+  每个李群都有一组左不变的光滑全局标架，因此每个李群都是可平行化的。
+\end{corollary}
+\begin{proof}
+  若 $G$ 的李群，那么 $\Lie(G)$ 的一组基就是左不变的光滑全局标架。
+\end{proof}
+
+下面我们通过分析 $\GL(n,\mathbb{R})$ 的李代数来结束本节。
+我们已经知道了 $\Lie(\GL(n,\mathbb{R}))$ 和 $T_{I_n}\GL(n,\mathbb{R})$
+之间存在向量空间同构。由于 $\GL(n,\mathbb{R})$ 是 $\mathfrak{gl}(n,\mathbb{R})$
+的开子集，所以 $T_{I_n}\GL(n,\mathbb{R})$ 和 $\mathfrak{gl}(n,\mathbb{R})$
+之间也存在向量空间同构，那么我们得到了向量空间同构
+$\Lie(\GL(n,\mathbb{R}))\simeq \mathfrak{gl}(n,\mathbb{R})$.
+而这两个向量空间我们都已经配备了独立的李代数结构，第一个是
+向量场的李括号，第二个是矩阵的交换子括号。
+下面我们证明上述向量空间同构实际上是李代数同构。
+
+\begin{proposition}[一般线性群的李代数]
+  复合映射
+  \[
+    \Lie(\GL(n,\mathbb{R}))\to T_{I_n}\GL(n,\mathbb{R})
+    \to \mathfrak{gl}(n,\mathbb{R})  
+  \]
+  给出了 $\Lie(\GL(n,\mathbb{R}))$ 到 $\mathfrak{gl}(n,\mathbb{R})$
+  的李代数同构。
+\end{proposition}
+\begin{proof}
+  
+\end{proof}
+
+\subsection{诱导的李代数同态}
+
+\begin{theorem}[李群同态诱导李代数同态]
+  令 $G,H$ 是李群，$\mathfrak{g},\mathfrak{h}$ 是对应的李代数。
+  设 $F:G\to H$ 是李群同态。对于每个 $X\in \mathfrak{g}$，存在
+  唯一的与 $X$ $F$-相关的 $\mathfrak{h}$ 中的向量场，记为
+  $F_*X$，映射 $F_*:\mathfrak{g}\to \mathfrak{h}$ 是李代数同态。
+\end{theorem}
+\begin{proof}
+  如果 $Y$ 与 $X$ 是 $F$-相关的，那么其必须满足
+  $Y_e=dF_e(X_e)$，$Y\in \mathfrak{h}$ 则必须满足
+  \[
+    Y=  \bigl(dF_e(X_e)\bigr)^{\mathrm{L}}.
+  \]
+  下面我们只需要说明这样的 $Y$ 与 $X$ 是 $F$-相关的即可。
+  任取 $g\in G$，有
+  \[
+    Y_{F(g)}=d\bigl(L_{F(g)}\bigr)_{e}\bigl(dF_e(X_e)\bigr)=d\bigl(L_{F(g)}\circ F\bigr)_e
+    (X_e),
+  \]
+  $F$ 是李群同态表明 $L_{F(g)}\circ F=F\circ L_g$，所以
+  \[
+    Y_{F(g)}=d\bigl(F\circ L_g\bigr)_e(X_e)=dF_g\bigl(d(L_g)_e(X_e )\bigr)
+    =dF_g\bigl(X_g\bigr),
+  \]
+  这就表明 $X$ 和 $Y$ 是 $F$-相关的向量场。
+
+  任取两个左不变向量场 $X,Y\in \mathfrak{g}$，由于 $X,Y$ 分别和 $F_*X,F_*Y$ 
+  是 $F$-相关的，根据李括号的自然属性，所以 $[X,Y]$ 和 $[F_*X,F_*Y]$
+  是 $F$-相关的，所以 $F_*[X,Y]=[F_*X,F_*Y]$，即 $F_*$ 是李代数同态。
+\end{proof}
+
+需要注意的是，上述定理表明对于任意左不变向量场 $X\in \mathfrak{g}$，
+即使 $F$ 不是微分同胚，也可以将 $X$ 推前到一个 $F$-相关的左不变向量场
+$F_*X$。
+
+\subsection{李子群的李代数}
+
+如果 $G$ 是李群，$H\subseteq G$ 是李子群，我们希望 $H$
+的李代数可以视为 $G$ 的李代数的李子代数。但是，$\Lie(H)$
+的元素严格来说是 $H$ 上的向量场而不是 $G$ 上的向量场。
+下面的命题给我们一种将 $\Lie(H)$ 视为 $\Lie(G)$ 的李子代数的方式。
+
+\begin{theorem}[李子群的李代数]
+  设 $H\subseteq G$ 是李子群，$\iota:H\hookrightarrow G$ 是包含映射。
+  那么存在李子代数 $\mathfrak{h}\subseteq\Lie(G)$，其典范同构于
+  $\Lie(H)$，并且可以刻画为
+  \[
+    \mathfrak{h}=\iota_*(\Lie(H))=\{X\in \Lie(G)\,|\, X_e\in T_eH\}.  
+  \]
+\end{theorem}
+\begin{proof}
+  我们有如下交换图
+  \[
+    \begin{tikzcd}
+      \Lie(H)\arrow[r,"\iota_*"]\arrow[d,"\simeq"] & \Lie(G)\arrow[d,"\simeq"]\\
+      T_eH\arrow[r,"d\iota_e"] & T_eG
+    \end{tikzcd}  
+  \]
+  所以 $\iota_*$ 是单射，故 $\iota_*(\Lie(H))$ 典范同构于
+  $\Lie(H)$。另一方面，$\iota_*(\Lie(H))$ 同构于 $d\iota_e(T_eH)$，
+  即 $\iota_*(\Lie(H))$ 由所有满足 $X_e\in T_eH$ 的 $X\in\Lie(G)$ 构成。
+\end{proof}
+
+\begin{example}[$\Orth(n)$ 的李代数]
+  \autoref{exa:orthogonal group} 表明正交群 $\Orth(n)$ 是常秩映射
+  $\varPhi:\GL(n,\mathbb{R})\to M(n,\mathbb{R})$ 的水平集，再根据
+  \autoref{exer:tangent space of submanifold}，切空间
+  $T_{I_n}\Orth(n)=\ker d\varPhi_{I_n}$，由于
+  $d\varPhi_{I_n}(B)=B+B^T$，所以
+  \[
+    T_{I_n}\Orth(n)=\{B\in \mathfrak{gl}(n,\mathbb{R})\,|\, B+B^T=0\},  
+  \]
+  于是 $\Lie(\Orth(n))\simeq T_{I_n}\Orth(n)$ 典范同构于所有反对称矩阵构成的
+  $\mathfrak{gl}(n,\mathbb{R})$ 的子代数 $\mathfrak{o}(n)$。注意，我们甚至
+  没有验证 $\mathfrak{o}(n)$ 是一个李代数。
+\end{example}
+
+\chapter{积分曲线和流}
+
+\section{积分曲线}
+
+设 $M$ 是光滑流形，$\gamma:J\to M$ 是光滑曲线，那么
+对于 $t\in J$，速度向量 $\gamma'(t)\in T_{\gamma(t)}M$。
+本节我们研究逆向的方法：给定每个点的切向量，寻找一条曲线
+使得其在每个点的速度向量等于给定的切向量。
+
+如果 $V$ 是 $M$ 上的向量场，定义\emph{$V$ 的积分曲线}为
+可微曲线 $\gamma:J\to M$，其在每个点处的速度等于 $V$ 在该店处的值：
+\[
+  \gamma'(t)=V_{\gamma(t)}\quad \forall t\in J.  
+\]
+如果 $0\in J$，点 $\gamma(0)$ 被称为\emph{$\gamma$ 的起点}。
+
+寻找积分曲线可以归结为求解光滑坐标卡中的常微分方程组。设
+$V$ 是一个光滑向量场，$\gamma:J\to M$ 是光滑曲线。在一个光滑坐标
+开集 $U\subseteq M$ 中，我们可以将 $\gamma$ 表示为
+$\gamma(t)=\bigl(\gamma^1(t),\dots,\gamma^n(t)\bigr)$。那么
+$\gamma'(t)=V_{\gamma(t)}$ 当且仅当
+\[
+  \dot\gamma^i(t)\left.\frac{\partial}{\partial x^i}\right|_{\gamma(t)}  
+  =V^i(\gamma(t))\left.\frac{\partial}{\partial x^i}\right|_{\gamma(t)} ,
+\] 
+这导出了一个常微分方程组：
+\begin{align*}
+  \dot\gamma^1(t)
+  &=V^1(\gamma^1(t),\dots,\gamma^n(t)) ,\\
+  &\vdots \\
+  \dot\gamma^n(t)
+  &=V^n(\gamma^1(t),\dots,\gamma^n(t)).
+\end{align*}
+
+\begin{proposition}
+  令 $V$ 是光滑流形 $M$ 上的光滑向量场。对于每个 $p\in M$，都存在
+  $\varepsilon>0$ 和光滑曲线 $\gamma:(-\varepsilon,\varepsilon)\to M$
+  使得 $\gamma$ 是 $V$ 的起点为 $p$ 的积分曲线。
+\end{proposition}
+
+\begin{lemma}[缩放引理]
+  令 $V$ 是光滑流形 $M$ 上的光滑向量场。$J\subseteq \mathbb{R}$
+  是区间，$\gamma:J\to M$ 是 $V$ 的积分曲线。对于任意 $a\in \mathbb{R}$，
+  定义曲线 $\tilde \gamma:\tilde{J}\to M$ 为 $\tilde{\gamma}(t)=\gamma(at)$，
+  其中 $\tilde{J}=\{t\,|\, at\in J\}$，那么 $\tilde{\gamma}$ 是向量场
+  $aV$ 的积分曲线。
+\end{lemma}
+\begin{proof}
+  任取 $f\in C^\infty(M)$，有
+  \begin{align*}
+    \tilde{\gamma}'(t_0)f&=d\tilde{\gamma}_{t_0}\left(
+      \left.\frac{d}{dt}\right|_{t_0}
+    \right)f
+    =\left.\frac{d}{dt}\right|_{t_0}(f\circ\tilde\gamma)(t)
+    =\left.\frac{d}{dt}\right|_{t_0}(f\circ\gamma)(at)\\
+    &=a (f\circ\gamma)'(at_0)
+    =a\gamma'(at_0)f=aV_{\gamma(at_0)}f=
+    aV_{\tilde{\gamma}(t_0)}f,
+  \end{align*}
+  所以 $\tilde{\gamma}'(t_0)=aV_{\tilde{\gamma}(t_0)}$。
+\end{proof}
+
+\begin{lemma}[平移引理]
+  令 $V,M,J$ 和 $\gamma$ 的含义同上一个引理。对于任意
+  $b\in \mathbb{R}$，定义曲线 $\hat\gamma:\hat J\to M$
+  为 $\hat \gamma(t)=\gamma(t+b)$，其中
+  $\hat J=\{t\,|\, t+b\in J\}$，那么 $\hat J$ 是向量场
+  $V$ 的积分曲线。
+\end{lemma}
+
+\begin{proposition}[积分曲线的自然性]
+  设 $M,N$ 是光滑流形，$F:M\to N$ 是光滑映射。那么 $X\in \mathfrak{X}(M)$
+  和 $Y\in \mathfrak{X}(N)$ 是 $F$-相关的当且仅当 $F$ 将 $X$ 的积分曲线
+  送到 $Y$ 的积分曲线，也就是说，对于 $X$ 的积分曲线 $\gamma$，
+  $F\circ\gamma$ 是 $Y$ 的积分曲线。
+\end{proposition}
+\begin{proof}
+  假设 $X,Y$ 是 $F$-相关的，这意味着对于任意 $p\in M$，有
+  \[
+    Y_{F(p)}=dF_p(X_p),
+  \]
+  于是
+  \[
+    (F\circ\gamma)'(t)
+    =dF_{\gamma(t)}\bigl(\gamma'(t)\bigr)
+    =dF_{\gamma(t)}(V_{\gamma(t)})=Y_{F(\gamma(t))}
+    =Y_{(F\circ\gamma)(t)},
+  \]
+  这就说明 $F\circ\gamma$ 是 $Y$ 的积分曲线。
+
+  反之，若对于任意 $X$ 的积分曲线 $\gamma$，$F\circ\gamma$ 都是
+  $Y$ 的积分曲线。那么任取 $p\in M$，选取 $X$ 的以 $p$ 为起点
+  的积分曲线 $\gamma$，有
+  \[
+    Y_{F(p)}=Y_{F(\gamma(0))}=(F\circ\gamma)'(0)
+    =dF_{\gamma(0)}(\gamma'(0))=dF_p(X_p),  
+  \]
+  即 $X,Y$ 是 $F$-相关的。
+\end{proof}
+
+\section{流}
+
+令 $M$ 是光滑流形，$V\in \mathfrak{X}(M)$。假设对于每个点 $p\in M$，
+$V$ 有唯一的一条定义在 $t\in \mathbb{R}$ 上的以 $p$ 为起点的积分曲线，
+记为 $\theta^{(p)}:\mathbb{R}\to M$。那么对于每个 $t\in \mathbb{R}$，我们可以
+定义映射 $\theta_t:M\to M$，将点 $p$ 送到以 $p$ 为起点的积分曲线
+在 $t$ 时刻的值：
+\[
+  \theta_t(p)=\theta^{(p)}(t).  
+\]
+那么每个 $\theta_t$ 看起来就像将流形沿着 $t$ 时刻的积分曲线进行“滑动”。
+平移引理表明 $t\mapsto \theta^{(p)}(t+s)$ 是 $V$ 的以 $q=\theta^{(p)}(s)$
+为起点的积分曲线，因为我们假设了积分曲线的唯一性，所以
+$\theta^{(q)}(t)=\theta^{(p)}(t+s)$，也就是
+\[
+  \theta_t\circ\theta_s(p)=\theta_t(q)=\theta_{t+s}(p).
+\]
+结合 $\theta_0(p)=\theta^{(p)}(0)=p$，这导出了一个加法群 $\mathbb{R}$
+在 $M$ 上的群作用 $\theta:\mathbb{R}\times M\to M$。
+
+出于这个动机，我们定义 $M$ 上的\emph{全局流}为一个 $M$
+上的连续左 $\mathbb{R}$-作用，即一个连续映射 $\theta:\mathbb{R}\times M\to M$
+满足对于任意 $s,t\in \mathbb{R}$ 和 $p\in M$ 有
+\begin{equation}
+  \theta\bigl(t,\theta(s,p)\bigr)=\theta(t+s,p),\quad
+  \theta(0,p)=p.
+\end{equation}
+
+下面的命题表明，每个光滑的全局流都是按照我们上面所述的方式
+从某个光滑向量场的积分曲线导出的。如果 $\theta:\mathbb{R}\times M\to M$
+是光滑的全局流，对于每个 $p\in M$，我们定义切向量 $V_p\in T_pM$ 为
+\[
+  V_p=\smash{\theta^{(p)}}'(0),
+\]
+那么 $p\mapsto V_p$ 是 $M$ 上的一个向量场，被称为\emph{$\theta$ 的无穷小生成元}。
+
+\begin{proposition}
+  令 $\theta:\mathbb{R}\times M\to M$ 是光滑的全局流，那么
+  $\theta$ 的无穷小生成元 $V$ 是 $M$ 上的光滑向量场，并且每个
+  曲线 $\theta^{(p)}$ 都是 $V$ 的积分曲线。
+\end{proposition}
+\begin{proof}
+  任取 $f\in C^\infty(M)$ 和 $p\in M$，有
+  \[
+    Vf(p)=V_pf=  \smash{\theta^{(p)}}'(0)f=
+    \left.\frac{d}{dt}\right|_{t=0}f\bigl(\theta^{(p)}(0)\bigr)
+    =\frac{\partial (f\circ\theta)}{\partial t}(0,p),
+  \]
+  由于 $f\circ\theta$ 是光滑函数，所以 $Vf$ 也是光滑函数，故
+  $V$ 是光滑向量场。
+
+  下面证明 $\theta^{(p)}$ 是 $V$ 的积分曲线。记 $q=\theta^{(p)}(t)$，那么
+  \[
+    V_{\theta^{(p)}(t)}f=\smash{\theta^{(q)}}'(0)f
+    =\left.\frac{d}{ds}\right|_{s=0}f(\theta(s,q))
+    =\left.\frac{d}{ds}\right|_{s=0}f(\theta(s+t,p))
+    =\smash{\theta^{(p)}}'(t)f,
+  \]
+  即 $\smash{\theta^{(p)}}'(t)=V_{\theta^{(p)}(t)}$。
+\end{proof}
+
+
+
+
+
+
+\chapter{向量丛}
+
+\section{向量丛}
+
+令 $M$ 是拓扑空间，\emph{$M$ 上的秩 $k$ 的(实)向量丛}指的是一个拓扑空间
+$E$ 附带一个连续满射 $\pi:E\to M$，其满足下面的条件：
+\begin{enumerate}
+  \item 对于每个 $p\in M$，$p$ 上的纤维 $E_p=\pi^{-1}(p)$ 有一个
+  $k$-维的实向量空间结构。
+  \item 对于每个 $p\in M$，都存在 $p$ 的邻域 $U$ 和一个同胚
+  $\varPhi:\pi^{-1}(U)\to U\times \mathbb{R}^k$ (这个同胚被称为
+  \emph{$E$ 在 $U$ 上的局部平凡化})，并且 $\varPhi$ 满足：
+  \begin{itemize}[nosep]
+    \item 记 $\pi_U:U\times \mathbb{R}^k\to U$ 是投影，
+    有 $\pi_U\circ\varPhi=\pi$；
+    \item 对于每个 $q\in U$，$\varPhi|_{{E_q}}$ 都是
+    $E_q$ 到 $\{q\}\times \mathbb{R}^k$ 的向量空间同构。
+  \end{itemize}
+\end{enumerate} 
+如果 $M,E$ 都是光滑流形，$\pi$ 是光滑映射并且局部平凡化可以
+选取为微分同胚，那么 $E$ 被称为\emph{光滑向量丛}。在这种情况下，
+我们将局部平凡化成为\emph{光滑局部平凡化}。
+
+空间 $E$ 被称为\emph{丛的全空间}，$M$ 被称为\emph{底空间}，
+$\pi$ 被称为\emph{投影}。
+
+\begin{exercise}
+  设 $E$ 是 $M$ 上的光滑向量丛，证明投影 $\pi:E\to M$
+  是满射的光滑浸没。
+\end{exercise}
+\begin{proof}
+  根据定义 $\pi$ 是满射。任取 $p\in M$，设 $U$ 是 $p$ 的邻域，
+  $\varPhi:\pi^{-1}(U)\to U\times \mathbb{R}^k$ 是光滑局部平凡化，那么
+  $\pi_U\circ\varPhi=\pi$。由于 $\pi_U$ 是光滑浸没，$\varPhi$
+  是微分同胚，所以 $\pi$ 是光滑浸没。
+\end{proof}
+
+如果存在 $E$ 在整个 $M$ 上的局部平凡化(这被称为\emph{$E$ 的全局平凡化})，
+那么 $E$ 被称为\emph{平凡丛}。在这种情况下，$E$ 本身同胚于
+$M\times \mathbb{R}^k$。如果 $E\to M$ 是光滑丛并且有一个光滑
+的全局平凡化，那么我们说 $E$ 是\emph{光滑平凡丛}，此时
+$E$ 微分同胚于 $M\times \mathbb{R}^k$。
+
+\begin{example}[积丛]
+  任意空间 $M$ 上的最简单的秩 $k$ 的向量丛是积空间 $E=M\times \mathbb{R}^k$，
+  投影 $\pi=\pi_1:M\times \mathbb{R}^k\to M$。这样的丛被称为\emph{积丛}，那么恒等映射
+  $\Id_E$ 就是一个全局平凡化，所以积丛是平凡丛。
+\end{example}
+
+\begin{proposition}[切丛作为向量丛]
+  令 $M$ 是一个光滑 $n$-流形，$TM$ 是切丛。那么
+  $TM$ 是 $M$ 上的秩 $n$ 的光滑向量丛。
+\end{proposition}
+\begin{proof}
+  记 $\pi:TM\to M$ 是投影映射。对于每个 $p\in M$，$\pi^{-1}(p)=T_pM$
+  是 $n$ 维向量空间。取 $p$ 处的光滑坐标卡 $(U,(x^i))$，那么
+  $\varPhi:\pi^{-1}(U)\to U\times \mathbb{R}^n$ 可以定义为
+  \[
+    \varPhi\left(v^i\left.\frac{\partial}{\partial x^i}\right|_q\right) 
+    =\left(q,\bigl(v^1,\dots,v^n\bigr)\right),
+  \]
+  那么 $\varPhi$ 的坐标表示为恒等映射，所以是微分同胚。
+  对于每个 $q\in U$，$\varPhi$ 限制在 $T_qM$ 上显然都是
+  向量空间同构。此外容易验证 $\pi_U\circ \varPhi=\pi$。
+\end{proof}
+ 
+\begin{lemma}
+  令 $\pi:E\to M$ 是秩 $k$ 的光滑向量丛，假设 $\varPhi:\pi^{-1}(U)\to U\times \mathbb{R}^k$
+  和 $\varPsi:\pi^{-1}(V)\to V\times \mathbb{R}^k$ 是两个 $E$ 的光滑局部平凡化
+  并且 $U\cap V\neq\emptyset$。那么存在一个光滑映射 $\tau:U\cap V\to \GL(k,\mathbb{R})$
+  使得复合映射 $\varPhi\circ\varPsi^{-1}:(U\cap V)\times \mathbb{R}^k\to (U\cap V)\times \mathbb{R}^k$
+  形如
+  \[
+    \varPhi\circ\varPsi^{-1}(p,v)=\bigl(p,\tau(p)v\bigr)  .
+  \]
+\end{lemma}
+\begin{proof}
+  我们有下面的交换图：
+  \[
+    \begin{tikzcd}[column sep=2.4em]
+      (U\cap V)\times \mathbb{R}^k\arrow[dr,"\pi_1"']
+      &
+      \pi^{-1}(U\cap V)\arrow[l,"\varPsi"']\arrow[r,"\varPhi"]\arrow[d,"\pi"]
+      &
+      (U\cap V)\times \mathbb{R}^k\arrow[dl,"\pi_1"]\\
+      & 
+      U\cap V
+      &
+    \end{tikzcd}  
+  \]
+  其中 $\varPhi,\varPsi$ 都是微分同胚。那么对于任意的
+  $(p,v)\in(U\cap V)\times \mathbb{R}^k$，有
+  \[
+    p=\pi_1(p,v)=\pi\circ\varPsi^{-1}(p,v)=\pi_1\circ(\varPhi\circ\varPsi^{-1})
+    (p,v),  
+  \]
+  这表明
+  \[
+    \varPhi\circ\varPsi^{-1}(p,v)=\bigl(p,\sigma(p,v)\bigr),
+  \]
+  其中 $\sigma:(U\cap V)\times \mathbb{R}^k\to \mathbb{R}^k$ 是光滑映射。
+  对于每个固定的 $p\in U\cap V$，
+  \[ 
+    \varPhi\circ\varPsi^{-1}:\{p\}\times \mathbb{R}^k\xrightarrow{\varPsi^{-1}}
+    E_p\xrightarrow{\varPhi}\{p\}\times \mathbb{R}^k
+  \]
+  是向量空间 $\{p\}\times \mathbb{R}^k$ 上的可逆线性变换，所以
+  $\sigma(p,v)=\tau(p)v$，其中 $\tau(p)\in\GL(k,\mathbb{R})$。
+\end{proof}
+
+上述光滑映射 $\tau:U\cap V\to\GL(k,\mathbb{R})$ 被称为局部平凡化
+$\varPhi$ 和 $\varPsi$ 之间的\emph{转移函数}。
+
+\begin{lemma}[向量丛坐标卡引理]
+  令 $M$ 是光滑流形，假设对于每个 $p\in M$ 我们都赋予一个 $k$ 维实向量空间
+  $E_p$。令 $E=\coprod_{p\in M}E_p$，$\pi:E\to M$ 将 $E_p$ 的每个元素
+  送到点 $p$。如果我们还有下面的资料：
+  \begin{enumerate}
+    \item $M$ 的一个开覆盖 $\{U_\alpha\}_{\alpha\in A}$；
+    \item 对于每个 $\alpha\in A$，有双射 $\varPhi_\alpha:\pi^{-1}(U_\alpha)\to U_\alpha\times \mathbb{R}^k$，
+    并且 $\varPhi$ 限制在每个 $E_p$ 上是向量空间 $E_p$ 到 $\{p\}\times \mathbb{R}^k$ 的同构；
+    \item 对于每个 $\alpha,\beta\in A$ 并且 $U_\alpha\cap U_\beta\neq\emptyset$，存在光滑映射
+    $\tau_{\alpha\beta}:U_\alpha\cap U_\beta\to \GL(k,\mathbb{R})$ 使得映射
+    $\varPhi_\alpha\circ\varPhi_\beta^{-1}:(U_\alpha\cap U_\beta)\times \mathbb{R}^k\to (U_\alpha\cap U_\beta)\times \mathbb{R}^k$
+    形如
+    \[
+      \varPhi_\alpha\circ\varPhi_\beta^{-1}(p,v)=\bigl(p,\tau_{\alpha\beta}(p)v\bigr).  
+    \]
+  \end{enumerate}
+  那么，$E$ 有唯一的拓扑和光滑结构使得其成为 $M$ 上的秩 $k$ 的光滑向量丛，
+  且 $\pi$ 是投影映射，$\{(U_\alpha,\varPhi_\alpha)\}$ 是光滑局部平凡化。
+\end{lemma}
+
+\begin{lemma}
+  $E$ 上的拓扑结构为：对于每个 $p\in M$，选取所有满足 $p\in V_p\subseteq U_\alpha$
+  的光滑坐标卡 $(V_p,\varphi_p)$，令 $\tilde\varphi_p=(\varphi_p\times \Id_{\mathbb{R}^k})\circ\varPhi_\alpha$，
+  那么拓扑基 $\{\tilde\varphi_p^{-1}(W)\}$ (其中 $W\subseteq \varphi_p(V_p)\times \mathbb{R}^k$ 是开集)
+  生成 $E$ 上的拓扑。$E$ 的光滑结构为：$\{(\pi^{-1}(V_p),\tilde\varphi_p)\}$
+  构成 $E$ 的一组光滑坐标卡。
+\end{lemma} 
+
+
+\chapter{余切丛}
+
+\section{余向量}
+
+\subsection{流形上的余切向量}
+
+$M$ 是光滑流形，对于每个 $p\in M$，定义\emph{$p$ 处的余切空间}
+$T_p^*M$ 为切空间 $T_pM$ 的对偶空间：
+\[
+  T_p^*M=(T_pM)^*.  
+\]
+$T_p^*M$ 的元素被称为\emph{$p$ 处的余切向量}，或者简称为\emph{$p$ 处的余向量}。
+
+给定开子集 $U\subseteq M$ 上的一个光滑局部坐标 $\left(x^i\right)$，
+对于每个 $p\in U$，坐标基 $\left(\partial /\partial x^i|_p\right)$
+给出了 $T_p^*M$ 的一组对偶基 $\left(\lambda^i|_p\right)$。
+那么任意余向量 $\omega\in T_p^*M$ 都可以唯一地表示为 $\omega=\omega_i\lambda^i|_p$，
+此时
+\[
+  \omega\left(\left.\frac{\partial}{\partial x^j}\right|_p\right)=\omega_i  
+  \lambda^i|_p\left(\left.\frac{\partial}{\partial x^j}\right|_p\right)
+  =\omega_j.
+\]
+
+\subsection{余向量场}
+
+对于光滑流形 $M$，无交并
+\[
+  T^*M=\coprod_{p\in M}T_p^*M  
+\]
+被称为\emph{$M$ 的余切丛}。给定开子集 $U$ 上的光滑局部坐标
+$\left(x^i\right)$，对于每个 $p\in U$，记 $\left(\partial/\partial x^i|_p\right)$
+的对偶基为 $\left(\lambda^i|_p\right)$，这定义了 $n$ 个映射
+$\lambda^1,\dots,\lambda^n:U\to T^*M$，被称为\emph{坐标余向量场}。
+
+与切丛一样，$M$ 的光滑局部坐标导出了余切丛的光滑局部坐标。如果 
+$\left(x^i\right)$ 是开子集 $U\subseteq M$ 上的光滑局部坐标，
+那么从 $\pi^{-1}(U)$ 到 $\mathbb{R}^{2n}$ 的映射
+\[
+  \xi_i\lambda^i|_p \mapsto 
+  \left(x^1(p),\dots,x^n(p),\xi_1,\dots,\xi_n\right)
+\]
+是 $T^*M$ 上的光滑局部坐标。我们说 $\left(x^i,\xi_i\right)$ 是
+$T^*M$ 关于 $\left(x^i\right)$ 的\emph{自然坐标}。
+
+$T^*M$ 的一个(局部或者全局的)截面被称为\emph{余向量场}或者
+\emph{$1$-形式}。与其他丛的截面一样，没有任何限定词的余向量场
+仅仅假设是连续的。我们将余向量场 $\omega$ 在 $p$ 处的值记为
+$\omega_p$。在开集 $U$ 上的光滑局部坐标中，余向量场 $\omega$
+可以由坐标余向量场 $\left(\lambda^i\right)$ 表示为
+$\omega=\omega_i\lambda^i$，其中 $\omega_i:U\to \mathbb{R}$
+被称为\emph{$\omega$ 的分量函数}，它们刻画为
+\[
+  \omega_i(p)=\omega_p\left(\left.\frac{\partial}{\partial x^i}\right|_p\right).  
+\]
+
+如果 $\omega$ 是 $M$ 上的余向量场，$X$ 是 $M$ 上的向量场，我们可以构造
+一个函数 $\omega(X):M\to \mathbb{R}$ 为
+\[
+  \omega(X)(p)=\omega_p(X_p).  
+\]
+如果我们用坐标表示 $\omega=\omega_i\lambda^i$ 和 $X=X^j\partial/\partial x^j$，那么
+\[
+  \omega(X)(p)=\left(\omega_i(p)\lambda^i|_p\right) 
+  \left(X^j(p)\left.\frac{\partial}{\partial x^j}\right|_p\right)
+  =\omega_i(p)X^i(p),
+\]
+所以 $\omega(X)$ 有局部坐标表示 $\omega(X)=\omega_iX^i$。
+
+
+\subsection{函数的微分}
+
+在初等微积分中，在 $\mathbb{R}^n$ 的光滑实值函数 $f$ 的梯度
+被定义为向量场，其分量是 $f$ 的偏导数，即
+\begin{equation}
+  \grad f= \sum_{i=1}^n\frac{\partial f}{\partial x^i}\frac{\partial}{\partial x^i}.
+\end{equation}
+不幸的是，这种梯度的形式并不是与坐标无关的。
+
+\begin{example}
+  令 $f(x,y)=x^2$，$X$ 是向量场
+  \[
+    X=\grad f=2x\frac{\partial}{\partial x},  
+  \]
+  考虑极坐标 $(r,\theta)$，由于
+  \[
+    \left.\frac{\partial}{\partial x}\right|_{(x,y)} 
+    =\frac{\partial r}{\partial x}\left.\frac{\partial}{\partial r}\right|_{(r,\theta)} 
+    +\frac{\partial \theta}{\partial x}\left.\frac{\partial}{\partial \theta}\right|_{(r,\theta)} 
+    =\frac{x}{r}\left.\frac{\partial}{\partial r}\right|_{(r,\theta)} 
+    -\frac{xy^2}{r}\left.\frac{\partial}{\partial \theta}\right|_{(r,\theta)},
+  \]
+  所以 $X$ 使用极坐标的表达为
+  \[
+    X=  \frac{2x^2}{r}\frac{\partial}{\partial r}
+    -\frac{2x^2y^2}{r}\frac{\partial}{\partial \theta}
+    =2r\cos^2\theta\frac{\partial}{\partial r}-
+    \frac{1}{2}r^3\sin^22\theta\frac{\partial}{\partial \theta}.
+  \]
+  但是
+  \[
+    X\neq \frac{\partial f}{\partial r}\frac{\partial}{\partial r}
+    +\frac{\partial f}{\partial\theta}\frac{\partial}{\partial \theta}
+    =2r\cos\theta  \frac{\partial}{\partial r}-r^2\sin 2\theta
+    \frac{\partial}{\partial \theta}.
+  \]
+\end{example}
+
+尽管光滑函数的偏导数不难以与坐标无关的方式解释为向量场的分量，但是可以
+证明它们可以解释为余向量场的分量，这是余向量场最重要的应用。
+
+令 $f$ 是光滑流形 $M$ 上的实值函数。我们定义余向量场 $df$ 为
+\[
+  df_p(v)=vf\quad \forall v\in T_pM,  
+\]
+$df$ 被称为\emph{$f$ 的微分}。
+
+\begin{proposition}
+  光滑函数的微分是一个光滑余向量场。
+\end{proposition}
+\begin{proof}
+  任取 $p\in M$，不难验证 $df_p:T_pM\to \mathbb{R}$ 是线性映射，所以
+  $df_p\in T_p^*M$ 确实是余向量。任取 $X\in \mathfrak{X}(M)$，有
+  $df(X)(p)=df_p(X_p)=X_pf=(Xf)(p)$，所以 $df(X)=Xf$ 是光滑函数，
+  即 $df$ 是光滑余向量场。
+\end{proof}
+
+为了更具体地了解 $df$，我们计算它的坐标表示。令 $\left(x^i\right)$ 是
+开子集 $U\subseteq M$ 上的光滑局部坐标，$\left(\lambda^i\right)$
+是对应的坐标余标架。那么 $df$ 可以表示为 $df_p=A_i(p)\lambda^i|_p$，
+其中 $A_i:U\to \mathbb{R}$，此时根据定义，有
+\[
+  \frac{\partial f}{\partial x^j}(p)=df_p\left(\left.\frac{\partial}{\partial x^j}\right|_p\right)
+  =  A_i(p)\lambda^i|_p \left(\left.\frac{\partial}{\partial x^j}\right|_p\right)
+  =A_j(p),
+\]
+于是我们得到 $df$ 的坐标表示：
+\begin{equation}\label{eq:coordinate represent of df}
+  df_p=\frac{\partial f}{\partial x^i}(p)\lambda^i|_p.
+\end{equation}
+
+特别地，如果我们将 $f$ 取为坐标函数 $x^j:U\to \mathbb{R}$，那么
+\[
+  dx^j|_p=  \frac{\partial x^j}{\partial x^i}(p)\lambda^i|_p
+  =\lambda^j|_p,
+\]
+也就是说，坐标余向量场 $\lambda^j$ 就是微分 $dx^j$。因此，我们可以将
+\eqref{eq:coordinate represent of df} 写为：
+\[
+  df_p=  \frac{\partial f}{\partial x^i}(p)dx^i|_p,
+\]
+或者作为余向量场之间的等式：
+\begin{equation}
+  df=\frac{\partial f}{\partial x^i}dx^i.
+\end{equation}
+
+注意，对于光滑函数 $f:M\to \mathbb{R}$，我们现在定义了两种微分，
+一种是在 \ref{sec:differential of map} 中定义的
+$\tilde{d}\!f_p:T_pM\to T_{f(p)}\mathbb{R}$，一种是本节定义的
+$df_p:T_pM\to \mathbb{R}$，这二者本质上是相同的，因为我们在给定的坐标
+中，我们有典范的同构 $T_{f(p)}\mathbb{R}\simeq \mathbb{R}$。
+此时，可以计算
+\[
+  \tilde d\!f_p\left(\left.\frac{\partial}{\partial x^i}\right|_p\right)
+  =\frac{\partial f}{\partial x^i}(p)\left.\frac{d}{dt}\right|_{f(p)},
+\]
+以及
+\[
+  df_p   \left(\left.\frac{\partial}{\partial x^i}\right|_p\right)
+  =\frac{\partial f}{\partial x^i}(p),
+\]
+所以这二者的值在同构的意义下是相同的。
+
+\section{余向量场的拉回}
+
+令 $F:M\to N$ 是光滑映射，$p\in M$，微分 $dF_p:T_pM\to T_{F(p)}N$
+导出了对偶的线性映射
+\[
+  dF_p^*:T_{F(p)}^*N\to T_p^*M,  
+\]
+被称为 \emph{$F$ 在 $p$ 处的拉回} 或者 \emph{$F$ 的余切映射}。
+根据对偶映射的定义，其刻画为：
+\[
+  dF_p^*(\omega)(v)= \omega(dF_p(v)),\quad \omega\in T_{F(p)}^*N,
+  v\in T_pM.
+\]
+也即
+\[
+  dF_p^*(\omega)=\omega\circ dF_p.  
+\]
+
+对于向量场而言，我们注意到光滑向量场的推前仅在微分同胚或者李群同态
+的特殊情况下有定义。而余向量场的情况则大有不同，事实上余向量场
+总是能够拉回到一个余向量场。给定光滑映射 $F:M\to N$ 和
+$N$ 上的余向量场 $\omega$，定义 $M$ 上的余向量场 $F^*\omega$
+为
+\[
+  (F^*\omega)_p =dF_p^*(\omega_{F(p)}),
+\]
+这个余向量场被称为\emph{$\omega$ 通过 $F$ 的拉回}。其在切向量 $v\in T_pM$
+上的作用为
+\[
+  (F^*\omega)_p(v)=\omega_{F(p)}\bigl(dF_p(v)\bigr)  .
+\]
+
+\begin{proposition}\label{prop:pullback of covector field}
+  令 $F:M\to N$ 是光滑映射，$u$ 是 $N$ 上的连续实值函数，$\omega$ 是
+  $N$ 上的余向量场，那么
+  \[
+    F^*(u\omega)=(u\circ F)F^*\omega,  
+  \]
+  此外，若 $u$ 是光滑的，那么
+  \[
+    F^*du=d(u\circ F).  
+  \]
+\end{proposition}
+\begin{proof}
+  直接计算得
+  \begin{align*}
+    \bigl(F^*(u\omega)\bigr)_p&=dF_p^*\bigl(u(F(p))\omega_{F(p)}\bigr)
+    =u(F(p))dF_p^*(\omega_{F(p)})\\
+    &=\bigl(u\circ F(p)\bigr) (F^*\omega)_p=\bigl((u\circ F)F^*\omega\bigr)_p.
+  \end{align*}
+  若 $u$ 是光滑的，那么
+  \begin{align*}
+    (F^*du)_p(v)&=dF_p^*(du_{F(p)})(v)=du_{F(p)}\bigl(dF_p(v)\bigr)\\
+    &=dF_p(v)u=v(u\circ F)=d(u\circ F)_p(v).\qedhere
+  \end{align*}
+\end{proof}
+
+\begin{proposition}
+  令 $F:M\to N$ 是光滑映射，$\omega$ 是
+  $N$ 上的余向量场，那么 $F^*\omega$ 是 $M$ 上的余向量场。如果
+  $\omega$ 光滑，那么 $F^*\omega$ 也光滑。
+\end{proposition}
+\begin{proof}
+  任取 $p\in M$，选取 $F(p)$ 处的光滑坐标卡 $(V,(y^j))$，令
+  $U=F^{-1}(V)$。设 $\omega=\omega_jdy^j$，那么
+  根据 \autoref{prop:pullback of covector field}，有
+  \[
+    F^*\omega=F^*\left(\omega_jdy^j\right)=
+    (\omega_j\circ F)F^*dy^j=
+    (\omega_j\circ F)d(y^j\circ F)=(\omega_j\circ F)dF^j,  
+  \]
+  所以 $F^*\omega:U\to T^*M$ 是连续映射。若 $\omega$ 光滑，显然
+  $F^*\omega$ 光滑。
+\end{proof}
+
+\begin{example}
+  令 $F:\mathbb{R}^3\to \mathbb{R}^2$ 为映射
+  \[
+    (u,v)=F(x,y,z) =(x^2y,y\sin z),
+  \]
+  余向量场 $\omega\in \mathfrak{X}^*(\mathbb{R}^2)$ 为
+  \[
+    \omega=vdu+udv,  
+  \]
+  那么拉回可以计算为
+  \begin{align*}
+    F^*\omega&=(v\circ F)dF^1+(u\circ F)dF^2\\
+    &=y\sin z (2xydx+x^2dy)+x^2y(\sin zdy+y\cos zdz)\\
+    &=2xy^2\sin z dx+2x^2y\sin zdy+x^2y^2\cos zdz.
+  \end{align*}
+\end{example}
+
+
+\chapter{张量}
+
+\section{多重线性代数}
+
+\subsection{向量空间的张量积}
+
+\begin{proposition}[抽象的张量积 vs. 具体的张量积]
+  如果 $V_1,\dots,V_k$ 是有限维向量空间，那么存在典范同构：
+  \[
+    V_1^*\otimes \cdots\otimes V_k^*\simeq \LL(V_1,\dots,V_k;\mathbb{R}),
+  \]
+  其中抽象的单张量 $\omega^1\otimes \cdots\otimes\omega^k$ 对应到
+  多重线性映射
+  \[
+    \omega^1\otimes\cdots\otimes\omega^k(v_1,\dots,v_k)=
+    \omega^1(v_1)\cdots \omega^k(v^k).  
+  \]
+\end{proposition}
+
+\subsection{向量空间上的协变张量和逆变张量}
+
+$V$ 是有限维向量空间，\emph{$V$ 上的协变 $k$-张量}指的是
+$k$ 重张量积 $V^*\otimes\cdots\otimes V^*$ 中的元素，我们可以将其视为
+$V$ 上的 $k$-重多重线性映射
+\[
+  \alpha:V\times\cdots\times V\to \mathbb{R},
+\]
+$k$ 被称为\emph{$\alpha$ 的秩}。出于惯例，将 $0$-张量定义为实数。我们将 $V$ 上的所有协变 $k$-张量构成的
+向量空间简记为
+\[
+  T^k(V^*)=V^*\otimes\cdots\otimes V^*.
+\]
+
+定义\emph{$V$ 上秩 $k$ 的逆变张量}空间为向量空间
+\[
+  T^k(V)=V\otimes \cdots\otimes V.  
+\]
+特别地，$T^1(V)=V$，同样出于惯例，定义 $T^0(V)=\mathbb{R}$。
+逆变 $k$-张量可以被视为 $V^*$ 上的 $k$-多重线性映射
+\[
+  \alpha:V^*\times \cdots\times V^*\to \mathbb{R} . 
+\]
+但是对于大多数目的来说，将逆变张量视为抽象的张量积空间中的元素更加简单。
+
+更一般的，定义\emph{$V$ 上的 $(k,l)$ 型混合张量}空间为
+\[
+  T^{(k,l)}(V)=T^k(V)\otimes T^l(V^*)=\underbrace{V\otimes\cdots\otimes V}_{\text{$k$ copies}}  
+  \otimes \underbrace{V^*\otimes\cdots\otimes V^*}_{\text{$l$ copies}}.
+\]
+上述定义的一些特殊情况为：
+\begin{align*}
+  T^{(0,0)}(V)&=T^0(V)=T^0(V^*)=\mathbb{R},\\
+  T^{(0,1)}(V)&=T^1(V^*)=V^*,\\
+  T^{(1,0)}(V)&=T^1(V)=V,\\
+  T^{(0,k)}(V)&=T^k(V^*),\\
+  T^{(k,0)}(V)&=T^k(V).
+\end{align*}
+
+
+
+
+\section{流形上的张量和张量场}
+
+令 $M$ 是光滑流形，定义 \emph{$M$ 上的协变 $k$-张量丛}为
+\[
+  T^kT^*M=\coprod_{p\in M}T^k\bigl(T_p^*M\bigr).  
+\] 
+类似地，定义 \emph{$M$ 上的逆变 $k$-张量丛}为
+\[
+  T^kTM=\coprod_{p\in M}T^k\bigl(T_pM\bigr)  .
+\]
+\emph{$M$ 上的 $(k,l)$ 型混合张量丛}为
+\[
+  T^{(k,l)}TM=\coprod_{p\in M}  T^{(k,l)}\bigl(T_pM\bigr).
+\]
+
+上述这些丛中任意一个都被称为\emph{$M$ 上的张量丛}。张量丛
+的截面被称为\emph{$M$ 上的(协变、逆变或者混合)张量场}。
+使用上面的定义，我们发现逆变 $1$-张量场就是向量场，
+协变 $1$-张量场就是余向量场。$0$-张量场就是连续实值函数。
+
+这些张量场的光滑截面构成的空间 
+$\Gamma\bigl(T^kT^*M\bigr),\Gamma\bigl(T^kTM\bigr),\Gamma\bigl(T^{(k,l)}TM\bigr)$
+是 $\mathbb{R}$ 上的无限维向量空间，也是 $C^\infty(M)$ 环上的模。
+在任意光滑局部坐标 $\left(x^i\right)$ 下，这些丛的截面
+可以表示为
+\[
+  A=\begin{dcases}
+    A_{i_1\dots i_k}dx^{i_1}\otimes\cdots\otimes dx^{i_k} & A\in \Gamma\bigl(T^kT^*M\bigr),\\
+    A^{i_1\dots i_k}\frac{\partial}{\partial x^{i_1}}\otimes
+    \cdots\otimes \frac{\partial}{\partial x^{i_k}} & A\in \Gamma\bigl(T^kTM\bigr),\\
+    A_{j_1\dots j_l}^{i_1\dots i_k}\frac{\partial}{\partial x^{i_1}}\otimes
+    \cdots\otimes \frac{\partial}{\partial x^{i_k}}\otimes
+    dx^{j_1}\otimes\cdots\otimes dx^{j_l} & A\in \Gamma\bigl(T^{(k,l)}TM\bigr).
+  \end{dcases}  
+\]
+函数 $A_{i_1\dots i_k},A^{i_1\dots i_k},A_{j_1\dots j_l}^{i_1\dots i_k}$ 被称为
+\emph{$A$ 的分量函数}。由于我们主要关注光滑协变张量场，所以我们对于
+光滑协变 $k$-张量场，采用以下简写：
+\[
+  \mathcal{T}^k(M)=\Gamma\bigl(T^kT^*M\bigr)  .
+\]
+
+\subsection{张量场的拉回}
+
+与余向量场类似，协变张量场可以通过光滑映射拉回产生定义域上的张量场。
+注意拉回构造仅限于协变张量场，这也是我们更多关注协变张量的原因之一。
+
+设 $F:M\to N$ 是光滑映射。对于任意点 $p\in M$ 和 $k$-张量
+$\alpha\in T^k\bigl(T_{F(p)}^*N\bigr)$，我们定义张量
+$dF_p^*(\alpha)\in T^k\bigl(T_p^*M\bigr)$ 为
+\[
+  dF_p^*(\alpha)(v_1,\dots,v_k)=\alpha\bigl(dF_p(v_1),\dots,dF_p(v_k)\bigr)  ,
+\]
+其中 $v_1,\dots,v_k\in T_pM$，这个 $dF_p^*(\alpha)$ 被称为
+\emph{$\alpha$ 通过 $F$ 在 $p$ 处的拉回}。如果 $A$ 是一个
+$N$ 上的协变 $k$-张量场，我们定义 $M$ 上的 $k$-张量场
+$F^*A$ 为
+\[
+  (F^*A)  _p=dF_p^*(A_{F(p)}).
+\]
+这被称为\emph{$A$ 通过 $F$ 的拉回}。这个张量场在
+$v_1,\dots,v_k\in T_pM$ 上的作用为
+\[
+  (F^*A)  _p(v_1,\dots,v_k)=A_{F(p)}\bigl(dF_p(v_1),\dots,dF_p(v_k)\bigr).
+\]
+
+
+ 
+
+
+\chapter{黎曼度量}
+
+\section{黎曼流形}
+
+令 $M$ 是光滑流形，\emph{$M$ 上的黎曼度量}指的是 $M$ 上的
+一个光滑的对称协变 $2$-张量场，并且在每个点处是正定的。
+一个\emph{黎曼流形}指的是二元组 $(M,g)$，其中 $M$ 是光滑流形，
+$g$ 是 $M$ 上的一个黎曼度量。
+
+如果 $g$ 是黎曼度量，那么对于每个 $p\in M$，$2$-张量 $g_p\in T_p^*M\otimes T_p^*M$
+是 $T_pM$ 上的一个内积。出于这一点，对于 $v,w\in T_pM$，我们通常使用 $\langle v,w\rangle_g$
+来表示实数 $g_p(v,w)$。
+
+在任意光滑局部坐标 $\left(x^i\right)$ 下，一个黎曼度量可以被写为：
+\[
+  g=g_{ij}dx^i\otimes dx^j.  
+\]
+其中 $(g_{ij})$ 是光滑函数的对称正定矩阵。$g$ 的对称性允许我们
+将 $g$ 写为下述对称积的形式：
+
+
+\subsection{拉回度量}
+
+设 $M,N$ 是光滑流形，$g$ 是 $N$ 上的黎曼度量，$F:M\to N$ 是光滑映射。
+拉回 $F^*g$ 是 $M$ 上的一个光滑 $2$-张量场。如果 $F^*g$ 是正定的，
+那么就是 $M$ 上的黎曼度量，被称为由 $F$ 确定的\emph{拉回度量}。
+
+\begin{proposition}[拉回度量判别法]
+  设 $F:M\to N$ 是光滑映射，$g$ 是 $N$ 上的黎曼度量，那么 
+  $F^*g$ 是 $M$ 上的黎曼度量当且仅当 $F$ 是光滑浸入。
+\end{proposition}
+
+如果 $(M,g)$ 和 $(\wwtilde{M},\tilde g)$ 是黎曼流形，
+光滑映射 $F:M\to N$ 如果是微分同胚并且使得 $F^*\tilde g=g$，
+那么我们说 $F$ 是一个\emph{(黎曼)等距}。如果每个 $p\in M$
+有一个邻域 $U$ 使得 $F|_U$ 是 $U$ 到 $\wwtilde M$ 的一个开子集
+的等距，那么我们说 $F$ 是一个\emph{局部等距}。
+
+一个黎曼流形 $(M,g)$ 如果局部等距于 $(\mathbb{R}^n,\bar g)$，那么
+$(M,g)$ 被称为\emph{平坦黎曼流形}，$g$ 被称为\emph{平坦度量}。
+
+\subsection{黎曼子流形}
+
+如果 $(M,g)$ 是一个黎曼流形，每个子流形 $S\subseteq M$
+都自动继承一个拉回度量 $\iota^*g$，其中 $\iota:S\hookrightarrow M$
+是包含映射。根据定义，这意味着对于 $v,w\in T_pS$，有
+\[
+  (\iota^*g)_p(v,w)=g_{\iota(p)}\bigl(d\iota_p(v),d\iota_p(w)\bigr)
+  =g_p(v,w),
+\]
+注意这里我们通过 $d\iota_p:T_pS\to T_pM$，将 $T_pS$ 视为 $T_pM$
+的子空间。所以 $(\iota^*g)_p$ 仅仅是 $g_p$ 在 $T_pS\times T_pS$
+上的限制。在这个度量下，$S$ 被称为\emph{$M$ 的黎曼子流形}。
+
+\subsection{法丛}
+
+设 $(M,g)$ 是 $n$ 维黎曼流形，$S\subseteq M$ 是 $k$ 维黎曼子流形。
+对于任意 $p\in S$，如果 $v\in T_pM$ 在内积 $\langle\cdot,\cdot\rangle_g$
+的意义下与 $T_pS$ 中的每个向量都正交，那么我们说 $v$ \emph{正规于 $S$}。
+定义 \emph{$S$ 在 $p$ 处的法空间}为子空间 $N_pS\subseteq T_pM$，
+由所有 $p$ 处的正规于 $S$ 的向量构成。定义 \emph{$S$ 的法丛}
+是子集 $NS\subseteq TM$，由 $S$ 在每个点处的法空间的无交并构成。
+
+
+
+
+
+
 
 
 
