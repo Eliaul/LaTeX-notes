@@ -1181,7 +1181,7 @@ $\mathcal A$ 的元素被称为\emph{可测集}，$(E,\mathcal{A})$ 被称为\em
   \item $\emptyset=E^c\in \mathcal{A}$。
   \item 如果一列子集 $A_n\in \mathcal{A}$，那么
   \[
-    \bigcap_{n\in \mathbb{N}}A_n=\Bigl(\bigcup_{n\in \mathbb{N}}A_n\Bigr) ^c\in \mathcal{A}.
+    \bigcap_{n\in \mathbb{N}}A_n=\biggl(\bigcup_{n\in \mathbb{N}}A_n\biggr) ^c\in \mathcal{A}.
   \]
   \item $\mathcal{A}$ 对有限并和有限交也是封闭的，只需要从某一项 $A_n$ 开始
   全部取空集即可。
@@ -1270,7 +1270,7 @@ $E$ 中的闭集也都是 Borel 子集。
     \item $\mu(\emptyset)=0$；
     \item ($\sigma$-可加性) 对于任意可数个不相交的可测集序列 $(A_n)_{n\in \mathbb{N}}$，有
     \[
-      \mu\Bigl(\bigcup_{n\in \mathbb{N}}A_n\Bigr) =\sum_{n\in \mathbb{N}}\mu(A_n).
+      \mu\biggl(\bigcup_{n\in \mathbb{N}}A_n\biggr) =\sum_{n\in \mathbb{N}}\mu(A_n).
     \]
   \end{enumerate}
   此时，三元组 $(E,\mathcal{A},\mu)$ 被称为\emph{测度空间}。
@@ -1297,18 +1297,18 @@ $\sum_{n\in \mathbb{N}}\mu(A_n)$ 作为正向级数在 $[0,\infty]$
     \]
     \item 如果 $A_n\in \mathcal{A}$ 且 $A_n\subseteq A_{n+1}$，那么
     \[
-      \mu\Bigl(\bigcup_{n\in \mathbb{N}}A_n\Bigr)  
+      \mu\biggl(\bigcup_{n\in \mathbb{N}}A_n\biggr)  
       =\lim_{n\to\infty}\mu(A_n).
     \]
     \item 如果 $B_n\in \mathcal{A}$ 且 $B_{n+1}\subseteq B_n$，
     $\mu(B_1)<\infty$，那么
     \[
-      \mu\Bigl(\bigcap_{n\in \mathbb{N}}B_n\Bigr)  
+      \mu\biggl(\bigcap_{n\in \mathbb{N}}B_n\biggr)  
       =\lim_{n\to\infty}\mu(B_n).
     \]
     \item 如果 $A_n\in \mathcal{A}$，那么
     \[
-      \mu\Bigl(\bigcup_{n\in \mathbb{N}}A_n\Bigr)\leq \sum_{n\in \mathbb{N}}\mu(A_n).
+      \mu\biggl(\bigcup_{n\in \mathbb{N}}A_n\biggr)\leq \sum_{n\in \mathbb{N}}\mu(A_n).
     \]
   \end{enumerate}
 \end{proposition}
@@ -1335,13 +1335,33 @@ $\sum_{n\in \mathbb{N}}\mu(A_n)$ 作为正向级数在 $[0,\infty]$
   \]
   那么 $A_n=\bigcup_{k\leq n}C_k$ 是无交并，所以
   \[
-    \mu\Bigl(\bigcup_{n\in \mathbb{N}}A_n\Bigr)  
-    =\mu\Bigl(\bigcup_{n\in \mathbb{N}}C_n \Bigr)
+    \mu\biggl(\bigcup_{n\in \mathbb{N}}A_n\biggr)  
+    =\mu\biggl(\bigcup_{n\in \mathbb{N}}C_n \biggr)
     =\sum_{n\in \mathbb{N}}\mu(C_n)=\lim_{n\to\infty}
     \sum_{k=1}^n \mu(C_k)=\lim_{n\to\infty} \mu(A_n).
   \]
 
-  (4)
+  (4) 令 $A_n=B_1 \smallsetminus B_n$，那么 $A_n\subseteq A_{n+1}$，此时
+  \[
+    \mu\biggl(\bigcap_{n\in \mathbb{N}}B_n\biggr)  =
+    \mu(B_1)-\mu\biggl(B_1 \smallsetminus\bigcap_{n\in \mathbb{N}}B_n\biggr)
+    = \mu(B_1)-\mu\biggl(\bigcup_{n\in \mathbb{N}}A_n\biggr),
+  \]
+  再根据 (3)，就有
+  \[
+    \mu\biggl(\bigcap_{n\in \mathbb{N}}B_n\biggr)  =\mu(B_1)-\lim_{n\to\infty}\mu(A_n)
+    =\lim_{n\to\infty}\mu(B_1 \smallsetminus A_n)=\lim_{n\to\infty}\mu(B_n).
+  \]
+
+  (5) 令 $C_1=A_1$，对于 $n\geq 2$ 的时候，令
+  \[
+    C_n=A_n \smallsetminus\bigcup_{k=1}^{n-1}A_k,
+  \]
+  那么 $C_n$ 之间互不相交，所以
+  \[
+    \mu\biggl(\bigcup_{n\in \mathbb{N}}A_n\biggr)=\mu\biggl(\bigcup_{n\in \mathbb{N}}C_n\biggr)
+    =\sum_{n\in \mathbb{N}}\mu(C_n)\leq \sum_{n\in \mathbb{N}}\mu(A_n).\qedhere
+  \]
 \end{proof}
 
 \begin{example}[常见的测度]
@@ -1362,7 +1382,7 @@ $\sum_{n\in \mathbb{N}}\mu(A_n)$ 作为正向级数在 $[0,\infty]$
     \]
     令 $(E,\mathcal{A})$ 是可测空间，固定 $x\in E$。对于每个 $A\in \mathcal{A}$，令
     $\delta_x(A)=\mathbf{1}_A(x)$，这给出了 $(E,\mathcal{A})$ 上的一个测度，被称为
-    \emph{$x$ 处的 Dirac 测度}。
+    \emph{$\mathbold x$ 处的 Dirac 测度}。
     \item 可以证明，在 $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ 上存在唯一的正测度 $\lambda$
     使得：对于每个开区间 $[a,b]$，有 $\lambda\bigl([a,b]\bigr)=b-a$。这个
     测度 $\lambda$ 被称为\emph{Lebesgue 测度}。
@@ -1375,6 +1395,100 @@ $\sum_{n\in \mathbb{N}}\mu(A_n)$ 作为正向级数在 $[0,\infty]$
   \nu(A)=\mu(A\cap C),\quad \forall A\in \mathcal{A}.
 \]
 不难验证 $\nu$ 还是 $(E,\mathcal{A})$ 上的正测度。
+
+\begin{definition}
+  \mbox{}
+  \begin{itemize}[nosep]
+    \item 如果 $\mu(E)<\infty$，那么我们说测度 $\mu$ 是\emph{有限的}。
+    \item 如果 $\mu(E)=1$，那么我们说测度 $\mu$ 是\emph{概率测度}，$(E,\mathcal{A},\mu)$ 是\emph{概率空间}。
+    \item 如果存在一列可测集 $(E_n)_{n\in \mathbb{N}}$ 使得 $E=\bigcup_n E_n$ 以及每个
+    $\mu(E_n)<\infty$，那么我们说测度 $\mu$ 是\emph{$\mathbold\sigma$-有限的}。
+    \item 如果 $x\in E$ 使得单点集 $\{x\}\in \mathcal{A}$ 并且 $\mu(\{x\})>0$，那么我们说
+    $x$ 是测度 $\mu$ 的一个\emph{原子}。
+    \item 如果测度 $\mu$ 没有原子，那么我们说 $\mu$ 是\emph{扩散测度}。
+  \end{itemize}
+\end{definition}
+
+如果 $(A_n)_{n\in \mathbb{N}}$ 是一列可测集，类比数列的上下极限，我们可以定义
+集合列的上下极限分别为：
+\[
+  \limsup A_n=\bigcap_{n=1}^\infty\biggl(\bigcup_{k=n}^\infty A_k\biggr),\quad
+  \liminf A_n=\bigcup_{n=1}^\infty\biggl(\bigcap_{k=n}^\infty A_k\biggr).
+\]
+注意到对于任意 $m$，都有
+\[
+  \bigcup_{n=1}^m\biggl(\bigcap_{k=n}^\infty A_k\biggr)
+  =\bigcap_{k=m}^\infty A_k,\quad 
+  \bigcap_{n=1}^m\biggl(\bigcup_{k=n}^\infty A_k\biggr)=\bigcup_{k=m}^\infty A_k,
+\]
+所以显然有 $\liminf A_n\subseteq \limsup A_n$。
+
+\begin{lemma}
+  令 $\mu$ 是 $(E,\mathcal{A})$ 上的测度，那么
+  \[
+    \mu(\liminf A_n)\leq \liminf \mu(A_n).
+  \]
+  如果 $\mu$ 是有限测度，或者更一般地，$\mu\left(\bigcup_{n=1}^\infty A_n\right)<\infty$，
+  那么
+  \[
+    \mu(\limsup A_n)\geq\limsup\mu(A_n).
+  \]
+\end{lemma}
+\begin{proof}
+  对于任意的 $n$，有 
+  \[
+    \mu\biggl(\bigcap_{k=n}^\infty A_k\biggr)\leq \inf_{k\geq n}\mu(A_k),
+  \]
+  所以
+  \[
+    \mu(\liminf A_n)=\lim_{n\to\infty}\mu\biggl(\bigcap_{k=n}^\infty A_k\biggr)
+    \leq \lim_{n\to\infty}\inf_{k\geq n}\mu(A_k)=\liminf \mu(A_n).
+  \]
+  第二个结论同理。
+\end{proof}
+
+\section{可测函数}
+
+\begin{definition}
+  令 $(E,\mathcal{A})$ 和 $(F,\mathcal{B})$ 是两个可测空间，如果映射 $f:E\to F$ 满足：
+  \[
+    \forall B\in \mathcal{B},\  f^{-1}(B)\in \mathcal{A},
+  \]
+  那么我们说 $f$ 是\emph{可测映射}。当 $E,F$ 是两个配备了 Borel $\sigma$-域的拓扑空间时，
+  我们说 $f$ 是\emph{Borel 可测的}。
+\end{definition}
+
+显然，可测映射的复合是可测映射。
+
+\begin{proposition}
+  令 $(E,\mathcal{A})$ 和 $(F,\mathcal{B})$ 是两个可测空间，映射 $f:E\to F$。$f$ 可测
+  当且仅当对于某个生成 $\mathcal{B}$ 的子集族 $\mathcal{C}$ (即 $\mathcal{B}=\sigma(\mathcal{C})$)，
+  有 $f^{-1}(B)\in \mathcal{A}\ (\forall B\in \mathcal{C})$。
+\end{proposition}
+\begin{proof}
+  只需证明充分性。记
+  \[
+    \mathcal{G}=\{B\in \mathcal{B}\,|\, f^{-1}(B)\in \mathcal{A}\},
+  \]
+  直接验证可知 $\mathcal{G}$ 是一个 $\sigma$-域，又因为 $\mathcal{C}\subseteq \mathcal{G}$，
+  所以 $\mathcal{B}=\sigma(\mathcal{C})\subseteq \mathcal{G}\subseteq \mathcal{B}$，
+  所以 $\mathcal{G}=\mathcal{B}$，这就表明 $f$ 是可测的。
+\end{proof}
+
+\begin{example}
+  若 $(F,\mathcal{B})=(\mathbb{R},\mathcal{B}(\mathbb{R}))$，要证明 $f$ 是可测的，只需说明
+  集合 $f^{-1}((a,b))$ 是可测的，或者 $f^{-1}((-\infty,a))$ 是可测的。
+\end{example}
+
+\begin{corollary}
+  设 $E,F$ 是两个配备 Borel $\sigma$-域的拓扑空间，那么连续映射 $f:E\to F$ 都是可测的。
+\end{corollary}
+
+
+
+
+
+
  
 
 \part{概率论}
@@ -1388,6 +1502,55 @@ $\sum_{n\in \mathbb{N}}\mu(A_n)$ 作为正向级数在 $[0,\infty]$
 令 $(\Omega,\mathcal{A})$ 是可测空间，$\mathbb{P}$ 是 $(\Omega,\mathcal{A})$
 上的概率测度，我们说 $(\Omega,\mathcal{A},\mathbb{P})$ 是\emph{概率空间}。
 
+因此，概率空间是测度空间的一个特例。然而，概率论的观点与测度论有很大不同。在概率论中，
+我们的目标是一个“随机实验”的数学模型：
+\begin{itemize}[nosep]
+  \item $\Omega$ 表示实验的所有可能的结果的集合。
+  \item $\mathcal{A}$ 是所有“事件”的集合。这里的事件指的是 $\Omega$ 的一个子集，其概率
+  可以被计算(也就是可测集)。我们应当把事件 $A$ 视为满足某一属性的所有 $\omega\in\Omega$ 
+  构成的子集。
+  \item 对于每个 $A\in \mathcal{A}$，$\mathbb{P}(A)$ 表示事件 $A$ 发生的概率。
+\end{itemize}
+
+当然，一个自然的疑问是，为什么需要考虑事件域 $\mathcal{A}$？换句话说，为什么不能对
+$\Omega$ 的任意子集都计算一个概率？原因在于，一般不可能在 $\Omega$ 的幂集 $\mathcal{P}(\Omega)$
+上定义我们感兴趣的概率测度(除开 $\Omega$ 是可数集这一简单情况)。例如，取 $\Omega=[0,1]$，
+配备 Borel $\sigma$-域和 Lebesgue 测度，但是，可以证明不可能将 Lebesgue 测度扩展到
+$[0,1]$ 的任意子集上使得其仍然满足测度的定义。
+
+\begin{example}
+  一些常见的概率模型。
+  \begin{enumerate}
+    \item 考虑扔两次骰子这一实验，那么
+    \[
+      \Omega=\{1,2,\dots,6\}^2,\quad \mathcal{A}=\mathcal{P}(\Omega),\quad
+      \mathbb{P}(A)=\frac{\card(A)}{36}.
+    \]
+    这里概率 $\mathbb{P}$ 的选取意味着让所有结果都有相同的概率。更一般地，如果 $\Omega$
+    是有限集，$\mathcal{A}=\mathcal{P}(\Omega)$，概率测度 $\mathbb{P}(\{\omega\})=1/\card(\Omega)$
+    被称为 $\Omega$ 上的\emph{均匀概率测度}。
+    \item 现在我们考虑实验：扔骰子，直到出现 $6$ 为止。由于得到 $6$ 所需的投掷次数是无界的
+    (即使你扔了 $1000$ 次骰子，仍有可能没有得到 $6$)，所以 $\Omega$ 的正确选择是想象
+    我们扔了无限次骰子：
+    \[
+      \Omega=\{1,2,\dots,6\}^{\mathbb{N}}.
+    \]
+    $\Omega$ 上的 $\sigma$-域 $\mathcal{A}$ 被定义为包含形如
+    \[
+      \{(\omega_1,\omega_2,\dots,\omega_n)\in\Omega\,|\, \}
+    \]
+  \end{enumerate}
+\end{example}
+
+\section{随机变量}
+
+在本章的剩余部分，我们都考虑一个概率空间 $(\Omega,\mathcal{A},\mathbb{P})$，并且所有
+随机变量都将在这个概率空间上定义。
+
+\begin{definition}
+  令 $(E,\mathcal{E})$ 是可测空间，值在 $E$ 中的\emph{随机变量}指的是一个可测映射
+  $X:\Omega\to E$。
+\end{definition}
 
 
 
