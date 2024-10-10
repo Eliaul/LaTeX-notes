@@ -1484,8 +1484,73 @@ $\sum_{n\in \mathbb{N}}\mu(A_n)$ 作为正向级数在 $[0,\infty]$
   设 $E,F$ 是两个配备 Borel $\sigma$-域的拓扑空间，那么连续映射 $f:E\to F$ 都是可测的。
 \end{corollary}
 
+\begin{lemma}
+  令 $(E,\mathcal{A}),(F_1,\mathcal{B}_1)$ 和 $(F_2,\mathcal{B}_2)$ 是可测空间，乘积
+  $F_1\times F_2$ 配备乘积 $\sigma$-域 $\mathcal{B}_1\otimes \mathcal{B}_2$，令映射
+  $f_1:E\to F_1$ 和 $F_2:E\to F_2$，定义 $f:E\to F_1\times F_2$ 为 $f(x)=(f_1(x),f_2(x))$，
+  那么 $f$ 可测当且仅当 $f_1,f_2$ 都可测。
+\end{lemma}
+
+\begin{corollary}
+  令 $(E,\mathcal{A})$ 是可测空间，$f,g$ 是从 $E$ 到 $\mathbb{R}$ 的可测函数，那么函数
+  \[ 
+    f+g,fg,\min(f,g),\max(f,g)
+  \] 
+  都是可测的。
+\end{corollary}
+
+记扩充实数 $\bar{\mathbb{R}}=\mathbb{R}\cup\{-\infty,+\infty\}$，其拓扑为序拓扑。
+与 $\mathbb{R}$ 类似，$\bar{\mathbb{R}}$ 的 Borel $\sigma$-域由区间 $[-\infty,a)$
+生成。
+
+\begin{proposition}
+  令 $(f_n)_{n\in \mathbb{N}}$ 是 $E\to\bar{\mathbb{R}}$ 的可测函数列，那么
+  \[
+    \sup f_n,\quad \inf f_n,\quad \limsup_{n\to\infty}f_n,\quad \liminf_{n\to\infty} f_n
+  \]
+  都是可测函数。特别地，如果 $(f_n)$ 逐点收敛，那么极限 $\lim f_n$ 是可测函数。
+\end{proposition}
+
+\begin{definition}
+  令 $(E,\mathcal{A})$ 和 $(F,\mathcal{B})$ 是可测空间，$\varphi:E\to F$ 是可测映射， 
+  $\mu$ 是 $(E,\mathcal{A})$ 上的测度，定义 $(F,\mathcal{B})$ 上的测度 $\nu$ 为
+  \[
+    \nu(B)=\mu(\varphi^{-1}(B)),\quad \forall B\in \mathcal{B}.
+  \]
+  $\nu$ 被称为\emph{$\mathbold\mu$ 在 $\mathbold\varphi$ 下的推前}，记为
+  $\varphi(\mu)$，有时也记为 $\varphi_*\mu$。
+\end{definition}
+
+\section{单调类}
 
 
+\chapter{可测函数的积分}
+
+\section{非负函数的积分}
+
+在本章中，我们考虑配备正测度 $\mu$ 的可测空间 $(E,\mathcal{A})$。
+
+\paragraph{简单函数}
+如果可测函数 $f:E\to \mathbb{R}$ 的值域是有限集，那么我们说 $f$ 的\emph{简单函数}。
+假设 $f$ 的所有可能的取值为 $\alpha_1,\dots,\alpha_n$，不妨假设 $\alpha_1<\alpha_2<\cdots<\alpha_n$。
+那么 $f$ 可以表示为
+\[
+  f(x)=\sum_{i=1}^n \alpha_i\mathbold 1_{A_i}(x),
+\]
+其中 $A_i=f^{-1}(\{\alpha_i\})\in \mathcal{A}$。注意到 $E$ 是 $A_1,\dots,A_n$ 的无交并。
+上述公式 $f=\sum_{i=1}^n \alpha_i\mathbold 1_{A_i}$ 被称为 $f$ 的标准表示。
+
+\begin{definition}
+  令 $f$ 是取值在 $\mathbb{R}_+$ 中的简单函数，标准表示为 $f=\sum_{i=1}^n \alpha_i\mathbold 1_{A_i}$。
+  定义\emph{$\mathbold f$ 相对于 $\mathbold\mu$ 的积分}为
+  \[
+    \int f\d\mu=\sum_{i=1}^n\alpha_i\mu(A_i).
+  \]
+  在 $\alpha_i=0$ 和 $\mu(A_i)=\infty$ 的情况下，约定 $0\times\infty=0$。
+\end{definition}
+
+注意上述定义中 $\sum_{i=1}^n\alpha_i\mu(A_i)$ 的取值为 $[0,\infty]$。所以在上述定义中
+我们只考虑非负的简单函数，这是为了避免出现 $\infty-\infty$ 之类的表达式。
 
 
 
