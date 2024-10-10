@@ -51,6 +51,7 @@
 \newcommand{\mat}[1]{\mathbold{#1}}
 \newcommand{\uline}{\underline{\hphantom{X}}}
 \newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\ulim}[1][]{\lim_{#1}\mathord{\uparrow}}
 
 \usepackage{enumitem}
 
@@ -1551,6 +1552,99 @@ $\sum_{n\in \mathbb{N}}\mu(A_n)$ 作为正向级数在 $[0,\infty]$
 
 注意上述定义中 $\sum_{i=1}^n\alpha_i\mu(A_i)$ 的取值为 $[0,\infty]$。所以在上述定义中
 我们只考虑非负的简单函数，这是为了避免出现 $\infty-\infty$ 之类的表达式。
+
+值得注意的是，如果简单函数 $f$ 有表达
+\[
+  f=\sum_{j=1}^m\beta_j\mathbold 1_{B_j},
+\]
+其中 $B_j$ 仍然构成 $E$ 的一个划分，但是 $\beta_j$ 不再是两两不同的。此时
+$f$ 的积分仍然为
+\[
+  \int f\d\mu=\sum_{j=1}^m\beta_j\mu(B_j).
+\]
+这是因为对于每个 $A_i$，某些 $B_j$ 构成了 $A_i$ 的划分，即
+\[
+  A_i=\bigcup_{\{j\,|\,\beta_j=\alpha_i\}}B_j,
+\]
+那么
+\[
+  \alpha_i\mu(A_i)=\alpha_i\sum_{\{j\,|\,\beta_j=\alpha_i\}}\mu( B_j)=
+  \sum_{\{j\,|\,\beta_j=\alpha_i\}}\beta_j\mu( B_j).
+\]
+
+非负简单函数的积分满足下面的一些基本的性质。
+
+\begin{proposition}
+  令 $f,g$ 是 $E$ 上的非负简单函数。
+  \begin{enumerate}
+    \item 对于每个 $a,b\in \mathbb{R}_+$，有
+    \[
+      \int(af+bg)\d\mu=a\int f\d\mu+b\int g\d\mu.
+    \]
+    \item 如果 $f\leq g$，那么
+    \[
+      \int f\d\mu\leq \int g\d\mu.
+    \]
+  \end{enumerate}
+\end{proposition}
+
+我们用 $\mathcal{E}_+$ 来表示 $E$ 上的非负简单函数的集合。
+
+\begin{definition}
+  令 $f:E\to[0,\infty]$ 是可测函数，定义\emph{$\mathbold f$ 相对于 $\mathbold\mu$ 的积分}
+  为
+  \[
+    \int f\d\mu=\sup_{h\in \mathcal{E}_+,h\leq f}\int h\d\mu.
+  \]
+\end{definition}
+
+$f$ 相对于 $\mu$ 的积分通常有很多写法，下面的表达
+\[
+  \int f\d\mu,\ \int f(x)\d\mu(x),\ \int f(x)\mu(\d x),\ \int\mu(\d x)f(x)
+\]
+表示的含义是完全相同的。此外，如果 $A$ 是 $E$ 的可测子集，我们定义
+\[
+  \int_A f\d\mu=\int f\mathbold 1_A\d\mu.
+\]
+
+从现在开始，我们用非负可测函数表示 $E\to [0,\infty]$ 的可测函数(值可以为无穷)。
+需要注意的是，我们前面定义的非负简单函数值必须有限。
+
+\begin{proposition}
+  令 $f,g$ 是 $E$ 上的非负可测函数。
+  \begin{enumerate}
+    \item 如果 $f\leq g$，那么 $\int f\d\mu\leq \int g\d\mu$。
+    \item 如果 $\mu(\{x\in E\,|\, f(x)> 0\})=0$，那么 $\int f\d\mu=0$。
+  \end{enumerate}
+\end{proposition}
+
+\begin{theorem}[单调收敛定理]
+  令 $(f_n)_{n\in \mathbb{N}}$ 是 $E$ 上的一列递增的非负可测函数，即 $f_n\leq f_{n+1}$，
+  记 $f=\ulim f_n$，那么
+  \[
+    \int f\d\mu=\ulim[n\to\infty]\int f_n\d\mu.
+  \]
+\end{theorem}
+
+
+\begin{proposition}
+  \mbox{}
+  \begin{enumerate}
+    \item 设 $f$ 是 $E$ 上的非负可测函数，那么存在一列递增的非负简单函数 $(f_n)_{n\in \mathbb{N}}$
+    使得 $f=\ulim f_n$。如果 $f$ 有界，那么 $f_n\to f$ 一致收敛。
+    \item 令 $f,g$ 是两个 $E$ 上的非负可测函数，$a,b\in \mathbb{R}_+$，那么
+    \[
+      \int (af+bg)\d\mu=a\int f\d\mu+b\int g\d\mu.
+    \]
+    \item 令 $(f_n)_{n\in \mathbb{N}}$ 是一列 $E$ 上的非负可测函数，那么
+    \[
+      \int\biggl(\sum_{n\in \mathbb{N}}f_n\biggr)\d\mu=\sum_{n\in \mathbb{N}}\int f_n\d\mu.
+    \]
+  \end{enumerate}
+\end{proposition}
+
+
+
 
 
 
