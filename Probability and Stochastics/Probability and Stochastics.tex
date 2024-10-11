@@ -52,6 +52,7 @@
 \newcommand{\uline}{\underline{\hphantom{X}}}
 \newcommand{\abs}[1]{\left|#1\right|}
 \newcommand{\ulim}[1][]{\lim_{#1}\mathord{\uparrow}}
+\newcommand{\dlim}[1][]{\lim_{#1}\mathord{\downarrow}}
 
 \usepackage{enumitem}
 
@@ -1383,7 +1384,15 @@ $\sum_{n\in \mathbb{N}}\mu(A_n)$ 作为正向级数在 $[0,\infty]$
     \]
     令 $(E,\mathcal{A})$ 是可测空间，固定 $x\in E$。对于每个 $A\in \mathcal{A}$，令
     $\delta_x(A)=\mathbf{1}_A(x)$，这给出了 $(E,\mathcal{A})$ 上的一个测度，被称为
-    \emph{$\mathbold x$ 处的 Dirac 测度}。
+    \emph{$\mathbold x$ 处的 Dirac 测度}。更一般的，如果 $(x_n)_{n\in \mathbb{N}}$
+    是 $E$ 中的点列，$(\alpha_n)_{n\in \mathbb{N}}$ 是 $[0,\infty]$ 中的点列，
+    我们可以考虑测度 $\sum_{n\in \mathbb{N}}\alpha_n\delta_{x_n}$ 为
+    \[
+      \biggl(\sum_{n\in \mathbb{N}}\alpha_n\delta_{x_n}\biggr)
+      (A)=\sum_{n\in \mathbb{N}}\alpha_n\delta_{x_n}(A)=
+      \sum_{n\in \mathbb{N}}\alpha_n\mathbold 1_{A}(x_n),
+    \]
+    这个测度被称为 $E$ 上的\emph{点测度}。
     \item 可以证明，在 $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ 上存在唯一的正测度 $\lambda$
     使得：对于每个开区间 $[a,b]$，有 $\lambda\bigl([a,b]\bigr)=b-a$。这个
     测度 $\lambda$ 被称为\emph{Lebesgue 测度}。
@@ -1643,6 +1652,80 @@ $f$ 相对于 $\mu$ 的积分通常有很多写法，下面的表达
   \end{enumerate}
 \end{proposition}
 
+\begin{corollary}
+  令 $g$ 是非负可测函数，对于 $A\in \mathcal{A}$，令
+  \[
+    \nu(A)=\int_A g\d\mu=\int g\mathbold 1_A \d\mu,
+  \]
+  那么 $\nu$ 是 $E$ 上的正测度，被称为密度 $g$ 相对于 $\mu$
+  的测度，记为 $\nu=g\cdot \mu$。此外，对于非负可测函数
+  $f$，有
+  \[
+    \int f\d\nu=\int fg\d\mu.
+  \]
+\end{corollary}
+
+\begin{proposition}
+  令 $f$ 是非负可测函数。
+  \begin{enumerate}
+    \item 对于每个 $a\in(0,\infty)$，有
+    \[
+      \mu(\{x\in E\,|\, f(x)\geq a\})\leq \frac{1}{a}\int f\d\mu.
+    \]
+    \item 我们有
+    \[
+      \int f\d\mu<\infty\Rightarrow f<\infty,\ \text{$\mu$ a.e.}
+    \]
+    \item 我们有
+    \[
+      \int f\d\mu=0\Leftrightarrow f=0,\ \text{$\mu$ a.e.}
+    \]
+    \item 如果 $g$ 是非负可测函数，
+    \[
+      f=g,\ \text{$\mu$ a.e.}\Rightarrow \int f\d\mu=\int g\d\mu.
+    \]
+  \end{enumerate}
+\end{proposition}
+
+\begin{theorem}[Fatou 引理]
+  令 $(f_n)_{n\in \mathbb{N}}$ 是一列非负可测函数，那么
+  \[
+    \int \liminf f_n\d\mu\leq \liminf \int f_n\d\mu.
+  \]
+\end{theorem}
+
+\begin{proposition}\label{prop:change variable}
+  令 $(F,\mathcal{B})$ 是可测空间，$\varphi:E\to F$ 是可测映射。令
+  $\nu$ 是 $\mu$ 在 $\varphi$ 下的推前。那么，对于任意 $F$ 上的非负可测函数 $h$，
+  我们有
+  \[
+    \int_Eh(\varphi(x))\mu(\d x)=\int_Fh(y)\nu(\d y).
+  \]
+\end{proposition}
+
+
+\section{可积函数}
+
+
+\begin{definition}
+  令 $f:E\to \mathbb{R}$ 是可测函数，如果
+  \[
+    \int|f|\d\mu<\infty,
+  \]
+  那么我们说 $f$ 相对于 $\mu$ \emph{可积}。在这种情况下，
+  我们定义
+  \[
+    \int f\d\mu=\int f^+\d\mu-\int f^-\d\mu.
+  \]
+  如果 $A\in \mathcal{A}$，记
+  \[
+    \int_A f\d\mu=\int f\mathbold 1_A\d\mu.
+  \]
+\end{definition}
+
+
+
+
 
 
 
@@ -1677,7 +1760,7 @@ $\Omega$ 的任意子集都计算一个概率？原因在于，一般不可能�
 配备 Borel $\sigma$-域和 Lebesgue 测度，但是，可以证明不可能将 Lebesgue 测度扩展到
 $[0,1]$ 的任意子集上使得其仍然满足测度的定义。
 
-\begin{example}
+\begin{example}\label{exa:dice model}
   一些常见的概率模型。
   \begin{enumerate}
     \item 考虑扔两次骰子这一实验，那么
@@ -1696,12 +1779,12 @@ $[0,1]$ 的任意子集上使得其仍然满足测度的定义。
     \]
     $\Omega$ 上的 $\sigma$-域 $\mathcal{A}$ 被定义为包含形如
     \[
-      \{(\omega_1,\omega_2,\dots,\omega_n)\in\Omega\,|\, \}
+      \{\omega\in\Omega\,|\, \omega_1=i_1,\dots,\omega_n=i_n\}
     \]
   \end{enumerate}
 \end{example}
 
-\section{随机变量}
+\subsection{随机变量}
 
 在本章的剩余部分，我们都考虑一个概率空间 $(\Omega,\mathcal{A},\mathbb{P})$，并且所有
 随机变量都将在这个概率空间上定义。
@@ -1711,7 +1794,158 @@ $[0,1]$ 的任意子集上使得其仍然满足测度的定义。
   $X:\Omega\to E$。
 \end{definition}
 
+\begin{example}
+  回顾 \eqref{exa:dice model} 中的模型。
+  \begin{enumerate}
+    \item $X((i,j))=i+j$ 定义了值在 $\{2,3,\dots,12\}$ 中的随机变量。
+    \item $X(\omega)=\inf\{j\,|\, \omega_j=6\}$，约定 $\inf \emptyset=\infty$，
+    定义了值在 $\bar{\mathbb{N}}=\mathbb{N}\cup\{\infty\}$ 中的随机变量。为了验证
+    $X$ 的可测性，只需要注意到
+    \[
+      X^{-1}(\{k\})=\{\omega\in\Omega\,|\, \omega_1\neq 6,\dots,\omega_{k-1}\neq 6,\omega_k=6\}.
+    \]
+  \end{enumerate}
+\end{example}
 
+\begin{definition}
+  令 $X$ 是值在 $(E,\mathcal{E})$ 中的随机变量，定义随机变量 $X$ 的
+  \emph{分布律} $\mathbb{P}_X$ 是概率测度 $\mathbb{P}$ 在 $X$ 下的推前。
+  也就是说，$\mathbb{P}_X$ 是 $(E,\mathcal{E})$ 上的概率测度，满足
+  \[
+    \mathbb{P}_X(B)=\mathbb{P}(X^{-1}(B)),\quad \forall B\in \mathcal{E}.
+  \]
+  两个值在 $(E,\mathcal{E})$ 中的随机变量 $Y,Y'$ 如果有相同的分布
+  $\mathbb{P}_Y=\mathbb{P}_{Y'}$，那么我们说 $Y$ 和 $Y'$ 是\emph{同分布}的。
+\end{definition}
+
+在概率论中，我们通常将 $\mathbb{P}_X(B)$ 写为 $\mathbb{P}(X\in B)$
+而不是 $\mathbb{P}(X^{-1}(B))$。这里 $X\in B$ 是集合
+$\{\omega\in\Omega\,|\, X(\omega)\in B\}$ 的简写，这是一个一般性
+的简写规则，在概率论中参数 $\omega$ 通常被隐藏。
+
+\paragraph{离散型随机变量}
+当 $E$ 是有限或者可数($\mathcal{E}=\mathcal{P}(E)$)的时候，
+$X$ 的分布是点测度，这是因为
+\[
+  \mathbb{P}_X(B)=\mathbb{P}(X\in B)=\mathbb{P}\biggl(\bigcup_{x\in B}\{X=x\}\biggr)
+  =\sum_{x\in B}\mathbb{P}(X=x)=\sum_{x\in E}p_x\delta_x(B),
+\]
+其中 $p_x=\mathbb{P}(X=x)$。这就表明
+\[
+  \mathbb{P}_X=\sum_{x\in E}p_x\delta_x 
+\]
+是 $E$ 上的点测度。
+
+\begin{example}
+  我们考虑 \eqref{exa:dice model} 中的第二个例子，随机变量
+  为 $X(\omega)=\inf\{j\,|\,\omega_j=6\}$。那么
+  \begin{align*}
+    \mathbb{P}(X=k)&=\mathbb{P}
+    \biggl(\bigcup_{1\leq i_1,\dots,i_k\leq 5}\{\omega\,|\, 
+    \omega_1=i_1,\dots,\omega_{k-1}=i_{k-1},\omega_k=6\}\biggr)\\
+    &=5^{k-1}\left(\frac{1}{6}\right)^k=\frac{1}{6}\left(\frac{5}{6}\right)^{k-1}.
+  \end{align*}
+  注意到
+  \[
+    \sum_{k=1}^\infty \mathbb{P}(X=k)=\frac{1}{6}\frac{1}{1-\frac{5}{6}}=1
+  \]
+  并且 $\{X=\infty\}\cup\bigcup_{k=1}^\infty \{X=k\}=\Omega$，所以
+  \[
+    \mathbb{P}(X=\infty)=1-\sum_{k=1}^\infty \mathbb{P}(X=k)=0,
+  \]  
+  但是 $\{X=\infty\}\neq\emptyset$。
+\end{example}
+
+\paragraph{具有密度的随机变量} $\mathbb{R}^d$ 上的密度函数是一个非负的 Borel 函数
+$p:\mathbb{R}^d\to \mathbb{R}_+$，其满足 
+\[
+  \int_{\mathbb{R}^d} p(x)\d x=1.
+\]
+对于一个值在 $\mathbb{R}^d$ 中的随机变量 $X$，如果存在密度 $p$ 使得
+\[
+  \mathbb{P}_X(B)=\int_B p(x)\d x
+\]
+对于任意 Borel 子集 $B$ 都成立，那么我们说 $X$ 有密度函数 $p$。
+换句话说，$p$ 是 $\mathbb{P}_X$ 相对于 Lebesgue 测度的密度。
+
+注意到密度 $p$ 实际上是在相差一个 Lebesgue 零测集的意义下由 $\mathbb{P}_X$ 确定的。
+在我们遇到的大多数例子中，$p$ 在 $\mathbb{R}^d$ 上连续，在这种情况下，$p$ 由
+$\mathbb{P}_X$ 唯一确定。
+
+在 $d=1$ 的时候，我们有
+\[
+  \mathbb{P}(\alpha\leq X\leq \beta)=\int_{\alpha}^\beta p(x)\d x.
+\]
+
+\subsection{数学期望}
+
+\begin{definition}
+  令 $X$ 是定义在 $(\Omega,\mathcal{A},\mathbb{P})$ 上的实随机变量，我们定义
+  \[
+    \mathbb{E}[X]=\int_\Omega X(\omega)\mathbb{P}(\d\omega)=\int X\d \mathbb{P},
+  \]
+  只要上述积分有意义，我们就说 $\mathbb{E}[X]$ 是 $X$ 的\emph{期望}。
+\end{definition}
+
+根据前面的内容，上述积分有意义的条件为下列二者之一：
+\begin{itemize}[nosep]
+  \item $X\geq 0$，此时 $\mathbb{E}[X]\in [0,\infty]$。
+  \item $X$ 符号任意，但是 $\mathbb{E}[|X|]=\int|X| \d \mathbb{P}<\infty$。
+\end{itemize}
+
+
+上面的定义可以拓展到多元随机变量 $X=(X_1,\dots,X_d)\in \mathbb{R}^d$，
+此时我们定义 $\mathbb{E}[X]=\bigl(\mathbb{E}[X_1],\dots,\mathbb{E}[X_d]\bigr)$。
+类似的，如果 $M$ 是随机矩阵(值在实矩阵空间中的随机变量)，我们可以定义
+矩阵 $\mathbb{E}[M]$ 为对 $M$ 的每个分量求期望构成的矩阵。
+
+注意到若 $X=\mathbold 1_B$，那么
+\[
+  \mathbb{E}[X]=\int\mathbold 1_B \d \mathbb{P}=\mathbb{P}(B).
+\]
+
+对于一些特殊的随机变量，下面的命题被频繁地使用。
+
+\begin{proposition}
+  令 $X$ 是值在 $[0,\infty]$ 中的随机变量，那么
+  \[
+    \mathbb{E}[X]=\int_0^\infty \mathbb{P}(X\geq x) \d x.
+  \]
+  令 $Y$ 是值在 $\mathbb{Z}_+$ 中的随机变量，那么
+  \[
+    \mathbb{E}[Y]=\sum_{k=0}^\infty k \mathbb{P}(X=k)=\sum_{k=1}^\infty \mathbb{P}(Y\geq k).
+  \]
+\end{proposition}
+\begin{proof}
+  根据 Fubini 定理，我们有
+  \[
+    \mathbb{E}[X]=\mathbb{E}\left[
+      \int_0^\infty \mathbold 1_{\{x\leq X\}}\d x
+    \right]=\int_0^\infty \mathbb{E}[\mathbold 1_{\{x\leq X\}}] \d x
+    =\int_0^\infty \mathbb{P}(X\geq x) \d x.
+  \]
+  对于随机变量 $Y$，我们有
+  \[
+    \mathbb{E}[Y]=\mathbb{E}\left[
+      \sum_{k=0}^\infty k\mathbold 1_{\{Y=k\}}
+    \right]=\int \biggl(\sum_{k=0}^\infty k\mathbold 1_{\{Y=k\}}\biggr)\d \mathbb{P}
+    =\sum_{k=0}^\infty k \mathbb{P}(Y=k).
+  \]
+  对于第二个等式，只需注意到
+  \[
+    Y=\sum_{k=1}^\infty \mathbold 1_{\{Y\geq k\}}.\qedhere
+  \]
+\end{proof}
+
+下面的命题是 \autoref{prop:change variable} 的特例，其十分重要，所以我们再次叙述一遍。
+
+\begin{proposition}
+  令 $X$ 是值在 $(E,\mathcal{E})$ 中的随机变量，对于任意可测函数 $f:E\to [0,\infty]$，
+  我们有
+  \[
+    \mathbb{E}[f(X)]=\int_E f(x) \mathbb{P}_X(\d x).
+  \]
+\end{proposition}
 
 
 
