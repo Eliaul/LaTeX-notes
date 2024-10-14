@@ -55,6 +55,7 @@
 \newcommand{\dlim}[1][]{\lim_{#1}\mathrel{\downarrow}}
 \newcommand{\indicator}[1]{\mathbold 1_{#1}}
 \newcommand{\alev}[1]{\text{$#1$ a.e.}}
+\newcommand{\alsu}[1]{\text{$#1$ a.s.}}
 
 \usepackage{enumitem}
 
@@ -2174,6 +2175,78 @@ $f:E\to \mathbb{R}$ 构成的空间。$\mathcal{L}_+^1(E,\mathcal{A},\mu)$ 来�
 \end{theorem}
 
 
+\chapter{测度的构造}
+
+\section{外测度}
+
+\begin{definition}
+  令 $E$ 是集合，映射 $\mu^*:\mathcal{P}(E)\to [0,\infty]$ 如果满足：
+  \begin{enumerate}
+    \item  $\mu^*(\emptyset)=0$；
+    \item $A\subseteq B\Rightarrow \mu^*(A)\leq\mu^*(B)$；
+    \item ($\sigma$-次可加性) 对于 $\mathcal{P}(E)$ 中的一列子集 $(A_k)_{k\in \mathbb{N}}$，
+    有
+    \[
+      \mu^*\biggl(\bigcup_{k\in \mathbb{N}}A_k \biggr)  \leq
+      \sum_{k\in \mathbb{N}}\mu^*(A_k).
+    \]
+  \end{enumerate}
+  那么我们说 $\mu^*$ 是一个\emph{外测度}。
+\end{definition}
+
+外测度的要求不如测度严格，首先 $\sigma$-可加性被替换为 $\sigma$-次可加性，
+其次外测度是在幂集 $\mathcal{P}(E)$ 上定义的，而测度只能在
+$\sigma$-域上定义。
+
+我们本节的目标是从外测度 $\mu^*$ 开始，在某个 $\sigma$-域 $\mathcal{M}(\mu^*)$
+上构造一个测度。从现在开始，我们固定一个外测度 $\mu^*$。
+
+\begin{definition}
+  对于 $E$ 的子集 $B$，如果任取 $A\subseteq E$，都有
+  \[
+    \mu^*(A)=\mu^*(A\cap B)+\mu^*(A\cap B^c),  
+  \]
+  那么我们说 $B$ 是\emph{$\mathbold{\mu^*}$-可测的}。用
+  $\mathcal{M}(\mu^*)$ 表示所有 $\mu^*$-可测的子集构成的子集族。
+\end{definition}
+
+\begin{remark}
+  根据 $\sigma$-次可加性，总是有
+  \[
+    \mu^*(A)\leq \mu^*(A\cap B)+\mu^*(A\cap B^c),
+  \]
+  所以要验证子集 $B$ 是 $\mu^*$-可测的，只需要说明反向的不等式即可。
+\end{remark}
+
+\begin{theorem}\label{thm:outer measure}
+  \mbox{}
+  \begin{enumerate}
+    \item $\mathcal{M}(\mu^*)$ 是 $\sigma$-域，并且其包含
+    所有的满足 $\mu^*(B)=0$ 的子集 $B\subseteq E$。
+    \item $\mu^*$ 在 $\mathcal{M}(\mu^*)$ 上的限制是一个测度。
+  \end{enumerate}
+\end{theorem}
+
+
+\section{Lebesgue 测度}
+
+对于任意子集 $A\subseteq \mathbb{R}$，定义
+\[
+  \lambda^*(A)=\inf\bigg\{\sum_{i\in \mathbb{N}}(b_i-a_i)\,|\, A\subseteq \bigcup_{i\in \mathbb{N}}(a_i,b_i)\bigg\}  .
+\]
+注意这个下确界的取值范围为 $[0,\infty]$：如果 $A$ 无界，那么
+将会得到 $\infty$。
+
+\begin{theorem}
+  \mbox{}
+  \begin{enumerate}
+    \item $\lambda^*$ 是 $\mathbb{R}$ 上的一个外测度。
+    \item $\sigma$-域 $\mathcal{M}(\lambda^*)$ 包含 $\mathcal{B}(\mathbb{R})$。
+    \item 对于任意实数 $a\leq b$，$\lambda^*([a,b])=\lambda^*((a,b))=b-a$。
+  \end{enumerate}
+\end{theorem}
+
+
 
 
  
@@ -2228,6 +2301,11 @@ $[0,1]$ 的任意子集上使得其仍然满足测度的定义。
     \]
   \end{enumerate}
 \end{example}
+
+与测度论类似，零测集也会出现在概率论的很多叙述中，如果某个
+命题对于某个概率为 $1$ 的事件中的每个 $\omega\in\Omega$ 都成立，那么
+我们说这个命题\emph{几乎肯定}成立，用缩写 a.s. 表示。
+
 
 \subsection{随机变量}
 
@@ -2548,7 +2626,55 @@ $\mathbb{P}_{X_j}$ 由 $\mathbb{P}_X$ 完全决定：$\mathbb{P}_{X_j}$
   \[
     m=\mathbb{E}[X],\quad \sigma^2 =\mathbb{E}[(X-m)^2]. 
   \]
+
+  对于 $a,b\in \mathbb{R}$，考虑随机变量 $Y=aX+b$，那么
+  对于任意的 Borel 函数 $f:\mathbb{R}\to \mathbb{R}_+$，有
+  \begin{align*}
+    \mathbb{E}[f(Y)]&=\mathbb{E}[f(aX+b)]=\int_{\mathbb{R}}f(ax+b)\mathbb{P}_X(\d x)\\
+    &=\int_{\mathbb{R}}f(ax+b)p(x)\d x
+    =\frac{1}{a}\int_{\mathbb{R}}f(y)p\left(\frac{y-b}{a}\right)\d y\\
+    &=\int_{\mathbb{R}}f(y)\frac{1}{a}p\left(\frac{y-b}{a}\right)\d y, 
+  \end{align*}
+  这表明
+  \[
+    p(y)=\frac{1}{a\sigma\sqrt{2\pi}}\exp\left(-\frac{(y-(am+b))^2}{2(a\sigma)^2}\right),
+  \]
+  即 $aX+b$ 服从分布 $\mathcal{N}(am+b,a^2\sigma^2)$。
 \end{enumerate}
+
+\subsection{实值随机变量的分布函数}
+
+令 $X$ 是实值随机变量，定义 $X$ 的\emph{分布函数}为 $F_X:\mathbb{R}\to [0,1]$，
+其满足
+\[
+  F_X(t)=\mathbb{P}(X\leq t)=\mathbb{P}_X((-\infty,t]),\quad \forall t\in \mathbb{R}.  
+\]
+根据 \autoref{coro:uniqueness of measure}，$F_X$ 实际上完全刻画了分布 $\mathbb{P}_X$。
+确切的说，如果知道了 $F_X$，即相当于知道了所有 $\mathbb{P}_X((-\infty,t])$ 的值，
+而所有区间 $(-\infty,t]$ 构成的子集族对有限交封闭，又因为 $\mathbb{P}_X$
+为有限测度，所以 $\mathbb{P}_X$ 在所有区间 $(-\infty,t]$ 上的值可以完全
+确定 $\mathbb{P}_X$ 在 $\mathcal{B}(\mathbb{R})$ 上的值。
+
+显然函数 $F_X$ 是递增的、右连续的并且在 $-\infty$ 处极限为 $0$、
+在 $+\infty$ 处极限为 $1$。反之，如果 $F:\mathbb{R}\to [0,1]$ 满足
+上面的性质，定理 ？表明存在(唯一的) $\mathbb{R}$ 上的概率测度
+$\mu$ 使得 $\mu((-\infty,t])=F(t)$。即这样的函数 $F$ 总能
+解释为某个实值随机变量的分布函数。
+
+令 $F_X(a-)$ 表示 $F_X$ 在 $a\in \mathbb{R}$ 处的左极限。那么
+容易验证
+\begin{align*}
+  \mathbb{P}(a\leq X\leq b)&=F_X(b)-F_X(a-),\\
+  \mathbb{P}(a<X<b)&=F_X(b-)-F_X(a).
+\end{align*}
+特别的，$\mathbb{P}(X=a)=F_X(a)-F_X(a-)$。这表明 $F_X$ 的间断点的个数
+恰为 $\mathbb{P}_X$ 的原子个数。
+
+
+\section{随机变量的矩}
+
+\subsection{矩和方差}
+
 
 
 
