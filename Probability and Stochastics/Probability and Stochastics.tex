@@ -51,8 +51,10 @@
 \newcommand{\mat}[1]{\mathbold{#1}}
 \newcommand{\uline}{\underline{\hphantom{X}}}
 \newcommand{\abs}[1]{\left|#1\right|}
-\newcommand{\ulim}[1][]{\lim_{#1}\mathord{\uparrow}}
-\newcommand{\dlim}[1][]{\lim_{#1}\mathord{\downarrow}}
+\newcommand{\ulim}[1][]{\lim_{#1}\mathrel{\uparrow}}
+\newcommand{\dlim}[1][]{\lim_{#1}\mathrel{\downarrow}}
+\newcommand{\indicator}[1]{\mathbold 1_{#1}}
+\newcommand{\alev}[1]{\text{$#1$ a.e.}}
 
 \usepackage{enumitem}
 
@@ -1240,6 +1242,7 @@ $E$ 中的闭集也都是 Borel 子集。
   \[
     \mathcal{C}_2=\{(-\infty,a)\,|\, a\in \mathbb{R}\}.
   \]
+  最后，不难证明这里的开区间都可以换成闭区间。
 \end{example}
 
 在后文中，每当我们考虑拓扑空间(例如 $\mathbb{R}$ 或者 $\mathbb{R}^d$)时，
@@ -1374,7 +1377,7 @@ $\sum_{n\in \mathbb{N}}\mu(A_n)$ 作为正向级数在 $[0,\infty]$
     \[
       \mu(A)=\card(A).  
     \]
-    \item 如果 $A$ 是 $E$ 的子集，定义 $A$ 的指示函数 $\mathbf{1}_A:E\to\{0,1\}$
+    \item 如果 $A$ 是 $E$ 的子集，定义 $A$ 的示性函数 $\mathbf{1}_A:E\to\{0,1\}$
     为
     \[
       \mathbf{1}_A(x)=\begin{cases}
@@ -1394,8 +1397,10 @@ $\sum_{n\in \mathbb{N}}\mu(A_n)$ 作为正向级数在 $[0,\infty]$
     \]
     这个测度被称为 $E$ 上的\emph{点测度}。
     \item 可以证明，在 $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ 上存在唯一的正测度 $\lambda$
-    使得：对于每个开区间 $[a,b]$，有 $\lambda\bigl([a,b]\bigr)=b-a$。这个
+    使得：对于每个闭区间 $[a,b]$，有 $\lambda\bigl([a,b]\bigr)=b-a$。这个
     测度 $\lambda$ 被称为\emph{Lebesgue 测度}。
+    Lebesgue 测度的唯一性可以由 \autoref{coro:uniqueness of measure} 保证，
+    存在性由 ？保证。
   \end{enumerate}
 \end{example}
 
@@ -1533,6 +1538,127 @@ $\sum_{n\in \mathbb{N}}\mu(A_n)$ 作为正向级数在 $[0,\infty]$
 
 \section{单调类}
 
+本节我们陈述单调类定理，这是测度论甚至概率论中的一个基本工具。
+
+\begin{definition}
+  $\mathcal{P}(E)$ 的一个子集 $\mathcal{M}$ 如果满足：
+  \begin{enumerate}
+    \item $E\in \mathcal{M}$；
+    \item 对于任意 $A,B\in \mathcal{M}$ 且 $A\subseteq B$，有
+    $B \smallsetminus A\in \mathcal{M}$；
+    \item 如果一列子集 $A_n\subseteq \mathcal{M}$ 且 $A_n\subseteq A_{n+1}$，
+    那么 $\bigcup_{n\in \mathbb{N}}A_n\in \mathcal{M}$，
+  \end{enumerate}
+  那么我们说 $\mathcal{M}$ 是一个\emph{单调类}。
+\end{definition}
+
+显然，$\sigma$-域都是单调类。反之，一个单调类是 $\sigma$-域当且仅当
+其对有限交封闭。这很容易证明，若单调类 $\mathcal{M}$ 对有限交封闭，那么
+任取一列子集 $A_n\subseteq \mathcal{M}$，对于任意的 $n$，有 
+\[
+  \bigcup_{k=1}^n  A_k=E \smallsetminus\bigcap_{k=1}^n A_k^c\in \mathcal{M},
+\]
+所以
+\[
+  \bigcup_{n\in \mathbb{N}}A_n=\bigcup_{n\in \mathbb{N}}
+  \biggl(\bigcup_{k=1}^n A_k\biggr)  \in \mathcal{M},
+\]
+这就表明 $\mathcal{M}$ 是一个 $\sigma$-域。
+
+与 $\sigma$-域类似，显然单调类的任意交仍然是单调类。如果
+$\mathcal{C}\subseteq \mathcal{P}(E)$，那么我们可以定义
+由 $\mathcal{C}$ 生成的单调类 $\mathcal{M}(\mathcal{C})$，
+即包含 $\mathcal{C}$ 的最小的单调类，其可以通过对所有
+包含 $\mathcal{C}$ 的单调类取交集得到。
+
+\begin{theorem}[单调类定理]
+  令 $\mathcal{C}\subseteq \mathcal{P}(E)$ 对有限交封闭，
+  那么 $\mathcal{M}(\mathcal{C})=\sigma(\mathcal{C})$。
+  因此，如果 $\mathcal{M}$ 是包含 $\mathcal{C}$ 的任意单调类，
+  那么 $\sigma(\mathcal{C})\subseteq \mathcal{M}$。
+\end{theorem}
+\begin{proof}
+  显然有 $\mathcal{M}(\mathcal{C})\subseteq \sigma(\mathcal{C})$。
+  要证明 $\sigma(\mathcal{C})\subseteq \mathcal{M}(\mathcal{C})$，
+  只需要说明 $\mathcal{M}(\mathcal{C})$ 是 $\sigma$-域。
+  根据上面的叙述，这只需要说明 $\mathcal{M}(\mathcal{C})$ 对
+  有限交封闭。
+
+  对于 $A\in \mathcal{P}{(E)}$，记
+  \[
+    \mathcal{M}_A=\{B\in \mathcal{M}(\mathcal{C})\,|\,
+    A\cap B\in \mathcal{M}(\mathcal{C})\}.  
+  \]
+  直接验证可知 $\mathcal{M}_A$ 是一个单调类。
+  下面任取 $A\in \mathcal{C}$，由于 $\mathcal{C}$
+  对有限交封闭，所以 $\mathcal{C}\subseteq \mathcal{M}_A$，这就表明
+  $\mathcal{M}(\mathcal{C})\subseteq \mathcal{M}_A$。
+
+  接下来任取 $D\in \mathcal{M}(\mathcal{C})$，上面的叙述告诉我们
+  $\mathcal{C}\subseteq \mathcal{M}_D$，所以 $\mathcal{M}(\mathcal{C})\subseteq \mathcal{M}_D$。
+  这就表明 $\mathcal{M}(\mathcal{C})$ 对有限交封闭，所以
+  $\mathcal{M}(\mathcal{C})$ 是 $\sigma$-域。
+\end{proof}
+
+单调类定理最重要的应用是证明某些测度的唯一性。
+
+\begin{corollary}\label{coro:uniqueness of measure}
+  令 $\mu,\nu$ 是 $(E,\mathcal{A})$ 上的两个测度。假设存在一个
+  子集族 $\mathcal{C}\subseteq \mathcal{A}$ 满足 $\mathcal{C}$
+  对有限交封闭且 $\mathcal{A}=\sigma(\mathcal{C})$，并且对于
+  任意 $A\in \mathcal{C}$ 都有 $\mu(A)=\nu(A)$。
+  \begin{enumerate}
+    \item 如果 $\mu(E)=\nu(E)<\infty$，那么 $\mu=\nu$。
+    \item 如果存在一列 $\mathcal{C}$ 中的递增序列 $(E_n)_{n\in \mathbb{N}}$ 
+    使得 $E=\bigcup_{n\in \mathbb{N}}E_n$，并且
+    $\mu(E_n)=\nu(E_n)<\infty$，那么 $\mu=\nu$。
+  \end{enumerate}
+\end{corollary}
+\begin{proof}
+  (1) 令
+  \[
+    \mathcal{G}=\{A\in \mathcal{A}\,|\,\mu(A)=\nu(A)\},
+  \]
+  那么 $\mathcal{C}\subseteq \mathcal{G}$ 且不难验证 $\mathcal{G}$
+  是单调类，根据单调类定理，有 $\mathcal{A}=\sigma(\mathcal{C})\subseteq \mathcal{G}$，
+  即 $\mu=\nu$。
+
+  (2) 记 $\mu_n$ 为 $\mu$ 在 $E_n$ 上的限制，$\nu_n$ 同理。
+  那么
+  \[
+    \mu_n(E)=\mu(E\cap E_n)=\mu(E_n)=\nu(E_n)=\nu(E\cap E_n)  
+    =\nu_n(E),
+  \]
+  根据 (1)，有 $\mu_n=\nu_n$。于是任取 $A\in \mathcal{A}$，有
+  \begin{align*}
+    \mu (A)&=\mu(A\cap E)=\mu\biggl(\bigcup_{n\in \mathbb{N}}(A\cap E_n)\biggr)
+    =\ulim[n\to\infty]\mu(A\cap E_n)\\
+    &=\ulim[n\to\infty]\mu_n(A)=\ulim[n\to\infty]\nu_n(A)
+    =\ulim[n\to\infty]\nu(A\cap E_n)\\
+    &=\nu\biggl(\bigcup_{n\in \mathbb{N}}(A\cap E_n)\biggr)
+    =\nu(A\cap E)=\nu(A),
+  \end{align*}
+  这就表明 $\mu=\nu$。
+\end{proof}
+
+\autoref{coro:uniqueness of measure} 表明了 Lebesgue 测度的唯一性。
+即若 $\lambda$ 是 $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ 上的 
+正测度，且使得 $\lambda\bigl([a,b]\bigr)=b-a$，那么这样的测度 $\lambda$
+是唯一的。这是因为我们可以取
+\[
+  \mathcal{C}=\big\{[a,b]\,|\, a,b\in \mathbb{R},a<b\big\}  ,
+\]
+此时 $\mathcal{C}$ 对有限交封闭并且 $\mathcal{B}(\mathbb{R})=\sigma(\mathcal{C})$。
+取 $E_n=[-n,n]\in \mathcal{C}$，那么 $\mathbb{R}=\bigcup_{n\in \mathbb{N}} E_n$
+且 $\lambda(E_n)<\infty$，应用 \autoref{coro:uniqueness of measure}
+的 (2) 即可表明唯一性。
+
+
+
+
+
+
+
 
 \chapter{可测函数的积分}
 
@@ -1596,6 +1722,33 @@ $f$ 的积分仍然为
     \]
   \end{enumerate}
 \end{proposition}
+\begin{proof}
+  (1) 设 $f,g$ 的标准表示分别为
+  \[
+    f=\sum_{i=1}^n\alpha_i\mathbold 1_{A_i},\quad  
+    g=\sum_{j=1}^m\beta_j\mathbold 1_{B_j}.  
+  \]
+  那么每个 $A_i$ 都是某些 $A_i\cap B_j$ 的无交并，同理，
+  每个 $B_j$ 都是某些 $A_i\cap B_j$ 的无交并，于是我们可以
+  使用一个新的划分 $\{C_1,\dots,C_p\}$ 使得
+  \[
+    f=\sum_{k=1}^p \gamma_k\mathbold 1_{C_k} ,\quad
+    g=\sum_{k=1}^p \theta_k\mathbold 1_{C_k} ,
+  \]
+  此时 $\gamma_k$ 不一定互不相同，$\theta_k$ 也不一定互不相同，
+  根据命题前面的叙述，我们有
+  \begin{align*}
+    \int
+    (af+bg)\d\mu&=\sum_{k=1}^p(a\gamma_k+b\theta_k)  \mu(C_k)\\&=
+    a\sum_{k=1}^p\gamma_k\mu(C_k)+b\sum_{k=1}^p\theta_k\mu(C_k)\\
+    &=a\int f\d\mu+b\int g\d\mu.
+  \end{align*}
+
+  (2) 由 (1)，有
+  \[
+    \int g\d\mu=\int(g-f)\d\mu+\int f\d\mu\geq \int f\d\mu.\qedhere  
+  \]
+\end{proof}
 
 我们用 $\mathcal{E}_+$ 来表示 $E$ 上的非负简单函数的集合。
 
@@ -1619,24 +1772,89 @@ $f$ 相对于 $\mu$ 的积分通常有很多写法，下面的表达
 从现在开始，我们用非负可测函数表示 $E\to [0,\infty]$ 的可测函数(值可以为无穷)。
 需要注意的是，我们前面定义的非负简单函数值必须有限。
 
-\begin{proposition}
+\begin{proposition}\label{prop:elementary property of positive measurable function}
   令 $f,g$ 是 $E$ 上的非负可测函数。
   \begin{enumerate}
     \item 如果 $f\leq g$，那么 $\int f\d\mu\leq \int g\d\mu$。
     \item 如果 $\mu(\{x\in E\,|\, f(x)> 0\})=0$，那么 $\int f\d\mu=0$。
   \end{enumerate}
 \end{proposition}
+\begin{proof}
+  (1) 显然
+  \[
+      \bigl\{h\in \mathcal{E}_+\,|\, h\leq f\bigr\}\subseteq 
+      \bigl\{h\in \mathcal{E}_+\,|\, h\leq g\bigr\},
+  \]
+  根据定义即得 $\int f\d\mu\leq \int g\d\mu$。
 
-\begin{theorem}[单调收敛定理]
+  (2) 设 $h\in \mathcal{E}_+$ 且 $h\leq f$，设 $h$ 的标准表示
+  为 $h=\sum_{i=1}^n \alpha_i\mathbold 1_{A_i}$，若 $\alpha_i> 0$，那么
+  \[
+    \mu(A_i)\leq   \mu (\{x\in E\,|\, h(x)> 0\})\leq \mu(\{x\in E\,|\, f(x)> 0\})=0,
+  \]
+  所以
+  \[
+    \int h\d\mu=\sum_{\{i\,|\,\alpha_i=0\}}\alpha_i\mu(A_i)+
+    \sum_{\{i\,|\,\alpha_i>0\}}\alpha_i\mu(A_i)=0+0=0,
+  \]
+  故 $\int f\d\mu=0$。
+\end{proof}
+
+下面的单调收敛定理是测度论中的一个极为重要的基本定理，其表明
+对于一列递增的非负可测函数，极限和积分可以交换次序。
+
+\begin{theorem}[单调收敛定理]\label{thm:monotone convergence thm}
   令 $(f_n)_{n\in \mathbb{N}}$ 是 $E$ 上的一列递增的非负可测函数，即 $f_n\leq f_{n+1}$，
   记 $f=\ulim f_n$，那么
   \[
     \int f\d\mu=\ulim[n\to\infty]\int f_n\d\mu.
   \]
 \end{theorem}
+\begin{proof}
+  由于 $f_n\leq f$，所以 $\int f_n\d\mu\leq\int f\d\mu$，
+  所以 $\ulim \int f_n\d\mu\leq\int f\d\mu$，于是我们只需要证明
+  反向的不等式。
+
+  假设非负可测函数 $h=\sum_{i=1}^k \alpha_i\mathbold 1_{A_i}$
+  满足 $h\leq f$，任取 $a\in[0,1)$，定义一列可测集
+  \[
+    E_n=\{x\in E\,|\, ah(x)\leq f_n(x)\}  ,
+  \]
+  此时对于任意的 $x\in E$，都有 $ah(x)<h(x)\leq f(x)$，而 $f=\ulim f_n$，
+  所以总存在足够大的 $n$，使得 $ah(x)\leq f_n(x)$，这表明 $E=\bigcup_{n\in \mathbb{N}}E_n$。
+  此外，$f_n\leq f_{n+1}$ 表明 $E_n\subseteq E_{n+1}$。
+
+  显然 $f_n\geq ah\mathbold 1_{E_n}$，所以
+  \[
+    \int f_n\d\mu\geq a\int_{E_n} h\d\mu=
+    a\sum_{i=1}^k\alpha_i\mu(A_i\cap E_n),  
+  \]
+  由于 $A_i=A_i\cap E=\bigcup_{n\in \mathbb{N}}(A_i\cap E_n)$，
+  所以
+  \[
+    \mu(A_i)=\mu\biggl(\bigcup_{n\in \mathbb{N}}(A_i\cap E_n)\biggr)
+    =\ulim[n\to\infty]\mu(A_i\cap E_n),
+  \]
+  于是
+  \[
+    \ulim[n\to\infty]\int f_n\d\mu\geq a\sum_{i=1}^k
+    \alpha_i\ulim[n\to\infty]\mu(A_i\cap E_n)
+    =  a\sum_{i=1}^k\alpha_i\mu(A_i)
+    =a\int h\d\mu,
+  \]
+  由于 $a$ 可以任意接近 $1$，所以
+  \[
+    \ulim[n\to\infty]\int f_n\d\mu\geq \int h\d\mu,
+  \]
+  所以
+  \[
+    \ulim[n\to\infty]\int f_n\d\mu\geq \int f\d\mu=
+    \sup_{h\in \mathcal{E}_+,h\leq f}\int h\d\mu.\qedhere
+  \]
+\end{proof}
 
 
-\begin{proposition}
+\begin{proposition}\label{prop:property of integral of positive function}
   \mbox{}
   \begin{enumerate}
     \item 设 $f$ 是 $E$ 上的非负可测函数，那么存在一列递增的非负简单函数 $(f_n)_{n\in \mathbb{N}}$
@@ -1651,8 +1869,67 @@ $f$ 相对于 $\mu$ 的积分通常有很多写法，下面的表达
     \]
   \end{enumerate}
 \end{proposition}
+\begin{proof}
+  (1) 令 $d_n:[0,\infty]\to \mathbb{R}_+$ 为
+  \[
+    d_n=\sum_{k=1}^{n2^n}\frac{k-1}{2^n}  
+    \mathbold 1_{\left[\frac{k-1}{2^n},\frac{k}{2^n}\right)}+
+    n\mathbold 1_{[n,\infty]},
+  \]
+  显然 $d_n$ 是非负简单函数。直观上来看，$d_n$ 将区间 $[0,n]$
+  等分为了 $n2^n$ 份，即将 $[0,1]$ 等分为了 $2^n$ 份。
+  那么对于 $x\in [0,n)$，总存在唯一的 $k_n$ 使得 
+  $(k_n-1)/2^n\leq x< k_n/2^n$，此时 $k_{n+1}=2k_n$
+  或者 $k_{n+1}=2k_n-1$，所以
+  \[
+    d_{n+1}(x)  =\frac{k_{n+1}-1}{2^{n+1}}\geq \frac{k_n-1 }{2^n}
+    =d_n(x),
+  \]
+  这表明 $d_n\leq d_{n+1}$。此外，不难看出 $\lim d_n(x)=x$。
+  
+  令 $f_n=d_n\circ f$，由于 $f_n$ 只有有限多个取值，所以
+  $f_n$ 是非负简单函数。$d_n\leq d_{n+1}$ 表明
+  $f_n\leq f_{n+1}$。且 $\lim f_n=\lim d_n\circ f=f$，
+  所以 $f_n$ 就是一列递增的非负简单函数且 $f=\ulim f_n$。
+  $f$ 有界表明在 $n$ 足够大的时候有 $0\leq f-f_n\leq 2^{-n}$，
+  即 $f_n\to f$ 一致收敛。
 
-\begin{corollary}
+  (2) 由 (1)，设 $f=\ulim f_n$，$g=\ulim g_n$，其中 $(f_n),(g_n)$
+  均为一列递增的简单函数，那么
+  \[
+    \int (af_n+bg_n)\d\mu=a\int f_n\d\mu+b\int g_n\d\mu,  
+  \]
+  令 $n\to\infty$，再根据单调收敛定理，就有
+  \[
+    \int (af+bg)\d\mu=a\int f\d\mu+b\int g\d\mu.
+  \]
+
+  (3) 根据 (2)，有
+  \[
+    \int\biggl(\sum_{n=1}^m f_n\biggr)  \d\mu=
+    \sum_{n=1}^m \int f_n\d\mu,
+  \]
+  令 $m\to\infty$，再根据单调收敛定理，就有
+  \[
+    \int\biggl(\sum_{n\in \mathbb{N}}f_n\biggr)\d\mu=\sum_{n\in \mathbb{N}}\int f_n\d\mu.
+    \qedhere
+  \]
+\end{proof}
+
+\begin{remark}
+  \autoref{prop:property of integral of positive function} 和
+  单调收敛定理 \ref{thm:monotone convergence thm} 给出了证明
+  关于非负可测函数积分的命题的一种基本范式，即根据
+  \autoref{prop:property of integral of positive function} 的 (1)，
+  假设一列非负简单函数逼近原函数，先证明命题对非负简单函数成立，
+  这通常是非常容易的，再使用单调收敛定理证明命题对所有的
+  非负可测函数成立。
+\end{remark}
+
+下面的推论在概率论中十分有用，其对应于随机变量的概率密度函数。其
+证明是上述注释中技巧的一个典型运用。
+
+\begin{corollary}\label{coro:density of measure}
   令 $g$ 是非负可测函数，对于 $A\in \mathcal{A}$，令
   \[
     \nu(A)=\int_A g\d\mu=\int g\mathbold 1_A \d\mu,
@@ -1664,6 +1941,43 @@ $f$ 相对于 $\mu$ 的积分通常有很多写法，下面的表达
     \int f\d\nu=\int fg\d\mu.
   \]
 \end{corollary}
+\begin{proof}
+  显然 $\nu(\emptyset)=0$。任取一列不相交的 $A_n\in \mathcal{A}$，
+  那么
+  \[
+    \nu\biggl(\bigcup_{n\in \mathbb{N}}A_n\biggr)  
+    =\int \biggl(\sum_{n\in \mathbb{N}}g\mathbold 1_{A_n}\biggr)
+    \d\mu=\sum_{n\in \mathbb{N}}\int g\mathbold 1_{A_n}\d\mu
+    =\sum_{n\in \mathbb{N}}\mu(A_n),
+  \]
+  这就表明 $\mu$ 是 $E$ 上的正测度。
+
+  对于任意示性函数 $\mathbold 1_A$，有
+  \[
+    \int \indicator{A}\d\nu=\nu(A)=\int \indicator{A}g\d\mu,
+  \]
+  进一步的，令 $f=\ulim f_n$，其中 $f_n$ 是非负简单函数，
+  对于每个 $f_n$，根据积分的线性性，都有
+  \[
+    \int f_n \d\nu=\int f_ng\d\mu, 
+  \]
+  令 $n\to\infty$，根据单调收敛定理，就有 
+  \[
+    \int f\d\nu=\int fg\d\mu.\qedhere
+  \]
+\end{proof}
+\begin{remark}
+  在实际中，我们通常也会写作 $\nu(\d x)=g(x)\mu(\d x)$，或者
+  $g=\d\nu/\d\mu$。
+\end{remark}
+
+在测度论中，命题通常在\emph{几乎处处}(almost everywhere)的意义下成立，也就是说，
+对于不满足该命题的所有 $x\in E$ 的集合，这个集合的 $\mu$-测度为 $0$，
+我们使用简写 $\alev{\mu}$ 来表示这个意思。也就是说，当我们
+写到 $f=g,\ \alev{\mu}$ 的时候，我们表示的意思实际上是
+\[
+  \mu\bigl(\{x\in E\,|\, f(x)\neq g(x)\}\bigr)=0.
+\]
 
 \begin{proposition}
   令 $f$ 是非负可测函数。
@@ -1686,6 +2000,60 @@ $f$ 相对于 $\mu$ 的积分通常有很多写法，下面的表达
     \]
   \end{enumerate}
 \end{proposition}
+\begin{proof}
+  (1) 令可测集
+  $
+    A=\{x\in E\,|\, f(x)\geq a\}
+  $，
+  那么 $f\geq a\indicator{A}$，所以
+  \[
+    \int f\d\mu\geq a\int \indicator{A}\d\mu  
+    =a\mu(A).
+  \]
+
+  (2) 令可测集
+  $
+    A_n=\{x\in E\,|\, f(x)\geq n\}  
+  $ 以及 $A_\infty=\{x\in E\,|\, f(x)=\infty\}$，
+  那么 $A_{n+1}\subseteq A_n$ 且 $A_\infty=\bigcap_{n\in \mathbb{N}}A_n$。
+  根据 (1)，有
+  \[
+    \mu(A_1)\leq \int f\d\mu<\infty,  
+  \]
+  所以
+  \[
+    \mu(A_\infty)=\dlim[n\to\infty] \mu(A_n)\leq
+    \dlim[n\to\infty]\frac{1}{n}\int f\d\mu=0, 
+  \]
+  所以 $\mu(A_\infty)=0$，即 $f<\infty,\ \alev{\mu}$。
+
+  (3) 充分性由 \autoref{prop:property of integral of positive function} 的 (2) 保证。
+  下证必要性。令可测集
+  $
+    A_n=\{x\in E\,|\, f(x)\geq 1/n\}  
+  $ 以及
+  $A_\infty=\{x\in E\,|\, f(x)\neq 0\}$，那么
+  $A_n\subseteq A_{n+1}$ 且 $A_\infty=\bigcup_{n\in \mathbb{N}}A_n$。
+  根据 (1)，有
+  \[
+    \mu(A_\infty)=\ulim[n\to\infty]\mu(A_n)\leq
+    \ulim[n\to\infty]n\int f\d\mu=0,
+  \]
+  所以 $\mu(A_\infty)=0$。
+
+  (4) 记 $f\wedge g=\min(f,g)$ 及 $f\vee g=\max(f,g)$，那么
+  $f=g,\ \alev{\mu}$ 表明  $f\vee g=f\wedge g,\ \alev{\mu}$。
+  根据 (3)，有
+  \[
+    \int f\vee g\d\mu=\int f\wedge g\d\mu+\int (f\vee g-f\wedge g)\d\mu
+    =\int f\wedge g\d\mu,  
+  \]
+  又因为 $\int f\wedge g\d\mu\leq \int f\d\mu\leq \int f\vee g\d\mu$，
+  对于 $g$ 类似，所以
+  \[
+    \int f\d\mu=\int g\d\mu.\qedhere  
+  \]
+\end{proof}
 
 \begin{theorem}[Fatou 引理]
   令 $(f_n)_{n\in \mathbb{N}}$ 是一列非负可测函数，那么
@@ -1693,6 +2061,27 @@ $f$ 相对于 $\mu$ 的积分通常有很多写法，下面的表达
     \int \liminf f_n\d\mu\leq \liminf \int f_n\d\mu.
   \]
 \end{theorem}
+\begin{proof}
+  只需证明
+  \[
+    \int\lim_{n\to\infty}\inf_{k\geq n}f_k \d\mu\leq 
+    \lim_{n\to\infty}\inf_{k\geq n}\int f_k\d\mu,  
+  \]
+  令 $g_n=\inf_{k\geq n}f_k$，那么 $g_n\leq g_{n+1}$，根据
+  单调收敛定理，有
+  \[
+    \int \lim_{n\to\infty}g_n\d\mu=\ulim[n\to\infty]\int g_n\d\mu.
+  \]
+  对于任意 $n$ 和 $k\geq n$，有 $\int g_n\d\mu\leq \int f_k\d\mu$，所以
+  \[
+    \int \lim_{n\to\infty}g_n\d\mu=\ulim[n\to\infty]\int g_n\d\mu
+    \leq\inf_{k\geq n} \int f_k\d\mu,
+  \]
+  令 $n\to\infty$，即可得到
+  \[
+    \int \liminf f_n\d\mu\leq \liminf \int f_n\d\mu.\qedhere
+  \]
+\end{proof}
 
 \begin{proposition}\label{prop:change variable}
   令 $(F,\mathcal{B})$ 是可测空间，$\varphi:E\to F$ 是可测映射。令
@@ -1702,10 +2091,26 @@ $f$ 相对于 $\mu$ 的积分通常有很多写法，下面的表达
     \int_Eh(\varphi(x))\mu(\d x)=\int_Fh(y)\nu(\d y).
   \]
 \end{proposition}
+\begin{proof}
+  若 $h=\indicator{B}$ 是示性函数，那么
+  \[
+    \int_E h(\varphi(x))\mu(\d x)=
+    \mu(\varphi^{-1}(B)) =\nu(B)=\int_F h(y)\nu(\d y).
+  \]
+  若 $h=\sum_{i=1}^n\alpha_i\indicator{B_i}$ 是非负简单函数，
+  那么根据积分的线性性，结论也成立。
+  若 $h$ 是一般的非负可测函数，设 $(h_n)_{n\in \mathbb{N}}$ 是一列递增的非负简单函数
+  且 $h=\ulim h_n$，根据单调收敛定理，即可证明结论。
+\end{proof}
+
 
 
 \section{可积函数}
 
+本节我们讨论可变号的可测函数。
+如果 $f:E\to \mathbb{R}$ 是可测函数，记 $f$ 正部分 $f^+=\max(f,0)$，
+负部分 $f^-=\max(-f,0)$，需要注意 $f^+$ 和 $f^-$ 此时都是非负可测函数
+并且 $f=f^+-f^-$，$|f|=f^++f^-$。
 
 \begin{definition}
   令 $f:E\to \mathbb{R}$ 是可测函数，如果
@@ -1723,10 +2128,50 @@ $f$ 相对于 $\mu$ 的积分通常有很多写法，下面的表达
   \]
 \end{definition}
 
+我们使用 $\mathcal{L}^1(E,\mathcal{A},\mu)$ 来表示所有可积函数
+$f:E\to \mathbb{R}$ 构成的空间。$\mathcal{L}_+^1(E,\mathcal{A},\mu)$ 来表示
+所有非负可积函数构成的空间。
 
+\begin{proposition}[可积函数的性质]
+  \mbox{}
+  \begin{enumerate}
+    \item 对于任意 $f\in \mathcal{L}^1(E,\mathcal{A},\mu)$，有
+    $\bigl|\int f\d\mu\bigr|\leq \int |f|\d\mu$。
+    \item $\mathcal{L}^1(E,\mathcal{A},\mu)$ 是 $\mathbb{R}$-向量空间。
+    \item 如果 $f,g\in \mathcal{L}^1(E,\mathcal{A},\mu)$ 且
+    $f\leq g$，那么 $\int f\d\mu\leq \int g\d\mu$。
+    \item 如果 $f\in \mathcal{L}^1(E,\mathcal{A},\mu)$，$g:E\to [0,\infty]$
+    是非负可测函数使得 $f=g,\ \alev{\mu}$，那么
+    $g\in \mathcal{L}^1(E,\mathcal{A},\mu)$ 且 $\int f\d\mu=\int g\d\mu$。
+    \item 令 $(F,\mathcal{B})$ 是可测空间，$\varphi:E\to F$ 是可测映射。令
+    $\nu$ 是 $\mu$ 在 $\varphi$ 下的推前。那么，对于任意可测函数 $h:F\to \mathbb{R}$，
+    $h$ 是 $\nu$-可积的当且仅当 $h\circ\varphi$ 是 $\mu$-可积的，并且我们有
+    \[
+      \int_Eh(\varphi(x))\mu(\d x)=\int_Fh(y)\nu(\d y).
+    \]
+  \end{enumerate}
+\end{proposition}
 
-
-
+\begin{theorem}[控制收敛定理]
+  令 $(f_n)_{n\in \mathbb{N}}$ 是 $\mathcal{L}^1(E,\mathcal{A},\mu)$
+  中的一列函数，如果：
+  \begin{enumerate}
+    \item 存在可测函数 $f:E\to \mathbb{R}$ 使得
+    \[
+      f_n(x)\to f(x),\quad\alev{\mu}  
+    \]
+    \item 存在非负可测函数 $g$ 使得 $\int g\d\mu<\infty$，并且
+    对于每个 $n\in \mathbb{N}$，都有
+    \[
+      |f_n(x)|\leq g(x),\quad \alev{\mu}   
+    \]
+  \end{enumerate}
+  那么 $f\in \mathcal{L}^1(E,\mathcal{A},\mu)$ 且我们有
+  \[
+    \lim_{n\to\infty}\int f_n\d\mu=\int f\d\mu,\quad
+    \lim_{n\to\infty}\int |f_n-f|\d\mu=0.  
+  \]
+\end{theorem}
 
 
 
@@ -1866,7 +2311,9 @@ $p:\mathbb{R}^d\to \mathbb{R}_+$，其满足
   \mathbb{P}_X(B)=\int_B p(x)\d x
 \]
 对于任意 Borel 子集 $B$ 都成立，那么我们说 $X$ 有密度函数 $p$。
-换句话说，$p$ 是 $\mathbb{P}_X$ 相对于 Lebesgue 测度的密度。
+换句话说，$p$ 是 $\mathbb{P}_X$ 相对于 Lebesgue 测度 $\lambda$ 的密度
+(\autoref{coro:density of measure})，
+也记为 $\mathbb{P}_X(\d x)=p(x)\lambda(\d x)=p(x)\d x$。
 
 注意到密度 $p$ 实际上是在相差一个 Lebesgue 零测集的意义下由 $\mathbb{P}_X$ 确定的。
 在我们遇到的大多数例子中，$p$ 在 $\mathbb{R}^d$ 上连续，在这种情况下，$p$ 由
@@ -1937,15 +2384,171 @@ $\mathbb{P}_X$ 唯一确定。
   \]
 \end{proof}
 
-下面的命题是 \autoref{prop:change variable} 的特例，其十分重要，所以我们再次叙述一遍。
+下面的命题是 \autoref{prop:change variable} 的特例，由于其结果十分重要，所以我们再次叙述一遍。
 
-\begin{proposition}
+\begin{proposition}\label{prop:use law to calculate exception}
   令 $X$ 是值在 $(E,\mathcal{E})$ 中的随机变量，对于任意可测函数 $f:E\to [0,\infty]$，
   我们有
   \[
-    \mathbb{E}[f(X)]=\int_E f(x) \mathbb{P}_X(\d x).
+    \mathbb{E}[f(X)]=\int_\Omega f(X(\omega)) \mathbb{P}(\d\omega)=\int_E f(x) \mathbb{P}_X(\d x).
   \]
 \end{proposition}
+
+如果可测函数 $f:E\to \mathbb{R}$，上面的命题在两端有意义的情况下也是成立的，
+即 $\mathbb{E}[|f(X)|]<\infty$ 的时候。特别地，如果 $X$ 是实值随机变量
+且使得 $\mathbb{E}[|X|]<\infty$，那么有
+\[
+  \mathbb{E}[X]  =\int_{\Omega} X(\omega)\mathbb{P}(\d\omega)
+  =\int_{\mathbb{R}} x \mathbb{P}_X(\d x).
+\]
+
+\autoref{prop:use law to calculate exception} 告诉我们可以使用
+分布 $\mathbb{P}_X$ 来计算 $f(X)$ 的期望。实际上这个过程可以倒过来，
+如果我们能找到 $E$ 上的测度 $\nu$ 使得
+\[
+  \mathbb{E}[f(X)]=\int f\d\nu,  
+\]
+其中 $f:E\to \mathbb{R}$ 是任意示性函数，此时对于任意
+$E$ 的可测子集 $A$，有
+\[
+  \mathbb{P}_X(A)=\int \indicator{A} \d \mathbb{P}_X=\mathbb{E}[\indicator{A}(X)]=  \int \indicator{A}\d\nu=\nu(A),
+\]
+所以分布 $\mathbb{P}_X=\nu$。下面的命题应用了这样的思想。
+
+\begin{proposition}
+  令 $X=(X_1,\dots,X_d)$ 是值在 $\mathbb{R}^d$ 中的随机变量，假设
+  $X$ 有密度 $p(x_1,\dots,x_d)$。那么，对于任意 $1\leq j\leq d$，
+  $X_j$ 的密度为
+  \[
+    p_j(x)=\int_{\mathbb{R}^{d-1}}p(x_1,\dots,x_{j-1},x,x_{j+1},\dots,x_d)
+    \d x_1\cdots \d x_{j-1}\d x_{j+1}\cdots \d x_d.  
+  \]
+\end{proposition}
+\begin{proof}
+  记 $\pi_j$ 是投影函数 $\pi_j(x_1,\dots,x_d)=x_j$。对于任意的
+  Borel 函数 $f:\mathbb{R}\to \mathbb{R}_+$，根据 Fubini 定理，有
+  \begin{align*}
+    \mathbb{E}[f(X_j)]&=\mathbb{E}[f\circ\pi_j(X)]\\
+    &=\int_{\mathbb{R}^d}f(\pi_j(x)) \mathbb{P}_X(\d x)\\
+    &=\int_{\mathbb{R}^d}f(x_j)p(x_1,\dots,x_d) \d x_1\cdots\d x_d \\
+    &=\int_{\mathbb{R}}f(x_j)\left(
+      \int_{\mathbb{R}^{d-1}}p(x_1,\dots,x_d)\d x_1\cdots
+      \d x_{j-1}\d x_{j+1}\cdots \d x_d
+    \right)\d x_j\\
+    &=\int_{\mathbb{R}}f(x_j)p_j(x_j)\d x_j
+    =\int_{\mathbb{R}}f(x_j) \mathbb{P}_{X_j}(\d x_j),
+  \end{align*}
+  这就表明对于任意 Borel 子集 $A$ 有
+  \[
+    \mathbb{P}_{X_j}(A)=\int_A p_j(x_j)\d x_j,  
+  \]
+  即 $X_j$ 有密度函数 $p_j$。 
+\end{proof}
+
+如果 $X=(X_1,\dots,X_d)$ 是值在 $\mathbb{R}^d$ 中的随机变量，那么
+概率测度 $\mathbb{P}_{X_j}$ 被称为 $X$ 的\emph{边缘分布}，分布律
+$\mathbb{P}_{X_j}$ 由 $\mathbb{P}_X$ 完全决定：$\mathbb{P}_{X_j}$
+就是 $\mathbb{P}_X$ 在投影 $\pi_j$ 下的推前。需要注意反之不是正确的，
+也就是说即使确定了所有的边缘分布 $\mathbb{P}_{X_1},\dots,\mathbb{P}_{X_j}$，
+也不能确定 $\mathbb{P}_X$。
+ 
+
+\subsection{经典分布}
+
+本小节我们列举一些重要的概率分布。
+
+\paragraph{离散分布}
+\begin{enumerate}
+  \item \emph{均匀分布}。如果 $E$ 是有限集，值在 $E$ 中的随机变量
+  $X$ 如果满足
+  \[
+    \mathbb{P}(X=x)=\frac{1}{\card(E)},\quad \forall x\in E,  
+  \]
+  那么我们说 $X$ 是 $E$ 上的均匀分布。
+  \item \emph{参数 $\mathbold{p\in[0,1]}$ 的 Bernoulli 分布}。如果值在
+  $\{0,1\}$ 中的随机变量 $X$ 满足
+  \[
+    \mathbb{P}(X=1)=p,\quad \mathbb{P}(X=0)=1-p,  
+  \]
+  那么我们说 $X$ 是 $E$ 上参数 $p$ 的 Bernoulli 分布。
+  \item \emph{二项分布 $\mathbold{\mathcal{B}(n,p)\ (n\in \mathbb{N},p\in[0,1])}$}。
+  如果值在 $\{0,1,\dots,n\}$ 中的随机变量 $X$ 满足
+  \[
+    \mathbb{P}(X=k)=\binom{n}{k}p^k(1-p)^{n-k} ,\quad \forall k\in\{0,1,\dots,n\} ,
+  \]
+  那么我们说 $X$ 是 $E$ 上的二项分布。
+  \item \emph{参数 $\mathbold{p\in(0,1)}$ 的几何分布}。如果
+  值在 $\mathbb{Z}_+$ 中的随机变量 $X$ 使得
+  \[
+    \mathbb{P}(X=k)=(1-p)p^k  ,\quad k\in \mathbb{Z}_+,
+  \]
+  那么我们说 $X$ 是 $E$ 上参数 $p$ 的几何分布。
+  \item \emph{参数 $\mathbold{\lambda>0}$ 的 Poisson 分布}。
+  如果值在 $\mathbb{Z}_+$ 中的随机变量 $X$ 使得
+  \[
+    \mathbb{P}(X=k)=\frac{\lambda^k}{k!}e^{-\lambda},\quad\forall k\in \mathbb{Z}_+,  
+  \]
+  那么我们说 $X$ 是 $E$ 上参数 $\lambda$ 的 Poisson 分布。容易计算
+  \[
+    \mathbb{E}[X]=\sum_{k=0}^\infty k \mathbb{P}(X=k)=
+    \sum_{k=1}  ^\infty \frac{\lambda^k}{(k-1)!}e^{-\lambda}=\lambda,
+  \]
+  Poisson 分布在实际应用中非常重要，通常被用于建模某个“罕见事件”
+  在长时间段内发生的次数。准确的数学叙述是 Poisson 分布是
+  二项分布的近似。对于每个 $n\geq 1$，记 $X_n$ 为服从二项分布
+  $\mathcal{B}(n,p_n)$ 的随机变量，如果在 $n\to\infty$ 的时候
+  有 $np_n\to\lambda$，那么对于每个 $k\in \mathbb{N}$，有
+  \[
+    \lim_{n\to\infty} \mathbb{P}(X_n=k)=
+    \frac{\lambda^k}{k!}e^{-\lambda}.
+  \]
+  这可以解释为，如果每天有很小的概率 $p_n\approx\lambda/n$
+  发生地震，那么地震在 $n$ 天内发生的次数将近似服从泊松分布。
+\end{enumerate}
+
+\paragraph{连续分布}
+在下面的五个例子中，$X$ 都指的是一个有密度 $p$ 的实值随机变量。
+\begin{enumerate}
+  \item \emph{$\mathbold{[a,b]}$ 上的均匀分布}：
+  \[
+    p(x)=\frac{1}{b-a}\indicator{[a,b]}(x).  
+  \]
+  \item \emph{参数 $\mathbold{\lambda>0}$ 的指数分布}：
+  \[
+    p(x)=\lambda e^{-\lambda x}\indicator{\mathbb{R}_+}(x),  
+  \]
+  此时对于 $a\geq 0$，有
+  \[
+    \mathbb{P}(X\geq a)=\int_a^\infty p(x)\d x=
+    e^{-\lambda a}.  
+  \]
+  这表明指数分布有下面的重要性质：对于 $a,b\geq 0$，有
+  \begin{equation}
+    \mathbb{P}(X\geq a+b)=\mathbb{P}(X\geq a)\mathbb{P}(X\geq b).
+  \end{equation}
+  \item \emph{Gamma 分布 $\mathbold{\Gamma(a,\lambda)\ (a>0,\lambda>0)}$}：
+  \[
+    p(x)=\frac{\lambda^a}{\Gamma(a)}x^{a-1}e^{-\lambda x}\indicator{\mathbb{R}_+}(x),  
+  \]
+  这是指数分布的推广，$a=1$ 时即指数分布。
+  \item \emph{参数 $\mathbold{a>0}$ 的 Cauchy 分布}：
+  \[
+    p(x)=\frac{1}{\pi}\frac{a}{a^2+x^2} , 
+  \]
+  注意到服从 Cauchy 分布的随机变量的数学期望是不存在的，因为
+  \[
+    \mathbb{E}[|X|]=\int_{-\infty}^{\infty}\frac{1}{\pi}\frac{a|x|}{a^2+x^2}\d x=\infty.  
+  \]
+  \item \emph{正态分布 $\mathbold{\mathcal{N}(m,\sigma^2)\ (m\in \mathbb{R},\sigma>0)}$}：
+  \[
+    p(x)=\frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{(x-m)^2}{2\sigma^2}\right)  .
+  \]
+  正态分布与 Poisson 分布一起成为概率论中最重要的两个分布。正态分布
+  的密度曲线呈著名的钟形曲线。按定义很容易验证
+  \[
+    m=\mathbb{E}[X],\quad \sigma^2 =\mathbb{E}[(X-m)^2]. 
+  \]
+\end{enumerate}
 
 
 
