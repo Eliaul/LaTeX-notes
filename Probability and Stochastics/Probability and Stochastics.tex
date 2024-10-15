@@ -44,6 +44,7 @@
 \DeclareMathOperator\supp{supp}
 \DeclareMathOperator\Id{Id}
 \DeclareMathOperator\rk{rank}
+\DeclareMathOperator\var{var}
 \DeclareMathOperator\card{card}
 \DeclareMathOperator\coker{coker}
 
@@ -56,6 +57,7 @@
 \newcommand{\indicator}[1]{\mathbold 1_{#1}}
 \newcommand{\alev}[1]{\text{$#1$ a.e.}}
 \newcommand{\alsu}[1]{\text{$#1$ a.s.}}
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
 
 \usepackage{enumitem}
 
@@ -2173,6 +2175,48 @@ $f:E\to \mathbb{R}$ 构成的空间。$\mathcal{L}_+^1(E,\mathcal{A},\mu)$ 来�
     \lim_{n\to\infty}\int |f_n-f|\d\mu=0.  
   \]
 \end{theorem}
+\begin{proof}
+  我们首先将两个条件中的几乎处处去掉，证明结论成立。
+  由于 $|f_n|\leq g$，所以 $|f|=\lim|f_n|\leq g$，所以
+  $\int |f|\d\mu\leq \int g\d\mu<\infty$，故
+  $f\in L^1(E,\mathcal{A},\mu)$。由于 $|f-f_n|\leq 2g$
+  以及 $\lim |f-f_n|=0$，根据 Fatou 引理，有
+  \[
+    \liminf \int\bigl(2g-|f-f_n|\bigr)\d\mu\geq
+    \int \bigl(2g-\limsup|f-f_n|\bigr)\d\mu 
+    =\int 2g\d\mu,
+  \]
+  再根据积分的线性性，有
+  \[
+    \int 2g\d\mu-\limsup\int|f-f_n|\d\mu\geq \int 2g\d\mu,  
+  \]
+  这表明
+  \[
+    \limsup\int |f-f_n|\d\mu = 0,  
+  \]
+  所以 $\lim \int |f-f_n|\d\mu$ 存在且为 $0$。最后，我们有
+  \[
+    \left|\int f\d\mu-\int f_n\d\mu\right|\leq \int |f-f_n|\d\mu\to 0,
+  \]
+  所以 $\int f\d\mu=\lim\int f_n\d\mu$。
+
+  现在我们证明几乎处处的情况。记
+  \[
+    A=\big\{x\in E\,|\, f_n(x)\to f(x),|f_n(x)|\leq g(x)\big\}  ,
+  \]
+  那么 $A$ 可测且条件表明 $\mu(A^c)=0$。定义
+  \[
+    \tilde f_n(x)=\indicator{A}(x)f_n(x),\quad \tilde{f}(x)=\indicator{A}(x)f(x),  
+  \]
+  于是在几乎处处的意义下有 $f_n=\tilde{f}_n$ 以及 $f=\tilde{f}$，
+  所以 $\int f_n\d\mu=\int\tilde{f}_n\d\mu$，
+  $\int f\d\mu=\int\tilde f\d\mu$ 以及 $\int|f-f_n|\d\mu=\int|\tilde f-\tilde f_n|\d\mu$。
+  对 $\tilde{f}_n$ 和 $\tilde{f}$ 应用上面的结论即可。
+\end{proof}
+
+\section{含参积分}
+
+
 
 
 \chapter{测度的构造}
@@ -2245,7 +2289,161 @@ $\sigma$-域上定义。
     \item 对于任意实数 $a\leq b$，$\lambda^*([a,b])=\lambda^*((a,b))=b-a$。
   \end{enumerate}
 \end{theorem}
+\begin{proof}
+  (1) 显然 $\lambda^*(\emptyset)=0$ 并且 $A\subseteq B$ 表明 $\lambda^*(A)\leq\lambda^*(B)$。
+  下面证明 $\sigma$-次可加性。任取 $\mathbb{R}$ 的一列子集 $(A_n)_{n\in \mathbb{N}}$，
+  不妨假设每个 $\lambda^*(A_n)<\infty$。任取 $\varepsilon>0$，对于每个 $A_n$，都存在
+  一列开区间 $\bigl(a_i^{(n)},b_i^{(n)}\bigr)$ 使得
+  \[
+    \lambda^*(A_n)\leq \sum_{i\in \mathbb{N}}\bigl(b_i^{(n)}-a_i^{(n)}\bigr)
+    <\lambda^*(A_n)+\frac{\varepsilon}{2^n},
+  \]
+  注意到所有的开区间 $\bigl(a_i^{(n)},b_{i}^{(n)}\bigr)\ (i,n\in \mathbb{N})$
+  构成了 $\bigcup_{n\in \mathbb{N}}A_n$ 的一个可数开覆盖，所以
+  \[
+    \lambda^*\biggl(\bigcup_{n\in \mathbb{N}}A_n\biggr)\leq
+    \sum_{n\in \mathbb{N}}\sum_{i\in \mathbb{N}}\bigl(b_i^{(n)}-a_i^{(n)}\bigr)
+    \leq \sum_{n\in \mathbb{N}}\lambda^*(A_n)+\varepsilon,
+  \]
+  由于 $\varepsilon$ 的任意性，所以 $\lambda^*$ 满足 $\sigma$-次可加性。
 
+  (2) 
+\end{proof}
+
+
+\chapter{$L^p$ 空间}
+
+\section{定义与 H\"older 不等式}
+
+在本章中，我们考虑测度空间 $(E,\mathcal{A},\mu)$。对于实数 $p\geq 1$，
+我们令 $\mathcal{L}^p(E,\mathcal{A},\mu)$ 表示所有满足
+\[
+  \int |f|^p\d\mu<\infty  
+\]
+的可测函数 $f:E\to \mathbb{R}$ 构成的空间。
+此外，我们引入 $\mathcal{L}^\infty(E,\mathcal{A},\mu)$ 表示所有
+几乎处处有界的可测函数 $f:E\to \mathbb{R}$ 构成的空间，即存在
+常数 $C\in \mathbb{R}_+$ 使得
+\[
+  |f|\leq C,\ \alev{\mu}  
+\]
+
+对于每个 $p\in [1,\infty]$，我们可以定义 $\mathcal{L}^p$ 上
+的一个等价关系：
+\[
+  f\sim g\Leftrightarrow f=g,\ \alev{\mu}  
+\]
+于是我们可以考虑商空间
+\[
+  L^p(E,\mathcal{A},\mu)=\mathcal{L}^p(E,\mathcal{A},\mu)/\sim.  
+\]
+也就是说，我们只考虑几乎处处相等意义上的函数，如果两个函数几乎处处
+相等，那么我们认为这是同一个函数。
+
+在没有歧义的情况下，我们使用 $L^p(\mu)$ 或者 $L^p$ 表示
+$L^p(E,\mathcal{A},\mu)$。注意到 $L^1$ 就是所有可积函数
+构成的空间。
+
+对于可测函数 $f:E\to \mathbb{R}$ 和 $p\in [1,\infty)$，我们定义
+\[
+  \norm{f}_p=\left(\int |f|^p\d\mu\right)^{1/p}  .
+\]
+约定 $\infty^{1/p}=\infty$。定义
+\[
+  \norm{f}_\infty=\inf\{C\in[0,\infty]\,|\, |f|\leq C,\ \alev{\mu}\}  .
+\]
+如果 $f,g$ 是两个几乎处处相等的可测函数，那么有 $\norm{f}_p=\norm{g}_p$，
+所以我们可以针对 $f\in L^p(E,\mathcal{A},\mu)$ 良好的定义 $\norm{f}_p$。
+
+对于 $p,q\in [1,\infty]$，我们说 $p$ 和 $q$ 是\emph{共轭指数}，如果
+\[
+  \frac{1}{p}+\frac{1}{q}=1.  
+\]
+特别地，$1$ 和 $\infty$ 是共轭的。
+
+\begin{theorem}[H\"older 不等式]
+  令 $p,q$ 是共轭指数，$f,g$ 是两个 $E\to \mathbb{R}$ 的可测函数，那么
+  \[
+    \int|fg|\d\mu\leq \norm{f}_p\norm{g}_q.  
+  \]
+  特别地，如果 $f\in L^p$ 以及 $g\in L^q$，那么
+  $fg\in L^1$。
+\end{theorem}
+\begin{proof}
+  若 $\norm{f}_p=0$，那么 $|f|=0\,\ \alev{\mu}$，这表明 
+  $\int |fg|\d\mu=0$，结论显然成立，所以我们不妨假设
+  $\norm{f}_p>0$ 以及 $\norm{g}_p>0$。进一步的，我们还可以假设
+  $f\in L^p$ 以及 $g\in L^q$，否则右边为 $\infty$ 显然成立。
+
+  先假设 $p=1$ 和 $q=\infty$，那么
+  \[
+    \int|fg|\d\mu\leq \norm{g}_{\infty}\int |f|\d\mu
+    =  \norm{f}_1\norm{g}_\infty.
+  \]
+  下面假设 $1<p,q<\infty$。
+
+  设 $\alpha\in (0,1)$，那么对于 $x\in [0,\infty)$ 有不等式
+  \[
+    x^\alpha-\alpha x\leq 1-\alpha,  
+  \]
+  取 $x=u/v\ (u\geq 0,v>0)$，我们有
+  \[
+    u^\alpha v^{1-\alpha}\leq \alpha u+(1-\alpha) v,  
+  \]
+  该不等式在 $v=0$ 时也成立。取 $\alpha=1/p$，$1-\alpha=1/q$，
+  以及
+  \[
+    u=\frac{|f|^p}{\norm{f}_p^p} ,\quad v=\frac{|g|^q}{\norm{g}_q^q},
+  \]
+  那么
+  \[
+  \frac{|fg|}{\norm{f}_p^p\norm{g}_q^q}\leq
+  \frac{1}{p}\frac{|f|^p}{\norm{f}_p^p}+
+  \frac{1}{q}\frac{|g|^q}{\norm{g}_q^q},
+  \]
+  两边积分，即得
+  \[
+    \int|fg|\d\mu\leq   \norm{f}_p^p\norm{g}_q^q.\qedhere
+  \]
+\end{proof}
+
+\begin{corollary}[Cauchy-Schwarz 不等式]
+  取 $p=q=2$，即得
+  \[
+    \int |fg|\d\mu\leq \left(\int |f|^2 \d\mu\right)^{1/2}  
+    \left(\int |g|^2 \d\mu\right)^{1/2}  .
+  \]
+\end{corollary}
+ 
+\begin{corollary}
+  假设 $\mu$ 是有限测度，$p,q$ 是共轭指数且 $p>1$，那么对于
+  任意可测函数 $f:E\to \mathbb{R}$，有
+  \[
+    \norm{f}_1\leq \mu(E)^{1/q}\norm{f}_p,  
+  \]
+  因此，对于任意 $p\in (1,\infty]$，有 $L^p\subseteq L^1$。
+  更一般地，对于任意 $1\leq r< r'<\infty$，有
+  \[
+    \norm{f}_r\leq \mu(E)^{\frac{1}{r}-\frac{1}{r'}}  
+    \norm{f}_{r'},
+  \]
+  因此，对于任意 $1\leq p<q\leq \infty$，有 $L^q\subseteq L^p$，
+  特别地，当 $\mu$ 是概率测度的时候，还有 $\norm{f}_p\leq\norm{f}_q$。
+\end{corollary}
+\begin{proof}
+  取 $g=\indicator{E}$，即得
+  \[
+    \int|f|\d\mu=\int|f \indicator{E}|\d\mu\leq
+    \norm{f}_p \norm{\indicator{E}}_q=\mu(E)^{1/q}\norm{f}_p. 
+  \]
+  用 $f^r$ 替代 $f$，取 $p=r'/r$，$1/q=1-r/r'$，那么
+  \[
+    \norm{f}_r\leq \mu(E)^{1/r-1/r'}\norm{f^r}_{r'/r}^{1/r}  
+    =\mu(E)^{1/r-1/r'}\norm{f}_{r'}.\qedhere
+  \]
+\end{proof}
+
+\section{Banach 空间 $L^p(E,\mathcal{A},\mu)$}
 
 
 
@@ -2674,6 +2872,80 @@ $\mu$ 使得 $\mu((-\infty,t])=F(t)$。即这样的函数 $F$ 总能
 \section{随机变量的矩}
 
 \subsection{矩和方差}
+
+令 $X$ 是实值随机变量，$p\in \mathbb{N}$。定义 $X$ 的\emph{$p$-阶矩}
+为 $\mathbb{E}[X^p]$，其仅在 $X\geq 0$ 或者 $\mathbb{E}[|X|^p]<\infty$
+的时候有定义。
+
+因为期望是相对于测度 $\mathbb{P}_X$ 的一种积分，所以我们有下面的结果。
+如果 $X$ 是值在 $[0,\infty]$ 中的随机变量，那么我们有
+\begin{itemize}[nosep]
+  \item $\mathbb{E}[X]<\infty\Rightarrow X<\infty,\ \alsu{\mathbb{P}_X}$
+  \item $\mathbb{E}[X]=0\Rightarrow X=0\,\ \alsu{\mathbb{P}_X}$
+\end{itemize}
+此外，各种极限与积分交换次序的定理也可以直接改写为期望的形式：
+\begin{itemize}[nosep]
+  \item \emph{单调收敛定理}。如果 $(X_n)_{n\in \mathbb{N}}$ 是一列
+  值在 $[0,\infty]$ 中递增的随机变量，那么
+  \[
+    \ulim[n\to\infty]  \mathbb{E}[X_n]=\mathbb{E}\left[\ulim[n\to\infty]X_n\right].
+  \]
+  \item \emph{Fatou 引理}。如果 $(X_n)_{n\in \mathbb{N}}$ 是一列
+  值在 $[0,\infty]$ 中的随机变量，那么
+  \[
+    \mathbb{E}[\liminf X_n]\leq \liminf \mathbb{E}[X_n].  
+  \]
+  \item \emph{控制收敛定理}。如果 $(X_n)_{n\in \mathbb{N}}$ 是一列
+  实值随机变量，并且存在值在 $[0,\infty]$ 中的随机变量 $Z$ 使得
+  \[
+    |X_n|\leq Z,\quad \mathbb{E}[Z]<\infty, \quad X_n\to X,\ 
+    \alsu{\mathbb{P}_X}  
+  \]
+  那么
+  \[
+    \lim_{n\to\infty}\mathbb{E}[X_n]=\mathbb{E}\left[\lim_{n\to\infty}X_n\right]=\mathbb{E}[X],
+    \quad \lim_{n\to\infty}\mathbb{E}[|X_n-X|]=0.
+  \]
+\end{itemize}
+
+对于每个 $p\in[1,\infty]$，考虑空间 $L^p(\Omega,\mathcal{A},\mathbb{P})$。
+H\"older 不等式表明对于任意实值随机变量 $X,Y$，如果 $p,q\in (1,\infty)$
+使得 $1/p+1/q=1$，那么
+\[
+  \mathbb{E}[|XY|]\leq \mathbb{E}[|X|^p]^{1/p}\mathbb{E}[|Y|^q]^{1/q}. 
+\]
+取 $Y=1$，我们得到 $\norm{X}_1\leq\norm{X}_p$。此外，
+如果 $1\leq p<q\leq \infty$，有 $\norm{X}_p\leq \norm{X}_q$，
+这也表明 $L^q(\Omega, \mathcal{A},\mathbb{P})\subseteq L^p(\Omega,\mathcal{A},\mathbb{P})$。
+
+Hilbert 空间 $L^2(\Omega,\mathcal{A},\mathbb{P})$ 上的内积定义为
+$\langle X,Y\rangle_{L^2}=\mathbb{E}[XY]$，Cauchy-Schwarz 不等式表明
+\[
+  \mathbb{E}[|XY|]\leq \mathbb{E}[X^2]  ^{1/2}\mathbb{E}[Y^2]^{1/2}.
+\]
+特别地，我们有
+\[
+  \mathbb{E}[|X|]^2\leq \mathbb{E}[X^2].  
+\]
+
+如果 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，$f:\mathbb{R}\to \mathbb{R}_+$
+是凸函数，那么 Jensen 不等式表明 
+\[
+  \mathbb{E}[f(X)]\geq f(\mathbb{E}[X]).
+\]
+
+\begin{definition}
+  令 $X\in L^2(\Omega,\mathcal{A},\mathbb{P})$，定义 $X$
+  的\emph{方差}为
+  \[
+    \var(X)=\mathbb{E}\bigl[(X-\mathbb{E}[X])^2\bigr]\geq 0,
+  \]
+  $X$ 的\emph{标准差}为
+  \[
+    \sigma_X=\sqrt{\var(X)}.  
+  \]
+\end{definition}
+
 
 
 
