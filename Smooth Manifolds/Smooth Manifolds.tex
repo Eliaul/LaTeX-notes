@@ -3847,6 +3847,44 @@ $\varPhi$ 和 $\varPsi$ 之间的\emph{转移函数}。
 \end{lemma} 
 
 
+\begin{example}[向量丛的限制]
+  设 $\pi:E\to M$ 是秩 $k$ 的向量丛，$S\subseteq M$ 是任意子集。定义\emph{$E$ 到 $S$ 的限制}
+  为 $E|_S=\bigcup_{p\in S}E_p$，投影 $E|_S\to S$ 就是 $\pi$ 的限制。
+  如果 $\varPhi:\pi^{-1}(U)\to U\times \mathbb{R}^k$ 是局部平凡化，那么其可以限制为双射
+  $\varPhi|_S:(\pi|_S)^{-1}(U\cap S)\to (U\cap S)\times \mathbb{R}^k$。如果 $E$
+  是光滑向量丛，$S\subseteq M$ 是浸入或者嵌入子流形，容易验证 $E|_S$ 是光滑向量丛。
+\end{example}
+
+\section{向量丛的局部或者全局截面}
+
+令 $\pi:E\to M$ 是向量丛，\emph{$E$ 的(全局)截面}指的是连续映射 $\sigma:M\to E$ 使得
+$\pi\circ\sigma=\Id_M$。这意味着对于每个 $p\in M$，$\sigma(p)$ 是纤维 $E_p$ 的元素。
+
+\emph{$E$ 的局部截面}指的是一个连续映射 $\sigma:U\to E$，其中 $U\subseteq M$ 是开集，
+使得 $\pi\circ\sigma=\Id_U$。
+
+\emph{$E$ 的零截面}指的是一个全局截面 $\zeta:M\to E$，其定义为
+\[
+  \zeta(p)=0\in E_p\quad \forall p\in M.
+\]
+与向量场的情况一样，截面 $\sigma$ 的\emph{支集}定义为集合 $\{p\in M\,|\, \sigma(p)\neq 0\}$ 的闭包。
+
+如果 $\pi:E\to M$ 是光滑向量丛，那么 $E$ 的所有全局截面在逐点加法和数乘下成为一个向量空间，记为
+$\Gamma(E)$。与向量场类似，光滑向量丛的截面可以左乘一个光滑实值函数：
+如果 $f\in C^\infty(M),\sigma\in\Gamma(E)$，我们可以定义 $f\sigma$ 为
+\[
+  (f\sigma)(p)=f(p)\sigma(p).
+\] 
+
+
+\section{丛同态}
+
+\section{子丛}
+
+
+
+
+
 \chapter{余切丛}
 
 \section{余向量}
