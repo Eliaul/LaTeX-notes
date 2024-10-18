@@ -3700,6 +3700,73 @@ $\theta^{(q)}(t)=\theta^{(p)}(t+s)$，也就是
   即 $\smash{\theta^{(p)}}'(t)=V_{\theta^{(p)}(t)}$。
 \end{proof}
 
+\subsection{流的基本定理}
+
+我们已经说明了每个光滑的全局流都会产生一个光滑的向量场，即无穷小生成元。反之，
+我们希望能说明每个光滑向量场都是某个光滑全局流的无穷小生成元。然而，很容易看出
+这是不成立的，因为存在光滑向量场使得其积分曲线不可能对所有的 $t\in \mathbb{R}$
+都有定义。
+
+\begin{example}
+  令 $M=\mathbb{R}^2 \smallsetminus\{0\}$ 附带标准坐标 $(x,y)$，$V=\partial/\partial x$ 是 $M$
+  上的向量场。$V$ 的唯一的以 $(-1,0)$ 为起点的积分曲线为 $\gamma(t)=(t-1,0)$。
+  但是此时 $\gamma$ 不能被连续地延拓为一条经过 $t=1$ 的积分曲线，这直观上是明显的，
+  因为 $M$ 在原点处有个洞。为了证明这一点，假设 $\tilde\gamma$ 是 $\gamma$ 的连续延拓且
+  经过 $t=1$，那么 $t\to 1_+$ 的时候有 $\gamma(t)\to\tilde{\gamma}(1)\in \mathbb{R}^2 \smallsetminus\{0\}$。
+  同时我们可以将 $\gamma$ 视为值域在 $\mathbb{R}^2$ 中的曲线，于是 $t\to 1_+$ 时有 $\gamma(t)\to (0,0)$，
+  出于极限的唯一性，必须有 $\tilde{\gamma}(1)=(0,0)\in \mathbb{R}^2 \smallsetminus\{0\}$，
+  这是矛盾的。
+\end{example}
+
+出于上述原因，我们给出下面的定义。如果 $M$ 是流形，定义 $M$ 的\emph{流域}指的是一个开集
+$\mathcal{D}\subseteq \mathbb{R}\times M$，其满足任取 $p\in M$，集合
+$\mathcal{D}^{(p)}=\{t\in \mathbb{R}\,|\, (t,p)\in \mathcal{D}\}$ 是
+包含 $0$ 的一个开区间。定义 $M$ 上的\emph{流}为一个连续映射 $\theta:\mathcal{D}\to M$，
+其中 $\mathcal{D}\subseteq \mathbb{R}\times M$ 是流域，这个映射满足：对于任意 $p\in M$，
+\[
+  \theta(0,p)=p,
+\]
+对于 $s\in \mathcal{D}^{(p)}$ 和 $t\in \mathcal{D}^{(\theta(s,p))}$，如果
+$s+t\in \mathcal{D}^{(p)}$，那么
+\[
+  \theta\bigl(t,\theta(s,p)\bigr)=\theta(t+s,p).
+\]
+有时我们将 $\theta$ 称为\emph{局部流}来和全局流区分。
+
+如果 $\theta$ 是流，只要 $(t,p)\in \mathcal{D}$，我们定义 $\theta_t(p)=\theta^{(p)}(t)=\theta(t,p)$，
+这与全局流一致。对于每个 $t\in \mathbb{R}$，我们还定义
+\[
+  M_t=\{p\in M\,|\, (t,p)\in \mathcal{D}\},
+\]
+所以
+\[
+  p\in M_t\Leftrightarrow (t,p)\in \mathcal{D}\Leftrightarrow t\in \mathcal{D}^{(p)}.
+\]
+如果 $\theta$ 是光滑的，定义 $\theta$ 的\emph{无穷小生成元} $V$ 为 $V_p=\smash{\theta^{(p)}}'(0)$。
+
+\begin{proposition}
+  如果 $\theta:\mathcal{D}\to M$ 是光滑流，那么无穷小生成元 $V$ 是光滑向量场，并且
+  每条曲线 $\theta^{(p)}$ 都是 $V$ 的积分曲线。
+\end{proposition}
+
+下面的定理是本节的主要结果。\emph{极大积分曲线}指的是不能延拓到任意更大开区间的一条积分曲线，
+\emph{极大流}指的是不能延拓到任意更大流域的流。
+
+\begin{theorem}[流的基本定理]
+  令 $V$ 是光滑流形 $M$ 上的光滑向量场，那么存在唯一的光滑极大流 $\theta:\mathcal{D}\to M$
+  使得其无穷小生成元为 $V$，此外，这个流有下面的性质：
+  \begin{enumerate}
+    \item 对于每个 $p\in M$，曲线 $\theta^{(p)}:\mathcal{D}^{(p)}\to M$ 是 $V$ 的唯一的
+    以 $p$ 为起点的极大积分曲线。
+    \item 如果 $s\in \mathcal{D}^{(p)}$，那么 $\mathcal{D}^{(\theta(s,p))}$ 是区间
+    $\mathcal{D}^{(p)}-s=\{t-s\,|\, t\in \mathcal{D}^{(p)}\}$。
+    \item 对于每个 $t\in \mathbb{R}$，$M_t$ 是 $M$ 的开集，并且 $\theta_t:M_t\to M_{-t}$
+    是微分同胚，其逆为 $\theta_{-t}$。
+  \end{enumerate}
+\end{theorem}
+
+上述基本定理中断言的存在且唯一的流称为\emph{$V$ 生成的流}，或者简称为\emph{$V$ 的流}。
+
 
 
 
