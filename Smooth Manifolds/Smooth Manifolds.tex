@@ -41,18 +41,19 @@
 \DeclareMathOperator\End{End}
 \DeclareMathOperator\Int{Int}
 \DeclareMathOperator\Tor{Tor}
-\DeclareMathOperator\LL{L}
 \DeclareMathOperator\Tr{Tr}
 \DeclareMathOperator\Hom{Hom}
 \DeclareMathOperator\supp{supp}
 \DeclareMathOperator\Id{Id}
 \DeclareMathOperator\rk{rank}
 \DeclareMathOperator\grad{grad}
+\newcommand{\LL}{{\mathrm{L}}}
 
 \newcommand{\ideal}[1]{\mathfrak{#1}}
 \newcommand{\mat}[1]{\mathbold{#1}}
 \newcommand{\uline}{\underline{\hphantom{X}}}
 \newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\lie}[1]{\mathfrak{#1}}
 
 \usepackage{enumitem}
 
@@ -3609,7 +3610,7 @@ $\gamma'(t)=V_{\gamma(t)}$ 当且仅当
   $V$ 的积分曲线。
 \end{lemma}
 
-\begin{proposition}[积分曲线的自然性]
+\begin{proposition}[积分曲线的自然性]\label{prop:naturality of integral curve}
   设 $M,N$ 是光滑流形，$F:M\to N$ 是光滑映射。那么 $X\in \mathfrak{X}(M)$
   和 $Y\in \mathfrak{X}(N)$ 是 $F$-相关的当且仅当 $F$ 将 $X$ 的积分曲线
   送到 $Y$ 的积分曲线，也就是说，对于 $X$ 的积分曲线 $\gamma$，
@@ -3767,7 +3768,60 @@ $s+t\in \mathcal{D}^{(p)}$，那么
 
 上述基本定理中断言的存在且唯一的流称为\emph{$V$ 生成的流}，或者简称为\emph{$V$ 的流}。
 
+\begin{proposition}[流的自然性]
+  设 $M,N$ 是光滑流形，$F:M\to N$ 是光滑映射，$X\in \mathfrak{X}(M)$，
+  $Y\in \mathfrak{X}(N)$。令 $\theta$ 是 $X$ 的流，$\eta$ 是 $Y$ 的流。
+  如果 $X$ 和 $Y$ 是 $F$-相关的，那么对于每个 $t\in \mathbb{R}$，
+  $F(M_t)\subseteq N_t$ 并且 $\eta_t\circ F=F\circ\theta_t$：
+  \[
+    \begin{tikzcd}
+      M_t\arrow[r,"F"]\arrow[d,"\theta_t"'] & N_t\arrow[d,"\eta_t"]\\
+      M_{-t}\arrow[r,"F"] & N_{-t}
+    \end{tikzcd}  
+  \]
+\end{proposition} 
+\begin{proof}
+  根据 \autoref{prop:naturality of integral curve}，对于任意 $p\in M$，
+  曲线 $F\circ\theta^{(p)}$ 是 $Y$ 的以 $F(p)$ 为起点的积分曲线，根据积分曲线
+  的唯一性，极大积分曲线 $\eta^{(F(p))}$ 至少定义在区间 $\mathcal{D}^{(p)}$
+  上并且在这个区间上有 $F\circ\theta^{(p)}=\eta^{(F(p))}$。这意味着
+  \[
+    p\in M_t\Rightarrow t\in \mathcal{D}^{(p)}  
+    \Rightarrow t\in \mathcal{D}^{(F(p))}\Rightarrow F(p)\in N_t,
+  \]
+  所以 $F(M_t)\subseteq N_t$。并且在 $t\in \mathcal{D}^{(p)}$
+  时，有 $F\bigl(\theta^{(p)}(t)\bigr)=\eta^{(F(p))}(t)$，
+  这等价于 $\eta_t(F(p))=F(\theta_t(p))$。
+\end{proof}
 
+\begin{corollary}[流的微分同胚不变性]
+  令 $F:M\to N$ 是微分同胚，如果 $X\in \mathfrak{X}(M)$ 以及
+  $\theta$ 是 $X$ 的流，那么 $F_*X$ 的流为任取 $t\in \mathbb{R}$，$\eta_t=F\circ\theta_t\circ F^{-1}$，
+  流域满足 $N_t=F(M_t)$。
+\end{corollary}
+
+\subsection{完备向量场}
+
+我们已经注意到不是所有的光滑向量场都生成一个全局流，能够生成全局流
+的光滑向量场足够重要，所以我们给它们一个名字。我们称一个光滑向量场
+是\emph{完备的}当且仅当其能够生成一个全局流，或者等价地说，
+它的极大积分曲线对所有的 $t\in \mathbb{R}$ 都有定义。
+我们将表明所有的紧支向量场是完备的，因此紧流形上的所有光滑向量场都是完备的。
+
+
+\begin{theorem}
+  光滑流形上的紧支光滑向量场是完备的。
+\end{theorem}
+
+\begin{corollary}
+  紧流形上的光滑向量场是完备的。
+\end{corollary}
+
+李群上的左不变向量场构成了另一类重要的完备向量场。
+
+\begin{theorem}
+  李群上的左不变向量场是完备的。
+\end{theorem}
 
 
 
@@ -4413,13 +4467,168 @@ $(M,g)$ 被称为\emph{平坦黎曼流形}，$g$ 被称为\emph{平坦度量}。
 是子集 $NS\subseteq TM$，由 $S$ 在每个点处的法空间的无交并构成。
 
 
+\chapter{指数映射}
 
+\section{单参数子群和指数映射}
 
+假设 $G$ 的李群，因为左不变向量场依赖于群结构自然地定义，
+所以我们希望寻找左不变向量场的流和群乘法之间的关系。
 
+\subsection{单参数子群}
 
+$G$ 的一个\emph{单参数子群}指的是一个李群同态 $\gamma:\mathbb{R}\to G$，
+这里 $\mathbb{R}$ 指的是加法李群。注意，单参数子群指的不是一个子群，
+而是一个李群同态，但是，其像集 $\gamma(\mathbb{R})$ 是 $G$ 的一个
+李子群。
 
+\begin{theorem}[单参数子群的特征]
+  令 $G$ 是李群，$G$ 的单参数子群恰好为左不变向量场的以单位元为起点的极大
+  积分曲线。
+\end{theorem}
+\begin{proof}
+  假设 $\gamma$ 是某个左不变向量场 $X\in\Lie(G)$ 的以单位元为起点的
+  极大积分曲线。因为左不变向量场都是完备的，所以 $\gamma$ 
+  定义在 $\mathbb{R}$ 上。左不变意味着任取 $g\in G$，$X$ 与自身 $L_g$-相关，
+  根据积分曲线的自然性，所以 $L_g$ 将 $X$ 的积分曲线送到 $X$ 的积分曲线。
+  对于任意的 $s\in \mathbb{R}$，那么 $L_{\gamma(s)}\circ\gamma$
+  是 $X$ 的以 $\gamma(s)$ 为起点的积分曲线，根据平移引理，
+  $t\mapsto \gamma(s+t)$ 也是以 $\gamma(s)$ 为起点的积分曲线，
+  根据极大积分曲线的唯一性，就有
+  \[
+    \gamma(s+t)=\gamma(s)\gamma(t),  
+  \]
+  这表明 $\gamma:\mathbb{R}\to G$ 是单参数子群。
 
+  反之，假设 $\gamma:\mathbb{R}\to G$ 是单参数子群，令 $X=\gamma_*(d/dt)\in\Lie(G)$，
+  这里 $d/dt$ 表示 $\mathbb{R}$ 上的左不变向量场。由于 $\gamma(0)=e$，
+  所以我们只需要验证 $\gamma$ 是 $X$ 的积分曲线。任取 $s\in \mathbb{R}$，有
+  \[
+    X_{\gamma(s)}=d \gamma_{s}\left(\frac{d}{dt}\bigg|_s\right)
+    =\gamma'(s),
+  \]
+  这就表明 $\gamma$ 是 $X$ 的积分曲线。
+\end{proof}
 
+给定 $X\in\Lie(G)$，通过上述方式由 $X$ 确定的单参数子群被称为
+\emph{$X$ 生成的单参数子群}。因为左不变向量场由其在单位元处的值
+唯一确定，所以单参数子群也由其在 $T_eG$ 中的初速度决定，也就是说
+我们有一一对应
+\[
+  \{\text{one-parameter subgroups of $G$}\}\longleftrightarrow
+  \Lie(G)  \longleftrightarrow T_eG.
+\]
+
+\begin{proposition}
+  对于任意 $A\in\lie{gl}(n,\mathbb{R})$，令
+  \[
+    e^A=\sum_{k=0}^\infty\frac{1}{k! }A^k  
+  \]
+  是矩阵指数，那么由 $A\in\lie{gl}(n,\mathbb{R})$ 生成的
+  $\GL(n,\mathbb{R})$ 的单参数子群为 $\gamma(t)=e^{tA}$。
+\end{proposition}
+\begin{proof}
+  给定 $A\in\lie{gl}(n,\mathbb{R})$，对应一个左不变向量场 $A^{\LL}$，
+  因此，由 $A$ 生成的单参数子群是 $A^{\LL}$ 的一条以 $I_n$ 为起点的积分曲线
+  $\gamma$，即
+  \[
+    \gamma(0)=I_n,  \quad
+    \gamma'(t)=A^{\LL}|_{\gamma(t)}=d\bigl(L_{\gamma(t)}\bigr)_{I_n}
+    \left(A\right)=\gamma(t)A,
+  \]
+  根据唯一性，我们只需要验证 $\gamma(t)=e^{tA}$ 满足上面的条件即可。
+  因为 $e^{tA}$ 在任意有界集上都是一致收敛的，所以可以逐项求导，
+  即
+  \[
+    \gamma'(t)=\sum_{k=1}^\infty\frac{k}{k!}t^{k-1}A^k
+    =\gamma(t)A,  
+  \]
+  故 $\gamma(t)=e^{tA}$ 就是这样的积分曲线，即为 $A$ 生成的单参数子群。
+\end{proof}
+
+\begin{proposition}
+  设 $G$ 是李群，$H\subseteq G$ 是李子群。$H$ 的单参数子群恰好为
+  $G$ 的初速度在 $T_eH$ 中的单参数子群。
+\end{proposition}
+\begin{proof}
+  令 $\gamma:\mathbb{R}\to H$ 是单参数子群，那么复合映射
+  $\mathbb{R}\to H\hookrightarrow G$ 是 $G$ 的单参数子群，
+  满足 $\gamma'(0)\in T_eH$。
+
+  反之，设 $\gamma:\mathbb{R}\to G$ 是单参数子群且 $\gamma'(0)\in T_eH$。
+  令 $\tilde{\gamma}:\mathbb{R}\to H$ 是 $\gamma'(0)\in T_eH$ 生成的单参数子群，
+  通过复合包含映射，$\tilde{\gamma}$ 可以视为 $G$ 的单参数子群，
+  因为 $\gamma$ 和 $\tilde{\gamma}$ 都是 $G$ 的单参数子群且
+  有相同的初速度 $\gamma'(0)$，所以它们必须相等。
+\end{proof}
+
+\begin{example}
+  令 $H$ 是 $\GL(n,\mathbb{R})$ 的李子群，前面的命题表明
+  $H$ 的单参数子群恰好形如 $\gamma(t)=e^{tA}$，其中 $A\in\lie h$，
+  $\lie h\subseteq \lie{gl}(n,\mathbb{R})$ 是对应于 $\Lie(H)$
+  的李子代数。例如，取 $H=\Orth(n)$，这表明 $\Orth(n)$
+  的单参数子群形如 $\gamma(t)=e^{tA}$，其中 $A$ 是任意反对称矩阵。
+  特别地，这表明任意反对称矩阵的指数是正交矩阵。
+\end{example}
+
+\subsection{指数映射}
+
+前一节我们看到 $\lie{gl}(n,\mathbb{R})$ 到 $\GL(n,\mathbb{R})$
+的矩阵指数发挥了重要作用，其将每条过原点的直线 $tA$ 对应到单参数子群
+$t\mapsto e^{tA}$。这可以推广到任意李群上。
+
+给定一个李群 $G$，李代数 $\lie g$。定义映射 $\exp:\lie g\to G$ 为：
+任取 $X\in \lie g$，令
+\[
+  \exp X=\gamma(1),  
+\]
+其中 $\gamma$ 表示 $X$ 生成的单参数子群，等价地说，即以 $e$ 为起点的
+$X$ 的一条积分曲线。映射 $\exp$ 被称为 $G$ 的\emph{指数映射}。
+
+\begin{proposition}
+  $G$ 是李群，对于任意 $X\in\Lie(G)$，$\gamma(s)=\exp sX$ 是
+  $G$ 的由 $X$ 生成的单参数子群。
+\end{proposition}
+\begin{proof}
+  令 $\gamma:\mathbb{R}\to G$ 是 $X$ 生成的单参数子群，那么对于任意
+  $s\in \mathbb{R}$，根据缩放引理，$\tilde{\gamma}(t)=\gamma(st)$
+  是 $sX$ 的一条以 $e$ 为起点的积分曲线，所以
+  \[
+    \exp sX=\tilde{\gamma}(1)=\gamma(s).\qedhere  
+  \]
+\end{proof}
+
+\begin{example}
+  这表明 $\GL(n,\mathbb{R})$ 的指数映射为 $\exp A=e^A$，这也是
+  指数映射名称的由来。
+\end{example}
+
+\begin{proposition}[指数映射的性质]
+  令 $G$ 是李群，$\lie g$ 是李代数。
+  \begin{enumerate}
+    \item 指数映射是 $\lie g\to G$ 的光滑映射。
+    \item 对于任意 $X\in\lie g$ 和 $s,t\in \mathbb{R}$，有
+    $\exp(s+t)X=\exp sX \exp tX$。
+    \item 对于任意 $X\in\lie g$，$(\exp X)^{-1}=\exp(-X)$。
+    \item 对于任意 $X\in\lie g$ 和 $n\in \mathbb{Z}$，
+    有 $(\exp X)^n=\exp(nX)$。
+    \item 微分 $(d\exp)_0:T_0\lie g\to T_eG$ 是恒等映射。
+    \item 指数映射限制在 $0\in \lie g$ 的某个邻域到
+    $e\in G$ 的某个邻域的时候是微分同胚。
+    \item 如果 $H$ 是另一个李群，$\lie h$ 是对应的李代数，
+    $\varPhi:G\to H$ 是李群同态，那么有交换图：
+    \begin{equation}
+      \begin{tikzcd}
+        \lie g\arrow[d,"\exp"']\arrow[r,"\varPhi_*"] &\lie h
+        \arrow[d,"\exp"] \\
+        G\arrow[r,"\varPhi"] & H 
+      \end{tikzcd}
+    \end{equation}
+    \item 左不变向量场 $X$ 的生成流 $\theta$ 满足 
+    $\theta_t=R_{\exp tX}$。
+  \end{enumerate}  
+\end{proposition}
+
+ 
 
 
 \end{document}

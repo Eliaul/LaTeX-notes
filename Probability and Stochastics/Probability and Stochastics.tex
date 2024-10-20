@@ -2216,6 +2216,111 @@ $f:E\to \mathbb{R}$ 构成的空间。$\mathcal{L}_+^1(E,\mathcal{A},\mu)$ 来�
 
 \section{含参积分}
 
+我们考虑带有一个参数的函数的积分。
+设 $(U,d)$ 是一个度量空间，参数位于这个空间中。
+
+\begin{theorem}[含参积分的连续性]
+  令 $f:U\times E\to \mathbb{R}$ (or $\mathbb{C}$)，$u_0\in U$。假设：
+  \begin{enumerate}
+    \item 对于每个 $u\in U$，函数 $x\mapsto f(u,x)$ 可测；
+    \item $\alev{\mu(\d x)}$，函数 $u\mapsto f(u,x)$ 在 $u_0$ 处连续；
+    \item 存在函数 $g\in \mathcal{L}_+^1(E,\mathcal{A},\mu)$
+    使得任取 $u\in U$ 有
+    \[
+      |f(u,x)|\leq g(x)\quad \alev{\mu(\d x)}  
+    \]
+  \end{enumerate}
+  那么函数 $F(u)=\int f(u,x)\mu(\d x)$ 是良好定义的且在 $u_0$
+  处连续。
+\end{theorem}
+\begin{proof}
+  条件 (1) 保证了 $x\mapsto f(u,x)$ 是可测的，所以 $F(u)$ 是良好定义的。
+  设 $(u_n)_{n\in \mathbb{N}}$ 是任意趋于 $u_0$ 的点列，那么 
+  对于几乎处处的 $x$，$u\mapsto f(u,x)$ 连续表明 $f(u_n,x)\to f(u,x)$，
+  再根据条件 (3) 和控制收敛定理，就有
+  \[
+    F(u_0)=\int \lim_{n\to\infty} f(u_n,x)\mu(\d x)
+    =  \lim_{n\to\infty}\int f(u_n,x)\mu(\d x)=\lim_{n\to\infty}F(u_n),
+  \]
+  这就表明 $F(u)$ 在 $u_0$ 处连续。
+\end{proof}
+
+\begin{example}
+  \mbox{}
+  \begin{enumerate}
+    \item \emph{Fourier 变换}。令 $\lambda$ 表示 $\mathbb{R}$ 上的 Lebesgue 测度。
+    如果 $\varphi\in \mathcal{L}^1(\mathbb{R},\mathcal{B}(\mathbb{R}),\lambda)$，
+    定义函数 $\hat\varphi:\mathbb{R}\to \mathbb{C}$ 为：
+    \[
+      \hat\varphi(u)=\int e^{iux}\varphi(x)\lambda(\d x),  
+    \]
+    根据上面的定理，$\hat\varphi$ 是连续函数。函数 $\hat\varphi$ 被称为 $\varphi$
+    的 \emph{Fourier 变换}。在概率论中，我们经常会考虑有限测度的 Fourier 变换。
+    如果 $\mu$ 是 $\mathbb{R}$ 上的有限测度，定义 $\mu$ 的 Fourier 变换为
+    \[
+      \hat{\mu}(u)=\int e^{iux}\mu(\d x)\quad u\in \mathbb{R}.  
+    \]
+    此时 $|e^{iux}|\leq \indicator{\mathbb{R}}$ 是可积函数，所以
+    $\hat\mu$ 是连续函数。
+    \item \emph{卷积}。令 $\varphi\in \mathcal{L}^1(\mathbb{R},\mathcal{B}(\mathbb{R}),\lambda)$，
+    $h: \mathbb{R}\to \mathbb{R}$ 是有界连续函数，那么定义函数 $h*\varphi$ 为
+    \[
+      h*\varphi(u)=\int h(u-x)\varphi(x)\lambda(\d x),  
+    \]
+    这是一个连续函数。
+  \end{enumerate}
+\end{example}
+
+下面我们叙述含参积分的可微性。令 $I\subseteq \mathbb{R}$ 是开区间。
+
+\begin{theorem}
+  考虑函数 $f:I\times E\to \mathbb{R}$，$u_0\in I$，假设
+  \begin{enumerate}
+    \item 对于每个 $u\in I$，函数 $x\mapsto f(u,x)$ 是可积函数；
+    \item $\alev{\mu(\d x)}$，函数 $u\mapsto f(u,x)$ 在 $u_0$ 处可导，
+    导数记为
+    \[
+      \frac{\partial f}{\partial u}(u_0,x);  
+    \]
+    \item 存在函数 $g\in \mathcal{L}_+^1(E,\mathcal{A},\mu)$ 使得
+    对于任意 $u\in I$ 有
+    \[
+      |f(u,x)-f(u_0,x)|\leq g(x)|u-u_0|,\quad \alev{\mu(\d x)}  
+    \]
+  \end{enumerate}
+  那么函数 $F(u)=\int f(u,x)\mu(\d x)$ 在 $u_0$ 处可导，并且
+  \[
+    F'(u_0)=\int \frac{\partial f}{\partial u}(u_0,x)\mu(\d x).
+  \]
+\end{theorem}
+\begin{proof}
+  
+\end{proof}
+
+
+\begin{exercise}
+  计算
+  \[
+    \lim_{n\to\infty}\int_0^n\left(1+\frac{x}{n}\right)^ne^{-2x}\d x.  
+  \]
+  令 $\alpha\in \mathbb{R}$，证明极限
+  \[
+    \lim_{n\to\infty}\int_0^n\left(1-\frac{x}{n}\right)^n x^{\alpha-1}\d x  
+  \]
+  在 $[0,\infty]$ 上存在，且极限值有限当且仅当 $\alpha>0$。
+\end{exercise}
+\begin{proof}
+  由于
+  \[
+    \int_0^n\left(1+\frac{x}{n}\right)^ne^{-2x}\d x=\int_0^1
+    n(1+x)^ne^{-2nx}\d x,
+  \]
+  对于任意 $x\in (0,1)$，有
+  \[
+    \lim_{n\to\infty}n(1+x)^n e^{-2nx}=\lim_{n\to\infty}n\bigl((1+x)e^{-2x}\bigr) ^n
+    =0,
+  \]
+\end{proof}
 
 
 
@@ -2447,7 +2552,20 @@ $L^p(E,\mathcal{A},\mu)$。注意到 $L^1$ 就是所有可积函数
 
 
 
- 
+\chapter{积测度}
+
+\section{积 $\sigma$-域}
+
+令 $(E,\mathcal{A})$ 和 $(F,\mathcal{B})$ 是两个可测空间。
+回顾第一章，我们定义 $E\times F$ 上的乘积 $\sigma$-域
+\[
+  \mathcal{A}\otimes \mathcal{B}=\sigma(A\times B\,|\, A\in \mathcal{A},B\in \mathcal{B}).  
+\]
+不难验证 $\mathcal{A}\otimes \mathcal{B}$ 是使得两个投影映射
+$\pi_1:E\times F\to E$ 和 $\pi_2:E\times F\to F$ 都可测的最小的
+$\sigma$-域。
+
+
 
 \part{概率论}
 
@@ -2946,6 +3064,14 @@ $\langle X,Y\rangle_{L^2}=\mathbb{E}[XY]$，Cauchy-Schwarz 不等式表明
   \]
 \end{definition}
 
+\begin{proposition}
+  令 $X\in L^2(\Omega, \mathcal{A},\mathbb{P})$，方差
+  $\var(X)=\mathbb{E}[X^2]-\bigl(\mathbb{E}[X]\bigr)^2$。
+  对于任意的 $a\in \mathbb{R}$，有
+  \[
+    \mathbb{E}[(X-a)^2]=\var(X)+\bigl(\mathbb{E}[X]-a\bigr)  ^2.
+  \]
+\end{proposition}
 
 
 

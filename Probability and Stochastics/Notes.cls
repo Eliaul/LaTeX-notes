@@ -183,32 +183,32 @@
   name=例,
   style=examplestyle
 ]{example}
-% \declaretheoremstyle[
-%   bodyfont={\upshape},
-%   headformat=\NUMBER \NOTE,
-%   notefont={\sffamily\mdseries},
-%   headfont={\mdseries\sffamily}
-% ]{problemstyle}
-% \declaretheorem[
-%   numberwithin=section,
-%   name={},
-%   style=problemstyle,
-%   refname={练习}
-% ]{exercise}
+\declaretheoremstyle[
+  bodyfont={\upshape},
+  headformat=\NAME~\NUMBER \NOTE,
+  notefont={\sffamily\mdseries},
+  headfont={\mdseries\sffamily}
+]{problemstyle}
+\declaretheorem[
+  numberwithin=chapter,
+  name={Exercise},
+  style=problemstyle,
+  refname={练习}
+]{exercise}
 
-\newtcbtheorem[
-  auto counter,number within=section,
-  number freestyle={%
-  \noexpand\arabic{section}-\noexpand\arabic{\tcbcounter}
-}]{exercise}{}{%
-  theorem style=plain,
-  coltitle=black,
-  fonttitle=\sffamily,
-  terminator sign={},
-  fontupper=\sffamily,
-  %description delimiters={}{},
-  title=\thetcbcounter
-}{exercise} 
+% \newtcbtheorem[
+%   auto counter,number within=section,
+%   number freestyle={%
+%   \noexpand\arabic{section}-\noexpand\arabic{\tcbcounter}
+% }]{exercise}{}{%
+%   theorem style=plain,
+%   coltitle=black,
+%   fonttitle=\sffamily,
+%   terminator sign={},
+%   fontupper=\sffamily,
+%   %description delimiters={}{},
+%   title=\thetcbcounter
+% }{exercise} 
 
 % \tcbset{
 %   common/.style={
