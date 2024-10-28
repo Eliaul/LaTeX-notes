@@ -2565,6 +2565,220 @@ $L^p(E,\mathcal{A},\mu)$。注意到 $L^1$ 就是所有可积函数
 $\pi_1:E\times F\to E$ 和 $\pi_2:E\times F\to F$ 都可测的最小的
 $\sigma$-域。
 
+如果 $C\subseteq E\times F$，$x\in E$，记
+\[
+  C_x=\{y\in F\,|\, (x,y)\in C\}\subseteq F,  
+\]
+如果 $y\in F$，记
+\[
+  C^y=\{x\in E\,|\, (x,y)\in C\}  \subseteq E.
+\]
+如果 $f$ 是 $E\times F$ 上的函数，$x\in E$，我们记 $f_x$ 表示
+$F$ 上的函数 $f_x(y)=f(x,y)$。类似地，如果 $y\in F$，我们记
+$f^y(x)=f(x,y)$ 表示 $E$ 上的函数。
+
+\begin{proposition}
+  \mbox{}
+  \begin{enumerate}
+    \item 令 $C\in \mathcal{A}\otimes \mathcal{B}$，那么
+    对于任意 $x\in E$，$C_x\in \mathcal{B}$，
+    对于任意 $y\in F$，$C^y\in \mathcal{A}$。
+    \item 令 $(G,\mathcal{G})$ 是可测空间，$f:E\times F\to G$
+    是可测函数，那么对于任意 $x\in E$，$f_x:F\to G$ 是可测的，
+    对于任意 $y\in F$，$f^y:E\to G$ 是可测的。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 对于 $x\in E$，令
+  \[
+    \mathcal{C}  =\{C\in \mathcal{A}\otimes \mathcal{B}\,|\, C_x\in \mathcal{B}\},
+  \]
+  那么不难验证 $\mathcal{C}$ 是一个 $\sigma$-域且包含所有的可测矩形，
+  于是 $\mathcal{C}=\mathcal{A}\otimes \mathcal{B}$，
+  即表明对于任意 $C\in \mathcal{A}\otimes \mathcal{B}$ 都有 $C_x\in \mathcal{B}$。
+  $C^y\in \mathcal{A}$ 同理。
+
+  (2) 对于 $x\in E$，任取 $D\in \mathcal{G}$，有
+  \[
+    f_x^{-1}(D)=\bigl(f^{-1}(D)\bigr)_x \in \mathcal{B}.\qedhere
+  \]
+\end{proof}
+
+
+\section{积测度}
+
+\begin{theorem}\label{thm:product measure}
+  令 $\mu$ 和 $\nu$ 分别是 $(E,\mathcal{A})$ 和 $(F,\mathcal{B})$
+  上的 $\sigma$-有限测度，那么
+  \begin{enumerate}
+    \item 存在唯一的 $(E\times F,\mathcal{A}\otimes \mathcal{B})$
+    上的测度 $m$，使得对于每个 $A\in \mathcal{A},B\in \mathcal{B}$，都有
+    \[
+      m(A\times B)=\mu(A)\nu(B),  
+    \]
+    约定 $0\times \infty=0$。测度 $m$ 也是 $\sigma$-有限的，
+    记为 $m=\mu\otimes\nu$。
+    \item 对于每个 $C\in \mathcal{A}\otimes \mathcal{B}$，函数
+    $x\mapsto \nu(C_x)$ 是 $\mathcal{A}$-可测的，
+    $y\mapsto \mu(C^y)$ 是 $\mathcal{B}$-可测的，并且我们有
+    \[
+      \mu\otimes \nu(C)=\int_E \nu(C_x)\mu(\d x)=\int_F\mu(C^y)\nu(\d y).  
+    \]
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  我们首先说明这样的测度 $m$ 一定是唯一的。我们使用 \autoref{coro:uniqueness of measure}
+  说明唯一性。若测度 $m'$ 也满足性质 (1)。首先所有可测矩形对有限交封闭且生成 $\mathcal{A}\otimes \mathcal{B}$，
+  并且 $m$ 和 $m'$ 在可测矩形上取值相同。$\mu$ 是 $\sigma$-有限的表明存在
+  递增的可测子集 $(A_n)_{n\in \mathbb{N}}$ 使得 $\bigcup_{n\in \mathbb{N}}A_n=E$
+  并且 $\mu(A_n)$ 有限。同理存在递增的可测子集 $(B_n)_{n\in \mathbb{N}}$ 
+  使得 $\bigcup_{n\in \mathbb{N}}B_n=F$ 并且 $\nu(B_n)$ 有限。
+  令 $G_n=A_n\times B_n$，那么 $G_n\subseteq G_{n+1}$ 并且
+  $E\times F=\bigcup_{n\in \mathbb{N}}G_n$，此时
+  \[
+    m'(G_n)=\mu(A_n)\nu(B_n)=m(G_n)<\infty,  
+  \] 
+  所以 \autoref{coro:uniqueness of measure} 表明 $m=m'$。
+
+  然后我们说明存在性。对于 $C\in \mathcal{A}\otimes \mathcal{B}$，定义
+  \begin{equation}\label{eq:def of product measure}
+    m(C) =\int_E\nu(C_x)\mu(\d x).
+  \end{equation}
+  对于任意 $x\in E$，有 $C_x\in \mathcal{B}$，所以 $\nu(C_x)$
+  是良好定义的。下面我们证明 $x\mapsto \nu(C_x)$ 是可测函数。
+  \begin{enumerate}[label=(\arabic*)]
+    \item 首先假设 $\nu$ 是有限测度。
+    令 $\mathcal{G}=\{C\in \mathcal{A}\otimes \mathcal{B}\,|\, \text{$x\mapsto \nu(C_x)$ 可测}\}$。
+    那么对于可测矩形 $A\times B\in \mathcal{A}\otimes \mathcal{B}$，有
+    $\nu((A\times B)_x)=\indicator{A}(x)\nu(B)$，此时 $x\mapsto \indicator{A}(x)\nu(B)$
+    当然是可测函数。故 $\mathcal{G}$ 包含所有的可测矩形。
+    其次，我们证明 $\mathcal{G}$ 是一个单调类。如果 $C,C'\in \mathcal{G}$
+    且 $C\subseteq  C'$，那么利用 $\nu$ 的有限性，就有
+    \[
+      \nu\bigl((C'\smallsetminus C)_x\bigr)  
+      =\nu(C'_x \smallsetminus C_x)=\nu(C_x')-\nu(C_x),
+    \]
+    所以 $x\mapsto \nu\bigl((C'\smallsetminus C)_x\bigr)$ 是可测函数，
+    即 $C' \smallsetminus C\in \mathcal{G}$。如果 $(C_n)_{n\in \mathbb{N}}$
+    是 $\mathcal{G}$ 中的一个递增序列，那么
+    \[
+      \nu\biggl(\biggl(\bigcup_{n\in \mathbb{N}}C_n\biggr)_x\biggr)  
+      =\nu\biggl(\bigcup_{n\in \mathbb{N}}(C_n)_x\biggr)
+      =\ulim[n\to\infty]\nu((C_n)_x),
+    \] 
+    而 $x\mapsto \ulim \nu((C_n)_x)$ 是可测函数，所以 $\bigcup_{n\in \mathbb{N}}C_n\in \mathcal{G}$。
+    这就表明 $\mathcal{G}$ 是单调类。由于 $\mathcal{G}$ 包含可测矩形，可测矩形对有限交封闭，
+    根据单调类定理，所以 $\mathcal{G}$ 是 $\sigma$-域，所以 $\mathcal{G}=\mathcal{A}\otimes \mathcal{B}$，
+    这表明对于任意 $C\in \mathcal{A}\otimes \mathcal{B}$，$x\mapsto \nu(C_x)$ 都是可测函数。
+    \item 然后假设 $\nu$ 是 $\sigma$-有限测度。此时存在 $\mathcal{B}$ 的一列递增
+    子集 $(B_n)_{n\in \mathbb{N}}$ 使得 $F=\bigcup_{n\in \mathbb{N}}B_n$
+    以及 $\nu(B_n)<\infty$。令 $\nu_n$ 表示测度 $\nu$ 在 $B_n$ 上的限制，那么
+    根据上面的叙述，任取 $C\in \mathcal{A}\otimes \mathcal{B}$，函数 $x\mapsto \nu_n(C_x)$ 是可测函数。
+    注意到
+    \[
+      \nu(C_x)=\nu\biggl(\bigcup_{n\in \mathbb{N}}(C_x\cap B_n)\biggr)  
+      =\ulim[n\to\infty] \nu_n(C_x),
+    \]
+    所以 $x\mapsto \ulim \nu(C_x)$ 是可测函数。
+  \end{enumerate}
+
+  于是我们证明了 $x\mapsto \nu(C_x)$ 是可测函数，这表明定义 \eqref{eq:def of product measure}
+  式是有意义的。下面我们验证 $m$ 满足测度的条件。显然 $m(\emptyset)=0$。
+  任取 $(C_n)_{n\in \mathbb{N}}$ 是 $\mathcal{A}\otimes \mathcal{B}$
+  中的一列不相交的子集，那么
+  \begin{align*}
+    m\biggl(\bigcup_{n\in \mathbb{N}}C_n\biggr)&=\int_E
+    \nu\biggl(\bigcup_{n\in \mathbb{N}}(C_n)_x\biggr)\mu(\d x)
+    =\int_E\sum_{n\in \mathbb{N}}\nu((C_n)_x)\mu(\d x)\\
+    &=\sum_{n\in \mathbb{N}}\int_E\nu((C_n)_x)\mu(\d x)
+    =\sum_{n\in \mathbb{N}}m(C_n),
+  \end{align*}
+  其中第三个等号利用了单调收敛定理。这就表明 $m$ 确实是一个测度。
+
+  对于可测矩形 $A\times B\in \mathcal{A}\otimes \mathcal{B}$，有
+  \[
+    m(A\times B)=\int_E\nu((A\times B)_x)\mu(\d x)
+    =\int_E\nu(B)\indicator{A}(x)\mu(\d x)  
+    =\mu(A)\nu(B),
+  \]
+  所以这样的 $m$ 是唯一的。对于 $C\in \mathcal{A}\otimes \mathcal{B}$，定义
+  \begin{equation*}
+    m'(C) =\int_F\mu(C^y)\nu(\d y),
+  \end{equation*}
+  重复上面的过程，可以证明 $m'$ 满足和 $m$ 相同的性质，所以 $m=m'$。
+\end{proof}
+
+\section{Fubini 定理}
+
+考虑可测空间 $(E,\mathcal{A})$ 和 $(F,\mathcal{B})$。
+
+\begin{theorem}[Fubini-Tonelli]\label{thm:Fubini-Tonelli}
+  令 $\mu$ 和 $\nu$ 分别是 $(E,\mathcal{A})$ 和 $(F,\mathcal{B})$ 上的两个
+  $\sigma$-有限的测度。令 $f:E\times F\to [0,\infty]$ 是可测函数。
+  \begin{enumerate}
+    \item 函数
+    \[
+      E\ni x\mapsto \int_F f(x,y)\nu(\d y),\quad 
+      F\ni y\mapsto \int_E f(x,y)\mu(\d x)  
+    \]
+    是值在 $[0,\infty]$ 中的可测函数。
+    \item 我们有
+    \[
+      \int_{E\times F}f\d\mu\otimes\nu 
+      =\int_E\left(\int_F f(x,y)\nu(\d y)\right)\mu(\d x)=\int_F
+      \left(\int_E f(x,y)\mu(\d x)\right)\nu(\d y).
+    \]
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  (1) 设 $f=\ulim f_n$，$(f_n)_{n\in \mathbb{N}}$ 是一列递增的非负简单函数，
+  那么根据单调收敛定理，有
+  \[
+    \int_F f(x,y)\nu(\d y)=\ulim[n\to\infty]\int_Ff_n(x,y)\nu(\d y)  ,
+  \]
+  所以我们只需要说明对于任意非负简单函数 $h$，$x\mapsto \int_F h(x,y)\nu(\d y)$
+  可测即可。对于示性函数 $\indicator{C}$，有
+  $\int_F \indicator{C}(x,y) \nu(\d y)=\nu(C_x)$，\autoref{thm:product measure}
+  表明 $x\mapsto \nu(C_x)$ 是可测的，再根据线性性，这就说明了
+  $x\mapsto \int_F h(x,y)\nu(\d y)$ 可测。
+  对于 $x\mapsto\int_E f(x,y)\mu(\d x)$ 同理。
+
+  (2) 设 $f=\ulim f_n$，$(f_n)_{n\in \mathbb{N}}$ 是一列递增的非负简单函数，
+  那么根据单调收敛定理，有
+  \[
+    \int_{E\times F} f\d\mu\otimes \nu
+    =\ulim[n\to\infty]\int_{E\times F}f_n(x,y)\nu(\d y),  
+  \]
+  所以只需要证明结论对于非负简单函数成立即可。根据线性性，只需要证明结论对
+  示性函数成立即可。任取示性函数 $\indicator{C}$，根据 \autoref{thm:product measure}，有
+  \[
+    \int_{E\times F} \indicator{C}\d\mu\otimes\nu=
+    \mu\otimes \nu(C)=\int_E\nu(C_x)\mu(\d x)  
+    =\int_E\left(\int_F \indicator{C}(x,y)\nu(\d y)\right)\mu(\d x),
+  \]
+  另一个等式同理。
+\end{proof}
+
+\autoref{thm:Fubini-Tonelli} 也可以推广到任意符号的版本。
+
+\begin{theorem}[Fubini-Lebesgue]
+  令 $f\in \mathcal{L}^1(E\times F,\mathcal{A}\otimes \mathcal{B},\mu\otimes\nu)$，那么
+  \begin{enumerate}
+    \item $\alev{\mu(\d x)}$，函数 $y\mapsto f(x,y)$ 属于 $\mathcal{L}^1(F,\mathcal{B},\nu)$。
+    $\alev{\nu(\d y)}$，函数 $x\mapsto f(x,y)$ 属于 $\mathcal{L}^1(E,\mathcal{A},\mu)$。
+    \item 函数 $x\mapsto \int_F f(x,y)\nu(\d y)$ 属于 $\mathcal{L}^1(E,\mathcal{A},\mu)$。
+    函数 $y\mapsto \int_E f(x,y)\mu(\d x)$ 属于 $\mathcal{L}^1(F,\mathcal{B},\nu)$。
+    \item 我们有
+    \[
+      \int_{E\times F}f\d\mu\otimes\nu 
+      =\int_E\left(\int_F f(x,y)\nu(\d y)\right)\mu(\d x)=\int_F
+      \left(\int_E f(x,y)\mu(\d x)\right)\nu(\d y).
+    \]
+  \end{enumerate}
+\end{theorem}
+
+
+
 
 
 \part{概率论}
@@ -3072,6 +3286,30 @@ $\langle X,Y\rangle_{L^2}=\mathbb{E}[XY]$，Cauchy-Schwarz 不等式表明
     \mathbb{E}[(X-a)^2]=\var(X)+\bigl(\mathbb{E}[X]-a\bigr)  ^2.
   \]
 \end{proposition}
+
+
+
+\chapter{独立性}
+
+\section{独立事件}
+
+在本章中，我们考虑概率空间 $(\Omega,\mathcal{A},\mathbb{P})$。如果 
+$A,B\in \mathcal{A}$ 且
+\[
+  \mathbb{P}(A\cap B)=\mathbb{P}(A)\mathbb{P}(B),  
+\]
+那么我们说 $A$ 和 $B$ 是\emph{独立的}。
+
+\section{$\sigma$-域和随机变量的独立性}
+
+如果 $\mathcal{B}\subseteq \mathcal{A}$ 是一个 $\sigma$-域，那么我们说
+$\mathcal{B}$ 是 $\mathcal{A}$ 的\emph{子 $\mathbold{\sigma}$-域}。我们可以认为
+子 $\sigma$-域 $\mathcal{B}$ 反映了概率空间的部分信息，即 $\mathcal{B}$ 中
+发生的事件。例如，如果 $\mathcal{B}=\sigma(X)$，$X$ 是随机变量，那么
+$\mathcal{B}$ 反映了 $X$ 的值的信息。这暗示了子 $\sigma$-域的独立性的概念：
+我们希望两个子 $\sigma$-域 $\mathcal{B}$ 和 $\mathcal{B}'$ 是独立的当且仅当
+它们中的任意两个事件都是独立的。
+
 
 
 
