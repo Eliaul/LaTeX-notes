@@ -3310,8 +3310,84 @@ $\mathcal{B}$ 反映了 $X$ 的值的信息。这暗示了子 $\sigma$-域的独
 我们希望两个子 $\sigma$-域 $\mathcal{B}$ 和 $\mathcal{B}'$ 是独立的当且仅当
 它们中的任意两个事件都是独立的。
 
+\begin{definition}
+  令 $\mathcal{B}_1,\dots,\mathcal{B}_n$ 是 $\mathcal{A}$ 的 $n$ 个
+  $\sigma$-子域，我们说 $\mathcal{B}_1,\dots,\mathcal{B}_n$ 是独立的，如果
+  对于任意 $A_1\in \mathcal{B}_1,\dots,A_n\in \mathcal{B}_n$，都有
+  \[
+    \mathbb{P}(A_1\cap\cdots\cap A_n)=\mathbb{P}(A_1)\cdots \mathbb{P}(A_n).  
+  \]
+\end{definition}
 
+令 $X_1,\dots,X_n$ 分别是值在 $(E_1,\mathcal{E}_1),\dots,(E_n,\mathcal{E}_n)$
+中的随机变量，我们说 $X_1,\dots,X_n$ 是独立的当且仅当
+$\sigma(X_1),\dots,\sigma(X_n)$ 是独立的。这等价于
+任取 $F_1\in \mathcal{E}_1,\dots,F_n\in \mathcal{E}_n$ 有
+\[
+  \mathbb{P}(\{X_1\in F_1\}\cap\cdots\cap\{X_n\in F_n\})  
+  =\mathbb{P}(X_1\in F_1)\cdots \mathbb{P}(X_n\in F_n).
+\]
 
+\begin{theorem}
+  令 $X_1,\dots,X_n$ 分别是值在 $(E_1,\mathcal{E}_1),\dots,(E_n,\mathcal{E}_n)$
+  中的随机变量。那么 $X_1,\dots,X_n$ 是独立的当且仅当 $(X_1,\dots,X_n)$
+  的分布是 $X_1,\dots,X_n$ 的分布的乘积测度，即
+  \[
+    \mathbb{P}_{(X_1,\dots,X_n)}=\mathbb{P}_{X_1}\otimes\cdots
+    \otimes \mathbb{P}_{X_n}.  
+  \]
+  此外，我们有
+  \[
+    \mathbb{E}\biggl[\prod_{i=1}^n f_i(X_i)\biggr] =\prod_{i=1}^n \mathbb{E}[f_i(X_i)],
+  \]
+  其中 $f_i$ 是 $(E_i,\mathcal{E}_i)$ 上的非负可测函数。
+\end{theorem}
+\begin{proof}
+  令 $F_i\in \mathcal{E}_i$，$X_1,\dots,X_n$ 独立当且仅当
+  \[
+    \mathbb{P}(\{X_1\in F_1\}\cap\cdots\cap\{X_n\in F_n\})  
+    =\mathbb{P}(X_1\in F_1)\cdots \mathbb{P}(X_n\in F_n),
+  \]
+  这表明
+  \[ 
+    \mathbb{P}_{(X_1,\dots,X_n)}(F_1\times\cdots\times F_n)
+    =\mathbb{P}_{X_1}(F_1)\cdots \mathbb{P}_{X_n}(F_n).
+  \]
+  所以 $\mathbb{P}_{(X_1,\dots,X_n)}$ 就是乘积测度 
+  $\mathbb{P}_{X_1}\otimes\cdots\otimes \mathbb{P}_{X_n}$。
+
+  记 $\pi_i:E_1\times \cdots\times E_n\to E_i$ 为投影，根据 Fubini 定理，有
+  \begin{align*}
+    \mathbb{E}\biggl[\prod_{i=1}^n f_i(X_i)\biggr]&=
+    \int_{E_1\times\cdots \times E_n}\prod_{i=1}^n f_i\circ\pi_i
+    \d\mathbb{P}_{(X_1,\dots,X_n)}\\
+    &=\prod_{i=1}^n \int_{E_i} f_i(x_i) \mathbb{P}_{X_i}(\d x_i)\\
+    &=\prod_{i=1}^n \mathbb{E}[f_i(X_i)].\qedhere
+  \end{align*}
+\end{proof}
+\begin{remark}
+  该定理中 $f_i$ 也可以是任意符号，此时如果 $\mathbb{E}[|f_i(X_i)|]<\infty$，
+  也即 $f_i\in \mathcal{L}^1(E_i,\mathcal{E}_i,\mathbb{P}_{X_i})$，那么
+  定理的结论依然成立。
+\end{remark}
+
+\begin{corollary}
+  令 $X_1,\dots,X_n$ 是实值随机变量。
+  \begin{enumerate}
+    \item 假设 $X_i$ 有密度 $p_i$ 并且 $X_1,\dots,X_n$ 是独立的，那么
+    $(X_1,\dots,X_n)$ 有密度
+    \[
+      p(x_1,\dots,x_n)=\prod_{i=1}^n p_i(x_i).  
+    \]
+    \item 反之，假设 $(X_1,\dots,X_n)$ 有密度 $p$，并且
+    $p$ 可以表达为
+    \[
+    p(x_1,\dots,x_n)=\prod_{i=1}^n q_i(x_i),  
+    \]
+    其中 $q_i$ 是 $\mathbb{R}$ 上的非负可测函数。那么 $X_1,\dots,X_n$
+    是独立的并且 $X_i$ 有密度 $p_i=C_iq_i$，其中 $C_i>0$ 为常数。
+  \end{enumerate}
+\end{corollary}
 
 
 
