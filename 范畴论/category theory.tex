@@ -1,0 +1,117 @@
+\documentclass[fontset=none]{Notes}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\usepackage{tikz-cd,wrapstuff}
+\usepackage{fixdif,siunitx,tikz,nicematrix}
+\usetikzlibrary{matrix,calc}
+
+\input{font.def}
+
+\usepackage[subscriptcorrection,nofontinfo,mtpbb,mtpfrak]{mtpro2}
+
+\tikzcdset{
+  arrow style=tikz,
+  diagrams={>={Straight Barb[scale=0.8]}}
+}
+
+\allowdisplaybreaks[1]
+
+\newlength{\mymathln}
+\newcommand{\aligninside}[2]{
+  \settowidth{\mymathln}{#2}
+  \mathmakebox[\mymathln]{#1}
+}
+
+\DeclareMathOperator\Spec{Spec}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\nil{nil}
+\DeclareMathOperator\rad{rad}
+\DeclareMathOperator\Ann{Ann}
+\DeclareMathOperator\Max{Max}
+\DeclareMathOperator\GL{GL}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Int{Int}
+\DeclareMathOperator\Tor{Tor}
+\DeclareMathOperator\Frac{Frac}
+\DeclareMathOperator\Tr{Tr}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\Leb{Leb}
+\DeclareMathOperator\supp{supp}
+\DeclareMathOperator\Id{Id}
+\DeclareMathOperator\rk{rank}
+\DeclareMathOperator\var{var}
+\DeclareMathOperator\card{card}
+\DeclareMathOperator\coker{coker}
+\DeclareMathOperator\ob{ob}
+
+\newcommand{\cat}[1]{\mathsf{#1}}
+
+\usepackage{enumitem}
+
+\setlist[enumerate]{nosep}
+
+%\DeclareMathAlphabet\mathcal{OMS}{cmsy}{m}{n}
+
+\newlength\stextwidth
+\newcommand\makesamewidth[3][c]{%
+  \settowidth{\stextwidth}{#2}%
+  \makebox[\stextwidth][#1]{#3}%
+}
+
+
+
+\begin{document}
+
+\frontmatter
+
+\tableofcontents
+
+\mainmatter
+
+\chapter{范畴、函子和自然变换}
+
+\section{范畴}
+
+\begin{definition}
+  一个\emph{范畴} $\cat{A}$ 由以下内容组成：
+  \begin{itemize}[nosep]
+    \item 一族\emph{对象} $\ob(\cat A)$；
+    \item 对于每个 $A,B\in\ob(\cat A)$，存在一族从 $A$ 到 $B$ 的\emph{态射}
+    $\Hom(A,B)$；
+    \item 对于每个 $A,B,C\in\ob(\cat A)$，有一个\emph{复合映射}：
+    \[
+      \Hom(A,B)\times \Hom(B,C)\to \Hom(A,C),
+      \quad (g,f)\mapsto g\circ f;
+    \]
+    \item 对于每个 $A\in\ob(\cat A)$，存在 $A$ 上的\emph{单位}
+    $1_A\in\Hom(A,A)$，
+  \end{itemize}
+  此外态射需要满足：
+  \begin{itemize}[nosep]
+    \item 对于每个 $f\in\Hom(A,B)$，$g\in\Hom(B,C)$ 与 $h\in\Hom(C,D)$，
+    有 $(h\circ g)\circ f=h\circ(g\circ f)$；
+    \item 对于每个 $f\in \Hom(A,B)$，有 $f\circ 1_A=f=1_B\circ f$。
+  \end{itemize}
+\end{definition}
+
+\begin{remark}
+  我们通常使用 $A\in \cat A$ 表示 $A\in\ob(\cat A)$，
+  $f:A\to B$ 或者
+  $
+    \begin{tikzcd}[cramped,sep=small]
+      A\arrow[r,"f"] & B
+    \end{tikzcd}
+  $
+  表示
+\end{remark}
+
+
+
+
+
+\end{document}

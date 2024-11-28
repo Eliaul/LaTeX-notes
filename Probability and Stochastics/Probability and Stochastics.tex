@@ -3023,7 +3023,7 @@ $E$ 的可测子集 $A$，有
 \]
 所以分布 $\mathbb{P}_X=\nu$。下面的命题应用了这样的思想。
 
-\begin{proposition}
+\begin{proposition}\label{prop:margin pdf}
   令 $X=(X_1,\dots,X_d)$ 是值在 $\mathbb{R}^d$ 中的随机变量，假设
   $X$ 有密度 $p(x_1,\dots,x_d)$。那么，对于任意 $1\leq j\leq d$，
   $X_j$ 的密度为
@@ -3388,7 +3388,60 @@ $\sigma(X_1),\dots,\sigma(X_n)$ 是独立的。这等价于
     是独立的并且 $X_i$ 有密度 $p_i=C_iq_i$，其中 $C_i>0$ 为常数。
   \end{enumerate}
 \end{corollary}
+\begin{proof}
+  (1) $X_i$ 有密度 $p_i$ 表明 $\mathbb{P}_{X_i}(\d x)=p_i(x)\d x$，
+  $X_1,\dots,X_n$ 独立表明
+  \begin{align*}
+    \mathbb{P}_{(X_1,\dots,X_n)}(A)&=
+    \mathbb{P}_{X_1}\otimes\cdots\otimes \mathbb{P}_{X_n}(A)
+    =\int_{\mathbb{R}^n} \indicator{A} \d \mathbb{P}_{X_1}\otimes\cdots\otimes \mathbb{P}_{X_n}
+    \\
+    &=\int_{\mathbb{R}}\cdots \int_{\mathbb{R}}\indicator{A}(x_1,\dots,x_n)
+    \mathbb{P}_{X_1}(\d x_1)\cdots \mathbb{P}_{X_n}(\d x_n) \\
+    &=\int_{\mathbb{R}}\cdots \int_{\mathbb{R}}\indicator{A}(x_1,\dots,x_n)
+    \prod_{i=1}^n p_i(x_i)
+    \d x_1\cdots \d x_n\\
+    &=\int_{\mathbb{R}^n} \indicator{A}\prod_{i=1}^n p_i \d \lambda
+    =\int_A \prod_{i=1}^np_i(x_i) \d x_1\cdots\d x_n,
+  \end{align*}
+  这就表明 
+  \[
+    p(x_1,\dots,x_n)=\prod_{i=1}^n p_i(x_i).  
+  \]
 
+  (2) 根据 \autoref{prop:margin pdf}，有
+  \[
+    p_i(x_i)=\int_{\mathbb{R}^{n-1}}p(x_1,\dots,x_n)\d x_1\cdots \d x_{i-1}
+    \d x_{i+1}\cdots\d x_n
+    =q_i(x_i)\prod_{j\neq i}\int_{\mathbb{R}}q_j(x_j)\d x_j,
+  \]
+  故 $p_i=C_iq_i$。此时
+  \begin{align*}
+    p(x_1,\dots,x_n)=\prod_{i=1}^n q_i(x_i)
+    =\prod_{i=1}^n \frac{1}{C_i}p_i(x_i),
+  \end{align*}
+  两边积分可知 $\prod_{i=1}^n C_i=1$，所以
+  \[
+    p(x_1,\dots,x_n)=\prod_{i=1}^n p_i(x_i),  
+  \]
+  这就表明 $\mathbb{P}_{(X_1,\dots,X_n)}=\mathbb{P}_{X_1}\otimes\cdots \mathbb{P}_{X_n}$，
+  即 $X_1,\dots,X_n$ 独立。
+\end{proof} 
+
+\begin{example}
+  令 $U$ 是服从参数 $1$ 的指数分布的随机变量，$V$ 是服从 $[0,1]$ 上
+  的均匀分布的随机变量，假设 $U,V$ 是独立的，记
+  \[
+    X=\sqrt{U}\cos(2\pi V),\quad Y=\sqrt{U}\sin(2\pi V),  
+  \]
+  证明 $X,Y$ 是独立的随机变量。
+\end{example}
+\begin{proof}
+  任取非负可测函数 $\varphi:\mathbb{R}^2\to \mathbb{R}$，有
+  \begin{align*}
+    \mathbb{E}[\varphi(X,Y)]&=\int_{\mathbb{R}^2}\varphi(x,y)
+  \end{align*}
+\end{proof}
 
 
 
