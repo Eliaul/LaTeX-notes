@@ -7,7 +7,7 @@
 \makeatother
 
 \usepackage{tikz-cd,wrapstuff}
-\usepackage{fixdif,siunitx,tikz,nicematrix}
+\usepackage{fixdif,siunitx,tikz,nicematrix,tabularray}
 \usetikzlibrary{matrix,calc}
 
 \input{font.def}
@@ -26,6 +26,9 @@
   \settowidth{\mymathln}{#2}
   \mathmakebox[\mymathln]{#1}
 }
+\newenvironment{arr}[1][]{%
+  $\begin{tikzcd}[cramped,#1]
+}{\end{tikzcd}$}
 
 \DeclareMathOperator\Spec{Spec}
 \DeclareMathOperator\im{im}
@@ -53,7 +56,13 @@
 
 \usepackage{enumitem}
 
-\setlist[enumerate]{nosep}
+\setlist[enumerate]{
+  nosep,
+  label=(\alph*),
+  itemindent=\labelwidth,
+  leftmargin=*,
+  listparindent=\parindent
+}
 
 %\DeclareMathAlphabet\mathcal{OMS}{cmsy}{m}{n}
 
@@ -102,13 +111,118 @@
 \begin{remark}
   我们通常使用 $A\in \cat A$ 表示 $A\in\ob(\cat A)$，
   $f:A\to B$ 或者
-  $
-    \begin{tikzcd}[cramped,sep=small]
-      A\arrow[r,"f"] & B
-    \end{tikzcd}
-  $
-  表示
+  \begin{arr}[sep=small]
+    A\arrow[r,"f"] & B
+  \end{arr}
+  表示 $f\in\Hom(A,B)$，$gf$ 表示 $g\circ f$。
 \end{remark}
+
+\begin{example}[数学结构的范畴]%
+  \begin{enumerate}
+    \item 集合范畴 $\cat{Set}$。对象为集合，给定集合 $A,B$，
+    $A$ 到 $B$ 的态射就是集合意义下 $A$ 到 $B$ 的映射，态射的复合
+    即映射的复合，此时单位 $1_A$ 就是恒等映射 $A\to A$。
+    \item 群范畴 $\cat{Grp}$。对象为群，态射为群同态。
+    \item 环范畴 $\cat{Ring}$。对象为环，态射为环同态。
+    \item 给定域 $k$，有 $k$ 上的向量空间范畴 $\cat{Vect}_k$，
+    对象是向量空间，态射是线性映射。
+    \item 拓扑空间范畴 $\cat{Top}$。对象是拓扑空间，态射
+    是连续映射。
+  \end{enumerate}
+\end{example}
+
+\begin{definition}
+  对于态射 $f:A\to B$，如果存在态射 $g:B\to A$ 使得
+  $gf=1_A$ 以及 $fg=1_B$，那么我们说 $f$ 是\emph{同构}。
+  此时我们说 $g$ 是 $f$ 的\emph{逆}，记为 $g=f^{-1}$。
+\end{definition}
+
+如果 $A$ 到 $B$ 之间存在一个同构，那么我们说 $A$ 和
+$B$ \emph{同构}，记作 $A\cong B$。
+
+\begin{example}
+  $\cat{Set}$ 中的同构等同于双射。当然，这句话在逻辑上其实是在
+  表明：一个映射具有双边逆映射当且仅当其是双射。
+\end{example}
+
+\begin{example}
+  $\cat{Grp}$ 中的同构等同于群同构。在一些抽象代数教材中，群同构
+  被定义为双射的群同态，如果是这样，那么实际上需要证明：
+  双射的群同态的逆映射也是群同态。类似地，
+  $\cat{Ring}$ 中的同构等同于环同构。
+\end{example}
+
+\begin{example}
+  $\cat{Top}$ 中的同构是同胚。与 $\cat{Grp}$ 或者 $\cat{Ring}$
+  不同的是，$\cat{Top}$ 中双射的连续映射不一定是同构，即
+  连续映射的逆映射可以是连续的。下面是一个经典的例子：
+  考虑映射 $f:[0,1)\to \mathbb{S}^1$ 为 $f(t)=e^{2\pi it}$，
+  $f$ 是双射的连续映射，但是 $f$ 不是同胚，因为 $[0,1)$
+  不是紧的，但是 $\mathbb{S}^1$ 是紧的。
+\end{example}
+
+目前为止范畴的例子中对象都是具有某些结构的集合(例如群结构、拓扑结构或者
+只有集合结构)，态射都是保持这些结构的映射(群同态、连续映射或者普通的映射)。
+但是，并非所有的范畴都长成这样，实际上范畴的含义相当广泛，
+其对象也不一定是“配备了额外结构的集合”，因此在一般的范畴中，
+谈论对象的“元素”是没有意义的。类似地，在一般意义上的范畴中，
+态射也不必是集合之间的映射。总的来说：
+\emph{范畴的对象不必类似于集合，态射也不必类似于映射}。
+下面的例子解释了这些观点。
+
+\begin{example}[范畴作为数学结构]
+  \begin{enumerate}
+    \item 一个范畴可以通过直接说出对象、态射、复合和单位来指定。
+    例如空范畴 $\emptyset$，其没有任何对象或者态射。
+    范畴 $\cat 1$ 由一个对象和唯一的单位态射构成。
+    也可以构造一个只有两个对象的范畴：
+    \[
+      \begin{tikzcd}
+        \bullet\arrow[r] & \bullet,
+      \end{tikzcd}
+    \]
+    这个范畴只有两个对象，每个对象有一个单位态射，两个对象之间有唯一的一个
+    非单位态射。在这些例子中，我们并没有将对象视为一个类似集合的东西，
+    也没有将态射视为一个映射，此时态射更多的类似于一个抽象的“箭头”。
+    \item 有些范畴中的态射只有单位态射，即任意两个不同的对象之间
+    都不存在任意态射，这样的范畴被称为\emph{离散范畴}。离散范畴
+    是最极端的情况，即不同的对象之间完全隔离。
+    \item 一个群本质上和只有一个对象且所有态射都是同构的范畴是一样的。
+    我们来说明这一点。考虑只有一个对象的范畴 $\cat A$，记这个对象为
+    $A$，那么范畴 $\cat A$ 的态射只有 $\Hom(A,A)$。我们要求
+    $\cat A$ 中的每个态射都是同构，也就是说每个 $f\in\Hom(A,A)$
+    都有一个逆 $g\in\Hom(A,A)$ 使得 $fg=1_A=gf$。
+    实际上这样的范畴 $\cat A$ 和群没有本质区别，对应关系如下所示。
+    {
+
+      \vspace*{5pt}
+      \centering
+      \begin{tblr}{
+        colspec={X[c]X[c]}
+      }
+      范畴 $\cat A$ & 群 $G$\\
+      态射 $f\in \Hom(A,A)$ & 元素 $g\in G$ \\
+      态射的复合 $\circ$ & 元素的乘法 $\cdot$ \\
+      单位态射 $1_A$ & 单位元 $1\in G$
+      \end{tblr} 
+      \vspace*{5pt}
+
+    }
+    \item 在上一个例子中，由于态射的逆不一定是必须的，所以考虑
+    “没有逆元的群”也是必要的，这被称为\emph{幺半群}。具有
+    一个对象的范畴本质上和幺半群是相同的，其论证完全仿照上例。
+    \item 一个\emph{预序}指的是满足自反性和传递性的二元关系。
+    一个\emph{预序集} $(S,\leq)$ 指的是一个集合 $S$ 配备预序 $\leq$。
+    例如 $S=\mathbb{Z}$，$\leq$ 是整除关系。
+
+    一个预序集可以被视为范畴 $\cat A$，其中对于每个 $A,B\in\cat A$，
+    至多只有一个从 $A$ 到 $B$ 的态射。此时我们用 $A\leq B$ 来表示存在
+    态射 $A\to B$。因为 $\cat A$ 是范畴，所以 $A\leq B\leq C$
+    表明 $A\leq C$。由于始终存在 $A\to A$ 的态射(即 $1_A$)，所以
+    $A\leq A$。所以 $\cat A$ 实际上就表示了一族对象，配备了
+    一个具备自反性和传递性的二元关系。
+  \end{enumerate}
+\end{example}
 
 
 
