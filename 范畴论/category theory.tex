@@ -53,6 +53,7 @@
 \DeclareMathOperator\ob{ob}
 
 \newcommand{\cat}[1]{\mathsf{#1}}
+\newcommand{\opcat}[1]{\mathsf{#1}^{\mathrm{op}}}
 
 \usepackage{enumitem}
 
@@ -221,8 +222,58 @@ $B$ \emph{同构}，记作 $A\cong B$。
     表明 $A\leq C$。由于始终存在 $A\to A$ 的态射(即 $1_A$)，所以
     $A\leq A$。所以 $\cat A$ 实际上就表示了一族对象，配备了
     一个具备自反性和传递性的二元关系。
+
+    一个\emph{偏序}指的是满足 $A\leq B,B\leq A\Rightarrow A=B$
+    的预序 $\leq$。等价地说，即上述范畴 $\cat A$ 中若 $A\cong B$
+    能推出 $A=B$。
   \end{enumerate}
 \end{example}
+
+\begin{example}[反范畴]
+  每个范畴 $\cat A$ 都有一个\emph{反范畴} $\opcat A$，
+  其定义为将 $\cat A$ 的所有箭头反向。准确的说，
+  有 $\ob(\opcat A)=\ob(\cat A)$，对于任意对象 $A,B$，有
+  $\Hom_{\opcat A}(A,B)=\Hom_{\cat A}(B,A)$。此时
+  $\opcat A$ 中若有
+  \begin{arr}[sep=small]
+    A\arrow[r,"f"] & B\arrow[r,"g"] & C
+  \end{arr}，那么意味着在 $\cat A$ 中有
+  \begin{arr}[sep=small]
+    A & B\arrow[l,"f"'] & C\arrow[l,"g"']
+  \end{arr}。
+\end{example}
+
+\begin{example}[积范畴]
+  给定两个范畴 $\cat A$ 和 $\cat B$，构造\emph{积范畴}
+  $\cat A\times\cat B$，满足
+  \begin{align*}
+    \ob(\cat A\times\cat B)&=\ob(A)\times\ob(\cat B),\\
+    \Hom\bigl((A,B),(A',B')\bigr)&=\Hom(A,A')\times\Hom(B,B').
+  \end{align*}
+  即态射 $(A,B)\to(A',B')$ 是一对 $(f,g)$，其中 $f:A\to A'$
+  是 $\cat A$ 中的态射，$g:B\to B'$ 是 $\cat B$ 中的态射。
+\end{example}
+
+\section{函子}
+
+\begin{definition}
+  令 $\cat A,\cat B$ 是范畴，\emph{函子} $F:\cat A\to \cat B$
+  由以下内容组成：
+  \begin{itemize}[nosep]
+    \item 映射 $\ob(\cat A)\to \ob(B)$，记作 $A\mapsto F(A)$；
+    \item 对于每个 $A,A'\in\cat A$，有映射 
+    $\Hom(A,A')\to\Hom(F(A),F(A'))$，记作 $f\mapsto F(f)$。
+  \end{itemize}
+  还要满足：
+  \begin{itemize}[nosep]
+    \item 当 $\cat A$ 中有
+    \begin{arr}[sep=small]
+      A\arrow[r,"f"] & A'\arrow[r,"f'"] & A''
+    \end{arr}
+    的时候，有 $F(f'\circ f)=F(f')\circ F(f)$；
+    \item 对于任意 $A\in\cat A$，有 $F(1_A)=1_{F(A)}$。
+  \end{itemize}
+\end{definition}
 
 
 
