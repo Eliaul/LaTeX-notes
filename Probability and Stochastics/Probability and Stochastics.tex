@@ -1441,7 +1441,7 @@ $\sum_{n\in \mathbb{N}}\mu(A_n)$ 作为正向级数在 $[0,\infty]$
 \]
 所以显然有 $\liminf A_n\subseteq \limsup A_n$。
 
-\begin{lemma}
+\begin{lemma}\label{lemma:liminf and limsup ineq}
   令 $\mu$ 是 $(E,\mathcal{A})$ 上的测度，那么
   \[
     \mu(\liminf A_n)\leq \liminf \mu(A_n).
@@ -3371,7 +3371,7 @@ $\sigma(X_1),\dots,\sigma(X_n)$ 是独立的。这等价于
   定理的结论依然成立。
 \end{remark}
 
-\begin{corollary}
+\begin{corollary}\label{coro:independence by pdf}
   令 $X_1,\dots,X_n$ 是实值随机变量。
   \begin{enumerate}
     \item 假设 $X_i$ 有密度 $p_i$ 并且 $X_1,\dots,X_n$ 是独立的，那么
@@ -3439,9 +3439,70 @@ $\sigma(X_1),\dots,\sigma(X_n)$ 是独立的。这等价于
 \begin{proof}
   任取非负可测函数 $\varphi:\mathbb{R}^2\to \mathbb{R}$，有
   \begin{align*}
-    \mathbb{E}[\varphi(X,Y)]&=\int_{\mathbb{R}^2}\varphi(x,y)
+    \mathbb{E}[\varphi(X,Y)]
+    &=\mathbb{E}
+    \bigl[\varphi\bigl(\sqrt{U}\cos(2\pi V),\sqrt{U}\sin(2\pi V)\bigr)\bigr]\\
+    &=\int_{\mathbb{R}^2}\varphi\bigl(\sqrt{u}\cos(2\pi v),\sqrt{u}\sin(2\pi v)\bigr)
+    \d \mathbb{P}_{(U,V)}\\
+    &=\int_{\mathbb{R}}\int_{\mathbb{R}}\varphi\bigl(\sqrt{u}\cos(2\pi v),\sqrt{u}\sin(2\pi v)\bigr)
+      e^{-u}\indicator{[0,\infty)}(u)\indicator{[0,1]}(v)\d u\d v\\
+    &=\int_{0}^\infty\int_0^1\varphi\bigl(\sqrt{u}\cos(2\pi v),\sqrt{u}\sin(2\pi v)\bigr)
+    e^{-u}\d u\d v \\
+    &=\frac{1}{\pi}\int_0^\infty\int_0^{2\pi}
+    \varphi(r\cos\theta,r\sin\theta)re^{-r^2}\d r\d\theta\\
+    &=\frac{1}{\pi}\int_{\mathbb{R}^2}\varphi(x,y)e^{-x^2-y^2}\d x\d y.
   \end{align*}
+  这表明 $(X,Y)$ 有概率密度 $p(x,y)=\pi^{-1}\exp(-x^2-y^2)=\pi^{-1}\exp(-x^2)\exp(-y^2)$，
+  根据 \autoref{coro:independence by pdf}，这表明 $X,Y$
+  是独立的。
 \end{proof}
+
+\section{Borel-Cantelli 引理}
+
+回顾集合极限的定义：如果 $(A_n)_{n\in \mathbb{N}}$ 是一列集合，
+我们记
+\[
+  \limsup A_n=\bigcap_{n=1}^\infty \bigcup_{k=n}^\infty A_k,  
+\]
+不难发现点 $\omega\in\limsup A_n$ 当且仅当存在无限多个
+$n$ 使得 $\omega\in A_n$。注意到
+\ref{lemma:liminf and limsup ineq} 告诉我们
+$\mathbb{P}(\limsup A_n)\geq \limsup \mathbb{P}(A_n)$。
+
+\begin{lemma}
+  令 $(A_n)_{n\in \mathbb{N}}$ 是一列事件。
+  \begin{enumerate}
+    \item 如果 $\sum_{n\in \mathbb{N}}\mathbb{P}(A_n)<\infty$，那么
+    \[
+      \mathbb{P}(\limsup A_n)=0,  
+    \]
+    \item 如果 $\sum_{n\in \mathbb{N}}\mathbb{P}(A_n)=\infty$，
+    事件 $A_n$ 是独立的，那么
+    \[
+      \mathbb{P}(\limsup A_n)=1.  
+    \]
+  \end{enumerate}
+\end{lemma}
+
+\paragraph{两个应用}
+(2) 我们令
+\[
+  (\Omega,\mathcal{A},\mathbb{P})=\bigl([0,1),\mathcal{B}([0,1)),\lambda\bigr) ,
+\]
+其中 $\lambda$ 表示 Lebesgue 测度。对于每个 $n\in \mathbb{N}$，令
+\[
+  X_n(\omega)=\lfloor 2^n\omega\rfloor-2\lfloor 2^{n-1}\omega\rfloor,
+\]
+其中 $\lfloor x\rfloor$ 表示向下取整。那么 $X_n(\omega)\in\{0,1\}$
+并且容易验证对于任意 $\omega\in [0,1)$ 有
+\[
+  0\leq\omega-\sum_{k=1}^nX_k(\omega)2^{-k}<2^{-n}.  
+\]
+这表明
+\[
+  \omega=\sum_{k=1}^\infty X_k(\omega)2^{-k}.  
+\]
+
 
 
 
