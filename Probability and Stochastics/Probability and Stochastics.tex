@@ -3503,6 +3503,33 @@ $\mathbb{P}(\limsup A_n)\geq \limsup \mathbb{P}(A_n)$。
   \omega=\sum_{k=1}^\infty X_k(\omega)2^{-k}.  
 \]
 
+\section{独立随机变量的和}
+
+\begin{proposition}[强大数定律]\label{prop:strong law}
+  令 $(X_n)_{n\in \mathbb{N}}$ 是一列独立同分布的实值随机变量，
+  若 $\mathbb{E}[X_1^4]<\infty$，那么我们几乎肯定有
+  \[
+    \frac{1}{n}(X_1+\cdots+X_n)\xrightarrow[n\to\infty]{} \mathbb{E}[X_1].
+  \]
+\end{proposition}
+
+
+\section{Poisson 过程}
+
+在本节，我们固定一个参数 $\lambda>0$，令 $U_1,U_2,\dots$ 是
+一列独立同分布的随机变量，它们都服从参数 $\lambda$ 的指数分布，
+即有概率密度 $\lambda e^{-\lambda x}\indicator{\mathbb{R}_+}$。
+令
+\[
+  T_n=U_1+U_2+\cdots+U_n.  
+\]
+对于任意实数 $t\geq 0$，令
+\[
+  N_t=\sum_{n=1}^\infty \indicator{\{T_n\leq t\}}=\sup\{n\in \mathbb{N}\,|\,T_n\leq t\}  .
+\]
+约定 $\sup\emptyset =0 $。\autoref{prop:strong law}
+告诉我们在 $n\to\infty$ 的时候，$T_n\to\infty \alsu{}$。
+
 
 
 
