@@ -3529,6 +3529,26 @@ $\mathbb{P}(\limsup A_n)\geq \limsup \mathbb{P}(A_n)$。
 \]
 约定 $\sup\emptyset =0 $。\autoref{prop:strong law}
 告诉我们在 $n\to\infty$ 的时候，$T_n\to\infty \alsu{}$。
+因此，使得 $(T_n)_{n\in \mathbb{N}}$ 有界的 $\omega\in\Omega$ 的集合构成一个零测集，
+除开这个零测集，对于任意 $t\geq 0$，我们都有 $N_t<\infty$。类似地，因为
+随机变量 $U_i$ 几乎处处是正值，我们可以假设对于每个 $\omega\in\Omega$ 都有
+$0<T_1(\omega)<T_2(\omega)<\cdots$。
+
+固定 $\omega$，函数 $t\mapsto N_t(\omega)$ 在 $0$ 处为零、单调递增且右连续，此外
+其每次以大小为 $1$ 的幅度增加。这个函数我们称为计数函数。在 $t\to\infty$
+的时候有 $N_t\to\infty$。
+
+\begin{definition}
+  随机变量族 $(N_t)_{t\geq 0}$ 被称为参数 $\lambda$ 的 Poisson 过程。
+\end{definition}
+
+泊松过程经常用于应用概率模型中，例如在排队论中，$N_t$ 表示在时间 $t$ 之前到达
+服务器的客户数量。选择指数分布来模拟两个连续到达的客户之间的时间段与指数分布缺乏记忆的特性有关。
+粗略地说，该属性表示，对于任何给定时间 $t \geq 0$，$t$ 与客户下一次到达之间的时间始终
+具有相同的分布，与时间 $t$ 之前发生的情况无关。
+
+
+
 
 
 
