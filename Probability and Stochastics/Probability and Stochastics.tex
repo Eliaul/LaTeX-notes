@@ -3200,6 +3200,18 @@ $\mu$ 使得 $\mu((-\infty,t])=F(t)$。即这样的函数 $F$ 总能
 特别的，$\mathbb{P}(X=a)=F_X(a)-F_X(a-)$。这表明 $F_X$ 的间断点的个数
 恰为 $\mathbb{P}_X$ 的原子个数。
 
+\subsection{由随机变量生成的 $\sigma$-域}
+
+\begin{proposition}\label{prop:sigmaX-measurable}
+  令 $X$ 是值在 $(E,\mathcal{E})$ 中的随机变量，$Y$ 是实值随机变量，
+  那么下面的说法等价：
+  \begin{enumerate}
+    \item $Y$ 是 $\sigma(X)$-可测的；
+    \item 存在 $(E,\mathcal{E})$ 到 $(\mathbb{R},\mathcal{B}(\mathbb{R}))$
+    的可测函数 $f$ 使得 $Y=f(X)$。
+  \end{enumerate}
+\end{proposition}
+
 
 \section{随机变量的矩}
 
@@ -3514,7 +3526,7 @@ $\mathbb{P}(\limsup A_n)\geq \limsup \mathbb{P}(A_n)$。
 \end{proposition}
 
 
-\section{Poisson 过程}
+\section{Poisson 过程}\label{sec:poisson}
 
 在本节，我们固定一个参数 $\lambda>0$，令 $U_1,U_2,\dots$ 是
 一列独立同分布的随机变量，它们都服从参数 $\lambda$ 的指数分布，
@@ -3546,6 +3558,425 @@ $0<T_1(\omega)<T_2(\omega)<\cdots$。
 服务器的客户数量。选择指数分布来模拟两个连续到达的客户之间的时间段与指数分布缺乏记忆的特性有关。
 粗略地说，该属性表示，对于任何给定时间 $t \geq 0$，$t$ 与客户下一次到达之间的时间始终
 具有相同的分布，与时间 $t$ 之前发生的情况无关。
+
+\begin{proposition}
+  对于每个 $n\geq 1$，$T_n$ 服从 Gamma 分布 $\Gamma(n,\lambda)$，
+  密度为
+  \[
+    p(x)=\frac{\lambda^n}{(n-1)!}x^{n-1}e^{-\lambda x}\indicator{\mathbb{R}_+}(x).  
+  \]
+  对于每个 $t> 0$，$N_t$ 服从参数 $\lambda t$ 的 Poisson 分布：
+  \[
+    \mathbb{P}(N_t=k)=\frac{(\lambda t)^k}{k!}e^{-\lambda t},
+    \quad \forall k\in \mathbb{N} . 
+  \]
+\end{proposition}
+\begin{proof}
+  注意到参数 $\lambda$ 的指数分布就是 Gamma 分布 $\Gamma(1,\lambda)$。
+  我们首先证明若 $X$ 服从分布 $\Gamma(a,\lambda)$，$Y$
+  服从分布 $\Gamma(b,\lambda)$，且 $X,Y$ 独立，那么 $X+Y$
+  服从分布 $\Gamma(a+b,\lambda)$。
+  那么
+  \begin{align*}
+    \mathbb{E}[\varphi(X+Y)]&=\int_{\mathbb{R}^2}
+    \varphi(x+y)p_a(x)p_b(y)\d x\d y\\
+    &=\int_{\mathbb{R}}\varphi(z)\left(\int_{\mathbb{R}}p_a(x)p_b(z-x)\d x\right)\d z\\
+    &=\int_0^\infty\varphi(z)\left(\int_{0}^z
+    \frac{\lambda^{a+b}}{\Gamma(a)\Gamma(b)}x^{a-1}
+    (z-x)^{b-1}e^{-\lambda z}\d x\right) \d z\\
+    &=\int_0^\infty \frac{\lambda^{a+b}e^{-\lambda z}z^{a+b-1}}{\Gamma(a)\Gamma(b)}
+    \varphi(z)\left(\int_0^1 x^{a-1}(1-x)^{b-1}\d x\right)\d z\\
+    &=\int_0^\infty \varphi(z)\frac{\lambda^{a+b}}{\Gamma(a+b)}
+    z^{a+b-1}e^{-\lambda z}\d z,
+  \end{align*}
+  这就表明 $X+Y$ 服从分布 $\Gamma(a+b,\lambda)$。由于
+  $T_n=U_1+\cdots+U_n$，所以 $T_n$ 服从分布 $\Gamma(n,\lambda)$。
+
+  对于 $k\geq 1$，有
+  \begin{align*}
+    \mathbb{P}(N_t=k)&=\mathbb{P}(T_k\leq t< T_{k+1})\\
+    &=\mathbb{P}(T_{k}\leq t)-\mathbb{P}(T_{k+1}\leq t)\\
+    &=\int_0^t \frac{\lambda^k}{(n-1)!}x^{k-1}e^{-\lambda x}\d x
+    -\int_0^t \frac{\lambda^{k+1}}{k!}x^{k}e^{-\lambda x}\d x\\
+    &=\frac{(\lambda t)^k}{k!}e^{-\lambda t}.
+  \end{align*}
+  对于 $k=0$ 的时候，有
+  $\mathbb{P}(N_t=0)=\mathbb{P}(T_1>t)=e^{-\lambda t}$。
+  这就表明 $N_t$ 服从参数 $\lambda t$ 的 Poisson 分布。
+\end{proof}
+
+我们现在将陈述有关 Poisson 过程的第一个重要结果。我们需要引入
+给定事件的条件概率的概念（更多关于条件的内容将在 \autoref{chap:condition} 中找到）。
+如果 $B\in \mathcal{A}$ 使得 $\mathbb{P}(B)>0$，我们定义 $(\Omega,\mathcal{A})$
+上的一个新的概率测度：已知 $B$ 的条件概率，记为 $\mathbb{P}(\cdot\,|\, B)$。
+对于每个 $A\in \mathcal{A}$，其满足
+\[
+  \mathbb{P}(A|B)=\frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}.  
+\]
+对于每个非负随机变量 $X$，$X$ 在 $\mathbb{P}(\cdot\,|\, B)$ 下的期望
+记为 $\mathbb{E}[X|B]$，容易看出
+\[
+  \mathbb{P}(A|B)=  \frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}
+  =\int_{A}\frac{\indicator{B}}{\mathbb{P}(B)}\d \mathbb{P},
+\]
+所以 $\mathbb{P}(\cdot\,|\, B)$ 相对于 $\mathbb{P}$ 有密度 $\indicator{B}/\mathbb{P}(B)$，
+故
+\[
+  \mathbb{E}[X|B]=\int_{\Omega} X(\omega) \mathbb{P}(\d\omega|B)
+  = \int_\Omega X(\omega)\frac{\indicator{B}(\omega)}{\mathbb{P}(B)}
+  \mathbb{P}(\d\omega)=\frac{\mathbb{E}[X\indicator{B}]}{\mathbb{P}(B)}. 
+\]
+
+\begin{proposition}
+  令 $t>0$，$n\in \mathbb{N}$。在条件概率 $\mathbb{P}(\cdot\,|\, N_t=n)$
+  下，随机变量 $(T_1,\dots,T_n)$ 有密度
+  \[
+    \frac{n!}{t^n}\indicator{\{0<s_1<s_2<\cdots<s_n<t\}}  .
+  \]
+  此外，在条件概率 $\mathbb{P}(\cdot\,|\, N_t=n)$ 下，随机变量
+  $T_{n+1}-t$ 服从参数 $\lambda$ 的指数分布并且独立于 $(T_1,\dots,T_n)$。
+\end{proposition}
+
+现在我们陈述关于 Poisson 过程的一个非常重要的定理。
+
+\begin{theorem}
+  令 $t>0$，对于每个 $r\geq 0$，令
+  \[
+    N_r^{(t)}=N_{t+r}-N_t.  
+  \]
+  随机变量族 $(N_r^{(t)})_{r\geq 0}$ 仍然是参数 $\lambda$
+  的 Poisson 过程，并且与 $(N_r)_{0\leq r\leq t}$ 独立。
+\end{theorem}
+\begin{remark}[直观解释]
+  如果我们将 Poisson 过程的跳跃时间解释为客户到达服务器的时间，
+  则该定理意味着如果有一个在时间 $t > 0$ 到达的观察者，其记录 $t$
+  之后客户的到达时间，看到（在分布的意义下）的情况与他在时间 $0$ 到达
+  的时候一样，并且了解时间 $0$ 和 $t$ 之间客户的到达时间不会给他提供
+  有关时间 $t$ 之后客户到达情况的信息。这可以被视为所谓“Markov 性质”的
+  一个方面。
+\end{remark}
+
+\begin{corollary}
+  令 $t_0=0\leq t_1\leq\cdots\leq t_k$，随机变量 $N_{t_1},N_{t_2}-N_{t_1},
+  \dots,N_{t_k}-N_{t_{k-1}}$ 是独立的，并且，对于每个 $1\leq j\leq k$，
+  $N_{t_j}-N_{t_{j-1}}$ 服从参数 $\lambda(t_j-t_{j-1})$ 的 Poisson 分布。
+\end{corollary}
+
+
+\chapter{随机变量的收敛}
+
+
+\chapter{条件}\label{chap:condition}
+
+\section{离散条件}
+
+本章中考虑概率空间 $(\Omega,\mathcal{A},\mathbb{P})$。我们已经在
+\autoref{sec:poisson} 中提到了，如果 $B\in \mathcal{A}$ 是
+一个概率为正的事件，我们可以定义 $(\Omega,\mathcal{A})$ 上的一个
+新的概率测度：对于 $A\in \mathcal{A}$，定义
+\[
+  \mathbb{P}(A|B)=\frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}.  
+\]
+概率测度 $A\mapsto \mathbb{P}(A|B)$ 被称为给定 $B$ 下的条件概率。
+类似地，对于每个非负随机变量 $X$，或者 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，
+定义给定 $B$ 下的 $X$ 的\emph{条件期望}为
+\[
+  \mathbb{E}[X|B]=\frac{\mathbb{E}[X\indicator{B}]}{\mathbb{P}(B)}.  
+\]
+
+现在我们定义已知一个离散随机变量下的条件期望。考虑一个离散随机变量
+$Y$，取值在可数空间 $E$ 中（$\sigma$-域为幂集）。令
+$E'=\{y\in E\,|\, \mathbb{P}(Y=y)>0\}$。如果 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，
+那么对于每个 $y\in E'$，有
+\[
+  \mathbb{E}[X|Y=y]=\frac{\mathbb{E}[X\indicator{\{Y=y\}}]}{\mathbb{P}(Y=y)}.
+\]
+
+\begin{definition}
+  令 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，定义已知 $Y$ 下
+  的 $X$ 的条件期望为一个\emph{随机变量}
+  \[
+    \mathbb{E}[X|Y]=\varphi(Y),  
+  \]
+  其中 $\varphi:E\to \mathbb{R}$ 为
+  \[
+    \varphi(y)=\begin{cases}
+      \mathbb{E}[X|Y=y] & y\in E',\\
+      0 & y\in E\smallsetminus E'.
+    \end{cases}
+  \] 
+\end{definition}
+\begin{remark}
+  定义中 $y\in E \smallsetminus E'$ 时 $\varphi(y)$ 的取值
+  是无关紧要的，因为我们可以证明这样的情况仅仅构成一个零测集：
+  \[
+    \mathbb{P}(Y\in E \smallsetminus E')=
+    \sum_{y\in E \smallsetminus E'}\mathbb{P}(Y=y)
+    =0.
+  \]
+\end{remark}
+
+与相对于一个事件的条件期望相比，需要注意 $\mathbb{E}[X|Y]$
+是一个 $\Omega\to \mathbb{R}$ 的\emph{随机变量}，其几乎肯定满足
+\[
+  \mathbb{E}[X|Y](\omega)=\mathbb{E}[X|Y=Y(\omega)].  
+\]
+
+\begin{proposition}
+  令 $X\in L^1(\Omega, \mathcal{A},\mathbb{P})$，我们有
+  $\mathbb{E}\bigl[\bigl|\mathbb{E}[X|Y]\bigr|\bigr]\leq \mathbb{E}[|X|]$，
+  这表明 $\mathbb{E}[X|Y]\in L^1(\Omega,\mathcal{A},\mathbb{P})$。
+  此外，对于任意有界的 $\sigma(Y)$-可测的实值随机变量 $Z$，
+  有
+  \[
+    \mathbb{E}[ZX]=\mathbb{E}\bigl[Z \mathbb{E}[X|Y]\bigr]  .
+  \]
+\end{proposition}
+
+\section{条件期望的定义}
+
+\subsection{可积随机变量}
+
+下面的定理提供了关于一个子 $\sigma$-域的可积随机变量的条件期望
+的定义。
+
+\begin{theorem}\label{thm:conditioning variable}
+  令 $\mathcal{B}$ 是 $\mathcal{A}$ 的一个子 $\sigma$-域，$X\in L^1(\Omega,\mathcal{A},\mathbb{P})$。
+  那么 $L^1(\Omega,\mathcal{A},\mathbb{P})$ 中存在唯一的随机变量
+  $\mathbb{E}[X| \mathcal{B}]$，使得
+  \[
+    \forall B\in \mathcal{B},\quad
+    \mathbb{E}[X \indicator{B}]=\mathbb{E}\bigl[\mathbb{E}[X| \mathcal{B}]\indicator{B}\bigr]  .
+  \]
+  更一般地，对于每个有界的 $\mathcal{B}$-可测的实值随机变量 $Z$，
+  有
+  \[
+    \mathbb{E}[XZ]=\mathbb{E}\bigl[\mathbb{E}[X| \mathcal{B}]Z\bigr]  .
+  \]
+  如果 $X\geq 0$，那么我们几乎肯定有 $\mathbb{E}[X| \mathcal{B}]\geq 0$。
+\end{theorem}
+
+特别地，如果 $\mathcal{B}=\sigma(Y)$ 是随机变量 $Y$ 生成的 $\sigma$-域，
+我们在写法上不区分
+\[
+  \mathbb{E}[X| \mathcal{B}] = \mathbb{E}[X|\sigma(Y)]
+  =\mathbb{E}[X|Y].
+\]
+这与前文离散情况下的定义是不冲突的。
+
+\begin{proposition}[条件期望的性质]
+  \mbox{}
+  \begin{enumerate}
+    \item 如果 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$
+    并且 $X$ 是 $\mathcal{B}$-可测的，那么
+    $\mathbb{E}[X|\mathcal{B}]=X$。
+    \item $L^1(\Omega,\mathcal{A},\mathbb{P})$
+    上的映射 $X\mapsto \mathbb{E}[X| \mathcal{B}]$
+    是线性映射。
+    \item 如果 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，
+    那么 $\mathbb{E}\bigl[\mathbb{E}[X| \mathcal{B}]\bigr]=\mathbb{E}[X]$。
+    \item 如果 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，那么
+    $|\mathbb{E}[X|\mathcal{B}]|\leq \mathbb{E}\bigl[|X|\bigm| \mathcal{B}\bigr]\alsu{}$，
+    因此 $\mathbb{E}\bigl[\bigl|\mathbb{E}[X|\mathcal{B}]\bigr|\bigr]\leq \mathbb{E}[|X|]$。
+    因此映射 $X\mapsto \mathbb{E}[X|\mathcal{B}]$ 是 $L^1(\Omega,\mathcal{A},\mathbb{P})$
+    上的压缩映射。
+    \item 如果 $X,X'\in L^1(\Omega,\mathcal{A},\mathbb{P})$ 并且
+    $X\geq X'$，那么 $\mathbb{E}[X|\mathcal{B}]\geq \mathbb{E}[X'|\mathcal{B}]\alsu{}$。
+  \end{enumerate}
+\end{proposition}
+
+\section{条件期望的计算}
+
+\subsection{离散条件}
+
+如果 $Y$ 是值在可数空间 $E$ 中的随机变量，令 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$。
+那么我们有
+\[
+  \mathbb{E}[X|Y]=\varphi(Y),  
+\]
+其中 $y\in E$ 且 $\mathbb{P}(Y=y)>0$ 的时候有
+\[
+  \varphi(y)=\frac{\mathbb{E}[X\indicator{\{Y=y\}}]}{\mathbb{P}(Y=y)}.
+\]
+
+\subsection{带有密度的随机变量}
+
+令 $X,Y$ 分别是值在 $\mathbb{R}^m$ 和 $\mathbb{R}^n$ 中的随机变量，
+假设 $(X,Y)$ 有相对于 Lebesgue 测度的密度，记为 $p(x,y)$。
+那么对于任意 Borel 可测函数 $f:\mathbb{R}^m\times \mathbb{R}^n\to \mathbb{R}_+$，有
+\[
+  \mathbb{E}[f(X,Y)]=\int_{\mathbb{R}^m\times \mathbb{R}^n}
+  f(x,y)p(x,y)\d x\d y.  
+\]
+注意此时 $Y$ 有密度
+\[
+  q(y)=\int_{\mathbb{R}^m}p(x,y)\d x.
+\]
+
+令 $h:\mathbb{R}^m\to \mathbb{R}_+$ 是可测函数，我们计算
+$\mathbb{E}[h(X)|Y]$。对于任意可测函数 $g:\mathbb{R}^n\to \mathbb{R}_+$，
+我们有
+\begin{align*}
+  \mathbb{E}[h(X)g(Y)]&=\int_{\mathbb{R}^m\times \mathbb{R}^n}
+  h(x)g(y)p(x,y)\d x\d y\\
+  &=\int_{\mathbb{R}^n}\left(\int_{\mathbb{R}^m}h(x)p(x,y)\d x\right)g(y)\d y\\
+  &=\int_{\mathbb{R}^n}\left(\int_{\mathbb{R}^m}h(x)p(x,y)\d x\right)
+  g(y)\indicator{\{q(y)>0\}}\d y,
+\end{align*}
+最后一个等式是因为若 $y$ 使得 $q(y)=0$，那么对于 $x$ 而言几乎处处有 $p(x,y)=0$，
+所以 $\int h(x)p(x,y)\d x=0$。于是 
+\begin{align*}
+  \mathbb{E}[h(X)g(Y)]&=\int_{\mathbb{R}^n}
+  \frac{\int_{\mathbb{R}^m}h(x)p(x,y)\d x}{q(y)}
+  g(y)q(y)\indicator{\{q(y)>0\}}\d y\\
+  &=\int_{\mathbb{R}^n}\varphi(y)g(y)q(y)\indicator{\{q(y)>0\}}\d y\\
+  &=\mathbb{E}[\varphi(Y)g(Y)],
+\end{align*}
+其中
+\[
+  \varphi(y)=\begin{dcases}
+    \frac{1}{q(y)}\int_{\mathbb{R}^m}h(x)p(x,y)\d x & q(y)>0,\\
+    h(0) & q(y)=0.
+  \end{dcases}  
+\]
+
+由于 $g$ 的任意性，根据 \autoref{prop:sigmaX-measurable}，这就表明
+对于每个有界的 $\sigma^{-1}(Y)$-可测的实值随机变量 $Z$ 有
+\[
+  \mathbb{E}[h(X)Z]=\mathbb{E}[\varphi(Y)Z],  
+\]
+即
+\[
+  \mathbb{E}[h(X)|Y]=\varphi(Y).  
+\]
+故我们得到了下面的命题。
+
+\begin{proposition}
+  对于每个 $y\in \mathbb{R}^n$，令 $\nu(y,\d x)$ 为
+  $\mathbb{R}^m$ 上的概率测度，定义为
+  \[
+    \nu(y,\d x)=\begin{dcases}
+      \frac{1}{q(y)}p(x,y)\d x & q(y)>0,\\
+      \delta_0(\d x) & q(y)=0,
+    \end{dcases}  
+  \]
+  那么对于任意可测函数 $h:\mathbb{R}^m\to \mathbb{R}_+$，我们有
+  \[
+    \mathbb{E}[h(X)|Y]=\int h(x)\nu(Y,\d x).  
+  \]
+\end{proposition}
+
+对于使得 $q(y)>0$ 的 $y$，我们有
+\[
+  \mathbb{E}[h(X)|Y=y]=\int h(x)\nu(y,\d x)
+  =\frac{1}{q(y)}\int h(x)p(x,y)\d x,  
+\]
+我们通常说
+\[
+  x\mapsto\frac{p(x,y)}{q(y)}  
+\]
+是已知 $Y=y$ 下 $X$ 的条件密度函数。
+
+\section{转移概率和条件分布}
+
+\begin{definition}
+  令 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 是两个可测空间，
+  $E$ 到 $F$ 的一个\emph{转移概率}指的是映射
+  \[
+    \nu:E\times \mathcal{F}\to [0,1],  
+  \]
+  其满足：
+  \begin{enumerate}
+    \item 对于每个 $x\in E$，$A\mapsto \nu(x,A)$ 是
+    $(F,\mathcal{F})$ 上的概率测度。
+    \item 对于每个 $A\in \mathcal{F}$，$x\mapsto \nu(x,A)$
+    是 $\mathcal{E}$-可测的。
+  \end{enumerate}
+\end{definition}
+
+从直观上，每固定一个“起点” $x\in E$，概率测度 $\nu(x,\cdot)$
+给出了一种随机的选择一个“到达点” $y\in F$ 的方法，这个概念将在
+Markov 链中发挥重要作用。
+
+\begin{definition}
+  令 $X$ 和 $Y$ 分别是值在 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$
+  中的随机变量。如果 $E$ 到 $F$ 的转移概率 $\nu$ 使得：
+  对于任意 $F$ 上的非负可测函数 $h$，有
+  \[
+    \mathbb{E}[h(Y)|X]=\int\nu(X,\d y) h(y),\quad 
+    \alsu{},  
+  \]
+  那么我们说 $\nu$ 是已知 $X$ 下 $Y$ 的条件分布。
+\end{definition}
+
+根据定义，如果 $\nu$ 是已知 $X$ 下 $Y$ 的条件分布，那么对于每个
+$A\in \mathcal{F}$，有
+\[
+  \mathbb{P}(Y\in A|X)=\mathbb{E}[\indicator{\{Y\in A\}}|X]
+  =\nu(X,A),\quad \alsu{}
+\]
+也可以写为对于任意 $x\in E$，有
+\[
+  \mathbb{P}(Y\in A| X=x)=\nu(x,A).  
+\]
+
+\part{随机过程}
+
+\chapter{Markov 链}
+
+\section{定义和首要性质}
+
+在本章中，$E$ 表示一个有限或者可数空间，配备 $\sigma$-域
+$\mathcal{P}(E)$。$E$ 上的随机矩阵指的是一族实数 
+$(Q(x,y))_{(x,y)\in E\times E}$，其满足：
+\begin{enumerate}
+  \item 对于任意 $x,y\in E$，$0\leq Q(x,y)\leq 1$；
+  \item 对于每个 $x\in E$，$\sum_{y\in E}Q(x,y)=1$。
+\end{enumerate}
+
+这个概念等价于从 $E$ 到 $E$ 的转移概率。实际上，如果我们令
+\[
+  \nu(x,A)=\sum_{y\in A}Q(x,y),\quad x\in E,A\subseteq E,  
+\]
+那么 $\nu$ 就是一个从 $E$ 到 $E$ 的转移概率。反之，给定一个
+转移概率 $\nu$，定义 $Q(x,y)=\nu(x,\{y\})$，这就给出了 
+$E$ 上的一个随机矩阵。
+
+对于每个 $n\geq 1$，我们定义 $Q_n=Q^n$ 为通常的矩阵乘法：
+定义 $Q_1=Q$，然后递归定义
+\[
+  Q_{n+1}(x,y)=\sum_{z\in E}Q_n(x,z)Q(z,y).  
+\]
+不难验证 $Q_n$ 仍然是 $E$ 上的一个随机矩阵。我们同时定义
+$Q_0(x,y)=\indicator{\{x=y\}}$（类似单位阵）。
+那么对于任意 $m,n\geq 0$，我们有 $Q_{m+n}=Q_mQ_n$：
+\[
+  Q_{m+n}(x,y)=\sum_{z\in E}Q_m(x,z)Q_n(z,y).  
+\]
+
+对于每个函数 $f:E\to \mathbb{R}_+$，用 $Qf$ 表示 $E$
+上的函数，满足
+\[
+  Qf(x)=\sum_{y\in E}Q(x,y)f(y),  
+\]
+取值在 $[0,\infty]$ 中。如果 $\nu$ 是 $E$ 上的测度，我们
+同时定义
+\[
+  \nu Q(y)=\sum_{x\in E}\nu(x)Q(x,y),\quad y\in E.  
+\]
+
+\begin{definition}
+  令 $Q$ 是 $E$ 上的随机矩阵，$(X_n)_{n\in \mathbb{Z}_+}$
+  是定义在 $(\Omega,\mathcal{A},\mathbb{P})$ 上值在 $E$ 中的随机过程。
+  如果对于每个 $n\geq 0$，已知 $(X_0,X_1,\dots,X_n)$ 下的
+  $X_{n+1}$ 的条件分布是 $Q(X_n,\cdot)$，那么 
+  我们说 $(X_n)_{n\in \mathbb{Z}_+}$ 是具有转移矩阵 $Q$
+  是 Markov 链。这等价于说对于每个 $x_0,\dots,x_n,y\in E$
+  使得 $\mathbb{P}(X_0=x_0,\dots,X_n=x_n)>0$，都有
+  \[
+    \mathbb{P}(X_{n+1}=y|X_0=x_0,\dots,X_n=x_n)=Q(x_n,y).  
+  \]
+\end{definition}
 
 
 
