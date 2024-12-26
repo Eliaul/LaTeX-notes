@@ -3785,6 +3785,18 @@ $E'=\{y\in E\,|\, \mathbb{P}(Y=y)>0\}$。如果 $X\in L^1(\Omega,\mathcal{A},\ma
   \end{enumerate}
 \end{proposition}
 
+\section{条件期望的具体性质}
+
+\begin{proposition}[嵌套 $\sigma$-域]\label{prop:nested sigma field}
+  令 $\mathcal{B}_1,\mathcal{B}_2$ 是 $\mathcal{A}$ 的两个子 $\sigma$-域且
+  $\mathcal{B}_1\subseteq \mathcal{B}_2$。那么对于任意非负（可积）随机变量 $X$，我们有
+  \[
+    \mathbb{E}\bigl[\mathbb{E}[X|\mathcal{B}_2]\bigm| \mathcal{B}_1\bigr]=
+    \mathbb{E}[X|\mathcal{B}_1].
+  \]
+\end{proposition}
+
+
 \section{条件期望的计算}
 
 \subsection{离散条件}
@@ -3978,6 +3990,111 @@ $Q_0(x,y)=\indicator{\{x=y\}}$（类似单位阵）。
   \]
 \end{definition}
 
+已知 $(X_0,X_1,\dots,X_n)$ 下的 $X_{n+1}$ 的条件分布是 $Q(X_n,\cdot)$ 还意味着
+对于每个 $y\in E$，有
+\[
+  \mathbb{P}(X_{n+1}=y|X_0,\dots,X_n)=Q(X_n,y).
+\]
+注意这是随机变量的等式。
+
+利用 \autoref{prop:nested sigma field}，对于 $\{0,1,\dots,n-1\}$ 的任意子集
+$\{i_1,\dots,i_k\}$，我们有
+\begin{align*}
+  &\hphantom{={}}\mathbb{P}(X_{n+1}=y|X_{i_1},\dots,X_{i_k},X_n)\\
+  &=\mathbb{E}\bigl[\mathbb{P}(X_{n+1}=y|X_{0},X_1,\dots,X_n)\bigm| X_{i_1},\dots,X_{i_k},X_n\bigr]\\
+  &=\mathbb{E}[Q(X_{n},y)|X_{i_1},\dots,X_{i_k},X_n]\\
+  &=Q(X_n,y)
+\end{align*}
+特别地，有
+\[
+  \mathbb{P}(X_{n+1}=y|X_n)=Q(X_n,y).
+\]
+这等价于，对于每个使得 $\mathbb{P}(X_n=x)>0$ 的 $x\in E$，有
+\[
+  \mathbb{P}(X_{n+1}=y|X_n=x)=Q(x,y).
+\]
+这个式子提供了一种直观理解，即如果 Markov 链在 $n$ 时间处于点 $x\in E$ 处，那么
+可以根据概率测度 $Q(x,\cdot)$ 衡量其在 $n+1$ 时间到达点的位置。
+
+\begin{remark}
+  \mbox{}
+  \begin{enumerate}
+    \item 对于一般的随机过程 $(X_n)_{n\in \mathbb{Z}_+}$，已知 $(X_0,X_1,\dots,X_n)$
+    下 $X_{n+1}$ 的条件分布可以写为 $\nu((X_0,X_1,\dots,X_n),\cdot)$ 的形式，其中
+    $\nu$ 表示从 $E^{n+1}$ 到 $E$ 的转移概率，此时条件分布依赖于所有 $X_0,X_1,\dots,X_n$
+    而不仅仅是 $X_n$。而 Markov 链的定义要求已知 $(X_0,X_1,\dots,X_n)$
+    下 $X_{n+1}$ 的条件分布仅仅依赖于 $X_n$，这被称为\emph{Markov 属性}：
+    为了预测 $X_{n+1}$，过去的所有 $(X_0,X_1,\dots,X_n)$ 的知识并不能提供比 $X_n$
+    更多的信息。  
+    \item 函数 $Q(x,\cdot)$ 给出了在不依赖 $n$ 的情况下，已知 $X_n=x$ 下 $X_{n+1}$
+    的条件分布。这就是“转移机制”的\emph{时齐性}。人们还可以考虑非齐次 Markov 链，
+    其中时间 $n$ 和 $n + 1$ 之间的转移机制取决于 $n$，但在本课程中我们仅考虑齐次 Markov 链。
+  \end{enumerate}
+\end{remark}
+
+\begin{proposition}
+  一个值在 $E$ 中的随机过程 $(X_n)_{n\in \mathbb{Z}_+}$ 是具有转移矩阵 $Q$ 的 Markov 链当且仅当
+  对于每个 $n\geq 0$ 和 $x_0,x_1,\dots,x_n\in E$，我们有
+  \[
+    \mathbb{P}(X_0=x_0,X_1=x_1,\dots,X_n=x_n)=\mathbb{P}(X_0=x_0)
+    Q(x_0,x_1)\cdots Q(x_{n-1},x_n).
+  \]
+\end{proposition}
+\begin{proof}
+  若 $(X_n)_{n\in \mathbb{Z}_+}$ 是具有转移矩阵 $Q$ 的 Markov 链，那么依据
+  \begin{align*}
+    &\mathbb{P}(X_0=x_0,X_1=x_1,\dots,X_n=x_n,X_{n+1}=x_{n+1})\\
+    &=\mathbb{P}(X_0=x_0,\dots,X_n=x_n)\mathbb{P}(X_{n+1}=x_{n+1}|X_0=x_0,\dots,X_n=x_n)
+  \end{align*}
+  进行归纳即可。
+
+  反之，假设上式成立，那么
+  \begin{align*}
+    &\mathbb{P}(X_{n+1}=y|X_0=x_0,\dots,X_n=x_n)\\
+    &=\frac{\mathbb{P}(X_0=x_0,\dots,X_n=x_n,X_{n+1}=y)}{\mathbb{P}(X_0=x_0,\dots,X_n=x_n)}
+    =Q(x_n,y),
+  \end{align*}
+  即 $(X_n)_{n\in \mathbb{Z}_+}$ 是具有转移矩阵 $Q$ 的 Markov 链。
+\end{proof}
+
+\begin{remark}
+  这表明对于 Markov 链 $(X_n)_{n\in \mathbb{Z}_+}$，$(X_0,X_1,\dots,X_n)$
+  的分布完全由初始分布和转移矩阵 $Q$ 确定。
+\end{remark}
+
+\begin{proposition}
+  $(X_n)_{n\in \mathbb{Z}_+}$ 是具有转移矩阵 $Q$ 的 Markov 链。
+  \begin{enumerate}
+    \item 对于每个 $n\geq 0$ 和可测函数 $f:E\to \mathbb{R}_+$，
+    \[
+      \mathbb{E}[f(X_{n+1})|X_0,X_1,\dots,X_n]=\mathbb{E}[f(X_{n+1})|X_n]=Qf(X_n).
+    \]
+    更一般地，对于 $\{0,1,\dots,n-1\}$ 的任意子集 $\{i_1,\dots,i_k\}$，我们有
+    \[
+      \mathbb{E}[f(X_{n+1})|X_{i_1},\dots,X_{i_k},X_n]=Qf(X_n).
+    \]
+    \item 对于每个 $n\geq 0$，$p\geq 1$ 以及 $y_1,\dots,y_p\in E$，有
+    \begin{align*}
+      &\mathbb{P}(X_{n+1}=y_1,\dots,X_{n+p}=y_p|X_0,\dots,X_n)\\
+      &=Q(X_n,y_1)Q(y_1,y_2)\cdots Q(y_{p-1},y_p).
+    \end{align*}
+    因此，有
+    \[
+      \mathbb{P}(X_{n+p}=y_p|X_n)=\mathbb{P}(X_{n+p}=y_p|X_0,\dots,X_n)=
+      Q_p(X_n,y_p).
+    \]
+    如果我们固定 $n\geq 0$，对于每个 $p\in \mathbb{Z}_+$，令 $Y_p=X_{n+p}$，
+    那么随机过程 $(Y_p)_{p\in \mathbb{Z}_+}$ 仍然是带有转移矩阵 $Q$ 的 Markov 链。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  
+\end{proof}
+
+
+\section{例子}
+
+\subsection{$\mathbb{Z}^d$ 上的随机游走}
 
 
 
