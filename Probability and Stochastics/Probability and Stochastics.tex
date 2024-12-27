@@ -4168,7 +4168,12 @@ $\{i_1,\dots,i_k\}$，我们有
 \]
 即 $\mat\Omega$ 的元素形如 $\omega=(\omega_0,\omega_1,\omega_2,\dots)$。定义坐标映射
 $\mat X_n$ 为 $\mat X_n(\omega)=\omega_n$。我们给 $\mat\Omega$ 配备使得所有坐标映射
-$\mat X_n$ 都可测的最小的 $\sigma$-域，记为 $\mathfrak{F}$。
+$\mat X_n$ 都可测的最小的 $\sigma$-域，记为 $\mathfrak{F}$，等价地说，
+$\mathfrak{F}$ 由所有的柱集生成：
+\[
+  \{x_0\}\times\cdots\times\{x_n\}\times E\times E\times \cdots,
+\]
+其中 $n\in \mathbb{Z}_+,x_0,\dots,x_n\in E$。
 
 \begin{lemma}
   令 $(G,\mathcal{G})$ 是可测空间，映射$\psi:G\to \mat\Omega$，那么
@@ -4191,7 +4196,7 @@ $\mat X_n$ 都可测的最小的 $\sigma$-域，记为 $\mathfrak{F}$。
   \[
     \mathbb{P}\bigl((Y_n)_{n\in \mathbb{Z}_+}\in B\bigr)=\matup P_x(B).
   \]
-  事实上，当 $B$ 是圆柱集（cylinder set）时，这个等式成立，然后依据单调类给出一般情况。
+  事实上，当 $B$ 是柱集（cylinder set）时，这个等式成立，然后依据单调类给出一般情况。
   这个等式表明，我们后面为典范 Markov 链建立的所有结果都可以转移到具有相同转移矩阵的任何
   Markov 链上（无论它是在哪个概率空间上定义的）。
 \end{remark}
@@ -4206,10 +4211,10 @@ $\mat X_n$ 都可测的最小的 $\sigma$-域，记为 $\mathfrak{F}$。
 \[
   H_x=\inf\{n\geq 1| \mat X_n=x\}, N_x=\sum_{n=0}^\infty \indicator{\{\mat X_n=x\}}.
 \]
-在 Markov 链中，$H_x$ 可以解释为状态第一次回到起点 $x$ 时需要的步数，
-$N_x$ 可以解释为状态经过起点 $x$ 的次数。
+在 Markov 链中，$H_x$ 可以解释为状态第一次经过点 $x$ 时需要的步数，
+$N_x$ 可以解释为状态经过点 $x$ 的次数。
 
-\begin{proposition}
+\begin{proposition}\label{prop:recurrent and transient}
   令 $x\in E$，那么
   \begin{itemize}
     \item 要么 $\matup P_x(H_x<\infty)=1$，此时
@@ -4227,9 +4232,9 @@ $N_x$ 可以解释为状态经过起点 $x$ 的次数。
   \end{itemize}
 \end{proposition}
 \begin{remark}
-  直观上来说，$\matup P_x(H_x<\infty)=1$ 的情况表明如果状态几乎肯定能够回到起点 $x$，那么
-  其几乎肯定能够无数次经过起点 $x$。$\matup P_x(H_x<\infty)<1$ 的情况表明
-  如果状态不一定能回到起点 $x$，那么其经过起点 $x$ 的次数几乎肯定是有限次，且期望也是有限次。
+  直观上来说，$\matup P_x(H_x<\infty)=1$ 的情况表明如果状态几乎肯定能够经过点 $x$，那么
+  其几乎肯定能够无数次经过点 $x$。$\matup P_x(H_x<\infty)<1$ 的情况表明
+  如果状态不一定能经过点 $x$，那么其经过点 $x$ 的次数几乎肯定是有限次，且期望也是有限次。
 \end{remark}
 
 \begin{definition}
@@ -4241,7 +4246,52 @@ $N_x$ 可以解释为状态经过起点 $x$ 的次数。
 
 注意到 $U(x,y)>0$ 当且仅当从 $x$ 出发的链能够到达 $y$ 的概率是正的。
 
+\begin{proposition}
+  \mbox{}
+  \begin{enumerate}
+    \item 对于每个 $x,y\in E$，有
+    \[
+      U(x,y)=\sum_{n=0}^\infty Q_n(x,y).  
+    \]
+    \item $U(x,x)=\infty$ 当且仅当 $x$ 是常返的。
+    \item 对于每个 $x,y\in E$ 且 $x\neq y$，有
+    \[
+      U(x,y)=\matup P_x(H_y<\infty) U(y,y).  
+    \]
+    因此，如果 $y$ 是暂留的，那么对于每个 $x\in E$，
+    我们有 $\matup P_x(N_y<\infty)=1$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 直接计算可知
+  \[
+    U(x,y)=\matup E_x\left[
+      \sum_{n=0}^\infty \indicator{\{\mat X_n=y\}}
+    \right]  =\sum_{n=0}^\infty \matup P_x(\mat X_n=y)
+    =\sum_{n=0}^\infty Q_n(x,y).
+  \]
 
+  (2) 根据 $U$ 的定义，我们有
+  $U(x,x)=\infty$ 当且仅当 $\matup P_x(N_x=\infty)=1$，
+  即 $x$ 是常返的。
+
+  (3) 
+\end{proof}
+
+\begin{remark}
+  这个命题告诉我们
+  \[
+    U(x,y)=\sum_{n=0}^\infty Q_n(x,y)=\sum_{n=0}^\infty
+    \matup P_x(X_{m+n}=y|X_m=x),
+  \]
+  所以 $U(x,y)>0$ 当且仅当存在某个 $n$ 使得 $\matup P_x(X_{m+n}=y|X_m=x)>0$。
+  有些教材会把 $\matup P_x(X_{m+n}=y|X_m=x)$ 记为 $p_{xy}^{(n)}$，
+  称作\emph{$n$ 步转移概率}。若 $U(x,y)>0$（等价地说，存在
+  $n\geq 0$ 使得 $p_{xy}^{(n)}>0$），那么我们说 $x$ \emph{可达}
+  $y$，记为 $x\to y$。如果同时有 $y\to x$，那么我们说 
+  $x$ 和 $y$ \emph{互通}，记为 $x\leftrightarrow y$。
+  不难验证互通是一个等价关系。
+\end{remark}
 
 
 
