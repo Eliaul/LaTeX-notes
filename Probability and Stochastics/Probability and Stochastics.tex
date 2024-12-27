@@ -50,6 +50,7 @@
 
 \newcommand{\ideal}[1]{\mathfrak{#1}}
 \newcommand{\mat}[1]{\mathbold{#1}}
+\newcommand{\matup}[1]{\mathbf{#1}}
 \newcommand{\uline}{\underline{\hphantom{X}}}
 \newcommand{\abs}[1]{\left|#1\right|}
 \newcommand{\ulim}[1][]{\lim_{#1}\mathrel{\uparrow}}
@@ -4032,7 +4033,7 @@ $\{i_1,\dots,i_k\}$，我们有
   \end{enumerate}
 \end{remark}
 
-\begin{proposition}
+\begin{proposition}\label{prop:law of X0 to Xn}
   一个值在 $E$ 中的随机过程 $(X_n)_{n\in \mathbb{Z}_+}$ 是具有转移矩阵 $Q$ 的 Markov 链当且仅当
   对于每个 $n\geq 0$ 和 $x_0,x_1,\dots,x_n\in E$，我们有
   \[
@@ -4088,13 +4089,158 @@ $\{i_1,\dots,i_k\}$，我们有
   \end{enumerate}
 \end{proposition}
 \begin{proof}
-  
+  (1) 注意到 $f(X_{n+1})=\sum_{y\in E}f(y)\indicator{\{X_{n+1}=y\}}$，那么
+  \begin{align*}
+    \mathbb{E}[f(X_{n+1})|X_0,X_1,\dots,X_n]
+    &=\sum_{y\in E}f(y)\mathbb{P}(X_{n+1}=y|X_0,X_1,\dots,X_n)\\
+    &=\sum_{y\in E}f(y)Q(X_n,y)\\
+    &=Qf(X_n).
+  \end{align*}
+  对于 $\{0,1,\dots,n-1\}$ 的任意子集 $\{i_1,\dots,i_k\}$，我们有
+  \begin{align*}
+    &\mathbb{E}[f(X_{n+1})|X_{i_1},\dots,X_{i_k},X_n]\\
+    &=\mathbb{E}\bigl[\mathbb{E}[f(X_{n+1})|X_0,X_1,\dots,X_n]\bigm| X_{i_1},\dots,X_{i_k},X_n\bigr]\\
+    &=\mathbb{E}[Qf(X_n)|X_{i_1},\dots,X_{i_k},X_n]\\
+    &=Qf(X_n).
+  \end{align*}
+
+  (2) 根据 \autoref{prop:law of X0 to Xn}，有
+  \begin{align*}
+    &\mathbb{P}(X_{n+1}=y_1,\dots,X_{n+p}=y_p|X_0=x_0,\dots,X_n=x_n)\\
+    &=\frac{\mathbb{P}(X_0=x_0)Q(x_0,x_1)\cdots Q(x_n,y_1)\cdots Q(y_{p-1},y_p)}{
+      \mathbb{P}(X_0=x_0)Q(x_0,x_1)\cdots Q(x_{n-1},x_n)
+    }\\
+    &=Q(x_n,y_1)Q(y_1,y_2)\cdots Q(y_{p-1},y_p),
+  \end{align*}
+  即 
+  \begin{align*}
+    &\mathbb{P}(X_{n+1}=y_1,\dots,X_{n+p}=y_p|X_0,\dots,X_n)\\
+    &=Q(X_n,y_1)Q(y_1,y_2)\cdots Q(y_{p-1},y_p).
+  \end{align*}
+
+  对于 $p=2$ 的情况，有
+  \begin{align*}
+    \mathbb{P}(X_{n+2}=y_2|X_0,\dots,X_n)
+    &=\sum_{y_1\in E}\mathbb{P}(X_{n+1}=y_1,X_{n+2}=y_2|X_0,\dots,X_n)\\
+    &=\sum_{y_1\in E} Q(X_n,y_1)Q(y_1,y_2)\\
+    &=Q_2(X_n,y_2),
+  \end{align*}
+  一般的情况由此归纳即可。于是
+  \begin{align*}
+    \mathbb{P}(X_{n+p}=y_p|X_n)
+    &=\mathbb{E}\bigl[\mathbb{P}(X_{n+p}=y_p|X_0,\dots,X_n)\bigm| X_n\bigr]\\
+    &=\mathbb{E}[Q_p(X_n,y_p)|X_n]=Q_p(X_n,y_p).
+  \end{align*}
+
+  最后我们验证 $(Y_p)_{p\in \mathbb{Z}_+}$ 是带有转移矩阵 $Q$ 的 Markov 链。
+  根据定义，有
+  \begin{align*}
+    &\mathbb{P}(Y_{p+1}=y_{p+1}|Y_0,\dots,Y_p)\\
+    &=\mathbb{P}(X_{n+p+1}=y_{p+1}|X_n,\dots,X_{n+p})\\
+    &=\mathbb{E}\bigl[\mathbb{P}(X_{n+p+1}=y_{p+1}|X_0,\dots,X_{n+p})\bigm| X_n,\dots,X_{n+p}\bigr]\\
+    &=\mathbb{E}[Q(X_{n+p},y_{p+1})|X_n,\dots,X_{n+p}]\\
+    &=Q(X_{n+p},y_{p+1})=Q(Y_p,y_{p+1}),
+  \end{align*}
+  这就表明 $(Y_p)_{p\in \mathbb{Z}_+}$ 是带有转移矩阵 $Q$ 的 Markov 链。
 \end{proof}
 
 
 \section{例子}
 
 \subsection{$\mathbb{Z}^d$ 上的随机游走}
+
+
+\section{典范的 Markov 链}
+
+在本节中，我们解释如何对概率空间（和随机过程）进行典范的选择，以获得具有给定转移矩阵的 Markov 链。
+这与前面的章节形成对比，前面的章节没有指定潜在的概率空间。在 Markov 链的背景下，这种典范的选择
+将有几个优点。特别是，它将使我们能够同时考虑给定的 Markov 链和所有可能的初始点。
+
+\begin{proposition}
+  令 $Q$ 是 $E$ 上的随机矩阵，我们可以找到一个概率空间 $(\Omega,\mathcal{A},\mathbb{P})$ 使得对于
+  每个 $x\in E$，都可以构建一个带有转移矩阵 $Q$ 的 Markov 链 $(X_n^x)_{n\in \mathbb{Z}_+}$ 且
+  $X_0^x=x$。
+\end{proposition}
+
+下面我们解释这个概率空间的选择，我们令
+\[
+  \mat\Omega=E^{\mathbb{Z}_+},
+\]
+即 $\mat\Omega$ 的元素形如 $\omega=(\omega_0,\omega_1,\omega_2,\dots)$。定义坐标映射
+$\mat X_n$ 为 $\mat X_n(\omega)=\omega_n$。我们给 $\mat\Omega$ 配备使得所有坐标映射
+$\mat X_n$ 都可测的最小的 $\sigma$-域，记为 $\mathfrak{F}$。
+
+\begin{lemma}
+  令 $(G,\mathcal{G})$ 是可测空间，映射$\psi:G\to \mat\Omega$，那么
+  $\psi$ 可测当且仅当 $\mat X_n\circ\psi$ 可测。
+\end{lemma}
+
+\begin{theorem}
+  令 $Q$ 是 $E$ 上的随机矩阵，对于每个 $x\in E$，存在唯一的 $(\mat\Omega,\mathfrak F)$ 上
+  的概率测度 $\matup P_x$ 使得坐标过程 $(\mat X_n)_{n\in \mathbb{Z}_+}$ 是带有
+  转移矩阵 $Q$ 的 Markov 链并且 $\matup P_x(\mat X_0=x)=1$。
+\end{theorem}
+\begin{remark}
+  我们将说在概率空间 $(\mat\Omega,\mathfrak F,\matup P_x)$ 上的坐标过程
+  $(\mat X_n)_{n\in \mathbb{Z}_+}$ 是具有转移矩阵 $Q$ 和初值 $x$ 的\emph{典范 Markov 链}。
+\end{remark}
+
+\begin{remark}\label{rmk:canonical Markov}
+  令 $(Y_n)_{n\in \mathbb{Z}_+}$ 是概率测度 $\mathbb{P}$ 下具有转移矩阵 $Q$ 的 Markov 链
+  且 $Y_0=x$。那么对于 $\mat\Omega=E^{\mathbb{Z}_+}$ 的任意可测子集 $B$，有
+  \[
+    \mathbb{P}\bigl((Y_n)_{n\in \mathbb{Z}_+}\in B\bigr)=\matup P_x(B).
+  \]
+  事实上，当 $B$ 是圆柱集（cylinder set）时，这个等式成立，然后依据单调类给出一般情况。
+  这个等式表明，我们后面为典范 Markov 链建立的所有结果都可以转移到具有相同转移矩阵的任何
+  Markov 链上（无论它是在哪个概率空间上定义的）。
+\end{remark}
+
+\section{状态分类}
+
+从现在开始，除非另有说明，否则我们将考虑上一节中针对 $E$ 上给定随机矩阵 $Q$ 引入的典范 Markov 链。
+如 \autoref{rmk:canonical Markov} 所述，我们可以将得出的所有结果都转移到
+在任何概率空间上定义的具有相同转移矩阵的 Markov 链。
+
+回顾记号
+\[
+  H_x=\inf\{n\geq 1| \mat X_n=x\}, N_x=\sum_{n=0}^\infty \indicator{\{\mat X_n=x\}}.
+\]
+在 Markov 链中，$H_x$ 可以解释为状态第一次回到起点 $x$ 时需要的步数，
+$N_x$ 可以解释为状态经过起点 $x$ 的次数。
+
+\begin{proposition}
+  令 $x\in E$，那么
+  \begin{itemize}
+    \item 要么 $\matup P_x(H_x<\infty)=1$，此时
+    \[
+      N_x=\infty,\ \alsu{\matup P_x}
+    \]
+    这种情况下 $x$ 被称为\emph{常返的}。
+    \item 要么 $\matup P_x(H_x<\infty)<1$，此时
+    \[
+      N_x<\infty,\ \alsu{\matup P_x}
+    \]
+    更准确地，对于每个 $k\geq 1$ 有 $\matup P_x(N_x=k)=\matup P_x(H_x=\infty)\matup P_x(H_x<\infty)^{k-1}$，
+    并且 $\matup E_x[N_x]=1/\matup P_x(H_x=\infty)<\infty$，在这种情况下 $x$
+    被称为是\emph{暂留的}。
+  \end{itemize}
+\end{proposition}
+\begin{remark}
+  直观上来说，$\matup P_x(H_x<\infty)=1$ 的情况表明如果状态几乎肯定能够回到起点 $x$，那么
+  其几乎肯定能够无数次经过起点 $x$。$\matup P_x(H_x<\infty)<1$ 的情况表明
+  如果状态不一定能回到起点 $x$，那么其经过起点 $x$ 的次数几乎肯定是有限次，且期望也是有限次。
+\end{remark}
+
+\begin{definition}
+  Markov 链的潜在核定义为 $E\times E$ 上的函数 
+  \[
+    U(x,y)=\matup E_x[N_y].
+  \]
+\end{definition}
+
+注意到 $U(x,y)>0$ 当且仅当从 $x$ 出发的链能够到达 $y$ 的概率是正的。
+
 
 
 
