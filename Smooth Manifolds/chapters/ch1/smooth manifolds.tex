@@ -1,0 +1,347 @@
+
+\chapter{光滑流形}
+
+\section{拓扑流形}
+
+\subsection{拓扑流形的例子}
+
+\begin{example}[连续函数的图像]\label{exa:graph of continuous fuction}
+  令 $U\subseteq\mathbb{R}^n$ 是开集，$f:U\to\mathbb{R}^k$ 是连续映射，
+  $f$ 的\emph{图像}定义为
+  \[
+    \Gamma(f)=\bigl\{(x,f(x))\bigm| x\in U\bigr\} \subseteq\mathbb{R}^n\times\mathbb{R}^k. 
+  \]
+  我们说明 $\Gamma(f)$ 同胚于 $U$，从而表明 $\Gamma(f)$ 是一个拓扑 $n$-流形。
+  考虑投影映射 $\pi_1:\mathbb{R}^n\times\mathbb{R}^k\to\mathbb{R}^n$，
+  将 $\pi_1$ 限制在 $\Gamma(f)$ 上，即定义 $\varphi:\Gamma(f)\to U$ 为
+  \[
+    \varphi(x,f(x))=x.  
+  \]
+  显然 $\varphi$ 是双射。$\varphi$ 的逆映射为 $\varphi^{-1}(x)=(x,f(x))$，
+  $f$ 连续表明 $\varphi^{-1}$ 连续，所以 $\varphi$ 是同胚。于是
+  $(\Gamma(f),\varphi)$ 是一个全局坐标卡，$\Gamma(f)$ 是拓扑 $n$-流形。
+\end{example}
+
+\begin{example}[球面]\label{exa:topological sphere}
+  对于 $n\geq 0$，单位 $n$-球面 $\mathbb{S}^n$ 作为 $\mathbb{R}^{n+1}$
+  的子空间是 Hausdorff 的以及第二可数的，下面我们说明 $\mathbb{S}^n$
+  是局部 Euclid 的。对于 $1\leq i\le n+1$，定义 $U_i^+$ 为 $\mathbb{S}^n$
+  中第 $i$ 个坐标大于零所表示的半球面：
+  \[
+    U_i^+=\bigl\{ (x^1,\dots,x^{n+1})\in \mathbb{R}^{n+1}\bigm| x^i>0 \bigr\} 
+    \cap\mathbb{S}^n ,
+  \]
+  类似的，记 $U_i^-$ 为 $x^i<0$ 表示的半球面。显然 $U_i^\pm$ 都是
+  $\mathbb{S}^n$ 的开集。
+
+  令 $f:\mathbb{B}^n\to\mathbb{R}$ 为连续映射
+  \[
+    f(x)=\sqrt{1-\abs{x}^2}=\sqrt{1-(x_1^2+\cdots+x_n^2)},
+  \]
+  那么对于每个 $i$，$U_i^+$ 是函数
+  \[
+    x^i=f(x^1,\dots,\hat x^i,\dots,x^{n+1})  
+  \]
+  的图像，其中 $\hat{x}^i$ 表示自变量中略去 $x^i$ 这一项。类似的，
+  $U_i^-$ 是函数
+  \[
+    x^i=-f(x^1,\dots,\hat x^i,\dots,x^{n+1})  
+  \]
+  的图像。由上例，每个 $U_i^\pm$ 都同胚于开球 $\mathbb{B}^n$，同胚映射
+  $\varphi_i^\pm:U_i^\pm\to\mathbb{B}^n$ 为
+  \[
+    \varphi_i^\pm(x^1,\dots,x^{n+1})=(x^1,\dots,\hat x^i,\dots,x^{n+1}).  
+  \]
+  所以 $(U_i^\pm,\varphi_i^\pm)$ 是 $2n+2$ 个坐标卡，其能够覆盖 $\mathbb{S}^n$，
+  所以 $\mathbb{S}^n$ 是一个拓扑 $n$-流形。
+\end{example}
+
+\begin{example}[射影空间]
+  \emph{$n$ 维实射影空间} $\mathbb{RP}^n$ 指的是 $\mathbb{R}^{n+1}$
+  中 $1$ 维子空间的集合，配备自然映射 $\pi:\mathbb{R}^{n+1}\smallsetminus\{0\}\to\mathbb{RP}^n$
+  诱导的商拓扑，$\pi$ 将每个 $x\in\mathbb{R}^{n+1}\smallsetminus\{0\}$ 送到
+  $x$ 张成的 $1$ 维子空间，我们记为 $[x]=\pi(x)$。$\mathbb{RP}^2$ 通常被称为\emph{射影平面}。
+
+  我们首先说明 $\mathbb{RP}^n$ 是局部 Euclid 的。对于每个 $1\leq i\le n+1$，
+  令
+  \[
+    U_i=\bigl\{(x^1,\dots,x^{n+1})\in\mathbb{R}^{n+1}\bigm| x^i\neq 0\bigr\}  ,
+  \]
+  那么 $\tilde{U}_i=\pi(U_i)$ 是 $\mathbb{RP}^n$ 的开集且 $\{U_i\}$ 能覆盖 $\mathbb{RP}^n$。
+  由于 $U_i=\pi^{-1}(\pi(U_i))$，所以 $U_i$ 是 $\mathbb{R}^{n+1}$ 的饱和开子集，所以
+  限制 $\pi|_{U_i}:U_i\to \tilde{U}_i$ 是商映射。构造 $\tilde\varphi_i:\tilde U_i\to\mathbb{R}^n$
+  为
+  \[
+    \tilde\varphi_i[x_1,\dots,x^{n+1}]=\left(\frac{x^1}{x^i},\dots,\frac{x^{i-1}}{x^i},\frac{x^{i+1}}{x^i},\dots,\frac{x^{n+1}}{x^i}\right)  ,
+  \]
+  $\tilde\varphi_i$ 显然是良定义的。由于 $\tilde\varphi_i\circ\pi|_{U_i}$
+  是连续映射，所以 $\tilde\varphi_i$ 连续。$\tilde\varphi_i$
+  有连续逆映射（其可以视为复合映射 $\mathbb{R}^n\to U_i\to\tilde U_i$）
+  \[
+    \tilde\varphi_i^{-1}(x^1,\dots,x^n)=[x^1,\dots,x^{i-1},1,x^{i+1},\dots,x^n],
+  \]
+  所以 $\tilde\varphi_i$ 是同胚。于是 $(\tilde U_i,\tilde\varphi_i)$ 构成了覆盖 $\mathbb{RP}^n$ 的
+  $n+1$ 个坐标卡。
+\end{example}
+
+\begin{example}[积流形]
+  若 $M_1,\dots,M_k$ 分别是 $n_1,\dots,n_k$ 维拓扑流形，则积空间
+  $M_1\times\cdots\times M_k$ 是 $n_1+\cdots+n_k$ 维拓扑流形。
+  由积拓扑的性质可知 $M_1\times\cdots\times M_k$ 是 Hausdorff 的以及第二可数的。
+  任取 $(p_1,\dots,p_k)\in M_1\times\cdots\times M_k$，$M_i$ 是 $n_i$ 维拓扑流形
+  表明存在 $p_i$ 处的坐标卡 $(U_i,\varphi_i)$，那么积映射
+  \[
+    \varphi_1\times\cdots\times\varphi_k:U_1\times\cdots\times U_k\to\mathbb{R}^{n_1+\cdots+ n_k}  
+  \]
+  是 $U_1\times\cdots\times U_k$ 到像集的同胚，所以 $M_1\times\cdots\times M_k$
+  的坐标卡形如 $(U_1\times\cdots\times U_k,\varphi_1\times\cdots\times \varphi_k)$。
+\end{example}
+
+\section{光滑结构}
+
+仅有拓扑结构无法在流形上做微积分，因为可微性在同胚的意义下并不是保持不变的。
+例如映射 $\varphi(x,y)=(x^{1/3},y^{1/3})$ 是 $\mathbb{R}^2\to\mathbb{R}^2$ 的同胚映射，
+考虑可微函数 $f:\mathbb{R}^2\to\mathbb{R}$ 为 $f(x,y)=x$，但是
+$f\circ\varphi(x,y)=x^{1/3}$ 在 $(0,0)$ 处不可微。这意味着我们需要引入
+额外的结构来定义流形之间映射的微分。
+
+对于一个拓扑 $n$-流形 $M$，$M$ 中的每个点都有一个坐标卡 $(U,\varphi)$，
+设 $\varphi:U\to\hat U\subseteq\mathbb{R}^n$ 的同胚，那么对于映射
+$f:M\to\mathbb{R}$，直觉上应该定义 $f$ 是光滑的当且仅当 $f\circ\varphi^{-1}:\hat U\to\mathbb{R}$
+是光滑的。但是我们还需要上述定义与坐标卡的选取无关，所以我们需要将上述
+定义限制在某一类“相容的光滑坐标卡”上，即将光滑坐标卡视为 $M$ 上的一种新的结构。
+
+令 $M$ 是拓扑 $n$-流形。如果 $(U,\varphi)$ 和 $(V,\psi)$ 是两个坐标卡并且
+$U\cap V\neq\emptyset$，那么复合映射 $\psi\circ\varphi^{-1}:\varphi(U\cap V)\to\psi(U\cap V)$
+被称为\emph{$\varphi$ 到 $\psi$ 的转移映射}，这依然是一个同胚。
+两个坐标卡 $(U,\varphi)$ 和 $(V,\psi)$ 如果满足 $U\cap V=\emptyset$ 或者
+$\psi\circ\varphi^{-1}$ 是微分同胚，那么我们说这两个坐标卡是\emph{光滑相容的}。
+
+我们定义 $M$ 的\emph{图册}为能覆盖 $M$ 的一族坐标卡的集合，一个图册 $\mathcal{A}$
+中的任意两个坐标卡如果都是光滑相容的，那么我们说 $\mathcal{A}$ 是一个\emph{光滑图册}。
+
+有了光滑图册，我们便可以良好的定义光滑函数，对于函数 $f:M\to\mathbb{R}$，
+如果对于光滑图册中的每个坐标卡 $(U,\varphi)$，函数 $f\circ\varphi^{-1}:U\to\mathbb{R}$
+都是光滑的，那么我们说 $f$ 是光滑的。此时光滑的定义不会出现冲突的现象，因为
+对于光滑图册中的另一个坐标卡 $(V,\psi)$，函数 $f\circ\psi^{-1}=(f\circ\varphi^{-1})\circ(\varphi\circ\psi^{-1})$，
+$(U,\varphi)$ 和 $(V,\psi)$ 光滑相容就表明 $f\circ\psi^{-1}$ 在 $\psi(U\cap V)$ 上也是光滑的。
+一般而言，不同的光滑图册也可能给出相同的“光滑结构”，例如 $\mathbb{R}^n$ 上的两个光滑图册：
+\[
+  \mathcal{A}_1=\{(\mathbb{R}^n,\Id_{\mathbb{R}^n})\},\quad
+  \mathcal{A}_2=\{(B_1(x),\Id_{B_1(x)})\,|\, x\in\mathbb{R}^n\},
+\]
+虽然这是两个不同的光滑图册，但是 $f:\mathbb{R}^n\to\mathbb{R}$
+的光滑性在这两个图册的意义下都是一样的，都与微积分中光滑的意义相同。
+造成这种现象的原因是 $\mathcal{A}_1$ 和 $\mathcal{A}_2$ 中的任意坐标卡都是光滑相容的，
+所以我们可以考虑将它们并起来得到更大的光滑图册 $\mathcal{A}_1\cup\mathcal{A}_2$。
+
+为了解决这个问题，我们采用下面的做法：如果 $M$ 上的光滑图册 $\mathcal{A}$
+不能恰当包含于任意更大的光滑图册，那么我们说 $\mathcal{A}$ 是\emph{最大的}。
+这意味着任意与 $\mathcal{A}$ 中坐标卡光滑相容的坐标卡都已经在 $\mathcal{A}$
+中了。
+
+现在我们可以定义本书的主要概念了。如果 $M$ 是一个拓扑流形，$M$ 上的\emph{光滑结构}
+指的是一个最大光滑图册。光滑结构中的坐标卡被称为\emph{光滑坐标卡}。一个\emph{光滑流形}指的是 $(M,\mathcal{A})$，
+其中 $M$ 是拓扑流形，$\mathcal{A}$ 是 $M$ 上的一个光滑结构。
+当光滑结构清晰的时候，我们简称为“$M$ 是一个光滑流形”。光滑结构也被称
+为\emph{微分结构}或者\emph{$C^\infty$ 结构}。
+需要注意，光滑结构是一个附加属性。事实上，一个拓扑流形可能有不同的光滑结构，
+也可能根本不存在光滑结构！
+
+通过明确指出最大光滑图册来定义光滑结构并不方便，因为这样的光滑图册可能包含
+非常多的坐标卡。下面的命题告诉我们，我们只需要指定某一个光滑图册即可。
+
+\begin{proposition}
+  $M$ 是一个拓扑流形。
+  \begin{enumerate}
+    \item $M$ 的每一个光滑图册 $\mathcal{A}$ 都被唯一的最大光滑图册包含，
+    称为\emph{由 $\mathcal{A}$ 确定的光滑结构}。
+    \item $M$ 的两个光滑图册确定相同的光滑结构当且仅当它们的并是一个光滑图册。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 令 $\bar{\mathcal{A}}$ 为与 $\mathcal{A}$ 中所有坐标卡都光滑相容的坐标卡的集合。
+  我们说明 $\bar{\mathcal{A}}$ 是一个光滑图册。任取 $(U,\varphi),(V,\psi)\in \bar{\mathcal{A}}$，
+  我们要说明 $\psi\circ\varphi^{-1}:\varphi(U\cap V)\to\psi(U\cap V)$ 是光滑的。
+
+  任取 $x=\varphi(p)\in\varphi(U\cap V)$，那么存在 $(W,\theta)\in\mathcal{A}$ 
+  使得 $p\in W$。由于 $(U,\varphi)$ 和 $(W,\theta)$ 光滑相容，
+  $(V,\psi)$ 和 $(W,\theta)$ 光滑相容，所以 $\theta\circ\varphi^{-1}:\varphi(U\cap W)\to\theta(U\cap W)$
+  是光滑的，$\psi\circ\theta^{-1}:\theta(V\cap W)\to\psi(V\cap W)$ 是光滑的，
+  因此 $\psi\circ\varphi^{-1}=(\psi\circ\theta^{-1})\circ(\theta\circ\varphi^{-1})$
+  在 $x$ 的某个邻域上是光滑的，故 $\psi\circ\varphi^{-1}$ 在 $\varphi(U\cap V)$
+  上是光滑的。这表明 $\bar{\mathcal{A}}$ 是光滑图册。根据定义，
+  $\bar{\mathcal{A}}$ 的最大性和唯一性显然。
+
+  (2) 设 $\mathcal{A}_1$ 和 $\mathcal{A}_2$ 是 $M$ 的两个光滑地图册。
+  若它们确定了相同的光滑结构 $\bar{\mathcal{A}}$，那么 $\mathcal{A}_1\cup\mathcal{A}_2\subseteq\bar{\mathcal{A}}$，
+  所以 $\mathcal{A}_1\cup\mathcal{A}_2$ 中任意两个坐标卡光滑相容，即 $\mathcal{A}_1\cup\mathcal{A}_2$
+  是光滑图册。反之，若 $\mathcal{A}_1\cup\mathcal{A}_2$ 是光滑图册，
+  那么 $\mathcal{A}_1\cup\mathcal{A}_2$ 确定了光滑结构 $\bar{\mathcal{A}}$，故
+  $\mathcal{A}_1\subseteq\mathcal{A}_1\cup\mathcal{A}_2\subseteq\bar{\mathcal{A}}$，
+  同理 $\mathcal{A}_2\subseteq\bar{\mathcal{A}}$，所以 $\mathcal{A}_1$ 和 $\mathcal{A}_2$
+  确定了相同的光滑结构。
+\end{proof}
+
+
+\section{光滑流形的例子}
+
+\begin{example}[Euclid 空间]
+  Euclid 空间 $\mathbb{R}^n$ 是一个 $n$ 维光滑流形，其光滑结构由光滑图册
+  $\{(\mathbb{R}^n,\Id_{\mathbb{R}^n})\}$ 确定，我们说这是 $\mathbb{R}^n$
+  上的\emph{标准光滑结构}，在不特殊说明的情况下，$\mathbb{R}^n$ 总是采用标准
+  光滑结构。
+\end{example}
+
+\begin{example}[$\mathbb{R}$ 上的另一个光滑结构]
+  考虑同胚 $\psi:\mathbb{R}\to\mathbb{R}$ 为 $\psi(x)=x^{3}$。
+  那么图册 $\{(\mathbb{R},\psi)\}$ 确定了 $\mathbb{R}$ 上的一个光滑结构。
+  坐标卡 $(\mathbb{R},\psi)$ 和 $(\mathbb{R},\Id_{\mathbb{R}})$ 不是光滑相容的，
+  因为转移映射 $\Id_{\mathbb{R}}\circ\psi^{-1}(x)=x^{1/3}$ 不是光滑映射。因此
+  这个光滑结构和标准光滑结构是不同的光滑结构。
+\end{example}
+
+\begin{example}[有限维向量空间]\label{exa:finite-dim vector space as manifold}
+  令 $V$ 是有限维实向量空间。$V$ 上的范数诱导了度量，从而确定了一个拓扑，
+  又因为 $V$ 上的任意两个范数都是等价的，所以 $V$ 上由范数诱导的拓扑结构是
+  唯一确定的。在范数诱导的拓扑下，$V$ 是一个拓扑 $n$-流形，并且
+  有一个自然的光滑结构。$V$ 的每组基 $(E_1,\dots,E_n)$ 都定义了一个同构
+  $E:\mathbb{R}^n\to V$ 为
+  \[
+    E(x)=\sum_{i=1}^n x^iE_i.  
+  \]
+  这个映射也是一个同胚，所以 $(V,E^{-1})$ 是一个坐标卡。如果
+  $(\tilde{E}_1,\dots,\tilde{E}_n)$ 是另一组基并且
+  $\tilde{E}(x)=\sum_j x^j\tilde{E}_j$ 的对应的同构。那么存在可逆矩阵
+  $(A_i^j)$ 使得 $E_i=\sum_j A_i^j\tilde{E}_j$。于是任意两个坐标卡
+  之间的转移映射为 $\tilde{E}^{-1}\circ E(x)=\tilde{x}=\left(\tilde{x}^1,\dots,\tilde{x}^n\right)$，
+  其中
+  \[
+    \sum_{j=1}^n\tilde{x}^j\tilde{E}_j=\sum_{i=1}^nx^iE_i=\sum_{i,j}^nx^iA_{i}^j\tilde{E}_j.  
+  \]
+  这表明 $\tilde{x}^j=\sum_iA_i^jx^i$，所以 $\tilde{E}^{-1}\circ E$
+  是可逆的线性映射，因此是微分同胚。故这样的坐标卡之间都是光滑相容的。
+  这样的坐标卡的集合确定了一个光滑结构，被称为\emph{$V$ 上的标准光滑结构}。
+  这个例子表明有限维向量空间上的光滑结构和基与范数的选取无关。
+\end{example}
+
+\begin{example}[矩阵空间]
+  令 $M(m\times n,\mathbb{R})$ 表示 $\mathbb{R}$ 上的 $m\times n$ 矩阵
+  的集合。因为 $M(m\times n,\mathbb{R})$ 是 $mn$ 维向量空间，
+  那么我们可以将 $M(m\times n,\mathbb{R})$ 视为 $\mathbb{R}^{mn}$，
+  在标准光滑结构下，$M(m\times n,\mathbb{R})$ 成为 $mn$-维光滑流形。
+  当 $m=n$ 的时候，我们简记为 $M(n,\mathbb{R})$。
+\end{example}
+
+\begin{example}[开子流形]
+  令 $M$ 是光滑 $n$-流形，$U\subseteq M$ 是开子集，定义 $U$ 上的图册
+  \[
+    \mathcal{A}_U=\{(V,\psi)\,|\,V\subseteq U,\text{$(V,\psi)$ 是 $M$ 的光滑坐标卡}\},  
+  \]
+  任取 $p\in U$，存在 $M$ 的光滑坐标卡 $(W,\psi)$ 使得 $p\in W$，
+  令 $V=W\cap U$，那么 $p\in V$ 且 $(V,\psi|_V)\in\mathcal{A}_U$，所以 $\mathcal{A}_U$
+  覆盖 $U$。此外容易验证 $\mathcal{A}_U$ 是光滑图册。所以 $M$ 的任意开子集
+  可以自然地成为光滑 $n$-流形。
+\end{example}
+
+\begin{example}[一般线性群]
+  一般线性群 $\GL(n,\mathbb{R})$ 是所有 $n\times n$ 可逆实矩阵的集合，
+  由于 $\GL(n,\mathbb{R})$ 是 $M(n,\mathbb{R})$ 的开子集，所以 $\GL(n,\mathbb{R})$
+  是光滑 $n^2$-流形。
+\end{example}
+
+\begin{example}[光滑函数的图像]
+  如果 $U\subseteq\mathbb{R}^n$ 是开子集，$f:U\to\mathbb{R}^k$ 是光滑函数，
+  \autoref{exa:graph of continuous fuction} 告诉我们 $f$ 的图像是拓扑 $n$-流形，
+  有全局坐标卡 $(\Gamma(f),\varphi)$，其中 $\varphi$ 是投影 $\pi:\mathbb{R}^{n}\times\mathbb{R}^k\to\mathbb{R}^n$
+  在 $\Gamma(f)$ 上的限制，这使得 $\{(\Gamma(f),\varphi)\}$ 成为一个光滑图册，
+  所以 $\Gamma(f)$ 有一个自然的光滑结构。
+\end{example}
+
+\begin{example}[球面]
+  \autoref{exa:topological sphere} 告诉我们单位 $n$-球面 $\mathbb{S}^n\subseteq\mathbb{R}^{n+1}$
+  是拓扑 $n$-流形，其有 $2n+2$ 个坐标卡 $\{(U_i^\pm,\varphi_i^\pm)\}$。
+  对于不同的 $i,j$，转移映射 $\varphi_i^\pm\circ(\varphi_j^\pm)^{-1}$ 为
+  \[
+    \varphi_i^\pm\circ(\varphi_j^\pm)^{-1}(u^1,\dots,u^{n})=
+    \left(u^1,\dots,\hat{u}^i,\dots,\pm\sqrt{1-|u|^2},\dots,u^n\right),
+  \]
+  其中 $\sqrt{1-|u|^2}$ 处于第 $j$ 个坐标，这显然是 $\mathbb{B}^n\to\mathbb{B}^n$ 的光滑映射。
+  当 $i=j$ 的时候，$U_i^+\cap U_i^-=\emptyset$。因此 $\{(U_i^\pm,\varphi_i^\pm)\}$
+  是一个光滑图册，这定义了 $\mathbb{S}^n$ 上的一个光滑结构，我们将这个光滑结构
+  作为 $\mathbb{S}^n$ 的\emph{标准光滑结构}。
+\end{example}
+
+\begin{example}[水平集]
+  前面的例子可以被推广。设 $U\subseteq\mathbb{R}^n$ 是开集，$\Phi:U\to\mathbb{R}$
+  是光滑函数，对于任意 $c\in\mathbb{R}$，$\Phi^{-1}(c)$ 被称为\emph{$\Phi$ 的水平集}。
+  令 $M=\Phi^{-1}(c)$，假设对于任意 $a\in\Phi^{-1}(c)$，全导数 $D\Phi(a)\in M(1\times n,\mathbb{R})$
+  都非零。设 $\partial\Phi/\partial x^i(a)\neq 0$，根据隐函数定理，存在 $a$
+  的邻域 $U_0$ 使得 $M\cap U_0$ 可以被表示为函数
+  \[
+    x^i=f(x^1,\dots,\hat{x}^i,\dots,x^n)  
+  \]
+  的图像，其中 $f$ 是 $\mathbb{R}^{n-1}$ 的某个开子集上的光滑函数。因此，和
+  \autoref{exa:graph of continuous fuction} 一样的讨论可知 $M$ 是一个
+  $n-1$ 维拓扑流形。然后通过类似 $n$-球面的处理，这样的坐标卡的集合是一个
+  光滑图册，所以 $M$ 有一个光滑结构。
+\end{example}
+
+目前我们都是从一个拓扑空间开始，验证其是拓扑流形，再指定一个光滑结构。
+我们可以将这两个步骤合起来得到更为方便的构造方法，特别是当我们
+从一个没有拓扑的集合上开始的时候。
+
+\begin{lemma}[光滑流形坐标卡引理]\label{lemma:smooth manifold chart}
+  $M$ 是集合，假设 $M$ 有一个子集族 $\{U_\alpha\}$，每个 $U_\alpha$ 都附带一个映射
+  $\varphi_\alpha:U_\alpha\to\mathbb{R}^n$，它们满足下面的条件：
+  \begin{enumerate}
+    \item 对于每个 $\alpha$，$\varphi_\alpha$ 是 $U_\alpha$ 到开子集
+    $\varphi_\alpha(U_\alpha)\subseteq\mathbb{R}^n$ 的双射。
+    \item 对于每个 $\alpha,\beta$，集合 $\varphi_\alpha(U_\alpha\cap U_\beta)$
+    和 $\varphi_\beta(U_\alpha\cap U_\beta)$ 是 $\mathbb{R}^n$ 的开集。
+    \item 当 $U_\alpha\cap U_\beta\neq\emptyset$ 的时候，映射
+    $\varphi_\beta\circ\varphi_\alpha^{-1}:\varphi_\alpha(U_\alpha\cap U_\beta)\to\varphi_\beta(U_\alpha\cap U_\beta)$
+    是光滑的。
+    \item 可数个 $U_\alpha$ 可以覆盖 $M$。
+    \item 令 $p,q\in M$ 是不同的两个点，要么存在 $U_\alpha$ 同时包含 $p,q$，
+    要么存在不同的 $U_\alpha$ 和 $U_\beta$ 使得 $p\in U_\alpha$ 以及 $q\in U_\beta$。
+  \end{enumerate}
+  此时 $M$ 有一个唯一的光滑流形结构使得每个 $(U_\alpha,\varphi_\alpha)$ 都是
+  光滑坐标卡。
+\end{lemma}
+\begin{proof}
+  首先定义形如 $\varphi_\alpha^{-1}(V)$ ($V$ 是 $\mathbb{R}^n$ 的开集) 的集合是开集，
+  我们验证这给出了 $M$ 上的一个拓扑基。任取 $p\in\varphi_\alpha^{-1}(V)\cap \varphi_\beta^{-1}(W)$，
+  注意到
+  \[
+    \varphi_\alpha^{-1}(V)\cap \varphi_\beta^{-1}(W)=\varphi_\alpha^{-1}
+    \left(V\cap (\varphi_\alpha\circ\varphi_\beta^{-1})(W)\right),
+  \]
+  条件 (2) 和 (3) 表明 $(\varphi_\alpha\circ\varphi_\beta^{-1})(W)=(\varphi_\beta\circ\varphi_\alpha^{-1})^{-1}(W)$ 是 $\varphi_\alpha(U_\alpha\cap U_\beta)$
+  的开集，进而也是 $\mathbb{R}^n$ 的开集，所以 
+  $\varphi_\alpha^{-1}(V)\cap \varphi_\beta^{-1}(W)$ 自身也在这个基集合中。
+  这表明上述定义给出了 $M$ 上的一个拓扑。
+
+  根据条件 (1)，每个 $\varphi_\alpha$ 是 $U_\alpha\to\varphi_\alpha(U_\alpha)$
+  的同胚，所以 $M$ 是局部 $n$ 维 Euclid 的。根据条件 (5)，$M$ 是
+  Hausdorff 的。根据条件 (4)，$M$ 是第二可数的。最后条件 (3) 保证了
+  $\{(U_\alpha,\varphi_\alpha)\}$ 是光滑图册。所以 $M$ 成为一个光滑流形。
+\end{proof}
+\begin{remark}
+  总的来说，上述引理中 $M$ 的拓扑结构为：
+  所有形如 $\varphi_\alpha^{-1}(V)$ 的开集(其中 $V$ 是 $\mathbb{R}^n$ 的开集)
+  构成的拓扑基生成的拓扑。
+  光滑结构为：所有形如 $(U_\alpha,\varphi_\alpha)$ 的坐标卡构成一组
+  光滑坐标卡。
+\end{remark}
+
+\begin{problem}{}{}
+  令 $X$ 是所有满足 $y=\pm 1$ 的点 $(x,y)\in \mathbb{R}^2$
+  的集合，$M$ 是 $X$ 商掉等价关系 $(x,-1)\sim (x,1)$
+  （对于所有的 $x\neq 0$）得到的商空间。证明 $M$ 是局部 Euclid 的
+  和第二可数的，但是不是 Hausdorff 的。
+\end{problem}
+\begin{proof}
+  
+\end{proof}
+

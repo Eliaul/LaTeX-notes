@@ -1,0 +1,370 @@
+
+\chapter{光滑映射}
+
+\section{光滑函数与光滑映射}
+
+在这本书中，我们用\emph{函数}指代值域为 $\mathbb{R}$ 或者 $\mathbb{R}^k$
+的映射。
+
+设 $M$ 是光滑 $n$-流形，函数 $f:M\to\mathbb{R}^k$。如果任取 $p\in M$，
+都存在一个光滑坐标卡 $(U,\varphi)$ 使得 $p\in U$ 以及复合映射
+$f\circ\varphi^{-1}$ 在 $\hat U=\varphi(U)\subseteq\mathbb{R}^n$ 上是光滑的，
+那么我们说 $f$ 是\emph{光滑函数}。流形 $M$ 上所有光滑实值函数 $f:M\to\mathbb{R}$
+的集合记为 $C^\infty(M)$，构成了 $\mathbb{R}$ 上的一个向量空间。
+
+\begin{exercise}{}{}
+$M$ 是光滑流形，设 $f:M\to\mathbb{R}^k$ 是光滑函数，证明对于\emph{任意}
+光滑坐标卡 $(U,\varphi)$，函数 $f\circ\varphi^{-1}:\varphi(U)\to\mathbb{R}^k$
+是光滑的。
+\end{exercise}
+\begin{proof}
+  任取 $p\in U$，$f$ 是光滑函数表明存在光滑坐标卡 $(V,\psi)$ 使得
+  $f\circ\psi^{-1}:\psi(V)\to\mathbb{R}^k$ 是光滑的，特别地，
+  $f\circ\psi^{-1}$ 在 $\psi(p)$ 处光滑。$(U,\varphi)$
+  和 $(V,\psi)$ 光滑相容表明 $\psi\circ\varphi^{-1}$ 是光滑的，特别地，
+  $\psi\circ\varphi^{-1}$ 在 $\varphi(p)$ 处是光滑的。
+  所以 $f\circ\varphi^{-1}=(f\circ\psi^{-1})\circ(\psi\circ\varphi^{-1})$
+  在 $p$ 处是光滑的。
+\end{proof}
+
+给定函数 $f:M\to\mathbb{R}^k$ 和坐标卡 $(U,\varphi)$，函数 $\hat f=f\circ\varphi^{-1}:\varphi(U)\to\mathbb{R}^k$
+被称为\emph{$f$ 的坐标表示}。根据定义，$f$ 是光滑的当且仅当在每个点处都存在
+光滑坐标卡使得坐标表示是光滑的。上面的练习表明，光滑函数在每个光滑坐标卡处
+都有光滑的坐标表示。
+
+光滑函数的定义可以容易地拓展到流形之间的光滑映射。令 $M,N$ 是光滑流形，
+$F:M\to N$ 是映射。如果对于每个 $p\in M$，都存在包含 $p$ 的光滑坐标卡 $(U,\varphi)$
+和包含 $F(p)$ 的光滑坐标卡 $(V,\psi)$ 使得 $F(U)\subseteq V$ 并且
+复合映射 $\psi\circ F\circ\varphi^{-1}:\varphi(U)\to\psi(V)$ 是光滑函数，
+那么我们说 $F$ 是\emph{光滑映射}。可以看到前文光滑函数的定义是光滑映射的特例，
+只需取 $N=V=\mathbb{R}^k$ 以及 $\psi=\Id_{\mathbb{R}^k}$ 即可。
+
+\begin{proposition}
+  光滑映射是连续的。
+\end{proposition}
+\begin{proof}
+  设 $F:M\to N$ 是光滑映射。任取 $p\in M$，那么存在包含 $p$ 的光滑坐标卡
+  $(U,\varphi)$ 和包含 $F(p)$ 的光滑坐标卡 $(V,\psi)$ 使得 $F(U)\subseteq V$
+  并且 $\psi\circ F\circ\varphi^{-1}$ 光滑，自然 $\psi\circ F\circ\varphi^{-1}$
+  是连续函数。所以 $F=\psi^{-1}\circ(\psi\circ F\circ\varphi^{-1})\circ\varphi$
+  是 $U\to V$ 的连续映射，这表明 $F$ 是局部连续的，从而是连续映射。
+\end{proof}
+
+\begin{proposition}[光滑性的等价刻画]
+  $M,N$ 是带边或者无边光滑流形，映射 $F:M\to N$ 是光滑的当且仅当下面
+  的两个条件之一成立：
+  \begin{enumerate}
+    \item 对于每个 $p\in M$，存在包含 $p$ 的光滑坐标卡 $(U,\varphi)$
+    和包含 $F(p)$ 的光滑坐标卡 $(V,\psi)$ 使得 $U\cap F^{-1}(V)$
+    是 $M$ 的开集，并且复合映射 $\psi\circ F\circ\varphi^{-1}$
+    是 $\varphi(U\cap F^{-1}(V))\to \psi(V)$ 的光滑函数。
+    \item $F$ 是连续映射，并且存在 $M$ 的光滑图册 $\{(U_\alpha,\varphi_\alpha)\}$
+    和 $N$ 的光滑图册 $\{(V_\beta,\psi_\beta)\}$ 使得对于每个 $\alpha$ 和 $\beta$，
+    $\psi_\beta\circ F\circ\varphi_\alpha^{-1}$ 是
+    $\varphi_\alpha(U_\alpha\cap F^{-1}(V_\beta))\to\psi_\beta(V_\beta)$
+    的光滑函数。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 若 $F$ 是光滑映射，那么存在包含 $p$ 的光滑坐标卡 $(U,\varphi)$
+  和包含 $F(p)$ 的光滑坐标卡 $(V,\psi)$ 使得 $F(U)\subseteq V$，并且
+  $\psi\circ F\circ\varphi^{-1}$ 光滑。此时 $U\cap F^{-1}(V)=U$
+  是 $M$ 的开集。
+
+  反之，若存在包含 $p$ 的光滑坐标卡 $(U,\varphi)$
+  和包含 $F(p)$ 的光滑坐标卡 $(V,\psi)$ 使得 $U\cap F^{-1}(V)$
+  是 $M$ 的开集，并且复合映射 $\psi\circ F\circ\varphi^{-1}$
+  是 $\varphi(U\cap F^{-1}(V))\to \psi(V)$ 的光滑函数。记
+  $W=U\cap F^{-1}(V)$，那么 $(W,\varphi|_W)$ 是包含 $p$ 的光滑坐标卡，
+  并且 $F(W)\subseteq F(U)\cap F(F^{-1}(V))\subseteq F(U)\cap V\subseteq V$，
+  所以 $F$ 是光滑映射。
+
+  (2) 若 $F$ 是光滑映射，那么对于每个 $p\in M$，存在包含 $p$ 的光滑坐标卡
+  $(U_p,\varphi_p)$ 和包含 $F(p)$ 的光滑坐标卡 $(V_{F(p)},\psi_{F(p)})$ 使得
+  $F(U_p)\subseteq V_{F(p)}$ 并且 $\psi_{F(p)}\circ F\circ\varphi_p^{-1}$
+  所示光滑函数。那么 $\{(U_p,\varphi_p)\}_{p\in M}$ 是 $M$ 的光滑图册。
+  若 $\{(V_{F(p)},\psi_{F(p)})\}_{p\in M}$ 不能覆盖 $V$，可以添加任意光滑坐标卡使得
+  其覆盖 $V$。此时即满足要求。
+
+  反之，若 $F$ 是连续映射，并且存在 $M$ 的光滑图册 $\{(U_\alpha,\varphi_\alpha)\}$
+  和 $N$ 的光滑图册 $\{(V_\beta,\psi_\beta)\}$ 使得对于每个 $\alpha$ 和 $\beta$，
+  $\psi_\beta\circ F\circ\varphi_\alpha^{-1}$ 是
+  $\varphi_\alpha(U_\alpha\cap F^{-1}(V_\beta))\to\psi_\beta(V_\beta)$
+  的光滑函数。任取 $p\in M$，存在包含 $p$ 的光滑坐标卡 $(U_\alpha,\varphi_\alpha)$
+  和包含 $F(p)$ 的光滑坐标卡 $V_\beta$，$F$ 连续表明 $U_\alpha\cap F^{-1}(V_\beta)$
+  是 $M$ 的开集，由 (1)，所以 $F$ 是光滑映射。
+\end{proof}
+
+\begin{proposition}[光滑性是局部的]\label{prop:smoothness is local}
+  令 $M,N$ 是带边或者无边光滑流形，映射 $F:M\to N$。
+  \begin{enumerate}
+    \item 如果每个 $p\in M$ 都有一个邻域 $U$ 使得限制 $F|_U$ 是光滑映射，
+    那么 $F$ 是光滑映射。
+    \item 反之，如果 $F$ 是光滑映射，那么其限制在任意开子集上都是光滑的。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) $F|_U:U\to N$ 光滑表明存在包含 $p$ 的 $U$ 的光滑坐标卡
+  $(W,\varphi)$ 和包含 $F(p)$ 的光滑坐标卡 $(V,\psi)$ 使得 $F(W)\subseteq V$ 并且
+  $\psi\circ F|_U\circ\varphi^{-1}$ 光滑。开子流形上的光滑结构
+  表明 $W\subseteq U$ 并且 $(W,\varphi)$ 是 $M$ 的光滑坐标卡，所以 $F$
+  是光滑映射。
+
+  (2) 设 $U\subseteq M$ 是开子集。任取 $p\in U$，存在包含 $p$ 的光滑坐标卡
+  $(W,\varphi)$ 和包含 $F(p)$ 的光滑坐标卡 $(V,\psi)$ 使得 $F(W)\subseteq V$
+  并且 $\psi\circ F\circ \varphi^{-1}$ 光滑。此时 $(W\cap U,\varphi|_{W\cap U})$
+  是 $U$ 的光滑坐标卡，并且 $F(W\cap U)\subseteq V$，所以 $F|_U:U\to N$ 是光滑映射。
+\end{proof}
+
+\begin{corollary}[光滑映射的粘合引理]
+  令 $M,N$ 是带边或者无边光滑流形，$\{U_\alpha\}_{\alpha\in A}$ 是 $M$ 
+  的一个开覆盖。假设对于每个 $\alpha\in A$，都有一个光滑映射 $F_\alpha:U_\alpha\to N$
+  并且这些光滑映射在重叠处重合，即 $F_\alpha|_{U_\alpha\cap U_\beta}=F_\beta|_{U_\alpha\cap U_\beta}$
+  对于任意 $\alpha,\beta\in A$ 都成立。那么存在唯一的光滑映射 $F:M\to N$ 使得
+  对于每个 $\alpha\in A$ 有 $F|_{U_\alpha}=F_\alpha$。
+\end{corollary}
+
+如果 $F:M\to N$ 是光滑映射，$(U,\varphi)$ 和 $(V,\psi)$ 分别是 $M$ 和 $N$
+的光滑坐标卡，我们说 $\hat F=\psi\circ F\circ\varphi^{-1}$ 是 $F$
+相对于给定坐标的\emph{坐标表示}。
+
+\begin{proposition}
+  $M,N,P$ 是带边或者无边光滑流形。
+  \begin{enumerate}
+    \item 常值映射 $c:M\to N$ 是光滑映射。
+    \item 恒等映射 $\Id_M$ 是光滑映射。
+    \item 如果 $U\subseteq M$ 是带边或者无边的开子流形，那么
+    包含映射 $\iota:U\hookrightarrow M$ 是光滑映射。
+    \item 如果 $F:M\to N$ 和 $G:N\to P$ 是光滑映射，那么
+    $G\circ F:M\to P$ 也是光滑映射。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 设对于任意 $p\in M$ 都有 $c(p)=q\in N$。那么任取包含 $p$ 的光滑坐标卡 $(U,\varphi)$
+  和包含 $q$ 的光滑坐标卡 $(V,\psi)$，都有 $c(U)=\{q\}\subseteq V$，
+  并且任取 $x\in\varphi(U)$，有 $\psi\circ c\circ \varphi^{-1}(x)=\psi(q)$，
+  所以 $\psi\circ c\circ\varphi^{-1}:\varphi(U)\to\psi(V)$ 是 Euclid 空间之间
+  的常值函数，自然是光滑函数。
+
+  (2) 对于 $p\in M$，任取包含 $p$ 的光滑坐标卡 $(U,\varphi)$，那么
+  $\Id_M(U)=U$，并且 $\varphi\circ\Id_M\circ\varphi^{-1}=\Id_{\varphi(U)}$
+  是光滑函数。
+
+  (3) 对于 $p\in U$，任取包含 $p$ 的光滑坐标卡 $(W,\varphi)$，此时 
+  $(W\cap U,\varphi|_{W\cap U})$ 是 $U$ 的光滑坐标卡，并且
+  $\iota(W\cap U)=W\cap U$，$\varphi|_{W\cap U}^{-1}\circ \iota\circ\varphi|_{W\cap U}$
+  是 $\varphi(W\cap U)$ 上的恒等映射，自然是光滑函数。
+
+  (4) 令 $p\in M$，$G$ 光滑表明存在包含 $F(p)$ 的光滑坐标卡 $(V,\psi)$
+  和包含 $G(F(p))$ 的光滑坐标卡 $(W,\theta)$ 使得 $G(V)\subseteq W$
+  以及 $\theta\circ G\circ\psi^{-1}:\psi(V)\to \theta(W)$ 是光滑的。
+  $F$ 连续表明 $F^{-1}(V)$ 是 $M$ 的包含 $p$ 的开集，所以
+  存在 $M$ 的光滑坐标卡 $(U,\varphi)$ 使得 $p\in U\subseteq F^{-1}(V)$，
+  那么 $G\circ F(U)\subseteq G(V)\subseteq W$，并且
+  $\theta\circ (G\circ F)\circ \varphi^{-1}=(\theta\circ G\circ \psi^{-1})
+  \circ(\psi\circ F\circ\varphi^{-1})$ 是光滑函数，这就表明 $G\circ F$ 是光滑映射。
+\end{proof}
+
+\begin{proposition}
+  设 $M_1,\dots,M_k$ 和 $N$ 是带边或者无边光滑流形，$M_1,\dots,M_k$
+  中至多只有一个有非空边界。对于每个 $i$，令 $\pi_i:M_1\times\cdots\times M_k\to M_i$
+  为投影映射。映射 $F:N\to M_1\times\cdots\times M_k$ 是光滑映射当且仅当每个复合映射
+  $F_i=\pi_i\circ F:N\to M_i$ 是光滑映射。
+\end{proposition}
+% \begin{proof}
+%   若 $F$ 光滑，$\pi_i\circ F$ 作为光滑映射的复合是光滑的。反之，若每个
+%   $F_i$ 光滑。任取 $p\in N$，存在 $N$ 的包含 $p$ 的光滑坐标卡 $(U_i,\varphi_i)$
+%   和 $M_i$ 的包含 $F_i(p)$ 的光滑坐标卡 $(V_i,\psi_i)$ 使得 $F_i(U_i)\subseteq V_i$
+%   以及 $\psi_i\circ F_i\circ\varphi_i^{-1}=(\psi_i\circ\pi_i)\circ F\circ\varphi_i^{-1}$ 是光滑函数。此时
+%   $(V_1\times\cdots\times V_k,\psi_1\times\cdots\times \psi_k)$ 是 $M_1\times\cdots\times M_k$
+%   的包含 $F(p)$ 的光滑坐标卡，任取 $N$ 的包含 $p$ 光滑坐标卡 $(U_1\cap\cdots\cap U_k,\varphi_i)$，
+%   有 $F(U_1\cap\cdots\cap U_k)\subseteq V_1\times\cdots\times V_k$，并且
+%   \[
+%     \left(\psi_1\times\cdots\times\psi_k\right)\circ F\circ\varphi_i^{-1}
+%     =\left(\psi_1\times\cdots\times\psi_k\right)\circ\psi
+%   \]
+% \end{proof}
+
+\subsection{微分同胚}
+
+$M,N$ 是带边或者无边光滑流形，如果 $F:M\to N$ 是光滑双射并且有光滑的逆映射，
+那么我们说 $F$ 是\emph{微分同胚}。
+
+\begin{example}[微分同胚]
+  \mbox{}
+  \begin{enumerate}
+    \item 考虑 $F:\mathbb{B}^n\to\mathbb{R}^n$ 和 $G:\mathbb{R}^n\to\mathbb{B}^n$
+    为
+    \[
+      F(x)=\frac{x}{\sqrt{1-|x|^2}},\quad G(y)=\frac{y}{\sqrt{1+|y|^2}},
+    \]
+    $F,G$ 都是光滑映射并且互为逆映射，所以 $\mathbb{B}^n$ 微分同胚于 $\mathbb{R}^n$。
+    \item $M$ 是任意光滑流形，$(U,\varphi)$ 是光滑坐标卡，那么 $\varphi:U\to\varphi(U)\subseteq\mathbb{R}^n$
+    是微分同胚，因为其坐标表示为恒等映射。
+  \end{enumerate}
+\end{example}
+
+\begin{proposition}[微分同胚的性质]
+  \mbox{}
+  \begin{enumerate}
+    \item 微分同胚的复合是微分同胚。
+    \item 微分同胚的有限积是微分同胚。
+    \item 微分同胚是同胚并且是开映射。
+    \item 微分同胚限制在带边或者无边开子流形上是到其像集的微分同胚。
+    \item 两个光滑流形微分同胚是一个等价关系。
+  \end{enumerate}
+\end{proposition}
+
+\begin{theorem}[维数的微分同胚不变性]
+  $m$ 维光滑流形微分同胚于 $n$ 维光滑流形的必要条件是 $m=n$。
+\end{theorem}
+\begin{proof}
+  设 $M$ 是光滑 $m$-流形，$N$ 是光滑 $n$-流形，$F:M\to N$ 是
+  微分同胚。任取 $p\in M$，设 $(U,\varphi)$ 是包含 $p$ 的光滑坐标卡，
+  $(V,\psi)$ 是包含 $F(p)$ 的光滑坐标卡并且 $F(U)\subseteq V$，并且 $\hat F=\psi\circ F\circ\varphi^{-1}$
+  是 $\varphi(U)$ 到其像集的微分同胚，这是 Euclid 空间的子集之间的微分同胚，
+  所以 $m=n$。
+\end{proof}
+
+
+\section{单位分解}
+
+单位分解是将局部的光滑对象“粘合”为全局光滑对象的工具，并且不需要像粘合引理一样
+要求它们在重叠区域上重合，单位分解在光滑流形理论中是不可或缺的。
+
+\begin{lemma}
+  函数 $f:\mathbb{R}\to\mathbb{R}$，
+  \[
+    f(t)=\begin{cases}
+      e^{-1/t}, &t>0,\\
+      0,& t\leq 0,
+    \end{cases}  
+  \]
+  是光滑函数。
+\end{lemma}
+
+\begin{lemma}
+  给定两个实数 $r_1 <r_2$，存在光滑函数 $h:\mathbb{R}\to\mathbb{R}$
+  使得 $t\leq r_1$ 时 $h(t)\equiv 1$，$r_1<t<r_2$ 的时候 
+  $0<h(t)<1$，$t\geq r_2$ 的时候 $h(t)\equiv 0$。
+\end{lemma}
+\begin{proof}
+  令 $f$ 是上一个引理中的函数，令
+  \[
+    h(t)=\frac{f(r_2-t)}{f(r_2-t)+f(t-r_1)}
+  \]
+  即满足要求。 
+\end{proof}
+
+\begin{lemma}
+  给定两个正实数 $r_1 <r_2$，存在光滑函数 $H:\mathbb{R}^n\to\mathbb{R}$
+  使得 $x\in \bar{B}_{r_1}(0)$ 时有 $H(x)\equiv 1$，
+  $x\in B_{r_2}(0)\smallsetminus \bar{B}_{r_1}(0)$ 时有 $0<H(x)<1$，
+  $x\in\mathbb{R}^n\smallsetminus B_{r_2}(0)$ 时有 $H(x)\equiv 0$。
+\end{lemma}
+\begin{proof}
+  令 $h$ 是上一个引理中的函数，令
+  \[
+    H(x)=h(\abs{x}),
+  \]
+  根据复合函数的光滑性，$x\neq 0$ 时 $H$ 是光滑的。又因为
+  $H$ 在 $B_{r_1}(0)$ 上是常值函数，所以 $H$ 是光滑函数。
+\end{proof}
+
+上述函数 $H$ 被称为\emph{鼓包函数}。
+
+如果 $f$ 是拓扑空间 $M$ 上的实值或者向量值函数，定义\emph{$f$ 的支集}
+$\supp f$ 为 $f$ 的非零点集的闭包：
+\[
+  \supp f=\overline{\{p\in M\,|\, f(p)\neq 0\}}  .
+\]
+例如上述函数 $H$ 的支集为 $\bar B_{r_2}(0)$。如果 $\supp f$
+被某个集合 $U\subseteq M$ 包含，那么我们说\emph{$f$ 支撑在 $U$ 中}。
+如果 $\supp f$ 是紧集，那么我们说 $f$ 是\emph{紧支的}。
+显然，紧空间上的任意函数都是紧支的。
+
+设 $M$ 是一个拓扑空间，令 $\mathcal{X}=(X_\alpha)_{\alpha\in A}$ 是
+$M$ 的任意开覆盖。\emph{从属于 $\mathcal{X}$ 的单位分解}指的是一族
+连续函数 $(\psi_\alpha)_{\alpha\in A}$，其中 $\psi_\alpha:M\to\mathbb{R}$
+满足下面的性质：
+\begin{enumerate}
+  \item 对于任意 $\alpha\in A$ 和 $x\in M$，有 $0\leq\psi_\alpha(x)\leq 1$。
+  \item 对于每个 $\alpha\in A$ 有 $\supp\psi_\alpha\subseteq X_\alpha$。
+  \item 支集族 $(\supp\psi_\alpha)_{\alpha\in A}$ 是局部有限的。也就是说，
+  对于任意 $x\in M$，都存在 $x$ 的一个邻域使得这个邻域只与有限多个
+  $\supp\psi_\alpha$ 有非空交集。
+  \item 对于任意 $x\in M$，有 $\sum_{\alpha\in A}\psi_\alpha(x)=1$。
+  注意，第 3 点表明对于任意 $x\in M$，这都是一个有限求和。
+\end{enumerate}
+如果 $M$ 是带边或者无边光滑流形，当上述 $\psi_\alpha$ 都是光滑函数的时候，
+我们说这是一个\emph{光滑单位分解}。
+
+\begin{theorem}[单位分解的存在性]
+  设 $M$ 是带边或者无边光滑流形，$\mathcal{X}=(X_\alpha)_{\alpha\in A}$ 是
+  $M$ 的任意开覆盖，那么存在从属于 $\mathcal{X}$ 的光滑单位分解。
+\end{theorem}
+\begin{proof}
+  对无边流形的情况进行证明。
+\end{proof}
+
+\subsection{单位分解的应用}
+
+单位分解的第一个应用是拓展鼓包函数的概念到流形的任意闭子集。
+如果 $M$ 是拓扑空间，$A\subseteq M$ 是闭子集，$U\subseteq M$ 是包含 $A$
+的开集，连续函数 $\psi:M\to\mathbb{R}$ 如果满足 $0\leq \psi\leq 1$，
+在 $A$ 上 $\psi\equiv 1$ 并且 $\supp \psi\subseteq U$，那么我们说
+$\psi$ 是\emph{关于 $A$ 的支在 $U$ 中的鼓包函数}。
+
+\begin{proposition}[光滑鼓包函数的存在性]
+  令 $M$ 是带边或者无边光滑流形，对于任意闭子集 $A\subseteq M$ 和任意包含
+  $A$ 的开集 $U$，存在关于 $A$ 的支在 $U$ 中的光滑鼓包函数。
+\end{proposition}
+\begin{proof}
+  令 $U_0=U$，$U_1=M\smallsetminus A$，那么 $\{U_0,U_1\}$ 是 $M$ 的开覆盖。
+  设 $\{\psi_0,\psi_1\}$ 是从属于这个开覆盖的光滑单位分解，当 $x\in A$
+  的时候，$\psi_0(x)+\psi_1(x)=1$ 并且 $\psi_1(x)=0$，所以 $\psi_0(x)=1$，
+  故 $\psi_0$ 就是关于 $A$ 的支在 $U$ 中的光滑鼓包函数。
+\end{proof}
+
+单位分解的第二个重要应用是将闭子集上的光滑函数进行延拓。设 $M,N$
+是带边或者无边光滑流形，$A\subseteq M$ 是任意子集，如果 $F:A\to N$
+在每个点 $p\in A$ 处都存在一个邻域 $W$ 以及一个光滑映射 $\tilde{F}:W\to N$
+使得 $\tilde{F}\big|_{W\cap A}=F$，那么我们说 $F$ 在 $A$ 上是光滑的。
+
+\begin{lemma}[光滑函数的延拓引理]\label{lemma:extension for smooth map}
+  设 $M$ 是带边或者无边光滑流形，$A\subseteq M$ 是闭子集，$f:A\to\mathbb{R}^k$
+  是光滑函数。对于任意包含 $A$ 的开子集 $U$，存在光滑函数 $\tilde{f}:M\to\mathbb{R}^k$
+  使得 $\tilde{f}\big|_A=f$ 以及 $\supp\tilde{f}\subseteq U$。
+\end{lemma}
+\begin{proof}
+  对于每个 $p\in A$，设邻域 $W_p$ 和光滑函数 $\tilde{f}_p:W_p\to\mathbb{R}^k$
+  使得 $\tilde{f}_p\big|_{W_p\cap A}=f$，用 $W_p\cap U$ 替代 $W_p$，
+  我们可以假设 $W_p\subseteq U$。那么集合族 $\{W_p\,|\,p\in A\}\cup\{M\smallsetminus A\}$
+  构成了 $M$ 的开覆盖。设 $\{\psi_p\,|\, p\in A\}\cup\{\psi_0\}$ 是从属于这个开覆盖的光滑单位分解。
+  也就是说我们有 $\supp\psi_p\subseteq W_p$ 以及 $\supp\psi_0\subseteq M\smallsetminus A$。
+
+  对于每个 $p\in A$，乘积 $\psi_p\tilde{f}_p$ 是 $W_p$ 上的光滑函数。对于
+  $x\in M\smallsetminus \supp\psi_p$，我们将 $\psi_p\tilde{f}_p(x)$ 解释为
+  $0$。当 $x\in W_p\smallsetminus \supp\psi_\alpha$ 的时候，
+  由于 $\psi_p\tilde{f}_p(x)=\psi_p(x)\tilde{f}_p(x)=0$，
+  根据粘合引理，那么 $\psi_p\tilde{f}_p$ 可以视为 $M\to\mathbb{R}^k$ 的光滑函数。
+  定义 $\tilde{f}:M\to\mathbb{R}^k$ 为
+  \[
+    \tilde{f}(x)=\sum_{p\in A}\psi_p\tilde{f}_p(x),  
+  \]
+  由于支集族 $\{\supp\psi_p\}$ 是局部有限的，所以上述求和是有限和，因此 $\tilde{f}$
+  是光滑函数。如果 $x\in A$，那么 $\psi_0(x)=0$ 并且 $\tilde{f}_p(x)=f(x)$，所以
+  \[
+    \tilde{f}(x)=\sum_{p\in A}\psi_p(x)f(x)=\left(
+      \psi_0(x)+\sum_{p\in A}\psi_p(x)
+    \right)f(x)=f(x),
+  \]
+  故 $\tilde{f}\big|_A=f$。$\tilde{f}(x)\neq 0$ 表明存在 $p$ 使得
+  $\psi_p(x)\neq 0$，即 $x\in \supp\psi_p$。
+  根据局部有限的性质，有
+  \[
+    \supp\tilde{f}\subseteq\overline{\bigcup_{p\in A}\supp\psi_p}=
+    \bigcup_{p\in A}\overline{\supp\psi_p}=\bigcup_{p\in A}\supp\psi_p\subseteq U.\qedhere
+  \]
+\end{proof}
+
