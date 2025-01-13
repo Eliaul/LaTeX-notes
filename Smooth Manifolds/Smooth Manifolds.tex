@@ -3310,6 +3310,28 @@ $\Gamma(E)$。与向量场类似，光滑向量丛的截面可以左乘一个光
 
 \section{丛同态}
 
+如果 $\pi:E\to M$ 和 $\pi':E'\to M'$ 是向量丛，连续映射 $F:E\to E'$
+被称为\emph{丛同态}，如果存在映射 $f:M\to M'$ 使得
+$\pi'\circ F=f\circ\pi$，即
+\[
+  \begin{tikzcd}
+    E\arrow[r,"F"]\arrow[d,"\pi"'] & E'\arrow[d,"\pi'"]\\
+    M\arrow[r,"f"'] & M' 
+  \end{tikzcd}  
+\]
+此外，对于每个 $p\in M$，限制映射 $F|_{E_p}:E_p\to E'_{f(p)}$
+是线性映射。此时我们还称 \emph{$F$ 覆盖 $f$}。
+
+\begin{proposition}
+  设 $\pi:E\to M$ 和 $\pi':E'\to M'$ 是向量丛，$F:E\to E'$
+  是覆盖 $f:M\to M'$ 的丛同态，那么 $f$ 是连续映射并且由 $F$
+  唯一确定。如果丛和 $F$ 都是光滑的，那么 $f$ 也是光滑的。
+\end{proposition}
+\begin{proof}
+  记 $\zeta:M\to E$ 是零截面，那么 $f=\pi'\circ F\circ\zeta$。
+\end{proof}
+
+
 \section{子丛}
 
 
