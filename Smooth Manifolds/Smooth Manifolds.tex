@@ -2162,7 +2162,7 @@ $G$-作用，映射 $F:M\to N$ 被称为\emph{等变的}，如果对于每个 $g
 \begin{proof}
   若 $X|_U$ 是光滑映射，那么任取 $p\in U$，$X|_U:U\to TM$ 的坐标表示为
   \[
-    \left(x^1,\dots,x^n\right)\mapsto \left(X^1(x),\dots,X^n(x),x^1,\dots,x^n\right),
+    \left(x^1,\dots,x^n\right)\mapsto \left(x^1,\dots,x^n,X^1(x),\dots,X^n(x)\right),
   \]
   所以 $X|_U$ 光滑等价于 $X^i$ 都是光滑函数。
 \end{proof}
@@ -3342,7 +3342,7 @@ $\pi'\circ F=f\circ\pi$，即
 
 \section{余向量}
 
-\subsection{流形上的余切向量}
+\subsection{流形上的余向量}
 
 $M$ 是光滑流形，对于每个 $p\in M$，定义\emph{$p$ 处的余切空间}
 $T_p^*M$ 为切空间 $T_pM$ 的对偶空间：
@@ -3362,16 +3362,44 @@ $T_p^*M$ 的元素被称为\emph{$p$ 处的余切向量}，或者简称为\emph{
   =\omega_j.
 \]
 
+假设 $\left(\tilde{x}^i\right)$ 是 $p$ 处的另一个光滑局部坐标，
+$\left(\tilde{\lambda}^j|_p\right)$ 是关于 $\left(\tilde{x}^i\right)$
+的一族对偶基。此时切空间 $T_pM$ 的两组基之间有基变换
+\[
+  \left.\frac{\partial}{\partial x^i}\right|_p=
+  \frac{\partial\tilde x^j}{\partial x^i}(\hat p)
+  \left.\frac{\partial}{\partial \tilde x^j}\right|_p.
+\]
+现在假设 $\omega\in T_p^*M$ 有表示 
+$\omega=\omega_i\lambda^i|_p=\tilde{\omega}_j\tilde{\lambda}^j|_p$，
+那么我们有
+\[
+  \omega_i=\omega\left(
+    \left.\frac{\partial}{\partial x^i}\right|_p
+  \right)=
+  \frac{\partial\tilde x^j}{\partial x^i}(\hat p)
+  \tilde{\omega}_j.
+\]
+
+
 \subsection{余向量场}
 
 对于光滑流形 $M$，无交并
 \[
   T^*M=\coprod_{p\in M}T_p^*M  
 \]
-被称为\emph{$M$ 的余切丛}。给定开子集 $U$ 上的光滑局部坐标
+被称为\emph{$M$ 的余切丛}。其有一个自然的投影映射 $\pi:T^*M\to M$，
+将 $\omega\in T_p^*M$ 送到 $p$。给定开子集 $U$ 上的光滑局部坐标
 $\left(x^i\right)$，对于每个 $p\in U$，记 $\left(\partial/\partial x^i|_p\right)$
 的对偶基为 $\left(\lambda^i|_p\right)$，这定义了 $n$ 个映射
 $\lambda^1,\dots,\lambda^n:U\to T^*M$，被称为\emph{坐标余向量场}。
+
+\begin{proposition}[余切丛作为向量丛]
+  $M$ 是一个光滑流形。配备标准的投影映射和每个纤维上的自然的向量空间结构，
+  余切丛 $T^*M$ 有唯一的拓扑和光滑结构使得其成为 $M$ 
+  上的秩 $n$ 的光滑向量丛使得所有的坐标余向量场
+  都是光滑的局部截面。
+\end{proposition}
 
 与切丛一样，$M$ 的光滑局部坐标导出了余切丛的光滑局部坐标。如果 
 $\left(x^i\right)$ 是开子集 $U\subseteq M$ 上的光滑局部坐标，
@@ -3406,6 +3434,35 @@ $\omega=\omega_i\lambda^i$，其中 $\omega_i:U\to \mathbb{R}$
   =\omega_i(p)X^i(p),
 \]
 所以 $\omega(X)$ 有局部坐标表示 $\omega(X)=\omega_iX^i$。
+
+与向量场一样，我们有很多方法可以检验余向量场的光滑性。
+
+\begin{proposition}[余向量场的光滑性判别]
+  $M$ 是一个光滑流形，$\omega:M\to T^*M$ 是余向量场，那么下面的说法等价：
+  \begin{enumerate}
+    \item $\omega$ 是光滑的。
+    \item 在每个光滑坐标卡下，$\omega$ 的分量都是光滑的。
+    \item 对于每个光滑向量场 $X\in \mathfrak{X}(M)$，
+    函数 $\omega(X)$ 是光滑函数。
+    \item 对于每个开集 $U\subseteq M$ 和光滑向量场 $X\in \mathfrak{X}(U)$，
+    函数 $\omega(X):U\to \mathbb{R}$ 是光滑的。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 设 $(U,(x^i))$ 是一个光滑坐标卡，
+  此时 $\omega=\omega_i\lambda^i$，即对于任意 $p\in U$，有
+  $\omega_p=\omega_i(p)\lambda^i|_p$。$\omega$ 光滑表明
+  其在这个坐标卡下的坐标表示
+  \[
+    (x^1,\dots,x^n)\mapsto \bigl(x^1,\dots,x^n,\omega_1(x),\dots,\omega_n(x)\bigr)
+  \]
+  是光滑的，这就表明 $\omega_i$ 都是光滑的。
+\end{proof}
+
+\subsection{余标架}
+
+
+
 
 
 \subsection{函数的微分}
@@ -3446,7 +3503,7 @@ $\omega=\omega_i\lambda^i$，其中 $\omega_i:U\to \mathbb{R}$
   \]
 \end{example}
 
-尽管光滑函数的偏导数不难以与坐标无关的方式解释为向量场的分量，但是可以
+尽管光滑函数的偏导数不能以与坐标无关的方式解释为向量场的分量，但是可以
 证明它们可以解释为余向量场的分量，这是余向量场最重要的应用。
 
 令 $f$ 是光滑流形 $M$ 上的实值函数。我们定义余向量场 $df$ 为
