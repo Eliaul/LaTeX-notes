@@ -3461,11 +3461,53 @@ $\omega=\omega_i\lambda^i$，其中 $\omega_i:U\to \mathbb{R}$
 
 \subsection{余标架}
 
+令 $M$ 是光滑流形，$U\subseteq M$ 是开集。\emph{$U$ 上的局部余标架}
+指的是一组 $U$ 上的余向量场 $(\varepsilon^1,\dots,\varepsilon^n)$
+使得对于每个 $p\in U$，$\bigl(\varepsilon^i|_p\bigr)$ 构成
+$T_p^*M$ 的一组基。如果 $U=M$，那么我们说这是一个\emph{全局余标架}。
+
+\begin{example}[坐标余标架]
+  对于每个光滑坐标卡 $\bigl(U,(x^i)\bigr)$，坐标余向量场
+  $\bigl(\lambda^i\bigr)$ 都定义了 $U$ 上的一个局部余标架，
+  被称为\emph{坐标余标架}。
+\end{example}
+
+给定开集 $U$ 上关于 $TM$ 的一个局部标架 $(E_1,\dots,E_n)$，
+唯一确定了 $U$ 上的一个局部余标架 $(\varepsilon^1,\dots,\varepsilon^n)$
+使得 $\bigl(\varepsilon^i|_p\bigr)$ 是 $\bigl(E_i|_p\bigr)$
+的对偶基，等价地说，有 $\varepsilon^i(E_j)=\delta_j^i$。
+这个余标架被称为对偶于 $(E_i)$ 的余标架。反之，给定
+$U$ 上的一个局部余标架 $(\varepsilon^i)$，唯一确定了
+一个局部标架 $(E_i)$，被称为对偶于 $(\varepsilon^i)$
+的标架。例如，在光滑坐标卡中，坐标标架 $\bigl(\partial/\partial x^i\bigr)$
+和坐标余标架 $\bigl(\lambda^i\bigr)$ 互为对偶。
+
+\begin{lemma}
+  令 $M$ 是光滑流形，$U\subseteq M$ 是开集。如果 $(E_i)$
+  是 $U$ 上的局部标架，$(\varepsilon^i)$ 是其对偶标架，
+  那么 $(E_i)$ 光滑当且仅当 $(\varepsilon^i)$ 光滑。
+\end{lemma}
+\begin{proof}
+  只需要说明对于每个 $p\in U$，$(E_i)$ 在 $p$ 的某个邻域上光滑
+  当且仅当 $(\varepsilon^i)$ 也在该邻域上光滑即可。
+  令 $\bigl(V,\bigl(x^i\bigr)\bigr)$ 是使得 $p\in V\subseteq U$
+  的光滑坐标卡，那么在 $V$ 中有
+  \[
+    E_i=a_i^k\frac{\partial}{\partial x^k},\quad
+    \varepsilon^j=b_l^j\lambda^l,
+  \]
+  其中 $\bigl(a_i^k\bigr)$ 和 $\bigl(b_l^j\bigr)$ 是实值函数矩阵。
+  $E_i$ 在 $V$ 上光滑当且仅当 $a_i^k$ 光滑，$\varepsilon^j$ 
+  在 $V$ 上光滑当且仅当 $b_l^j$ 光滑。由于 $\varepsilon^j(E_i)=\delta_i^j$，
+  所以矩阵 $\bigl(a_i^k\bigr)$ 和 $\bigl(b_l^j\bigr)$ 互为逆矩阵，
+  所以 $a_i^k$ 光滑当且仅当 $b_l^j$ 光滑。
+\end{proof}
 
 
 
 
-\subsection{函数的微分}
+
+\section{函数的微分}
 
 在初等微积分中，在 $\mathbb{R}^n$ 的光滑实值函数 $f$ 的梯度
 被定义为向量场，其分量是 $f$ 的偏导数，即
@@ -3535,6 +3577,9 @@ $df$ 被称为\emph{$f$ 的微分}。
 \begin{equation}\label{eq:coordinate represent of df}
   df_p=\frac{\partial f}{\partial x^i}(p)\lambda^i|_p.
 \end{equation}
+因此，任何光滑坐标卡中 $df$ 的分量函数都是 $f$ 关于这些局部坐标
+的偏导数。这表明我们可以将 $df$ 视为梯度的类似物，只不过将其以
+一种坐标无关的方式重新解释。
 
 特别地，如果我们将 $f$ 取为坐标函数 $x^j:U\to \mathbb{R}$，那么
 \[
@@ -3550,6 +3595,27 @@ $df$ 被称为\emph{$f$ 的微分}。
 \begin{equation}
   df=\frac{\partial f}{\partial x^i}dx^i.
 \end{equation}
+特别地，在 $1$ 维的情况下，简化为
+\[
+  df=\frac{df}{dx}dx,  
+\]
+这正是一元微积分中我们熟悉的写法。从今以后，我们放弃记号
+$\lambda^i$，转而用 $dx^i$ 替代。
+
+\begin{proposition}[微分的性质]
+  令 $M$ 是光滑流形，$f,g\in C^\infty(M)$，
+  \begin{enumerate}
+    \item 如果 $a,b\in \mathbb{R}$，那么
+    $d(af+bg)=adf+bdg$。
+    \item $d(fg)=fdg+gdf$。
+    \item 如果 $g\neq 0$，那么 $d(f/g)=(gdf-fdg)/g^2$。
+    \item 如果 $J\subseteq \mathbb{R}$ 包含 $f$ 的像集，
+    $h:J\to \mathbb{R}$ 是光滑函数，那么
+    $d(h\circ f)=(h'\circ f)df$。
+    \item 如果 $f$ 是常值函数，那么 $df=0$。
+  \end{enumerate}
+\end{proposition}
+
 
 注意，对于光滑函数 $f:M\to \mathbb{R}$，我们现在定义了两种微分，
 一种是在 \ref{sec:differential of map} 中定义的
@@ -3659,6 +3725,27 @@ $N$ 上的余向量场 $\omega$，定义 $M$ 上的余向量场 $F^*\omega$
     &=2xy^2\sin z dx+2x^2y\sin zdy+x^2y^2\cos zdz.
   \end{align*}
 \end{example}
+
+\section{线积分}
+
+余向量场的另一个重要应用是使得线积分的概念具有与坐标无关的意义。
+
+我们丛最简单的情况开始：假设 $[a,b]\subseteq \mathbb{R}$
+是一个区间，$\omega$ 是 $[a,b]$ 上的光滑余向量场。
+（这意味着 $\omega$ 的分量函数在 $[a,b]$ 的某个邻域上有一个光滑延拓）。
+令 $t$ 是 $\mathbb{R}$ 上的标准坐标，那么 $\omega$ 可以写为
+$\omega_t=f(t)dt$，其中 $f$ 是光滑函数 $f:[a,b]\to \mathbb{R}$。
+我们定义\emph{$\omega$ 在 $[a,b]$ 上的积分}为
+\[
+  \int_{[a,b]}\omega=\int_a^b f(t) \, dt.  
+\]
+下面的命题告诉我们这不仅仅是一个符号上的小技巧。
+
+\begin{proposition}[积分的微分同胚不变性]
+  令 $\omega$ 是 $[a,b]\subseteq \mathbb{R}$ 上的光滑余向量场。
+  
+\end{proposition}
+
 
 
 \chapter{张量}
