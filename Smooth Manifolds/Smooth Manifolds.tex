@@ -7,7 +7,8 @@
 \makeatother
 
 \usepackage{tikz-cd,wrapstuff}
-\usepackage{fixdif,siunitx,tikz,nicematrix}
+\usepackage{siunitx,tikz,nicematrix}
+\usepackage[normal]{fixdif}
 \usetikzlibrary{matrix,calc}
 
 \input{font.def}
@@ -3616,6 +3617,21 @@ $\lambda^i$，转而用 $dx^i$ 替代。
   \end{enumerate}
 \end{proposition}
 
+\begin{proposition}[微分为零的函数]\label{prop:functions with vanishing differential}
+  如果 $f$ 是光滑流形 $M$ 上的光滑实值函数，那么 $df=0$
+  当且仅当 $f$ 在 $M$ 的每个连通分支上是常值函数。
+\end{proposition}
+\begin{proof}
+  只需要假设 $M$ 是连通的。如果 $f$ 是常值函数，那么显然 $df=0$。
+  反之，假设 $df=0$，令 $p\in M$，$\mathcal{C}=\{q\in M\,|\, f(q)=f(p)\}$。
+  任取 $q\in \mathcal{C}$，令 $U$ 是以 $q$ 为中心的光滑坐标球，那么
+  $df=0=\partial f/\partial x^i \d x^i$ 表明在 $U$ 上有
+  $\partial f/\partial x^i\equiv 0$，根据基本的微积分内容可知
+  $f$ 在 $U$ 上是常值函数，所以 $U\subseteq \mathcal{C}$，
+  即 $\mathcal{C}$ 是开集。由于 $\mathcal{C}=f^{-1}(f(p))$，
+  所以 $\mathcal{C}$ 是闭集。所以 $\mathcal{C}=M$。
+\end{proof}
+
 
 注意，对于光滑函数 $f:M\to \mathbb{R}$，我们现在定义了两种微分，
 一种是在 \ref{sec:differential of map} 中定义的
@@ -3726,6 +3742,13 @@ $N$ 上的余向量场 $\omega$，定义 $M$ 上的余向量场 $F^*\omega$
   \end{align*}
 \end{example}
 
+换句话说，要计算 $F^*\omega$，只需要将 $F$ 的分量函数
+复合上对应 $\omega$ 系数的分量函数即可。
+
+\subsection{余向量场限制在子流形上}
+
+
+
 \section{线积分}
 
 余向量场的另一个重要应用是使得线积分的概念具有与坐标无关的意义。
@@ -3741,10 +3764,259 @@ $\omega_t=f(t)dt$，其中 $f$ 是光滑函数 $f:[a,b]\to \mathbb{R}$。
 \]
 下面的命题告诉我们这不仅仅是一个符号上的小技巧。
 
-\begin{proposition}[积分的微分同胚不变性]
+\begin{proposition}[积分的微分同胚不变性]\label{prop:diffeomorphic invariance of line integral}
   令 $\omega$ 是 $[a,b]\subseteq \mathbb{R}$ 上的光滑余向量场。
-  
+  如果 $\varphi:[c,d]\to[a,b]$ 是单调递增的微分同胚，那么
+  \[
+    \int_{[c,d]}\varphi^*\omega=\int_{[a,b]}\omega.  
+  \]
 \end{proposition}
+\begin{proof}
+  任取 $s\in [c,d]$，那么 
+  $(\varphi^*\omega)_s=f(\varphi(s)) d\varphi=f(\varphi(s))\varphi'(s)ds$，于是
+  \[
+    \int_{[c,d]}\varphi^*\omega=\int_c^d f(\varphi(s))\varphi'(s)\, ds
+    =\int_a^b f(t)\, dt=\int_{[a,b]}\omega.\qedhere
+  \]
+\end{proof}
+
+令 $M$ 是一个光滑流形，\emph{$M$ 中的曲线段} 指的是一条定义域为紧区间
+的连续曲线 $\gamma:[a,b]\to M$。将 $[a,b]$ 视为带边流形，如果
+$\gamma$ 是光滑映射（等价地说，$\gamma$ 在端点处的某个邻域中有光滑的延拓），
+那么我们说这是\emph{光滑曲线段}。如果存在 $[a,b]$ 的划分 $a=a_0<a_1<\cdots<a_k=b$
+使得 $\gamma|_{[a_{i-1},a_i]}$ 是光滑的，那么我们说 $\gamma$
+是\emph{分段光滑曲线段}。
+
+\begin{proposition}
+  令 $M$ 是连通的光滑流形，那么 $M$ 的任意两个点可以用分段光滑曲线段连接。
+\end{proposition}
+\begin{proof}
+  任取 $p\in M$，定义集合 $\mathcal{C}\subseteq M$，点 $q\in \mathcal{C}$
+  当且仅当存在从 $p$ 到 $q$ 的分段光滑曲线段。显然 $p\in \mathcal{C}$，
+  所以 $\mathcal{C}$ 非空，我们只需要说明 $\mathcal{C}$ 既开又闭即可表明
+  $\mathcal{C}=M$。
+
+  任取 $q\in \mathcal{C}$，那么存在 $p$ 到 $q$ 的分段光滑曲线段。
+  令 $U$ 是以 $q$ 为中心的光滑坐标球，那么对于任意的 $q'\in U$，
+  我们可以构造从 $q$ 到 $q'$ 的光滑曲线（在坐标球中用直线连接即可），
+  将这两条曲线段连接即可得到 $p$ 到 $q'$ 的分段光滑曲线段，所以
+  $q'\in \mathcal{C}$，这表明 $\mathcal{C}$ 是开集。
+  另一方面，任取 $q\in\partial \mathcal{C}$，同样取以 $q$ 为中心
+  的光滑坐标球 $U$，那么存在 $q'\in U\cap \mathcal{C}$，
+  于是存在从 $p$ 到 $q'$ 的分段光滑曲线段以及从 $q'$ 到 $q$
+  的光滑曲线段，所以存在从 $p$ 到 $q$ 的分段光滑曲线段，
+  所以 $q\in \mathcal{C}$，即 $\mathcal{C}$ 是闭集。
+\end{proof}
+
+如果 $\gamma:[a,b]\to M$ 是光滑曲线段，$\omega$ 是 $M$ 上的光滑余向量场，
+我们定义 \emph{$\omega$ 在 $\gamma$ 上的线积分} 为
+\[
+  \int_\gamma\omega=\int_{[a,b]}\gamma^*\omega.  
+\]
+更一般地，如果 $\gamma$ 是分段光滑的，我们定义
+\[
+    \int_\gamma\omega=\sum_{i=1}^k\int_{[a_{i-1},a_i]}\gamma^*\omega.
+\]
+
+\begin{proposition}[线积分的性质]
+  令 $M$ 是光滑流形，$\gamma:[a,b]\to M$ 是分段光滑曲线段，
+  $\omega,\omega_1,\omega_2\in \mathfrak{X}^*(M)$，
+  \begin{enumerate}
+    \item 对于任意 $c_1,c_2\in \mathbb{R}$，有
+    \[
+      \int_\gamma(c_1\omega_1+c_2\omega_2)=c_1\int_\gamma\omega_1+
+      c_2\int_\gamma\omega_2.  
+    \]
+    \item 如果 $\gamma$ 是常值映射，那么 $\int_\gamma\omega=0$。
+    \item 如果 $\gamma_1=\gamma|_{[a,c]}$ 以及 $\gamma_2=\gamma|_{[c,b]}$，
+    其中 $a<c<b$，那么
+    \[
+      \int_\gamma\omega=\int_{\gamma_1} \omega+\int_{\gamma_2}\omega.
+    \]
+    \item 如果 $F:M\to N$ 是任意光滑映射，$\eta\in \mathfrak{X}^*(N)$，
+    那么
+    \[
+      \int_\gamma F^*\eta=\int_{F\circ\gamma}\eta.  
+    \]
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (4) 只需要对 $\gamma$ 光滑的情况进行证明。我们有
+  \[
+    \int_\gamma F^*\eta=  \int_{[a,b]}\gamma^*(F^*\eta),
+  \]
+  由于
+  \[
+    \bigl(\gamma^*(F^*\eta)\bigr)_s(v)=
+    (F^*\eta)_{\gamma(s)}(d\gamma(v))=
+    \eta_{F(\gamma(s))}\bigl(d(F\circ\gamma)(s)\bigr)
+    =\bigl((F\circ\gamma)^*\eta\bigr)_s(v),
+  \]
+  其中 $s\in[a,b]$，$v\in T_s \mathbb{R}$。所以
+  \[
+    \int_\gamma F^*\eta=  \int_{[a,b]}\gamma^*(F^*\eta)
+    =\int_{[a,b]}(F\circ\gamma)^*\eta=\int_{F\circ\gamma}\eta.\qedhere
+  \]
+\end{proof}
+
+\begin{example}\label{exa:covector field on R2-0}
+  令 $M=\mathbb{R}^2 \smallsetminus\{0\}$，$\omega$ 是余向量场
+  \[
+    \omega=\frac{xdy-ydx}{x^2+y^2}.  
+  \]
+  $\gamma:[0,2\pi]\to M$ 是曲线段 $\gamma(t)=(\cos t,\sin t)$。
+  那么
+  \[
+    \int_\gamma\omega=\int_{[0,2\pi]}\gamma^*\omega=
+    \int_{[0,2\pi]}\frac{\cos t(\cos t\d t)-\sin t(-\sin t\d t)}{\cos^2 t+\sin ^2t} 
+    =2\pi. 
+  \]
+\end{example}
+
+线积分的一个重要性质是其独立于曲线的参数化。令 $\gamma:[a,b]\to M$
+和 $\tilde\gamma:[c,d]\to M$ 是分段光滑曲线段，如果 $\tilde\gamma=\gamma\circ\varphi$，
+其中 $\varphi:[c,d]\to [a,b]$ 是微分同胚，那么我们说 $\tilde{\gamma}$
+是 $\gamma$ 的\emph{重参数化}。如果 $\varphi$ 是递增函数，那么
+我们说 $\tilde{\gamma}$ 是\emph{向前重参数化}，反之称为%
+\emph{向后重参数化}。
+
+\begin{proposition}[线积分的参数独立性]
+  令 $M$ 是光滑流形，$\omega\in \mathfrak{X}^*(M)$，$\gamma$
+  是分段光滑曲线段，对于 $\gamma$ 的重参数化 $\tilde{\gamma}$，
+  我们有
+  \[
+    \int_{\tilde{\gamma}}\omega=\begin{dcases}
+      \hphantom{-}\int_\gamma\omega & \text{$\tilde{\gamma}$ 是向前重参数化},\\
+      -\int_\gamma\omega & \text{$\tilde{\gamma}$ 是向后重参数化}.
+    \end{dcases}  
+  \]
+\end{proposition}
+\begin{proof}
+  根据 \autoref{prop:diffeomorphic invariance of line integral}，
+  对于向前重参数化的情况，我们有
+  \[
+    \int_{\tilde{\gamma}}\omega=\int_{[c,d]}(\gamma\circ\varphi)^*\omega
+    =\int_{[c,d]}\varphi^*\gamma^*\omega=\int_{[a,b]}\gamma^*\omega
+    =\int_\gamma\omega.\qedhere
+  \]
+\end{proof}
+
+\begin{proposition}
+  如果 $\gamma:[a,b]\to M$ 是分段光滑曲线段，那么 $\omega$ 在 $\gamma$
+  上的线积分可以表示为
+  \begin{equation}\label{eq:caculate line integral}
+    \int_\gamma\omega=\int_a^b \omega_{\gamma(t)}\bigl(\gamma'(t)\bigr)
+    \d t.
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  假设 $\gamma$ 是光滑的即可。在局部坐标中，设 $\omega=\omega_i \d x^i$，
+  那么
+  \begin{align*}
+    \omega_{\gamma(t)}\bigl(\gamma'(t)\bigr)
+    &=\omega_i\bigl(\gamma(t)\bigr)\d x^i\bigl(\gamma'(t)\bigr)
+    =\omega_i\bigl(\gamma(t)\bigr) \bigl(\gamma'(t) x^i\bigr)\\
+    &=\omega_i\bigl(\gamma(t)\bigr)
+    \left(\d \gamma_t\left(\frac{d}{ds}\bigg|_{t}\right)x^i\right)
+    =\omega_i\bigl(\gamma(t)\bigr) \dot{\gamma}^i(t),
+  \end{align*}
+  所以
+  \[
+    (\gamma^*\omega)_t=\omega_i\bigl(\gamma(t)\bigr)
+    \d(\gamma^i)_t=\omega_i\bigl(\gamma(t)\bigr)
+    \dot{\gamma}(t)\d t=\omega_{\gamma(t)}\bigl(\gamma'(t)\bigr)\d t,
+  \]
+  所以
+  \[
+    \int_\gamma\omega=\int_{[a,b]}\gamma^*\omega
+    =\int_a^b   \omega_{\gamma(t)}\bigl(\gamma'(t)\bigr)\d t.\qedhere
+  \]
+\end{proof}
+
+有一种情况下的线积分计算非常简单：函数微分的线积分。
+
+\begin{theorem}[线积分基本定理]\label{thm:fundamental theorem for line integral}
+  令 $M$ 是光滑流形，$f\in C^\infty(M)$，$\gamma:[a,b]\to M$
+  是分段光滑曲线段，那么
+  \[
+    \int_\gamma \d f =f\bigl(\gamma(b)\bigr)-
+    f\bigl(\gamma(a)\bigr).
+  \]
+\end{theorem}
+\begin{proof}
+  假设 $\gamma$ 是光滑的即可。那么我们有
+  \[
+    \int_\gamma \d f =
+    \int_a^b \d f_{\gamma(t)}\bigl(\gamma'(t)\bigr)\d t
+    =\int_a^b (f\circ\gamma)'(t)\d t
+    =f\bigl(\gamma(b)\bigr)-
+    f\bigl(\gamma(a)\bigr).\qedhere
+  \]
+\end{proof}
+
+\section{保守场}
+
+\autoref{thm:fundamental theorem for line integral} 
+表明当余向量场是光滑函数微分的时候，其线积分的计算极为简单。
+出于这个原因，当余向量场拥有这个性质的时候我们给它一个术语。
+对于光滑流形 $M$ 上的光滑余向量场 $\omega$，如果存在函数
+$f\in C^\infty(M)$ 使得 $\omega=df$，那么我们说 $\omega$
+是\emph{恰当的}。在这种情况下，函数 $f$ 称为 $\omega$ 的\emph{势}。
+这个势不是唯一确定的，但是根据 \autoref{prop:functions with vanishing differential}，
+$\omega$ 的任意两个势仅仅是在 $M$ 的每个连通分支上相差一个常数。
+
+由于恰当微分很容易计算积分，所以确定余向量场是否恰当是非常重要的，
+\autoref{thm:fundamental theorem for line integral} 提供了
+一条重要的线索。\autoref{thm:fundamental theorem for line integral}
+表明恰当余向量场的线积分仅仅与端点 $p=\gamma(a)$ 和 $q=\gamma(b)$
+有关！特别地，如果 $\gamma$ 是\emph{闭合曲线段}，即 $\gamma(a)=\gamma(b)$，
+那么 $df$ 在 $\gamma$ 上的积分为零。
+
+如果 $\omega$ 在任意分段光滑闭合曲线段上的线积分为零，那么我们说
+$\omega$ 是\emph{保守的}。这个术语来源于物理学：如果沿任何
+闭合路径作用的力引起的能量变化为零，那么这个力场被称为保守场。
+
+\begin{proposition}
+  光滑余向量场 $\omega$ 是保守的当且仅当其线积分是路径无关的，
+  也就是说，只要分段光滑曲线段 $\gamma$ 和 $\tilde{\gamma}$
+  有相同的起点和终点，那么 $\int_\gamma\omega=\int_{\tilde{\gamma}}\omega$。
+\end{proposition}
+\begin{proof}
+  假设 $\omega$ 是保守场，$\gamma(a)=\tilde{\gamma}(a)=p$，
+  $\gamma(b)=\tilde{\gamma}(b)=q$，记 $\xi$ 是以 $q$ 为起点
+  $p$ 为终点的分段光滑曲线段，$\zeta$ 是连接 $\gamma$ 和
+  $\xi$ 的分段光滑曲线段，$\tilde\zeta$ 是连接 $\tilde\gamma$ 和
+  $\xi$ 的分段光滑曲线段，根据 $\omega$ 的保守性，就有
+  \[
+    \int_{\tilde\gamma}\omega+\int_{\xi}\omega=\int_{\tilde{\zeta}}\omega=0=\int_{\zeta}\omega=\int_{\gamma}\omega+\int_{\xi}\omega,  
+  \]
+  即 $\int_\gamma\omega=\int_{\tilde\gamma}\omega$。
+
+  反之，假设 $\int_\gamma\omega=\int_{\tilde{\gamma}}\omega$。
+  那么任取分段光滑闭合曲线段 $\gamma$，设 $\zeta$ 是值为 $\gamma(a)=\gamma(b)$
+  的常值曲线，那么 
+  \[
+    \int_\gamma\omega=\int_\zeta\omega=0,  
+  \]
+  即 $\omega$ 是保守场。
+\end{proof}
+
+\begin{theorem}
+  令 $M$ 是光滑流形，$M$ 上的光滑余向量场是保守的当且仅当其是恰当的。
+\end{theorem}
+
+如果每个光滑余向量场都是恰当的自然是最好不过，因为此时线积分
+的计算只需要找到一个势函数然后计算端点处的值即可，但是，
+这个假设是不成立的。
+
+\begin{example}
+  \autoref{exa:covector field on R2-0} 中的余向量场 $\omega$
+  不是恰当的，因为其不是保守的，当 $\gamma$ 取逆时针的圆周时，
+  $\gamma$ 是闭合光滑曲线段，但是 $\int_\gamma\omega=2\pi\neq 0$。
+\end{example}
+
+
+
 
 
 
