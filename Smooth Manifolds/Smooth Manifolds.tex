@@ -8,12 +8,12 @@
 
 \usepackage{tikz-cd,wrapstuff}
 \usepackage{siunitx,tikz,nicematrix}
-\usepackage[normal]{fixdif}
 \usetikzlibrary{matrix,calc}
 
 \input{font.def}
 
 \usepackage[subscriptcorrection,nofontinfo,mtpbb,mtpfrak]{mtpro2}
+\usepackage[normal]{fixdif}
 
 \tikzcdset{
   arrow style=tikz,
@@ -4015,6 +4015,86 @@ $\omega$ 是\emph{保守的}。这个术语来源于物理学：如果沿任何
   $\gamma$ 是闭合光滑曲线段，但是 $\int_\gamma\omega=2\pi\neq 0$。
 \end{example}
 
+我们希望有一种简单的方法来检查余向量场是否恰当。幸运的是，
+有一个非常简单的必要条件，其源于光滑函数的混合偏导数与计算顺序无关。
+
+假设 $\omega\in \mathfrak{X}^*(M)$ 是恰当的，令 $f$ 是 $\omega$
+的任意势函数，$(U,(x^i))$ 是 $M$ 上的光滑坐标卡。因为 $f$ 是光滑的，
+所以在 $U$ 上有
+\[
+  \frac{\partial^2 f}{\partial x^i\partial x^j}=
+  \frac{\partial^2 f}{\partial x^j\partial x^i} .
+\]
+将 $\omega$ 表示为 $\omega=\omega_i \d x^i$，那么 $\omega= df$
+等价于 $\omega_i=\partial f/\partial x^i$，于是上式表明
+$\omega$ 的分量函数必须满足
+\begin{equation}\label{eq:close covector field}
+  \frac{\partial \omega_j}{\partial x^i}=\frac{\partial\omega_i}{\partial x^j}.  
+\end{equation}
+由此，满足上式的光滑余向量场 $\omega$ 被称为\emph{闭的}。我们得到了下面的命题。
+
+\begin{proposition}
+  每个恰当余向量场都是闭的。
+\end{proposition}
+
+按定义检查余向量场是否闭的难点在于需要对每个坐标卡进行检查。
+下面的命题给出了与坐标无关的闭的余向量场的表述。
+
+\begin{proposition}
+  令 $\omega$ 是光滑流形 $M$ 上的光滑余向量场，下面的说法等价：
+  \begin{enumerate}
+    \item $\omega$ 是闭的。
+    \item $\omega$ 在每个点的某个光滑坐标卡中满足 \eqref{eq:close covector field} 式。
+    \item 对于任意开集 $U\subseteq M$ 和光滑向量场 $X,Y\in \mathfrak{X}(U)$，有
+    \begin{equation}\label{eq:close covector field without coordinate}
+      X\bigl(\omega(Y)\bigr)-Y\bigl(\omega(X)\bigr)=\omega\bigl([X,Y]\bigr).
+    \end{equation}
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 从定义立即得到。
+
+  $(2)\Rightarrow(3)$ 对于任意坐标卡 $(V,(x^i))$，其中 $V\subseteq U$，
+  设 $\omega=\omega_i\d x^i$，$X=X^j\partial/\partial x^j$，
+  $Y=Y^k\partial/\partial x^k$，那么
+  \[
+    X\bigl(\omega(Y)\bigr)=X\bigl(\omega_iY^i\bigr)
+    = Y^i X\omega_i+\omega_iXY^i=
+    Y^iX^j\frac{\partial \omega_i}{\partial x^j}
+    +\omega_iXY^i.
+  \]
+  对 $Y\bigl(\omega(X)\bigr)$ 重复这个步骤，然后相减，得到
+  \[
+    X\bigl(\omega(Y)\bigr)-Y\bigl(\omega(X)\bigr)=
+    Y^iX^j\left(\frac{\partial \omega_i}{\partial x^j}-
+    \frac{\partial \omega_j}{\partial x^i}\right)
+    +\omega_i\bigl(XY^i-YX^i\bigr),
+  \]
+  \eqref{eq:close covector field} 式表明第一项为零，而 
+  \autoref{prop:coordinate formula for lie bracket} 表明后一项为
+  $\omega_i\bigl([X,Y]\bigr)$。
+
+  $(3)\Rightarrow (1)$ 取 $X=\partial/\partial x^i$，
+  $Y=\partial/\partial x^j$，那么 $[X,Y]=0$，即得到
+  \eqref{eq:close covector field} 式。
+\end{proof}
+
+这一命题的结果是可以使用标准 (b) 来检查闭性，因为可以快速表明
+许多余向量场不是闭的，从而说明其不是恰当的。
+
+\begin{corollary}
+  假设 $F:M\to N$ 是局部微分同胚，那么拉回 $F^*:\mathfrak{X}^*(N)
+  \to \mathfrak{X}^*(M)$ 将闭的余向量场送到闭的余向量场，
+  恰当的余向量场送到恰当的余向量场。
+\end{corollary}
+\begin{proof}
+  恰当余向量场的情况由 \autoref{prop:pullback of covector field}
+  得到。对于闭的情况，如果 $(U,\varphi)$ 是 $N$ 的一个光滑坐标卡，
+  那么 $\varphi\circ F$ 可以视为定义在 $F^{-1}(U)$ 的任意点的某个
+  邻域上的光滑坐标映射，在这个坐标下，$F$ 的坐标表示是恒等映射，
+  所以 $\omega$ 满足 \eqref{eq:close covector field} 式，
+  即 $F^*\omega$ 在 $F^{-1}(U)$ 中满足 \eqref{eq:close covector field} 式。
+\end{proof}
 
 
 
