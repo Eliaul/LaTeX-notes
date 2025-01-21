@@ -30,7 +30,7 @@
 
 \DeclareMathOperator\Spec{Spec}
 \DeclareMathOperator\im{im}
-\DeclareMathOperator\nil{nil}
+\DeclareMathOperator\sgn{sgn}
 \DeclareMathOperator\rad{rad}
 \DeclareMathOperator\Ann{Ann}
 \DeclareMathOperator\Max{Max}
@@ -41,7 +41,7 @@
 \DeclareMathOperator\Lie{Lie}
 \DeclareMathOperator\End{End}
 \DeclareMathOperator\Int{Int}
-\DeclareMathOperator\Tor{Tor}
+\DeclareMathOperator\Sym{Sym}
 \DeclareMathOperator\Tr{Tr}
 \DeclareMathOperator\Hom{Hom}
 \DeclareMathOperator\supp{supp}
@@ -4096,6 +4096,31 @@ $\omega$ 的分量函数必须满足
   即 $F^*\omega$ 在 $F^{-1}(U)$ 中满足 \eqref{eq:close covector field} 式。
 \end{proof}
 
+我们已经说明了恰当余向量场都是闭余向量场，那么自然会引出逆命题：
+是否每个闭余向量场都是恰当的？答案是几乎总是是的，但是有一个重要
+的限制。这取决于区域的形状，如下面的例子所示。
+
+\begin{example}
+  回到 \autoref{exa:covector field on R2-0} 中的余向量场 $\omega$。
+  直接计算可知 $\omega$ 是闭的，但是我们已经说明其在 $\mathbb{R}^2 \smallsetminus\{0\}$
+  上不是恰当的。但是另一方面，如果我们限制 $\omega$ 的定义域在右半平面
+  $U=\{(x,y)\,|\, x>0\}$ 上，直接计算表明 $\omega=\d\bigl(\arctan y/x\bigr)$，
+  如果使用极坐标则更清晰，即 $\omega=\d\theta$。
+\end{example}
+
+上面的例子说明了一个关键的原则：一个闭余向量场是否恰当的问题是一个全局性
+的问题，取决于定义域的形状。这一观察是 de Rham 上同调的起点，其表达了
+光滑结构和拓扑之间的深层次关系。现在我们可以证明下面的结果。如果
+$V$ 是有限维向量空间，子集 $U\subseteq V$ 被称为\emph{星形的}，
+如果存在 $c\in U$ 使得对于每个 $x\in U$，从 $c$ 到 $x$ 的线段都在
+$U$ 中。例如，每个凸集都是星形的。
+
+\begin{theorem}[余向量场的 Poincar\'e 引理]
+  如果 $U$ 是 $\mathbb{R}^n$ 或者 $\mathbb{H}^n$ 的星形开子集，
+  那么 $U$ 上的闭余向量场都是恰当的。
+\end{theorem}
+
+
 
 
 
@@ -4118,12 +4143,29 @@ $\omega$ 的分量函数必须满足
     \omega^1(v_1)\cdots \omega^k(v^k).  
   \]
 \end{proposition}
+\begin{proof}
+  定义映射 $\varPhi:V_1^*\times\cdots\times V_k^*\to \LL(V_1,\dots,V_k;\mathbb{R})$
+  为
+  \[
+    \varPhi\bigl(\omega^1,\dots,\omega^k\bigr)(v_1,\dots,v_k)
+    =\omega^1(v_1)\cdots\omega^k(v_k).
+  \]
+  不难验证 $\varPhi$ 是多重线性映射，所以诱导了唯一的线性映射 
+  $\tilde{\varPhi}$ 满足
+  \[
+    \tilde\varPhi\bigl(\omega^1\otimes\cdots\otimes\omega^k\bigr)(v_1,\dots,v_k)
+    =\omega^1(v_1)\cdots\omega^k(v_k).
+  \]
+  线性映射 $\tilde{\varPhi}$ 将 $V_1^*\otimes\cdots\otimes V_k^*$ 的基 $\varepsilon_{(1)}^{i_1}\otimes\cdots\otimes \varepsilon_{(k)}^{i_k}$
+  送到 $\LL(V_1,\dots,V_k;\mathbb{R})$ 的基  $\varepsilon_{(1)}^{i_1}\otimes\cdots\otimes \varepsilon_{(k)}^{i_k}$，
+  所以是同构映射。
+\end{proof}
 
 \subsection{向量空间上的协变张量和逆变张量}
 
 $V$ 是有限维向量空间，\emph{$V$ 上的协变 $k$-张量}指的是
 $k$ 重张量积 $V^*\otimes\cdots\otimes V^*$ 中的元素，我们可以将其视为
-$V$ 上的 $k$-重多重线性映射
+$V$ 上的 $k$-多重线性映射
 \[
   \alpha:V\times\cdots\times V\to \mathbb{R},
 \]
@@ -4132,6 +4174,18 @@ $k$ 被称为\emph{$\alpha$ 的秩}。出于惯例，将 $0$-张量定义为实�
 \[
   T^k(V^*)=V^*\otimes\cdots\otimes V^*.
 \]
+
+\begin{example}[协变张量]
+  令 $V$ 是有限维向量空间。
+  \begin{enumerate}
+    \item 每个线性泛函 $\omega:V\to \mathbb{R}$ 都是一个协变 $1$-张量，
+    由于 $\omega$ 可以视为 $T_a^*V\simeq V^*$ 的元素，所以协变 $1$-张量
+    就是余向量。
+    \item $V$ 上的协变 $2$-张量就是\emph{双线性型}，例如 $\mathbb{R}^2$
+    上的内积。
+    \item 将行列式视为参数为 $n$ 个向量的函数，是 $\mathbb{R}^n$ 上的协变 $n$-张量。
+  \end{enumerate}
+\end{example}
 
 定义\emph{$V$ 上秩 $k$ 的逆变张量}空间为向量空间
 \[
@@ -4158,7 +4212,106 @@ $k$ 被称为\emph{$\alpha$ 的秩}。出于惯例，将 $0$-张量定义为实�
   T^{(k,0)}(V)&=T^k(V).
 \end{align*}
 
+在本书中，我们主要关注协变张量。因此，除非我们明确指定，否则张量
+将始终被理解为协变张量。然而，重要的是要意识到逆变和混合张量
+在微分几何的更高级部分中发挥着重要作用，特别是黎曼几何。
 
+\section{对称和交错张量}
+
+一般来说，重新排列协变张量的参数对其值造成的影响不必有什么规律。
+然而，一些特殊的张量（例如内积）在重新排列参数时值保持不变（内积的对称性）。
+对于行列式而言，互换两个参数，行列式会改变符号。在本节中，我们描述这两类
+重要的张量：对称张量和交错张量。当它们的参数重新排列时，会以最简单的方式发生变化。
+
+\subsection{对称张量}
+
+令 $V$ 是有限维向量空间。$V$ 上的协变 $k$-张量 $\alpha$ 如果交换任意两个参数
+的值都保持不变：
+\[
+  \alpha(v_1,\dots,v_i,\dots,v_j,\dots,v_k)=
+  \alpha(v_1,\dots,v_j,\dots,v_i,\dots,v_k),
+\]
+其中 $1\leq i<j\leq k$，那么我们说 $\alpha$ 是\emph{对称的}。
+
+令 $S_k$ 是 $k$ 阶对称群，任取 $\sigma\in S_k$，我们记
+$k$-张量 $\sigma\alpha$ 为
+\[
+  \sigma\alpha(v_1,\dots,v_k)=\alpha(v_{\sigma(1)},\dots,v_{\sigma(k)}).  
+\]
+不难验证 $\tau(\sigma\alpha)=(\tau\sigma)\alpha$。由于
+$S_k$ 可以由所有的二轮换生成，所以 $\alpha$ 是对称张量当且仅当
+任取 $\sigma\in S_k$ 有 $\sigma\alpha=\alpha$。
+
+所有对称 $k$-张量的集合构成 $T^k(V^*)$ 的一个子空间，我们记为
+$\Sigma^k(V^*)$。我们可以定义投影映射 $\Sym:T^k(V^*)\to \Sigma^k(V^*)$
+为
+\[
+  \Sym \alpha=\frac{1}{k!}\sum_{\sigma\in S_k}\sigma\alpha.  
+\]
+这个映射被称为\emph{对称化}。
+
+\begin{proposition}[对称化的性质]
+  令 $\alpha$ 是一个协变张量。
+  \begin{enumerate}
+    \item $\Sym\alpha$ 是对称张量。
+    \item $\alpha$ 是对称张量当且仅当 $\Sym\alpha=\alpha$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  任取 $\alpha\in T^k(V^*)$，$\tau\in S_k$，那么
+  \begin{align*}
+    (\Sym\alpha)(v_{\tau(1)},\dots,v_{\tau(k)})&=
+    \frac{1}{k!}\sum_{\sigma\in S_k}\sigma\alpha(v_{\tau(1)},\dots,v_{\tau(k)})\\
+    &=\frac{1}{k!}\sum_{\sigma\in S_k}(\sigma\tau)\alpha(v_1,\dots,v_k)\\
+    &=\frac{1}{k!}\sum_{\eta\in S_k}\eta\alpha(v_1,\dots,v_k)\\
+    &=(\Sym\alpha)(v_1,\dots,v_k),
+  \end{align*}
+  所以 $\Sym\alpha$ 是对称张量。
+
+  如果 $\alpha$ 是对称张量，那么任取 $\sigma\in S_k$ 有 $\sigma\alpha=\alpha$，
+  所以 $\Sym\alpha=\alpha$。反之，如果 $\Sym\alpha=\alpha$，由 (1)
+  可知 $\alpha$ 是对称张量。
+\end{proof}
+
+如果 $\alpha$ 和 $\beta$ 是 $V$ 上的对称张量，那么 $\alpha\otimes\beta$
+一般不是对称张量。但是，使用对称化算子，可以定义一种新的乘法，将
+一对对称张量送到一个对称张量。如果 $\alpha\in \Sigma^k(V^*)$，
+$\beta\in \Sigma^l(V^*)$，我们定义\emph{对称积} $\alpha\beta$
+为 $(k+l)$-张量
+\[
+  \alpha\beta=\Sym(\alpha\otimes\beta).  
+\]
+
+\begin{proposition}[对称积的性质]
+  \mbox{}
+  \begin{enumerate}
+    \item 对称积是对称的且双线性的：对于对称张量 $\alpha,\beta,\gamma$
+    和 $a,b\in \mathbb{R}$，有
+    \begin{align*}
+      \alpha\beta&=\beta\alpha,\\
+      (a\alpha+b\beta)\gamma&=a\alpha\gamma+b\beta\gamma=
+      \gamma(a\alpha+b\beta).
+    \end{align*}
+    \item 如果 $\alpha,\beta$ 是余向量，那么
+    \[
+      \alpha\beta=\frac{1}{2}(\alpha\otimes\beta+\beta\otimes\alpha).  
+    \]
+  \end{enumerate}
+\end{proposition}
+
+\subsection{交错张量}
+
+$V$ 上的协变 $k$-张量 $\alpha$ 如果满足：
+\[
+  \alpha(v_1,\dots,v_i,\dots,v_j,\dots,v_k)=
+  -\alpha(v_1,\dots,v_j,\dots,v_i,\dots,v_k),
+\]
+那么我们说 $\alpha$ 是\emph{交错张量}。所有交错 $k$-张量
+构成的子空间记为 $\Lambda^k(V^*)\subseteq T^k(V^*)$。
+此时，可以验证对于 $\sigma\in S_k$，有 $\sigma\alpha=(\sgn\sigma)\alpha$。
+
+每个 $0$-张量（实数）和 $1$-张量都是对称且交错的。一个交错 $2$-张量
+就是反对称的双线性型（交错型）。
 
 
 \section{流形上的张量和张量场}
