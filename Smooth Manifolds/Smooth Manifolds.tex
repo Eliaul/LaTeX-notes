@@ -4356,6 +4356,31 @@ $\Gamma\bigl(T^kT^*M\bigr),\Gamma\bigl(T^kTM\bigr),\Gamma\bigl(T^{(k,l)}TM\bigr)
   \mathcal{T}^k(M)=\Gamma\bigl(T^kT^*M\bigr)  .
 \]
 
+\begin{proposition}[张量场的光滑性判别]
+  $M$ 是光滑流形，$A:M\to T^kT^*M$ 是截面，下面的说法等价。
+  \begin{enumerate}
+    \item $A$ 光滑。
+    \item 在每个光滑坐标卡中，$A$ 的分量函数都是光滑的。
+    \item $M$ 的每个点处都存在一个光滑坐标卡使得 $A$ 的分量函数
+    在这上面光滑。
+    \item 如果 $X_1,\dots,X_k\in \mathfrak{X}(M)$，函数 $A(X_1,\dots,X_k):M\to \mathbb{R}$
+    \[
+      A(X_1,\dots,X_k)(p)=A_p\bigl(X_1|_p,\dots,X_k|_p\bigr)
+    \]
+    是光滑的。
+  \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+  $M$ 是光滑流形，$A\in \mathcal{T}^k(M)$，$B\in \mathcal{T}^l(M)$，
+  $f\in C^\infty(M)$。那么 $fA$ 和 $A\otimes B$ 也是光滑张量场，其在
+  光滑坐标卡中的分量为
+  \begin{align*}
+    (fA)_{i_1\dots i_k}&= fA_{i_1\dots i_k},\\
+    (A\otimes B)_{i_1\dots i_{k+l}}&=A_{i_1\dots i_k}B_{i_{k+1}\dots i_{k+l}}.
+  \end{align*}
+\end{proposition}
+
 \subsection{张量场的拉回}
 
 与余向量场类似，协变张量场可以通过光滑映射拉回产生定义域上的张量场。
