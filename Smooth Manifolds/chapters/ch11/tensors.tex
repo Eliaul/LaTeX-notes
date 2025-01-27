@@ -263,6 +263,118 @@ $\Gamma\bigl(T^kT^*M\bigr),\Gamma\bigl(T^kTM\bigr),\Gamma\bigl(T^{(k,l)}TM\bigr)
 \[
   \mathfrak{X}(M)\times\cdots\times \mathfrak{X}(M)\to C^\infty(M).  
 \]
+不难发现这个映射在 $\mathbb{R}$ 上是多重线性的。实际上，它在 
+\emph{$C^\infty(M)$ 上是多重线性的}，也就是说任取 $f,f'\in C^\infty(M)$，
+$X_i,X_i'\in \mathfrak{X}(M)$，我们有
+\begin{align*}
+  &A(X_1,\dots,fX_i+f'X_i',\dots,X_k)\\
+  &=fA(X_1,\dots,X_i,\dots,X_k)+f'A(X_1,\dots,X_i',\dots,X_k).
+\end{align*}
+这个性质实际上是光滑张量场的特征。
+
+\begin{lemma}[张量表征引理]
+  映射
+  \begin{align*}
+    \mathcal{A}:\underbrace{\mathfrak{X}(M)\times\cdots\times \mathfrak{X}(M)}
+    _{\text{$k$ copies}}\to C^\infty(M)
+  \end{align*}
+  是由一个光滑协变 $k$-张量场诱导的当且仅当其在 $C^\infty(M)$ 上是多重线性的。
+\end{lemma}
+\begin{proof}
+  我们已经说明了必要性，下面说明充分性。假设 $\mathcal{A}$ 在 $C^\infty(M)$ 上是多重线性的。
+  我们希望定义一个张量场 $A:M\to T^kT^*M$ 为
+  \[
+    A_p(v_1,\dots,v_k)=\mathcal{A}(V_1,\dots,V_k)(p),  
+  \]
+  其中 $p\in M$，$v_1,\dots,v_k\in T_pM$，$V_1,\dots,V_k$ 是 $v_1,\dots,v_k$
+  的任意延拓到 $M$ 上的光滑向量场。此时容易验证 $A$ 是光滑的张量场且
+  诱导了 $\mathcal{A}$。下面我们只需要说明 $A$ 是良定义的，即与延拓的选取无关。
+
+  首先说明 $\mathcal{A}$ 是局部的映射。如果 $X_i$ 是光滑向量场，其在 $p$
+  的某个邻域 $U$ 中为零，那么我们可以选取支在 $U$ 中的鼓包函数 $\psi$
+  满足 $\psi(p)=1$，此时 $\psi X_i\equiv 0$，所以
+  \[
+    0=\mathcal{A}(X_1,\dots,\psi X_i,\dots,X_k)(p)= 
+  \psi(p)\mathcal{A}(X_1,\dots,X_i,\dots,X_k)(p),
+  \]
+  所以 $\mathcal{A}(X_1,\dots,X_k)$ 在 $p$ 处为零，这表明 $\mathcal{A}(X_1,\dots,X_k)$
+  在 $p$ 处的取值只与 $X_1,\dots,X_k$ 在 $p$ 的某个邻域上的取值有关。
+
+  然后我们说明 $\mathcal{A}$ 实际上只与 $X_1,\dots,X_k$ 在 $p$ 点处的值有关。
+  若 $X_i|_p=0$，那么在 $p$ 处的任意坐标邻域中可以写为 $X_i=X_i^j\partial/\partial x^j$，
+  其中分量函数 $X_i^j(p)=0$。我们可以将向量场 $\partial/\partial x^j$
+  延拓为 $M$ 上的光滑向量场 $E_j$ 使得 $E_j$ 在这个邻域中有 $E_j=\partial/\partial x^j$。
+  同样的，可以将光滑函数 $X_i^j$ 延拓为 $M$ 上的光滑函数 $f_i^j$ 使得
+  $f_i^j$ 在这个邻域中有 $f_i^j=X_i^j$。那么在这个邻域中有 $f_i^jE_j=X_i$，
+  根据 $\mathcal{A}$ 的多重线性性以及局部性，就有
+  \begin{align*}
+    \mathcal{A}(X_1,\dots,X_i,\dots,X_k)(p)&=
+    \mathcal{A}(X_1,\dots,f_i^jE_j,\dots,X_k)(p)\\
+    &=f_i^j(p)\mathcal{A}(X_1,\dots,E_j,\dots,X_k)(p)=0.
+  \end{align*} 
+  这就表明 $\mathcal{A}$ 只与 $X_1,\dots,X_k$ 在 $p$ 点处的值有关。
+\end{proof}
+
+更一般地，若 $F$ 是 $M$ 上的光滑 $(k,l)$-张量场，给定光滑
+余向量场 $\omega^1,\dots,\omega^k\in \mathfrak{X}^*(M)$ 以及
+光滑向量场 $X_1,\dots,X_l\in \mathfrak{X}(M)$，此时可以定义映射
+\[
+  \mathcal{F}:\underbrace{\mathfrak{X}^*(M)\times\cdots\times \mathfrak{X}^*(M)}
+  _{\text{$k$ copies}}\times \underbrace{\mathfrak{X}(M)\times\cdots\times \mathfrak{X}(M)}
+  _{\text{$l$ copies}}\to C^\infty(M)
+\]
+满足
+\[
+  \mathcal{F}(\omega^1,\dots,\omega^k,X_1,\dots,X_l)(p)
+  =F_p\bigl(\omega^1|_p,\dots,\omega^k|_p,X_1|_p,\dots,X_l|_p\bigr)  .
+\]
+不难验证 $\mathcal{F}$ 是 $C^\infty(M)$-多重线性的。与上面的证明完全类似的，
+可以证明这样的映射 $\mathcal{F}$ 是 $(k,l)$-张量场诱导的当且仅当
+$\mathcal{F}$ 是 $C^\infty(M)$-多重线性的。
+
+然后我们再介绍一个张量场的重要的表征。
+
+\begin{lemma}
+  $V$ 是有限维向量空间，那么在多重线性映射
+  \[
+    \underbrace{V^*\times\cdots\times V^*}_{\text{$k$ copies}}  \times
+    \underbrace{V\times\cdots\times V}_{\text{$l$ copies}}  \to V
+  \]
+  的空间和张量积空间 $T^{(k+1,l)}(V)$ 之间存在一个同构。
+\end{lemma}
+\begin{proof}
+  任取上述多重线性映射 $f$，定义 $\varPhi(f)\in T^{(k+1,l)}(V)$ 满足：
+  任取 $\omega^1,\dots,\omega^{k+1}\in V^*$ 和 $v_1,\dots,v_l\in V$，有
+  \[
+    \varPhi(f)\bigl(\omega^1,\dots,\omega^{k+1},v_1,\dots,v_l\bigr) 
+    =\omega^{k+1}\bigl(f(\omega^1,\dots,\omega^k,v_1,\dots,v_l)\bigr),
+  \]
+  不难验证 $\varPhi(f)$ 是多重线性映射，所以确实是 $(k+1,l)$-张量。
+  这两个空间的维数都是 $(\dim V)^{(k+1)l}$，显然 $\varPhi$
+  是单射，所以 $\varPhi$ 是同构。
+\end{proof}
+
+上面的引理告诉我们，对于 $(k+1,l)$-张量场 $F$，我们可以诱导出一个
+$C^\infty(M)$-多重线性映射
+\[
+  \mathcal{F}:\underbrace{\mathfrak{X}^*(M)\times\cdots\times \mathfrak{X}^*(M)}
+  _{\text{$k$ copies}}\times \underbrace{\mathfrak{X}(M)\times\cdots\times \mathfrak{X}(M)}
+  _{\text{$l$ copies}}\to \mathfrak{X}(M),
+\]
+定义为
+\[
+  \mathcal{F}(\omega^1,\dots,\omega^k,X_1,\dots,X_l)(p)=
+  \varPhi^{-1}(F_p)\bigl(\omega^1|_p,\dots,\omega^k|_p,X_1|_p,\dots,X_l|_p\bigr).
+\]
+反之，也可以从这样的 $C^\infty(M)$-多重线性映射 $\mathcal{F}$
+诱导出 $(k+1,l)$-张量场 $F$，定义为
+\[
+  F_p(u^1,\dots,u^k,u^{k+1},v_1,\dots,v_l) =
+  u^{k+1}\bigl(\mathcal{F}(\omega^1,\dots,\omega^k,V_1,\dots,V_l)(p)\bigr),
+\]
+其中 $\omega^1,\dots,\omega^k$ 是 $u^1,\dots,u^k$ 的延拓到 $M$
+上的光滑余向量场，$V_1,\dots,V_l$ 是 $v_1,\dots,v_l$ 的延拓到 $M$
+上的光滑向量场。
 
 流形上的\emph{对称张量场}指的是一个协变张量场并且其在每个点处的取值都是
 对称张量。两个或多个张量场的对称积由逐点张量的对称积定义。例如，
