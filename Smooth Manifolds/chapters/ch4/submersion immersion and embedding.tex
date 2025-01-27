@@ -1,0 +1,433 @@
+
+\chapter{浸没、浸入和嵌入}
+
+\section{常秩映射}
+
+设 $M,N$ 是带边或者无边光滑流形。给定一个光滑映射 $F:M\to N$
+和点 $p\in M$，定义\emph{$F$ 在 $p$ 处的秩}为线性映射 $dF_p:T_pM\to T_{F(p)}N$
+的秩。显然其等价定义有 $F$ 在任意光滑坐标卡下的 Jacobi 矩阵的秩以及
+$\im dF_p\subseteq T_{F(p)}N$ 的维数。如果 $F$ 在任意点处的秩
+都是 $r$，那么我们说 $F$ 是\emph{常秩}的，记为 $\rk F=r$。
+显然 $F$ 在任意点处的秩都小于等于 $\min\{\dim M,\dim N\}$，如果
+$dF_p$ 的秩等于 $\min\{\dim M,\dim N\}$，那么我们说\emph{$F$ 在 $p$ 处满秩}。
+如果 $F$ 在任意点处都满秩，那么我们说\emph{$F$ 满秩}。
+
+如果光滑映射 $F:M\to N$ 在任意点处的微分都是满射(等价地说，$\rk F=\dim N$)，那么我们说 $F$ 是\emph{光滑浸没}。
+如果 $F$ 在任意点处的微分都是单射(等价地说，$\rk F=\dim M$)，那么我们说 $F$ 是\emph{光滑浸入}。
+
+\begin{proposition}\label{prop:regular points is open}
+  设 $F:M\to N$ 是光滑映射，$p\in M$。如果 $dF_p$ 是满射，那么存在 $p$ 
+  的邻域 $U$ 使得 $F|_U$ 是浸没。如果 $dF_p$ 是单射，那么存在 $p$ 
+  的邻域 $U$ 使得 $F|_U$ 是浸入。
+\end{proposition}
+\begin{proof}
+  任取 $p$ 处的光滑坐标卡 $(W,\varphi)$ 和 $F(p)$ 处的光滑坐标卡 $(V,\psi)$，那么 $F$
+  的坐标表示 $\psi\circ F\circ\varphi^{-1}$ 在 $\hat p=\varphi(p)$ 处的 Jacobi 矩阵是满秩矩阵，由于满秩矩阵的集合是 $\dim N\times\dim M$
+  矩阵空间中的开集，所以存在 $\hat p$ 的邻域 $U\subseteq W$ 使得 $F$ 
+  在 $U$ 中任意点都满秩，此时 $F|_U$ 为浸没或者浸入。
+\end{proof}
+
+\begin{example}[浸没和浸入]
+  \mbox{}
+  \begin{enumerate}
+    \item 设 $M_1,\dots,M_k$ 是光滑流形，那么每个投影映射 $\pi_i:M_1\times\cdots\times M_k\to M_i$
+    是光滑浸没。这是因为 $\pi_i$ 的某个坐标表示为
+    $\hat \pi(x_1,\dots,x_k)=x_i$，其 Jacobi 矩阵满秩。
+    \item 如果 $\gamma:J\to M$ 是光滑曲线，那么 $\gamma$ 是光滑浸入当且仅当
+    对于任意的 $t\in J$ 有 $\gamma'(t)\neq 0$。
+    \item 如果 $M$ 是光滑流形，赋予切丛 $TM$ \autoref{prop:smooth structure of tangent bundle}
+    中的光滑结构，那么投影 $\pi:TM\to M$ 是光滑浸没。对于 $M$ 的任意光滑坐标卡
+    $(U,(x^i))$ 和对应的 $TM$ 的光滑坐标卡 $(\pi^{-1}(U),(x^i,v^i))$，$\pi$
+    的坐标表示为 $\hat \pi(x,v)=x$，其 Jacobi 矩阵是行满秩矩阵。
+  \end{enumerate}
+\end{example}
+
+\subsection{局部微分同胚}
+
+令 $M,N$ 是带边或者无边光滑流形，映射 $F:M\to N$。如果每个 $p\in M$
+处都有一个邻域 $U$ 使得 $F(U)$ 是开集并且 $F|_U:U\to F(U)$ 是微分同胚，那么
+我们说 $F$ 是\emph{局部微分同胚}。由于 $F$ 满足局部的光滑性，根据
+\autoref{prop:smoothness is local}，局部微分同胚是光滑映射。
+
+\begin{theorem}[流形上的反函数定理]
+  设 $M,N$ 是光滑流形，$F:M\to N$ 是光滑映射。如果 $p\in M$ 使得
+  $dF_p$ 可逆，那么存在 $p$ 的连通邻域 $U_0$ 和 $F(p)$ 的连通邻域 $V_0$
+  使得 $F|_{U_0}:U_0\to V_0$ 是微分同胚。
+\end{theorem}
+\begin{proof}
+  $dF_p$ 可逆表明 $\dim M=\dim N=n$。取 $p$ 处的光滑坐标卡 $(U,\varphi)$
+  和 $F(p)$ 处的光滑坐标卡 $(V,\psi)$ 并且 $F(U)\subseteq V$，
+  $\hat F=\psi\circ F\circ\varphi^{-1}:\hat U=\varphi(U)\to \psi(V)=\hat V$
+  是光滑函数。微分 $d\hat F_{\hat p}=d\psi_{F(p)}\circ dF_p\circ d(\varphi^{-1})_{\hat p}$
+  可逆，Euclid 空间中的反函数定理告诉我们存在 $\hat p$ 的连通邻域 $\hat U_0\subseteq\hat U$
+  以及 $\psi(F(p))$ 的连通邻域 $\hat V_0\subseteq \hat V$ 使得 
+  $\hat F|_{\hat U_0}:\hat U_0\to\hat V_0$ 是微分同胚，那么 $U_0=\varphi^{-1}(\hat U_0)$
+  和 $V_0=\psi^{-1}(\hat V_0)$ 即为我们所需要的。
+\end{proof}
+
+\begin{proposition}[局部微分同胚的基本性质]
+  \mbox{}
+  \begin{enumerate}
+    \item 局部微分同胚的复合是局部微分同胚。
+    \item 光滑流形之间局部微分同胚的有限积是局部微分同胚。
+    \item 局部微分同胚是局部同胚并且是开映射。
+    \item 局部微分同胚限制在带边或者无边开子流形上是局部微分同胚。
+    \item 微分同胚是局部微分同胚。
+    \item 双射的局部微分同胚是微分同胚。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 设 $F:M\to N$ 和 $G:N\to P$ 是局部微分同胚。任取 $p\in M$，
+  那么存在 $F(p)$ 的邻域 $V$ 使得 $G(V)$ 是 $P$ 的开集，并且 
+  $G|_V:V\to G(V)$ 是微分同胚。$F$ 是局部微分同胚表明存在 $p$
+  的邻域 $U$ 使得 $F(U)$ 为 $N$ 的开集并且 $F|_U:U\to F(U)$ 是微分同胚，
+  用 $U\cap F^{-1}(V)$ 替代 $U$，可以假设 $U\subseteq F^{-1}(V)$，即
+  $F(U)\subseteq V$。那么 $G|_{F(U)}:F(U)\to G(F(U))$ 是微分同胚，故
+  $(G\circ F)|_U:U\to G(F(U))$ 是微分同胚，即 $G\circ F$ 是局部微分同胚。
+\end{proof}
+
+
+\begin{proposition}\label{prop:local diffeomorphism}
+  设 $M,N$ 是光滑流形，$F:M\to N$ 是映射。
+  \begin{enumerate}
+    \item $F$ 是局部微分同胚当且仅当 $F$ 同时是光滑浸没以及光滑浸入。
+    \item 如果 $\dim M=\dim N$ 并且 $F$ 为光滑浸没或者光滑浸入，那么
+    $F$ 是局部微分同胚。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 设 $F$ 是局部微分同胚。任取 $p\in M$，存在 $p$ 的邻域 $U$ 使得 $F(U)$
+  为开集并且 $F|_U:U\to F(U)$ 是微分同胚，那么微分 $dF_p:T_pM\to T_{F(p)}N$
+  是同构，所以 $\rk F=\dim M=\dim N$，即 $F$ 是光滑浸没以及光滑浸入。
+
+  反之，若 $F$ 是光滑浸没以及光滑浸入，任取 $p\in M$，那么 $dF_p:T_pM\to T_{F(p)}N$
+  是同构，根据反函数定理，存在 $p$ 的邻域 $U$ 和 $F(p)$ 的邻域 $V$ 使得
+  $F|_U:U\to V$ 是微分同胚，即 $F$ 是局部微分同胚。
+
+  (2) 只需注意到对于相同维数的向量空间之间的线性映射，单射或者满射即可推出同构。
+\end{proof}
+
+\begin{example}[局部微分同胚]
+  定义映射 $\varepsilon:\mathbb{R}\to\mathbb{S}^1$ 为 $\varepsilon(t)=e^{2\pi it}$，
+  $\varepsilon$ 是局部微分同胚，因为其坐标表示为 $\hat\varepsilon(t)=2\pi t+c$
+  是微分同胚。  
+\end{example}
+
+
+
+
+
+\subsection{秩定理}
+
+\begin{theorem}[秩定理]
+  设 $M,N$ 分别是 $m$ 维和 $n$ 维光滑流形，$F:M\to N$ 是秩 $r$ 的光滑映射。
+  对于每个 $p\in M$，存在以 $p$ 为中心的光滑坐标卡 $(U,\varphi)$ 和以
+  $F(p)$ 为中心的光滑坐标卡 $(V,\psi)$ 使得 $F(U)\subseteq V$，并且
+  $F$ 的坐标表示满足
+  \[
+    \hat F\left(x^1,\dots,x^r,x^{r+1},\dots,x^m\right) =
+    \left(x^1,\dots,x^r,0,\dots,0\right).
+  \]
+  特别地，如果 $F$ 是光滑浸没，那么
+  \[
+    \hat F\left(x^1,\dots,x^n,x^{n+1},\dots,x^m\right) =
+    \left(x^1,\dots,x^n\right),
+  \]
+  如果 $F$ 是光滑浸入，那么
+  \[
+    \hat F\left(x^1,\dots,x^m\right) =
+    \left(x^1,\dots,x^m,0,\dots,0\right).
+  \]
+\end{theorem}
+\begin{proof}
+  该定理的叙述是局部的，所以在选定光滑坐标卡后，我们可以将 $M,N$
+  替换为开集 $U\subseteq\mathbb{R}^m$ 和开集 $V\subseteq\mathbb{R}^n$。
+  $DF(p)$ 的秩为 $r$ 表明其存在某个 $r\times r$ 子矩阵的行列式不为零。
+  通过调整坐标的顺序，我们假定其左上角的子矩阵的行列式不为零，即
+  $\left(\partial F^i/\partial x^j\right)$，其中 $1\leq i,j\leq r$。
+  记 $\mathbb{R}^m$ 中的标准坐标为 $(x,y)=(x^1,\dots,x^r,y^1,\dots,y^{m-r})$，
+  $\mathbb{R}^n$ 中的标准坐标为 $(v,w)=(v^1,\dots,v^r,w^1,\dots,w^{n-r})$。
+  通过平移坐标系，我们可以假设 $p=(0,0)$ 以及 $F(p)=(0,0)$。将 
+  $F(x,y)$ 分解为 $F(x,y)=\left(Q(x,y),R(x,y)\right)$，其中
+  $Q:U\to\mathbb{R}^r$ 和 $R:U\to\mathbb{R}^{n-r}$ 是光滑函数。
+  此时 $\left(\partial Q^i/\partial x^j(0,0)\right)$ 是可逆矩阵。
+
+  定义 $\varphi:U\to\mathbb{R}^m$ 为 $\varphi(x,y)=\left(Q(x,y),y\right)$，那么
+  \[
+    D\varphi(0,0)=\begin{pmatrix}
+      \dfrac{\partial Q^i}{\partial x^j}(0,0) &  \dfrac{\partial Q^i}{\partial y^j}(0,0)\\[4mm]
+      0 & I_{m-r}
+    \end{pmatrix}  .
+  \]
+  显然 $D\varphi(0,0)$ 可逆。根据反函数定理，存在 $(0,0)$ 的连通邻域 $U_0$
+  和 $\varphi(0,0)=(0,0)$ 的连通邻域 $\tilde{U}_0$ 使得 $\varphi:U_0\to\tilde{U}_0$
+  是微分同胚。通过缩小 $U_0$ 和 $\tilde{U}_0$，我们假设 $\tilde{U}_0$ 是开立方体。
+  记逆映射 $\varphi^{-1}:\tilde{U}_0\to U_0$ 为
+  $\varphi^{-1}(x,y)=\left(A(x,y),B(x,y)\right)$，其中 $A:\tilde{U}_0\to\mathbb{R}^r$
+  和 $B:\tilde{U}_0\to\mathbb{R}^{m-r}$ 是光滑函数，那么
+  \[
+    (x,y)=\varphi\left(A(x,y),B(x,y)\right)=\left(Q\bigl(A(x,y),B(x,y)\bigr),B(x,y)\right),
+  \]
+  故 $B(x,y)=y$。因此 $\varphi^{-1}$ 满足
+  \[
+    \varphi^{-1}(x,y)=\left(A(x,y),y\right)  .
+  \]
+  另一方面，对比分量 $x$，有 $Q\left(A(x,y),y\right)=x$，因此
+  \[
+    F\circ\varphi^{-1}(x,y)=\left(x,\tilde{R}(x,y)\right)  ,
+  \]
+  其中 $\tilde{R}:\tilde{U}_0\to\mathbb{R}^{n-r}$ 满足
+  $\tilde{R}(x,y)=R\left(A(x,y),y\right)$。$F\circ\varphi^{-1}$ 在
+  任意 $(x,y)\in\tilde{U}_0$ 处的 Jacobi 矩阵为
+  \[
+    D\left(F\circ\varphi^{-1}\right)(x,y)=\begin{pmatrix}
+      I_r & 0 \\[2mm]
+      \dfrac{\partial \tilde{R}^i}{\partial x^j}(x,y) & 
+      \dfrac{\partial \tilde{R}^i}{\partial y^j}(x,y)
+    \end{pmatrix}.
+  \]
+  由于微分同胚不改变映射的秩，所以上述矩阵的秩为 $r$，这表明
+  $\partial\tilde{R}^i/\partial y^j(x,y)$ 为零矩阵，所以 $\tilde{R}$
+  的取值实际上与 $y$ 无关，不妨设 $S(x)=\tilde{R}(x,0)$ (这里 $\tilde{U}_0$ 是开立方体保证 $\tilde{R}(x,0)$ 有定义)，
+  那么
+  \[
+    F\circ\varphi^{-1}(x,y)=\left(x,S(x)\right)  .
+  \] 
+
+  令 $V_0\subseteq V$ 为 $V_0=\left\{(v,w)\in V\,\middle|\, (v,0)\in\tilde{U}_0\right\}$，
+  那么 $V_0$ 是包含 $(0,0)$ 的开集。此时 $F\circ\varphi^{-1}\left(\tilde{U}_0\right)\subseteq V_0$。
+  定义 $\psi:V_0\to\mathbb{R}^n$ 为 $\psi(v,w)=(v,w-S(v))$，这是到其像集的微分同胚，
+  因为有逆映射 $\psi^{-1}(s,t)=(s,t+S(s))$，所以 $(V_0,\psi)$ 是光滑坐标卡。
+  那么
+  \[
+    \psi\circ F\circ\varphi^{-1}(x,y)=\psi(x,S(x))=(x,S(x)-S(x))=(x,0) .
+  \]
+  这就完成了证明。
+\end{proof}
+
+\begin{corollary}
+  令 $M,N$ 是光滑流形，$F:M\to N$ 是光滑映射，且 $M$ 是连通空间。那么下面的说法等价：
+  \begin{enumerate}
+    \item 对于每个 $p\in M$ 都存在包含 $p$ 的光滑坐标卡和包含 $F(p)$ 的光滑坐标卡，
+    使得 $F$ 的坐标表示是线性映射。
+    \item $F$ 是常秩的。
+  \end{enumerate}
+\end{corollary}
+\begin{proof}
+  $(2)\Rightarrow (1)$ 即秩定理。
+  $(1)\Rightarrow (2)$ 由于线性映射是常秩的，所以 $F$ 在每个点 $p$ 处都有一个邻域
+  使得 $F$ 在这个邻域上为常秩，$M$ 的连通性表明 $F$ 在 $M$ 上为常秩。
+\end{proof}
+
+\begin{theorem}[全局秩定理]
+  令 $M,N$ 是光滑流形，$F:M\to N$ 是常秩光滑映射。
+  \begin{enumerate}
+    \item 若 $F$ 是满射，那么 $F$ 是光滑浸没。
+    \item 若 $F$ 是单射，那么 $F$ 是光滑浸入。
+    \item 若 $F$ 是双射，那么 $F$ 是微分同胚。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  记 $m=\dim M$，$n=\dim N$，设 $F$ 有常秩 $r$。(a)
+  若 $F$ 是满射，假设 $F$ 不是光滑浸没，那么 $r<n$。根据秩定理，存在
+  以 $p$ 为中心的光滑坐标卡 $(U,\varphi)$ 和以 $F(p)$ 为中心的光滑坐标卡
+  $(V,\psi)$ 使得 $F(U)\subseteq V$ 并且 $F$ 的坐标表示为
+  \[
+    \hat F\left(x^1,\dots,x^r,x^{r+1},\dots,x^m\right) =
+    \left(x^1,\dots,x^r,0,\dots,0\right).
+  \]
+  通过适当缩小 $U$，我们假设 $U$ 是一个正则坐标球并且 $F(\bar U)\subseteq V$。
+  这表明 $F(\bar U)$ 是集合 $\left\{y\in V\,\middle|\, y^{r+1}=\cdots=y^n=0\right\}$
+  ($N$ 的闭子集且不包含 $N$ 的任意非空开子集) 的紧子集，所以 $F(\bar U)$ 是 $N$ 的闭集且不包含 $N$ 的任何非空开子集，
+  所以
+  \[
+    \overline{N\smallsetminus F(\bar U)}=N\smallsetminus \Int F(\bar U)=
+    N\smallsetminus\emptyset=N,
+  \]
+  故 $F(\bar U)$ 在 $N$ 中无处稠密。因为流形的任意开覆盖都有可数子覆盖，所以我们可以
+  选取可数个这样的坐标卡 $\{(U_i,\varphi_i)\}$ 覆盖 $M$，其对应的坐标卡 $\{(V_i,\psi_i)\}$
+  覆盖 $F(M)$。因为
+  \[
+    F(M)=\bigcup_{i=1}^\infty F(\bar U),  
+  \]
+  根据 Baire 纲定理，所以 $F(M)$ 在 $N$ 中的内部为空集，这与 $F$ 是满射矛盾。
+
+  (b) 若 $F$ 是单射，假设 $F$ 不是光滑浸入，那么 $r<m$。根据秩定理，
+  存在
+  以 $p$ 为中心的光滑坐标卡 $(U,\varphi)$ 和以 $F(p)$ 为中心的光滑坐标卡
+  $(V,\psi)$ 使得 $F(U)\subseteq V$ 并且 $F$ 的坐标表示为
+  \[
+    \hat F\left(x^1,\dots,x^r,x^{r+1},\dots,x^m\right) =
+    \left(x^1,\dots,x^r,0,\dots,0\right),
+  \]
+  那么对于任意小的 $\varepsilon$ 都有 $\hat F(0,\dots,0,\varepsilon)=(0,\dots,0,0)$，
+  这与 $F$ 是单射矛盾。
+
+  (c) 根据 (a) 和 (b)，$F$ 同时是光滑浸没以及光滑浸入，根据 \autoref{prop:local diffeomorphism}，
+  $F$ 是局部微分同胚，双射的局部微分同胚是微分同胚。
+\end{proof}
+
+\section{嵌入}
+
+如果 $M,N$ 是带边或者无边光滑流形，若 $F:M\to N$ 同时是光滑浸入以及
+拓扑嵌入，那么我们说 $F$ 是\emph{$M$ 到 $N$ 的光滑嵌入}。
+
+\begin{example}[光滑嵌入]
+  \mbox{}
+  \begin{enumerate}
+    \item $M$ 是带边或者无边光滑流形，$U\subseteq M$ 是开子流形，那么
+    包含映射 $\iota:U\hookrightarrow M$ 是光滑嵌入。
+    \item 如果 $M_1,\dots,M_k$ 是光滑流形，$p_i\in M_i$ 是任意点，
+    定义 $\iota_j:M_j\to M_1\times\cdots\times M_k$ 为
+    \[
+      \iota_j(q)=(p_1,\dots,p_{j-1},q,p_{j+1},\dots,p_k),  
+    \]
+    那么 $\iota_j$ 是光滑嵌入。
+  \end{enumerate}
+\end{example}
+
+\begin{example}[光滑的拓扑嵌入]
+  定义映射 $\gamma:\mathbb{R}\to\mathbb{R}^2$ 为 $\gamma(t)=(t^3,0)$ 是光滑映射
+  并且是拓扑嵌入，但是其不是光滑嵌入，因为 $\gamma'(0)=(0,0)$ 不满秩。
+\end{example}
+
+\begin{example}[八字曲线]\label{exa:eight-curve}
+  考虑曲线 $\beta:(-\pi,\pi)\to\mathbb{R}^2$ 为
+  \[
+    \beta(t)=(\sin 2t,\sin t) . 
+  \]
+  $\beta$ 的像集也被称为\emph{双扭线}($x^2=4y^2(1-y^2)$)。
+  由于 $\beta'(t)=(2\cos 2t,\cos t)\neq (0,0)$，所以 $\beta$ 是单射的光滑浸入。
+  但是 $\beta$ 不是拓扑嵌入，因为其像集在子空间拓扑下是紧集，但是
+  $(-\pi,\pi)$ 不是紧集。
+\end{example}
+
+\begin{example}[环面上的稠密曲线]
+  令 $\mathbb{T}^2=\mathbb{S}^1\times\mathbb{S}^1\subseteq\mathbb{C}^2$ 是环面，
+  $\alpha$ 是任意无理数。定义映射 $\gamma:\mathbb{R}\to\mathbb{T}^2$ 为
+  \[
+    \gamma(t)=\left(e^{2\pi it},e^{2\pi i\alpha t}\right),
+  \]
+  由于 $\gamma'(t)$ 始终不为零，所以 $\gamma$ 是光滑浸入。若 $\gamma(t_1)=\gamma(t_2)$，
+  那么 $t_1-t_2$ 和 $\alpha(t_1-t_2)$ 同时为整数，这只能表明 $t_1=t_2$，所以 $\gamma$ 是单射。
+
+  考虑集合 $\gamma(\mathbb{Z})$。根据 Dirichlet 逼近定理，对于任意的 $\varepsilon>0$，
+  存在整数 $n,m$ 使得 $\abs{\alpha n-m}<\varepsilon$。使用不等式
+  $\abs{e^{it_1}-e^{it_2}}\leq\abs{t_1-t_2}$，其中 $t_1,t_2\in\mathbb{R}$ (这是因为从 $e^{it_1}$ 到 $e^{it_2}$ 的线段长度小于等于圆弧长度)，
+  我们有 $\abs{e^{2\pi i\alpha n}-1}=\abs{e^{2\pi i\alpha n}-e^{2\pi i m}}\leq \abs{2\pi(\alpha n-m)}<2\pi \varepsilon$，
+  因此，
+  \[
+    \abs{\gamma(n)-\gamma(0)}=\abs{\left(e^{2\pi i n},e^{2\pi i \alpha n}\right)-(1,1)}
+    =\abs{\left(1,e^{2\pi i\alpha n}\right)-(1,1)}<2\pi\varepsilon , 
+  \]
+  所以 $\gamma(0)$ 是 $\gamma(\mathbb{Z})$ 的极限点。这意味着 $\gamma$ 并不同胚于它的像，
+  因为 $\mathbb{Z}$ 在 $\mathbb{R}$ 中没有任何极限点。实际上，可以证明像集 $\gamma(\mathbb{R})$
+  在 $\mathbb{T}^2$ 中稠密。这表明单射的光滑浸入也不一定是光滑嵌入。
+\end{example}
+
+下面的命题给出了一个判断单射的浸入为嵌入的充分条件。
+
+\begin{proposition}
+  设 $F:M\to N$ 是带边或者无边光滑流形，$F:M\to N$ 是单射的光滑浸入，如果 $F$
+  满足下列条件之一，那么 $F$ 是光滑嵌入。
+  \begin{enumerate}
+    \item $F$ 是开映射或者闭映射。
+    \item $F$ 是恰当映射。
+    \item $M$ 是紧空间。
+    \item $M$ 有空的边界并且 $\dim M=\dim N$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  若 $F$ 为开映射或者闭映射，那么 $F$ 是拓扑嵌入，进而是光滑嵌入。
+  (2) 和 (3) 都能推出 $F$ 是闭映射。对于 (4)，$\dim M=\dim N$ 表明
+  $dF_p$ 可逆，$M$ 边界为空表明 $F(M)\subseteq\Int N$，
+  \autoref{prop:local diffeomorphism} 表明 $F:M\to\Int N$ 是局部微分同胚，
+  从而是开映射。$F:M\to N$ 是开映射的复合 $M\to\Int N\hookrightarrow N$，
+  所以 $F$ 是光滑嵌入。
+\end{proof}
+
+\begin{theorem}[局部嵌入定理]\label{thm:local embedding}
+  设 $M,N$ 是带边或者无边光滑流形，$F:M\to N$ 是光滑映射。那么 $F$
+  是光滑浸入当且仅当在 $M$ 的每个点处，都存在一个邻域 $U$ 使得
+  $F|_U:U\to N$ 是光滑嵌入。
+\end{theorem}
+\begin{proof}
+  若 $F$ 是光滑浸入。任取点 $p\in M$，根据秩定理，存在包含 $p$
+  的光滑坐标卡 $(U_1,\varphi)$ 和包含 $F(p)$ 的光滑坐标卡 $(V,\psi)$，
+  使得 $F(U_1)\subseteq V$ 以及 $F$ 的坐标表示为
+  \[
+    \psi\circ F\circ\varphi^{-1}\left(x^1,\dots,x^m\right)=
+    \left(x^1,\dots,x^m,0,\dots,0\right),
+  \]
+  此时 $\psi\circ F\circ\varphi^{-1}$ 是单射，所以 $F|_{U_1}$ 是单射。
+  取 $p$ 的一个预紧的邻域 $U$，并且 $U$ 满足 $\bar U\subseteq U_1$。
+  那么 $F|_{\bar U}:\bar U\to N$ 是紧空间到 Hausdorff 空间的连续映射，从而
+  是闭映射，又因为 $F|_{\bar U}$ 是单射，所以 $F|_{\bar U}$ 是拓扑嵌入，
+  于是 $F|_U$ 作为 $F|_{\bar U}$ 的限制也是拓扑嵌入。显然 $F|_U$
+  是光滑浸入，所以 $F|_U$ 是光滑嵌入。
+
+  反之，若在 $M$ 的每个点 $p$ 处，都存在一个邻域 $U$ 使得 $F|_U:U\to N$ 是光滑嵌入。
+  这表明 $d(F|_U)_p=d(F\circ\iota)_p=dF_{p}\circ d\iota_p$ 是单射，而
+  $d\iota_p:T_pU\to T_pM$ 是同构，所以 $dF_p$ 是单射，所以 $F$ 是光滑浸入。 
+\end{proof}
+
+
+\section{浸没}
+
+如果 $\pi:M\to N$ 是连续映射，定义\emph{$\pi$ 的截面}是 $\pi$ 的连续右逆，
+即一个连续映射 $\sigma:N\to M$ 使得 $\pi\circ\sigma=\Id_N$。
+定义\emph{$\pi$ 的局部截面}是连续映射 $\sigma:U\to M$，其中 $U\subseteq N$
+是开集并且满足 $\pi\circ\sigma=\Id_U$。下面的定理表明，对于光滑浸没而言，
+其在值域上的局部行为类似满射。
+
+\begin{theorem}[局部截面定理]
+  设 $M,N$ 是光滑流形，$\pi:M\to N$ 是光滑映射。那么 $\pi$ 是光滑浸没当且仅当
+  $M$ 的每个点都在 $\pi$ 的某个光滑局部截面的像集中。
+\end{theorem}
+\begin{proof}
+  若 $\pi$ 是光滑浸没。任取 $p\in M$，根据秩定理，存在以 $p$ 为中心的光滑坐标卡
+  $(U,\varphi)$ 和以 $\pi(p)$ 为中心的光滑坐标卡 $(V,\psi)$ 使得
+  $\pi(U)\subseteq V$ 并且有坐标表示
+  \[
+    \psi\circ\pi\circ\varphi^{-1}\left(x^1,\dots,x^m\right)=\left(x^1,\dots,x^n\right).
+  \]
+  对于 $\varepsilon>0$，记 $\mathbb{R}^m$ 中的开立方体
+  \[
+    \hat C_\varepsilon=\bigl\{\,x\bigm| \abs{x^i}<\varepsilon,i=1,\dots,m\,\bigr\},
+  \]
+  我们可以让 $\varepsilon$ 足够小使得 $\hat C_\varepsilon\subseteq \varphi(U)$，
+  记 $C_\varepsilon=\varphi^{-1}\left(\hat C_\varepsilon\right)\subseteq U$。
+  于是 
+  \[ 
+    \psi\circ\pi(C_\varepsilon)=\bigl\{\,y\bigm| \abs{y^i}<\varepsilon,i=1,\dots,n\,\bigr\}
+  \]
+  是 $\mathbb{R}^n$ 中的开立方体。记 $C_\varepsilon'=\psi^{-1}\left(\psi\circ \pi(C_\varepsilon)\right)$
+  是 $N$ 的开集。令 $\sigma:C_\varepsilon'\to C_\varepsilon$，其坐标表示满足
+  \[
+    \varphi\circ\sigma\circ\psi^{-1}\left(x^1,\dots,x^n\right)  
+    =\left(x^1,\dots,x^n,0,\dots,0\right),
+  \]
+  那么 $\pi\circ\sigma=\Id_{C_\varepsilon'}$，且 $p\in C_\varepsilon$ 表明
+  $p\in\im\sigma$。
+
+  反之，若任取 $p\in M$，存在 $\pi$ 的光滑局部截面 $\sigma:U\to M$ 使得 $p\in\im\sigma$。
+  设 $q\in U$ 使得 $p=\sigma(q)$。那么 $\pi\circ\sigma=\Id_U$ 表明
+  \[
+    \Id_{T_qN}=d\left(\Id_U\right)_q= d\pi_{p}\circ d\sigma_q,
+  \]
+  即 $d\pi_p$ 是满射，所以 $\pi$ 是光滑浸没。
+\end{proof}
+
+\begin{proposition}[光滑浸没的性质]
+  令 $M,N$ 是光滑流形，$\pi:M\to N$ 是光滑浸没。那么 $\pi$ 是开映射，
+  进一步的，如果 $\pi$ 是满射，那么 $\pi$ 是商映射。
+\end{proposition}
+\begin{proof}
+  设 $W\subseteq M$ 是开集，任取 $q=\pi(p)\in \pi(W)$，即 $p\in W$，
+  根据局部截面定理，存在 $\pi$ 的光滑局部截面 $\sigma:U\to M$
+  使得 $p\in \im\sigma$，设 $q'\in U$ 使得 $p=\sigma(q')$，那么
+  $q=\pi(p)=\pi(\sigma(q'))=q'$，所以 $\sigma(q)=p\in W$，所以 $q\in \sigma^{-1}(W)$。
+  任取 $y\in\sigma^{-1}(W)$，那么 $\sigma(y)\in W$，即 $y=\pi(\sigma(y))\in \pi(W)$，
+  所以 $q\in\sigma^{-1}(W)\subseteq \pi(W)$，这表明 $\pi(W)$
+  是开集，即 $\pi$ 是开映射。
+\end{proof}

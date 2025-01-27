@@ -1,0 +1,548 @@
+
+\chapter{子流形}
+
+\section{嵌入子流形}
+
+设 $M$ 是带边或者无边光滑流形，$M$ 的\emph{嵌入子流形}
+指的是子集 $S\subseteq M$，其配备子空间拓扑和使得包含映射 $S\hookrightarrow M$
+为光滑嵌入的光滑结构。嵌入子流形也被称为\emph{正则子流形}。
+
+如果 $S$ 是 $M$ 的嵌入子流形，那么 $\dim M-\dim S$ 被称为 $S$ 在 $M$
+中的\emph{余维数}。余维数为 $1$ 的嵌入子流形被称为一个\emph{嵌入超曲面}。
+
+\begin{proposition}[开子流形]\label{prop:open submanifold}
+  设 $M$ 是光滑流形，那么 $M$ 的余维数为 $0$ 的嵌入子流形恰好为开子流形。
+\end{proposition}
+\begin{proof}
+  设 $U\subseteq M$ 是开子流形，$\iota:U\hookrightarrow M$ 为包含映射。
+  此时 $\iota$ 的坐标表示为恒等映射，所以 $\iota$ 为光滑浸入，又因为
+  $U$ 有子空间拓扑，所以 $\iota$ 是光滑嵌入。故 $U$ 为余维数
+  $\dim M-\dim U=0$ 的嵌入子流形。反之，设 $U$ 是余维数为 $0$ 的嵌入子流形。
+  根据定义，包含映射 $\iota:U\hookrightarrow M$ 是光滑嵌入，根据
+  \autoref{prop:local diffeomorphism}，$\iota$ 是局部微分同胚，从而是开映射，
+  所以 $U$ 是 $M$ 的开子集，故 $U$ 是开子流形。
+\end{proof}
+
+\begin{proposition}[嵌入的像作为子流形]\label{prop:image of embedding}
+  设 $M$ 是带边或者无边光滑流形，$N$ 是光滑流形，$F:N\to M$ 是光滑嵌入。
+  令 $S=F(N)$，在子空间拓扑下，$S$ 是拓扑流形，并且有唯一的光滑结构使得
+  其为 $M$ 的嵌入子流形以及 $F$ 为 $N\to F(N)$ 的微分同胚。 
+\end{proposition}
+\begin{proof}
+  $F$ 是嵌入表明 $F$ 可以视为 $N\to S$ 的同胚，所以 $S$ 是一个拓扑流形。
+  定义 $S$ 上的光滑坐标卡形如 $\left(F(U),\varphi\circ F^{-1}\right)$，
+  其中 $(U,\varphi)$ 为 $N$ 的任意光滑坐标卡。$N$ 的光滑坐标卡的相容性
+  导出了 $S$ 的光滑坐标卡的相容性，所以这给出了 $S$ 上的光滑结构。
+  在这个光滑结构下，$F:N\to S$ 显然是微分同胚。包含映射 $S\hookrightarrow M$
+  是光滑嵌入的复合：
+  \[
+    S\xlongrightarrow{F^{-1}}N\xlongrightarrow{F}M,  
+  \]
+  所以包含映射 $S\hookrightarrow M$ 是光滑嵌入，即 $S$ 是 $M$ 的嵌入子流形。
+\end{proof}
+
+\begin{proposition}[积流形的切片]
+  令 $M,N$ 是光滑流形。对于每个 $p\in N$，子集 $M\times\{p\}$ (被称为积流形的一个\emph{切片})
+  是 $M\times N$ 的一个微分同胚于 $M$ 的嵌入子流形。
+\end{proposition}
+\begin{proof}
+  考虑光滑嵌入 $x\mapsto (x,p)$，那么 $M\times\{p\}$ 作为该光滑嵌入的像集
+  是 $M\times N$ 的同胚于 $M$ 的嵌入子流形。
+\end{proof}
+
+\begin{proposition}[图像作为子流形]\label{prop:graph is submanifold}
+  设 $M$ 是光滑 $n$-流形，$N$ 是光滑带边或者无边 $n$-流形，$U\subseteq M$
+  是开集，$f:U\to N$ 是光滑映射。令 $\Gamma(f)\subseteq M\times N$ 为 $f$
+  的图像：
+  \[
+    \Gamma(f)=\left\{(x,y)\in M\times N\,\middle|\, x\in U,y=f(x)\right\}  .
+  \]
+  那么 $\Gamma(f)$ 是 $M\times N$ 的嵌入 $m$-维子流形。
+\end{proposition}
+\begin{proof}
+  定义映射 $\gamma_f:U\to M\times N$ 为
+  \[
+    \gamma_f(x)=(x,f(x)),
+  \]
+  那么 $\gamma_f$ 是像集为 $\Gamma(f)$ 的光滑映射。投影映射 $\pi_M:M\times N\to M$
+  满足 $\pi_M\circ\gamma_f=\Id_U$，所以对于任意的 $x\in U$，有 
+  $d(\pi_M)_{(x,f(x))}\circ d(\gamma_f)_x=\Id_{T_xM}$，所以 $d(\gamma_f)_x$
+  是单射，故 $\gamma_f$ 是光滑浸入。$\gamma_f$ 也是拓扑嵌入，因为
+  $\pi_M|_{\Gamma(f)}$ 为 $\gamma_f$ 的逆映射。所以 $\Gamma(f)$
+  是同胚于 $U$ 的嵌入子流形。
+\end{proof}
+
+\subsection{嵌入子流形的切片坐标卡}
+
+下面的定理将表明嵌入子流形可以局部地建模在 $\mathbb{R}^k$ 到 $\mathbb{R}^n$
+的标准嵌入上，我们把 $\mathbb{R}^k$ 视为子空间
+\[
+  \left\{\left(x^1,\dots,x^k,x^{k+1},\dots,x^n\right)\,\middle|\,x^{k+1}=\cdots=x^n=0\right\}  
+  \subseteq\mathbb{R}^n.
+\]
+更一般地，如果 $U$ 是 $\mathbb{R}^n$ 的开子集，定义\emph{$U$ 的 $k$-维切片}
+(简称 $k$-切片)是
+形如
+\[
+  S=\left\{\left(x^1,\dots,x^k,x^{k+1},\dots,x^n\right)\in U\,\middle|\,
+  x^{k+1}=c^{k+1},\dots,x^n=c^n\right\}  
+\]
+的任意子集，其中 $c^{k+1},\dots,c^n$ 是常数。显然，每个 $k$-切片
+都同胚于 $\mathbb{R}^k$ 的一个开子集。
+
+令 $M$ 是光滑 $n$-流形，$(U,\varphi)$ 是一个光滑坐标卡。如果 $S$
+是 $U$ 的子集并且使得 $\varphi(S)$ 是 $\varphi(U)$ 的 $k$-切片，那么我们说
+$S$ 是\emph{$U$ 的 $k$-切片}。(虽然一般来说我们允许切片由任意常数
+$c^{k+1},\dots,c^n$ 定义，但是有时候将这些常数定义为零是更有用的，这只需要
+将每个坐标函数减去一个常数即可做到。)给定一个子集 $S\subseteq M$，
+如果 $S$ 的每个点都被包含在 $M$ 的某个光滑坐标卡 $(U,\varphi)$ 中且使得
+$S\cap U$ 是 $U$ 的 $k$-切片，那么我们说 $S$ 满足\emph{局部 $k$-切片条件}。
+任意这样的坐标卡被称为\emph{$S$ 在 $M$ 中的切片坐标卡}，对应的坐标 
+$\left(x^1,\dots,x^n\right)$ 被称为\emph{切片坐标}。
+
+\begin{theorem}[嵌入子流形的局部切片判别法]
+  令 $M$ 是光滑 $n$-流形，如果 $S\subseteq M$ 是嵌入 $k$-维子流形，那么
+  $S$ 满足局部 $k$-切片条件。反之，如果 $S\subseteq M$ 满足局部 $k$-切片条件，
+  那么在子空间拓扑下，$S$ 是 $k$-维拓扑流形，并且有一个光滑结构使其成为
+  $M$ 的 $k$-维嵌入子流形。
+\end{theorem}
+\begin{proof}
+  设 $S\subseteq M$ 是嵌入 $k$-维子流形，那么包含映射 $\iota:S\hookrightarrow M$
+  是光滑嵌入，从而是光滑浸入。任取 $p\in S$，根据秩定理，存在 $S$
+  的 $p$ 为中心的光滑坐标卡 $(U,\varphi)$ 和 $M$ 的 $p$ 为中心的光滑坐标卡
+  $(V,\psi)$ 使得 $U=\iota(U)\subseteq V$ 并且 $\iota$ 的坐标表示
+  $\psi\circ\iota|_U\circ\varphi^{-1}:\varphi(U)\to \psi(V)$ 为
+  \[
+    \left(x^1,\dots,x^k\right)  \to\left(x^1,\dots,x^k,0,\dots,0\right).
+  \]
+  由于 $U$ 是 $S$ 的开集，所以存在 $M$ 的开集 $W$ 使得 $U=W\cap S$，
+  令 $V_0=W\cap V$，那么 $S\cap V_0=U\cap V=U$ 是 $V_0$
+  的 $k$-切片，所以 $(V_0,\psi|_{V_0})$ 是 $S$ 在 $M$
+  中的切片坐标卡。故 $S$ 满足局部 $k$-切片条件。
+
+  反之，设 $S$ 满足局部 $k$-切片条件。在子空间拓扑下，$S$ 是 Hausdorff 的
+  和第二可数的，下面我们构造 $S$ 的坐标卡。
+
+  记 $\pi:\mathbb{R}^n\to\mathbb{R}^k$ 是前 $k$ 个坐标的投影。
+  设 $(U,\varphi)$ 是 $S$ 在 $M$ 中的切片坐标卡，定义
+  $V=U\cap S$，$\psi=\pi\circ\varphi|_V$。由于 $\varphi(V)$
+  是 $\varphi(U)$ 的 $k$-切片，即 $\varphi(V)=\varphi(U)\cap A$，其中
+  \[
+    A=\left\{\left(x^1,\dots,x^k,x^{k+1},\dots,x^n\right)\in\mathbb{R}^n\,\middle|\,
+      x^{k+1}=c^{k+1},\dots,x^n=c^n
+    \right\},
+  \]
+  显然 $A$ 微分同胚于 $\mathbb{R}^k$。由于 $\varphi(U)$ 是 $\mathbb{R}^n$
+  的开集，所以 $\varphi(V)=\varphi(U)\cap A$ 是 $A$ 的开集，所以
+  $\psi(V)=\pi\circ\varphi(V)$ 是 $\pi(A)=\mathbb{R}^k$ 的开集。此外，
+  $\psi:V\to\psi(V)$ 是同胚，因为其有连续逆映射 $\varphi^{-1}\circ j|_{\psi(V)}$，
+  其中 $j:\mathbb{R}^k\to\mathbb{R}^n$ 为 
+  \[
+    j\left(x^1,\dots,x^k\right)=\left(x^1,\dots,x^k,c^{k+1},\dots,c^n\right).
+  \]
+  这表明 $S$ 是一个拓扑 $k$-流形，并且包含映射 $\iota:S\hookrightarrow M$ 是拓扑嵌入。
+
+  下面我们验证上述坐标卡之间的相容的。设 $(U,\varphi)$ 和 $(U',\varphi')$ 是
+  $S$ 在 $M$ 中的两个切片坐标卡，令 $(V,\psi)$ 和 $(V',\psi')$ 为对应的
+  $S$ 的坐标卡。转移映射为 $\psi'\circ\psi^{-1}=\pi\circ\varphi'\circ\varphi^{-1}\circ j$，
+  这是光滑映射的复合，所以 $\psi'\circ\psi^{-1}$ 是光滑的。这定义了 $S$
+  上的光滑结构。选取 $S$ 在 $M$ 中的切片坐标卡 $(U,\varphi)$ 和对应的 $S$
+  的坐标卡 $(V,\psi)$，包含映射 $\iota:S\hookrightarrow M$ 的坐标表示为
+  \[
+    \left(x^1,\dots,x^k\right)\mapsto\left(
+      x^1,\dots,x^k,c^{k+1},\dots,c^n
+    \right),
+  \]
+  这是一个光滑浸入。所以 $\iota$ 是光滑嵌入，$S$ 是 $M$ 的嵌入子流形。
+\end{proof}
+
+\begin{example}[球面作为子流形]
+  $\mathbb{S}^n$ 是 $\mathbb{R}^{n+1}$ 的嵌入子流形。
+  令 $U_i^+=\{x\in\mathbb{R}^{n+1}\,|\, x^i>0\}$，我们知道 $\mathbb{S}^n\cap U_i^+$
+  是光滑函数
+  \[
+    x^i=f\left(x^1,\dots,x^{i-1},x^{i+1},\dots,x^{n+1}\right)  
+  \]
+  的图像，其中 $f:\mathbb{B}^n\to\mathbb{R}$ 为 $f(u)=\sqrt{1-|u|^2}$。
+  类似地，令 $U_i^-=\{x\in\mathbb{R}^{n+1}\,|\, x^i<0\}$，$\mathbb{S}^n\cap U_i^-$
+  是 $-f$ 的图像。根据 \autoref{prop:graph is submanifold}，每个
+  $\mathbb{S}^n\cap U_i^\pm$ 都是 $\mathbb{R}^{n+1}$ 的 $n$ 维嵌入子流形，所以
+  满足局部 $n$-切片条件，所以 $\mathbb{S}^n$ 满足局部 $n$-切片条件，
+  因此 $\mathbb{S}^n$ 是嵌入子流形。
+
+  我们也可以直接写出 $\mathbb{S}^n$ 在 $\mathbb{R}^{n+1}$ 中的切片坐标卡。
+  记
+  \[
+    V_i^+=\left\{\left(x^1,\dots,x^{n+1}\right)\,\middle|\,
+    \left(x^1,\dots,x^{i-1},x^{i+1},\dots,x^{n+1}\right)\in\mathbb{B}^n,x^i>0\right\} , 
+  \]
+  类似地，记 $V_i^-$ 为上述集合，其中 $x^i<0$。定义
+  $\varphi_i^\pm:V_i^\pm\to\mathbb{R}^{n+1}$ 为
+  \[
+    \left(x^1,\dots,x^{n+1}\right)\mapsto\left(
+      u,x^i\mp f(u)
+    \right)  ,
+  \]
+  其中 $u=\left(x^1,\dots,x^{i-1},x^{i+1},\dots,x^{n+1}\right)$。不难验证
+  $\varphi_i^\pm\left(V_i^\pm\right)=\mathbb{B}^{n}\times\mathbb{R}$。
+  此时 $\left(V_i^\pm,\varphi_i^\pm\right)$ 就是 $\mathbb{S}^n$ 在 $\mathbb{R}^{n+1}$
+  中的切片坐标卡，因为
+  \[
+    \varphi_i^\pm\left(V_i^\pm\cap\mathbb{S}^n\right)=\mathbb{B}^n
+  \]
+  是 $\varphi_i^\pm\left(V_i^\pm\right)$ 的 $n$-切片。
+\end{example}
+
+
+\subsection{水平集}
+
+如果 $\varPhi:M\to N$ 是任意映射，$c\in N$，我们说 $\varPhi^{-1}(c)$
+是\emph{$\varPhi$ 的水平集}。在 $N=\mathbb{R}^k$ 和 $c=0$ 的时候，
+水平集 $\varPhi^{-1}(0)$ 通常被称为\emph{零点集}。
+
+\begin{theorem}[常秩水平集定理]
+  令 $M,N$ 是光滑流形，$\varPhi:M\to N$ 是光滑映射，并且有常秩 $r$。
+  $\varPhi$ 的每个水平集都是 $M$ 的余维数为 $r$ 的嵌入子流形。
+\end{theorem}
+\begin{proof}
+  记 $m=\dim M$，$n=\dim N$。任取 $p\in \varPhi^{-1}(c)$，根据秩定理，
+  存在以 $p$ 为中心的 $M$ 的光滑坐标卡 $(U,\varphi)$ 和以 $\varPhi(p)$
+  为中心的 $N$ 的光滑坐标卡 $(V,\psi)$，使得 $\varPhi(U)\subseteq V$
+  并且 $\varPhi$ 的坐标表示为
+  \[
+    \left(x^1,\dots,x^m\right)\mapsto\left(x^1,\dots,x^r,0,\dots,0\right),
+  \]
+  那么 
+  \[ 
+    \varphi\left(\varPhi^{-1}(c)\cap U\right)=
+    \varphi\left(\varPhi^{-1}(c)\right)\cap\varphi(U)=
+    \varphi\left(\varPhi^{-1}\left(\psi^{-1}(0)\right)\right)\cap\varphi(U)
+  \]
+  是 $\varphi(U)$ 的 $(m-r)$-切片
+  \[
+    \left\{\left(x^1,\dots,x^m\right)\in\varphi(U)\,\middle|\, x^1=\cdots=x^r=0\right\}  .
+  \]
+  这表明 $\varPhi^{-1}(c)$ 满足局部 $(m-r)$-切片条件，所以是 $M$ 的 $(m-r)$-维
+  嵌入子流形。
+\end{proof}
+
+\begin{corollary}[浸没水平集定理]
+  如果 $M,N$ 是光滑流形，$\varPhi:M\to N$ 是光滑浸没，那么 $\varPhi$
+  的水平集是 $M$ 的余维数为 $\dim N$ 的嵌入子流形。
+\end{corollary}
+
+如果 $\varPhi:M\to N$ 是光滑映射，点 $p\in M$ 使得 $d\varPhi_p:T_pM\to T_{\varPhi(p)}N$
+是满射，那么 $p$ 被称为\emph{$\varPhi$ 的正则点}，否则被称为\emph{$\varPhi$ 的临界点}。
+我们有以下两个简单的观察：如果 $\dim M<\dim N$，那么 $M$ 的每个点都是临界点；
+$M$ 的每个点都是正则点当且仅当 $\varPhi$ 是浸没。
+根据 \autoref{prop:regular points is open}，我们知道 $\varPhi$ 的正则点的集合
+是 $M$ 的开集。一个点 $c\in N$ 被称为\emph{$\varPhi$ 的正则值}，如果水平集
+$\varPhi^{-1}(c)$ 中的每个点都是正则点，否则被称为\emph{$\varPhi$ 的临界值}。
+特别地，如果 $\varPhi^{-1}(c)=\emptyset$，那么 $c$ 是正则值。
+如果 $c$ 是正则值，那么水平集 $\varPhi^{-1}(c)$ 被称为\emph{正则水平集}。
+
+\begin{corollary}[正则水平集定理]
+  令 $M,N$ 是光滑流形，$\varPhi:M\to N$ 是光滑映射，$c\in N$ 是正则值，那么
+  正则水平集 $\varPhi^{-1}(c)$ 是 $M$ 的余维数为 $\dim N$ 的嵌入子流形。
+\end{corollary}
+\begin{proof}
+  令 $U$ 为 $\varPhi$ 的所有正则值的集合，根据 \autoref{prop:regular points is open}，
+  $U$ 是 $M$ 的开子集。显然 $\varPhi^{-1}(c)\subseteq U$。此时
+  $\varPhi|_U:U\to N$ 是光滑浸没，根据浸没水平集定理，$\varPhi^{-1}(c)$
+  是 $U$ 的嵌入子流形。因为光滑嵌入的复合 $\varPhi^{-1}(c)\hookrightarrow U\hookrightarrow M$
+  是光滑嵌入，所以 $\varPhi^{-1}(c)$ 是 $M$ 的嵌入子流形。
+\end{proof}
+
+\begin{example}[球面]
+  现在我们可以更简单地证明 $\mathbb{S}^n$ 是 $\mathbb{R}^{n+1}$ 的嵌入子流形。
+  定义光滑函数 $f:\mathbb{R}^{n+1}\to\mathbb{R}$ 为 $f(x)=\abs{x}^2$，因为
+  $df_x(v)=2\sum_i x^iv^i$，所以 $x\neq 0$ 时 $df_x$ 都是满射，所以
+  $\mathbb{S}^n=f^{-1}(1)$ 是 $f$ 的正则水平集，故 $\mathbb{S}^n$
+  是 $\mathbb{R}^{n+1}$ 的余维数为 $1$ 的嵌入子流形。
+\end{example}
+
+\begin{proposition}
+  令 $S$ 为光滑 $m$-流形 $M$ 的子集，那么 $S$ 是 $M$ 的嵌入 $k$-子流形当且仅当
+  $S$ 的每个点都有 $M$ 中的邻域 $U$ 使得 $U\cap S$ 是某个光滑浸没 $\varPhi:U\to \mathbb{R}^{m-k}$
+  的水平集。
+\end{proposition}
+\begin{proof}
+  若 $S$ 是嵌入 $k$-子流形，任取 $p\in S$，存在 $S$ 在 $M$ 中的切片坐标卡 $(U,\varphi)$，
+  使得 $\varphi(U\cap S)$ 是 $\varphi(U)$ 的 $k$-切片，令 $\varPhi:U\to \mathbb{R}^{m-k}$
+  为 $\varPhi=\pi\circ\varphi$，其中 $\pi:\mathbb{R}^m\to \mathbb{R}^{m-k}$
+  是后 $m-k$ 个坐标的投影，显然 $\varPhi$ 是光滑浸没，且 
+  $U\cap S$ 是 $\varPhi$ 的某个水平集。反之，若任取 $p\in S$
+  都存在 $M$ 中的邻域 $U$ 使得 $U\cap S$ 是光滑浸没 $\varPhi:U\to \mathbb{R}^{m-k}$
+  的水平集，根据浸没水平集定理，$U\cap S$ 是 $U$ 的嵌入 $k$-子流形，从而是
+  $M$ 的嵌入 $k$-子流形，这表明 $S$ 满足局部 $k$-切片条件，所以
+  $S$ 是 $M$ 的嵌入 $k$-子流形。
+\end{proof}
+
+若 $S\subseteq M$ 是嵌入子流形，光滑映射 $\varPhi:M\to N$ 使得 $S$ 是 $\varPhi$
+的正则水平集，那么 $\varPhi$ 被称为 $S$ 的\emph{定义映射}。特别地，在 $N=\mathbb{R}^{m-k}$
+的情况下，$\varPhi$ 被称为 $S$ 的\emph{定义函数}。若 $U$ 是 $M$ 的开子集，
+$\varPhi:U\to N$ 是使得 $S\cap U$ 为正则水平集的光滑映射，那么 $\varPhi$
+被称为 $S$ 的\emph{局部定义映射}。
+
+
+
+
+\section{浸入子流形}
+
+设 $M$ 是带边或者无边光滑流形，一个子集 $S\subseteq M$ 如果
+配备了一个拓扑（不一定是子空间拓扑），在这个拓扑下成为一个拓扑流形，
+并且有一个光滑结构使得包含映射 $S\hookrightarrow M$ 是光滑浸入，那么
+我们说 $S$ 是 $M$ 的\emph{浸入子流形}。与嵌入子流形类似，
+我们定义 $S$ 在 $M$ 中的\emph{余维数}是 $\dim M-\dim S$。
+
+显然，每个嵌入子流形都是浸入子流形，因此浸入子流形是一种更一般的子流形。
+
+\begin{proposition}[浸入的像集作为子流形]\label{prop:image of immersion}
+  设 $M$ 是带边或者无边光滑流形，$N$ 是光滑流形，$F:N\to M$
+  是单射的光滑浸入。令 $S=F(N)$，那么 $S$ 有唯一的拓扑结构和光滑结构
+  使得 $S$ 是 $M$ 的一个光滑子流形并且 $F:N\to S$ 是微分同胚。
+\end{proposition}
+\begin{proof}
+  证明和 \autoref{prop:image of embedding} 基本类似，只不过我们现在凭借
+  $N$ 来给予 $S$ 的拓扑结构。定义 $U\subseteq S$ 是开集当且仅当
+  $F^{-1}(U)$ 是 $N$ 的开集。定义 $S$ 的坐标卡形如 $\left(F(U),\varphi\circ F^{-1}\right)$，
+  其中 $(U,\varphi)$ 是 $N$ 的光滑坐标卡。这些坐标卡是光滑相容的，
+  所以给出了 $S$ 上的一个光滑结构。显然在这个光滑结构下，$F:N\to S$
+  是微分同胚。包含映射 $S\hookrightarrow M$ 是微分同胚和光滑浸入的复合
+  \[
+    S\xlongrightarrow{F^{-1}} N\xlongrightarrow{F} M,  
+  \]
+  所以 $S\hookrightarrow M$ 是光滑浸入，即 $S$ 是 $M$ 的光滑子流形。
+\end{proof}
+
+\begin{exercise}{}{}
+  设 $M$ 是光滑流形，$S\subseteq M$ 是浸入子流形。证明：
+  $S$ 的子空间拓扑下的开集在上述子流形拓扑下也是开的。
+  此外，$S$ 在子流形拓扑下的开集是子空间拓扑下的开集当且仅当
+  $S$ 是嵌入子流形。
+\end{exercise}
+\begin{proof}
+  设 $U$ 是 $S$ 在子空间拓扑下的开子集，那么存在 $M$ 的开子集 $W$
+  使得 $U=S\cap W$，此时 $U=\iota(\iota^{-1}(W))$，由于 $\iota^{-1}(W)$
+  是 $S$ 的开子集，所以 $U$ 是 $S$ 在子流形拓扑下的开子集。 
+
+  若 $S$ 在子流形拓扑下的开集是子空间拓扑下的开集，此时表明 $S$
+  的子流形拓扑就是子空间拓扑。所以包含映射 $\iota:S\hookrightarrow M$
+  是拓扑嵌入，从而是光滑嵌入，即 $S$ 是嵌入子流形。反之，若 $S$
+  是嵌入子流形，那么 $\iota:S\hookrightarrow M$ 是拓扑嵌入，
+  所以若 $U\subseteq S$ 是开集，那么 $U=\iota(U)$ 是 $\iota(S)=S$
+  的开集，即 $U$ 是 $S$ 在子空间拓扑下的开集。
+\end{proof}
+
+\begin{proposition}
+  设 $M$ 是带边或者无边光滑流形，$S\subseteq M$ 是浸入子流形。
+  如果下面三个条件之一被满足，那么 $S$ 是嵌入子流形。
+  \begin{enumerate}
+    \item $S$ 在 $M$ 中的余维数是 $0$。
+    \item 包含映射 $S\hookrightarrow M$ 是恰当映射。
+    \item $S$ 是紧子集。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 若 $S$ 在 $M$ 中的余维数是 $0$，由于包含映射 $\iota:S\hookrightarrow M$
+  是光滑浸入且 $\dim S=\dim M$，根据 \autoref{prop:local diffeomorphism}，
+  $\iota$ 是局部微分同胚，所以是开映射，所以 $S$ 是 $M$ 的开子集，
+  故 $\iota$ 为拓扑嵌入，所以 $S$ 是嵌入子流形。
+\end{proof}
+
+\begin{proposition}[浸入子流形是局部的嵌入]
+  如果 $M$ 是带边或者无边光滑流形，$S\subseteq M$ 是浸入子流形，那么对于每个
+  $p\in S$，都存在 $p$ 在 $S$ 中的邻域 $U$ 使得 $U$ 是 $M$ 的嵌入子流形。
+\end{proposition}
+\begin{proof}
+  包含映射 $\iota:S\hookrightarrow M$ 是光滑浸入，任取 $p\in S$，根据
+  \autoref{thm:local embedding}，存在 $p$ 在 $S$ 中的邻域 $U$ 使得
+  $\iota|_U:U\hookrightarrow M$ 是光滑嵌入，即 $U$ 是 $M$ 的嵌入子流形。
+\end{proof}
+
+设 $S\subseteq M$ 是浸入 $k$-维子流形。设 $U\subseteq \mathbb{R}^k$ 是开集，
+如果连续映射 $X:U\to M$ 的像集是 $S$ 的开子集并且 $X:U\to S$ 是拓扑嵌入，
+那么我们说 $X$ 是\emph{$S$ 的局部参数化}。如果 $X$
+是 $U\to X(U)$ 的微分同胚(相对于 $S$ 的光滑流形结构)，那么我们说
+$X$ 是\emph{光滑局部参数化}。如果 $X$ 的像集是整个 $S$，那么 $X$
+被称为\emph{全局参数化}。
+
+\begin{proposition}\label{prop:local parameterization}
+  设 $M$ 是光滑流形，$S\subseteq M$ 是 $k$ 维浸入子流形，$\iota:S\hookrightarrow M$
+  是包含映射，$U$ 是 $\mathbb{R}^k$ 的开子集。映射 $X:U\to M$ 是 $S$
+  的光滑局部参数化当且仅当存在 $S$ 的一个光滑坐标卡 $(V,\varphi)$
+  使得 $X=\iota\circ\varphi^{-1}$。因此，这表明 $S$ 的每个点都在
+  某个局部参数化的像集中。
+\end{proposition}
+\begin{proof}
+  若 $X:U\to M$ 是 $S$ 的光滑局部参数化。令 $V=X(U)$，$\varphi=X^{-1}:V\to U$，
+  根据定义，$(V,\varphi)$ 是一个坐标卡。任取 $S$ 的光滑坐标卡 $(W,\psi)$，
+  那么 $\psi\circ\varphi^{-1}=\psi\circ X$ 是光滑映射，所以
+  $(V,\varphi)$ 是 $S$ 的光滑坐标卡。
+
+  反之，若存在 $S$ 的光滑坐标卡 $(V,\varphi)$ 使得 $X=\iota\circ\varphi^{-1}$，
+  那么取 $U=\varphi(V)$，此时 $(X:U\to S)=\varphi^{-1}$ 是拓扑嵌入。
+  并且 $\varphi$ 是微分同胚表明 $X:U\to V$ 是微分同胚，所以 $X:U\to M$
+  是 $S$ 的光滑局部参数化。
+\end{proof}
+
+\begin{example}[图像参数化]
+  设 $U\subseteq \mathbb{R}^n$ 是开子集，$f:U\to \mathbb{R}^k$ 是光滑函数。
+  定义映射 $\gamma_f:U\to \mathbb{R}^n\times \mathbb{R}^k$ 为
+  $\gamma_f(u)=(u,f(u))$，那么 $\gamma_f$ 是图像 $\Gamma(f)$ 的光滑全局参数化。
+  例如，映射 $F:\mathbb{B}^2\to \mathbb{R}^3$ 为
+  \[
+    F(u,v)=\left(u,v,\sqrt{1-u^2-v^2}\right)  
+  \]
+  是 $\mathbb{S}^2$ 的光滑局部参数化，其像集为上半开球面。
+\end{example} 
+
+
+\section{将映射限制在子流形上}
+
+\begin{theorem}[光滑映射限制定义域]
+  如果 $M,N$ 是带边或者无边光滑流形，$F:M\to N$ 是光滑映射，$S\subseteq M$
+  是浸入或者嵌入子流形，那么 $F|_S:S\to N$ 是光滑映射。
+\end{theorem}
+\begin{proof}
+  注意到 $F|_S=F\circ\iota$，其中 $\iota:S\hookrightarrow M$ 是包含映射。
+  那么 $F|_S$ 作为光滑映射的复合是光滑的。
+\end{proof}
+
+\begin{theorem}[光滑映射限制值域]
+  设 $M$ 是光滑流形，$S\subseteq M$ 是浸入子流形，$F:N\to M$
+  是光滑映射并且 $F(N)\subseteq S$，如果 $F:N\to S$ 是连续映射，那么
+  $F:N\to S$ 光滑。
+\end{theorem}
+\begin{proof}
+  任取 $p\in N$，记 $q=F(p)\in S$。根据局部嵌入定理，存在 $q$ 在 $S$ 中的某个邻域 $V$
+  使得 $V$ 是 $M$ 的嵌入子流形，所以存在 $V$ 在 $M$ 中的切片坐标卡 $(W,\psi)$，
+  令 $V_0=W\cap V$，设 $\psi(V_0)$ 是 $\psi(W)$ 的 $k$-切片。令 $\pi:\mathbb{R}^n\to \mathbb{R}^k$
+  为前 $k$ 个分量的投影，$\tilde{\psi}=\pi\circ\psi$。由于 $V_0$ 是 $V$ 中的开集，
+  $V$ 是 $S$ 的开集，所以 $V_0$ 是 $S$ 的开集，所以 $(V_0,\tilde\psi)$ 是 $S$ 的光滑坐标卡。
+
+  令 $U=F^{-1}(V_0)$，$F:N\to S$ 连续表明 $U$ 是 $N$ 的开集，取 $p$ 处的光滑坐标卡 $(U_0,\varphi)$
+  使得 $U_0\subseteq U$，那么 $F:N\to S$ 的坐标表示为
+  \[
+    \tilde{\psi}\circ F\circ \varphi^{-1}=\pi\circ(\psi\circ F\circ\varphi^{-1}),
+  \] 
+  右端的 $F:N\to M$，所以这是光滑映射，故 $F:N\to S$ 光滑。
+\end{proof}
+
+\begin{corollary}
+  令 $M$ 是光滑流形，$S\subseteq M$ 是嵌入子流形，那么光滑映射 $F:N\to M$ 只要 $F(N)\subseteq S$，
+  那么 $F:N\to S$ 就是光滑映射。
+\end{corollary}
+\begin{proof}
+  $S$ 配备子空间拓扑，所以 $F:N\to S$ 作为连续映射的限制是连续映射。
+\end{proof}
+
+\section{子流形的切空间}
+
+令 $M$ 是带边或者无边光滑流形，$S\subseteq M$ 是嵌入或者浸入子流形，由于 $\iota:S\hookrightarrow M$
+是光滑浸入，所以任取 $p\in S$ 微分 $d\iota_p:T_pS\to T_pM$ 是单射，这意味着我们可以把 $T_pS$ 视为
+$T_pM$ 的子空间，此时对于任意切向量 $v\in T_pS$，它的像 $\tilde v=d\iota_p(v)\in T_pM$ 为
+\[
+  \tilde{v}f=d\iota_p(v)(f)=v(f\circ\iota)=v(f|_S),
+\]
+其中 $f\in C^\infty(M)$，我们将 $v$ 和 $\tilde v$ 等同。注意这种等同与嵌入或者浸入无关。
+
+\begin{proposition}
+  设 $M$ 是带边或者无边光滑流形，$S\subseteq M$ 是浸入或者嵌入子流形，$p\in S$。
+  切向量 $v\in T_pM$ 在 $T_pS$ 中当且仅当存在光滑曲线 $\gamma:J\to M$，
+  其像集 $\gamma(J)\subseteq S$，并且作为 $J\to S$ 的映射是光滑映射，使得
+  $0\in J$，$\gamma(0)=p$ 以及 $\gamma'(0)=v$。
+\end{proposition}
+\begin{proof}
+  $v\in T_pS$ 意味着存在 $w\in T_pS$ 使得 $v=d\iota_p(w)$，
+  根据 \autoref{prop:velocity}，存在光滑曲线 $\tilde\gamma:J\to S$
+  使得 $\tilde\gamma(0)=p$，$\tilde\gamma'(0)=w$，令
+  $\gamma=\iota\circ\tilde{\gamma}$，那么 $\gamma'(0)=d\iota_p(\gamma'(0))=v$。
+  反之，由于 $\tilde{\gamma}:J\to S$ 是光滑映射，所以
+  $\gamma=\iota\circ\tilde{\gamma}$，所以
+  \[
+    v=\gamma'(0)=d\iota_p(\tilde \gamma'(0))  \in \im d\iota_p.\qedhere
+  \]
+\end{proof}
+
+\begin{proposition}
+  设 $M$ 是光滑流形，$S\subseteq M$ 是嵌入子流形，$p\in S$。
+  切空间 $T_pS$ 作为 $T_pM$ 的子空间可以刻画为
+  \[
+    T_pS=\bigl\{v\in T_pM\,|\, \forall f\in C^\infty(M), f|_S=0,vf=0\bigr\}  .
+  \]
+\end{proposition}
+\begin{proof}
+  任取 $v=d\iota_p(w)\in T_p S\subseteq T_pM$，那么对于任意 $f\in C^\infty(M)$ 且 $f|_S=0$，有
+  \[
+    vf=d\iota_p(w)f=w(f\circ\iota_p)=w(f|_S)=0.
+  \]
+
+  反之，若 $v\in T_pM$ 满足 $f|_S=0$ 的时候 $vf=0$。
+  假设 $(U,\varphi=(x^1,\dots,x^n))$ 是 $S$ 在 $M$ 中的切片坐标卡，
+  那么 $T_pM$ 的一组基为 $\partial/\partial x^i|_p$。
+  设 $\varphi(S\cap U)$ 是 $\varphi(U)$ 的 $k$-切片，那么
+  $\iota:S\cap U\hookrightarrow M$ 的坐标表示为
+  \[
+    \varphi\circ\iota\circ\tilde\varphi^{-1}:\left(x^1,\dots,x^k\right)\mapsto
+    \left(x^1,\dots,x^k,0,\dots,0\right)  ,
+  \]
+  这表明
+  \[
+    d\iota_p\left(\left.\frac{\partial}{\partial x^i}\right|_p\right)
+    =  \left.\frac{\partial}{\partial x^i}\right|_p,\quad i=1,\dots,k.
+  \]
+  所以 $d\iota_p(T_pS)$ 是由 $\partial/\partial x^1|_p,\dots,\partial/\partial x^k|_p$
+  张成的 $T_pM$ 的子空间。设
+  \[
+    v=v^i \left.\frac{\partial}{\partial x^i}\right|_p\in T_pM,  
+  \]
+  所以 $v\in T_pS$ 当且仅当 $v^j=0\ (j>k)$。
+
+  令 $\psi:M\to \mathbb{R}$ 是关于 $\{p\}$ 的支在 $U$ 中的光滑鼓包函数，
+  对于每个 $j>k$，考虑函数 $f(q)=\psi(q)x^j$，其中 $q\in M$。
+  显然 $f|_S=0$，所以
+  \[
+    0=vf= v^i\frac{\partial (f\circ\varphi^{-1})}{\partial x^i}(\varphi(p))
+    =v^j.\qedhere  
+  \]
+\end{proof}
+
+\begin{proposition}
+  假设 $M$ 是光滑流形，$S\subseteq M$ 是嵌入子流形，如果 $\varPhi:U\to N$
+  是 $S$ 的局部定义映射，那么 $T_pS=\ker d\varPhi_p:T_pM\to T_{\varPhi(p)}N$，
+  其中 $p\in S\cap U$。
+\end{proposition}
+\begin{proof}
+  根据定义，$S\cap U$ 是 $\varPhi$ 的正则水平集，令 $\iota:S\cap U\hookrightarrow U$，
+  那么 $\varPhi\circ\iota:S\cap U\to N$ 是常值映射，所以
+  $d(\varPhi\circ\iota)_p:T_pS\to T_{\varPhi(p)}N$ 是零映射，所以
+  \[
+    d\varPhi_p\circ d\iota_p=d(\varPhi\circ\iota)_p=0,
+  \]
+  这表明 $T_pS=\im d\iota_p\subseteq \ker d\varPhi_p$。另一方面，$\varPhi$ 是定义映射表明
+  $d\varPhi_p$ 是满射，故
+  \[
+    \dim\ker d\varPhi_p=\dim T_pM-\dim T_{\varPhi(p)}N=\dim S\cap U=
+    \dim T_pS,
+  \]
+  这就表明 $T_pS=\ker d\varPhi_p$。
+\end{proof}
+
+\begin{corollary}
+  设 $S\subseteq M$ 是光滑浸没 $\varPhi=(\varPhi^1,\dots,\varPhi^k):M\to \mathbb{R}^k$
+  的水平集，切向量 $v\in T_pM$ 在 $T_pS$ 中当且仅当 $v\varPhi^1=\cdots=v\varPhi^k=0$。
+\end{corollary}
+
+\begin{exercise}\label{exer:tangent space of submanifold}
+  设 $S\subseteq M$ 是常秩映射 $\varPhi:M\to N$ 的水平集，证明对于每个 $p\in S$
+  有 $T_pS=\ker d\varPhi_p$。
+\end{exercise}
+\begin{proof}
+  根据常秩水平集定理，有 $\dim S=\dim M-\dim N$，故
+  \[
+    \dim T_pS=\dim T_pM-\dim T_{\varPhi(p)}N=\dim \ker d\varPhi_p.
+  \]
+  记 $\iota:S\hookrightarrow M$，那么 $\varPhi\circ\iota:S\to N$ 是常值映射，
+  所以 $d(\varPhi\circ \iota)_p=0$，这就表明 $T_pS=\ker d\varPhi_p$。
+\end{proof}

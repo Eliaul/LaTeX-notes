@@ -1,0 +1,776 @@
+\chapter{切向量}
+
+\section{切向量}
+
+以单位球面 $\mathbb{S}^{n-1}\subseteq\mathbb{R}^n$ 为例，我们试图定义
+$\mathbb{S}^{n-1}$ 中一点处的“切向量”。在定义这个概念之前，我们先回顾
+$\mathbb{R}^n$ 中的元素。对于 $\mathbb{R}^n$ 中的元素，我们通常将它们
+视为点，用坐标 $(x^1,\dots,x^n)$ 表示。同时，我们也可以将它们视为向量，
+其拥有方向和长度，但是与所处的位置（起点）无关，一个向量 $v=v^ie_i$
+可以被视为从任意起点处出发的一个箭头。
+对于切向量的定义而言，我们希望这个向量和起点是绑定的，也就是说，在每个点处
+都有一个独立的 $\mathbb{R}^n$ 的复制品，当我们谈及一个点 $a$ 处的切向量的时候，
+我们想象中这些切向量应该处于 $\mathbb{R}^n$ 的一个复制品中，这个复制品
+的原点被平移到 $a$ 处。
+
+
+\subsection{几何的切向量}
+
+给定 $a\in\mathbb{R}^n$，定义\emph{$a$ 处的几何切空间} $\mathbb{R}_a^n$ 为
+集合 $\{a\}\times\mathbb{R}^n=\{(a,v)\,|\, v\in\mathbb{R}^n\}$。
+$\mathbb{R}^n$ 中的\emph{几何切向量}指的是 $\mathbb{R}_a^n$ 中的元素。
+我们将 $(a,v)$ 简记为 $v_a$ 或者 $v|_a$。显然 $\mathbb{R}_a^n$
+是同构于 $\mathbb{R}^n$ 的向量空间。
+
+几何上来看，$a\in\mathbb{S}^{n-1}$ 处的切空间应该是 $\mathbb{R}_a^n$ 的一个子空间，
+其与向量 $a$ 正交。但是对于一般的光滑流形而言，我们需要寻找切向量的其他特征来定义一般的切向量的概念。
+几何切向量提供了一种新颖的视角。对于任意几何切向量 $v_a\in\mathbb{R}_a^n$，
+其诱导了一个映射 $D_{v|_a}:C^\infty(\mathbb{R}^n)\to\mathbb{R}$，其将光滑函数
+$f:\mathbb{R}^n\to\mathbb{R}$ 送到 $f$ 在 $a$ 处沿 $v$ 方向的方向导数：
+\[
+  D_{v|_a}f=D_vf(a)=\left.\frac{d}{dt}\right|_{t=0}f(a+tv).  
+\]
+$D_{v|_a}$ 是 $\mathbb{R}$ 线性映射，并且满足乘积法则：
+\[
+  D_{v|_a}(fg)=f(a)D_{v|_a}g+g(a)D_{v|_a}f.
+\]
+若 $v_a=v^ie_{i}|_a$，那么
+\[
+  D_{v|_a}f=v^i\frac{\partial f}{\partial x^i}(a)  .
+\]
+
+利用切向量的特点，我们可以给出如下定义。设点 $a\in\mathbb{R}^n$，
+映射 $w:C^\infty(\mathbb{R}^n)\to\mathbb{R}$ 如果是 $\mathbb{R}$-线性映射并且
+满足乘积法则：
+\[
+  w(fg)=f(a)wg+g(a)wf, 
+\]
+那么我们说 $w$ 是\emph{$a$ 处的导子}。记 $T_a\mathbb{R}^n$ 为所有
+$a$ 处的导子的集合。定义加法和数乘
+\[
+  (w_1+w_2)f=w_1f+w_2f,\quad (cw)f=c(wf),
+\]
+$T_a\mathbb{R}^n$ 成为一个向量空间。根据前面的叙述，我们知道
+每个切向量都自然地诱导出一个导子，那么导子能否代表所有的切向量？
+一个重要的事实是，$T_a\mathbb{R}^n$ 与几何切空间 $\mathbb{R}_a^n$
+是同构的。
+
+\begin{lemma}[导子的性质]\label{lemma:property of derivation}
+  设 $a\in\mathbb{R}^n$，$w\in T_a\mathbb{R}^n$，$f,g\in C^\infty(\mathbb{R}^n)$。
+  \begin{enumerate}
+    \item 如果 $f$ 是常值函数，那么 $wf=0$。
+    \item 如果 $f(a)=g(a)=0$，那么 $w(fg)=0$。
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  (1) 设 $f(x)\equiv c$，那么 $f(x)=cf_1(x)$，其中 $f_1(x)\equiv 1$。
+  根据导子的乘积法则，有
+  \[
+    wf_1=w(f_1f_1)=2f_1(a)wf_1=2wf_1,
+  \]
+  所以 $wf_1=0$，所以 $wf=c(wf_1)=0$。
+
+  (2) 根据乘积法则，有
+  \[
+    w(fg)=f(a)wg+g(a)wf=0.\qedhere  
+  \]
+\end{proof}
+
+\begin{proposition}\label{prop:gemotry tangent vector is derivation}
+  令 $a\in\mathbb{R}^n$，那么
+  \begin{enumerate}
+    \item 对于几何切向量 $v_a\in \mathbb{R}_a^n$，映射 $D_{v|_a}:C^\infty(\mathbb{R}^n)\to\mathbb{R}$
+    定义了 $a$ 处的一个导子。
+    \item 映射 $v_a\mapsto D_{v|_a}$ 给出了 $\mathbb{R}_a^n\to T_a\mathbb{R}^n$ 的同构。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 根据方向导数的性质是显然的。
+
+  (2) 容易验证 $v_a\mapsto D_{v|_a}$ 是线性映射。首先我们说明这是一个单射。
+  假设 $v_a\in\mathbb{R}_a^n$ 使得 $D_{v|_a}=0$，即对于任意的 $f\in C^\infty(\mathbb{R}^n)$
+  有 $D_vf(a)=D_{v|_a}f=0$。特别地，考虑坐标函数 $x^j:\mathbb{R}^n\to\mathbb{R}$，
+  其将点 $x$ 送到第 $j$ 个坐标 $x^j$。设 $v_a=v^i e_i|_a$，那么
+  \[
+    v^j=v^i\frac{\partial}{\partial x^i}x^j(a)=D_v x^j(a)=D_{v|_a}x^j=  0,
+  \]
+  所以 $v_a=0$，故 $v_a\mapsto D_{v|_a}$ 是单射。
+
+  下面说明这是一个满射。任取 $w\in T_a\mathbb{R}^n$，令 $v^i=w(x^i)$，
+  $v_a=v^ie_i|_a$，我们证明 $w=D_{v|_a}$。对于任意 $f\in C^\infty(\mathbb{R}^n)$，
+  根据 Taylor 公式，有
+  \begin{align*}
+    f(x)={}&f(a)+\sum_{i=1}^n\frac{\partial f}{\partial x^i}(a)(x^i-a^i)\\
+    &+\sum_{i,j=1}^n(x^i-a^i)(x^j-a^j)\int_0^1(1-t)\frac{\partial^2 f}{\partial x^i\partial x^j}
+    (a+t(x-a))dt,
+  \end{align*}
+  根据 \autoref{lemma:property of derivation}，所以
+  \begin{align*}
+    wf&=w(f(a))+\sum_{i=1}^n\frac{\partial f}{\partial x^i}(a)w(x^i-a^i)\\
+    &=\sum_{i=1}^n\frac{\partial f}{\partial x^i}(a)w(x^i)=\sum_{i=1}^nv^i
+    \frac{\partial f}{\partial x^i}(a)\\
+    &=D_{v|_a}f.\qedhere
+  \end{align*}
+\end{proof}
+
+\begin{corollary}\label{coro:bases of geometry tangent space}
+  对于任意 $a\in\mathbb{R}^n$，对于 $1\leq i\leq n$，定义导子
+  \[
+    \left.\frac{\partial}{\partial x^i}\right|_a:C^\infty(\mathbb{R}^n)\to\mathbb{R},\quad
+    \left.\frac{\partial}{\partial x^i}\right|_af=\frac{\partial f}{\partial x^i}(a),
+  \]
+  那么这 $n$ 个导子构成了 $T_a\mathbb{R}^n$ 的一组基。
+\end{corollary}
+
+\subsection{流形上的切向量}
+
+经过上一小节，我们找到了几何的切向量的一个等价刻画，即导子。而
+导子的定义可以非常容易地推广到流形上。令 $M$ 是带边或者无边光滑流形，
+$p\in M$。一个线性映射 $v:C^\infty(M)\to\mathbb{R}$ 如果满足乘积法则
+\[
+  v(fg)=f(p)vg+g(p)vf,\quad \forall f,g\in C^\infty(M) , 
+\]
+那么我们说 $v$ 是\emph{$p$ 处的导子}。所以 $p$ 处的导子的集合记为 $T_pM$，
+这是一个向量空间，称为\emph{$M$ 在 $p$ 处的切空间}。$T_pM$ 中的元素
+被称为\emph{$p$ 处的切向量}。
+
+与\autoref{lemma:property of derivation} 完全类似地，流形上的切向量也有下面的性质。
+
+\begin{lemma}[流形上切向量的性质]\label{lemma:property of tangent vector}
+  设 $M$ 是带边或者无边光滑流形，$p\in M$，$v\in T_pM$，并且 $f,g\in C^\infty(M)$。
+  \begin{enumerate}
+    \item 如果 $f$ 是常值函数，那么 $vf=0$。
+    \item 如果 $f(p)=g(p)=0$，那么 $v(fg)=0$。
+  \end{enumerate}
+\end{lemma}
+
+考虑到几何切向量是定义流形上切向量的动机，我们应该把 $M$ 在 $p$ 的切向量
+想象为与 $M$ 相切的、以 $p$ 为起点的一个“箭头”。当然，涉及切向量的定理必须
+基于上述切向量的抽象定义，但是我们的几何直觉应当尽可能的联系几何图像。
+
+\section{光滑映射的微分}\label{sec:differential of map}
+
+对于 Euclid 空间之间的光滑映射，我们知道映射在一个点上的全导数（微分）是一个线性映射，
+其代表了在该点附近对光滑映射的“最佳线性近似”。在流形的情况下，也有类似的线性映射，
+但是流形不是向量空间，所以这样的线性映射是切空间之间的线性映射。
+
+设 $M,N$ 是带边或者无边光滑流形，$F:M\to N$ 是光滑映射，对于每个 $p\in M$，
+我们定义\emph{$F$ 在 $p$ 处的微分}为映射
+\[
+  dF_p:T_pM\to T_{F(p)}N  ,
+\]
+给定 $v\in T_pM$，令 $dF_p(v)$ 为 $F(p)$ 处的导子，其把 $f\in C^\infty(N)$
+送到
+\[
+  dF_p(v)(f)=v(f\circ F).  
+\]
+注意到光滑映射的复合表明 $f\circ F\in C^\infty(M)$，所以上述定义是有意义的。
+下面我们验证 $dF_p(v)$ 确实是 $T_{F(p)}N$ 中的元素。
+算子 $dF_p(v):C^\infty(N)\to\mathbb{R}$ 是线性的，这是因为 $v$ 是线性的。
+任取 $f,g\in C^\infty(N)$，我们有
+\begin{align*}
+  dF_p(v)(fg)&=v(fg\circ F)=v((f\circ F)(g\circ F))\\
+  &=f(F(p))v(g\circ F)+g(F(p))v(f\circ F)\\
+  &=f(F(p))dF_p(v)(g)+g(F(p))dF_p(v)(f),
+\end{align*}
+所以 $dF_p(v)$ 满足乘积法则，故 $dF_p(v)$ 确实是 $N$ 在 $F(p)$ 处的一个导子。
+
+\begin{proposition}[微分的性质]
+  令 $M,N,P$ 是带边或者无边光滑流形，$F:M\to N$ 和 $G:N\to P$ 是光滑映射，
+  $p\in M$。 
+  \begin{enumerate}
+    \item $dF_p:T_pM\to T_{F(p)}N$ 是线性映射。
+    \item $d(G\circ F)_p=dG_{F(p)}\circ dF_p:T_pM\to T_{G(F(p))}P$。
+    \item $d(\Id_M)_p=\Id_{T_pM}:T_pM\to T_pM$。
+    \item 若 $F$ 是微分同胚，则 $dF_p:T_pM\to T_{F(p)}N$ 是同构，且
+    $(dF_p)^{-1}=d(F^{-1})_{F(p)}$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 直接验证即可。
+
+  (2) 任取 $v\in T_pM$，$f\in T_{G(F(p))}P$，有
+  \begin{align*}
+    d(G\circ F)_p(v)(f)&=v(f\circ (G\circ F))=v((f\circ G)\circ F)\\
+    &=dF_p(v)(f\circ G)=dG_{F(p)}\bigl(dF_p(v)\bigr)(f)\\
+    &=dG_{F(p)}\circ dF_p(v)(f),
+  \end{align*}
+  所以 $d(G\circ F)_p=dG_{F(p)}\circ dF_p$。
+
+  (3) 任取 $v\in T_pM$，$f\in C^\infty(M)$，有
+  \[
+    d(\Id_M)_p(v)(f)=v(f\circ\Id_M)=vf,  
+  \]
+  所以 $d(\Id_M)(v)=v$，即 $d(\Id_M)_p=\Id_{T_pM}$。
+
+  (4) $F$ 是微分同胚表明 $F$ 有光滑逆映射 $F^{-1}:N\to M$，那么
+  $F^{-1}\circ F=\Id_M$，根据 (2) 和 (3)，我们有
+  \[
+    d(F^{-1})_{F(p)}\circ dF_p=d(F^{-1}\circ F)_p=d(\Id_M)_p=\Id_{T_pM},
+  \] 
+  所以 $dF_p$ 是同构并且 $(dF_p)^{-1}=d(F^{-1})_{F(p)}$。
+\end{proof}
+
+下面我们先解决一个技术性的问题，虽然切空间是用整个流形上的光滑函数定义的，
+但是对于坐标卡而言，我们需要研究局部的切向量。
+
+\begin{proposition}\label{prop:local property of tangent vector}
+  令 $M$ 是带边或者无边光滑流形，$p\in M$，$v\in T_pM$。如果 $f,g\in C^\infty(M)$
+  在 $p$ 点的某个邻域上重合，那么 $vf=vg$。
+\end{proposition}
+\begin{proof}
+  令 $h=f-g$，那么 $h$ 在 $p$ 的某个邻域 $U$ 上为零。令 $\psi\in C^\infty(M)$
+  是关于 $M\smallsetminus U$ 的支在 $M\smallsetminus \{p\}$ 中的鼓包函数，
+  那么函数 $\psi h=h$，且 $\psi(p)=h(p)=0$，于是 \autoref{lemma:property of tangent vector}
+  表明 $v h=v(\psi h)=0$，所以 $vf=vg$。
+\end{proof}
+
+\begin{proposition}[开子流形的切空间]\label{prop:tangent space of open submanifold}
+  令 $M$ 是带边或者无边光滑流形，$U\subseteq M$ 是开子集，$\iota:U\hookrightarrow M$
+  是包含映射。对于任意 $p\in U$，微分 $d\iota_p:T_pU\to T_pM$ 是同构。
+\end{proposition}
+\begin{proof}
+  设 $v\in T_pU$ 使得 $d\iota_p(v)=0$，令 $B$ 是 $p$ 的邻域使得 $\bar B\subseteq U$。
+  对于任意的 $f\in C^\infty(U)$，其可以延拓为 $\tilde{f}\in C^\infty(M)$ 使得
+  $\tilde{f}\big|_B=f$。因为 $f$ 和 $\tilde{f}\big|_U$ 在 $B$ 上重合，根据 \autoref{prop:local property of tangent vector}，
+  我们有
+  \[
+    vf=v\left(\tilde{f}\big|_U\right)=v\left(\tilde{f}\circ\iota\right)=
+    d\iota_p(v)\tilde{f}=0,
+  \]
+  所以 $v=0$，故 $d\iota_p$ 是单射。
+
+  另一方面，任取 $w\in T_pM$，定义算子 $v:C^\infty(U)\to\mathbb{R}$ 为
+  $vf=w\tilde{f}$，其中 $\tilde{f}\in C^\infty(M)$ 是 $f$ 在 $B$ 上的任意光滑函数延拓，
+  \autoref{prop:local property of tangent vector} 告诉我们算子 $v$ 是良定义的。
+  容易验证 $v\in T_pU$。于是对于任意 $g\in C^\infty(M)$，有
+  \[
+    d\iota_p(v)(g)=v(g\circ\iota)=w\left(\widetilde{g\circ\iota}\right) 
+    =wg,
+  \]
+  最后一个等号是因为 $g$ 和 $\widetilde{g\circ\iota}$ 在 $B$ 上重合。
+  这就表明 $d\iota_p$ 是满射。
+\end{proof}
+
+给定一个开子集 $U\subseteq M$，对于任意点 $p\in U$，现在我们把
+$T_pU$ 和 $T_pM$ 完全等同。这意味着我们做了如下观察：将 
+$v\in T_pU$ 和 $d\iota_p(v)\in T_pM$ 等同，即认为 $v$ 作用在
+整个流形 $M$ 上的光滑函数而不是 $U$ 上的光滑函数。
+由于导子对光滑函数的作用只与该函数在任意小的邻域上的值有关，所以
+这种等同是无害的。反过来，这也表明任意切向量 $v\in T_pM$
+可以作用在定义在 $p$ 的邻域上的光滑函数，而不一定作用在
+定义在整个流形 $M$ 上的光滑函数。
+
+\begin{proposition}[切空间的维数]
+  如果 $M$ 是 $n$ 维光滑流形，那么对于每个 $p\in M$，切空间 $T_pM$
+  是 $n$ 维向量空间。
+\end{proposition}
+\begin{proof}
+  给定 $p\in M$，设 $(U,\varphi)$ 是包含 $p$ 的一个光滑坐标卡，由于
+  $\varphi:U\to\varphi(U)=\hat U\subseteq\mathbb{R}^n$ 是微分同胚，
+  所以 $d\varphi_p:T_pU\to T_{\varphi(p)}\hat U$ 是同构，
+  \autoref{prop:tangent space of open submanifold} 表明 $T_p M\simeq T_pU$
+  以及 $T_{\varphi(p)}\hat U\simeq T_{\varphi(p)}\mathbb{R}^n$，所以
+  $\dim T_pM=\dim T_{\varphi(p)}\mathbb{R}^n=n$。
+\end{proof}
+
+回顾 \autoref{exa:finite-dim vector space as manifold}，每个有限维向量空间
+都有一个自然的光滑结构，并且其独立于基或者范数的选取。下面的命题表明，
+向量空间的切空间可以自然地等同为该向量空间自身。
+
+设 $V$ 是有限维向量空间，$a\in V$。对于任意向量 $v\in V$，定义
+$D_{v|_a}:C^\infty(V)\to\mathbb{R}$ 为
+\[
+  D_{v|_a}f=\left.\frac{d}{dt}\right|_{t=0}f(a+tv).
+\]
+
+\begin{proposition}[向量空间的切空间]
+  设 $V$ 是有限维向量空间，附带标准光滑结构。对于每个点 $a\in V$，
+  映射 $v\mapsto D_{v|_a}$ 给出了 $V\to T_aV$ 的典范同构，使得
+  对于任意线性映射 $L:V\to W$，下面的图表交换：
+  \[
+    \begin{tikzcd}[sep=3.2em]
+      V\arrow[r,"\simeq"]\arrow[d,"L"'] & T_aV\arrow[d,"dL_a"] \\
+      W\arrow[r,"\simeq"'] & T_{La}W
+    \end{tikzcd}
+  \]
+\end{proposition}
+\begin{proof}
+  一旦我们选取了 $V$ 的一组基，完全仿照 \autoref{prop:gemotry tangent vector is derivation}，
+  我们可以证明 $D_{v|_a}$ 确实是导子，并且映射 $v\mapsto D_{v|_a}$ 是同构。
+
+  设 $L:V\to W$ 是线性映射，任选 $V,W$ 的一组基后，$L$ 的坐标表示
+  仍然是线性映射，故 $L$ 是光滑映射。最后，直接计算可得
+  \begin{align*}
+    dL_a\left(D_{v|_a}\right)f&=D_{v|_a}(f\circ L)=\left.\frac{d}{dt}\right|_{t=0}
+    f(L(a+tv))\\
+    &=\left.\frac{d}{dt}\right|_{t=0}f(La+tLv)=D_{Lv|_{La}}f.\qedhere
+  \end{align*}
+\end{proof}
+
+非常重要的一点是同构 $V\simeq T_aV$ 是不依赖于基的选取的，出于这一点，
+我们可以把有限维向量空间的切向量视为这个空间内的元素。更一般的，如果 $M$
+是向量空间 $V$ 的开子流形，我们有同构 $T_pM\simeq T_pV\simeq V$，
+也就是说我们可以把 $M$ 的每个切空间都和 $V$ 等同。例如，因为
+$\GL(n,\mathbb{R})$ 是向量空间 $M(n,\mathbb{R})$ 的开子流形，所以我们可以
+将 $X\in\GL(n,\mathbb{R})$ 处的切空间等同于 $M(n,\mathbb{R})$。
+
+\begin{proposition}[积流形的切空间]
+  令 $M_1,\dots,M_k$ 是光滑流形，对于每个 $j$，令 $\pi_j:M_1\times\cdots\times M_k\to M_j$
+  是投影。对于任意 $p=(p_1,\dots,p_k)\in M_1\times\cdots\times M_k$，定义映射
+  \[
+    \alpha:T_p(M_1\times\cdots\times M_k)\to T_{p_1}M_1\oplus \cdots\oplus T_{p_k}M_k  
+  \]
+  为
+  \[
+    \alpha(v)=\left(d(\pi_1)_p(v),\dots,d(\pi_k)_p(v)\right),  
+  \]
+  那么 $\alpha$ 是同构。如果 $M_i$ 是带边光滑流形，结论也正确。
+\end{proposition}
+\begin{proof}
+  不难验证 $\pi_j$ 是光滑映射以及 $\alpha$ 是线性映射。
+  令包含映射 $\iota_j:M_j\to M_1\times\cdots\times M_k$ 为
+  \[
+    \iota_j(x)=(p_1,\dots,x,\dots,p_k),  
+  \]
+  其中 $x$ 处于第 $j$ 个分量。
+  定义线性映射
+  \[
+    \beta:T_{p_1}M_1\oplus \cdots\oplus T_{p_k}M_k\to T_p(M_1\times\cdots\times M_k)
+  \]
+  为
+  \[
+    \beta(v_1,\dots,v_k)=d(\iota_1)_{p_1}(v_1)+\cdots+d(\iota_k)_{p_k}(v_k).
+  \]
+  那么
+  \begin{align*}
+    \alpha\circ\beta(v_1,\dots,v_k)&=\left(
+      \sum_{i=1}^k d(\pi_1)_p\circ d(\iota_i)_{p_i}(v_i),\dots,
+      \sum_{i=1}^k d(\pi_k)_p\circ d(\iota_i)_{p_i}(v_i)
+    \right)  \\
+    &=\left(\sum_{i=1}^kd(\pi_1\circ\iota_i)_{p_i}(v_i),\dots,\sum_{i=1}^kd(\pi_k\circ\iota_i)_{p_i}(v_i)\right)\\
+    &=\left(
+      d(\pi_1\circ\iota_1)_{p_1}(v_1),\dots,d(\pi_k\circ\iota_k)_{p_k}(v_k)
+    \right)\\
+    &=\left(
+      d\bigl(\Id_{M_1}\bigr)_{p_1}(v_1),\dots,d\bigl(\Id_{M_k}\bigr)_{p_k}(v_k)
+    \right)\\
+    &=(v_1,\dots,v_k),
+  \end{align*}
+  所以 $\alpha$ 是满射。显然
+  \[
+    \dim   T_p(M_1\times\cdots\times M_k)=\dim T_{p_1}M_1\oplus \cdots\oplus T_{p_k}M_k  ,
+  \]
+  所以 $\alpha$ 是同构。
+\end{proof}
+
+\section{使用坐标进行计算}
+
+
+现在我们把抽象的微分和切空间的定义落实到计算上，我们将研究如何在局部坐标
+使用切向量和微分进行计算。
+
+设 $M$ 是光滑流形，$(U,\varphi)$ 是一个光滑坐标卡，那么 $\varphi$
+是 $U$ 到开集 $\hat U=\varphi(U)\subseteq\mathbb{R}^n$ 的微分同胚。微分
+$d\varphi_p:T_pM\to T_{\varphi(p)}\mathbb{R}^n$ 是同构。
+
+根据 \autoref{coro:bases of geometry tangent space}，导子 
+$\partial/\partial x^1|_{\varphi(p)},\dots,\partial/\partial x^n|_{\varphi(p)}$
+构成了 $T_{\varphi(p)}\mathbb{R}^n$ 的一组基。因此，其在
+$d\varphi_p$ 下的原像构成 $T_pM$ 的一组基，我们使用
+$\partial/\partial x^i|_p$ 来表示它们。也就是说，
+我们定义
+\[
+  \left.\frac{\partial}{\partial x^i}\right|_p=(d\varphi_p)^{-1}\left(
+    \left.\frac{\partial}{\partial x^i}\right|_{\varphi(p)}
+  \right)=d(\varphi^{-1})_{\varphi(p)}\left(
+    \left.\frac{\partial}{\partial x^i}\right|_{\varphi(p)}
+  \right)\in T_pM\simeq T_pU.
+\]
+此时，我们可以发现，其在 $f\in C^\infty(U)$ 上的作用为
+\[
+  \left.\frac{\partial}{\partial x^i}\right|_pf=
+  \left.\frac{\partial}{\partial x^i}\right|_{\varphi(p)}(f\circ\varphi^{-1})
+  =\frac{\partial \hat f}{\partial x^i}(\hat p),
+\]
+其中 $\hat f=f\circ\varphi^{-1}$ 是 $f$ 的坐标表示，$\hat p=(p^1,\dots,p^n)=\varphi(p)$
+是 $p$ 的坐标表示。这样的记号看上去容易混淆，实际上对应 Euclid 空间中偏导数的定义，
+即 $\partial/\partial x^i|_p$ 计算了函数 $f$ (的坐标表示) 在点 $p$ (的坐标表示) 处
+的第 $i$ 个偏导数。切向量 $\partial/\partial x^i|_p$ 被称为
+与给定坐标系相关的\emph{$p$ 处的坐标向量}。若 $M=\mathbb{R}^n$，
+局部坐标取标准坐标 $(\mathbb{R}^n,\Id_{\mathbb{R}^n})$，此时
+切向量 $\partial/\partial x^i|_p$ 就是偏导数算子。
+
+因此，任意切向量 $v\in T_pM$ 可以唯一地表示为一个线性组合
+\[
+  v=v^i\!\left.\frac{\partial}{\partial x^i}\right|_p.
+\]
+这组基 $\left(\partial/\partial x^i|_p\right)$ 被称为\emph{$T_pM$ 的坐标基}，
+实数 $(v^1,\dots,v^n)$ 被称为 $v$ 相对于这个坐标基的\emph{分量}。
+如果 $v$ 是已知的，用 $x^j\in C^\infty(U)$ 表示坐标函数，将
+$x\in U$ 送到 $\varphi(x)\in\mathbb{R}^n$ 的第 $i$ 个分量，那么
+\[
+  v(x^j)=v^i\!\left.\frac{\partial}{\partial x^i}\right|_px^j=
+  v^i\frac{\partial x^j}{\partial x^i}(\hat p)=v^j.
+\]
+
+
+\subsection{使用坐标计算微分}
+
+现在我们研究微分在坐标下的表示。首先考虑光滑映射 $F:U\to V$，
+其中 $U\subseteq\mathbb{R}^n$，$V\subseteq\mathbb{R}^m$ 是开集。
+对于任意 $p\in U$，我们来确定 $dF_p:T_p\mathbb{R}^n\to T_{F(p)}\mathbb{R}^m$
+在坐标基下的表示矩阵。使用 $(x^1,\dots,x^n)$ 表示定义域上的坐标，
+$(y^1,\dots,y^m)$ 表示值域上的坐标，那么我们可以计算得到
+\begin{align*}
+  dF_p\left(\left.\frac{\partial}{\partial x^i}\right|_p\right)f&=
+  \left.\frac{\partial}{\partial x^i}\right|_p(f\circ F)=
+  \frac{\partial f}{\partial y^j}(F(p))\frac{\partial F^j}{\partial x^i}(p)\\
+  &=\left(\frac{\partial F^j}{\partial x^i}(p)\left.\frac{\partial}{\partial y^j}\right|_{F(p)}\right)f,
+\end{align*}
+所以
+\begin{equation}
+  dF_p\left(\left.\frac{\partial}{\partial x^i}\right|_p\right)=
+  \frac{\partial F^j}{\partial x^i}(p)\left.\frac{\partial}{\partial y^j}\right|_{F(p)}.
+\end{equation}
+也就是说，$dF_p$ 在坐标基下的表示矩阵为
+\[
+  \begin{pmatrix}
+    \dfrac{\partial F^1}{\partial x^1}(p) & \cdots & \dfrac{\partial F^1}{\partial x^n}(p)\\
+    \vdots & \ddots & \vdots \\
+    \dfrac{\partial F^m}{\partial x^1}(p) & \cdots & \dfrac{\partial F^m}{\partial x^n}(p)
+  \end{pmatrix}  .
+\]
+可见这个矩阵就是 $F$ 在 $p$ 处的 Jacobi 矩阵，即全导数 $DF(p):\mathbb{R}^n\to\mathbb{R}^m$
+的表示矩阵。因此，在这种情况下，$dF_p:T_p\mathbb{R}^n\to T_{F(p)}\mathbb{R}^m$
+对应全导数 $DF(p):\mathbb{R}^n\to\mathbb{R}^m$。
+
+现在我们考虑带边或者无边光滑流形之间的光滑映射 $F:M\to N$。选取 $p\in M$ 处
+的光滑坐标卡 $(U,\varphi)$ 和 $F(p)\in N$ 处的光滑坐标卡 $(V,\psi)$，我们得到
+$F$ 的坐标表示 $\hat F=\psi\circ F\circ\varphi^{-1}:\varphi(U\cap F^{-1}(V))\to \psi(V)$。
+令 $\hat p=\varphi(p)$ 为 $p$ 的坐标表示。根据上面的叙述，$d\hat F_{\hat p}$
+可以表示为 $\hat F$ 在 $\hat p$ 处的 Jacobi 矩阵。使用 $F\circ\varphi^{-1}=\psi^{-1}\circ\hat F$，
+我们有
+\begin{align*}
+  dF_p\left(\left.\frac{\partial}{\partial x^i}\right|_p\right)&=
+  dF_p\left(
+    d(\varphi^{-1})_{\hat p}\left(
+      \left.\frac{\partial}{\partial x^i}\right|_{\hat p}
+    \right)
+  \right)=
+  d(\psi^{-1})_{\hat F(\hat p)}\left(
+    d\hat F_{\hat p}\left(
+      \left.\frac{\partial}{\partial x^i}\right|_{\hat p}
+    \right)
+  \right)\\
+  &=d(\psi^{-1})_{\hat F(\hat p)}\left(
+    \frac{\partial \hat F^j}{\partial x^i}(\hat p)
+    \left.\frac{\partial}{\partial y^j}\right|_{\hat F(\hat p)}
+  \right)\\
+  &=    \frac{\partial \hat F^j}{\partial x^i}(\hat p)
+  \left.\frac{\partial}{\partial y^j}\right|_{F(p)}.
+\end{align*}
+因此，$dF_p$ 在坐标基下的表示矩阵为 $F$ (的坐标表示) 在 $p$ (的坐标表示) 处
+的 Jacobi 矩阵。
+
+\subsection{基变换}
+
+设 $(U,\varphi)$ 和 $(V,\psi)$ 是 $M$ 上的两个光滑坐标卡，$p\in U\cap V$。
+将 $\varphi$ 的坐标函数记为 $(x^i)$，$\psi$ 的坐标函数记为 $(\tilde{x}^i)$。
+$p$ 处的任意切向量都可以由两组基 $\left(\partial/\partial x^i|_p\right)$
+和 $\left(\partial/\partial \tilde{x}^i|_p\right)$ 表示。现在我们研究这两个表示的关系。
+
+在这种情况下，我们通常将转移映射 $\psi\circ\varphi^{-1}:\varphi(U\cap V)\to\psi(U\cap V)$
+写为下面的简写记号：
+\[
+  \psi\circ\varphi^{-1}(x)=\left(\tilde{x}^1(x),\dots,\tilde{x}^n(x)\right)  .
+\]
+这里我们滥用一种典型的记号：对于 $\tilde{x}^i(x)$，我们把 $\tilde{x}^i$
+视为一个坐标函数（定义域为 $M$ 的开集，值域为 $\mathbb{R}^n$ 或者 $\mathbb{H}^n$
+的开集），但是此处 $x$ 为 $\varphi(U\cap V)$ 中的点，所以这里的
+$\tilde{x}^i(x)$ 实际上表示 $\tilde{x}^i\circ\varphi^{-1}(x)$。
+根据前一小节，微分 $d(\psi\circ\varphi^{-1})_{\varphi(p)}$ 满足
+\[
+  d(\psi\circ\varphi^{-1})_{\varphi(p)}\left(
+    \left.\frac{\partial}{\partial x^i}\right|_{\varphi(p)}
+  \right)  =\frac{\partial \tilde{x}^j}{\partial x^i}(\varphi(p))
+  \left.\frac{\partial }{\partial \tilde x^j}\right|_{\psi(p)},
+\]
+利用坐标向量的定义，我们有
+\begin{align*}
+  \left.\frac{\partial}{\partial x^i}\right|_p&=d(\varphi^{-1})_{\varphi(p)}
+  \left(
+    \left.\frac{\partial}{\partial x^i}\right|_{\varphi(p)}
+  \right)\\
+  &=d(\psi^{-1})_{\psi(p)}\circ d(\psi\circ\varphi^{-1})_{\varphi(p)}
+  \left(
+    \left.\frac{\partial}{\partial x^i}\right|_{\varphi(p)}
+  \right)\\
+  &=d(\psi^{-1})_{\psi(p)}\left(
+    \frac{\partial \tilde{x}^j}{\partial x^i}(\varphi(p))
+  \left.\frac{\partial }{\partial \tilde x^j}\right|_{\psi(p)}
+  \right)\\
+  &=\frac{\partial \tilde{x}^j}{\partial x^i}(\hat p)
+  \left.\frac{\partial }{\partial \tilde x^j}\right|_{p},
+\end{align*}
+其中 $\hat p=\varphi(p)$。那么对于切向量 $v=v^i\partial/\partial x^i|_p=\tilde{v}^j\partial/\partial\tilde{x}^j|_p$，
+其两个分量之间满足关系
+\[
+  \tilde{v}^j=\frac{\partial\tilde{ x}^j}{\partial x^i}(\hat p) v^i.  
+\]
+
+\section{切丛}
+
+$M$ 是带边或者无边光滑流形，定义 $M$ 的\emph{切丛} $TM$ 为 $M$
+在所有点处切空间的无交并：
+\[
+  TM=\coprod_{p\in M} T_pM.  
+\]
+
+我们通常把 $TM$ 中的元素写成 $(p,v)$，其中 $p\in M$，$v\in T_pM$。
+切丛配备一个自然的投影映射 $\pi:TM\to M$，其满足 $\pi(p,v)=p$。
+通过自然的单射 $v\mapsto (p,v)$，我们通常会将 $T_pM$ 视为 $TM$
+的子集。对于 $T_pM$ 中的切向量，我们通常会使用三种不同的记号：
+$v$、$(p,v)$ 或者 $v_p$，这取决于我们有多强调点 $p$ 的存在。
+
+以 $M=\mathbb{R}^n$ 为例，根据 \autoref{prop:gemotry tangent vector is derivation}，
+我们知道 $\mathbb{R}^n$ 的切空间可以等同于几何切空间，所以我们有
+\[
+  T\mathbb{R}^n=\coprod_{a\in\mathbb{R}^n}T_a\mathbb{R}^n
+  \simeq\coprod_{a\in\mathbb{R}^n}\mathbb{R}_a^n=\coprod_{a\in\mathbb{R}^n}
+  \{a\} \times\mathbb{R}^n=\mathbb{R}^n\times\mathbb{R}^n, 
+\] 
+于是 $\mathbb{R}^n\times\mathbb{R}^n$ 中的元素 $(a,v)$ 可以视为表示了
+一个几何切向量 $v_a$ 或者导子 $D_{v|_a}$。然而，需要注意的是，
+一般光滑流形的切丛并不能直接等同于 Cartesian 积，因为并没有一种自然地方式
+将不同点处的切空间等同起来。
+
+如果 $M$ 是光滑流形，切丛 $TM$ 可以被简单地视为向量空间的无交并，但是
+实际上它可以有更深刻的结构。下面的命题表明切丛也可以被视为一个光滑流形。
+ 
+\begin{proposition}\label{prop:smooth structure of tangent bundle}
+  对于光滑 $n$-流形 $M$，切丛 $TM$ 有一个自然的拓扑和光滑结构使得其成为
+  $2n$ 维光滑流形。在这个结构下，投影 $\pi:TM\to M$ 是光滑映射。
+\end{proposition}
+\begin{proof}
+  我们使用 \autoref{lemma:smooth manifold chart} 来定义 $TM$ 上的拓扑结构和
+  光滑结构。对于 $M$ 的任意光滑坐标卡 $(U,\varphi)$，注意到 $\pi^{-1}(U)\subseteq TM$
+  是所有在 $U$ 中一点处的切向量的集合。令 $(x^1,\dots,x^n)$ 是 $\varphi$ 的坐标函数，
+  定义映射 $\tilde{\varphi}:\pi^{-1}(U)\to\mathbb{R}^{2n}$ 为
+  \begin{equation}\label{eq:coordinate of TM}
+    \tilde{\varphi}\left(
+      v^i\!\left.\frac{\partial}{\partial x^i}\right|_p
+    \right)  =\left(x^1(p),\dots,x^n(p),v^1,\dots,v^n\right).
+  \end{equation}
+  其像集为 $\varphi(U)\times\mathbb{R}^n$ 是 $\mathbb{R}^{2n}$ 的开集。
+  $\tilde{\varphi}$ 是到其像集的双射，因为其逆映射为
+  \[
+    \tilde{\varphi}^{-1} \left(x^1,\dots,x^n,v^1,\dots,v^n\right)
+    =v^i\!\left.\frac{\partial}{\partial x^i}\right|_{\varphi^{-1}(x)}.
+  \]
+
+  现在假设 $(U,\varphi)$ 和 $(V,\psi)$ 是 $M$ 的两个光滑坐标卡，令
+  $\left(\pi^{-1}(U),\tilde{\varphi}\right)$ 和 $\left(\pi^{-1}(V),\tilde{\psi}\right)$
+  是对应的 $TM$ 的坐标卡。集合
+  \begin{align*}
+    \tilde{\varphi}\left(\pi^{-1}(U)\cap\pi^{-1}(V)\right)&=
+    \varphi(U\cap V)\times\mathbb{R}^n,\\
+    \tilde{\psi}\left(\pi^{-1}(U)\cap\pi^{-1}(V)\right)&=
+    \psi(U\cap V)\times\mathbb{R}^n,
+  \end{align*}
+  它们都是 $\mathbb{R}^{2n}$ 的开集。转移映射 $\tilde{\psi}\circ\tilde{\varphi}^{-1}:{\varphi}(U\cap V)\times\mathbb{R}^n\to\psi(U\cap V)\times\mathbb{R}^n$
+  满足
+  \[
+    \tilde{\psi}\circ\tilde{\varphi}^{-1}\left(x^1,\dots,x^n,v^1,\dots,v^n\right)
+    =\left(
+      \tilde{x}^1,\dots,\tilde{x}^n,
+      \frac{\partial\tilde{x}^1}{\partial x^j}(x)v^j,\dots,
+      \frac{\partial\tilde{x}^n}{\partial x^j}(x)v^j
+    \right),
+  \]
+  所以 $\tilde{\psi}\circ\tilde{\varphi}^{-1}$ 是光滑的。
+
+  由于 $M$ 是第二可数的，所以存在可数个 $\{U_i\}$ 覆盖 $M$，其中每个 $U_i$
+  都是 $M$ 的一个光滑坐标卡。于是 $\{\pi^{-1}(U_i)\}$ 满足 \autoref{lemma:smooth manifold chart}
+  的 (1) 到 (4)。下面我们只需要验证 $TM$ 的 Hausdorff 性质。假设 $(p,v)$ 和 $(p,w)$
+  是 $TM$ 中不同的切向量，那么存在光滑坐标卡 $U_i$ 包含 $p$，此时
+  $(p,v)$ 和 $(p,w)$ 都被同一个坐标卡 $\pi^{-1}(U_i)$ 包含。
+  假设 $(p,v)$ 和 $(q,w)$ 是 $TM$ 中不同的切向量，其中 $p\neq q$，由于
+  $M$ 是 Hausdorff 的，所以存在不相交的光滑坐标卡 $U,V$ 使得
+  $p\in U$ 以及 $q\in V$，此时 $\pi^{-1}(U)$ 和 $\pi^{-1}(V)$
+  是分别包含 $p$ 和 $q$ 的不相交坐标卡。因此，$TM$ 成为一个 $2n$ 维光滑流形。
+
+  对于 $M$ 的光滑坐标卡 $(U,\varphi)$ 和 $TM$ 的光滑坐标卡 $\left(\pi^{-1}(U),\tilde{\varphi}\right)$，
+  $\pi$ 的坐标表示为 $\hat\pi=\varphi\circ\pi\circ\tilde{\varphi}^{-1}$，满足
+  $\hat\pi(x,v)=x$，所以 $\hat \pi$ 是光滑函数，$\pi$ 是光滑映射。
+\end{proof}
+
+\begin{remark}
+  总的来说，切丛 $TM$ 的拓扑结构为：设 $\{(U_i,\varphi_i)\}$ 是覆盖 $M$ 的一组
+  可数的光滑坐标卡，定义 $TM$ 的拓扑为  $\{\tilde\varphi_i^{-1}(V)\}$ 构成的拓扑基生成的拓扑，
+  其中 $V$ 是 $\mathbb{R}^{2n}$ 的开集。
+  $TM$ 的光滑结构为：$\{(\pi^{-1}(U_i),\tilde\varphi_i)\}$ 构成 $TM$ 的一组光滑坐标卡。
+\end{remark}
+
+\eqref{eq:coordinate of TM} 式中的坐标 $(x^i,v^i)$ 被称为\emph{$TM$ 上的自然坐标}。
+
+\begin{proposition}
+  设 $M$ 是带边或者无边光滑 $n$-流形并且能够被单个光滑坐标卡覆盖，
+  那么 $TM$ 微分同胚于 $M\times\mathbb{R}^n$。
+\end{proposition}
+\begin{proof}
+  设 $(M,\varphi)$ 是 $M$ 的一个全局光滑坐标卡，那么 $\varphi:M\to\hat U\subseteq\mathbb{R}^n$
+  是微分同胚，\eqref{eq:coordinate of TM} 式表明 $\tilde{\varphi}:TM\to \hat U\times\mathbb{R}^n$ 是
+  微分同胚，故 $TM\approx\hat U\times\mathbb{R}^n\approx M\times\mathbb{R}^n$。
+\end{proof}
+
+将光滑映射 $F:M\to N$ 在所有点上的微分放在一起，我们可以定义\emph{全局微分}，
+记为 $dF:TM\to TN$，当 $dF$ 限制在 $T_pM\subseteq TM$ 上时将 $dF$ 定义为
+$dF_p$。对于切向量 $v\in T_pM$，我们会混用记号 $dF_p(v)$ 和 $dF(v)$，取决于
+我们有多强调点 $p$。
+
+\begin{proposition}
+  如果 $F:M\to N$ 是光滑映射，那么全局微分 $dF:TM\to TN$ 是光滑映射。
+\end{proposition}
+\begin{proof}
+  $dF$ 在 $TM$ 的自然坐标 $\tilde\varphi=(x^i,v^i)$ 和 $TN$ 的自然坐标 $\tilde\psi=(y^i,w^i)$ 下的表示为
+  \begin{align*}
+    \widehat{dF}\left(x^1,\dots,x^n,v^1,\dots,v^n\right)&=
+    \tilde{\psi}\circ dF\circ\tilde\varphi^{-1}\left(x^1,\dots,x^n,v^1,\dots,v^n\right)\\
+    &=\tilde{\psi}\circ dF\left(p,v^i\!\left.\frac{\partial}{\partial x^i}\right|_{p}\right)\\
+    &=\tilde\psi \circ dF_{p}\left(v^i\!\left.\frac{\partial}{\partial x^i}\right|_{p}\right)\\
+    &=\tilde{\psi}\left(
+      F(p),v^i\frac{\partial\hat F^j}{\partial x^i}(x)\left.\frac{\partial}{\partial y^j}\right|_{F(p)}
+    \right)
+    \\
+    &=\left(
+      F^1(x),\dots,F^n(x),
+      \frac{\partial F^1}{\partial x^i}(x)v^i,\dots,
+      \frac{\partial F^n}{\partial x^i}(x)v^i
+    \right),
+  \end{align*}
+  这是一个光滑函数，所以 $dF$ 是光滑映射。
+\end{proof}
+
+\begin{corollary}[全局微分的性质]
+  设 $F:M\to N$ 和 $G:N\to P$ 是光滑映射。那么
+  \begin{enumerate}
+    \item $d(G\circ F)=dG\circ dF$。
+    \item $d(\Id_M)=\Id_{TM}$。
+    \item 如果 $F$ 是微分同胚，那么 $dF:TM\to TN$ 也是微分同胚，并且
+    $(dF)^{-1}=d(F^{-1})$。
+  \end{enumerate}
+\end{corollary}
+
+\section{曲线的速度向量}
+
+$M$ 是带边或者无边光滑流形，我们定义\emph{$M$ 中的曲线}为连续映射
+$\gamma:J\to M$，其中 $J\subseteq\mathbb{R}$ 是区间。
+注意，本书中的曲线始终指区间到 $M$ 的一个映射，而不是 $M$ 中的某个点集。
+
+我们对切空间的定义实际上导出了对速度向量的自然定义：
+给定一个光滑曲线 $\gamma:J\to M$ 和 $t_0\in J$，定义
+\emph{$\gamma$ 在 $t_0$ 处的速度}为 $\gamma'(t_0)$：
+\[
+  \gamma'(t_0)=d\gamma\left(\left.\frac{d}{dt}\right|_{t_0}\right)
+  \in T_{\gamma(t_0)}M,
+\]
+其中 $d/dt|_{t_0}$ 表示 $T_{t_0}\mathbb{R}$ 的标准坐标基 (对于一维流形而言，我们
+通常记为 $d/dt$ 而不是 $\partial/\partial t$)。此时速度向量作用在
+函数 $f\in C^\infty(M)$ 上为
+\[
+  \gamma'(t_0)f=  d\gamma\left(\left.\frac{d}{dt}\right|_{t_0}\right)f
+  =\left.\frac{d}{dt}\right|_{t_0}(f\circ\gamma)=
+  (f\circ\gamma)'(t_0).
+\]
+
+令 $(U,\varphi)$ 是光滑坐标卡，坐标函数为 $\left(x^i\right)$。如果
+$\gamma(t_0)\in U$，记 $\gamma$ 的坐标表示为 $\gamma(t)=\left(\gamma^1(t),\dots,\gamma^n(t)\right)$。
+那么速度的坐标表示为
+\[
+  \gamma'(t_0)=\frac{d\gamma^i}{dt}(t_0)\left.\frac{\partial}{\partial x^i}\right|_{\gamma(t_0)}.
+\]
+
+下面的命题表明流形上的任意切向量都是某条曲线的速度向量。
+这给出了一种更加几何的方式去理解切丛：切丛仅仅是 $M$ 中所有光滑曲线的
+速度向量的集合。
+
+\begin{proposition}\label{prop:velocity}
+  设 $M$ 是带边或者无边光滑流形，$p\in M$。每个 $v\in T_pM$
+  都是 $M$ 中某个光滑曲线的速度向量。
+\end{proposition}
+\begin{proof}
+  假设 $p\in \Int M$。令 $(U,\varphi)$ 是以 $p$ 为中心的光滑坐标卡，
+  设 $v=v^i\partial/\partial x^i|_p$ 是其在坐标基下的表示。
+  对于充分小的 $\varepsilon>0$，令 $\gamma:(-\varepsilon,\varepsilon)\to U$
+  是曲线，其坐标表示满足
+  \[
+    \gamma(t)=\left(tv^1,\dots,tv^n\right).
+  \]
+  注意此时表示 $\gamma(t)=\varphi^{-1}\left(tv^1,\dots,tv^n\right)$。
+  那么 $\gamma(0)=p$ 并且 $\gamma'(0)=v^i\partial/\partial x^i|_p=v$。
+
+  现在假设 $p\in\partial M$。
+\end{proof}
+
+\begin{proposition}[复合曲线的速度]
+  令 $F:M\to N$ 是光滑映射，$\gamma:J\to M$ 是光滑曲线。对于任意 $t_0\in J$，
+  复合曲线 $F\circ\gamma:J\to N$ 在 $t=t_0$ 处的速度为
+  \[
+    (F\circ\gamma)'(t_0)=dF\!\left(\gamma'(t_0)\right)  .
+  \]
+\end{proposition}
+\begin{proof}
+  根据定义，有
+  \[
+    (F\circ\gamma)'(t_0)=d(F\circ\gamma)\left(
+      \left.\frac{d}{dt}\right|_{t_0}
+    \right)=(dF\circ d\gamma)\left(
+      \left.\frac{d}{dt}\right|_{t_0}
+    \right)=dF\!\left(\gamma'(t_0)\right).\qedhere
+  \]
+\end{proof}
+
+\begin{corollary}[通过速度向量计算微分]
+  设 $F:M\to N$ 是光滑映射，$p\in M$，$v\in T_pM$，那么
+  \[
+    dF_p(v)=(F\circ\gamma)'(0),  
+  \]
+  其中 $\gamma:J\to M$ 是满足 $\gamma(0)=p$ 以及 $\gamma'(0)=v$ 的任意光滑曲线。
+\end{corollary}
+
+\section{Problems}
+
+\begin{problem}{}{}
+  设 $M,N$ 是带边或者无边光滑流形，$F:M\to N$ 是光滑映射，证明对于任意 $p\in M$
+  有 $dF_p:T_pM\to T_{F(p)}N$ 是零映射当且仅当 $F$ 在 $M$ 的每个连通分支上是常值映射。
+\end{problem}
+\begin{proof}
+  若任取 $p\in M$，$dF_p$ 是零映射。取 $p$ 处的一个光滑坐标卡 $(U,\varphi)$ 和
+  $F(p)$ 处的光滑坐标卡 $(V,\psi)$，通过缩小 $U$，我们可以假设 $U$ 被 $p$ 所在的连通分支包含。
+  此时 $dF_p$ 满足
+  \[
+    dF_p\left(\left.\frac{\partial}{\partial x^i}\right|_p\right)=\frac{\partial F^j}{\partial x^i}(\hat p)
+    \left.\frac{\partial}{\partial x^j}\right|_{F(p)}=0,
+  \]
+  所以对于任意的 $i,j$，有 $\partial F^j/\partial x^i(\hat p)=0$。此时任取 $q\in U$，都有
+  $\partial F^j/\partial x^i(\hat q)=0$，所以 $\partial F^j/\partial x^i:\varphi(U)\to\mathbb{R}$
+  恒为零。这表明 $\psi\circ F\circ\varphi^{-1}:\varphi(U)\to \psi(V)$ 是常值函数，
+  所以 $F$ 在 $U$ 上是常值函数。于是 $F$ 在 $p$ 所在的连通分支上是常值函数。
+\end{proof}
+
+\begin{problem}{}{}
+  证明 $T \mathbb{S}^1$ 微分同胚于 $\mathbb{S}^1\times \mathbb{R}$。
+\end{problem}
+\begin{proof}
+  令 $F:T \mathbb{S}^1\to \mathbb{S}^1\times \mathbb{R}$ 为
+  \[
+    F\left(p, v\left.\frac{d}{dt}\right|_p\right)=(p,v),
+  \]
+  那么 $F$ 在标准光滑结构下的坐标表示为
+  \[
+    (x,v)\mapsto (x,v)
+  \]
+  是光滑映射。同理不难验证 $F^{-1}$ 也是光滑映射。
+\end{proof}
+

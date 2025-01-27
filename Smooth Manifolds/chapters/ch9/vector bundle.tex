@@ -1,0 +1,269 @@
+
+
+\chapter{向量丛}
+
+\section{向量丛}
+
+令 $M$ 是拓扑空间，\emph{$M$ 上的秩 $k$ 的(实)向量丛}指的是一个拓扑空间
+$E$ 附带一个连续满射 $\pi:E\to M$，其满足下面的条件：
+\begin{enumerate}
+  \item 对于每个 $p\in M$，$p$ 上的纤维 $E_p=\pi^{-1}(p)$ 有一个
+  $k$-维的实向量空间结构。
+  \item 对于每个 $p\in M$，都存在 $p$ 的邻域 $U$ 和一个同胚
+  $\varPhi:\pi^{-1}(U)\to U\times \mathbb{R}^k$ (这个同胚被称为
+  \emph{$E$ 在 $U$ 上的局部平凡化})，并且 $\varPhi$ 满足：
+  \begin{itemize}[nosep]
+    \item 记 $\pi_U:U\times \mathbb{R}^k\to U$ 是投影，
+    有 $\pi_U\circ\varPhi=\pi$；
+    \item 对于每个 $q\in U$，$\varPhi|_{{E_q}}$ 都是
+    $E_q$ 到 $\{q\}\times \mathbb{R}^k$ 的向量空间同构。
+  \end{itemize}
+\end{enumerate} 
+如果 $M,E$ 都是光滑流形，$\pi$ 是光滑映射并且局部平凡化可以
+选取为微分同胚，那么 $E$ 被称为\emph{光滑向量丛}。在这种情况下，
+我们将局部平凡化成为\emph{光滑局部平凡化}。
+
+空间 $E$ 被称为\emph{丛的全空间}，$M$ 被称为\emph{底空间}，
+$\pi$ 被称为\emph{投影}。
+
+\begin{exercise}
+  设 $E$ 是 $M$ 上的光滑向量丛，证明投影 $\pi:E\to M$
+  是满射的光滑浸没。
+\end{exercise}
+\begin{proof}
+  根据定义 $\pi$ 是满射。任取 $p\in M$，设 $U$ 是 $p$ 的邻域，
+  $\varPhi:\pi^{-1}(U)\to U\times \mathbb{R}^k$ 是光滑局部平凡化，那么
+  $\pi_U\circ\varPhi=\pi$。由于 $\pi_U$ 是光滑浸没，$\varPhi$
+  是微分同胚，所以 $\pi$ 是光滑浸没。
+\end{proof}
+
+如果存在 $E$ 在整个 $M$ 上的局部平凡化(这被称为\emph{$E$ 的全局平凡化})，
+那么 $E$ 被称为\emph{平凡丛}。在这种情况下，$E$ 本身同胚于
+$M\times \mathbb{R}^k$。如果 $E\to M$ 是光滑丛并且有一个光滑
+的全局平凡化，那么我们说 $E$ 是\emph{光滑平凡丛}，此时
+$E$ 微分同胚于 $M\times \mathbb{R}^k$。
+
+\begin{example}[积丛]
+  任意空间 $M$ 上的最简单的秩 $k$ 的向量丛是积空间 $E=M\times \mathbb{R}^k$，
+  投影 $\pi=\pi_1:M\times \mathbb{R}^k\to M$。这样的丛被称为\emph{积丛}，那么恒等映射
+  $\Id_E$ 就是一个全局平凡化，所以积丛是平凡丛。
+\end{example}
+
+\begin{proposition}[切丛作为向量丛]
+  令 $M$ 是一个光滑 $n$-流形，$TM$ 是切丛。那么
+  $TM$ 是 $M$ 上的秩 $n$ 的光滑向量丛。
+\end{proposition}
+\begin{proof}
+  记 $\pi:TM\to M$ 是投影映射。对于每个 $p\in M$，$\pi^{-1}(p)=T_pM$
+  是 $n$ 维向量空间。取 $p$ 处的光滑坐标卡 $(U,(x^i))$，那么
+  $\varPhi:\pi^{-1}(U)\to U\times \mathbb{R}^n$ 可以定义为
+  \[
+    \varPhi\left(v^i\left.\frac{\partial}{\partial x^i}\right|_q\right) 
+    =\left(q,\bigl(v^1,\dots,v^n\bigr)\right),
+  \]
+  那么 $\varPhi$ 的坐标表示为恒等映射，所以是微分同胚。
+  对于每个 $q\in U$，$\varPhi$ 限制在 $T_qM$ 上显然都是
+  向量空间同构。此外容易验证 $\pi_U\circ \varPhi=\pi$。
+\end{proof}
+ 
+\begin{lemma}
+  令 $\pi:E\to M$ 是秩 $k$ 的光滑向量丛，假设 $\varPhi:\pi^{-1}(U)\to U\times \mathbb{R}^k$
+  和 $\varPsi:\pi^{-1}(V)\to V\times \mathbb{R}^k$ 是两个 $E$ 的光滑局部平凡化
+  并且 $U\cap V\neq\emptyset$。那么存在一个光滑映射 $\tau:U\cap V\to \GL(k,\mathbb{R})$
+  使得复合映射 $\varPhi\circ\varPsi^{-1}:(U\cap V)\times \mathbb{R}^k\to (U\cap V)\times \mathbb{R}^k$
+  形如
+  \[
+    \varPhi\circ\varPsi^{-1}(p,v)=\bigl(p,\tau(p)v\bigr)  .
+  \]
+\end{lemma}
+\begin{proof}
+  我们有下面的交换图：
+  \[
+    \begin{tikzcd}[column sep=2.4em]
+      (U\cap V)\times \mathbb{R}^k\arrow[dr,"\pi_1"']
+      &
+      \pi^{-1}(U\cap V)\arrow[l,"\varPsi"']\arrow[r,"\varPhi"]\arrow[d,"\pi"]
+      &
+      (U\cap V)\times \mathbb{R}^k\arrow[dl,"\pi_1"]\\
+      & 
+      U\cap V
+      &
+    \end{tikzcd}  
+  \]
+  其中 $\varPhi,\varPsi$ 都是微分同胚。那么对于任意的
+  $(p,v)\in(U\cap V)\times \mathbb{R}^k$，有
+  \[
+    p=\pi_1(p,v)=\pi\circ\varPsi^{-1}(p,v)=\pi_1\circ(\varPhi\circ\varPsi^{-1})
+    (p,v),  
+  \]
+  这表明
+  \[
+    \varPhi\circ\varPsi^{-1}(p,v)=\bigl(p,\sigma(p,v)\bigr),
+  \]
+  其中 $\sigma:(U\cap V)\times \mathbb{R}^k\to \mathbb{R}^k$ 是光滑映射。
+  对于每个固定的 $p\in U\cap V$，
+  \[ 
+    \varPhi\circ\varPsi^{-1}:\{p\}\times \mathbb{R}^k\xrightarrow{\varPsi^{-1}}
+    E_p\xrightarrow{\varPhi}\{p\}\times \mathbb{R}^k
+  \]
+  是向量空间 $\{p\}\times \mathbb{R}^k$ 上的可逆线性变换，所以
+  $\sigma(p,v)=\tau(p)v$，其中 $\tau(p)\in\GL(k,\mathbb{R})$。
+\end{proof}
+
+上述光滑映射 $\tau:U\cap V\to\GL(k,\mathbb{R})$ 被称为局部平凡化
+$\varPhi$ 和 $\varPsi$ 之间的\emph{转移函数}。
+
+\begin{lemma}[向量丛坐标卡引理]
+  令 $M$ 是光滑流形，假设对于每个 $p\in M$ 我们都赋予一个 $k$ 维实向量空间
+  $E_p$。令 $E=\coprod_{p\in M}E_p$，$\pi:E\to M$ 将 $E_p$ 的每个元素
+  送到点 $p$。如果我们还有下面的资料：
+  \begin{enumerate}
+    \item $M$ 的一个开覆盖 $\{U_\alpha\}_{\alpha\in A}$；
+    \item 对于每个 $\alpha\in A$，有双射 $\varPhi_\alpha:\pi^{-1}(U_\alpha)\to U_\alpha\times \mathbb{R}^k$，
+    并且 $\varPhi$ 限制在每个 $E_p$ 上是向量空间 $E_p$ 到 $\{p\}\times \mathbb{R}^k$ 的同构；
+    \item 对于每个 $\alpha,\beta\in A$ 并且 $U_\alpha\cap U_\beta\neq\emptyset$，存在光滑映射
+    $\tau_{\alpha\beta}:U_\alpha\cap U_\beta\to \GL(k,\mathbb{R})$ 使得映射
+    $\varPhi_\alpha\circ\varPhi_\beta^{-1}:(U_\alpha\cap U_\beta)\times \mathbb{R}^k\to (U_\alpha\cap U_\beta)\times \mathbb{R}^k$
+    形如
+    \[
+      \varPhi_\alpha\circ\varPhi_\beta^{-1}(p,v)=\bigl(p,\tau_{\alpha\beta}(p)v\bigr).  
+    \]
+  \end{enumerate}
+  那么，$E$ 有唯一的拓扑和光滑结构使得其成为 $M$ 上的秩 $k$ 的光滑向量丛，
+  且 $\pi$ 是投影映射，$\{(U_\alpha,\varPhi_\alpha)\}$ 是光滑局部平凡化。
+\end{lemma}
+
+\begin{remark}
+  $E$ 上的拓扑结构为：对于每个 $p\in M$，选取所有满足 $p\in V_p\subseteq U_\alpha$
+  的光滑坐标卡 $(V_p,\varphi_p)$，令 $\tilde\varphi_p=(\varphi_p\times \Id_{\mathbb{R}^k})\circ\varPhi_\alpha$，
+  那么拓扑基 $\{\tilde\varphi_p^{-1}(W)\}$ (其中 $W\subseteq \varphi_p(V_p)\times \mathbb{R}^k$ 是开集)
+  生成 $E$ 上的拓扑。$E$ 的光滑结构为：$\{(\pi^{-1}(V_p),\tilde\varphi_p)\}$
+  构成 $E$ 的一组光滑坐标卡。
+\end{remark} 
+
+
+\begin{example}[向量丛的限制]
+  设 $\pi:E\to M$ 是秩 $k$ 的向量丛，$S\subseteq M$ 是任意子集。定义\emph{$E$ 到 $S$ 的限制}
+  为 $E|_S=\bigcup_{p\in S}E_p$，投影 $E|_S\to S$ 就是 $\pi$ 的限制。
+  如果 $\varPhi:\pi^{-1}(U)\to U\times \mathbb{R}^k$ 是局部平凡化，那么其可以限制为双射
+  $\varPhi|_S:(\pi|_S)^{-1}(U\cap S)\to (U\cap S)\times \mathbb{R}^k$。如果 $E$
+  是光滑向量丛，$S\subseteq M$ 是浸入或者嵌入子流形，容易验证 $E|_S$ 是光滑向量丛。
+\end{example}
+
+\section{向量丛的局部或者全局截面}
+
+令 $\pi:E\to M$ 是向量丛，\emph{$E$ 的(全局)截面}指的是连续映射 $\sigma:M\to E$ 使得
+$\pi\circ\sigma=\Id_M$。这意味着对于每个 $p\in M$，$\sigma(p)$ 是纤维 $E_p$ 的元素。
+
+\emph{$E$ 的局部截面}指的是一个连续映射 $\sigma:U\to E$，其中 $U\subseteq M$ 是开集，
+使得 $\pi\circ\sigma=\Id_U$。
+
+\emph{$E$ 的零截面}指的是一个全局截面 $\zeta:M\to E$，其定义为
+\[
+  \zeta(p)=0\in E_p\quad \forall p\in M.
+\]
+与向量场的情况一样，截面 $\sigma$ 的\emph{支集}定义为集合 $\{p\in M\,|\, \sigma(p)\neq 0\}$ 的闭包。
+
+\begin{example}[向量丛的截面]
+  设 $M$ 是光滑流形。
+  \begin{enumerate}
+    \item $TM$ 的截面就是 $M$ 上的向量场。
+    \item 如果 $E=M\times \mathbb{R}^k$ 是积丛，那么在 $E$ 的截面和
+    $M\to \mathbb{R}^k$ 的连续映射之间有一个自然的一一对应。一个连续映射 $F:M\to \mathbb{R}^k$
+    决定了截面 $\tilde F:M\to E$ 为 $\tilde F(p)=(p,F(p))$，反之依然。如果 $M$
+    是光滑流形，那么截面 $\tilde F$ 光滑当且仅当 $F$ 光滑。
+  \end{enumerate}
+\end{example}
+
+如果 $\pi:E\to M$ 是光滑向量丛，那么 $E$ 的所有全局截面在逐点加法和数乘下成为一个向量空间，记为
+$\Gamma(E)$。与向量场类似，光滑向量丛的截面可以左乘一个光滑实值函数：
+如果 $f\in C^\infty(M),\sigma\in\Gamma(E)$，我们可以定义 $f\sigma$ 为
+\[
+  (f\sigma)(p)=f(p)\sigma(p).
+\] 
+
+\begin{lemma}[向量丛的延拓引理]
+  令 $\pi:E\to M$ 是光滑流形 $M$ 上的向量丛，$A$ 是 $M$ 的闭子集，$\sigma:A\to E$
+  是 $E|_A$ 的截面，如果对于每个 $p\in A$，都存在 $p$ 的邻域 $V$ 和
+  $V$ 上的光滑截面与 $\sigma$ 在 $V\cap A$ 上重合，那么对于包含 $A$ 的任意开子集
+  $U\subseteq M$，都存在光滑全局截面 $\tilde\sigma\in \Gamma(E)$ 使得
+  $\tilde{\sigma}|_A=\sigma$ 以及 $\supp\tilde{\sigma}\subseteq U$。
+\end{lemma}
+
+
+\section{丛同态}
+
+如果 $\pi:E\to M$ 和 $\pi':E'\to M'$ 是向量丛，连续映射 $F:E\to E'$
+被称为\emph{丛同态}，如果存在映射 $f:M\to M'$ 使得
+$\pi'\circ F=f\circ\pi$，即
+\[
+  \begin{tikzcd}
+    E\arrow[r,"F"]\arrow[d,"\pi"'] & E'\arrow[d,"\pi'"]\\
+    M\arrow[r,"f"'] & M' 
+  \end{tikzcd}  
+\]
+此外，对于每个 $p\in M$，限制映射 $F|_{E_p}:E_p\to E'_{f(p)}$
+是线性映射。此时我们还称 \emph{$F$ 覆盖 $f$}。
+
+\begin{proposition}
+  设 $\pi:E\to M$ 和 $\pi':E'\to M'$ 是向量丛，$F:E\to E'$
+  是覆盖 $f:M\to M'$ 的丛同态，那么 $f$ 是连续映射并且由 $F$
+  唯一确定。如果丛和 $F$ 都是光滑的，那么 $f$ 也是光滑的。
+\end{proposition}
+\begin{proof}
+  记 $\zeta:M\to E$ 是零截面，那么 $f=\pi'\circ F\circ\zeta$。
+\end{proof}
+
+如果一个双射的丛同态 $F:E\to E'$ 的逆也是丛同态，那么 $F$ 被称为\emph{丛同构}。
+如果 $F$ 还是微分同胚，那么被称为\emph{光滑丛同构}。
+
+当 $E$ 和 $E'$ 都是同一个底空间 $M$ 上的向量丛的时候，稍微严格一些的丛同态概念更加有用。
+\emph{$M$ 上的丛同态}指的是一个覆盖 $\Id_M$ 的丛同态，换句话说，即一个连续映射
+$F:E\to E'$ 满足 $\pi'\circ F=\pi$，
+\[
+  \begin{tikzcd}
+    E\arrow[rr,"F"]\arrow[dr,"\pi"'] & & E'\arrow[dl,"\pi'"]\\
+    & M & 
+  \end{tikzcd}  
+\]
+并且 $F$ 在每个纤维上的限制是线性映射。如果存在一个 $M$ 上的丛同态
+$F:E\to E'$ 同时是（光滑）丛同构，那么我们说 $E$ 和 $E'$ 
+\emph{在 $M$ 上是（光滑）同构的}。
+
+\begin{proposition}
+  设 $E,E'$ 是光滑流形 $M$ 上的光滑向量丛，$F:E\to E'$ 是
+  $M$ 上的双射光滑丛同态，那么 $F$ 是光滑丛同构。
+\end{proposition}
+\begin{proof}
+  $F$ 是双射表明任取 $p\in M$，$F|_{E_p}:E_p\to E_{F(p)}'$ 是双射的线性映射，
+  所以 $F|_{E_p}$ 是同构，所以 $F^{-1}|_{E_{F(p)}'}$ 是同构，故
+  $F^{-1}$ 是双射的丛同态，所以 $F$ 是丛同构。
+  任取 $p\in M$，设 $\varPhi$ 是 $E$ 在 $U$ 上的局部平凡化，
+  $\varPhi'$ 是 $E'$ 在 $U'$ 上的局部平凡化，那么 
+  $F$ 在 $U\cap U'$ 中的坐标表示为
+  \[
+    (x,v)\mapsto (p,\varPhi^{-1}(v))\mapsto \bigl(p,F\circ\varPhi^{-1}(v)\bigr)  
+    \mapsto \bigl(x,\varPhi'\circ F\circ\varPhi^{-1}(v)\bigr),
+  \]
+  注意到 $\varPhi'\circ F\circ\varPhi^{-1}:\mathbb{R}^m\to \mathbb{R}^{n}$
+  是双射的线性映射，所以 $F$ 是微分同胚。
+\end{proof}
+
+\begin{example}[丛同态]
+  \mbox{}
+  \begin{enumerate}
+    \item 如果 $F:M\to N$ 是光滑映射，那么全局微分 $\d F:TM\to TN$
+    是覆盖 $F$ 的光滑丛同态。
+    \item 如果 $E\to M$ 是光滑向量丛，$S\subseteq M$ 是浸入子流形，那么
+    包含映射 $E|_S\hookrightarrow E$ 是覆盖包含映射 $S\hookrightarrow M$
+    的光滑丛同态。
+  \end{enumerate}
+\end{example}
+
+
+
+
+
+\section{子丛}
+
+

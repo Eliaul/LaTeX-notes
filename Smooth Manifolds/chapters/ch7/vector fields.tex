@@ -1,0 +1,729 @@
+
+\chapter{向量场}
+
+\section{流形上的向量场}
+
+设 $M$ 是带边或者无边光滑流形，$M$ 上的\emph{向量场}指的是映射 $\pi:TM\to M$
+的一个截面。确切地说，一个向量场是连续映射 $X:M\to TM$，通常记为 $p\mapsto X_p$，
+其满足
+\[
+  \pi\circ X=\Id_M.
+\]
+等价地说，对于每个 $p\in M$，有 $X_p\in T_pM$。
+
+我们主要对光滑向量场感兴趣，即其作为 $M\to TM$ 的映射是光滑的，其中 $TM$
+赋予 \autoref{prop:smooth structure of tangent bundle} 定义的光滑结构。
+如果 $X$ 是 $M$ 上的向量场，$X$ 的支集被定义为集合 $\{p\in M\,|\, X_p\neq 0\}$
+的闭包。如果 $X$ 的支集是紧集，那么我们说 $X$ 是\emph{紧支的}。
+
+设 $M$ 是光滑 $n$-流形，如果 $X:M\to TM$ 是 $M$ 上的向量场，$(U,(x^i))$
+是 $M$ 的一个光滑坐标卡，那么对于点 $p\in U$，我们可以将 $X_p$
+表示为基向量的线性组合：
+\begin{equation}\label{eq:value of vector field}
+  X_p=X^i(p)\left.\frac{\partial}{\partial x^i}\right|_p.
+\end{equation}
+其中我们定义函数 $X^i:U\to \mathbb{R}$，被称为 $X$ 在给定坐标卡下的\emph{分量}。
+
+\begin{proposition}[向量场的光滑性判别]
+  令 $M$ 是带边或者无边光滑流形，$X:M\to TM$ 是向量场，如果 $(U,(x^i))$
+  是 $M$ 的一个光滑坐标卡，那么 $X|_U$ 是光滑的当且仅当其在这个坐标卡下
+  的每个分量函数是光滑的。
+\end{proposition}
+\begin{proof}
+  若 $X|_U$ 是光滑映射，那么任取 $p\in U$，$X|_U:U\to TM$ 的坐标表示为
+  \[
+    \left(x^1,\dots,x^n\right)\mapsto \left(x^1,\dots,x^n,X^1(x),\dots,X^n(x)\right),
+  \]
+  所以 $X|_U$ 光滑等价于 $X^i$ 都是光滑函数。
+\end{proof}
+
+\begin{example}[坐标向量场]
+  如果 $(U,(x^i))$ 是 $M$ 的一个光滑坐标卡，那么
+  \[
+    p\mapsto \left.\frac{\partial}{\partial x^i}\right|_p
+  \]
+  是 $U$ 上的一个向量场，被称为第 $i$ 个\emph{坐标向量场}，记为 $\partial/\partial x^i$。
+  由于其分量是常数，所以这当然是一个光滑向量场。
+\end{example}
+
+如果 $U\subseteq M$ 是开集，那么我们知道 $T_pU$ 同构于 $T_pM$，这允许我们将
+$TU$ 视为开子集 $\pi^{-1}(U)\subseteq TM$。因此，一个 $U$ 上的向量场可以被视为
+$U\to TU$ 的映射也可以被视为 $U\to TM$ 的映射。如果 $X$ 是 $M$ 上的光滑向量场，
+那么限制 $X|_U$ 是 $U$ 上的光滑向量场。
+
+下面的引理是 \autoref{lemma:extension for smooth map} 的推广，其证明也是完全类似的。
+如果 $M$ 是带边或者无边光滑流形，$A\subseteq M$ 是任意子集，一个\emph{沿 $A$ 的向量场}
+指的是连续映射 $X:A\to TM$ 满足 $\pi\circ X=\Id_A$。如果对于每个 $p\in A$，
+都存在 $M$ 中的邻域 $V$ 和 $V$ 上的光滑向量场 $\tilde X$，使得 $\tilde X$
+在 $V\cap A$ 上和 $X$ 重合，那么我们说 $X$ 是\emph{沿 $A$ 的光滑向量场}。
+
+\begin{lemma}[向量场的延拓引理]
+  $M$ 是带边或者无边光滑流形，$A\subseteq M$ 是闭子集。假设 $X$ 是沿 $A$ 的向量场。给定
+  包含 $A$ 的开集 $U$，存在 $M$ 上的全局光滑向量场 $\tilde X$ 使得 $\tilde X|_A=X$
+  以及 $\supp \tilde X\subseteq U$。
+\end{lemma}
+
+作为一个重要的特例，这表明一个点上的任意切向量都可以延拓为整个光滑流形上的光滑向量场。
+
+\begin{proposition}
+  $M$ 是带边或者无边光滑流形，给定 $p\in M$ 和 $v\in T_pM$，存在 $M$ 上的光滑向量场 $X$
+  使得 $X_p=v$。
+\end{proposition}
+\begin{proof}
+  我们只需要说明向量场 $p\mapsto v$ 是光滑的。任取 $p$ 处的光滑坐标卡 $(U,\varphi)$，
+  令 $U$ 上的向量场为常系数的向量场，此时便可以使用延拓引理。
+\end{proof}
+ 
+$M$ 是带边或者无边光滑流形，使用记号 $\mathfrak{X}(M)$ 来表示 $M$ 上的光滑向量场全体。
+定义逐点的加法和数乘为：
+\[
+  (aX+bY)_p=aX_p+bY_p,
+\]
+这使得 $\mathfrak X(M)$ 成为一个向量空间。此外，光滑向量场还可以与光滑实值函数做乘法：
+如果 $f\in C^\infty(M)$，我们定义 $fX:M\to TM$ 为
+\[
+  (fX)_p=f(p)X_p.
+\]
+下面的命题表明这些操作生成的确实都是光滑向量场。
+
+\begin{proposition}
+  $M$ 是带边或者无边光滑流形。
+  \begin{enumerate}
+    \item 如果 $X$ 和 $Y$ 是 $M$ 上的光滑向量场，$f,g\in C^\infty(M)$，那么
+    $fX+gY$ 是光滑向量场。
+    \item $\mathfrak X(M)$ 是光滑函数环 $C^\infty(M)$ 上的模。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) $fX:X\to TM$ 在给定坐标卡下的分量函数 $(fX)^i:M\to \mathbb{R}$ 为：
+  \[
+    (fX)^i(p)=f(p)X^i(p),
+  \]
+  也就是说 $(fX)^i=fX^i$ 是光滑函数，所以 $fX$ 是光滑向量场。
+\end{proof}
+
+利用这种记号，向量场 $X$ 的基表达式 \eqref{eq:value of vector field} 也可以写为
+向量场之间的等式而不是切向量的等式：
+\[
+  X=X^i\frac{\partial }{\partial x^i}.
+\]
+其中 $\partial/\partial x^i$ 是坐标向量场。
+
+\subsection{局部和全局标架}
+
+光滑坐标卡给出的坐标向量场提供了一种表示向量场的简洁方式，因为它们的值构成了切空间
+的一组基。然而，这并不是唯一的选择。
+
+假设 $M$ 是光滑 $n$-流形，定义在子集 $A\subseteq M$ 上的 $k$ 个向量场 $(X_1,\dots,X_k)$
+被称为\emph{线性无关的}，如果对于每个 $p\in A$，$\left(X_1|_p,\dots,X_k|_p\right)$
+在 $T_pM$ 中是线性无关的。如果对于每个 $p\in A$，切向量组 $\left(X_1|_p,\dots,X_k|_p\right)$
+都张成 $T_pM$，那么我们说它们\emph{张成切丛}。如果开子集 $U\subseteq M$ 上的
+$n$ 个向量场 $(E_1,\dots,E_n)$ 是线性无关的且张成切丛，那么我们说它们是
+关于 $M$ 的\emph{局部标架}。此时对于每个 $p\in U$，切向量 $\left(E_1|_p,\dots,E_n|_p\right)$
+都构成 $T_pM$ 的一组基。如果 $U=M$，那么它们被称为\emph{全局标架}。如果
+$E_i$ 都是光滑向量场，那么被称为\emph{光滑标架}。我们使用缩写 $(E_i)$ 来表示
+标架 $(E_1,\dots,E_n)$。如果 $M$ 是 $n$ 维的，那么检验 $n$ 元组
+$(E_1,\dots,E_n)$ 是局部标架只需要说明线性无关或者张成切丛中的一个即可。
+
+\begin{example}[局部和全局标架]\mbox{}
+  \begin{enumerate}
+    \item 标准坐标向量场构成了 $\mathbb{R}^n$ 的一个光滑全局标架。
+    \item 如果 $(U,(x^i))$ 是光滑流形 $M$ 的光滑坐标卡，那么坐标向量场
+    $\left(\partial/\partial x^i\right)$ 构成了一个光滑局部标架，被称为\emph{坐标标架}。
+  \end{enumerate}
+\end{example}
+
+\subsection{向量场作为 $C^\infty(M)$ 的导子}
+
+向量场的一个基本性质是它们在光滑实值函数空间上定义算子。
+如果 $X\in \mathfrak X(M)$ 以及 $f$ 是定义在开子集 $U\subseteq M$ 上的光滑实值函数，
+那么我们可以定义一个新的函数 $Xf:U\to \mathbb{R}$：
+\[
+  (Xf)(p)=X_pf.
+\]
+（注意区分 $fX$ 和 $Xf$ 的区别。）由于切向量对函数的作用只与函数在该点的任意小的邻域中的行为有关，所以
+$Xf$ 也是由局部确定的。特别地，对于任意开子集 $V\subseteq U$，有
+\[
+  (Xf)|_V=X(f|_V).
+\]
+
+\begin{proposition}
+  $M$ 是带边或者无边光滑流形，$X:M\to TM$ 是向量场，那么下面的说法等价：
+  \begin{enumerate}
+    \item $X$ 是光滑向量场。
+    \item 对于每个 $f\in C^\infty(M)$，函数 $Xf$ 都是光滑函数。
+    \item 对于每个开集 $U\subseteq M$ 和 $f\in C^\infty(U)$，函数 $Xf$ 在 $U$ 上是光滑的。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 任取 $p\in M$ 以及 $p$ 处的光滑坐标卡 $(U,(x^i))$，那么 
+  $Xf:M\to \mathbb{R}$ 的坐标表示为
+  \[
+    \left(x^1,\dots,x^n \right)\mapsto 
+    X_x f=\left(X^i(x)\left.\frac{\partial}{\partial x^i}\right|_x\right)f=
+    X^i(x)\frac{\partial f}{\partial x^i}(x),
+  \]
+  $X$ 光滑表明分量函数 $X^i$ 光滑，所以 $Xf$ 是光滑函数。
+
+  $(2)\Rightarrow (3)$ 对于 $f\in C^\infty(U)$，任取 $p\in U$，令 $\psi$
+  为关于 $p$ 的某个邻域的支在 $U$ 中的光滑鼓包函数，定义 $\tilde f=\psi f$。
+  那么 $\tilde f\in C^\infty(M)$，根据假设 $X\tilde f$ 是光滑函数，
+  并且 $X\tilde f$ 在 $p$ 的某个邻域上等于 $Xf$，这表明 $Xf$ 在 $p$ 的某个邻域上
+  是光滑的，所以在 $U$ 上是光滑的。
+
+  $(3)\Rightarrow (1)$ 设 $(U,(x^i))$ 是任意光滑坐标卡，那么
+  \[
+    Xx^i=\left(X^j\frac{\partial }{\partial x^j}\right)x^i
+    =X^j\frac{\partial x^i}{\partial x^j}=X^i,
+  \]
+  根据假设，$Xx^i$ 是光滑的，所以 $X^i$ 是光滑的，这就表明 $X$ 的每个分量函数是光滑的，
+  即 $X$ 是光滑向量场。
+\end{proof}
+
+上述命题的结果是一个光滑向量场 $X\in \mathfrak X(M)$ 定义了 $C^\infty(M)$
+上的映射为 $f\mapsto Xf$，这显然是一个线性映射。此外，切向量的乘积法则导出了向量场的乘积法则：
+\begin{equation}\label{eq:product rule of vector field}
+  X(fg)=fXg+gXf.
+\end{equation}
+我们只需要逐点验证两端相等即可。一般来说，满足 $\mathbb{R}$-线性和
+乘积法则 \eqref{eq:product rule of vector field} 式的映射 $X:C^\infty(M)\to C^\infty(M)$
+被称为\emph{导子}。与切空间类似，下面的命题表明 $C^\infty(M)$ 的导子可以等同于光滑向量场。
+
+\begin{proposition}\label{prop:derivation and vector field}
+  $M$ 是带边或者无边光滑流形，映射 $D:C^\infty(M)\to C^\infty(M)$ 是导子当且仅当
+  其形如 $Df=Xf$，其中 $X\in \mathfrak X(M)$。
+\end{proposition}
+\begin{proof}
+  我们已经说明了向量场都是导子。反过来，假设 $D$ 是导子，我们要说明存在 $X\in \mathfrak X(M)$
+  使得 $Df=Xf$。任取 $p\in M$，那么这样的向量场 $X$ 必须满足
+  \[
+    X_pf=(Df)(p),
+  \]
+  容易验证这样的 $X_p$ 确实是 $p$ 处的切向量。又因为任取 $f\in C^\infty(M)$，$Xf=Df$
+  都是光滑的，所以 $X$ 确实是光滑向量场。
+\end{proof}
+
+出于这个结果，我们将 $M$ 上的光滑向量场和 $C^\infty(M)$ 的导子视为同一个对象，
+使用同一个字母。
+
+\section{向量场和光滑映射}
+
+如果 $F:M\to N$ 是光滑映射，$X$ 是 $M$ 上的向量场，那么对于每个 $p\in M$，我们得到
+一个切向量 $dF_p(X_p)\in T_{F(p)}N$，但是这并不能定义 $N$ 上的向量场。
+例如，若 $F$ 不是满射，那么对于点 $q\in N \smallsetminus F(M)$，我们无法分配切向量。
+若 $F$ 不是单射，那么 $N$ 中同一个点可能有多种不同的切向量定义方式。
+所以我们研究下面的定义。
+
+如果 $F:M\to N$ 是光滑映射，$X$ 是 $M$ 上的向量场，$Y$ 是 $N$ 上的向量场。
+对于每个 $p\in M$，如果有 $dF_p(X_p)=Y_{F(p)}$，那么我们说 $X$ 和 $Y$
+是\emph{$F$-相关的}。下面的命题说明了 $F$-相关的向量场如何作用在光滑函数上。
+
+\begin{proposition}
+  设 $F:M\to N$ 是光滑映射，$X\in \mathfrak X(M)$ 和 $Y\in \mathfrak X(N)$。
+  那么 $X$ 和 $Y$ 是 $F$-相关的当且仅当对于每个定义在 $N$ 的某个开子集上的光滑
+  实值函数 $f$，有
+  \[
+    X(f\circ F)=(Yf)\circ F.
+  \]
+\end{proposition}
+\begin{proof}
+  设 $f:U\to \mathbb{R}$ 是光滑函数，任取 $p\in U$，那么
+  \[
+    X(f\circ F)(p)=X_p(f\circ F)=dF_p(X_p)f,
+  \]
+  另一方面，有
+  \[
+    (Yf)\circ F(p)=Yf(F(p))=Y_{F(p)}f,
+  \]
+  所以 $X(f\circ F)=(Yf)\circ F$ 对于任意的 $f$ 成立当且仅当
+  $dF_p(X_p)=Y_{F(p)}$，即 $X$ 和 $Y$ 是 $F$-相关的。
+\end{proof}
+
+需要注意的是对于一个光滑映射 $F:M\to N$ 和向量场 $X\in \mathfrak X(M)$，
+可能出现 $N$ 上的任意向量场都不与 $X$ 是 $F$-相关的情况。然而， 
+当微分同胚的时候，这样的向量场总是存在的。
+
+\begin{proposition}
+  设 $M,N$ 是带边或者无边光滑流形，$F:M\to N$ 是微分同胚。对于每个 $X\in \mathfrak X(M)$，
+  都存在唯一的 $F$-相关于 $X$ 的 $N$ 上的光滑向量场。
+\end{proposition}
+\begin{proof}
+  设向量场 $Y\in \mathfrak X(N)$ $F$-相关于 $X$，那么其必须满足 $dF_p(X_p)=Y_{F(p)}$。
+  于是我们定义 $Y:N\to TN$ 为
+  \[
+    Y_q=dF_{F^{-1}(q)}\left(X_{F^{-1}(q)}\right).
+  \]
+  根据定义 $X$ 和 $Y$ 是 $F$-相关的。任取 $f\in C^\infty(N)$，那么
+  \[
+    Y_qf=dF_{F^{-1}(q)}\left(X_{F^{-1}(q)}\right)f=
+    X_{F^{-1}(q)}(f\circ F)=\bigl(X(f\circ F)\bigr)(F^{-1}(q)),
+  \]
+  所以 $Yf=\bigl(X(f\circ F)\bigr)\circ F^{-1}$ 是光滑映射，
+  这表明 $Y$ 是光滑向量场。
+\end{proof}
+
+在上述命题的情况下，我们将这个唯一的 $F$-相关于 $X$ 的向量场记为 $F_*X$，
+称为\emph{$X$ 通过 $F$ 的推前}。需要注意只有 $F$ 是微分同胚的时候 $F_*X$
+才有定义。上面的证明告诉我们，$F_*X$ 的定义为：
+\begin{equation}
+  (F_*X)_q=dF_{F^{-1}(q)}\left(X_{F^{-1}(q)}\right).
+\end{equation}
+
+\begin{example}[向量场推前的计算]
+  令 $M,N$ 是 $\mathbb{R}^2$ 的开子流形：
+  \begin{align*}
+    M&=\{(x,y)\,|\, y>0,x+y>0\},\\
+    N&=\{(u,v)\,|\, u>0,v>0\},
+  \end{align*}
+  定义 $F:M\to N$ 为 $F(x,y)=(x+y,x/y+1)$。那么 $F$ 是微分同胚，
+  因为其有光滑逆映射 $F^{-1}(u,v)=(u-u/v,u/v)$。定义 $M$
+  上的光滑向量场为：
+  \[
+    X_{(x,y)}=y^2\left.\frac{\partial}{\partial x}\right|_{(x,y)}  ,
+  \]
+  我们计算推前 $F_*X$。$F$ 在 $(x,y)$ 处的 Jacobi 矩阵为
+  \[
+    DF(x,y)=\begin{pmatrix}
+      1 & 1 \\ 
+      1/y & -x/y^2
+    \end{pmatrix} ,
+  \]
+  所以
+  \[
+    dF_{(x,y)}(a,b)=\left(a+b,a/y-bx/y^2\right),  
+  \]
+  所以
+  \[
+    dF_{F^{-1}(u,v)}\left(X_{F^{-1}(u,v)}\right)=  
+    dF_{F^{-1}(u,v)}(u^2/v^2,0)=
+    \left(u^2/v^2,u/v\right),
+  \]
+  所以
+  \[
+    (F_*X)_{(u,v)}=\frac{u^2}{v^2}\left.\frac{\partial}{\partial u}\right|_{(u,v )}  
+    +\frac{u}{v}\left.\frac{\partial}{\partial v}\right|_{(u,v)} .
+  \]
+\end{example}
+
+\section{李括号}
+
+令 $X,Y$ 是光滑流形 $M$ 上的两个光滑向量场。给定光滑函数 $f:M\to \mathbb{R}$，
+我们可以将 $X$ 作用在 $f$ 上得到另一个光滑函数 $Xf$。进一步的，我们可以
+将向量场 $Y$ 作用在这个函数上得到光滑函数 $YXf=Y(Xf)$。然而，算子 $f\mapsto YXf$
+并不满足乘积法则，所以这样得到的 $YX$ 并不是 $C^\infty(M)$ 的导子。
+
+我们可以以相反的顺序进行上述操作，得到函数 $XYf$，将这两个算子相减，
+我们得到算子 $[X,Y]:C^\infty(M)\to C^\infty(M)$，被称为
+\emph{$X$ 和 $Y$ 的李括号}，定义为
+\[
+  [X,Y]f=XYf-YXf.  
+\]
+一个关键的事实是这个算子是一个向量场。
+
+\begin{lemma}
+  两个光滑向量场的李括号是一个光滑向量场。
+\end{lemma}
+\begin{proof}
+  \allowdisplaybreaks
+  根据 \autoref{prop:derivation and vector field}，我们只需要说明
+  $[X,Y]$ 是一个导子。任取 $f,g\in C^\infty(M)$，有
+  \begin{align*}
+    [X,Y](fg)&=X\bigl(Y(fg)\bigr)-Y\bigl(X(fg)\bigr)\\
+    &=X\bigl(fYg+gYf\bigr)-Y\bigl(fXg+gXf\bigr)\\
+    &=X(fYg)+X(gYf)-Y(fXg)-Y(gXf)\\
+    &=fXYg+(Yg)(Xf)+gXYf+(Yf)(Xg)\\
+    &\mathrel{-}fYXg-(Xg)(Yf)-gYXf-(Xf)(Yg)\\
+    &=fXYg+gXYf-fYXg-gYXf\\
+    &=f[X,Y]g+g[X,Y]f.\qedhere
+  \end{align*}
+\end{proof}
+
+向量场 $[X,Y]$ 在点 $p\in M$ 处的值是 $p$ 处的导子，其满足
+\[
+  [X,Y]_pf=X_p(Yf)-Y_p(Xf).  
+\]
+然而，这个公式对于计算的用处有限，因为其需要计算涉及 $f$ 的二阶导数
+的项，这些项里面总会相互抵消一部分，下一个命题给出了更有用的坐标公式。
+
+\begin{proposition}[李括号的坐标公式]\label{prop:coordinate formula for lie bracket}
+  令 $X,Y$ 是光滑流形 $M$ 上的光滑向量场，设 $X=X^i\partial/\partial x^i$
+  和 $Y=Y^j\partial /\partial x^j$ 是 $X,Y$ 在同一组光滑坐标卡
+  $(x^i)$ 下的分量表示。那么 $[X,Y]$ 可以表示为
+  \[
+    [X,Y]=\left(X^i\frac{\partial Y^j}{\partial x^i}-Y^i\frac{\partial X^j}{\partial x^i}\right)
+    \frac{\partial}{\partial x^j},  
+  \]
+  或者更简洁地写为
+  \[
+    [X,Y]=\left(XY^j-YX^j\right)  \frac{\partial}{\partial x^j}.
+  \]
+\end{proposition}
+\begin{proof}
+  由于 $([X,Y]f)|_U=[X,Y](f|_U)$，所以我们只需要在某个坐标卡中
+  计算即可。我们有
+  \begin{align*}
+    [X,Y]f&=X^i\frac{\partial (Yf)}{\partial x^i}-Y^j\frac{\partial (Xf)}{\partial x^j}\\
+    &=X^i\frac{\partial}{\partial x^i}\left(Y^j\frac{\partial f}{\partial x^j}\right)
+    -Y^j\frac{\partial}{\partial x^j}\left(X^i\frac{\partial f}{\partial x^i}\right)\\
+    &=X^iY^j\frac{\partial^2f}{\partial x^i\partial x^j}
+    +X^i\frac{\partial f}{\partial x^j}\frac{\partial Y^j}{\partial x^i}
+    -Y^jX^i\frac{\partial^2 f}{\partial x^j\partial x^i}
+    -Y^j\frac{\partial f}{\partial x^i}\frac{\partial X^i}{\partial x^j}\\
+    &=X^i\frac{\partial Y^j}{\partial x^i}\frac{\partial f}{\partial x^j}-
+    Y^j\frac{\partial X^i}{\partial x^j}\frac{\partial f}{\partial x^i},
+  \end{align*}
+  最后一步使用了光滑函数的高阶偏导数与次序无关。
+\end{proof}
+
+\autoref{prop:coordinate formula for lie bracket} 的一个直接应用是
+对于坐标向量场而言，任取 $i,j$，都有
+\[
+  \left[\frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j}\right]  
+  =0,
+\]
+这是因为其坐标函数都是常值函数。
+
+\begin{example}
+  定义光滑向量场 $X,Y\in \mathfrak{X}(\mathbb{R}^3)$ 为
+  \[
+    X=x\frac{\partial}{\partial x}+\frac{\partial}{\partial y}
+    +x(y+1)\frac{\partial }{\partial z},
+    \quad 
+    Y=\frac{\partial}{\partial x}+y\frac{\partial }{\partial z}.   
+  \]
+  那么它们的李括号为
+  \begin{align*}
+    [X,Y]&= \left(XY^1-YX^1\right)\frac{\partial}{\partial x}
+    +\left(XY^2-YX^2\right)\frac{\partial}{\partial y}
+    +\left(XY^3-YX^3\right)\frac{\partial}{\partial z}\\
+    &=-\frac{\partial}{\partial x}-y\frac{\partial}{\partial z}.
+  \end{align*}
+\end{example}
+
+\begin{proposition}[李括号的性质]
+  对于任意 $X,Y,Z\in \mathfrak{X}(M)$，李括号满足：
+  \begin{enumerate}
+    \item 双线性性：对于 $a,b\in \mathbb{R}$，有
+    \begin{align*}
+      [aX+bY,Z]&=a[X,Z]+b[Y,Z],\\
+      [Z,aX+bY]&=a[Z,X]+b[Z,Y].
+    \end{align*}
+    \item 反对称性：
+    \begin{align*}
+      [X,Y]=-[Y,X].
+    \end{align*}
+    \item Jacobi 恒等式：
+    \begin{align*}
+      [X,[Y,Z]]+[Y,[Z,X]]+[Z,[X,Y]]=0.
+    \end{align*}
+    \item 对于 $f,g\in C^\infty(M)$，有
+    \begin{align*}
+      [fX,gY]=fg[X,Y]+(fXg)Y-(gYf)X.
+    \end{align*}
+  \end{enumerate}
+\end{proposition}
+
+
+\begin{proposition}[李括号的自然属性]
+  令 $F:M\to N$ 是光滑映射，向量场 $X_1,X_2\in \mathfrak{X}(M)$
+  和 $Y_1,Y_2\in \mathfrak{X}(N)$，其中 $X_i,Y_i$ 是 $F$-相关的。
+  那么 $[X_1,X_2]$ 和 $[Y_1,Y_2]$ 是 $F$-相关的。
+\end{proposition}
+\begin{proof}
+  $X_i,Y_i$ 是 $F$-相关的表明对于任意的 $f\in C^\infty(N)$ 有
+  \[
+    X_i(f\circ F)=Y_if\circ F,  
+  \] 
+  所以
+  \begin{align*}
+    [X_1,X_2](f\circ F)&=X_1X_2(f\circ F)-X_2X_1(f\circ F)\\
+    &=X_1(Y_2f\circ F)-X_2(Y_1f\circ F)\\
+    &=(Y_1Y_2f)\circ F-(Y_2Y_1f)\circ F \\
+    &=\bigl([Y_1,Y_2]f\bigr)\circ F,
+  \end{align*}
+  这就表明 $[X_1,X_2]$ 和 $[Y_1,Y_2]$ 是 $F$-相关的。
+\end{proof}
+
+\begin{corollary}[李括号的推前]
+  设 $F:M\to N$ 是微分同胚，$X_1,X_2\in \mathfrak{X}(M)$，那么
+  $F_*[X_1,X_2]=[F_*X_1,F_*X_2]$。
+\end{corollary}
+\begin{proof}
+  由于 $X_i$ 和 $F_*X_i$ 是 $F$-相关的，所以
+  $[X_1,X_2]$ 和 $[F_*X_1,F_*X_2]$ 是 $F$-相关的，根据
+  唯一性，就有 $[F_*X_1,F_*X_2]=F_*[X_1,X_2]$。
+\end{proof}
+
+\section{李群的李代数}
+
+假设 $G$ 是李群，$G$ 上的向量场 $X$ 如果在任意左平移下保持不变，那么我们说
+$X$ 是\emph{左不变}的。确切地说，对于任意 $g\in G$，$X$ 与自身是
+$L_g$-相关的，即
+\[
+  \forall g,g'\in G,\quad X_{gg'}=d(L_g)_{g'}(X_{g'}).  
+\]
+由于 $L_g$ 是微分同胚，所以可以表述为任取 $g\in G$ 都有
+$(L_g)_*X=X$。
+
+由于 $(L_g)_*(aX+bY)=a(L_g)_*X+b(L_g)_*Y$，所以 $G$ 上所有左不变的光滑向量场
+构成 $\mathfrak{X}(G)$ 的一个子空间。更重要的是，这个子空间对于李括号是封闭的。
+
+\begin{proposition}
+  $G$ 是李群，设 $X,Y$ 是 $G$ 上的光滑左不变向量场，那么 $[X,Y]$
+  也是左不变的。
+\end{proposition}
+\begin{proof}
+  任取 $g\in G$，由于 $(L_g)_*X=X$ 以及 $(L_g)_*Y=Y$，所以 
+  \[
+    (L_g)_*[X,Y]=[(L_g)_*X,(L_g)_*Y]=[X,Y].\qedhere
+  \]
+\end{proof}
+
+($\mathbb{R}$ 上的)\emph{李代数}指的是一个实向量空间 $\mathfrak{g}$，
+其配备一个 $\mathfrak{g}\times \mathfrak{g}\to \mathfrak{g}$ 的\emph{李括号}，
+通常记为 $(X,Y)\mapsto [X,Y]$，其对于任意 $X,Y,Z\in \mathfrak{g}$，满足
+下面的性质：
+\begin{enumerate}
+  \item 双线性性：对于 $a,b\in \mathbb{R}$，有
+  \begin{align*}
+    [aX+bY,Z]&=a[X,Z]+b[Y,Z],\\
+    [Z,aX+bY]&=a[Z,X]+b[Z,Y].
+  \end{align*}
+  \item 反对称性：
+  \begin{align*}
+    [X,Y]=-[Y,X].
+  \end{align*}
+  \item Jacobi 恒等式：
+  \begin{align*}
+    [X,[Y,Z]]+[Y,[Z,X]]+[Z,[X,Y]]=0.
+  \end{align*}
+\end{enumerate}
+如果 $\mathfrak{g}$ 是李代数，子空间 $\mathfrak{h}\subseteq \mathfrak{g}$
+对李括号封闭，那么 $\mathfrak{h}$ 被称为\emph{$\mathfrak{g}$ 的李子代数}。
+在这种情况下，$\mathfrak{h}$ 的李括号就是 $\mathfrak{g}$ 的李括号的限制。
+
+如果 $\mathfrak{g}$ 和 $\mathfrak{h}$ 是两个李代数，线性映射
+$A:\mathfrak{g}\to \mathfrak{h}$ 保持李括号：$A[X,Y]=[AX,AY]$，
+那么我们说 $A$ 是\emph{李代数同态}。如果 $A$ 是同构，那么我们说
+$A$ 是\emph{李代数同构}。
+
+\begin{example}[李代数]\label{exa:lie algebra}
+  \mbox{}
+  \begin{enumerate}
+    \item 光滑流形 $M$ 上的所有光滑向量场 $\mathfrak{X}(M)$
+    在李括号下成为李代数。
+    \item 如果 $G$ 是李群，那么 $G$ 上所有光滑左不变向量场的集合
+    是 $\mathfrak{X}(G)$ 的李子代数。
+    \item 向量空间 $M(n,\mathbb{R})$ 在李括号(被称为\emph{换位子括号})
+    \[
+      [A,B]=AB-BA  
+    \]
+    下成为 $n^2$-维李代数。当我们将 $M(n,\mathbb{R})$ 视为李代数
+    的时候，我们使用 $\mathfrak{gl}(n,\mathbb{R})$ 表示。
+  \end{enumerate}
+\end{example}
+
+\ref{exa:lie algebra} 的 (2) 是最重要的例子，李群 $G$ 上所有光滑左不变向量场的集合
+被称为\emph{$G$ 的李代数}，记为 $\Lie(G)$。一个基本事实是 $\Lie(G)$
+是有限维的，并且维数与 $G$ 相同。
+
+\begin{theorem}\label{thm:dim of lie algebra}
+  $G$ 是李群，定义求值映射 $\varepsilon:\Lie(G)\to T_eG$ 为
+  $\varepsilon(X)=X_e$，那么 $\varepsilon$ 是向量空间同构。
+  这表明 $\Lie(G)$ 是维数为 $\dim G$ 的有限维向量空间。
+\end{theorem}
+\begin{proof}
+  不难验证 $\varepsilon$ 是线性映射。令 $\varepsilon(X)=X_e=0$，
+  那么任取 $g\in G$，$X$ 左不变表明
+  \[
+    X_g=d(L_g)_e(X_e)=0,
+  \]
+  所以 $X=0$，这表明 $\varepsilon$ 是单射。
+
+  任取 $v\in T_eG$，我们要构造一个光滑左不变向量场 $X$ 使得 $X_e=v$。
+  这样的 $X$ 必须满足 
+  \[
+    X_g=d(L_g)_e(X_e)=d(L_g)_e(v),  
+  \]
+  所以我们定义 $G$ 上的向量场 $v^{\mathrm{L}}$ 为
+  \[
+    v^{\mathrm{L}}\big|_g=d(L_g)_e(v).
+  \]
+  我们首先说明 $v^{\mathrm{L}}$ 是光滑的。任取 $f\in C^\infty(G)$，选取
+  光滑曲线 $\gamma:(-\delta,\delta)\to G$ 满足 $\gamma(0)=e$ 以及
+  $\gamma'(0)=v$，那么
+  \[
+    v^{\mathrm{L}}\big|_gf=d(L_g)_e\circ d\gamma_0\left(\left.\frac{d}{dt}\right|_0\right)f
+    =\left.\frac{d}{dt}\right|_{t=0}(f\circ L_g\circ\gamma)(t),
+  \]
+  定义 $\varphi:(-\delta,\delta)\times G\to \mathbb{R}$ 为
+  $\varphi(t,g)=f(L_g(\gamma(t)))$ 是光滑函数
+  \[
+    (-\delta,\delta)\times G\to G\times G\xrightarrow{m} G\xrightarrow{f} \mathbb{R}
+  \]
+  的复合，所以是光滑函数，
+  所以 $\bigl(v^{\mathrm{L}}f\bigr)(g)=v^{\mathrm{L}}\big|_gf=\partial\varphi/\partial t(0,g)$ 
+  是光滑函数，这就表明 $v^{\mathrm{L}}$ 是光滑向量场。
+
+  现在说明 $v^{\mathrm{L}}$ 是左不变向量场，对于任意 $h\in G$，有
+  \[
+      d(L_h)_{g}\left(v^{\mathrm{L}}\big|_g\right)
+      =d(L_h)_g\circ d(L_g)_e(v)=d(L_{hg})_e(v)=
+      v^{\mathrm{L}}\big|_{hg},
+  \]
+  这就表明 $v^{\mathrm{L}}$ 是左不变的。所以 $v=\varepsilon(v^{\mathrm{L}})$，
+  故 $\varepsilon$ 是满射。
+\end{proof}
+
+根据上面的证明，我们还可以发现 $G$ 上任意左不变向量场都自动是
+光滑向量场。
+
+\begin{corollary}
+  李群上的任意左不变向量场都是光滑向量场。
+\end{corollary}
+\begin{proof}
+  设 $X$ 是左不变向量场，那么
+  \[
+    X_g=d(L_g)(X_e)=(X_e)^{\mathrm{L}}\big|_g,
+  \]
+  所以 $X=(X_e)^{\mathrm{L}}$ 是光滑向量场。
+\end{proof}
+
+全局左不变向量场的存在性也导出了李群的另一个重要性质。回顾，
+如果光滑流形有一个光滑的全局标架，那么我们说这个流形是\emph{可平行化的}。
+如果 $G$ 是李群，左不变向量场构成的局部或者全局的标架被称为\emph{左不变标架}。
+
+\begin{corollary}
+  每个李群都有一组左不变的光滑全局标架，因此每个李群都是可平行化的。
+\end{corollary}
+\begin{proof}
+  若 $G$ 的李群，那么 $\Lie(G)$ 的一组基就是左不变的光滑全局标架。
+\end{proof}
+
+下面我们通过分析 $\GL(n,\mathbb{R})$ 的李代数来结束本节。
+我们已经知道了 $\Lie(\GL(n,\mathbb{R}))$ 和 $T_{I_n}\GL(n,\mathbb{R})$
+之间存在向量空间同构。由于 $\GL(n,\mathbb{R})$ 是 $\mathfrak{gl}(n,\mathbb{R})$
+的开子集，所以 $T_{I_n}\GL(n,\mathbb{R})$ 和 $\mathfrak{gl}(n,\mathbb{R})$
+之间也存在向量空间同构，那么我们得到了向量空间同构
+$\Lie(\GL(n,\mathbb{R}))\simeq \mathfrak{gl}(n,\mathbb{R})$.
+而这两个向量空间我们都已经配备了独立的李代数结构，第一个是
+向量场的李括号，第二个是矩阵的交换子括号。
+下面我们证明上述向量空间同构实际上是李代数同构。
+
+\begin{proposition}[一般线性群的李代数]
+  复合映射
+  \[
+    \Lie(\GL(n,\mathbb{R}))\to T_{I_n}\GL(n,\mathbb{R})
+    \to \mathfrak{gl}(n,\mathbb{R})  
+  \]
+  给出了 $\Lie(\GL(n,\mathbb{R}))$ 到 $\mathfrak{gl}(n,\mathbb{R})$
+  的李代数同构。
+\end{proposition}
+\begin{proof}
+  
+\end{proof}
+
+\subsection{诱导的李代数同态}
+
+\begin{theorem}[李群同态诱导李代数同态]
+  令 $G,H$ 是李群，$\mathfrak{g},\mathfrak{h}$ 是对应的李代数。
+  设 $F:G\to H$ 是李群同态。对于每个 $X\in \mathfrak{g}$，存在
+  唯一的与 $X$ $F$-相关的 $\mathfrak{h}$ 中的向量场，记为
+  $F_*X$，映射 $F_*:\mathfrak{g}\to \mathfrak{h}$ 是李代数同态。
+\end{theorem}
+\begin{proof}
+  如果 $Y$ 与 $X$ 是 $F$-相关的，那么其必须满足
+  $Y_e=dF_e(X_e)$，$Y\in \mathfrak{h}$ 则必须满足
+  \[
+    Y=  \bigl(dF_e(X_e)\bigr)^{\mathrm{L}}.
+  \]
+  下面我们只需要说明这样的 $Y$ 与 $X$ 是 $F$-相关的即可。
+  任取 $g\in G$，有
+  \[
+    Y_{F(g)}=d\bigl(L_{F(g)}\bigr)_{e}\bigl(dF_e(X_e)\bigr)=d\bigl(L_{F(g)}\circ F\bigr)_e
+    (X_e),
+  \]
+  $F$ 是李群同态表明 $L_{F(g)}\circ F=F\circ L_g$，所以
+  \[
+    Y_{F(g)}=d\bigl(F\circ L_g\bigr)_e(X_e)=dF_g\bigl(d(L_g)_e(X_e )\bigr)
+    =dF_g\bigl(X_g\bigr),
+  \]
+  这就表明 $X$ 和 $Y$ 是 $F$-相关的向量场。
+
+  任取两个左不变向量场 $X,Y\in \mathfrak{g}$，由于 $X,Y$ 分别和 $F_*X,F_*Y$ 
+  是 $F$-相关的，根据李括号的自然属性，所以 $[X,Y]$ 和 $[F_*X,F_*Y]$
+  是 $F$-相关的，所以 $F_*[X,Y]=[F_*X,F_*Y]$，即 $F_*$ 是李代数同态。
+\end{proof}
+
+需要注意的是，上述定理表明对于任意左不变向量场 $X\in \mathfrak{g}$，
+即使 $F$ 不是微分同胚，也可以将 $X$ 推前到一个 $F$-相关的左不变向量场
+$F_*X$。
+
+\subsection{李子群的李代数}
+
+如果 $G$ 是李群，$H\subseteq G$ 是李子群，我们希望 $H$
+的李代数可以视为 $G$ 的李代数的李子代数。但是，$\Lie(H)$
+的元素严格来说是 $H$ 上的向量场而不是 $G$ 上的向量场。
+下面的命题给我们一种将 $\Lie(H)$ 视为 $\Lie(G)$ 的李子代数的方式。
+
+\begin{theorem}[李子群的李代数]
+  设 $H\subseteq G$ 是李子群，$\iota:H\hookrightarrow G$ 是包含映射。
+  那么存在李子代数 $\mathfrak{h}\subseteq\Lie(G)$，其典范同构于
+  $\Lie(H)$，并且可以刻画为
+  \[
+    \mathfrak{h}=\iota_*(\Lie(H))=\{X\in \Lie(G)\,|\, X_e\in T_eH\}.  
+  \]
+\end{theorem}
+\begin{proof}
+  我们有如下交换图
+  \[
+    \begin{tikzcd}
+      \Lie(H)\arrow[r,"\iota_*"]\arrow[d,leftrightarrow,"\simeq"] & \Lie(G)\arrow[d,leftrightarrow,"\simeq"]\\
+      T_eH\arrow[r,"d\iota_e"] & T_eG
+    \end{tikzcd}  
+  \]
+  所以 $\iota_*$ 是单射，故 $\iota_*(\Lie(H))$ 典范同构于
+  $\Lie(H)$。另一方面，$\iota_*(\Lie(H))$ 同构于 $d\iota_e(T_eH)$，
+  即 $\iota_*(\Lie(H))$ 由所有满足 $X_e\in T_eH$ 的 $X\in\Lie(G)$ 构成。
+\end{proof}
+
+\begin{example}[$\Orth(n)$ 的李代数]
+  \autoref{exa:orthogonal group} 表明正交群 $\Orth(n)$ 是常秩映射
+  $\varPhi:\GL(n,\mathbb{R})\to M(n,\mathbb{R})$ 的水平集，再根据
+  \autoref{exer:tangent space of submanifold}，切空间
+  $T_{I_n}\Orth(n)=\ker d\varPhi_{I_n}$，由于
+  $d\varPhi_{I_n}(B)=B+B^T$，所以
+  \[
+    T_{I_n}\Orth(n)=\{B\in \mathfrak{gl}(n,\mathbb{R})\,|\, B+B^T=0\},  
+  \]
+  于是 $\Lie(\Orth(n))\simeq T_{I_n}\Orth(n)$ 典范同构于所有反对称矩阵构成的
+  $\mathfrak{gl}(n,\mathbb{R})$ 的子代数 $\mathfrak{o}(n)$。注意，我们甚至
+  没有验证 $\mathfrak{o}(n)$ 是一个李代数。
+\end{example}
+
+与李群的概念平行，我们也有李代数表示的概念。如果 $\lie g$ 是有限维李代数，
+$\lie g$ 的\emph{(有限维)表示}指的是一个李代数同态 $\varphi:\lie g\to\lie{gl}(V)$，
+其中 $V$ 是某个有限维向量空间，$\lie{gl}(V)$ 是 $V$ 上线性变换构成的李代数。
+如果 $\varphi$ 是单射，那么就说 $\varphi$ 是\emph{忠实的}。
+这种情况下 $\lie g$ 同构于李子代数 $\varphi(\lie g)\subseteq \lie{gl}(V)$。
+
+李群表示和李代数表示之间存在着密切关系。设 $G$ 是李群，$\lie g$ 是其李代数。
+如果 $\rho:G\to \GL(V)$ 是李群表示，那么显然 $\rho_*:\lie g\to\lie{gl}(V)$
+是 $\lie g$ 的李代数表示。
+
+\begin{theorem}[Ado]
+  每个有限维实李代数都有一个忠实的有限维表示。
+\end{theorem}
+
+\begin{corollary}
+  每个有限维实李代数都同构于某个矩阵代数（附带换位子括号）
+  $\lie{gl}(n,\mathbb{R})$ 的一个李子代数。
+\end{corollary}
+\begin{proof}
+  令 $\lie g$ 是有限维实李代数。根据 Ado 定理，$\lie g$
+  有一个忠实表示 $\rho:\lie g\to\lie{gl}(V)$。选取 $V$ 的一组基导出
+  $\lie{gl}(V)$ 和某个 $\lie{gl}(n,\mathbb{R})$ 的李代数同构，然后与
+  $\rho$ 复合即可。
+\end{proof}
+
+ 

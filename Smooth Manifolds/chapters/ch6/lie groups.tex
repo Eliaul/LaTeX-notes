@@ -1,0 +1,376 @@
+
+
+\chapter{李群}
+
+\section{基本定义}
+
+\begin{example}[李群]
+  \mbox{}
+  \begin{enumerate}
+    \item $n\times n$ 可逆实矩阵集合 $\GL(n,\mathbb{R})$ 被称为\emph{一般线性群}。
+    其是 $M(n,\mathbb{R})$ 的开子流形，由于矩阵乘法 $AB$ 是多项式，所以
+    是光滑的。矩阵求逆的光滑性由 Cramer 法则保证。
+    \item 令 $\GL^+(n,\mathbb{R})$ 表示 $\GL(n,\mathbb{R})$ 中行列式为正的
+    可逆矩阵集合。显然 $\GL^+(n,\mathbb{R})$ 是 $\GL(n,\mathbb{R})$ 的子群
+    同时是开子集，所以其群运算作为 $\GL(n,\mathbb{R})$ 的群运算的限制是光滑的，
+    所以 $\GL^+(n,\mathbb{R})$ 是李群。
+    \item 设 $G$ 的任意李群，$H\subseteq G$ 是\emph{开子群}(子群同时是开子集)。
+    类似 (2) 中的叙述，$H$ 是李群，其群结构和光滑结构都继承于 $G$。
+    \item Euclid 空间 $\mathbb{R}^n$ 在加法下是李群。
+    \item 
+  \end{enumerate}
+\end{example}
+
+\section{李群同态}
+
+如果 $G,H$ 是李群，如果 $F:G\to H$ 同时是群同态和光滑映射，那么我们说
+$F$ 是\emph{李群同态}。如果 $F$ 还是微分同胚，那么我们说 $F$
+是\emph{李群同构}。
+
+\begin{theorem}
+  李群同态是常秩映射。
+\end{theorem} 
+\begin{proof}
+  设 $F:G\to H$ 是李群同态，记 $G$ 的单位元为 $e$，$H$ 的单位元为 $\tilde{e}$。
+  任取 $g_0\in G$，对于任意 $g\in G$，有
+  \[
+    F(L_{g_0}(g))=F(g_0g)=F(g_0)F(g)=L_{F(g_0)}(F(g)),  
+  \] 
+  所以 $F\circ L_{g_0}=L_{F(g_0)}\circ F$，所以
+  \[
+    dF_{g_0}\circ d\left(L_{g_0}\right)_e=d\left(L_{F(g_0)}\right)_{\tilde{e}}\circ dF_e,  
+  \]
+  由于 $L_{g_0}$ 和 $L_{F(g_0)}$ 是微分同胚，所以 $dF_{g_0}$ 和 $dF_e$
+  有相同的秩，故 $F$ 是常秩映射。
+\end{proof}
+
+\begin{corollary}
+  一个李群同态是李群同构当且仅当其是双射。
+\end{corollary}
+\begin{proof}
+  全局秩定理表明双射的常秩映射是微分同胚。
+\end{proof}
+
+\section{李子群}
+
+设 $G$ 的李群，$G$ 的\emph{李子群}指的是 $G$ 的一个子群，配备了一个拓扑
+和光滑结构使得其成为一个李群以及 $G$ 的浸入子流形。
+
+\begin{proposition}\label{prop:embedding and subgroup is lie subgroup}
+  令 $G$ 是李群，设 $H\subseteq G$ 是子群同时是嵌入子流形，那么 $H$ 是李子群。
+\end{proposition}
+\begin{proof}
+  乘法 $G\times G\to G$ 是光滑的，$H$ 是嵌入子流形表明 $H\times H\to G$
+  光滑(这一步实际上只需要浸入子流形)，将值域限制在嵌入子流形不改变光滑性，
+  所以 $H\times H\to H$ 是光滑的。类似地，求逆也是光滑映射，所以 $H$
+  是李群。
+\end{proof}
+
+\begin{lemma}
+  设 $G$ 是李群，$H\subseteq G$ 是开子群。那么 $H$ 是嵌入李子群并且是闭集，故 $H$
+  是 $G$ 的连通分支的并。
+\end{lemma}
+\begin{proof}
+  $H$ 是开子流形表明 $H$ 是嵌入李子群。对于任意 $g\in G$，陪集 $gH=L_g(H)$ 是开集，所以
+  $G\smallsetminus H$ 作为陪集的并是开集，所以 $H$ 是闭集。$H$ 既开又闭表明 $H$
+  是连通分支的并集。
+\end{proof}
+
+
+\begin{proposition}
+  设 $G$ 是李群，$W\subseteq G$ 是单位元处的任意邻域。
+  \begin{enumerate}
+    \item $W$ 生成 $G$ 的一个开子群。
+    \item 如果 $W$ 是连通的，那么其生成 $G$ 的一个连通开子群。
+    \item 如果 $G$ 是连通的，那么 $W$ 生成 $G$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 记 $W_1=W\cup W^{-1}$，对于 $k\geq 2$，递归地定义 $W_k=W_1W_{k-1}$，那么
+  \[
+    \langle W\rangle=\bigcup_{k=1}^\infty W_k,
+  \]
+  由于求逆映射 $g\mapsto g^{-1}$ 是微分同胚，所以 $W^{-1}$ 是开集，所以 $W_1$ 是开集。
+  假设 $W_{k-1}$ 是开集，那么
+  \[
+    W_k=\bigcup_{g\in W_1}L_g(W_{k-1})
+  \]
+  是开集的并，所以 $W_k$ 是开集。故 $\langle W\rangle$ 是开集。
+
+  (2) 由于 $W$ 和 $W^{-1}$ 都是连通的，且 $e\in W\cap W^{-1}$，所以 $W_1$ 是连通的。
+  假设 $W_{k-1}$ 是连通的，那么 $W_k=m(W_1\times W_{k-1})$ 是连通空间在连续映射下的像，所以是连通的。
+  又因为 $e\in W_k$，所以 $\langle W\rangle$ 是连通的。
+
+  (3) $\langle W\rangle$ 是开子群表明 $\langle W\rangle$ 是连通分支的并，$G$ 连通表明 $\langle W\rangle=G$。
+\end{proof}
+
+若 $G$ 是李群，则 $G$ 的包含单位元的连通分支被称为 $G$ 的\emph{单位分支}。
+
+\begin{proposition}
+  令 $G$ 是李群，$G_0$ 是单位分支。那么 $G_0$ 是 $G$ 的正规子群，并且是唯一的连通开子群。
+  $G$ 的任意连通分支都微分同胚于 $G_0$。
+\end{proposition}
+\begin{proof}
+  任取 $g\in G$，那么 $gG_0g^{-1}=L_g\left(R_{g^{-1}}(G_0)\right)$ 是连通的，并且 $e\in gG_0g^{-1}$，所以
+  $gG_0g^{-1}\subseteq G_0$，这就表明 $G_0$ 是正规子群。设 $G_0'$ 是连通开子群，那么 $G_0'$ 是开子群表明
+  $G_0'$ 是连通分支的并集，$G_0'$ 是连通的表明 $G_0'$ 是某一个连通分支，又因为 $e\in G_0'$，所以 $G_0'=G_0$
+  是单位分支。设 $G_0'$ 是任意连通分支，任取 $g\in G_0'$，$g^{-1}G_0'=L_{g^{-1}}(G_0')$ 是连通的且包含
+  单位元，故 $g^{-1}G_0'$ 被单位分支 $G_0$ 包含，那么 $L_{g}(G_0)=gG_0\supseteq G_0'$ 是连通的，所以
+  $G_0'=gG_0=L_g(G_0)$ 微分同胚于 $G_0$。
+\end{proof}
+ 
+\begin{proposition}
+  令 $F:G\to H$ 是李群同态，那么 $\ker F$ 是 $G$ 的恰当嵌入李子群，其余维数
+  为 $\rk F$。
+\end{proposition}
+\begin{proof}
+  根据常秩水平集定理，$\ker F$ 是 $G$ 的余维数为 $\rk F$ 的嵌入子流形。
+  再根据 \autoref{prop:embedding and subgroup is lie subgroup}，$\ker F$
+  是李子群。
+\end{proof}
+
+\begin{proposition}\label{prop:image of injective lie group homomorphism}
+  如果 $F:G\to H$ 是单射的李群同态，那么 $F$ 的像集有唯一的光滑流形结构使得
+  $F(G)$ 是 $H$ 的李子群并且 $F:G\to F(G)$ 是李群同构。
+\end{proposition}
+\begin{proof}
+  因为李群同态是常秩映射，所以根据全局秩定理，此时 $F$ 是浸入。
+  根据 \autoref{prop:image of immersion}，所以 $F(G)$ 有唯一的光滑结构
+  使得 $F(G)$ 是 $H$ 的浸入子流形且 $F:G\to F(G)$ 是微分同胚。
+\end{proof}
+
+一般情况下，光滑子流形可以同时是非嵌入的以及闭的，例如八字曲线
+\ref{exa:eight-curve}，但是下面的定理表明对于李子群而言，
+闭和嵌入性并不是独立的，即嵌入性和闭等价。
+
+\begin{theorem}
+  设 $G$ 是李群，$H\subseteq G$ 是李子群，那么 $H$ 是闭集当且仅当
+  $H$ 是嵌入李子群。
+\end{theorem}
+
+\section{群作用和等变映射}
+
+如果 $M$ 是光滑流形，$G$ 是李群，群作用 $G\times M\to M$ 是光滑映射，
+那么这个群作用被称为\emph{光滑作用}。
+对于光滑作用 $\theta:G\times M\to M$，任取 $g\in G$，记 
+$\theta_g:M\to M$ 为 $\theta_g(p)=g\cdot p$。由于 $\theta_{g^{-1}}$
+是其光滑逆映射，所以 $\theta_g$ 一定是微分同胚。
+
+设 $G$ 是李群，$M,N$ 是带边或者无边光滑流形并且都配备一个光滑
+$G$-作用，映射 $F:M\to N$ 被称为\emph{等变的}，如果对于每个 $g\in G$
+都有
+\[
+  F(g\cdot p)=g\cdot F(p) \ (\text{left actions})  ,\quad
+  F(p\cdot g)=F(p)\cdot g \ (\text{right actions})  .
+\]
+等价地说，如果 $\theta$ 是 $G$ 在 $M$ 上的光滑作用，$\varphi$
+是 $G$ 在 $N$ 上的光滑作用，那么 $F$ 是等变的当且仅当
+\[
+  F\circ \theta_g=\varphi_g\circ F.  
+\]
+
+\begin{theorem}[等变秩定理]
+  设 $G$ 是李群，$M,N$ 是带边或者无边光滑流形，
+  $F:M\to N$ 是光滑映射，相对于 $M$ 上的传递的光滑 $G$-作用 $\theta$ 和
+  $N$ 上的任意光滑 $G$-作用 $\varphi$ 是等变的。那么 $F$ 是常值映射。
+  进而，若 $F$ 是满射，那么是一个光滑浸没；若 $F$ 是单射，那么
+  是一个光滑浸入；若 $F$ 是双射，那么是一个微分同胚。
+\end{theorem}
+\begin{proof}
+  任取 $p,q\in M$，$\theta$ 是传递的表明存在 $g\in G$ 使得
+  $q=\theta_g(p)$，那么 $F\circ\theta_g=\varphi_g\circ F$ 表明
+  \[
+    dF_{q}\circ d(\theta_g)_p=d(\varphi_g)_{F(p)}\circ dF_p,  
+  \]
+  $\theta_g$ 和 $\varphi_g$ 都是微分同胚表明 $dF_q$ 和 $dF_p$
+  的秩相同，所以 $F$ 是常秩映射。
+\end{proof}
+
+假设 $G$ 是李群，$M$ 是光滑流形，$\theta:G\times M\to M$ 是光滑左作用，
+对于每个 $p\in M$，定义\emph{轨道映射} $\theta^{(p)}:G\to M$ 为
+\[
+  \theta^{(p)}(g)=g\cdot p.  
+\]
+显然 $\theta^{(p)}$ 的像集就是 $p$ 所在的轨道。
+
+\begin{proposition}[轨道映射的性质]
+  假设 $\theta$ 是李群 $G$ 在光滑流形 $M$ 上的光滑左作用，对于每个
+  $p\in M$，轨道映射 $\theta^{(p)}:G\to M$ 是光滑常秩映射，
+  所以稳定化子 $G_p=\left(\theta^{(p)}\right)^{-1}(p)$
+  是 $G$ 的恰当嵌入李子群。如果 $G_p=\{e\}$，那么
+  $\theta^{(p)}$ 是单射的光滑浸入，所以轨道 $G\cdot p$
+  是 $M$ 的浸入子流形。
+\end{proposition}
+\begin{proof}
+  映射 $\theta^{(p)}$ 可以视为光滑映射的复合
+  \[
+    G\to G\times M\to M,  
+  \]
+  所以 $\theta^{(p)}$ 是光滑映射。考虑 $G$ 在自身上的作用为
+  $g\cdot g'=gg'$，这是一个传递的光滑作用，那么
+  \[
+    \theta^{(p)}(g\cdot g')=(gg')\cdot p=g\cdot \theta^{(p)}(g'),  
+  \]
+  所以 $\theta^{(p)}$ 是等变映射，从而是常秩映射。根据常秩水平集定理，
+  稳定化子 $G_p$ 是嵌入子流形，根据 \autoref{prop:embedding and subgroup is lie subgroup}，
+  $G_p$ 是恰当嵌入李子群。若 $G_p=\{e\}$，那么
+  \[
+    \theta^{(p)}(g)=\theta^{(p)}(g')\Rightarrow
+    p=(g^{-1}g')\cdot p\Rightarrow g^{-1}  g'\in G_p
+    \Rightarrow g=g',
+  \]
+  所以 $\theta^{(p)}$ 为单射。再根据全局秩定理，$\theta^{(p)}$
+  是浸入。根据 \autoref{prop:image of immersion}，轨道 $G\cdot p$
+  是浸入子流形。
+\end{proof}
+
+\begin{example}[正交群]\label{exa:orthogonal group}
+  由 $n\times n$ 正交矩阵构成的 $\GL(n,\mathbb{R})$ 的子群 
+  $\Orth(n)$ 被称为正交群。定义光滑映射 $\varPhi:\GL(n,\mathbb{R})\to M(n,\mathbb{R})$
+  为 $\varPhi(A)=A^TA$，那么 $\Orth(n)$ 是 $\varPhi$ 的水平集 $\varPhi^{-1}(I_n)$。
+  我们只要能说明 $\varPhi$ 是常秩映射就能够表明 $\Orth(n)$ 是 
+  $\GL(n,\mathbb{R})$ 的嵌入李子群。下面我们构造合适的群作用使得
+  $\varPhi$ 是等变映射。定义 $\theta$ 为 $\GL(n.\mathbb{R})$
+  在自身上的右乘作用，即 $A\cdot B=AB$。$\varphi$
+  为 $\GL(n,\mathbb{R})$ 在 $M(n,\mathbb{R})$ 上的右作用为：
+  \[
+    X\cdot B=B^TXB,  
+  \]
+  那么
+  \[
+    \varPhi(A\cdot B)=(AB)^T(AB)=B^TA^TAB=\varPhi(A)\cdot B ,
+  \]
+  这就表明 $\varPhi$ 是等变映射，根据等变秩定理，$\varPhi$
+  确实是常秩映射。因此，$\Orth(n)$ 是 $\GL(n,\mathbb{R})$
+  的嵌入李子群。此外，不难发现 $\Orth(n)$ 是紧的。
+
+  为了确定 $\Orth(n)$ 的维数，还需要确定 $\varPhi$ 的秩，即
+  微分 $d\varPhi_{I_n}$ 的像空间的维数。对于 $B\in T_{I_n}\GL(n,\mathbb{R})=M(n,\mathbb{R})$，
+  设 $\gamma:(-\varepsilon,\varepsilon)\to \GL(n,\mathbb{R})$ 
+  光滑曲线 $\gamma(t)=I_n+tB$，那么
+  \[
+    d\varPhi_{I_n}(B)=\left.\frac{d}{dt}\right|_{t=0}\varPhi(\gamma(t))
+    =\left.\frac{d}{dt}\right|_{t=0}(I_n+tB^T)(I_n+tB)
+    =B+B^T,
+  \]
+  所以 $\im d\varPhi_{I_n}$ 被对称矩阵空间包含。反之，任取对称矩阵 $B$，
+  有 $d\varPhi_{I_n}(B/2)=B$，所以 $\im d\varPhi_{I_n}$ 就是对称矩阵空间，
+  维数为 $(n^2+n)/2$，这就表明 $\rk \varPhi=(n^2+n)/2$，
+  故
+  \[
+    \dim\Orth(n)=\dim\GL(n,\mathbb{R})-\rk \varPhi
+    =\frac{n^2-n}{2}.
+  \]
+\end{example}
+
+\begin{example}[特殊正交群]
+  $n\times n$ 特殊正交群被定义为行列式为 $1$ 的正交矩阵构成的集合，
+  记为 $\SO(n)$。由于 $\det:\Orth(n)\to \mathbb{R}$ 为连续映射
+  且 $\SO(n)=\det^{-1}(0,\infty)$，所以 $\SO(n)$ 是 $\Orth(n)$
+  的开子集，故 $\SO(n)$ 是 $\Orth(n)$ 的嵌入李子群并且
+  $\dim \SO(n)=\dim\Orth(n)=(n^2-n)/2$。同时，$\SO(n)$
+  也是 $\Orth(n)$ 的闭子集，所以也是紧的。
+\end{example}
+
+\subsection{表示}
+
+目前我们看到的大部分李群都可以视为 $\GL(n,\mathbb{R})$ 或者 $\GL(n,\mathbb{C})$
+的李子群。一个自然的问题就是是否所有的李群都有这种形式。研究这个问题的关键是
+群表示论。
+
+如果 $V$ 是有限维实或者复向量空间，我们用 $\GL(V)$ 表示 $V$ 上的可逆线性变换
+群，这是一个同构于 $\GL(n,\mathbb{R})$ 或 $\GL(n,\mathbb{C})$
+的李群，其中 $n=\dim V$。如果 $G$ 是李群，我们说 $G$ 的\emph{(有限维)表示}
+指的是一个 $G$ 到某个 $\GL(V)$ 的李群同态。
+
+如果表示 $\rho:G\to \GL(V)$ 是单射，那么我们说这个表示是\emph{忠实的}。
+此时根据 \autoref{prop:image of injective lie group homomorphism}，
+$\rho(G)$ 是 $\GL(V)$ 的李子群，且 $\rho:G\to \rho(G)$ 是李群同构。
+因此，一个李群有一个忠实表示当且仅当其同构于 $\GL(n,\mathbb{R})$ 或 $\GL(n,\mathbb{C})$
+的某个李子群。不是所有的李群都有这样的表示，但是我们还没有构造反例的技术。
+
+\begin{example}[李群表示]
+  \mbox{}
+  \begin{enumerate}
+    \item 包含映射 $\mathbb{S}^1\hookrightarrow \mathbb{C}^*\simeq \GL(1,\mathbb{C})$
+    是圆周群的忠实表示。更一般地，映射 $\rho:\mathbb{T}^n\to \GL(n,\mathbb{C})$
+    \[
+      \rho\bigl(z^1,\dots,z^n\bigr)  =\begin{pmatrix}
+        z^1 & 0 & \cdots & 0 \\
+        0 & z^2 & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0  & 0 & \cdots & z^n 
+      \end{pmatrix}
+    \]
+    是 $\mathbb{T}^n$ 的忠实表示。
+    \item 令 $\sigma:\mathbb{R}^n\to \GL(n+1,\mathbb{R})$ 为
+    \[
+      \sigma(x)=\begin{pmatrix}
+        I_n & x \\
+        0 & 1
+      \end{pmatrix}  ,
+    \]
+    此时 $\sigma$ 是 $\mathbb{R}^n$ 的忠实表示。
+    \item 令 $\Euc(n)=\mathbb{R}^n\rtimes \Orth(n)$ 是 Euclid 群，
+    $\Euc(n)$ 的一个忠实表示 $\rho:\Euc(n)\to \GL(n,\mathbb{R})$ 为
+    \[
+      \rho(b,A)=\begin{pmatrix}
+        A & b \\
+        0 & 1
+      \end{pmatrix}  .
+    \]
+  \end{enumerate}
+\end{example}
+
+
+
+\begin{problem}{}{}
+  令 $\mathbb{H}=\mathbb{C}\times \mathbb{C}$(视为实向量空间)，定义
+  双线性的乘法 $\mathbb{H}\times \mathbb{H}\to \mathbb{H}$ 为
+  \[
+    (a,b)(c,d)=\bigl(ac-b\bar d,ad+b\bar c\bigr),\quad a,b,c,d\in \mathbb{C}.  
+  \]
+  在这个乘法下，$\mathbb{H}$ 是 $\mathbb{R}$ 上的 $4$-维代数，
+  被称为\emph{四元数代数}。对于每个 $p=(a,b)\in \mathbb{H}$，定义
+  $p^*=\bigl(\bar a,-b\bigr)$。定义 $\mathbb{H}$ 的一组基为
+  $(\mathbb{1},\mathbb{i},\mathbb{j},\mathbb{k})$ 为
+  \[
+    \mathbb{1}=(1,0),\mathbb{i}=(i,0),\mathbb{j}=(0,1),\mathbb{k}=(0,i)  ,
+  \]
+  那么可以验证它们满足    
+  \begin{gather*}
+    \mathbb{i}^2=\mathbb{j}^2=\mathbb{k}^2=-1,\quad
+    \mathbb{1}q=q \mathbb{1}=q\ \forall q\in \mathbb{H},\\
+    \mathbb{ij}=-\mathbb{ji}=\mathbb{k},\quad \mathbb{jk}=-\mathbb{kj}=\mathbb{i},
+    \quad \mathbb{ki}=-\mathbb{ik}=\mathbb{j},\\ 
+    \mathbb{1}^*=\mathbb{1},\quad \mathbb{i}^*=-\mathbb{i},\quad \mathbb{j}^*=-\mathbb{j},
+    \quad \mathbb{k}^*=-\mathbb{k}.
+  \end{gather*}
+  如果 $p^*=p$，那么称 $p$ 为实四元数，如果 $p^*=-p$，那么称 $p$ 为纯虚四元数。
+  实四元数可以通过对应 $x\leftrightarrow x\mathbb{1}$ 等同为实数。
+  \begin{enumerate}
+    \item 证明四元数乘法是结合的但不是交换的。
+    \item 证明 $(pq)^*=q^*p^*$。
+    \item 证明 $\langle p,q\rangle=\frac{1}{2}(p^*q+q^*p)$ 是 $\mathbb{H}$
+    上的一个内积，其导出的范数满足 $|pq|=|p||q|$。
+    \item 证明任意非零四元数都有乘法逆元 $p^{-1}=p^*/|p|^2$。
+    \item 证明非零四元数集合 $\mathbb{H}^*$ 在四元数乘法下构成李群。
+  \end{enumerate} 
+\end{problem}
+\begin{proof}
+  (5) $\mathbb{H}^*$ 是乘法群。范数映射 $|\cdot|:\mathbb{H}\to \mathbb{R}$
+  是连续映射，所以 $\mathbb{H}^*$ 作为 $\mathbb{R}\smallsetminus\{0\}$
+  的原像是 $\mathbb{H}$ 的开子集，故 $\mathbb{H}^*$ 是开子流形，
+  且容易验证 $\mathbb{H}^*$ 的乘法的求逆都是光滑映射，所以 
+  $\mathbb{H}^*$ 是李群，维数为 $4$。
+\end{proof}
+
+\begin{problem}{}{}
+  令 $\mathbb{H}^*$ 是非零四元数李群，$\mathcal{S}\subseteq \mathbb{H}^*$
+  是单位四元数的集合，证明 $\mathcal{S}$ 是 $\mathbb{H}^*$ 的恰当嵌入李子群，
+  并且同构于 $\SU(2)$。
+\end{problem}
+\begin{proof}
+  记 $N:\mathbb{H}^*\to \mathbb{R}^*$ 为范数映射，显然这是一个李群同态，
+  所以是常秩映射，所以 $\mathcal{S}=\ker N$ 是恰当嵌入李子群。
+\end{proof}

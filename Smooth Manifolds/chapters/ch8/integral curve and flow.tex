@@ -1,0 +1,284 @@
+
+\chapter{积分曲线和流}
+
+\section{积分曲线}
+
+设 $M$ 是光滑流形，$\gamma:J\to M$ 是光滑曲线，那么
+对于 $t\in J$，速度向量 $\gamma'(t)\in T_{\gamma(t)}M$。
+本节我们研究逆向的方法：给定每个点的切向量，寻找一条曲线
+使得其在每个点的速度向量等于给定的切向量。
+
+如果 $V$ 是 $M$ 上的向量场，定义\emph{$V$ 的积分曲线}为
+可微曲线 $\gamma:J\to M$，其在每个点处的速度等于 $V$ 在该点处的值：
+\[
+  \gamma'(t)=V_{\gamma(t)}\quad \forall t\in J.  
+\]
+如果 $0\in J$，点 $\gamma(0)$ 被称为\emph{$\gamma$ 的起点}。
+
+寻找积分曲线可以归结为求解光滑坐标卡中的常微分方程组。设
+$V$ 是一个光滑向量场，$\gamma:J\to M$ 是光滑曲线。在一个光滑坐标
+开集 $U\subseteq M$ 中，我们可以将 $\gamma$ 表示为
+$\gamma(t)=\bigl(\gamma^1(t),\dots,\gamma^n(t)\bigr)$。那么
+$\gamma'(t)=V_{\gamma(t)}$ 当且仅当
+\[
+  \dot\gamma^i(t)\left.\frac{\partial}{\partial x^i}\right|_{\gamma(t)}  
+  =V^i(\gamma(t))\left.\frac{\partial}{\partial x^i}\right|_{\gamma(t)} ,
+\] 
+这导出了一个常微分方程组：
+\begin{align*}
+  \dot\gamma^1(t)
+  &=V^1(\gamma^1(t),\dots,\gamma^n(t)) ,\\
+  &\vdots \\
+  \dot\gamma^n(t)
+  &=V^n(\gamma^1(t),\dots,\gamma^n(t)).
+\end{align*}
+
+\begin{proposition}
+  令 $V$ 是光滑流形 $M$ 上的光滑向量场。对于每个 $p\in M$，都存在
+  $\varepsilon>0$ 和光滑曲线 $\gamma:(-\varepsilon,\varepsilon)\to M$
+  使得 $\gamma$ 是 $V$ 的起点为 $p$ 的积分曲线。
+\end{proposition}
+
+\begin{lemma}[缩放引理]
+  令 $V$ 是光滑流形 $M$ 上的光滑向量场。$J\subseteq \mathbb{R}$
+  是区间，$\gamma:J\to M$ 是 $V$ 的积分曲线。对于任意 $a\in \mathbb{R}$，
+  定义曲线 $\tilde \gamma:\tilde{J}\to M$ 为 $\tilde{\gamma}(t)=\gamma(at)$，
+  其中 $\tilde{J}=\{t\,|\, at\in J\}$，那么 $\tilde{\gamma}$ 是向量场
+  $aV$ 的积分曲线。
+\end{lemma}
+\begin{proof}
+  任取 $f\in C^\infty(M)$，有
+  \begin{align*}
+    \tilde{\gamma}'(t_0)f&=d\tilde{\gamma}_{t_0}\left(
+      \left.\frac{d}{dt}\right|_{t_0}
+    \right)f
+    =\left.\frac{d}{dt}\right|_{t_0}(f\circ\tilde\gamma)(t)
+    =\left.\frac{d}{dt}\right|_{t_0}(f\circ\gamma)(at)\\
+    &=a (f\circ\gamma)'(at_0)
+    =a\gamma'(at_0)f=aV_{\gamma(at_0)}f=
+    aV_{\tilde{\gamma}(t_0)}f,
+  \end{align*}
+  所以 $\tilde{\gamma}'(t_0)=aV_{\tilde{\gamma}(t_0)}$。
+\end{proof}
+
+\begin{lemma}[平移引理]
+  令 $V,M,J$ 和 $\gamma$ 的含义同上一个引理。对于任意
+  $b\in \mathbb{R}$，定义曲线 $\hat\gamma:\hat J\to M$
+  为 $\hat \gamma(t)=\gamma(t+b)$，其中
+  $\hat J=\{t\,|\, t+b\in J\}$，那么 $\hat J$ 是向量场
+  $V$ 的积分曲线。
+\end{lemma}
+
+\begin{proposition}[积分曲线的自然性]\label{prop:naturality of integral curve}
+  设 $M,N$ 是光滑流形，$F:M\to N$ 是光滑映射。那么 $X\in \mathfrak{X}(M)$
+  和 $Y\in \mathfrak{X}(N)$ 是 $F$-相关的当且仅当 $F$ 将 $X$ 的积分曲线
+  送到 $Y$ 的积分曲线，也就是说，对于 $X$ 的积分曲线 $\gamma$，
+  $F\circ\gamma$ 是 $Y$ 的积分曲线。
+\end{proposition}
+\begin{proof}
+  假设 $X,Y$ 是 $F$-相关的，这意味着对于任意 $p\in M$，有
+  \[
+    Y_{F(p)}=dF_p(X_p),
+  \]
+  于是
+  \[
+    (F\circ\gamma)'(t)
+    =dF_{\gamma(t)}\bigl(\gamma'(t)\bigr)
+    =dF_{\gamma(t)}(V_{\gamma(t)})=Y_{F(\gamma(t))}
+    =Y_{(F\circ\gamma)(t)},
+  \]
+  这就说明 $F\circ\gamma$ 是 $Y$ 的积分曲线。
+
+  反之，若对于任意 $X$ 的积分曲线 $\gamma$，$F\circ\gamma$ 都是
+  $Y$ 的积分曲线。那么任取 $p\in M$，选取 $X$ 的以 $p$ 为起点
+  的积分曲线 $\gamma$，有
+  \[
+    Y_{F(p)}=Y_{F(\gamma(0))}=(F\circ\gamma)'(0)
+    =dF_{\gamma(0)}(\gamma'(0))=dF_p(X_p),  
+  \]
+  即 $X,Y$ 是 $F$-相关的。
+\end{proof}
+
+\section{流}
+
+令 $M$ 是光滑流形，$V\in \mathfrak{X}(M)$。假设对于每个点 $p\in M$，
+$V$ 有唯一的一条定义在 $t\in \mathbb{R}$ 上的以 $p$ 为起点的积分曲线，
+记为 $\theta^{(p)}:\mathbb{R}\to M$。那么对于每个 $t\in \mathbb{R}$，我们可以
+定义映射 $\theta_t:M\to M$，将点 $p$ 送到以 $p$ 为起点的积分曲线
+在 $t$ 时刻的值：
+\[
+  \theta_t(p)=\theta^{(p)}(t).  
+\]
+那么每个 $\theta_t$ 看起来就像将流形沿着 $t$ 时刻的积分曲线进行“滑动”。
+平移引理表明 $t\mapsto \theta^{(p)}(t+s)$ 是 $V$ 的以 $q=\theta^{(p)}(s)$
+为起点的积分曲线，因为我们假设了积分曲线的唯一性，所以
+$\theta^{(q)}(t)=\theta^{(p)}(t+s)$，也就是
+\[
+  \theta_t\circ\theta_s(p)=\theta_t(q)=\theta_{t+s}(p).
+\]
+结合 $\theta_0(p)=\theta^{(p)}(0)=p$，这导出了一个加法群 $\mathbb{R}$
+在 $M$ 上的群作用 $\theta:\mathbb{R}\times M\to M$。
+
+出于这个动机，我们定义 $M$ 上的\emph{全局流}为一个 $M$
+上的连续左 $\mathbb{R}$-作用，即一个连续映射 $\theta:\mathbb{R}\times M\to M$
+满足对于任意 $s,t\in \mathbb{R}$ 和 $p\in M$ 有
+\begin{equation}
+  \theta\bigl(t,\theta(s,p)\bigr)=\theta(t+s,p),\quad
+  \theta(0,p)=p.
+\end{equation}
+
+下面的命题表明，每个光滑的全局流都是按照我们上面所述的方式
+从某个光滑向量场的积分曲线导出的。如果 $\theta:\mathbb{R}\times M\to M$
+是光滑的全局流，对于每个 $p\in M$，我们定义切向量 $V_p\in T_pM$ 为
+\[
+  V_p=\smash{\theta^{(p)}}'(0),
+\]
+那么 $p\mapsto V_p$ 是 $M$ 上的一个向量场，被称为\emph{$\theta$ 的无穷小生成元}。
+
+\begin{proposition}
+  令 $\theta:\mathbb{R}\times M\to M$ 是光滑的全局流，那么
+  $\theta$ 的无穷小生成元 $V$ 是 $M$ 上的光滑向量场，并且每个
+  曲线 $\theta^{(p)}$ 都是 $V$ 的积分曲线。
+\end{proposition}
+\begin{proof}
+  任取 $f\in C^\infty(M)$ 和 $p\in M$，有
+  \[
+    Vf(p)=V_pf=  \smash{\theta^{(p)}}'(0)f=
+    \left.\frac{d}{dt}\right|_{t=0}f\bigl(\theta^{(p)}(0)\bigr)
+    =\frac{\partial (f\circ\theta)}{\partial t}(0,p),
+  \]
+  由于 $f\circ\theta$ 是光滑函数，所以 $Vf$ 也是光滑函数，故
+  $V$ 是光滑向量场。
+
+  下面证明 $\theta^{(p)}$ 是 $V$ 的积分曲线。记 $q=\theta^{(p)}(t)$，那么
+  \[
+    V_{\theta^{(p)}(t)}f=\smash{\theta^{(q)}}'(0)f
+    =\left.\frac{d}{ds}\right|_{s=0}f(\theta(s,q))
+    =\left.\frac{d}{ds}\right|_{s=0}f(\theta(s+t,p))
+    =\smash{\theta^{(p)}}'(t)f,
+  \]
+  即 $\smash{\theta^{(p)}}'(t)=V_{\theta^{(p)}(t)}$。
+\end{proof}
+
+\subsection{流的基本定理}
+
+我们已经说明了每个光滑的全局流都会产生一个光滑的向量场，即无穷小生成元。反之，
+我们希望能说明每个光滑向量场都是某个光滑全局流的无穷小生成元。然而，很容易看出
+这是不成立的，因为存在光滑向量场使得其积分曲线不可能对所有的 $t\in \mathbb{R}$
+都有定义。
+
+\begin{example}
+  令 $M=\mathbb{R}^2 \smallsetminus\{0\}$ 附带标准坐标 $(x,y)$，$V=\partial/\partial x$ 是 $M$
+  上的向量场。$V$ 的唯一的以 $(-1,0)$ 为起点的积分曲线为 $\gamma(t)=(t-1,0)$。
+  但是此时 $\gamma$ 不能被连续地延拓为一条经过 $t=1$ 的积分曲线，这直观上是明显的，
+  因为 $M$ 在原点处有个洞。为了证明这一点，假设 $\tilde\gamma$ 是 $\gamma$ 的连续延拓且
+  经过 $t=1$，那么 $t\to 1_+$ 的时候有 $\gamma(t)\to\tilde{\gamma}(1)\in \mathbb{R}^2 \smallsetminus\{0\}$。
+  同时我们可以将 $\gamma$ 视为值域在 $\mathbb{R}^2$ 中的曲线，于是 $t\to 1_+$ 时有 $\gamma(t)\to (0,0)$，
+  出于极限的唯一性，必须有 $\tilde{\gamma}(1)=(0,0)\in \mathbb{R}^2 \smallsetminus\{0\}$，
+  这是矛盾的。
+\end{example}
+
+出于上述原因，我们给出下面的定义。如果 $M$ 是流形，定义 $M$ 的\emph{流域}指的是一个开集
+$\mathcal{D}\subseteq \mathbb{R}\times M$，其满足任取 $p\in M$，集合
+$\mathcal{D}^{(p)}=\{t\in \mathbb{R}\,|\, (t,p)\in \mathcal{D}\}$ 是
+包含 $0$ 的一个开区间。定义 $M$ 上的\emph{流}为一个连续映射 $\theta:\mathcal{D}\to M$，
+其中 $\mathcal{D}\subseteq \mathbb{R}\times M$ 是流域，这个映射满足：对于任意 $p\in M$，
+\[
+  \theta(0,p)=p,
+\]
+对于 $s\in \mathcal{D}^{(p)}$ 和 $t\in \mathcal{D}^{(\theta(s,p))}$，如果
+$s+t\in \mathcal{D}^{(p)}$，那么
+\[
+  \theta\bigl(t,\theta(s,p)\bigr)=\theta(t+s,p).
+\]
+有时我们将 $\theta$ 称为\emph{局部流}来和全局流区分。
+
+如果 $\theta$ 是流，只要 $(t,p)\in \mathcal{D}$，我们定义 $\theta_t(p)=\theta^{(p)}(t)=\theta(t,p)$，
+这与全局流一致。对于每个 $t\in \mathbb{R}$，我们还定义
+\[
+  M_t=\{p\in M\,|\, (t,p)\in \mathcal{D}\},
+\]
+所以
+\[
+  p\in M_t\Leftrightarrow (t,p)\in \mathcal{D}\Leftrightarrow t\in \mathcal{D}^{(p)}.
+\]
+如果 $\theta$ 是光滑的，定义 $\theta$ 的\emph{无穷小生成元} $V$ 为 $V_p=\smash{\theta^{(p)}}'(0)$。
+
+\begin{proposition}
+  如果 $\theta:\mathcal{D}\to M$ 是光滑流，那么无穷小生成元 $V$ 是光滑向量场，并且
+  每条曲线 $\theta^{(p)}$ 都是 $V$ 的积分曲线。
+\end{proposition}
+
+下面的定理是本节的主要结果。\emph{极大积分曲线}指的是不能延拓到任意更大开区间的一条积分曲线，
+\emph{极大流}指的是不能延拓到任意更大流域的流。
+
+\begin{theorem}[流的基本定理]
+  令 $V$ 是光滑流形 $M$ 上的光滑向量场，那么存在唯一的光滑极大流 $\theta:\mathcal{D}\to M$
+  使得其无穷小生成元为 $V$，此外，这个流有下面的性质：
+  \begin{enumerate}
+    \item 对于每个 $p\in M$，曲线 $\theta^{(p)}:\mathcal{D}^{(p)}\to M$ 是 $V$ 的唯一的
+    以 $p$ 为起点的极大积分曲线。
+    \item 如果 $s\in \mathcal{D}^{(p)}$，那么 $\mathcal{D}^{(\theta(s,p))}$ 是区间
+    $\mathcal{D}^{(p)}-s=\{t-s\,|\, t\in \mathcal{D}^{(p)}\}$。
+    \item 对于每个 $t\in \mathbb{R}$，$M_t$ 是 $M$ 的开集，并且 $\theta_t:M_t\to M_{-t}$
+    是微分同胚，其逆为 $\theta_{-t}$。
+  \end{enumerate}
+\end{theorem}
+
+上述基本定理中断言的存在且唯一的流称为\emph{$V$ 生成的流}，或者简称为\emph{$V$ 的流}。
+
+\begin{proposition}[流的自然性]
+  设 $M,N$ 是光滑流形，$F:M\to N$ 是光滑映射，$X\in \mathfrak{X}(M)$，
+  $Y\in \mathfrak{X}(N)$。令 $\theta$ 是 $X$ 的流，$\eta$ 是 $Y$ 的流。
+  如果 $X$ 和 $Y$ 是 $F$-相关的，那么对于每个 $t\in \mathbb{R}$，
+  $F(M_t)\subseteq N_t$ 并且 $\eta_t\circ F=F\circ\theta_t$：
+  \[
+    \begin{tikzcd}
+      M_t\arrow[r,"F"]\arrow[d,"\theta_t"'] & N_t\arrow[d,"\eta_t"]\\
+      M_{-t}\arrow[r,"F"] & N_{-t}
+    \end{tikzcd}  
+  \]
+\end{proposition} 
+\begin{proof}
+  根据 \autoref{prop:naturality of integral curve}，对于任意 $p\in M$，
+  曲线 $F\circ\theta^{(p)}$ 是 $Y$ 的以 $F(p)$ 为起点的积分曲线，根据积分曲线
+  的唯一性，极大积分曲线 $\eta^{(F(p))}$ 至少定义在区间 $\mathcal{D}^{(p)}$
+  上并且在这个区间上有 $F\circ\theta^{(p)}=\eta^{(F(p))}$。这意味着
+  \[
+    p\in M_t\Rightarrow t\in \mathcal{D}^{(p)}  
+    \Rightarrow t\in \mathcal{D}^{(F(p))}\Rightarrow F(p)\in N_t,
+  \]
+  所以 $F(M_t)\subseteq N_t$。并且在 $t\in \mathcal{D}^{(p)}$
+  时，有 $F\bigl(\theta^{(p)}(t)\bigr)=\eta^{(F(p))}(t)$，
+  这等价于 $\eta_t(F(p))=F(\theta_t(p))$。
+\end{proof}
+
+\begin{corollary}[流的微分同胚不变性]
+  令 $F:M\to N$ 是微分同胚，如果 $X\in \mathfrak{X}(M)$ 以及
+  $\theta$ 是 $X$ 的流，那么 $F_*X$ 的流为任取 $t\in \mathbb{R}$，$\eta_t=F\circ\theta_t\circ F^{-1}$，
+  流域满足 $N_t=F(M_t)$。
+\end{corollary}
+
+\subsection{完备向量场}
+
+我们已经注意到不是所有的光滑向量场都生成一个全局流，能够生成全局流
+的光滑向量场足够重要，所以我们给它们一个名字。我们称一个光滑向量场
+是\emph{完备的}当且仅当其能够生成一个全局流，或者等价地说，
+它的极大积分曲线对所有的 $t\in \mathbb{R}$ 都有定义。
+我们将表明所有的紧支向量场是完备的，因此紧流形上的所有光滑向量场都是完备的。
+
+
+\begin{theorem}
+  光滑流形上的紧支光滑向量场是完备的。
+\end{theorem}
+
+\begin{corollary}
+  紧流形上的光滑向量场是完备的。
+\end{corollary}
+
+李群上的左不变向量场构成了另一类重要的完备向量场。
+
+\begin{theorem}
+  李群上的左不变向量场是完备的。
+\end{theorem}
+

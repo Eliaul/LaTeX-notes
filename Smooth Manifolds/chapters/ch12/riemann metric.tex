@@ -1,0 +1,370 @@
+
+
+\chapter{黎曼度量}
+
+\section{黎曼流形}
+
+令 $M$ 是光滑流形，\emph{$M$ 上的黎曼度量}指的是 $M$ 上的
+一个光滑的对称协变 $2$-张量场，并且在每个点处是正定的。
+一个\emph{黎曼流形}指的是二元组 $(M,g)$，其中 $M$ 是光滑流形，
+$g$ 是 $M$ 上的一个黎曼度量。
+
+如果 $g$ 是黎曼度量，那么对于每个 $p\in M$，$2$-张量 $g_p\in T^2(T_p^*M)$
+是 $T_pM$ 上的一个内积。出于这一点，对于 $v,w\in T_pM$，我们通常使用 $\langle v,w\rangle_g$
+来表示实数 $g_p(v,w)$。
+
+在任意光滑局部坐标 $\left(x^i\right)$ 下，一个黎曼度量可以被写为：
+\[
+  g=g_{ij}\d x^i\otimes \d x^j.  
+\]
+其中 $(g_{ij})$ 是光滑函数的对称正定矩阵。$g$ 的对称性允许我们
+将 $g$ 写为下述对称积的形式：
+\begin{align*}
+  g&=g_{ij}\d x^i\otimes \d x^j\\
+  &=\frac{1}{2}\bigl(g_{ij}\d x^i\otimes \d x^j+g_{ji}\d x^i\otimes \d x^j\bigr)\\
+  &=\frac{1}{2}\bigl(g_{ij}\d x^i\otimes \d x^j+g_{ij}\d x^j\otimes \d x^i\bigr)\\
+  &=g_{ij}\d x^i\d x^j.
+\end{align*}
+
+\begin{example}[Euclid 度量]
+  最简单的黎曼度量的例子是 $\mathbb{R}^2$ 上的\emph{Euclid 度量}
+  $\bar g$，在标准坐标下，其表示为
+  \[
+    \bar g=\delta_{ij}\d x^i\d x^j.  
+  \]
+  通常我们把张量 $\alpha$ 与自身的对称积记为 $\alpha^2$，所以 Euclid 度量
+  可以写为
+  \[
+    \bar g = \bigl(\d x^1\bigr)^2+\cdots +\bigl(\d x^n\bigr)^2.
+  \]
+  对于向量 $v,w\in T_p \mathbb{R}^n$，这导致
+  \[
+    \bar g_p(v,w)=\delta_{ij}v^iw^j=\sum_{i=1}^nv^iw^i=v\cdot w.
+  \]
+  换句话说，$\bar g$ 是 $2$-张量场，其在每个点处的取值就是 Euclid 内积。
+\end{example}
+
+\begin{example}[积度量]
+  如果 $(M,g)$ 和 $(\wwtilde{M},\tilde{g})$ 是黎曼流形，我们可以定义
+  积流形 $M\times\wwtilde{M}$ 上的黎曼度量 $\hat g=g\oplus\tilde g$，
+  这被称为\emph{积度量}，定义为：
+  \[
+    \hat g\Bigl(\bigl(v,\tilde v\bigr),\bigl(w,\tilde w\bigr)\Bigr)  
+    =g(v,w)+\tilde g\bigl(\tilde v,\tilde w\bigr).
+  \]
+  其中 $\bigl(v,\tilde v\bigr),\bigl(w,\tilde w\bigr)\in T_pM\oplus T_q\wwtilde M\simeq T_{(p,q)}\bigl(M\times\wwtilde M\bigr)$。
+  给定 $M$ 的局部坐标 $\bigl(x^1,\dots,x^n\bigr)$ 和 $\wwtilde M$
+  的局部坐标 $\bigl(y^1,\dots,y^m\bigr)$，可得 $M\times \wwtilde M$
+  的一个局部坐标 $\bigl(x^1,\dots,x^n,y^1,\dots,y^m\bigr)$，
+  积度量在这个坐标中可以局部地表示为分块对角阵
+  \[
+    \bigl(\hat g_{ij}\bigr) =\begin{pmatrix}
+      g_{ij} & 0 \\
+      0 & \tilde g_{ij}
+    \end{pmatrix}.
+  \]
+\end{example}
+
+\begin{proposition}[黎曼度量的存在性]
+  每个光滑流形都存在一个黎曼度量。
+\end{proposition}
+
+下面是可以定义在黎曼流形 $(M,g)$ 上的一些几何结构。
+\begin{itemize}[noitemsep]
+  \item 切向量 $v\in T_pM$ 的\emph{长度}定义为
+  \[
+    |v|_g=\langle v,v\rangle_g^{1/2}=g_p(v,v)^{1/2}.  
+  \]
+  \item 两个非零切向量 $v,w\in T_pM$ 的\emph{夹角}被定义为
+  满足
+  \[
+    \cos\theta=\frac{\inn{v,w}_g}{|v|_g|w|_g}
+  \]
+  的唯一的 $\theta\in [0,\pi]$。
+  \item 切向量 $v,w\in T_pM$ 如果满足 $\inn{v,w}_g=0$，那么我们说
+  它们是\emph{正交的}。这意味着二者至少有一个零向量，或者夹角为 $\pi/2$。
+\end{itemize}
+
+研究黎曼流形的一个非常有用的工具是正交标架。我们说开子集 $U\subseteq M$
+上的局部标架 $(E_1,\dots,E_n)$ 是\emph{正交标架}，如果在每个点 $p\in U$
+处的向量组 $(E_1|_p,\dots,E_n|_p)$ 构成 $T_pM$ 的一组正交基，或者等价地说，
+有 $\inn{E_i,E_j}_p=\delta_{ij}$。
+
+\begin{example}
+  坐标标架 $\bigl(\partial/\partial x^i\bigr)$ 是 $\mathbb{R}^n$
+  的关于 Euclid 度量的一个全局正交标架。
+\end{example}
+
+
+\subsection{拉回度量}
+
+设 $M,N$ 是光滑流形，$g$ 是 $N$ 上的黎曼度量，$F:M\to N$ 是光滑映射。
+拉回 $F^*g$ 是 $M$ 上的一个光滑 $2$-张量场。如果 $F^*g$ 是正定的，
+那么就是 $M$ 上的黎曼度量，被称为由 $F$ 确定的\emph{拉回度量}。
+
+\begin{proposition}[拉回度量判别法]
+  设 $F:M\to N$ 是光滑映射，$g$ 是 $N$ 上的黎曼度量，那么 
+  $F^*g$ 是 $M$ 上的黎曼度量当且仅当 $F$ 是光滑浸入。
+\end{proposition}
+\begin{proof}
+  若 $F^*g$ 是 $M$ 上的黎曼度量。任取 $p\in M$，$v\in T_pM$，
+  若 $dF_p(v)=0$，那么
+  \[
+    (F^*g)_p(v,v)=g_{F(p)}\bigl(\d F_p(v),\d F_p(v)\bigr)  =0,
+  \]
+  $(F^*g)_p$ 正定表明 $v=0$，即 $dF_p$ 是单射，即 $F$ 是光滑浸入。
+
+  反之，若 $F$ 是光滑浸入，那么 $\d F_p$ 是单射，若 $(F^*g)_p(v,v)=0$，
+  那么 $g_{F(p)}$ 的正定性表明 $\d F_p(v)=0$，所以 $v=0$，即
+  $(F^*g)_p$ 是正定的，所以 $F^*g$ 是 $M$ 上的黎曼度量。
+\end{proof}
+
+\begin{example}\label{exa:polar coordinate of euclid metric}
+  我们计算 $\mathbb{R}^2$ 上的 Euclid 度量 $\bar g=\d x^2+\d y^2$
+  在极坐标中的表示，那么 $x=r\cos\theta$，$y=r\sin\theta$ 表明
+  \begin{align*}
+    \bar g&=\d (r\cos\theta)^2+\d (r\sin\theta)^2\\
+    &=(\cos\theta\d r-r\sin\theta\d\theta)^2+(\sin\theta\d r+r\cos\theta\d\theta)^2\\
+    &=\d r^2+r^2\d\theta^2.
+  \end{align*}
+\end{example}
+
+如果 $(M,g)$ 和 $(\wwtilde{M},\tilde g)$ 是黎曼流形，
+光滑映射 $F:M\to N$ 如果是微分同胚并且使得 $F^*\tilde g=g$，
+那么我们说 $F$ 是一个\emph{(黎曼)等距}。如果每个 $p\in M$
+有一个邻域 $U$ 使得 $F|_U$ 是 $U$ 到 $\wwtilde M$ 的一个开子集
+的等距，那么我们说 $F$ 是一个\emph{局部等距}。等价地说，
+$F$ 是一个局部微分同胚且满足 $F^*\tilde{g}=g$。
+
+一个黎曼流形 $(M,g)$ 如果局部等距于 $(\mathbb{R}^n,\bar g)$，那么
+$(M,g)$ 被称为\emph{平坦黎曼流形}，$g$ 被称为\emph{平坦度量}。
+
+\begin{theorem}
+  对于一个黎曼流形 $(M,g)$，下面的说法等价：
+  \begin{enumerate}
+    \item $g$ 是平坦的。
+    \item $M$ 的每个点处都存在一个光滑坐标卡，使得 $g$ 的坐标表示为
+    $g=\delta_{ij}\d x^i\d x^j$。
+    \item $M$ 的每个点处都存在一个光滑坐标卡，使得坐标标架是正交标架。
+    \item $M$ 的每个点都被包含在某个可交换正交标架的定义域中。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 设 $F:M\to \mathbb{R}^n$ 是局部等距，那么
+  $F^*\bar g=g$。任取 $p\in M$，$F$ 是局部微分同胚表明存在 $p$ 的邻域 $U$ 使得 $F|_U$
+  是 $U\to F(U)$ 的微分同胚，故 $(U,F)$ 是 $p$ 处的一个光滑坐标卡，
+  此时 $g$ 的坐标表示为
+  \[
+    g=(\delta_{ij}\circ F) \d F^i\otimes \d F^j=\sum_{i=1}^n
+    \d F^i\otimes \d F^i.\qedhere
+  \]
+\end{proof}
+
+
+\subsection{黎曼子流形}
+
+如果 $(M,g)$ 是一个黎曼流形，每个子流形 $S\subseteq M$
+都自动继承一个拉回度量 $\iota^*g$，其中 $\iota:S\hookrightarrow M$
+是包含映射。根据定义，这意味着对于 $v,w\in T_pS$，有
+\[
+  (\iota^*g)_p(v,w)=g_{\iota(p)}\bigl(d\iota_p(v),d\iota_p(w)\bigr)
+  =g_p(v,w),
+\]
+注意这里我们通过 $d\iota_p:T_pS\to T_pM$，将 $T_pS$ 视为 $T_pM$
+的子空间。所以 $(\iota^*g)_p$ 仅仅是 $g_p$ 在 $T_pS\times T_pS$
+上的限制。在这个度量下，$S$ 被称为\emph{$M$ 的黎曼子流形}。
+
+\begin{example}
+  $\mathbb{S}^n$ 上由包含映射 $\iota:\mathbb{S}^n\hookrightarrow \mathbb{R}^{n+1}$
+  确定的度量 $\mathring{g}=\iota^*\bar g$，这个度量被称为球面上的
+  \emph{圆度量}或者\emph{标准度量}。
+\end{example}
+
+如果 $(M,g)$ 是黎曼流形，$\iota:S\hookrightarrow M$ 是黎曼子流形，
+通常通过局部参数化来计算度量 $\iota^*g$。回顾 \autoref{prop:local parameterization}，
+存在从开集 $U\subseteq \mathbb{R}^k$ 到 $M$ 的单射浸入 $X$，其像集
+为 $S$ 的开子集，并且其逆是 $S$ 的一个坐标映射。因为 $\iota\circ X=X$
+（这里我们滥用同一个记号 $X$ 来表示值域为 $S$ 或者 $M$ 的映射），
+所以 $\iota^*g$ 的坐标表示就是 $X^*(\iota^*g)=X^*g$。
+
+\begin{example}[图像坐标中的度量]
+  令 $U\subseteq \mathbb{R}^n$ 是开集，$S\subseteq \mathbb{R}^{n+1}$
+  是光滑函数 $f:U\to \mathbb{R}$ 的图像。映射 $X:U\to \mathbb{R}^{n+1}$
+  为 $X(u^1,\dots,u^n)=\bigl(u^1,\dots,u^n,f(u)\bigr)$，那么 $X$
+  是 $S$ 的一个全局参数化，所以 $S$ 上的由图像坐标诱导的度量为
+  \[
+    X^*\bar g=\bigl(\d u^1\bigr)^2+\cdots+\bigl(\d u^n\bigr)^2+\d f^2.
+  \]
+  例如，$\mathbb{S}^2$ 的上半球面由映射 $X:\mathbb{B}^2\to \mathbb{R}^3$
+  \[
+    X(u,v)=\left(u,v,\sqrt{1-u^2-v^2}\right)  
+  \]
+  参数化，那么在这个坐标下，圆度量可以表示为
+  \begin{align*}
+    \mathring{g}&=X^*\bar g=\d u^2+\d v^2+\left(\frac{-u\d u-v\d v}{\sqrt{1-u^2-v^2}}\right)^2\\
+    &=\d u^2+\d v^2+\frac{u^2\d u^2+v^2\d v^2+2uv\d u\d v}{1-u^2-v^2}\\
+    &=\frac{(1-v^2)\d u^2+(1-u^2)\d v^2+2uv\d u\d v}{1-u^2-v^2}.
+  \end{align*}
+\end{example}
+
+\subsection{法丛}
+
+设 $(M,g)$ 是 $n$ 维黎曼流形，$S\subseteq M$ 是 $k$ 维黎曼子流形。
+对于任意 $p\in S$，如果 $v\in T_pM$ 在内积 $\langle\cdot,\cdot\rangle_g$
+的意义下与 $T_pS$ 中的每个向量都正交，那么我们说 $v$ \emph{正交于 $S$}。
+定义 \emph{$S$ 在 $p$ 处的法空间}为子空间 $N_pS\subseteq T_pM$，
+由所有 $p$ 处的正交于 $S$ 的向量构成。定义 \emph{$S$ 的法丛}
+是子集 $NS\subseteq TM$，由 $S$ 在每个点处的法空间的无交并构成。
+
+\section{黎曼距离函数}
+
+黎曼度量为我们提供的最重要的工具之一是定义曲线长度的能力。
+假设 $(M,g)$ 是黎曼流形。$\gamma:[a,b]\to M$ 是分段光滑曲线段，
+那么定义 \emph{$\gamma$ 的长度} 为
+\[
+  \LL_g(\gamma)=\int_a^b|\gamma'(t)|_g \d t.  
+\]
+
+现在我们可以定义黎曼流形中两点之间的距离。设 $(M,g)$ 是连通的黎曼流形，
+对于任意 $p,q\in M$，定义 \emph{$p$ 到 $q$ 的距离} 为所有从 $p$
+到 $q$ 的分段光滑曲线段 $\gamma$ 的长度 $\LL_g(\gamma)$ 的下确界，
+记为 $d_g(p,q)$。因为连通光滑流形中任意两点都可以用分段光滑曲线段连接，
+所以这个定义是有意义的。
+
+我们将看到黎曼距离函数将 $M$ 变成为一个度量空间，其度量诱导的拓扑与给定的流形拓扑相同。
+关键在于下面的技术性引理，它表明每个黎曼度量在坐标上都可以局部地与 Euclid 度量相比较。
+
+\begin{lemma}
+  令 $g$ 是开子集 $U\subseteq \mathbb{R}^n$ 上的一个黎曼度量。给定紧子集 
+  $K\subseteq U$，存在正常数 $c,C$ 使得对于任意 $x\in K$ 和 $v\in T_x \mathbb{R}^n$，有
+  \[
+    c|v|_{\bar g}\leq |v|_g\leq C|v|_{\bar g}.  
+  \]
+\end{lemma}
+
+\begin{theorem}[黎曼流形作为度量空间]
+  设 $(M,g)$ 是连通的黎曼流形，在黎曼距离函数下，$M$ 成为一个度量空间，
+  并且这个度量诱导的拓扑和流形自带的拓扑相同。
+\end{theorem}
+
+
+\section{切丛-余切丛同构}
+
+黎曼度量的另一个作用是它提供了切丛和余切丛之间的自然的同构。给定光滑流形 $M$
+上的一个黎曼度量 $g$，我们可以定义一个丛同态 $\hat g:TM\to T^*M$。
+对于 $p\in M$，$v\in T_pM$，定义 $\hat g(v)\in T_p^*M$ 满足
+\[
+  \hat g(v)(w)=g_p(v,w)\quad w\in T_pM.  
+\]
+这诱导了 $\mathfrak{X}(M)\to \mathfrak{X}^*(M)$ 的映射
+\[
+  \hat g(X)(Y)=g(X,Y).   
+\]
+我们使用同一个记号来表示这个映射。
+
+注意到 $\hat g$ 在每个点处的单射，所以也是满射，所以 $\hat g$ 是双射，
+从而是丛同构。
+
+在任意光滑坐标 $(x^i)$ 中，我们可以写为 $g=g_{ij}\d x^i\d x^j$，
+如果 $X,Y$ 是光滑向量场，那么
+\[
+  \hat g(X)(Y)=g(X,Y)=g_{ij}\d x^i(X)\d x^j(Y)=
+  g_{ij}X^iY^j,  
+\]
+这表明余向量场 $\hat g(X)$ 有坐标表示
+\[
+  \hat g(X)=g_{ij}X^i\d x^j.  
+\]
+故
+\[
+  \hat g\left(\frac{\partial}{\partial x^i}\right)=
+  g_{ij} \d x^j=g_{ji}\d x^j,  
+\]
+换句话说，$\hat g:TM\to T^*M$ 在 $TM$ 的坐标标架和 $T^*M$ 的坐标余标架
+下的表示矩阵与 $g$ 的表示矩阵相同。
+
+通常将余向量场 $\hat g(X)$ 的分量记为
+\[
+  \hat g(X)=X_j\d x^j,\quad \text{where $X_j=g_{ij}X^i$}.  
+\]
+可以看到，采用这种记号后，通过黎曼度量 $g$，我们将向量场 $X$ 变成了一个余向量场，
+且分量 $X^j$ 变成了 $X_j=g_{ij}X^i$，出于这一点，我们说
+$\hat g(X)$ 是 $X$ 通过\emph{指标下降}得到的。通常我们使用 
+$X^\flat$ 来表示 $\hat g(X)$，因为符号 $\flat$ (``flat") 在乐谱中用来
+表示音调的降低。
+
+逆映射 $\hat g^{-1}:T^*M\to TM$ 的表示矩阵就是 $(g_{ij})$ 的逆矩阵。
+我们记 $\bigl(g^{ij}\bigr)$ 为实值函数矩阵，其在每个点 $p\in M$
+处的取值为 $\bigl(g_{ij}(p)\bigr)$ 的逆矩阵，所以
+\[
+  g^{ij}g_{jk}=g_{kj}g^{ji}=\delta_k^i.  
+\]
+因为 $g_{ij}$ 是对称矩阵，所以 $g^{ij}$ 也是对称矩阵。所以对于
+余向量场 $\omega\in \mathfrak{X}^*(M)$，向量场 $\hat g^{-1}(\omega)$
+有坐标表示
+\[
+  \hat g^{-1}(\omega)=\omega^i\frac{\partial}{\partial x^i},
+  \quad \text{where $\omega^i=g^{ij}\omega_j$}  .
+\]
+与上面一样，我们使用 $\omega^{\sharp}$ (``sharp'') 来表示
+$\hat g^{-1}(\omega)$，我们说 $\omega^\sharp$ 是 $\omega$
+通过\emph{指标上升}得到的。由于 $\flat$ 和 $\sharp$ 是从
+乐谱中借用的，所以这两个互逆的映射通常被称为\emph{音乐同构}。
+
+上升算符最重要的用途是将梯度恢复为黎曼流形上的向量场。
+对于黎曼流形 $(M,g)$ 上的任意光滑实值函数 $f$，我们定义向量场
+\emph{$f$ 的梯度}为
+\[
+  \grad f=(\d f)^\sharp.
+\]
+解开这个定义，我们看到对于任意 $X\in \mathfrak{X}(M)$，梯度满足
+\[
+  \inn{\grad f,X}_g=\hat g(\grad f)(X)=
+  \d f(X)=Xf.
+\]
+因此梯度 $\grad f$ 是唯一满足
+\[
+  \inn{\grad f,X}_g=Xf\quad \forall X\in \mathfrak{X}(M)  
+\]
+的向量场。或者等价地说，
+\[
+  \inn{\grad f,\cdot}_g=\d f.  
+\]
+
+在光滑坐标中，$\grad f$ 有表示
+\[
+  \grad f=(\d f)^i\frac{\partial}{\partial x^i}
+  =g^{ij}(\d f)_j  \frac{\partial}{\partial x^i}
+  =g^{ij}\frac{\partial f}{\partial x^j}\frac{\partial}{\partial x^i}.
+\]
+特别地，这表明 $\grad f$ 是光滑的。在 $\mathbb{R}^n$ 配备 Euclid 度量的时候，
+这导出
+\[
+  \grad f=\delta^{ij}\frac{\partial f}{\partial x^j}\frac{\partial}{\partial x^i}
+  =\sum_{i=1}^n\frac{\partial f}{\partial x^i}\frac{\partial}{\partial x^i}.
+\]
+
+\begin{example}
+  我们计算函数 $f\in C^\infty(\mathbb{R}^2)$ 相对于 Euclid 度量在极坐标中的梯度。
+  在 \autoref{exa:polar coordinate of euclid metric} 中我们知道 $\bar g$
+  在极坐标中的矩阵为 $\begin{psmallmatrix}1 & 0 \\ 0 & r^2\end{psmallmatrix}$，
+  所以逆矩阵为 $\begin{psmallmatrix}1 & 0 \\ 0 & 1/r^2\end{psmallmatrix}$，
+  所以 
+  \[
+    \grad f=\frac{\partial f}{\partial r}\frac{\partial}{\partial r}+
+    \frac{1}{r^2}\frac{\partial f}{\partial\theta}  \frac{\partial}{\partial \theta}.
+  \]
+\end{example}
+
+黎曼流形上函数 $f$ 的梯度实际上与 Euclid 空间中的梯度有相同的几何性质：
+其指向 $f$ 下降最快的方向，正交于 $f$ 的水平集，并且其长度是 $f$ 在任意方向上的
+方向导数的最大值。要看出这一点，任取 $p\in M$ 和 $v\in T_pM$，有
+\[
+  vf=\d f_p(v)=  \inn{\grad f|_p,v}_g,
+\]
+所以 $v=\grad f|_p$ 的时候 $vf$ 取得最大值，此时最大值
+\[
+  vf=\bigl|\grad f|_p\bigr|_g^2.
+\]
+
+

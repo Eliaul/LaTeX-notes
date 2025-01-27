@@ -1,0 +1,783 @@
+
+
+\chapter{余切丛}
+
+\section{余向量}
+
+\subsection{流形上的余向量}
+
+$M$ 是光滑流形，对于每个 $p\in M$，定义\emph{$p$ 处的余切空间}
+$T_p^*M$ 为切空间 $T_pM$ 的对偶空间：
+\[
+  T_p^*M=(T_pM)^*.  
+\]
+$T_p^*M$ 的元素被称为\emph{$p$ 处的余切向量}，或者简称为\emph{$p$ 处的余向量}。
+
+给定开子集 $U\subseteq M$ 上的一个光滑局部坐标 $\left(x^i\right)$，
+对于每个 $p\in U$，坐标基 $\left(\partial /\partial x^i|_p\right)$
+给出了 $T_p^*M$ 的一组对偶基 $\left(\lambda^i|_p\right)$。
+那么任意余向量 $\omega\in T_p^*M$ 都可以唯一地表示为 $\omega=\omega_i\lambda^i|_p$，
+此时
+\[
+  \omega\left(\left.\frac{\partial}{\partial x^j}\right|_p\right)=\omega_i  
+  \lambda^i|_p\left(\left.\frac{\partial}{\partial x^j}\right|_p\right)
+  =\omega_j.
+\]
+
+假设 $\left(\tilde{x}^i\right)$ 是 $p$ 处的另一个光滑局部坐标，
+$\left(\tilde{\lambda}^j|_p\right)$ 是关于 $\left(\tilde{x}^i\right)$
+的一族对偶基。此时切空间 $T_pM$ 的两组基之间有基变换
+\[
+  \left.\frac{\partial}{\partial x^i}\right|_p=
+  \frac{\partial\tilde x^j}{\partial x^i}(\hat p)
+  \left.\frac{\partial}{\partial \tilde x^j}\right|_p.
+\]
+现在假设 $\omega\in T_p^*M$ 有表示 
+$\omega=\omega_i\lambda^i|_p=\tilde{\omega}_j\tilde{\lambda}^j|_p$，
+那么我们有
+\[
+  \omega_i=\omega\left(
+    \left.\frac{\partial}{\partial x^i}\right|_p
+  \right)=
+  \frac{\partial\tilde x^j}{\partial x^i}(\hat p)
+  \tilde{\omega}_j.
+\]
+
+
+\subsection{余向量场}
+
+对于光滑流形 $M$，无交并
+\[
+  T^*M=\coprod_{p\in M}T_p^*M  
+\]
+被称为\emph{$M$ 的余切丛}。其有一个自然的投影映射 $\pi:T^*M\to M$，
+将 $\omega\in T_p^*M$ 送到 $p$。给定开子集 $U$ 上的光滑局部坐标
+$\left(x^i\right)$，对于每个 $p\in U$，记 $\left(\partial/\partial x^i|_p\right)$
+的对偶基为 $\left(\lambda^i|_p\right)$，这定义了 $n$ 个映射
+$\lambda^1,\dots,\lambda^n:U\to T^*M$，被称为\emph{坐标余向量场}。
+
+\begin{proposition}[余切丛作为向量丛]
+  $M$ 是一个光滑流形。配备标准的投影映射和每个纤维上的自然的向量空间结构，
+  余切丛 $T^*M$ 有唯一的拓扑和光滑结构使得其成为 $M$ 
+  上的秩 $n$ 的光滑向量丛使得所有的坐标余向量场
+  都是光滑的局部截面。
+\end{proposition}
+
+与切丛一样，$M$ 的光滑局部坐标导出了余切丛的光滑局部坐标。如果 
+$\left(x^i\right)$ 是开子集 $U\subseteq M$ 上的光滑局部坐标，
+那么从 $\pi^{-1}(U)$ 到 $\mathbb{R}^{2n}$ 的映射
+\[
+  \xi_i\lambda^i|_p \mapsto 
+  \left(x^1(p),\dots,x^n(p),\xi_1,\dots,\xi_n\right)
+\]
+是 $T^*M$ 上的光滑局部坐标。我们说 $\left(x^i,\xi_i\right)$ 是
+$T^*M$ 关于 $\left(x^i\right)$ 的\emph{自然坐标}。
+
+$T^*M$ 的一个(局部或者全局的)截面被称为\emph{余向量场}或者
+\emph{$1$-形式}。与其他丛的截面一样，没有任何限定词的余向量场
+仅仅假设是连续的。我们将余向量场 $\omega$ 在 $p$ 处的值记为
+$\omega_p$。在开集 $U$ 上的光滑局部坐标中，余向量场 $\omega$
+可以由坐标余向量场 $\left(\lambda^i\right)$ 表示为
+$\omega=\omega_i\lambda^i$，其中 $\omega_i:U\to \mathbb{R}$
+被称为\emph{$\omega$ 的分量函数}，它们刻画为
+\[
+  \omega_i(p)=\omega_p\left(\left.\frac{\partial}{\partial x^i}\right|_p\right).  
+\]
+
+如果 $\omega$ 是 $M$ 上的余向量场，$X$ 是 $M$ 上的向量场，我们可以构造
+一个函数 $\omega(X):M\to \mathbb{R}$ 为
+\[
+  \omega(X)(p)=\omega_p(X_p).  
+\]
+如果我们用坐标表示 $\omega=\omega_i\lambda^i$ 和 $X=X^j\partial/\partial x^j$，那么
+\[
+  \omega(X)(p)=\left(\omega_i(p)\lambda^i|_p\right) 
+  \left(X^j(p)\left.\frac{\partial}{\partial x^j}\right|_p\right)
+  =\omega_i(p)X^i(p),
+\]
+所以 $\omega(X)$ 有局部坐标表示 $\omega(X)=\omega_iX^i$。
+
+与向量场一样，我们有很多方法可以检验余向量场的光滑性。
+
+\begin{proposition}[余向量场的光滑性判别]
+  $M$ 是一个光滑流形，$\omega:M\to T^*M$ 是余向量场，那么下面的说法等价：
+  \begin{enumerate}
+    \item $\omega$ 是光滑的。
+    \item 在每个光滑坐标卡下，$\omega$ 的分量都是光滑的。
+    \item 对于每个光滑向量场 $X\in \mathfrak{X}(M)$，
+    函数 $\omega(X)$ 是光滑函数。
+    \item 对于每个开集 $U\subseteq M$ 和光滑向量场 $X\in \mathfrak{X}(U)$，
+    函数 $\omega(X):U\to \mathbb{R}$ 是光滑的。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 设 $(U,(x^i))$ 是一个光滑坐标卡，
+  此时 $\omega=\omega_i\lambda^i$，即对于任意 $p\in U$，有
+  $\omega_p=\omega_i(p)\lambda^i|_p$。$\omega$ 光滑表明
+  其在这个坐标卡下的坐标表示
+  \[
+    (x^1,\dots,x^n)\mapsto \bigl(x^1,\dots,x^n,\omega_1(x),\dots,\omega_n(x)\bigr)
+  \]
+  是光滑的，这就表明 $\omega_i$ 都是光滑的。
+\end{proof}
+
+\subsection{余标架}
+
+令 $M$ 是光滑流形，$U\subseteq M$ 是开集。\emph{$U$ 上的局部余标架}
+指的是一组 $U$ 上的余向量场 $(\varepsilon^1,\dots,\varepsilon^n)$
+使得对于每个 $p\in U$，$\bigl(\varepsilon^i|_p\bigr)$ 构成
+$T_p^*M$ 的一组基。如果 $U=M$，那么我们说这是一个\emph{全局余标架}。
+
+\begin{example}[坐标余标架]
+  对于每个光滑坐标卡 $\bigl(U,(x^i)\bigr)$，坐标余向量场
+  $\bigl(\lambda^i\bigr)$ 都定义了 $U$ 上的一个局部余标架，
+  被称为\emph{坐标余标架}。
+\end{example}
+
+给定开集 $U$ 上关于 $TM$ 的一个局部标架 $(E_1,\dots,E_n)$，
+唯一确定了 $U$ 上的一个局部余标架 $(\varepsilon^1,\dots,\varepsilon^n)$
+使得 $\bigl(\varepsilon^i|_p\bigr)$ 是 $\bigl(E_i|_p\bigr)$
+的对偶基，等价地说，有 $\varepsilon^i(E_j)=\delta_j^i$。
+这个余标架被称为对偶于 $(E_i)$ 的余标架。反之，给定
+$U$ 上的一个局部余标架 $(\varepsilon^i)$，唯一确定了
+一个局部标架 $(E_i)$，被称为对偶于 $(\varepsilon^i)$
+的标架。例如，在光滑坐标卡中，坐标标架 $\bigl(\partial/\partial x^i\bigr)$
+和坐标余标架 $\bigl(\lambda^i\bigr)$ 互为对偶。
+
+\begin{lemma}
+  令 $M$ 是光滑流形，$U\subseteq M$ 是开集。如果 $(E_i)$
+  是 $U$ 上的局部标架，$(\varepsilon^i)$ 是其对偶标架，
+  那么 $(E_i)$ 光滑当且仅当 $(\varepsilon^i)$ 光滑。
+\end{lemma}
+\begin{proof}
+  只需要说明对于每个 $p\in U$，$(E_i)$ 在 $p$ 的某个邻域上光滑
+  当且仅当 $(\varepsilon^i)$ 也在该邻域上光滑即可。
+  令 $\bigl(V,\bigl(x^i\bigr)\bigr)$ 是使得 $p\in V\subseteq U$
+  的光滑坐标卡，那么在 $V$ 中有
+  \[
+    E_i=a_i^k\frac{\partial}{\partial x^k},\quad
+    \varepsilon^j=b_l^j\lambda^l,
+  \]
+  其中 $\bigl(a_i^k\bigr)$ 和 $\bigl(b_l^j\bigr)$ 是实值函数矩阵。
+  $E_i$ 在 $V$ 上光滑当且仅当 $a_i^k$ 光滑，$\varepsilon^j$ 
+  在 $V$ 上光滑当且仅当 $b_l^j$ 光滑。由于 $\varepsilon^j(E_i)=\delta_i^j$，
+  所以矩阵 $\bigl(a_i^k\bigr)$ 和 $\bigl(b_l^j\bigr)$ 互为逆矩阵，
+  所以 $a_i^k$ 光滑当且仅当 $b_l^j$ 光滑。
+\end{proof}
+
+
+
+
+
+\section{函数的微分}
+
+在初等微积分中，在 $\mathbb{R}^n$ 的光滑实值函数 $f$ 的梯度
+被定义为向量场，其分量是 $f$ 的偏导数，即
+\begin{equation}
+  \grad f= \sum_{i=1}^n\frac{\partial f}{\partial x^i}\frac{\partial}{\partial x^i}.
+\end{equation}
+不幸的是，这种梯度的形式并不是与坐标无关的。
+
+\begin{example}
+  令 $f(x,y)=x^2$，$X$ 是向量场
+  \[
+    X=\grad f=2x\frac{\partial}{\partial x},  
+  \]
+  考虑极坐标 $(r,\theta)$，由于
+  \[
+    \left.\frac{\partial}{\partial x}\right|_{(x,y)} 
+    =\frac{\partial r}{\partial x}\left.\frac{\partial}{\partial r}\right|_{(r,\theta)} 
+    +\frac{\partial \theta}{\partial x}\left.\frac{\partial}{\partial \theta}\right|_{(r,\theta)} 
+    =\frac{x}{r}\left.\frac{\partial}{\partial r}\right|_{(r,\theta)} 
+    -\frac{xy^2}{r}\left.\frac{\partial}{\partial \theta}\right|_{(r,\theta)},
+  \]
+  所以 $X$ 使用极坐标的表达为
+  \[
+    X=  \frac{2x^2}{r}\frac{\partial}{\partial r}
+    -\frac{2x^2y^2}{r}\frac{\partial}{\partial \theta}
+    =2r\cos^2\theta\frac{\partial}{\partial r}-
+    \frac{1}{2}r^3\sin^22\theta\frac{\partial}{\partial \theta}.
+  \]
+  但是
+  \[
+    X\neq \frac{\partial f}{\partial r}\frac{\partial}{\partial r}
+    +\frac{\partial f}{\partial\theta}\frac{\partial}{\partial \theta}
+    =2r\cos\theta  \frac{\partial}{\partial r}-r^2\sin 2\theta
+    \frac{\partial}{\partial \theta}.
+  \]
+\end{example}
+
+这表明光滑函数的偏导数不能以与坐标无关的方式解释为向量场的分量，但是可以
+证明它们可以解释为余向量场的分量，这是余向量场最重要的应用。
+
+令 $f$ 是光滑流形 $M$ 上的实值函数。我们定义余向量场 $df$ 为
+\[
+  df_p(v)=vf\quad \forall v\in T_pM,  
+\]
+$df$ 被称为\emph{$f$ 的微分}。
+
+\begin{proposition}
+  光滑函数的微分是一个光滑余向量场。
+\end{proposition}
+\begin{proof}
+  任取 $p\in M$，不难验证 $df_p:T_pM\to \mathbb{R}$ 是线性映射，所以
+  $df_p\in T_p^*M$ 确实是余向量。任取 $X\in \mathfrak{X}(M)$，有
+  $df(X)(p)=df_p(X_p)=X_pf=(Xf)(p)$，所以 $df(X)=Xf$ 是光滑函数，
+  即 $df$ 是光滑余向量场。
+\end{proof}
+
+为了更具体地了解 $df$，我们计算它的坐标表示。令 $\left(x^i\right)$ 是
+开子集 $U\subseteq M$ 上的光滑局部坐标，$\left(\lambda^i\right)$
+是对应的坐标余标架。那么 $df$ 可以表示为 $df_p=A_i(p)\lambda^i|_p$，
+其中 $A_i:U\to \mathbb{R}$，此时根据定义，有
+\[
+  \frac{\partial f}{\partial x^j}(p)=df_p\left(\left.\frac{\partial}{\partial x^j}\right|_p\right)
+  =  A_i(p)\lambda^i|_p \left(\left.\frac{\partial}{\partial x^j}\right|_p\right)
+  =A_j(p),
+\]
+于是我们得到 $df$ 的坐标表示：
+\begin{equation}\label{eq:coordinate represent of df}
+  df_p=\frac{\partial f}{\partial x^i}(p)\lambda^i|_p.
+\end{equation}
+因此，任何光滑坐标卡中 $df$ 的分量函数都是 $f$ 关于这些局部坐标
+的偏导数。这表明我们可以将 $df$ 视为梯度的类似物，只不过将其以
+一种坐标无关的方式重新解释。
+
+特别地，如果我们将 $f$ 取为坐标函数 $x^j:U\to \mathbb{R}$，那么
+\[
+  dx^j|_p=  \frac{\partial x^j}{\partial x^i}(p)\lambda^i|_p
+  =\lambda^j|_p,
+\]
+也就是说，坐标余向量场 $\lambda^j$ 就是微分 $dx^j$。因此，我们可以将
+\eqref{eq:coordinate represent of df} 写为：
+\[
+  df_p=  \frac{\partial f}{\partial x^i}(p)dx^i|_p,
+\]
+或者作为余向量场之间的等式：
+\begin{equation}
+  df=\frac{\partial f}{\partial x^i}dx^i.
+\end{equation}
+特别地，在 $1$ 维的情况下，简化为
+\[
+  df=\frac{df}{dx}dx,  
+\]
+这正是一元微积分中我们熟悉的写法。从今以后，我们放弃记号
+$\lambda^i$，转而用 $dx^i$ 替代。
+
+\begin{proposition}[微分的性质]
+  令 $M$ 是光滑流形，$f,g\in C^\infty(M)$，
+  \begin{enumerate}
+    \item 如果 $a,b\in \mathbb{R}$，那么
+    $d(af+bg)=adf+bdg$。
+    \item $d(fg)=fdg+gdf$。
+    \item 如果 $g\neq 0$，那么 $d(f/g)=(gdf-fdg)/g^2$。
+    \item 如果 $J\subseteq \mathbb{R}$ 包含 $f$ 的像集，
+    $h:J\to \mathbb{R}$ 是光滑函数，那么
+    $d(h\circ f)=(h'\circ f)df$。
+    \item 如果 $f$ 是常值函数，那么 $df=0$。
+  \end{enumerate}
+\end{proposition}
+
+\begin{proposition}[微分为零的函数]\label{prop:functions with vanishing differential}
+  如果 $f$ 是光滑流形 $M$ 上的光滑实值函数，那么 $df=0$
+  当且仅当 $f$ 在 $M$ 的每个连通分支上是常值函数。
+\end{proposition}
+\begin{proof}
+  只需要假设 $M$ 是连通的。如果 $f$ 是常值函数，那么显然 $df=0$。
+  反之，假设 $df=0$，令 $p\in M$，$\mathcal{C}=\{q\in M\,|\, f(q)=f(p)\}$。
+  任取 $q\in \mathcal{C}$，令 $U$ 是以 $q$ 为中心的光滑坐标球，那么
+  $df=0=\partial f/\partial x^i \d x^i$ 表明在 $U$ 上有
+  $\partial f/\partial x^i\equiv 0$，根据基本的微积分内容可知
+  $f$ 在 $U$ 上是常值函数，所以 $U\subseteq \mathcal{C}$，
+  即 $\mathcal{C}$ 是开集。由于 $\mathcal{C}=f^{-1}(f(p))$，
+  所以 $\mathcal{C}$ 是闭集。所以 $\mathcal{C}=M$。
+\end{proof}
+
+
+注意，对于光滑函数 $f:M\to \mathbb{R}$，我们现在定义了两种微分，
+一种是在 \ref{sec:differential of map} 中定义的
+$\tilde{d}\!f_p:T_pM\to T_{f(p)}\mathbb{R}$，一种是本节定义的
+$df_p:T_pM\to \mathbb{R}$，这二者本质上是相同的，因为我们在给定的坐标
+中，我们有典范的同构 $T_{f(p)}\mathbb{R}\simeq \mathbb{R}$。
+此时，可以计算
+\[
+  \tilde d\!f_p\left(\left.\frac{\partial}{\partial x^i}\right|_p\right)
+  =\frac{\partial f}{\partial x^i}(p)\left.\frac{d}{dt}\right|_{f(p)},
+\]
+以及
+\[
+  df_p   \left(\left.\frac{\partial}{\partial x^i}\right|_p\right)
+  =\frac{\partial f}{\partial x^i}(p),
+\]
+所以这二者的值在同构的意义下是相同的。
+
+\section{余向量场的拉回}
+
+令 $F:M\to N$ 是光滑映射，$p\in M$，微分 $dF_p:T_pM\to T_{F(p)}N$
+导出了对偶的线性映射
+\[
+  dF_p^*:T_{F(p)}^*N\to T_p^*M,  
+\]
+被称为 \emph{$F$ 在 $p$ 处的拉回} 或者 \emph{$F$ 的余切映射}。
+根据对偶映射的定义，其刻画为：
+\[
+  dF_p^*(\omega)(v)= \omega(dF_p(v)),\quad \omega\in T_{F(p)}^*N,
+  v\in T_pM.
+\]
+也即
+\[
+  dF_p^*(\omega)=\omega\circ dF_p.  
+\]
+
+对于向量场而言，我们注意到光滑向量场的推前仅在微分同胚或者李群同态
+的特殊情况下有定义。而余向量场的情况则大有不同，事实上余向量场
+总是能够拉回到一个余向量场。给定光滑映射 $F:M\to N$ 和
+$N$ 上的余向量场 $\omega$，定义 $M$ 上的余向量场 $F^*\omega$
+为
+\[
+  (F^*\omega)_p =dF_p^*(\omega_{F(p)}),
+\]
+这个余向量场被称为\emph{$\omega$ 通过 $F$ 的拉回}。其在切向量 $v\in T_pM$
+上的作用为
+\[
+  (F^*\omega)_p(v)=\omega_{F(p)}\bigl(dF_p(v)\bigr)  .
+\]
+
+\begin{proposition}\label{prop:pullback of covector field}
+  令 $F:M\to N$ 是光滑映射，$u$ 是 $N$ 上的连续实值函数，$\omega$ 是
+  $N$ 上的余向量场，那么
+  \[
+    F^*(u\omega)=(u\circ F)F^*\omega,  
+  \]
+  此外，若 $u$ 是光滑的，那么
+  \[
+    F^*du=d(u\circ F).  
+  \]
+\end{proposition}
+\begin{proof}
+  直接计算得
+  \begin{align*}
+    \bigl(F^*(u\omega)\bigr)_p&=dF_p^*\bigl(u(F(p))\omega_{F(p)}\bigr)
+    =u(F(p))dF_p^*(\omega_{F(p)})\\
+    &=\bigl(u\circ F(p)\bigr) (F^*\omega)_p=\bigl((u\circ F)F^*\omega\bigr)_p.
+  \end{align*}
+  若 $u$ 是光滑的，那么
+  \begin{align*}
+    (F^*du)_p(v)&=dF_p^*(du_{F(p)})(v)=du_{F(p)}\bigl(dF_p(v)\bigr)\\
+    &=dF_p(v)u=v(u\circ F)=d(u\circ F)_p(v).\qedhere
+  \end{align*}
+\end{proof}
+
+\begin{proposition}
+  令 $F:M\to N$ 是光滑映射，$\omega$ 是
+  $N$ 上的余向量场，那么 $F^*\omega$ 是 $M$ 上的余向量场。如果
+  $\omega$ 光滑，那么 $F^*\omega$ 也光滑。
+\end{proposition}
+\begin{proof}
+  任取 $p\in M$，选取 $F(p)$ 处的光滑坐标卡 $(V,(y^j))$，令
+  $U=F^{-1}(V)$。设 $\omega=\omega_jdy^j$，那么
+  根据 \autoref{prop:pullback of covector field}，有
+  \[
+    F^*\omega=F^*\left(\omega_jdy^j\right)=
+    (\omega_j\circ F)F^*dy^j=
+    (\omega_j\circ F)d(y^j\circ F)=(\omega_j\circ F)dF^j,  
+  \]
+  所以 $F^*\omega:U\to T^*M$ 是连续映射。若 $\omega$ 光滑，显然
+  $F^*\omega$ 光滑。
+\end{proof}
+
+\begin{example}
+  令 $F:\mathbb{R}^3\to \mathbb{R}^2$ 为映射
+  \[
+    (u,v)=F(x,y,z) =(x^2y,y\sin z),
+  \]
+  余向量场 $\omega\in \mathfrak{X}^*(\mathbb{R}^2)$ 为
+  \[
+    \omega=vdu+udv,  
+  \]
+  那么拉回可以计算为
+  \begin{align*}
+    F^*\omega&=(v\circ F)dF^1+(u\circ F)dF^2\\
+    &=y\sin z (2xydx+x^2dy)+x^2y(\sin zdy+y\cos zdz)\\
+    &=2xy^2\sin z dx+2x^2y\sin zdy+x^2y^2\cos zdz.
+  \end{align*}
+\end{example}
+
+换句话说，要计算 $F^*\omega$，只需要将 $F$ 的分量函数
+复合上对应 $\omega$ 系数的分量函数即可。
+
+\subsection{余向量场限制在子流形上}
+
+
+
+\section{线积分}
+
+余向量场的另一个重要应用是使得线积分的概念具有与坐标无关的意义。
+
+我们丛最简单的情况开始：假设 $[a,b]\subseteq \mathbb{R}$
+是一个区间，$\omega$ 是 $[a,b]$ 上的光滑余向量场。
+（这意味着 $\omega$ 的分量函数在 $[a,b]$ 的某个邻域上有一个光滑延拓）。
+令 $t$ 是 $\mathbb{R}$ 上的标准坐标，那么 $\omega$ 可以写为
+$\omega_t=f(t)dt$，其中 $f$ 是光滑函数 $f:[a,b]\to \mathbb{R}$。
+我们定义\emph{$\omega$ 在 $[a,b]$ 上的积分}为
+\[
+  \int_{[a,b]}\omega=\int_a^b f(t) \, dt.  
+\]
+下面的命题告诉我们这不仅仅是一个符号上的小技巧。
+
+\begin{proposition}[积分的微分同胚不变性]\label{prop:diffeomorphic invariance of line integral}
+  令 $\omega$ 是 $[a,b]\subseteq \mathbb{R}$ 上的光滑余向量场。
+  如果 $\varphi:[c,d]\to[a,b]$ 是单调递增的微分同胚，那么
+  \[
+    \int_{[c,d]}\varphi^*\omega=\int_{[a,b]}\omega.  
+  \]
+\end{proposition}
+\begin{proof}
+  任取 $s\in [c,d]$，那么 
+  $(\varphi^*\omega)_s=f(\varphi(s)) d\varphi=f(\varphi(s))\varphi'(s)ds$，于是
+  \[
+    \int_{[c,d]}\varphi^*\omega=\int_c^d f(\varphi(s))\varphi'(s)\, ds
+    =\int_a^b f(t)\, dt=\int_{[a,b]}\omega.\qedhere
+  \]
+\end{proof}
+
+令 $M$ 是一个光滑流形，\emph{$M$ 中的曲线段} 指的是一条定义域为紧区间
+的连续曲线 $\gamma:[a,b]\to M$。将 $[a,b]$ 视为带边流形，如果
+$\gamma$ 是光滑映射（等价地说，$\gamma$ 在端点处的某个邻域中有光滑的延拓），
+那么我们说这是\emph{光滑曲线段}。如果存在 $[a,b]$ 的划分 $a=a_0<a_1<\cdots<a_k=b$
+使得 $\gamma|_{[a_{i-1},a_i]}$ 是光滑的，那么我们说 $\gamma$
+是\emph{分段光滑曲线段}。
+
+\begin{proposition}
+  令 $M$ 是连通的光滑流形，那么 $M$ 的任意两个点可以用分段光滑曲线段连接。
+\end{proposition}
+\begin{proof}
+  任取 $p\in M$，定义集合 $\mathcal{C}\subseteq M$，点 $q\in \mathcal{C}$
+  当且仅当存在从 $p$ 到 $q$ 的分段光滑曲线段。显然 $p\in \mathcal{C}$，
+  所以 $\mathcal{C}$ 非空，我们只需要说明 $\mathcal{C}$ 既开又闭即可表明
+  $\mathcal{C}=M$。
+
+  任取 $q\in \mathcal{C}$，那么存在 $p$ 到 $q$ 的分段光滑曲线段。
+  令 $U$ 是以 $q$ 为中心的光滑坐标球，那么对于任意的 $q'\in U$，
+  我们可以构造从 $q$ 到 $q'$ 的光滑曲线（在坐标球中用直线连接即可），
+  将这两条曲线段连接即可得到 $p$ 到 $q'$ 的分段光滑曲线段，所以
+  $q'\in \mathcal{C}$，这表明 $\mathcal{C}$ 是开集。
+  另一方面，任取 $q\in\partial \mathcal{C}$，同样取以 $q$ 为中心
+  的光滑坐标球 $U$，那么存在 $q'\in U\cap \mathcal{C}$，
+  于是存在从 $p$ 到 $q'$ 的分段光滑曲线段以及从 $q'$ 到 $q$
+  的光滑曲线段，所以存在从 $p$ 到 $q$ 的分段光滑曲线段，
+  所以 $q\in \mathcal{C}$，即 $\mathcal{C}$ 是闭集。
+\end{proof}
+
+如果 $\gamma:[a,b]\to M$ 是光滑曲线段，$\omega$ 是 $M$ 上的光滑余向量场，
+我们定义 \emph{$\omega$ 在 $\gamma$ 上的线积分} 为
+\[
+  \int_\gamma\omega=\int_{[a,b]}\gamma^*\omega.  
+\]
+更一般地，如果 $\gamma$ 是分段光滑的，我们定义
+\[
+    \int_\gamma\omega=\sum_{i=1}^k\int_{[a_{i-1},a_i]}\gamma^*\omega.
+\]
+
+\begin{proposition}[线积分的性质]
+  令 $M$ 是光滑流形，$\gamma:[a,b]\to M$ 是分段光滑曲线段，
+  $\omega,\omega_1,\omega_2\in \mathfrak{X}^*(M)$，
+  \begin{enumerate}
+    \item 对于任意 $c_1,c_2\in \mathbb{R}$，有
+    \[
+      \int_\gamma(c_1\omega_1+c_2\omega_2)=c_1\int_\gamma\omega_1+
+      c_2\int_\gamma\omega_2.  
+    \]
+    \item 如果 $\gamma$ 是常值映射，那么 $\int_\gamma\omega=0$。
+    \item 如果 $\gamma_1=\gamma|_{[a,c]}$ 以及 $\gamma_2=\gamma|_{[c,b]}$，
+    其中 $a<c<b$，那么
+    \[
+      \int_\gamma\omega=\int_{\gamma_1} \omega+\int_{\gamma_2}\omega.
+    \]
+    \item 如果 $F:M\to N$ 是任意光滑映射，$\eta\in \mathfrak{X}^*(N)$，
+    那么
+    \[
+      \int_\gamma F^*\eta=\int_{F\circ\gamma}\eta.  
+    \]
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (4) 只需要对 $\gamma$ 光滑的情况进行证明。我们有
+  \[
+    \int_\gamma F^*\eta=  \int_{[a,b]}\gamma^*(F^*\eta),
+  \]
+  由于
+  \[
+    \bigl(\gamma^*(F^*\eta)\bigr)_s(v)=
+    (F^*\eta)_{\gamma(s)}(d\gamma(v))=
+    \eta_{F(\gamma(s))}\bigl(d(F\circ\gamma)(s)\bigr)
+    =\bigl((F\circ\gamma)^*\eta\bigr)_s(v),
+  \]
+  其中 $s\in[a,b]$，$v\in T_s \mathbb{R}$。所以
+  \[
+    \int_\gamma F^*\eta=  \int_{[a,b]}\gamma^*(F^*\eta)
+    =\int_{[a,b]}(F\circ\gamma)^*\eta=\int_{F\circ\gamma}\eta.\qedhere
+  \]
+\end{proof}
+
+\begin{example}\label{exa:covector field on R2-0}
+  令 $M=\mathbb{R}^2 \smallsetminus\{0\}$，$\omega$ 是余向量场
+  \[
+    \omega=\frac{xdy-ydx}{x^2+y^2}.  
+  \]
+  $\gamma:[0,2\pi]\to M$ 是曲线段 $\gamma(t)=(\cos t,\sin t)$。
+  那么
+  \[
+    \int_\gamma\omega=\int_{[0,2\pi]}\gamma^*\omega=
+    \int_{[0,2\pi]}\frac{\cos t(\cos t\d t)-\sin t(-\sin t\d t)}{\cos^2 t+\sin ^2t} 
+    =2\pi. 
+  \]
+\end{example}
+
+线积分的一个重要性质是其独立于曲线的参数化。令 $\gamma:[a,b]\to M$
+和 $\tilde\gamma:[c,d]\to M$ 是分段光滑曲线段，如果 $\tilde\gamma=\gamma\circ\varphi$，
+其中 $\varphi:[c,d]\to [a,b]$ 是微分同胚，那么我们说 $\tilde{\gamma}$
+是 $\gamma$ 的\emph{重参数化}。如果 $\varphi$ 是递增函数，那么
+我们说 $\tilde{\gamma}$ 是\emph{向前重参数化}，反之称为%
+\emph{向后重参数化}。
+
+\begin{proposition}[线积分的参数独立性]
+  令 $M$ 是光滑流形，$\omega\in \mathfrak{X}^*(M)$，$\gamma$
+  是分段光滑曲线段，对于 $\gamma$ 的重参数化 $\tilde{\gamma}$，
+  我们有
+  \[
+    \int_{\tilde{\gamma}}\omega=\begin{dcases}
+      \hphantom{-}\int_\gamma\omega & \text{$\tilde{\gamma}$ 是向前重参数化},\\
+      -\int_\gamma\omega & \text{$\tilde{\gamma}$ 是向后重参数化}.
+    \end{dcases}  
+  \]
+\end{proposition}
+\begin{proof}
+  根据 \autoref{prop:diffeomorphic invariance of line integral}，
+  对于向前重参数化的情况，我们有
+  \[
+    \int_{\tilde{\gamma}}\omega=\int_{[c,d]}(\gamma\circ\varphi)^*\omega
+    =\int_{[c,d]}\varphi^*\gamma^*\omega=\int_{[a,b]}\gamma^*\omega
+    =\int_\gamma\omega.\qedhere
+  \]
+\end{proof}
+
+\begin{proposition}
+  如果 $\gamma:[a,b]\to M$ 是分段光滑曲线段，那么 $\omega$ 在 $\gamma$
+  上的线积分可以表示为
+  \begin{equation}\label{eq:caculate line integral}
+    \int_\gamma\omega=\int_a^b \omega_{\gamma(t)}\bigl(\gamma'(t)\bigr)
+    \d t.
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  假设 $\gamma$ 是光滑的即可。在局部坐标中，设 $\omega=\omega_i \d x^i$，
+  那么
+  \begin{align*}
+    \omega_{\gamma(t)}\bigl(\gamma'(t)\bigr)
+    &=\omega_i\bigl(\gamma(t)\bigr)\d x^i\bigl(\gamma'(t)\bigr)
+    =\omega_i\bigl(\gamma(t)\bigr) \bigl(\gamma'(t) x^i\bigr)\\
+    &=\omega_i\bigl(\gamma(t)\bigr)
+    \left(\d \gamma_t\left(\frac{d}{ds}\bigg|_{t}\right)x^i\right)
+    =\omega_i\bigl(\gamma(t)\bigr) \dot{\gamma}^i(t),
+  \end{align*}
+  所以
+  \[
+    (\gamma^*\omega)_t=\omega_i\bigl(\gamma(t)\bigr)
+    \d(\gamma^i)_t=\omega_i\bigl(\gamma(t)\bigr)
+    \dot{\gamma}(t)\d t=\omega_{\gamma(t)}\bigl(\gamma'(t)\bigr)\d t,
+  \]
+  所以
+  \[
+    \int_\gamma\omega=\int_{[a,b]}\gamma^*\omega
+    =\int_a^b   \omega_{\gamma(t)}\bigl(\gamma'(t)\bigr)\d t.\qedhere
+  \]
+\end{proof}
+
+有一种情况下的线积分计算非常简单：函数微分的线积分。
+
+\begin{theorem}[线积分基本定理]\label{thm:fundamental theorem for line integral}
+  令 $M$ 是光滑流形，$f\in C^\infty(M)$，$\gamma:[a,b]\to M$
+  是分段光滑曲线段，那么
+  \[
+    \int_\gamma \d f =f\bigl(\gamma(b)\bigr)-
+    f\bigl(\gamma(a)\bigr).
+  \]
+\end{theorem}
+\begin{proof}
+  假设 $\gamma$ 是光滑的即可。那么我们有
+  \[
+    \int_\gamma \d f =
+    \int_a^b \d f_{\gamma(t)}\bigl(\gamma'(t)\bigr)\d t
+    =\int_a^b (f\circ\gamma)'(t)\d t
+    =f\bigl(\gamma(b)\bigr)-
+    f\bigl(\gamma(a)\bigr).\qedhere
+  \]
+\end{proof}
+
+\section{保守场}
+
+\autoref{thm:fundamental theorem for line integral} 
+表明当余向量场是光滑函数微分的时候，其线积分的计算极为简单。
+出于这个原因，当余向量场拥有这个性质的时候我们给它一个术语。
+对于光滑流形 $M$ 上的光滑余向量场 $\omega$，如果存在函数
+$f\in C^\infty(M)$ 使得 $\omega=df$，那么我们说 $\omega$
+是\emph{恰当的}。在这种情况下，函数 $f$ 称为 $\omega$ 的\emph{势}。
+这个势不是唯一确定的，但是根据 \autoref{prop:functions with vanishing differential}，
+$\omega$ 的任意两个势仅仅是在 $M$ 的每个连通分支上相差一个常数。
+
+由于恰当微分很容易计算积分，所以确定余向量场是否恰当是非常重要的，
+\autoref{thm:fundamental theorem for line integral} 提供了
+一条重要的线索。\autoref{thm:fundamental theorem for line integral}
+表明恰当余向量场的线积分仅仅与端点 $p=\gamma(a)$ 和 $q=\gamma(b)$
+有关！特别地，如果 $\gamma$ 是\emph{闭合曲线段}，即 $\gamma(a)=\gamma(b)$，
+那么 $df$ 在 $\gamma$ 上的积分为零。
+
+如果 $\omega$ 在任意分段光滑闭合曲线段上的线积分为零，那么我们说
+$\omega$ 是\emph{保守的}。这个术语来源于物理学：如果沿任何
+闭合路径作用的力引起的能量变化为零，那么这个力场被称为保守场。
+
+\begin{proposition}
+  光滑余向量场 $\omega$ 是保守的当且仅当其线积分是路径无关的，
+  也就是说，只要分段光滑曲线段 $\gamma$ 和 $\tilde{\gamma}$
+  有相同的起点和终点，那么 $\int_\gamma\omega=\int_{\tilde{\gamma}}\omega$。
+\end{proposition}
+\begin{proof}
+  假设 $\omega$ 是保守场，$\gamma(a)=\tilde{\gamma}(a)=p$，
+  $\gamma(b)=\tilde{\gamma}(b)=q$，记 $\xi$ 是以 $q$ 为起点
+  $p$ 为终点的分段光滑曲线段，$\zeta$ 是连接 $\gamma$ 和
+  $\xi$ 的分段光滑曲线段，$\tilde\zeta$ 是连接 $\tilde\gamma$ 和
+  $\xi$ 的分段光滑曲线段，根据 $\omega$ 的保守性，就有
+  \[
+    \int_{\tilde\gamma}\omega+\int_{\xi}\omega=\int_{\tilde{\zeta}}\omega=0=\int_{\zeta}\omega=\int_{\gamma}\omega+\int_{\xi}\omega,  
+  \]
+  即 $\int_\gamma\omega=\int_{\tilde\gamma}\omega$。
+
+  反之，假设 $\int_\gamma\omega=\int_{\tilde{\gamma}}\omega$。
+  那么任取分段光滑闭合曲线段 $\gamma$，设 $\zeta$ 是值为 $\gamma(a)=\gamma(b)$
+  的常值曲线，那么 
+  \[
+    \int_\gamma\omega=\int_\zeta\omega=0,  
+  \]
+  即 $\omega$ 是保守场。
+\end{proof}
+
+\begin{theorem}
+  令 $M$ 是光滑流形，$M$ 上的光滑余向量场是保守的当且仅当其是恰当的。
+\end{theorem}
+
+如果每个光滑余向量场都是恰当的自然是最好不过，因为此时线积分
+的计算只需要找到一个势函数然后计算端点处的值即可，但是，
+这个假设是不成立的。
+
+\begin{example}
+  \autoref{exa:covector field on R2-0} 中的余向量场 $\omega$
+  不是恰当的，因为其不是保守的，当 $\gamma$ 取逆时针的圆周时，
+  $\gamma$ 是闭合光滑曲线段，但是 $\int_\gamma\omega=2\pi\neq 0$。
+\end{example}
+
+我们希望有一种简单的方法来检查余向量场是否恰当。幸运的是，
+有一个非常简单的必要条件，其源于光滑函数的混合偏导数与计算顺序无关。
+
+假设 $\omega\in \mathfrak{X}^*(M)$ 是恰当的，令 $f$ 是 $\omega$
+的任意势函数，$(U,(x^i))$ 是 $M$ 上的光滑坐标卡。因为 $f$ 是光滑的，
+所以在 $U$ 上有
+\[
+  \frac{\partial^2 f}{\partial x^i\partial x^j}=
+  \frac{\partial^2 f}{\partial x^j\partial x^i} .
+\]
+将 $\omega$ 表示为 $\omega=\omega_i \d x^i$，那么 $\omega= df$
+等价于 $\omega_i=\partial f/\partial x^i$，于是上式表明
+$\omega$ 的分量函数必须满足
+\begin{equation}\label{eq:close covector field}
+  \frac{\partial \omega_j}{\partial x^i}=\frac{\partial\omega_i}{\partial x^j}.  
+\end{equation}
+由此，满足上式的光滑余向量场 $\omega$ 被称为\emph{闭的}。我们得到了下面的命题。
+
+\begin{proposition}
+  每个恰当余向量场都是闭的。
+\end{proposition}
+
+按定义检查余向量场是否闭的难点在于需要对每个坐标卡进行检查。
+下面的命题给出了与坐标无关的闭的余向量场的表述。
+
+\begin{proposition}
+  令 $\omega$ 是光滑流形 $M$ 上的光滑余向量场，下面的说法等价：
+  \begin{enumerate}
+    \item $\omega$ 是闭的。
+    \item $\omega$ 在每个点的某个光滑坐标卡中满足 \eqref{eq:close covector field} 式。
+    \item 对于任意开集 $U\subseteq M$ 和光滑向量场 $X,Y\in \mathfrak{X}(U)$，有
+    \begin{equation}\label{eq:close covector field without coordinate}
+      X\bigl(\omega(Y)\bigr)-Y\bigl(\omega(X)\bigr)=\omega\bigl([X,Y]\bigr).
+    \end{equation}
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 从定义立即得到。
+
+  $(2)\Rightarrow(3)$ 对于任意坐标卡 $(V,(x^i))$，其中 $V\subseteq U$，
+  设 $\omega=\omega_i\d x^i$，$X=X^j\partial/\partial x^j$，
+  $Y=Y^k\partial/\partial x^k$，那么
+  \[
+    X\bigl(\omega(Y)\bigr)=X\bigl(\omega_iY^i\bigr)
+    = Y^i X\omega_i+\omega_iXY^i=
+    Y^iX^j\frac{\partial \omega_i}{\partial x^j}
+    +\omega_iXY^i.
+  \]
+  对 $Y\bigl(\omega(X)\bigr)$ 重复这个步骤，然后相减，得到
+  \[
+    X\bigl(\omega(Y)\bigr)-Y\bigl(\omega(X)\bigr)=
+    Y^iX^j\left(\frac{\partial \omega_i}{\partial x^j}-
+    \frac{\partial \omega_j}{\partial x^i}\right)
+    +\omega_i\bigl(XY^i-YX^i\bigr),
+  \]
+  \eqref{eq:close covector field} 式表明第一项为零，而 
+  \autoref{prop:coordinate formula for lie bracket} 表明后一项为
+  $\omega_i\bigl([X,Y]\bigr)$。
+
+  $(3)\Rightarrow (1)$ 取 $X=\partial/\partial x^i$，
+  $Y=\partial/\partial x^j$，那么 $[X,Y]=0$，即得到
+  \eqref{eq:close covector field} 式。
+\end{proof}
+
+这一命题的结果是可以使用标准 (b) 来检查闭性，因为可以快速表明
+许多余向量场不是闭的，从而说明其不是恰当的。
+
+\begin{corollary}
+  假设 $F:M\to N$ 是局部微分同胚，那么拉回 $F^*:\mathfrak{X}^*(N)
+  \to \mathfrak{X}^*(M)$ 将闭的余向量场送到闭的余向量场，
+  恰当的余向量场送到恰当的余向量场。
+\end{corollary}
+\begin{proof}
+  恰当余向量场的情况由 \autoref{prop:pullback of covector field}
+  得到。对于闭的情况，如果 $(U,\varphi)$ 是 $N$ 的一个光滑坐标卡，
+  那么 $\varphi\circ F$ 可以视为定义在 $F^{-1}(U)$ 的任意点的某个
+  邻域上的光滑坐标映射，在这个坐标下，$F$ 的坐标表示是恒等映射，
+  所以 $\omega$ 满足 \eqref{eq:close covector field} 式，
+  即 $F^*\omega$ 在 $F^{-1}(U)$ 中满足 \eqref{eq:close covector field} 式。
+\end{proof}
+
+我们已经说明了恰当余向量场都是闭余向量场，那么自然会引出逆命题：
+是否每个闭余向量场都是恰当的？答案是几乎总是是的，但是有一个重要
+的限制。这取决于区域的形状，如下面的例子所示。
+
+\begin{example}
+  回到 \autoref{exa:covector field on R2-0} 中的余向量场 $\omega$。
+  直接计算可知 $\omega$ 是闭的，但是我们已经说明其在 $\mathbb{R}^2 \smallsetminus\{0\}$
+  上不是恰当的。但是另一方面，如果我们限制 $\omega$ 的定义域在右半平面
+  $U=\{(x,y)\,|\, x>0\}$ 上，直接计算表明 $\omega=\d\bigl(\arctan y/x\bigr)$，
+  如果使用极坐标则更清晰，即 $\omega=\d\theta$。
+\end{example}
+
+上面的例子说明了一个关键的原则：一个闭余向量场是否恰当的问题是一个全局性
+的问题，取决于定义域的形状。这一观察是 de Rham 上同调的起点，其表达了
+光滑结构和拓扑之间的深层次关系。现在我们可以证明下面的结果。如果
+$V$ 是有限维向量空间，子集 $U\subseteq V$ 被称为\emph{星形的}，
+如果存在 $c\in U$ 使得对于每个 $x\in U$，从 $c$ 到 $x$ 的线段都在
+$U$ 中。例如，每个凸集都是星形的。
+
+\begin{theorem}[余向量场的 Poincar\'e 引理]
+  如果 $U$ 是 $\mathbb{R}^n$ 或者 $\mathbb{H}^n$ 的星形开子集，
+  那么 $U$ 上的闭余向量场都是恰当的。
+\end{theorem}
+

@@ -1,0 +1,345 @@
+
+\chapter{张量}
+
+\section{多重线性代数}
+
+\subsection{向量空间的张量积}
+
+\begin{proposition}[抽象的张量积 vs. 具体的张量积]
+  如果 $V_1,\dots,V_k$ 是有限维向量空间，那么存在典范同构：
+  \[
+    V_1^*\otimes \cdots\otimes V_k^*\simeq \LL(V_1,\dots,V_k;\mathbb{R}),
+  \]
+  其中抽象的单张量 $\omega^1\otimes \cdots\otimes\omega^k$ 对应到
+  多重线性映射
+  \[
+    \omega^1\otimes\cdots\otimes\omega^k(v_1,\dots,v_k)=
+    \omega^1(v_1)\cdots \omega^k(v^k).  
+  \]
+\end{proposition}
+\begin{proof}
+  定义映射 $\varPhi:V_1^*\times\cdots\times V_k^*\to \LL(V_1,\dots,V_k;\mathbb{R})$
+  为
+  \[
+    \varPhi\bigl(\omega^1,\dots,\omega^k\bigr)(v_1,\dots,v_k)
+    =\omega^1(v_1)\cdots\omega^k(v_k).
+  \]
+  不难验证 $\varPhi$ 是多重线性映射，所以诱导了唯一的线性映射 
+  $\tilde{\varPhi}$ 满足
+  \[
+    \tilde\varPhi\bigl(\omega^1\otimes\cdots\otimes\omega^k\bigr)(v_1,\dots,v_k)
+    =\omega^1(v_1)\cdots\omega^k(v_k).
+  \]
+  线性映射 $\tilde{\varPhi}$ 将 $V_1^*\otimes\cdots\otimes V_k^*$ 的基 $\varepsilon_{(1)}^{i_1}\otimes\cdots\otimes \varepsilon_{(k)}^{i_k}$
+  送到 $\LL(V_1,\dots,V_k;\mathbb{R})$ 的基  $\varepsilon_{(1)}^{i_1}\otimes\cdots\otimes \varepsilon_{(k)}^{i_k}$，
+  所以是同构映射。
+\end{proof}
+
+\subsection{向量空间上的协变张量和逆变张量}
+
+$V$ 是有限维向量空间，\emph{$V$ 上的协变 $k$-张量}指的是
+$k$ 重张量积 $V^*\otimes\cdots\otimes V^*$ 中的元素，我们可以将其视为
+$V$ 上的 $k$-多重线性映射
+\[
+  \alpha:V\times\cdots\times V\to \mathbb{R},
+\]
+$k$ 被称为\emph{$\alpha$ 的秩}。出于惯例，将 $0$-张量定义为实数。我们将 $V$ 上的所有协变 $k$-张量构成的
+向量空间简记为
+\[
+  T^k(V^*)=V^*\otimes\cdots\otimes V^*.
+\]
+
+\begin{example}[协变张量]
+  令 $V$ 是有限维向量空间。
+  \begin{enumerate}
+    \item 每个线性泛函 $\omega:V\to \mathbb{R}$ 都是一个协变 $1$-张量，
+    由于 $\omega$ 可以视为 $T_a^*V\simeq V^*$ 的元素，所以协变 $1$-张量
+    就是余向量。
+    \item $V$ 上的协变 $2$-张量就是\emph{双线性型}，例如 $\mathbb{R}^2$
+    上的内积。
+    \item 将行列式视为参数为 $n$ 个向量的函数，是 $\mathbb{R}^n$ 上的协变 $n$-张量。
+  \end{enumerate}
+\end{example}
+
+定义\emph{$V$ 上秩 $k$ 的逆变张量}空间为向量空间
+\[
+  T^k(V)=V\otimes \cdots\otimes V.  
+\]
+特别地，$T^1(V)=V$，同样出于惯例，定义 $T^0(V)=\mathbb{R}$。
+逆变 $k$-张量可以被视为 $V^*$ 上的 $k$-多重线性映射
+\[
+  \alpha:V^*\times \cdots\times V^*\to \mathbb{R} . 
+\]
+但是对于大多数目的来说，将逆变张量视为抽象的张量积空间中的元素更加简单。
+
+更一般的，定义\emph{$V$ 上的 $(k,l)$ 型混合张量}空间为
+\[
+  T^{(k,l)}(V)=T^k(V)\otimes T^l(V^*)=\underbrace{V\otimes\cdots\otimes V}_{\text{$k$ copies}}  
+  \otimes \underbrace{V^*\otimes\cdots\otimes V^*}_{\text{$l$ copies}}.
+\]
+上述定义的一些特殊情况为：
+\begin{align*}
+  T^{(0,0)}(V)&=T^0(V)=T^0(V^*)=\mathbb{R},\\
+  T^{(0,1)}(V)&=T^1(V^*)=V^*,\\
+  T^{(1,0)}(V)&=T^1(V)=V,\\
+  T^{(0,k)}(V)&=T^k(V^*),\\
+  T^{(k,0)}(V)&=T^k(V).
+\end{align*}
+
+在本书中，我们主要关注协变张量。因此，除非我们明确指定，否则张量
+将始终被理解为协变张量。然而，重要的是要意识到逆变和混合张量
+在微分几何的更高级部分中发挥着重要作用，特别是黎曼几何。
+
+\section{对称和交错张量}
+
+一般来说，重新排列协变张量的参数对其值造成的影响不必有什么规律。
+然而，一些特殊的张量（例如内积）在重新排列参数时值保持不变（内积的对称性）。
+对于行列式而言，互换两个参数，行列式会改变符号。在本节中，我们描述这两类
+重要的张量：对称张量和交错张量。当它们的参数重新排列时，会以最简单的方式发生变化。
+
+\subsection{对称张量}
+
+令 $V$ 是有限维向量空间。$V$ 上的协变 $k$-张量 $\alpha$ 如果交换任意两个参数
+的值都保持不变：
+\[
+  \alpha(v_1,\dots,v_i,\dots,v_j,\dots,v_k)=
+  \alpha(v_1,\dots,v_j,\dots,v_i,\dots,v_k),
+\]
+其中 $1\leq i<j\leq k$，那么我们说 $\alpha$ 是\emph{对称的}。
+
+令 $S_k$ 是 $k$ 阶对称群，任取 $\sigma\in S_k$，我们记
+$k$-张量 $\sigma\alpha$ 为
+\[
+  \sigma\alpha(v_1,\dots,v_k)=\alpha(v_{\sigma(1)},\dots,v_{\sigma(k)}).  
+\]
+不难验证 $\tau(\sigma\alpha)=(\tau\sigma)\alpha$。由于
+$S_k$ 可以由所有的二轮换生成，所以 $\alpha$ 是对称张量当且仅当
+任取 $\sigma\in S_k$ 有 $\sigma\alpha=\alpha$。
+
+所有对称 $k$-张量的集合构成 $T^k(V^*)$ 的一个子空间，我们记为
+$\Sigma^k(V^*)$。我们可以定义投影映射 $\Sym:T^k(V^*)\to \Sigma^k(V^*)$
+为
+\[
+  \Sym \alpha=\frac{1}{k!}\sum_{\sigma\in S_k}\sigma\alpha.  
+\]
+这个映射被称为\emph{对称化}。
+
+\begin{proposition}[对称化的性质]
+  令 $\alpha$ 是一个协变张量。
+  \begin{enumerate}
+    \item $\Sym\alpha$ 是对称张量。
+    \item $\alpha$ 是对称张量当且仅当 $\Sym\alpha=\alpha$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  任取 $\alpha\in T^k(V^*)$，$\tau\in S_k$，那么
+  \begin{align*}
+    (\Sym\alpha)(v_{\tau(1)},\dots,v_{\tau(k)})&=
+    \frac{1}{k!}\sum_{\sigma\in S_k}\sigma\alpha(v_{\tau(1)},\dots,v_{\tau(k)})\\
+    &=\frac{1}{k!}\sum_{\sigma\in S_k}(\sigma\tau)\alpha(v_1,\dots,v_k)\\
+    &=\frac{1}{k!}\sum_{\eta\in S_k}\eta\alpha(v_1,\dots,v_k)\\
+    &=(\Sym\alpha)(v_1,\dots,v_k),
+  \end{align*}
+  所以 $\Sym\alpha$ 是对称张量。
+
+  如果 $\alpha$ 是对称张量，那么任取 $\sigma\in S_k$ 有 $\sigma\alpha=\alpha$，
+  所以 $\Sym\alpha=\alpha$。反之，如果 $\Sym\alpha=\alpha$，由 (1)
+  可知 $\alpha$ 是对称张量。
+\end{proof}
+
+如果 $\alpha$ 和 $\beta$ 是 $V$ 上的对称张量，那么 $\alpha\otimes\beta$
+一般不是对称张量。但是，使用对称化算子，可以定义一种新的乘法，将
+一对对称张量送到一个对称张量。如果 $\alpha\in \Sigma^k(V^*)$，
+$\beta\in \Sigma^l(V^*)$，我们定义\emph{对称积} $\alpha\beta$
+为 $(k+l)$-张量
+\[
+  \alpha\beta=\Sym(\alpha\otimes\beta).  
+\]
+
+\begin{proposition}[对称积的性质]
+  \mbox{}
+  \begin{enumerate}
+    \item 对称积是对称的且双线性的：对于对称张量 $\alpha,\beta,\gamma$
+    和 $a,b\in \mathbb{R}$，有
+    \begin{align*}
+      \alpha\beta&=\beta\alpha,\\
+      (a\alpha+b\beta)\gamma&=a\alpha\gamma+b\beta\gamma=
+      \gamma(a\alpha+b\beta).
+    \end{align*}
+    \item 如果 $\alpha,\beta$ 是余向量，那么
+    \[
+      \alpha\beta=\frac{1}{2}(\alpha\otimes\beta+\beta\otimes\alpha).  
+    \]
+  \end{enumerate}
+\end{proposition}
+
+\subsection{交错张量}
+
+$V$ 上的协变 $k$-张量 $\alpha$ 如果满足：
+\[
+  \alpha(v_1,\dots,v_i,\dots,v_j,\dots,v_k)=
+  -\alpha(v_1,\dots,v_j,\dots,v_i,\dots,v_k),
+\]
+那么我们说 $\alpha$ 是\emph{交错张量}。所有交错 $k$-张量
+构成的子空间记为 $\Lambda^k(V^*)\subseteq T^k(V^*)$。
+此时，可以验证对于 $\sigma\in S_k$，有 $\sigma\alpha=(\sgn\sigma)\alpha$。
+交错的协变 $k$-张量也被称为\emph{外形式}，\emph{多重余向量}或者\emph{$k$-余向量}。
+
+每个 $0$-张量（实数）和 $1$-张量都是对称且交错的。一个交错 $2$-张量
+就是反对称的双线性型（交错型）。
+
+
+\section{流形上的张量和张量场}
+
+令 $M$ 是光滑流形，定义 \emph{$M$ 上的协变 $k$-张量丛}为
+\[
+  T^kT^*M=\coprod_{p\in M}T^k\bigl(T_p^*M\bigr).  
+\] 
+类似地，定义 \emph{$M$ 上的逆变 $k$-张量丛}为
+\[
+  T^kTM=\coprod_{p\in M}T^k\bigl(T_pM\bigr)  .
+\]
+\emph{$M$ 上的 $(k,l)$ 型混合张量丛}为
+\[
+  T^{(k,l)}TM=\coprod_{p\in M}  T^{(k,l)}\bigl(T_pM\bigr).
+\]
+
+上述这些丛中任意一个都被称为\emph{$M$ 上的张量丛}。张量丛
+的截面被称为\emph{$M$ 上的(协变、逆变或者混合)张量场}。
+使用上面的定义，我们发现逆变 $1$-张量场就是向量场，
+协变 $1$-张量场就是余向量场。$0$-张量场就是连续实值函数。
+
+这些张量场的光滑截面构成的空间 
+$\Gamma\bigl(T^kT^*M\bigr),\Gamma\bigl(T^kTM\bigr),\Gamma\bigl(T^{(k,l)}TM\bigr)$
+是 $\mathbb{R}$ 上的无限维向量空间，也是 $C^\infty(M)$ 环上的模。
+在任意光滑局部坐标 $\left(x^i\right)$ 下，这些丛的截面
+可以表示为
+\[
+  A=\begin{dcases}
+    A_{i_1\dots i_k}dx^{i_1}\otimes\cdots\otimes dx^{i_k} & A\in \Gamma\bigl(T^kT^*M\bigr),\\
+    A^{i_1\dots i_k}\frac{\partial}{\partial x^{i_1}}\otimes
+    \cdots\otimes \frac{\partial}{\partial x^{i_k}} & A\in \Gamma\bigl(T^kTM\bigr),\\
+    A_{j_1\dots j_l}^{i_1\dots i_k}\frac{\partial}{\partial x^{i_1}}\otimes
+    \cdots\otimes \frac{\partial}{\partial x^{i_k}}\otimes
+    dx^{j_1}\otimes\cdots\otimes dx^{j_l} & A\in \Gamma\bigl(T^{(k,l)}TM\bigr).
+  \end{dcases}  
+\]
+函数 $A_{i_1\dots i_k},A^{i_1\dots i_k},A_{j_1\dots j_l}^{i_1\dots i_k}$ 被称为
+\emph{$A$ 的分量函数}。由于我们主要关注光滑协变张量场，所以我们对于
+光滑协变 $k$-张量场，采用以下简写：
+\[
+  \mathcal{T}^k(M)=\Gamma\bigl(T^kT^*M\bigr)  .
+\]
+
+\begin{proposition}[张量场的光滑性判别]
+  $M$ 是光滑流形，$A:M\to T^kT^*M$ 是截面，下面的说法等价。
+  \begin{enumerate}
+    \item $A$ 光滑。
+    \item 在每个光滑坐标卡中，$A$ 的分量函数都是光滑的。
+    \item $M$ 的每个点处都存在一个光滑坐标卡使得 $A$ 的分量函数
+    在这上面光滑。
+    \item 如果 $X_1,\dots,X_k\in \mathfrak{X}(M)$，函数 $A(X_1,\dots,X_k):M\to \mathbb{R}$
+    \[
+      A(X_1,\dots,X_k)(p)=A_p\bigl(X_1|_p,\dots,X_k|_p\bigr)
+    \]
+    是光滑的。
+    \item 对于任意定义在开集 $U\subseteq M$ 上的光滑向量场 $X_1,\dots,X_k$，
+    函数 $A(X_1,\dots,X_k)$ 在 $U$ 上光滑。
+  \end{enumerate}
+\end{proposition}
+
+\begin{proposition}
+  $M$ 是光滑流形，$A\in \mathcal{T}^k(M)$，$B\in \mathcal{T}^l(M)$，
+  $f\in C^\infty(M)$。那么 $fA$ 和 $A\otimes B$ 也是光滑张量场，其在
+  光滑坐标卡中的分量为
+  \begin{align*}
+    (fA)_{i_1\dots i_k}&= fA_{i_1\dots i_k},\\
+    (A\otimes B)_{i_1\dots i_{k+l}}&=A_{i_1\dots i_k}B_{i_{k+1}\dots i_{k+l}}.
+  \end{align*}
+\end{proposition}
+
+若 $A$ 是 $M$ 上的光滑协变 $k$-张量场，$X_1,\dots,X_k$ 是光滑向量场，
+那么 $A(X_1,\dots,X_k)$ 是 $M$ 上的光滑函数，因此 $A$ 诱导了映射
+\[
+  \mathfrak{X}(M)\times\cdots\times \mathfrak{X}(M)\to C^\infty(M).  
+\]
+
+流形上的\emph{对称张量场}指的是一个协变张量场并且其在每个点处的取值都是
+对称张量。两个或多个张量场的对称积由逐点张量的对称积定义。例如，
+如果 $A,B$ 是两个光滑余向量场，那么它们的对称积指的是一个光滑 $2$-张量场
+$AB$，其计算为
+\[
+  AB=\frac{1}{2}(A\otimes B+B\otimes A).  
+\]
+
+交错张量场被称为\emph{微分形式}，我们将在后面深入研究。
+
+
+\subsection{张量场的拉回}
+
+与余向量场类似，协变张量场可以通过光滑映射拉回产生定义域上的张量场。
+注意拉回构造仅限于协变张量场，这也是我们更多关注协变张量的原因之一。
+
+设 $F:M\to N$ 是光滑映射。对于任意点 $p\in M$ 和 $k$-张量
+$\alpha\in T^k\bigl(T_{F(p)}^*N\bigr)$，我们定义张量
+$dF_p^*(\alpha)\in T^k\bigl(T_p^*M\bigr)$ 为
+\[
+  dF_p^*(\alpha)(v_1,\dots,v_k)=\alpha\bigl(dF_p(v_1),\dots,dF_p(v_k)\bigr)  ,
+\]
+其中 $v_1,\dots,v_k\in T_pM$，这个 $dF_p^*(\alpha)$ 被称为
+\emph{$\alpha$ 通过 $F$ 在 $p$ 处的拉回}。如果 $A$ 是一个
+$N$ 上的协变 $k$-张量场，我们定义 $M$ 上的 $k$-张量场
+$F^*A$ 为
+\[
+  (F^*A)  _p=dF_p^*(A_{F(p)}).
+\]
+这被称为\emph{$A$ 通过 $F$ 的拉回}。这个张量场在
+$v_1,\dots,v_k\in T_pM$ 上的作用为
+\[
+  (F^*A)  _p(v_1,\dots,v_k)=A_{F(p)}\bigl(dF_p(v_1),\dots,dF_p(v_k)\bigr).
+\]
+
+\begin{proposition}[拉回张量的性质]\label{prop:property of pullback of tensor}
+  设 $F:M\to N$ 和 $G:N\to P$ 是光滑映射，$A,B$ 是 $N$ 上的协变张量场，
+  $f$ 是 $N$ 上的实值函数。
+  \begin{enumerate}
+    \item $F^*(fB)=(f\circ F)F^*B$。
+    \item $F^*(A\otimes B)=F^*A\otimes F^*B$。
+    \item $F^*(A+B)=F^*A+F^*B$。
+    \item $F^*B$ 是张量场并且 $F^*B$ 光滑当且仅当 $B$ 光滑。
+    \item $(G\circ F)^*B=F^*(G^*B)$。
+    \item $(\Id_N)^*B=B$。
+  \end{enumerate}
+\end{proposition}
+ 
+如果 $f$ 是连续实值函数（$0$-张量场），$B$ 是 $k$-张量场，那么我们定义的
+$f\otimes B$ 和 $fB$ 可以等同，$F^*f$ 和 $f\circ F$ 可以等同。
+
+下面的命题是 \autoref{prop:property of pullback of tensor} 的直接结果。
+与余向量场拉回的计算在形式上是一致的。
+
+\begin{corollary}
+  令 $F:M\to N$ 是光滑映射，$B$ 是 $N$ 上的协变 $k$-张量场。如果 $p\in M$，
+  $(y^i)$ 是 $F(p)$ 处的一个光滑坐标，那么 $F^*B$ 在 $p$ 的这个邻域可以表示为
+  \begin{align*}
+    &F^*\bigl(B_{i_1\dots i_k}\d y^{i_1}\otimes\cdots\otimes \d y^{i_k}\bigr)\\
+    &=\bigl(B_{i_1\dots i_k}\circ F\bigr)
+    \d\bigl(y^{i_1}\circ F\bigr)\otimes\cdots\otimes
+    \d\bigl(y^{i_k}\circ F\bigr).
+  \end{align*}
+\end{corollary}
+
+\begin{example}
+  令 $M=\{(r,\theta)\,|\, r>0,|\theta|<\pi/2\}$，$N=\{(x,y)\,|\, x>0\}$，
+  $F:M\to \mathbb{R}^2$ 是光滑映射 $F(r,\theta)=(r\cos\theta,r\sin\theta)$。
+  张量场 $A=x^{-2}\d y\otimes\d y$ 通过 $F$ 的拉回可以计算为：
+  \begin{align*}
+    F^*A&=(r\cos\theta)^{-2}\d(r\sin\theta)\otimes\d (r\sin\theta)\\
+    &=(r\cos\theta)^{-2}(\sin\theta\d r+r\cos\theta\d\theta)
+    \otimes (\sin\theta\d r+r\cos\theta\d\theta)\\
+    &=r^{-2}\tan^2\theta\d r\otimes\d r+
+    r^{-1}\tan\theta(\d\theta\otimes\d r+\d r\otimes\d \theta)
+    +\d\theta\otimes\d\theta.
+  \end{align*}
+\end{example}
+

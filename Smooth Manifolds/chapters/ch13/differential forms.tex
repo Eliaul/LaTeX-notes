@@ -1,0 +1,269 @@
+\chapter{微分形式}
+
+\section{交错张量代数}
+
+我们定义投影 $\Alt:T^k(V^*)\to \Lambda^k(V^*)$，称为\emph{交错化}：
+\[
+  \Alt\alpha=\frac{1}{k!}\sum_{\sigma\in S_k}(\sgn\sigma)  (\sigma\alpha).
+\]
+
+\begin{example}
+  如果 $\alpha$ 是 $1$-张量，那么 $\Alt\alpha=\alpha$。如果 $\beta$
+  是 $2$-张量，那么
+  \[
+    (\Alt\beta) (v,w)=\frac{1}{2}\bigl(\beta(v,w)-\beta(w,v)\bigr).
+  \]
+\end{example}
+
+\begin{proposition}[交错化的性质]
+  令 $\alpha$ 是有限维向量空间上的协变张量。
+  \begin{enumerate}
+    \item $\Alt\alpha$ 是交错的。
+    \item $\Alt\alpha=\alpha$ 当且仅当 $\alpha$ 是交错的。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 任取 $\tau\in S_k$，有
+  \begin{align*}
+    \tau(\Alt\alpha)&=\frac{1}{k!}\sum_{\sigma\in S_k}(\sgn\sigma)(\tau\sigma\alpha)\\
+    &=\frac{1}{k!}\sum_{\sigma\in S_k}(\sgn\tau)(\sgn\tau\sigma)(\tau\sigma\alpha)\\
+    &=(\sgn\tau)\frac{1}{k!}\sum_{\eta\in S_k}(\sgn\eta)\eta\alpha\\
+    &=(\sgn\tau)(\Alt\alpha).
+  \end{align*}
+  这就表明 $\Alt \alpha$ 是交错张量。
+  
+  (2) 若 $\alpha=\Alt\alpha$，则由 (1)，$\alpha$ 是交错的。反之，若
+  $\alpha$ 是交错的，那么 
+  \[
+    \Alt\alpha=  \frac{1}{k!}\sum_{\sigma\in S_k}(\sgn\sigma)  (\sigma\alpha)
+    =\frac{1}{k!}\sum_{\sigma\in S_k}(\sgn\sigma)^2\alpha=
+    \alpha.\qedhere
+  \]
+\end{proof}
+
+\subsection{基本交错张量}
+
+给定正整数 $k$，一个有序的正整数的 $k$-元组 $I=(i_1,\dots,i_k)$
+被称为\emph{长度 $k$ 的多重指标}。如果 $I$ 是这样一个多重指标，$\sigma\in S_k$，
+我们记
+\[
+  I_\sigma=\bigl(i_{\sigma(1)},\dots,i_{\sigma(k)}\bigr).  
+\]
+注意到我们有 $I_{\sigma\tau}=(I_\sigma)_\tau$。
+
+令 $V$ 是 $n$-维向量空间，$\bigl(\varepsilon^1,\dots,\varepsilon^n \bigr)$
+是 $V^*$ 的一组基。我们定义 $V$ 上的一族 $k$-余向量来推广行列式函数的概念。
+对于每个多重指标 $I=(i_1,\dots,i_k)$ 且 $1\leq i_1,\dots,i_k\leq n$，定义
+协变 $k$-张量 $\varepsilon^I=\varepsilon^{i_1\dots i_k}$ 为
+\[
+  \varepsilon^I(v_1,\dots,v_k)=\det \begin{pmatrix}
+    \varepsilon^{i_1}(v_1) & \cdots & \varepsilon^{i_1}(v_k)\\
+    \vdots & \ddots & \vdots \\
+    \varepsilon^{i_k}(v_1) & \cdots & \varepsilon^{i_k}(v_k)\\
+  \end{pmatrix}  =\det\begin{pmatrix}
+    v_1^{i_1} & \cdots & v_k^{i_1} \\
+    \vdots & \ddots & \vdots \\
+    v_1^{i_k} & \cdots & v_k^{i_k} \\
+  \end{pmatrix}.
+\]
+换句话说，如果 $\mathbb{v}$ 是由 $v_1,\dots,v_k$ 作为列向量构成的 $n\times k$ 矩阵，
+每一列是 $v_i$ 在对偶于 $\bigl(\varepsilon^i\bigr)$ 的基 $(E_i)$ 下的分量，
+那么 $\varepsilon^I(v_1,\dots,v_k)$ 相当于 $\mathbb{v}$ 的由 $i_1,\dots,i_k$ 行组成的
+$k\times k$ 子矩阵的行列式。因为行列式交换两列符号相反，所以 $\varepsilon^I$
+是一个交错 $k$-张量。我们说 $\varepsilon^I$ 是\emph{基本交错张量}
+或者\emph{基本 $k$-余向量}。
+
+\begin{example}
+  设 $\bigl(\mathbb{R}^3\bigr)^*$ 的标准对偶基为 $\bigl(e^1,e^2,e^3\bigr)$，那么
+  \begin{gather*}
+    e^{13}(v,w)=\det
+    \begin{pmatrix}
+      v^1 & w^1 \\
+      v^3 & w^3 
+    \end{pmatrix}=v^1w^3-w^1v^3  ,\\
+    e^{123}(v,w,x)=\det(v,w,x).
+  \end{gather*}
+\end{example}
+
+为了简化计算，我们扩展 Kronecker 符号的定义。如果 $I,J$ 都是长度为 $k$
+的多重指标，我们定义
+\[
+  \delta_J^I=\det\begin{pmatrix}
+    \delta_{j_1}^{i_1} & \cdots & \delta_{j_k}^{i_1} \\
+    \vdots & \ddots & \vdots \\
+    \delta_{j_1}^{i_k} & \cdots & \delta_{j_k}^{i_k} \\
+  \end{pmatrix}  .
+\]
+可以证明，在 $I$ 或者 $J$ 有重复的指标或者 $J$ 不是 $I$ 的一个置换的时候，有
+$\delta_J^I=0$。在 $I,J$ 都没有重复指标且 $J=I_\sigma$ 的时候，有 $\delta_J^I=\sgn\sigma$。
+
+\begin{proposition}[基本 $k$-余向量的性质]
+  令 $(E_i)$ 是 $V$ 的一组基，$\bigl(\varepsilon^i\bigr)$ 是 $V^*$ 的对偶基。
+  \begin{enumerate}
+    \item 如果 $I$ 有重复指标，那么 $\varepsilon^I=0$。
+    \item 如果 $J=I_\sigma$，那么 $\varepsilon^I=(\sgn\sigma)\varepsilon^J$。
+    \item $\varepsilon^I$ 在基向量上的值为
+    \[
+      \varepsilon^I(E_{j_1},\dots,E_{j_k})=\delta_J^I.  
+    \]
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) $I$ 有重复指标表明 $\varepsilon^I$ 有两行相同，所以为零。
+  (2) 考虑 $\sigma$ 是对换的情况即可，此时 $\varepsilon^J$ 是 $\varepsilon^I$
+  交换两行得到的，所以符号相反。(3) 按照定义即得。
+\end{proof}
+
+基本 $k$-余向量的重要性在于其提供了 $\Lambda^k(V^*)$ 的一组方便的基。
+当然，所有的 $\varepsilon^I$ 并不是线性无关的，因为其中一些是零，一些是相差
+一个符号。但是，下面的命题表明，如果我们限制多重指标 $I=(i_1,\dots,i_k)$
+是\emph{递增的}，即 $i_1<\cdots<i_k$，那么这些多重指标对应的基本 $k$-余向量
+构成基。我们定义一个加撇的求和记号用于表示仅对递增的多重指标求和，例如
+\[
+  \sideset{}{'}\sum_{I}\alpha_I\varepsilon^I
+  =\sum_{\{I\,|\, i_1<\cdots<i_k\}}  \alpha_I\varepsilon^I.
+\]
+
+\begin{proposition}[$\Lambda^k(V^*)$ 的一组基]
+  令 $V$ 是有限维向量空间，$\bigl(\varepsilon^i\bigr)$ 是 $V^*$
+  的任意一组基，那么对于每个正整数 $k\leq n$，$k$-余向量的集合
+  \[
+    \mathcal{E}=\bigl\{\varepsilon^I\,|\, \text{$I$ 是长度为 $k$ 的多重递增指标}\bigr\}  
+  \]
+  构成 $\Lambda^k(V^*)$ 的一组基，因此
+  \[
+    \dim\Lambda^k(V^*)=\binom{n}{k}=\frac{n!}{k!(n-k)!}.  
+  \]
+  如果 $k> n$，那么 $\dim\Lambda^k(V^*)=0$。
+\end{proposition}
+\begin{proof}
+  当 $k>n$ 的时候，此时任意的 $\alpha\in \Lambda^k(V^*)$ 的参数一定线性相关，
+  所以 $\alpha=0$，故 $\Lambda^k(V^*)$ 为平凡空间。对于 $k\le n$ 的时候，
+  我们证明 $\mathcal{E}$ 线性无关且张成 $\Lambda^k(V^*)$。令 $(E_i)$
+  是对偶于 $\bigl(\varepsilon^i\bigr)$ 的 $V$ 的基。
+
+  首先说明 $\mathcal{E}$ 张成 $\Lambda^k(V^*)$。任取 $\alpha\in \Lambda^k(V^*)$。
+  对于任意多重指标 $I=(i_1,\dots,i_k)$，定义
+  \[
+    \alpha_I=\alpha(E_{i_1},\dots,E_{i_k}).  
+  \]
+  那么任取多重指标 $J$，如果 $J=I_\sigma$，那么 $\alpha_J=(\sgn\sigma)\alpha_I$，所以有
+  \[
+    \alpha(E_{j_1},\dots,E_{j_k})=\alpha_J=\sideset{}{'}\sum_{I}\alpha_I\delta_J^I
+    =  \sideset{}{'}\sum_I\alpha_I\varepsilon^I(E_{j_1},\dots,E_{j_k}),
+  \]
+  故 $\alpha=\sideset{}{'}{\textstyle\sum_I}\alpha_I\varepsilon^I$，这就说明  $\mathcal{E}$ 张成 $\Lambda^k(V^*)$。
+
+  然后说明 $\mathcal{E}$ 线性无关。设 $\sideset{}{'}{\textstyle\sum_I}\alpha_I\varepsilon^I=0$。
+  令 $J$ 是任意递增的多重指标，将两边作用在 $(E_{j_1},\dots,E_{j_k})$ 上，有
+  \[
+    \alpha_J=\sideset{}{'}\sum_I\alpha_I\delta_J^I=0  
+  \]
+  所以系数 $\alpha_I=0$。
+\end{proof}
+
+特别地，对于 $n$ 维向量空间 $V$，$\Lambda^n(V^*)$ 是 $1$-维的并且由
+$\varepsilon^{1\dots n}$ 张成。根据定义，$\varepsilon^{1\dots n}$
+就是行列式函数。
+
+\begin{proposition}
+  设 $V$ 是 $n$ 维向量空间，$\omega\in \Lambda^n(V^*)$。如果 $T:V\to V$
+  是线性映射，$v_1,\dots,v_n\in V$，那么
+  \begin{equation}
+    \omega(Tv_1,\dots,Tv_n)=(\det T)\omega(v_1,\dots,v_n).
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  任取 $V$ 的一组基 $(E_i)$，设 $\bigl(\varepsilon^i\bigr)$ 是对偶基。
+  此时 $\omega=c\varepsilon^{1\dots n}$。记 $T$ 在 $(E_i)$ 下的表示矩阵为
+  $(T_i^j)$，即 $T_i=TE_i=T_i^jE_j$。我们只需要证明结论对基向量成立，此时右边为
+  \[
+    (\det T)c\varepsilon^{1\dots n}(E_1,\dots,E_n)=c(\det T).
+  \]
+  左边为
+  \[
+    \omega(TE_1,\dots,E_n)=c\varepsilon^{1\dots n}
+    (T_1,\dots,T_n)=c\det (T_i^j).  
+  \]
+  所以二者相等。
+\end{proof}
+
+\subsection{楔积}
+
+给定 $\omega\in \Lambda^k(V^*)$ 和 $\eta\in \Lambda^l(V^*)$，我们定义\emph{楔积}
+或者 \emph{外积} 为一个 $(k+l)$-余向量：
+\begin{equation}
+  \omega\wedge\eta=\frac{(k+l)!}{k!l!}\Alt(\omega\otimes\eta).
+\end{equation}
+交错化前面的系数是为了下面的引理。
+
+\begin{lemma}
+  $V$ 是有限维向量空间，$\bigl(\varepsilon^1,\dots,\varepsilon^n\bigr)$
+  是 $V^*$ 的一组基。对于任意多重指标 $I=(i_1,\dots,i_k)$ 和
+  $J=(j_1,\dots,j_l)$，有
+  \[
+    \varepsilon^I\wedge\varepsilon^J=\varepsilon^{IJ},  
+  \]
+  其中 $IJ=(i_1,\dots,i_k,j_1,\dots,j_l)$ 由 $I$ 和 $J$ 拼接得到。
+\end{lemma} 
+\begin{proof}
+  根据多重线性性，只需要证明对于任意基向量 $(E_{p_1},\dots,E_{p_{k+l}})$，
+  有 
+  \begin{equation}
+    \varepsilon^I\wedge\varepsilon^J(E_{p_1},\dots,E_{p_{k+l}})
+    =\varepsilon^{IJ}(E_{p_1},\dots,E_{p_{k+l}}).
+  \end{equation}
+
+  \textsc{Case 1:} 如果 $P=(p_1,\dots,p_{k+l})$ 有重复指标，那么
+  两边均为零，所以相等。
+
+  \textsc{Case 2:} $P$ 包含一个指标且这个指标不在 $I$ 或者 $J$ 中。
+  此时等式右端为 $\delta_P^{IJ}=0$。类似的，左端的每一项都是 $\varepsilon^I$
+  和 $\varepsilon^J$ 的某个置换之积，但是参数有一个指标不在 $I$ 或者 $J$
+  中，所以每一项都为零，所以此时两端都为零。
+
+  \textsc{Case 3:} $P=IJ$ 且 $P$ 没有重复指标。此时右端为
+  $\delta_P^{IJ}=1$。左端根据定义，有
+  \begin{align*}
+    &\hphantom{{}={}}\varepsilon^I\wedge \varepsilon^J(E_{p_1},\dots,E_{p_{k+l}})\\
+    &=\frac{(k+l)!}{k!l!}\Alt\bigl(\varepsilon^I\otimes\varepsilon^J\bigr)
+    (E_{p_1},\dots,E_{p_{k+l}})\\
+    &=\frac{1}{k!l!}\sum_{\sigma\in S_{k+l}}(\sgn\sigma)
+    \varepsilon^I\bigl(E_{p_{\sigma(1)}},\dots,E_{p_{\sigma(k)}}\bigr)
+    \varepsilon^J\bigl(E_{p_{\sigma(k+1)}},\dots,E_{p_{\sigma(k+l)}}\bigr),
+  \end{align*}
+  由于 $P=IJ$，所以只有 $\sigma=\tau\eta$ 的时候上述求和非零，其中
+  $\tau\in S_k$ 置换 $\{1,\dots,k\}$，$\eta\in S_l$ 置换 $\{k+1,\dots,k+l\}$。
+  所以
+  \begin{align*}
+    &\hphantom{{}={}}\varepsilon^I\wedge \varepsilon^J(E_{p_1},\dots,E_{p_{k+l}})\\
+    &=\frac{1}{k!l!}\sum_{\substack{\tau\in S_k\\\eta\in S_l}}
+    (\sgn\tau)(\sgn\eta) \varepsilon^I\bigl(E_{p_{\tau(1)}},\dots,E_{p_{\tau(k)}}\bigr)
+    \varepsilon^J\bigl(E_{p_{k+\eta(1)}},\dots,E_{p_{k+\eta(l)}}\bigr)\\
+    &=\left(
+      \frac{1}{k!}\sum_{\tau\in S_k}(\sgn\tau)
+      \varepsilon^I\bigl(E_{p_{\tau(1)}},\dots,E_{p_{\tau(k)}}\bigr)
+    \right)\left(
+      \frac{1}{l!}\sum_{\eta\in S_l}\varepsilon^J\bigl(E_{p_{k+\eta(1)}},\dots,E_{p_{k+\eta(l)}}\bigr)
+    \right)\\
+    &=\bigl(\Alt \varepsilon^I\bigr)\bigl(E_{p_{1}},\dots,E_{p_{k}}\bigr)
+    \bigl(\Alt \varepsilon^J\bigr)\bigl(E_{p_{k+1}},\dots,E_{p_{k+l}}\bigr)\\
+    &=\varepsilon^I\bigl(E_{p_{1}},\dots,E_{p_{k}}\bigr)
+    \varepsilon^J\bigl(E_{p_{k+1}},\dots,E_{p_{k+l}}\bigr)=1.
+  \end{align*}
+
+  \textsc{Case 4:} $P$ 是 $IJ$ 的一个置换且没有重复指标。此时等式两端同时用
+  置换作用使得参数变为与 $IJ$ 的指标一致即可。
+\end{proof} 
+
+\begin{proposition}[楔积的性质]
+  令 $\omega,\omega',\eta,\eta',\xi$ 是有限维向量空间 $V$ 上的多重余向量。
+  \begin{enumerate}
+    \item 对于 $a,a'\in \mathbb{R}$，有
+    \begin{align*}
+      (a\omega+a'\omega')\wedge\eta&=a(\omega\wedge\eta)+a'(\omega'\wedge\eta),\\
+      \eta\wedge(a\omega+a'\omega')&=a(\eta\wedge\omega)+a'(\eta\wedge\omega').
+    \end{align*}
+  \end{enumerate}
+\end{proposition}
+

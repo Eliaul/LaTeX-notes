@@ -1,0 +1,351 @@
+\documentclass[fontset=none]{Notes}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\usepackage{tikz-cd,wrapstuff}
+\usepackage{siunitx,tikz,nicematrix}
+\usetikzlibrary{matrix,calc}
+
+\input{font.def}
+
+\usepackage[subscriptcorrection,nofontinfo,mtpbb,mtpfrak]{mtpro2}
+\usepackage[normal]{fixdif}
+
+\tikzcdset{
+  arrow style=tikz,
+  diagrams={>={Straight Barb[scale=0.8]}}
+}
+
+\allowdisplaybreaks[1]
+
+\newlength{\mymathln}
+\newcommand{\aligninside}[2]{
+  \settowidth{\mymathln}{#2}
+  \mathmakebox[\mymathln]{#1}
+}
+
+\DeclareMathOperator\Spec{Spec}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\sgn{sgn}
+\DeclareMathOperator\rad{rad}
+\DeclareMathOperator\Alt{Alt}
+\DeclareMathOperator\Max{Max}
+\DeclareMathOperator\GL{GL}
+\DeclareMathOperator\Orth{O}
+\DeclareMathOperator\SO{SO}
+\DeclareMathOperator\SU{SU}
+\DeclareMathOperator\Lie{Lie}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Int{Int}
+\DeclareMathOperator\Sym{Sym}
+\DeclareMathOperator\Tr{Tr}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\supp{supp}
+\DeclareMathOperator\Id{Id}
+\DeclareMathOperator\rk{rank}
+\DeclareMathOperator\grad{grad}
+\DeclareMathOperator\Euc{E}
+\newcommand{\LL}{{\mathrm{L}}}
+
+\newcommand{\ideal}[1]{\mathfrak{#1}}
+\newcommand{\mat}[1]{\mathbold{#1}}
+\newcommand{\uline}{\underline{\hphantom{X}}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\lie}[1]{\mathfrak{#1}}
+\newcommand{\inn}[1]{\left\langle #1\right\rangle}
+
+\usepackage{enumitem}
+
+\setlist[enumerate]{nosep}
+
+%\DeclareMathAlphabet\mathcal{OMS}{cmsy}{m}{n}
+
+\newlength\stextwidth
+\newcommand\makesamewidth[3][c]{%
+  \settowidth{\stextwidth}{#2}%
+  \makebox[\stextwidth][#1]{#3}%
+}
+
+
+
+\begin{document}
+
+\frontmatter
+
+\tableofcontents
+
+\mainmatter
+
+\chapter{黎曼度量}
+
+
+\chapter{联络}
+
+\section{向量场作微分的问题}
+
+令 $I\subseteq \mathbb{R}$ 是区间， $\gamma:I\to \mathbb{R}^n$ 是光滑曲线，
+在标准坐标中可以表示为 $\gamma(t)=\bigl(\gamma^1(t),\dots,\gamma^n(t)\bigr)$。
+这样的曲线有良定义的\emph{速度} $\gamma'(t)$ 和\emph{加速度} $\gamma''(t)$，
+计算为
+\begin{align}\label{eq:velocity of curve in Euclid space}
+  \gamma'(t)&=\dot{\gamma}^1(t)\frac{\partial}{\partial x^1}\bigg|_{\gamma(t)}
+  +\cdots+\dot\gamma^n(t)\frac{\partial}{\partial x^n}\bigg|_{\gamma(t)},\\
+  \gamma''(t)&=\ddot{\gamma}^1(t)\frac{\partial}{\partial x^1}\bigg|_{\gamma(t)}
+  +\cdots+\ddot\gamma^n(t)\frac{\partial}{\partial x^n}\bigg|_{\gamma(t)}.
+\end{align}
+注意到 $\gamma$ 是直线当且仅当 $\gamma''(t)\equiv 0$。
+
+我们也可以定义 $\mathbb{R}^n$ 上的向量场的方向导数，只需要计算标准坐标中
+分量函数的方向导数即可：给定向量场 $Y\in \mathfrak{X}(\mathbb{R}^n)$
+和向量 $v\in T_p \mathbb{R}^n$，定义\emph{$Y$ 在 $v$ 方向上的 Euclid 方向导数}
+为
+\[
+  \wbar\nabla_v Y=v(Y^1)\frac{\partial}{\partial x^1}\bigg|_p
+  + \cdots + v(Y^n)\frac{\partial}{\partial x^n}\bigg|_p,
+\]
+其中 $v(Y^i)$ 为
+\[
+  v(Y^i)=v^1\frac{\partial Y^i}{\partial x^1}(p)+\cdots +
+  v^n\frac{\partial Y^i}{\partial x^n}(p).
+\]
+如果 $X$ 是另一个向量场，我们可以通过在每个点处计算 $\wbar\nabla_{X_p}Y$
+得到一个新的向量场 $\wbar\nabla_XY$：
+\begin{equation}
+  \wbar\nabla_XY=X(Y^1)  \frac{\partial}{\partial x^1}+\cdots+
+  X(Y^n)  \frac{\partial}{\partial x^n}.
+\end{equation}
+
+更一般地，我们可以对 $\mathbb{R}^n$ 的子流形上的曲线和向量场做同样的推广。
+假设 $M\subseteq \mathbb{R}^n$ 是嵌入子流形，考虑光滑曲线 $\gamma:I\to M$。
+我们想将 $M$ 中的测地线想象为一条“尽可能直”的曲线。当然，如果 $M$ 本身是弯曲的，
+那么 $\gamma'(t)$ （视为 $\mathbb{R}^n$ 中的向量）必须要有所不同的定义，
+否则曲线将会离开 $M$。一种方式是计算上面的 Euclid 加速度 $\gamma''(t)$，
+然后使用切向投影 $\pi^\top:T_{\gamma(t)}\mathbb{R}^n\to T_{\gamma(t)}M$。
+这会导出切向于 $M$ 的向量 $\gamma''(t)^\top=\pi^\top(\gamma''(t))$，
+我们称为\emph{$\gamma$ 的切向加速度}。此时可以合理地认为，当 $M$ 中曲线
+的切向加速度为零的时候，它是尽可能直的。
+
+类似地，假设 $Y$ 是 $M$ 上的一个光滑向量场，我们想知道 $Y$ 沿着 
+$v\in T_pM$ 方向在 $M$ 中变化了多少。一种合理的方式是将 $Y$ 延拓为
+$\mathbb{R}^n$ 的某个开子集上的光滑向量场 $\wtilde Y$，然后计算
+$\wtilde Y$ 在 $v$ 方向的 Euclid 方向导数，然后正交投影到 $T_pM$ 上。
+即定义\emph{$Y$ 在 $v$ 方向上的切向方向导数}为
+\begin{equation}
+  \nabla_v^\top Y=\pi^\top\bigl(\wbar\nabla_v\wtilde Y\bigr).
+\end{equation}
+这个切向方向导数可以证明是良定义的并且保持刚体运动。但是，此时没有理由
+相信切向方向导数是 $M$ 是内在不变量（即仅仅依赖于 $M$ 上的诱导度量）。
+
+在抽象的黎曼流形上，由于没有“环境 Euclid 空间”的存在，因此该技巧不可用。
+因此我们必须找到某种方法理解抽象黎曼流形中光滑曲线的加速度。令 $\gamma:I\to M$
+是光滑曲线，我们知道在 $t\in I$ 时刻 $\gamma$ 的速度被定义为切向量
+$\gamma'(t)\in T_{\gamma(t)}M$，其在坐标中的表示为 \eqref{eq:velocity of curve in Euclid space} 式。
+
+但是，与速度不同，加速度并没有这样一个坐标无关的解释。例如，考虑参数化的圆周
+$\gamma(t)=(\cos t,\sin t)$。作为 $\mathbb{R}^2$ 中的曲线，其有加速度
+\[
+  \gamma''(t)=-\cos t\frac{\partial}{\partial x}\bigg|_{\gamma(t)}
+  -\sin t   \frac{\partial}{\partial y}\bigg|_{\gamma(t)}.
+\]
+但是在极坐标中，同样的曲线被描述为 $(r(t),\theta(t))= (1,t)$，在这个坐标下，
+加速度变为
+\[
+  \gamma''(t)=r''(t)\frac{\partial}{\partial r}\bigg|_{\gamma(t)}   
+  +\theta''(t)\frac{\partial}{\partial \theta}\bigg|_{\gamma(t)}=0.
+\]
+
+总的来说，问题是这样的：为了通过对 $\gamma'(t)$ 微分来定义 $\gamma''(t)$，
+我们必须对向量 $\gamma'(t+h)$ 和 $\gamma'(t)$ 的差商取极限，但是
+$\gamma'(t+h)$ 和 $\gamma'(t)$ 生活在不同的切空间中，所以它们的减法是没有意义的。
+而在 $\mathbb{R}^n$ 中光滑曲线的加速度能够计算是因为它的每个切空间都可以自然地
+视为 $\mathbb{R}^n$ 本身。在一般的流形上，是不存在这样的自然的等同的。
+
+速度向量 $\gamma'(t)$ 是沿着曲线的速度场的一个例子。为了解释在流形中曲线的加速度，
+我们需要的是某种独立于坐标的方式去将向量场沿曲线做微分。为此，我们需要
+一种方法来比较向量场在不同点的值，或者直观的说，即“联接”相邻的切空间。
+这引出了联络的概念：这是流形上的一个额外的数据，一种计算向量场的方向导数的规则。
+
+\section{联络}
+
+事实证明首先定义联络作为区分向量丛截面的方式是最简单的。这个定义
+旨在捕获 Euclid 方向导数算符和切向方向导数算符（$\wbar\nabla$ 和 $\wbar\nabla^\top$）
+的基本性质。在定义一般情况的联络之后，我们将把定义应用到向量丛沿曲线的情况。
+
+令 $\pi:E\to M$ 是光滑流形 $M$ 上的光滑向量丛，$\Gamma(E)$ 是 $E$ 的光滑截面空间。
+\emph{$E$ 中的联络}指的是一个映射
+\[
+  \nabla:\mathfrak{X}(M)\times \Gamma(E)\to\Gamma(E),  
+\]
+通常记为 $(X,Y)\mapsto \nabla_XY$，其满足下面的属性：
+\begin{enumerate}
+  \item $\nabla_XY$ 在 $X$ 上是 $C^\infty(M)$-线性的：对于
+  $f_1,f_2\in C^\infty(M)$ 和 $X_1,X_2\in \mathfrak{X}(M)$，有
+  \[
+    \nabla_{f_1X_1+f_2X_2}Y=f_1\nabla_{X_1}Y+f_2\nabla_{X_2}Y.  
+  \]
+  \item $\nabla_XY$ 在 $Y$ 上是 $\mathbb{R}$-线性的：对于
+  $a_1,a_2\in \mathbb{R}$ 和 $Y_1,Y_2\in\Gamma(E)$，有
+  \[
+    \nabla_X(a_1Y_1+a_2Y_2)=a_1\nabla_XY_1+a_2\nabla_XY_2.  
+  \]
+  \item $\nabla$ 满足乘积法则：对于 $f\in C^\infty(M)$，有
+  \[
+    \nabla_X(fY)=f\nabla_XY+(Xf)Y.  
+  \]
+\end{enumerate}
+$\nabla_XY$ 被称为\emph{$Y$ 在 $X$ 方向的协变导数}。
+
+针对不同的情况有很多种类型的联络。我们这里定义的联络被称为\emph{Koszul 联络}。
+由于我们在本书中不需要考虑其他类型的联络，因此我们将 Koszul 联络简称为联络。
+
+尽管联络是在全局截面上定义的，但是实际上这是一个\emph{局部算符}。
+
+\begin{lemma}[局部性]\label{lemma:locality of connection}
+  假设 $\nabla$ 是光滑向量丛 $\pi:E\to M$ 中的联络。对于任意 $X\in \mathfrak{X}(M)$，
+  $Y\in \Gamma(E)$ 和 $p\in M$，协变导数 $\nabla_XY|_p$ 只与 $X,Y$ 在 $p$ 处的一个任意小
+  的邻域上有关。准确的说，如果在 $p$ 的某个邻域上有 $X=\wtilde X$ 和 $Y=\wtilde Y$，
+  那么 $\nabla_XY|_p=\nabla_{\wtilde X}\wtilde Y|_p$。
+\end{lemma}
+\begin{proof}
+  首先考虑 $Y$。通过将 $Y$ 替换为 $Y-\wtilde Y$，我们只需要说明如果 $Y$ 在 $p$
+  的某个邻域上为零，那么 $\nabla_XY|_p=0$。假设 $Y$ 在 $p$ 的某个邻域 $U$ 上为零，
+  选取支在 $U$ 中的满足 $\varphi(p)=1$ 的鼓包函数 $\varphi\in C^\infty(M)$。
+  于是在 $M$ 中有 $\varphi Y\equiv 0$。那么对于 $X\in \mathfrak{X}(M)$，我们有
+  $\nabla_X(\varphi Y)=\nabla_X(0\cdot \varphi Y)=0\nabla_X(\varphi Y)=0$，
+  所以
+  \[
+    0=\nabla_X(\varphi Y)=\varphi\nabla_XY+(X\varphi)Y,  
+  \]
+  注意到在 $\varphi$ 的支集上有 $Y\equiv 0$，所以 $(X\varphi)Y\equiv 0$，
+  故 $\varphi\nabla_XY=0$，所以 $\nabla_XY|_p=0$。
+
+  然后考虑 $X$，同样的，假设 $X$ 在 $p$ 的某个邻域 $U$ 上为零，选取支在 $U$ 中的满足 $\varphi(p)=1$ 的鼓包函数 $\varphi\in C^\infty(M)$。
+  于是在 $M$ 中有 $\varphi X\equiv 0$。那么任取 $Y\in\Gamma(E)$，有
+  $\nabla_{\varphi X}Y=\nabla_{0\cdot\varphi X}Y=0\nabla_{\varphi X}Y=0$，所以
+  \[
+    0=\nabla_{\varphi X}Y=\varphi\nabla_XY,  
+  \]
+  于是 $\nabla_XY|_p=0$。
+
+  利用上面两点，如果在 $p$ 的某个邻域上有 $X=\wtilde X$ 和 $Y=\wtilde Y$，
+  那么就有
+  \[
+    \nabla_{\wtilde X}\wtilde Y|_p
+    =  \nabla_{X}\wtilde Y|_p=
+    \nabla_XY|_p.\qedhere
+  \]
+\end{proof}
+ 
+\begin{proposition}[联络的限制]\label{prop:restriction of connection}
+  假设 $\nabla$ 是光滑向量丛 $E\to M$ 中的联络。对于每个开子集 $U\subseteq M$，
+  存在唯一的在限制丛 $E|_U$ 上的联络 $\nabla^U$ 满足：对于每个
+  $X\in \mathfrak{X}(M)$ 和 $Y\in\Gamma(E)$，有
+  \begin{equation}
+    \nabla_{X|_U}^U(Y|_U)=(\nabla_XY)|_U.
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  首先我们证明唯一性。假设 $\nabla^U$ 是这样一个联络，$X\in \mathfrak{X}(U)$
+  和 $Y\in\Gamma(E|_U)$ 是任意的。给定 $p\in U$，我们可以使用鼓包函数去构造一个
+  光滑向量场 $\wtilde X\in \mathfrak{X}(M)$ 和光滑截面 $\wtilde Y\in \Gamma(E)$
+  使得 $\wtilde X|_U$ 和 $ X$ 在 $p$ 的某个邻域上重合，
+  $\wtilde Y|_U$ 和 $ Y$ 在 $p$ 的某个邻域上重合，那么
+  \autoref{lemma:locality of connection} 表明
+  \[
+    \nabla_X^UY\big|_p= \nabla_{\wtilde X|_U}^U (\wtilde Y|_U)\big|_p
+    =(\nabla_{\wtilde X}\wtilde Y)|_p.
+  \]
+  右边完全由 $\nabla$ 确定，所以这表明 $\nabla^U$ 如果存在则唯一。
+
+  为了证明存在性，给定 $X\in \mathfrak{X}(U)$ 和 $Y\in \Gamma(E|_U)$，
+  对于每个 $p\in U$，我们与上面一样的方式构造 $\wtilde X$ 和 $\wtilde Y$，
+  然后定义 $\nabla_X^UY|_p=(\nabla_{\wtilde X}\wtilde Y)|_p$，根据 \autoref{lemma:locality of connection}，
+  这与 $\wtilde X$ 和 $\wtilde Y$ 的选取无关，不难验证这满足联络的定义。
+\end{proof}
+
+在上述命题的情况下，我们通常将 $\nabla$ 的限制仍记为 $\nabla$，这个命题保证
+这样简写没有歧义。
+
+\autoref{lemma:locality of connection} 告诉我们我们可以在仅仅知道
+$X,Y$ 在 $p$ 的某个邻域的值的情况下计算 $\nabla_XY$。实际上，下面的命题表明，
+对于 $X$ 而言，我们甚至只需要知道 $X$ 在 $p$ 处一个点的值即可。
+
+\begin{proposition}\label{prop:connection depends on X at one point}
+  在 \autoref{lemma:locality of connection} 的假设下，$\nabla_XY|_p$
+  仅仅依赖于 $Y$ 在 $p$ 的某个邻域上的值以及 $X$ 在 $p$ 处的值。
+\end{proposition}
+\begin{proof}
+  关于 $Y$ 的断言在 \autoref{lemma:locality of connection} 已经说明。
+  对于 $X$，根据线性性，只需要说明在 $X_p=0$ 的情况下有
+  $\nabla_XY|_p=0$ 即可。选取 $p$ 的一个坐标邻域 $U$，那么 $X$ 可以局部表示为
+  $X=X^i\partial_i$，满足 $X^i(p)=0$。对于每个 $Y\in\Gamma(E|_U)$，我们有
+  \[
+    \nabla_XY|_p=X^i(p)\nabla_{\partial_i}Y|_p=0.\qedhere  
+  \]
+\end{proof}
+
+多亏了 \autoref{prop:restriction of connection} 和 \autoref{prop:connection depends on X at one point}，
+我们可以定义记号 $\nabla_vY$，其中 $v$ 是 $T_pM$ 的某个元素，$Y$ 是 $E$ 的定义在
+$p$ 的某个邻域上的光滑局部截面。如果我们要计算它，只需要令 $X$ 是 $p$
+的邻域上的向量场并且 $X|_p=v$，然后令 $\nabla_vY=\nabla_XY|_p$ 即可。
+\autoref{prop:connection depends on X at one point} 表明这个结果不依赖于
+延拓的选取。此后，我们将以这种方式解释丛的局部截面的协变导数，而不再进一步注释。
+
+\subsection{切丛中的联络}
+
+切丛中的联络通常被称为\emph{$M$ 上的联络}（有时也被称为\emph{仿射联络}或者\emph{线性联络}）。
+
+设 $M$ 是光滑流形，根据定义，$TM$ 上的联络是一个映射
+\[
+  \nabla:\mathfrak{X}(M)\times \mathfrak{X}(M)\to \mathfrak{X}(M)  
+\]
+且满足联络的三个条件。为了计算，我们需要检查联络如何作用在局部标架上。
+令 $(E_i)$ 是 $TM$ 的在开子集 $U\subseteq M$ 上的光滑局部标架。
+对于任意指标 $i$ 和 $j$，我们可以将向量场 $\nabla_{E_i}E_j$ 在同一组标架
+下表示为
+\begin{equation}
+  \nabla_{E_i}E_j=\Gamma_{ij}^k E_k.
+\end{equation}
+这定义了 $n^3$ 个光滑函数 $\Gamma_{ij}^k:U\to \mathbb{R}$，称为
+$\nabla$ 相对于这组标架的\emph{联络系数}。下面的命题表明联络由联络系数
+完全确定。
+
+\begin{proposition}
+  令 $M$ 是光滑流形，$\nabla$ 是 $TM$ 中的联络。假设 $(E_i)$ 是开子集
+  $U\subseteq M$ 上的光滑局部标架，$\{\Gamma_{ij}^k\}$ 是联络系数。
+  对于光滑向量场 $X,Y\in \mathfrak{X}(U)$，设 $X=X^iE_i$，
+  $Y=Y^jE_j$，那么
+  \begin{equation}
+    \nabla_XY=\bigl(X(Y^k)+X^iY^j\Gamma_{ij}^k\bigr)E_k.
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  只需要利用联络的定义进行计算：
+  \begin{align*}
+    \nabla_XY&=\nabla_X\bigl(Y^jE_j\bigr)\\
+    &=X\bigl(Y^j\bigr)E_j+Y^j\nabla_{X^iE_i}E_j\\
+    &=X\bigl(Y^j\bigr)E_j+X^iY^j\nabla_{E_i}E_j\\
+    &=X\bigl(Y^j\bigr)E_j+X^iY^j\Gamma_{ij}^kE_k.\qedhere
+  \end{align*}
+\end{proof}
+
+一旦联络系数在某个局部标架中确定，下面的命题表明在同一开集上任意其他的
+局部标架中的联络系数也可以确定。
+
+\begin{proposition}[联络系数的变换法则]
+  令 $M$ 是光滑流形，$\nabla$ 是 $TM$ 中的联络。假设在开集 $U\subseteq M$
+  上有两个光滑局部标架 $(E_i)$ 和 $\bigl(\wtilde E_j\bigr)$，其中
+  $\wtilde E_i=A_i^jE_j$。令 $\Gamma_{ij}^k$ 和 $\wtilde\Gamma_{ij}^k$
+  分别为 $\nabla$ 在这两组标架中的联络系数，那么 
+  \begin{equation}
+    \wtilde \Gamma_{ij}^k=\bigl(A^{-1}\bigr)_p^kA_i^qA_j^r\Gamma_{qr}^p
+    +\bigl(A^{-1}\bigr)_p^kA_i^qE_q\bigl(A_j^p\bigr).
+  \end{equation}
+\end{proposition}
+
+
+\end{document}
