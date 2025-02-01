@@ -335,46 +335,84 @@ $\mathcal{F}$ 是 $C^\infty(M)$-多重线性的。
 然后我们再介绍一个张量场的重要的表征。
 
 \begin{lemma}
-  $V$ 是有限维向量空间，那么在多重线性映射
+  映射
   \[
-    \underbrace{V^*\times\cdots\times V^*}_{\text{$k$ copies}}  \times
-    \underbrace{V\times\cdots\times V}_{\text{$l$ copies}}  \to V
+    \mathcal{F}:\underbrace{\mathfrak{X}^*(M)\times\cdots\times \mathfrak{X}^*(M)}
+    _{\text{$k$ copies}}\times \underbrace{\mathfrak{X}(M)\times\cdots\times \mathfrak{X}(M)}
+    _{\text{$l$ copies}}\to \mathfrak{X}(M)
   \]
-  的空间和张量积空间 $T^{(k+1,l)}(V)$ 之间存在一个同构。
+  是 $C^\infty(M)$-线性的当且仅当其由一个光滑 $(k+1,l)$-张量场诱导。
 \end{lemma}
 \begin{proof}
-  任取上述多重线性映射 $f$，定义 $\varPhi(f)\in T^{(k+1,l)}(V)$ 满足：
-  任取 $\omega^1,\dots,\omega^{k+1}\in V^*$ 和 $v_1,\dots,v_l\in V$，有
+  若上述 $\mathcal{F}$ 是 $C^\infty(M)$-线性的，那么可以定义
+  一个映射
   \[
-    \varPhi(f)\bigl(\omega^1,\dots,\omega^{k+1},v_1,\dots,v_l\bigr) 
-    =\omega^{k+1}\bigl(f(\omega^1,\dots,\omega^k,v_1,\dots,v_l)\bigr),
+    F: \mathfrak{X}^*(M)\times\underbrace{\mathfrak{X}^*(M)\times\cdots\times \mathfrak{X}^*(M)}
+    _{\text{$k$ copies}}\times \underbrace{\mathfrak{X}(M)\times\cdots\times \mathfrak{X}(M)}
+    _{\text{$l$ copies}}\to C^\infty(M)
   \]
-  不难验证 $\varPhi(f)$ 是多重线性映射，所以确实是 $(k+1,l)$-张量。
-  这两个空间的维数都是 $(\dim V)^{(k+1)l}$，显然 $\varPhi$
-  是单射，所以 $\varPhi$ 是同构。
-\end{proof}
+  为 
+  \[
+    F\bigl(\alpha,\omega^1,\dots,\omega^k,X_1,\dots,X_l\bigr)  
+    =\alpha\bigl(\mathcal{F}\bigl(\omega^1,\dots,\omega^k,X_1,\dots,X_l\bigr)\bigr),
+  \]
+  不难验证 $F$ 是 $C^\infty(M)$-线性的，那么根据张量表征引理，
+  $F$ 由一个光滑 $(k+1,l)$-张量场诱导。
 
-上面的引理告诉我们，对于 $(k+1,l)$-张量场 $F$，我们可以诱导出一个
-$C^\infty(M)$-多重线性映射
-\[
-  \mathcal{F}:\underbrace{\mathfrak{X}^*(M)\times\cdots\times \mathfrak{X}^*(M)}
-  _{\text{$k$ copies}}\times \underbrace{\mathfrak{X}(M)\times\cdots\times \mathfrak{X}(M)}
-  _{\text{$l$ copies}}\to \mathfrak{X}(M),
-\]
-定义为
-\[
-  \mathcal{F}(\omega^1,\dots,\omega^k,X_1,\dots,X_l)(p)=
-  \varPhi^{-1}(F_p)\bigl(\omega^1|_p,\dots,\omega^k|_p,X_1|_p,\dots,X_l|_p\bigr).
-\]
-反之，也可以从这样的 $C^\infty(M)$-多重线性映射 $\mathcal{F}$
-诱导出 $(k+1,l)$-张量场 $F$，定义为
-\[
-  F_p(u^1,\dots,u^k,u^{k+1},v_1,\dots,v_l) =
-  u^{k+1}\bigl(\mathcal{F}(\omega^1,\dots,\omega^k,V_1,\dots,V_l)(p)\bigr),
-\]
-其中 $\omega^1,\dots,\omega^k$ 是 $u^1,\dots,u^k$ 的延拓到 $M$
-上的光滑余向量场，$V_1,\dots,V_l$ 是 $v_1,\dots,v_l$ 的延拓到 $M$
-上的光滑向量场。
+  反之，给定一个光滑 $(k+1,l)$-张量场 $F$，其诱导
+  一个 $C^\infty(M)$-线性的映射
+  \[
+    F:  \underbrace{\mathfrak{X}^*(M)\times\cdots\times \mathfrak{X}^*(M)}
+    _{\text{$k+1$ copies}}\times \underbrace{\mathfrak{X}(M)\times\cdots\times \mathfrak{X}(M)}
+    _{\text{$l$ copies}}\to C^\infty(M).
+  \]
+  定义映射
+  \[
+    \mathcal{F}:\underbrace{\mathfrak{X}^*(M)\times\cdots\times \mathfrak{X}^*(M)}
+    _{\text{$k$ copies}}\times \underbrace{\mathfrak{X}(M)\times\cdots\times \mathfrak{X}(M)}
+    _{\text{$l$ copies}}\to \mathfrak{X}(M)
+  \]
+  满足对于任意的 $\alpha\in \mathfrak{X}^*(M)$，有
+  \[
+    \alpha\bigl(\mathcal{F}\bigl(\omega^1,\dots,\omega^k,X_1,\dots,X_l\bigr)  \bigr)  
+    =F\bigl(\alpha,\omega^1,\dots,\omega^k,X_1,\dots,X_l\bigr)  .
+  \]
+  换句话说，任取 $p\in M$，向量 $\mathcal{F}\bigl(\omega^1,\dots,\omega^k,X_1,\dots,X_l\bigr)\big|_p\in T_pM$
+  满足
+  \begin{align*}
+    \alpha_p\bigl(\mathcal{F}\bigl(\omega^1,\dots,\omega^k,X_1,\dots,X_l\bigr)\big|_p\bigr)  
+    &=F\bigl(\alpha,\omega^1,\dots,\omega^k,X_1,\dots,X_l\bigr) (p)\\
+    &=F_p\bigl(\alpha_p,\omega^1|_p,\dots,\omega^k|_p,X_1|_p,\dots,X_l|_p\bigr),
+  \end{align*}
+  这表明 $\mathcal{F}\bigl(\omega^1,\dots,\omega^k,X_1,\dots,X_l\bigr)\big|_p$ 由余切向量
+  $\alpha_p\in T_p^*M$ 唯一确定，所以 $\mathcal{F}$ 是良定义的。
+  不难验证 $\mathcal{F}$ 是 $C^\infty(M)$-线性的。下面我们只需要说明 
+  $\mathcal{F}\bigl(\omega^1,\dots,\omega^k,X_1,\dots,X_l\bigr)$ 是光滑向量场即可。
+  
+  假设在局部坐标 $\bigl(x^i\bigr)$ 中，有 $\alpha=\alpha_i\d x^i$，
+  $\omega^j=\omega^j_i\d x^i$，$X_j=X_j^i\partial/\partial x^i$，以及
+  \[
+    F=F_{j_1\dots j_l}^{i_1\dots i_{k+1}}
+    \frac{\partial}{\partial x^{i_1}}\otimes  \cdots
+    \otimes \frac{\partial}{\partial x^{i_{k+1}}}\otimes \d x^{j_1}
+    \otimes\cdots\otimes \d x^{j_{l}},
+  \]
+  那么
+  \[
+    F\bigl(\alpha,\omega^1,\dots\omega^k,X_1,\dots,X_l\bigr)  
+    =\alpha_{i_1}\omega^1_{i_2}\cdots\omega^{k}_{i_{k+1}}
+    X_1^{j_1}\cdots X_l^{j_l}F_{j_1\dots j_l}^{i_1\dots i_{k+1}},
+  \]
+  这表明
+  \[
+    \mathcal{F}\bigl(\omega^1,\dots,\omega^k,X_1,\dots,X_l\bigr)=
+    \omega^1_{i_2}\cdots\omega^{k}_{i_{k+1}}
+    X_1^{j_1}\cdots X_l^{j_l}F_{j_1\dots j_l}^{i_1i_2\dots i_{k+1}}
+    \frac{\partial}{\partial x^{i_1}},
+  \]
+  这就表明 $\mathcal{F}\bigl(\omega^1,\dots,\omega^k,X_1,\dots,X_l\bigr)$
+  是光滑向量场。
+\end{proof}
 
 流形上的\emph{对称张量场}指的是一个协变张量场并且其在每个点处的取值都是
 对称张量。两个或多个张量场的对称积由逐点张量的对称积定义。例如，

@@ -256,13 +256,13 @@ $(M,g)$ 被称为\emph{平坦黎曼流形}，$g$ 被称为\emph{平坦度量}。
 \[
   \hat g(v)(w)=g_p(v,w)\quad w\in T_pM.  
 \]
-这诱导了 $\mathfrak{X}(M)\to \mathfrak{X}^*(M)$ 的映射
+任取 $X\in \mathfrak{X}(M)$，诱导了 $\mathfrak{X}^*(M) \to C^\infty(M)$ 的映射 $\hat g(X)$：
 \[
   \hat g(X)(Y)=g(X,Y).   
 \]
 我们使用同一个记号来表示这个映射。
 
-注意到 $\hat g$ 在每个点处的单射，所以也是满射，所以 $\hat g$ 是双射，
+注意到 $\hat g$ 在每个点处是单射，所以也是满射，所以 $\hat g$ 是双射，
 从而是丛同构。
 
 在任意光滑坐标 $(x^i)$ 中，我们可以写为 $g=g_{ij}\d x^i\d x^j$，
@@ -367,4 +367,30 @@ $\hat g^{-1}(\omega)$，我们说 $\omega^\sharp$ 是 $\omega$
   vf=\bigl|\grad f|_p\bigr|_g^2.
 \]
 
+指标上升和指标下降算符可以扩展到混合张量场上。如果 $F$ 是 $(k,l)$-张量场，
+$i\in\{1,\dots,k+l\}$ 是 $F$ 的某个协变指标，我们可以构造一个新的 $(k+1,l-1)$-张量场
+$F^\sharp$ 为
+\[
+  F^\sharp\bigl(\alpha_1,\dots,\alpha_{k+l}\bigr)=
+  F\bigl(\alpha_1,\dots,\alpha_{i-1},\alpha_i^\sharp,\alpha_{i+1},\dots,\alpha_{k+l}\bigr),
+\]
+其中 $\alpha_1,\dots,\alpha_{k+l}$ 是合适的向量场或者余向量场。
+类似地，如果 $i$ 是逆变指标，可以定义 $(k-1,l+1)$-张量场 $F^\flat$
+为
+\[
+  F^\flat\bigl(\alpha_1,\dots,\alpha_{k+l}\bigr)=
+  F\bigl(\alpha_1,\dots,\alpha_{i-1},\alpha_i^\flat,\alpha_{i+1},\dots,\alpha_{k+l}\bigr).
+\]
+例如，如果 $A$ 在某个局部坐标中表示为 $(1,2)$-张量场
+\[
+  A={{A_{i}}^j}_k\d x^i\otimes \frac{\partial}{\partial x^j}\otimes \d x^k,
+\]
+那么 $A^\flat$ 是一个 $(0,3)$-张量场
+\[
+  A^\flat =A_{ijk}\d x^i\otimes \d x^j\otimes \d x^k,  
+\]
+其中
+\[
+  A_{ijk}= g_{jl}  {{A_{i}}^l}_k.
+\]
 

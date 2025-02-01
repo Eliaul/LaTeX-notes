@@ -42,7 +42,7 @@
 \DeclareMathOperator\End{End}
 \DeclareMathOperator\Int{Int}
 \DeclareMathOperator\Sym{Sym}
-\DeclareMathOperator\Tr{Tr}
+\DeclareMathOperator\tr{tr}
 \DeclareMathOperator\Hom{Hom}
 \DeclareMathOperator\supp{supp}
 \DeclareMathOperator\Id{Id}
@@ -350,6 +350,176 @@ $\nabla$ 相对于这组标架的\emph{联络系数}。下面的命题表明联�
 \subsection{联络的存在性}
 
 
+\section{张量场的协变导数}
+
+我们在本节证明 $TM$ 中的每个联络都自动诱导了 $M$ 上所有张量丛中的联络，
+因此给出了一种计算任意类型张量场的协变导数的方法。
+
+\begin{proposition}
+  令 $M$ 是光滑流形，$\nabla$ 是 $TM$ 中的联络。那么 $\nabla$
+  唯一确定了每个张量丛 $T^{(k,l)}TM$ 中的联络，同样记为 $\nabla$，
+  其满足下面的四个条件。
+  \begin{enumerate}
+    \item 在 $T^{(1,0)}TM=TM$ 中，$\nabla$ 与给定的联络相同。
+    \item 在 $T^{(0,0)}TM=M\times \mathbb{R}$ 中，$\nabla$ 给出了通常意义下函数的微分：
+    \[
+      \nabla_Xf=Xf.  
+    \]
+    \item $\nabla$ 服从下面的乘积法则：
+    \[
+      \nabla_X(F\otimes G)=(\nabla_XF)\otimes G+F\otimes(\nabla_XG).  
+    \]
+    \item $\nabla$ 与缩并操作交换：如果 $\tr$ 是任意一对协变和逆变指标上的迹，
+    那么
+    \[
+      \nabla_X(\tr F)=\tr(\nabla_XF).  
+    \]
+  \end{enumerate}
+  这个联络同时遵循下面的两条额外属性：
+  \begin{enumerate}[label=(\alph{*})]
+    \item $\nabla$ 相对于余向量场 $\omega$ 和向量场 $Y$ 的自然配对，服从下面的乘积法则：
+    \[
+      \nabla_X\inn{\omega,Y}=\inn{\nabla_X\omega,Y}+\inn{\omega,\nabla_XY}.  
+    \]
+    \item 对于所有的 $F\in\Gamma\bigl(T^{(k,l)}TM\bigr)$，光滑 $1$-形式
+    $\omega^1,\dots,\omega^k$ 和光滑向量场 $Y_1,\dots,Y_l$，有
+    \begin{equation}\label{eq:convariant derivative of tensor field}
+      \begin{gathered}
+        (\nabla_XF)\bigl(\omega^1,\dots,\omega^k,Y_1,\dots,Y_l\bigr)=
+        X\bigl(F\bigl(\omega^1,\dots,\omega^k,Y_1,\dots,Y_l\bigr)\bigr)\\
+        -\sum_{i=1}^kF\bigl(\omega^1,\dots,\nabla_X\omega^i\dots,\omega^k,Y_1,\dots,Y_l\bigr)\\
+        -\sum_{j=1}^lF\bigl(\omega^1,\dots,\omega^k,Y_1,\dots,\nabla_XY_j,\dots,Y_l\bigr).
+      \end{gathered}
+    \end{equation}
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  首先我们证明满足 (1)--(4) 的联络一定满足 (a) 和 (b)。
+  对于 (a)，注意到 $\inn{\omega,Y}=\omega(Y)=\omega_iY^i$。
+  另一方面，对于 $\omega\otimes Y\in \Gamma\bigl(T^{(1,1)}TM\bigr)$，
+  其诱导 $C^\infty(M)$-线性映射 $\mathcal{F}:\mathfrak{X}(M)\to \mathfrak{X}(M)$，
+  满足任取 $\alpha\in \mathfrak{X}^*(M)$ 有
+  $\alpha(\mathcal{F}(X))=(\alpha Y)(\omega X)$，即
+  \[
+    \mathcal{F}(X)=\omega_jX^j Y^i\partial_i,
+  \]
+  这表明 $\mathcal{F}$ 在每个点处作为 $T_pM\to T_pM$ 的线性映射，
+  其在基 $\partial/\partial x^i|_p$ 下的表示矩阵为
+  $(\omega_j Y^i)(p)$，故 $\tr(\omega\otimes Y)=\omega_iY^i$。这表明
+  $\inn{\omega,Y}=\tr(\omega\otimes Y)$。那么条件 (1)--(4) 表明
+  \begin{align*}
+    \nabla_X\inn{\omega,Y}&=\nabla_X\bigl(\tr(\omega\otimes Y)\bigr)\\
+    &=\tr\bigl(\nabla_X(\omega\otimes Y)\bigr)\\
+    &=\tr\bigl(\nabla_X\omega\otimes Y+\omega\otimes\nabla_XY\bigr)\\
+    &=\inn{\nabla_X\omega,Y}+\inn{\omega,\nabla_XY}.
+  \end{align*}
+  对于 (b)，我们可以归纳证明等式：
+  \[
+    F\bigl(\omega^1,\dots,\omega^k,Y_1,\dots,Y_l\bigr)=
+    \underbrace{\tr\circ\cdots\circ\tr}_{k+l}
+    \bigl(F\otimes\omega^1\otimes\cdots\otimes\omega^k\otimes Y_1\otimes\cdots\otimes Y_l\bigr),
+  \]
+  其中每个 $\tr$ 算符作用在 $F$ 的一个上升指标和对应余向量场的下降指标上，
+  或者 $F$ 的一个下降指标和对应向量场的上升指标上。以 $F\in \Gamma\bigl(T^{(1,1)}TM\bigr)$
+  为例，由于 $F\otimes\omega\otimes Y=F_{j_1}^{i_1}\omega_{j_2} Y^{i_2}\partial_{i_1}\otimes \d x^{j_1}\otimes \d x^{j_2}\otimes \partial_{i_2}$，
+  所以
+  \[
+    \tr(F\otimes\omega\otimes Y)_j^i=
+    F^m_{j}\omega_m Y^{i},
+  \]
+  所以 
+  \[
+    (\tr\circ\tr)(F\otimes\omega\otimes Y)=F_n^m\omega_m Y^n
+    =F(\omega,Y).  
+  \]
+  然后使用类似的计算即可，例如
+  \begin{align*}
+    (\nabla_XF)(\omega,Y)&=\tr\circ\tr \bigl(\nabla_XF\otimes\omega\otimes Y\bigr)
+    \\
+    &=\tr\circ\tr \bigl(\nabla_X(F\otimes\omega\otimes Y)
+    -F\otimes\nabla_X(\omega\otimes Y)\bigr)\\
+    &=\tr\circ\tr \bigl(\nabla_X(F\otimes\omega\otimes Y)
+    -F\otimes\nabla_X\omega\otimes Y-F\otimes\omega\otimes\nabla_XY\bigr)\\
+    &=\nabla_X\bigl(F(\omega,Y)\bigr)-F\bigl(\nabla_X\omega,Y\bigr)
+    -F\bigl(\omega,\nabla_XY\bigr)\\
+    &=X\bigl(F(\omega,Y)\bigr)-F\bigl(\nabla_X\omega,Y\bigr)
+    -F\bigl(\omega,\nabla_XY\bigr).
+  \end{align*}
+
+  下面我们证明唯一性。假设 $\nabla$ 满足 (1)--(4)，那么也满足 (a) 和 (b)。
+  对于余向量场 $\omega$，有
+  \begin{equation}\label{eq:convariant derivative of covector field}
+    (\nabla_X\omega)(Y)=\nabla_X(\omega Y)-\omega(\nabla_XY),
+  \end{equation}
+  这表明 $T^*M$ 中的联络由 $TM$ 中的联络唯一确定。类似地，(b) 表明
+  每个张量场 $F$ 的协变导数都由向量场和余向量场的协变导数唯一确定。
+
+  现在证明存在性。我们首先根据 \eqref{eq:convariant derivative of covector field}
+  式定义余向量场的协变导数，然后根据 \eqref{eq:convariant derivative of tensor field} 
+  式定义一般张量场的协变导数。首先我们需要验证这样的定义在每个 $\omega^i$
+  和 $Y_j$ 上都是 $C^\infty(M)$-线性的，从而确实定义了一个光滑张量场。
+  然后我们验证其满足联络的条件。这些都是直接按定义验证即可。
+\end{proof}
+
+虽然 \eqref{eq:convariant derivative of covector field} 和 \eqref{eq:convariant derivative of tensor field}
+式给出了一般张量场的协变导数的定义，但是在计算中并不实用，因为
+计算 $\nabla_XF$ 在一个点处的值需要将所有的参数延拓到某个开集上的
+向量场或者余向量场上，然后计算大量的导数。为了在局部坐标中
+计算协变导数，下面的公式更加有用。
+
+\begin{proposition}
+  令 $M$ 是光滑流形，$\nabla$ 是 $TM$ 中的联络。设 $(E_i)$
+  是 $M$ 的一个局部标架，$\bigl(\varepsilon^i\bigr)$ 是其对偶标架，
+  $\{\Gamma_{ij}^k\}$ 是 $\nabla$ 相对于这组标架的联络系数。令 $X$
+  是光滑向量场，$X^iE_i$ 是 $X$ 的局部表示。
+  \begin{enumerate}
+    \item 余向量场 $\omega=\omega_i\varepsilon^i$ 的协变导数为
+    \[
+      \nabla_X\omega=\bigl(X(\omega_k)-X^j\omega_i\Gamma_{jk}^i\bigr)  \varepsilon^k.
+    \]
+    \item 如果 $F\in\Gamma\bigl(T^{(k,l)}TM\bigr)$ 局部表示为
+    \[
+      F=F^{i_1\dots i_k}_{j_1\dots j_l}E_{i_1}\otimes
+      \cdots\otimes E_{i_k}\otimes\varepsilon^{j_1}\otimes\cdots\otimes\varepsilon^{j_l},
+    \]
+    那么 $F$ 的协变导数为
+    \begin{multline*}
+      \nabla_XF=\biggl(X\left(F^{i_1\dots i_k}_{j_1\dots j_l}\right)+
+      \sum_{s=1}^kX^m F^{i_1\dots p\dots i_k}_{j_1\dots j_l}\Gamma_{mp}^{i_s}-
+      \sum_{s=1}^lX^mF^{i_1\dots i_k}_{j_1\dots p\dots j_l}\Gamma_{mj_s}^p\biggr)\times\\
+      E_{i_1}\otimes
+      \cdots\otimes E_{i_k}\otimes\varepsilon^{j_1}\otimes\cdots\otimes\varepsilon^{j_l}.
+    \end{multline*}
+  \end{enumerate}
+\end{proposition}
+
+因为 $\nabla_XF$ 在 $X$ 上是 $C^\infty(M)$-线性的，所以 $F$ 在所有
+方向上的协变导数可以被编码为一个秩比 $F$ 大 $1$ 的张量场，如下所示。
+
+\begin{proposition}[全协变导数]
+  令 $M$ 是光滑流形，$\nabla$ 是 $TM$ 中的联络，对于每个
+  $F\in\Gamma\bigl(T^{(k,l)}TM\bigr)$，定义映射
+  \[
+    \nabla F:\underbrace{\Omega^1(M)\times\cdots\times\Omega^1(M)}_{\text{$k$ copies}}
+    \times \underbrace{\mathfrak{X}(M)\times\cdots\times \mathfrak{X}(M)}_{\text{$l+1$ copies}}
+    \to C^\infty(M)
+  \]
+  为
+  \begin{equation}
+    (\nabla F)\bigl(\omega^1,\dots,\omega^k,Y_1,\dots,Y_l,X\bigr)
+    =(\nabla_XF)\bigl(\omega^1,\dots,\omega^k,Y_1,\dots,Y_l\bigr).
+  \end{equation}
+  这定义了一个光滑 $(k,l+1)$-张量场，被称为\emph{$F$ 的全协变导数}。
+\end{proposition}
+\begin{proof}
+  根据张量表征引理即得。
+\end{proof}
+
+
+
+
+
+
 \section{沿曲线的向量场和张量场}
 
 现在，我们可以解决一个最初激发联络定义的问题：我们如何
@@ -365,6 +535,212 @@ $C^\infty(I)$-模，使用逐点的乘法定义：
 \]
 最简单的沿 $\gamma$ 的光滑向量场的例子是曲线的速度
 $\gamma'(t)\in T_{\gamma(t)}M$。
+
+设 $\gamma:I\to M$ 是光滑曲线，$\wtilde V$ 是 $M$ 的包含 $\gamma(I)$
+的开集上的光滑向量场，定义 $V:I\to M$ 满足 $V(t)= \wtilde V_{\gamma(t)}$，
+也即 $V=\wtilde V\circ \gamma$，此时 $V$ 是沿 $\gamma$ 的光滑向量场。
+对于一个沿 $\gamma$ 的光滑向量场 $V$，如果存在 $\gamma(I)$ 的一个邻域上的
+光滑向量场 $\wtilde V$ 使得 $V=\wtilde V\circ\gamma$，那么我们说
+$V$ 是\emph{可延拓的}。注意到并不是所有向量场都是可延拓的，例如，
+如果 $\gamma(t_1)=\gamma(t_2)$ 但是 $\gamma'(t_1)\neq \gamma'(t_2)$，那么
+速度 $\gamma'(t)$ 就不是可延拓的。事实上，即使 $\gamma$ 是单射，
+其速度也不一定是可延拓的。
+
+更一般地，\emph{沿 $\gamma$ 的张量场} 指的是一个连续映射 $\sigma:I\to T^{(k,l)}TM$
+使得 $\sigma(t)\in T^{(k,l)}\bigl(T_{\gamma(t)}M\bigr)$。同样，如果存在
+$\gamma(I)$ 的某个邻域上的光滑张量场 $\tilde\sigma$ 使得 $\sigma=\tilde\sigma\circ\gamma$，
+那么我们说 $\sigma$ 是\emph{可延拓的}。
+
+\subsection{沿曲线的协变导数}
+
+沿曲线的协变导数给出了一种对联络的解释：即给出了向量场沿曲线求导的方法。
+
+\begin{theorem}[沿曲线的协变导数]\label{thm:convariant derivative along a curve}
+  $M$ 是光滑流形，$\nabla$ 是 $TM$ 上的联络。对于光滑曲线 $\gamma:I\to M$，
+  联络确定了唯一的算符：
+  \[
+    D_t:\mathfrak{X}(\gamma)\to \mathfrak{X}(\gamma),  
+  \]
+  我们称为\emph{沿 $\gamma$ 的协变导数}，其满足下面的性质：
+  \begin{enumerate}
+    \item $\mathbb{R}$-线性：
+    \[
+      D_t(aV+bW)=aD_tV+bD_tW\quad a,b\in \mathbb{R}.  
+    \]
+    \item 乘积法则：
+    \[
+      D_t(fV)=f'V+fD_tV\quad f\in C^\infty(I).  
+    \]
+    \item 如果 $V\in \mathfrak{X}(\gamma)$ 是可延拓的，那么对于 $V$ 的任意延拓 $\wtilde V$，有
+    \[
+      D_tV(t)=\nabla_{\gamma'(t)}\wtilde V.  
+    \]
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  首先我们证明唯一性。假设 $D_t$ 是这样的算符，任取 $t_0\in I$。
+  与 \autoref{lemma:locality of connection} 的证明类似，可以说明 $D_tV$
+  在 $t_0$ 处的值只与 $V$ 在包含 $t_0$ 的任意小区间 $(t_0-\varepsilon,t_0+\varepsilon)$
+  上的值有关。
+
+  选取 $M$ 的在 $\gamma(t_0)$ 的某个邻域中给定光滑坐标 $\bigl(x^i\bigr)$，此时我们有
+  \[
+    V(t)=V^j(t)\partial_j|_{\gamma(t)}.  
+  \]
+  其中 $t$ 接近 $t_0$，$V^1,\dots,V^n$ 是定义在 $t_0$ 在 $I$ 中的某个邻域上的 
+  光滑实值函数。根据 $D_t$ 的性质，又因为 $\partial_j$ 都是可延拓的，那么
+  \begin{equation}\label{eq:convariant derivative along a curve}
+    \begin{aligned}
+      D_tV(t)&=\dot V^j(t)\partial_j|_{\gamma(t)}+V^j(t)\nabla_{\gamma'(t)}\partial_j\\
+      &=\Bigl(\dot V^k(t)+\dot\gamma^i(t)V^j(t)\Gamma_{ij}^k(\gamma(t))\Bigr)
+      \partial_k|_{\gamma(t)}.
+    \end{aligned}
+  \end{equation}
+  这表明 $D_t$ 一定是唯一的。
+
+  对于存在性，如果 $\gamma(I)$ 被单个坐标卡包含，那么我们可以使用 \eqref{eq:convariant derivative along a curve} 
+  定义 $D_tV$，不难验证这满足协变导数的条件。在一般情况下，我们可以用坐标卡覆盖 $\gamma(I)$
+  然后在每个坐标卡上定义 $D_tV$，唯一性表明在两个坐标卡的重叠处的定义相同。
+\end{proof}
+
+\eqref{eq:convariant derivative along a curve} 提供了一个实用的公式去计算
+坐标中这样的协变导数。
+
+现在我们可以证明 $\nabla_vY$ 实际上只与 $Y$ 在沿光滑曲线 $\gamma$ 上的取值有关，
+其中某个 $t_0$ 使得 $\gamma(t_0)=p$ 以及 $\gamma'(t_0)=v$。
+
+\begin{proposition}
+  $M$ 是光滑流形，$\nabla$ 是 $TM$ 上的联络，令 $p\in M$ 以及 
+  $v\in T_pM$。假设 $Y$ 和 $\wtilde Y$ 是两个光滑向量场，它们在
+  光滑曲线 $\gamma:I\to M$ 的像集上的取值相同，其中
+  $\gamma(t_0)=p$ 以及 $\gamma'(t_0)=v$，那么 $\nabla_vY=\nabla_v\wtilde Y$。
+\end{proposition}
+\begin{proof}
+  我们可以定义沿 $\gamma$ 的光滑向量场 $Z$，令 $Z(t)=Y_{\gamma(t)}=\wtilde Y_{\gamma(t)}$。
+  因为 $Y$ 和 $\wtilde Y$ 都是 $Z$ 的延拓，那么根据
+  \autoref{thm:convariant derivative along a curve}，
+  $\nabla_vY$ 和 $\nabla_v\wtilde Y$ 都等于 $D_tZ(t_0)$。
+\end{proof}
+
+\section{测地线}
+
+现在我们可以定义曲线的加速度和测地线的概念了。
+
+令 $M$ 是光滑流形，$\nabla$ 是 $TM$ 中的联络。对于每个光滑曲线
+$\gamma:I\to M$，我们可以定义\emph{$\gamma$ 的加速度}是
+沿 $\gamma$ 的向量场 $D_t\gamma'$。如果光滑曲线 $\gamma$ 的加速度
+是零：$D_t\gamma'\equiv 0$，那么我们说 $\gamma$ 是\emph{测地线}。
+凭借光滑坐标 $\bigl(x^i\bigr)$，如果我们将 $\gamma$ 的分量写为
+$\gamma(t)=\bigl(x^1(t),\dots,x^n(t)\bigr)$，那么根据 \eqref{eq:convariant derivative along a curve}
+式，$\gamma$ 是测地线当且仅当其分量满足下面的\emph{测地线方程}：
+\begin{equation}\label{eq:geodesic curve equation}
+  \ddot{x}^k(t)+\dot x^i(t)\dot x^j(t)\Gamma_{ij}^k(x(t))=0,
+\end{equation}
+其中我们使用 $x(t)$ 作为 $\bigl(x^1(t),\dots,x^n(t)\bigr)$ 的简写。
+这是一个关于实值函数 $x^1,\dots,x^n$ 的二阶常微分方程组。
+
+\begin{theorem}[测地线的存在唯一性]
+  令 $M$ 是光滑流形，$\nabla$ 是 $TM$ 中的联络。对于每个 $p\in M$，
+  $w\in T_pM$ 和 $t_0\in \mathbb{R}$，都存在一个包含 $t_0$
+  的开区间 $I\subseteq \mathbb{R}$ 和测地线 $\gamma:I\to M$ 满足
+  $\gamma(t_0)=p$ 和 $\gamma'(t_0)=w$。此外，任意两个这样的测地线在它们的公共
+  定义域一定是相等的。
+\end{theorem}
+
+一个测地线 $\gamma:I\to M$ 被称为\emph{极大的}，如果其不能延拓为一个更大区间
+上的测地线。一个\emph{测地线段}指的是定义域是紧区间的测地线。
+
+\begin{corollary}
+  令 $M$ 是光滑流形，$\nabla$ 是 $TM$ 中的联络。对于每个 $p\in M$，
+  $v\in T_pM$，存在唯一的极大测地线 $\gamma:I\to M$ 使得
+  $\gamma(0)=p$ 以及 $\gamma'(0)=v$，且 $I$ 是包含 $0$
+  的开区间。
+\end{corollary}
+
+这个唯一的满足 $\gamma(0)=p$ 和 $\gamma'(0)=v$ 的极大测地线 $\gamma$
+被称为\emph{有起点 $p$ 和初速度 $v$ 的测地线}，记为 $\gamma_v$。
+
+\section{平行移动}
+
+令 $M$ 是光滑流形，$\nabla$ 是 $TM$ 中的联络。一个沿光滑曲线 $\gamma$
+的光滑向量场 $V$ 如果使得 $D_tV\equiv 0$，那么我们说 $V$ 是
+\emph{沿 $\gamma$ 平行的}。测地线可以解释为速度向量场沿自身平行的曲线。
+
+关于沿曲线平行的向量场的一个基本事实是：曲线上任何一点的任意切向量
+都可以延拓为一个沿整条曲线平行的向量场。我们首先观察坐标中平行性代表的方程。
+给定一个光滑曲线 $\gamma$，设其有局部坐标表示 
+$\gamma(t)=\bigl(\gamma^1(t),\dots,\gamma^n(t)\bigr)$，
+\eqref{eq:convariant derivative along a curve} 式表明向量场 $V$ 
+沿 $\gamma$ 平行当且仅当
+\begin{equation}
+  \dot V^k(t)=-\dot\gamma^i(t)V^j(t)\Gamma_{ij}^k(\gamma(t)),
+  \quad k=1,\dots,n.
+\end{equation}
+
+\begin{theorem}[线性 ODE 解的存在性、唯一性和光滑性]
+  令 $I\subseteq \mathbb{R}$ 是开子集，对于 $1\leq j,k\leq n$，
+  令 $A_j^k:I\to \mathbb{R}$ 是光滑函数。对于每个 $t_0\in I$ 和
+  初值向量 $\bigl(c^1,\dots,c^n\bigr)\in \mathbb{R}^n$，线性初值问题
+  \begin{equation}
+    \begin{aligned}
+      \dot V^k(t)&=A_j^k(t)V^j(t),\\
+      V^k(t_0)&=c^k,
+    \end{aligned}
+  \end{equation}
+  在 $I$ 上有唯一的光滑解，并且这个解光滑依赖于 $(t,c)\in I\times \mathbb{R}^n$。
+\end{theorem}
+
+\begin{theorem}[平行移动的存在性]\label{thm:existence of parallel transport}
+  设 $M$ 是光滑流形，$\nabla$ 是 $TM$ 中的联络。给定光滑曲线
+  $\gamma:I\to M$，$t_0\in I$ 和向量 $v\in T_{\gamma(t_0)}M$，
+  那么存在唯一的沿 $\gamma$ 平行的向量场 $V$ 使得 $V(t_0)=v$。
+\end{theorem}
+
+\autoref{thm:existence of parallel transport} 中给出的向量场
+被称为\emph{$v$ 沿 $\gamma$ 的平行移动}。对于每个 $t_0,t_1\in I$，
+我们定义映射
+\begin{equation}
+  P_{t_0t_1}^\gamma:T_{\gamma(t_0)}M\to T_{\gamma(t_1)}M,
+\end{equation}
+称为\emph{平行移动映射}，定义为 $P_{t_0t_1}^\gamma(v)=V(t_1)$。
+这个映射是线性映射，因为平行性方程是线性的。事实上这是一个同构，
+因为 $P_{t_0t_1}^\gamma$ 有逆映射 $P_{t_1t_0}^\gamma$。
+
+
+\chapter{Levi-Civita 联络}
+
+\section{黎曼流形上的联络}
+
+\subsection{度量联络}
+
+令 $g$ 是光滑流形 $M$ 上的黎曼度量或者伪黎曼度量。对于 $TM$ 中的联络
+$\nabla$，任取 $X,Y,Z\in \mathfrak{X}(M)$，如果有
+\begin{equation}
+  \nabla_X\inn{Y,Z}=\inn{\nabla_XY,Z}+\inn{Y,\nabla_XZ},
+\end{equation}
+那么我们说 $\nabla$ 是\emph{与 $g$ 相容的}，或者说 $\nabla$ 是\emph{度量联络}。
+
+\begin{proposition}[度量联络的特征]
+  令 $(M,g)$ 是黎曼流形或者伪黎曼流形，$\nabla$ 是 $TM$ 中的联络。那么下面的条件等价：
+  \begin{enumerate}
+    \item $\nabla$ 与 $g$ 相容：$\nabla_X\inn{Y,Z}=\inn{\nabla_XY,Z}+\inn{Y,\nabla_XZ}$。
+    \item $g$ 相对于 $\nabla$ 平行：$\nabla g\equiv 0$。
+    \item 在光滑局部标架 $(E_i)$ 中，$\nabla $ 是联络系数满足
+    \begin{equation}
+      \Gamma_{ki}^lg_{lj}+\Gamma_{kj}^lg_{il}=E_k(g_{ij}).
+    \end{equation}
+    \item 如果 $V,W$ 是沿光滑曲线 $\gamma$ 的向量场，那么
+    \begin{equation}
+      \frac{\d}{\d t}\inn{V,W}=\inn{D_tV,W}+\inn{V,D_tW}.
+    \end{equation}
+    \item 如果 $V,W$ 是沿光滑曲线 $\gamma$ 的向量场，那么 $\inn{V,W}$
+    沿 $\gamma$ 是常数。
+    \item 给定任意光滑曲线 $\gamma$，每个沿 $\gamma$ 的平行移动映射
+    都是线性等距。
+    \item 给定任意光滑曲线 $\gamma$，在 $\gamma$ 的某个点处的每组
+    正交基都可以延拓为一组沿 $\gamma$ 平行的正交标架。
+  \end{enumerate}
+\end{proposition}
 
 
 

@@ -28,7 +28,8 @@
   \mathmakebox[\mymathln]{#1}
 }
 
-\DeclareMathOperator\Spec{Spec}
+\DeclareMathOperator\Ad{Ad}
+\DeclareMathOperator\ad{ad}
 \DeclareMathOperator\im{im}
 \DeclareMathOperator\sgn{sgn}
 \DeclareMathOperator\rad{rad}
@@ -353,15 +354,104 @@ $\theta:G\times M\to M$ 或者 $(p,g)\mapsto p\cdot g$。
   (t,p)\mapsto p\cdot \exp tX.  
 \]
 这确实是一个流，因为 $\exp(0X)=e$ 以及 $\exp(sX)\exp(tX)=\exp(s+t)X$。
-令 $\wwhat X\in \mathfrak{X}(M)$ 为这个流的无穷小生成元，那么任取 $p\in M$，有
+令 $\what X\in \mathfrak{X}(M)$ 为这个流的无穷小生成元，那么任取 $p\in M$，有
 \[
-  \wwhat X|_p=\frac{\d}{\d t}\bigg|_{t=0} p\cdot \exp tX.  
+  \what X|_p=\frac{\d}{\d t}\bigg|_{t=0} p\cdot \exp tX.  
 \]
-因此我们得到映射 $\hat\theta:\Lie(G)\to \mathfrak{X}(M)$ 为 $\hat\theta (X)=\wwhat X$。
+因此我们得到映射 $\hat\theta:\Lie(G)\to \mathfrak{X}(M)$ 为 $\hat\theta (X)=\what X$。
+
+利用轨道映射 $\theta^{(p)}:G\to M$，$\theta^{(p)}(g)=p\cdot g$，
+可以得到 $\what X$ 的一个有用的刻画。因为 $\gamma(t)=\exp tX$
+是 $G$ 中初速度为 $\gamma'(0)=X_e$ 的光滑曲线，那么我们有
+\begin{equation}
+  \d\bigl(\theta^{(p)}\bigr)_e(X_e)
+  =\d \bigl(\theta^{(p)}\circ\gamma\bigr)_0(0)
+  =\frac{\d}{\d t}\bigg|_{t=0}p\cdot \exp tX=\what X|_p,
+\end{equation}
+
+\begin{lemma}
+  设 $G$ 是李群，$\theta$ 是 $G$ 在光滑流形 $M$ 上的光滑右作用。
+  对于任意 $X\in\Lie(G)$ 和 $p\in M$，向量场 $X$ 和 $\hat\theta(X)$
+  是 $\theta^{(p)}$-相关的。
+\end{lemma}
+\begin{proof}
+  注意到
+  \[
+    \theta^{(p\cdot g)}=\theta^{(p)}\circ L_g,  
+  \]
+  所以
+  \[
+    \hat\theta(X)|_{\theta^{(p)}(g)}=\d\bigl(\theta^{(p\cdot g)}\bigr)_e
+    (X_e)=\d\bigl(\theta^{(p)}\bigr)_g\bigl(\d (L_g)_e(X_e)\bigr),
+  \]
+  由于 $X$ 与自身是 $L_g$-相关的，所以 $\d(L_g)_e(X_e)=X_g$，所以
+  \[
+    \hat\theta(X)|_{\theta^{(p)}(g)}=\d\bigl(\theta^{(p)}\bigr)_g(X_g),
+  \]
+  这就说明 $X$ 和 $\hat\theta(X)$ 是 $\theta^{(p)}$-相关的。
+\end{proof}
+ 
+\begin{theorem}
+  设 $G$ 是李群，$\theta$ 是 $G$ 在光滑流形 $M$ 上的光滑右作用。
+  映射 $\hat \theta:\Lie(G)\to \mathfrak{X}(M)$ 是一个李代数同态。
+\end{theorem} 
+\begin{proof}
+  由于 $\hat\theta(X)|_p=\d\bigl(\theta^{(p)}\bigr)_e(X_e)$，所以
+  $\hat\theta$ 是线性映射。任取 $p\in M$，
+  $X,Y\in\Lie(G)$，根据李括号的自然性，
+  向量场 $[X,Y]$ 和 $\bigl[\hat\theta(X),\hat\theta(Y)\bigr]$
+  是 $\hat\theta^{(p)}$-相关的，也就是说，有
+  \[
+    \bigl[\hat\theta(X),\hat\theta(Y)\bigr]_{p}
+    =\d\bigl(\hat\theta^{(p)}\bigr)_e\bigl([X,Y]_e\bigr)
+    =\hat\theta\bigl([X,Y]\bigr)\big|_{p},
+  \]
+  即 $\hat\theta\bigl([X,Y]\bigr)=\bigl[\hat\theta(X),\hat\theta(Y)\bigr]$，
+  $\hat\theta$ 是李代数同态。
+\end{proof}
+
+上述李代数同态 $\hat\theta:\Lie(G)\to \mathfrak{X}(M)$ 被称为
+\emph{$\theta$ 的无穷小生成元}。更一般地，如果 $\lie g$ 是任意
+有限维李代数，此时李代数同态 $\hat\theta:\lie g\to \mathfrak{X}(M)$
+被称为\emph{$M$ 上的（右）$\lie g$-作用}。给定一个 $\lie g$-作用
+$\hat\theta$，如果对于任意 $X\in \lie g$，向量场 $\hat\theta(X)$
+都是完备的，那么我们说 $\hat\theta$ 是\emph{完备的}。
+
+就像每个完备向量场生成一个 $\mathbb{R}$-作用一样，下面的定理表明，
+至少对于单连通的李群，每个完备的李代数作用都生成一个群作用。
+
+\begin{theorem}[李代数作用上的基本定理]
+  令 $M$ 是光滑流形，$G$ 是单连通李群，$\lie g=\Lie(G)$。
+  设 $\hat\theta:\lie g\to \mathfrak{X}(M)$ 是完备的 $\lie g$-作用。
+  那么存在唯一的 $M$ 上的光滑的 $G$-右作用使得其无穷小生成元是
+  $\hat\theta$。
+\end{theorem}
+
+\section{李对应}
 
 
- 
- 
+\section{正规子群}
+
+\begin{lemma}
+  令 $G$ 是连通李群，$H\subseteq G$ 是连通李子群。那么 $H$
+  是 $G$ 的正规子群当且仅当对于任意 $X\in\lie g$ 和 $Y\in\lie h$ 有
+  \begin{equation}
+    (\exp X)(\exp Y)(\exp -X)\in H.
+  \end{equation}
+\end{lemma}
+
+如果 $\lie g$ 是李代数，线性子空间 $\lie h\subseteq \lie g$ 如果
+对于任意 $X\in\lie g$ 和 $Y\in\lie h$ 都满足 $[X,Y]\in\lie h$，那么
+我们说 $\lie h$ 是\emph{$\lie g$ 中的理想}。
+
+\subsection{伴随表示}
+
+令 $G$ 是李群，$\lie g$ 是它的李代数。对于任意 $g\in G$，
+共轭映射 $C_g:G\to G$ 定义为 $C_g(h)=ghg^{-1}$ 是一个李群同态。
+我们用 $\Ad(g)=(C_g)_*:\lie g\to \lie g$ 表示 $C_g$ 诱导的李代数同态。
+
+
+
 
 
 \end{document}
