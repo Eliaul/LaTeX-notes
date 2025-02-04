@@ -16,8 +16,22 @@
     所以 $\GL^+(n,\mathbb{R})$ 是李群。
     \item 设 $G$ 的任意李群，$H\subseteq G$ 是\emph{开子群}(子群同时是开子集)。
     类似 (2) 中的叙述，$H$ 是李群，其群结构和光滑结构都继承于 $G$。
-    \item Euclid 空间 $\mathbb{R}^n$ 在加法下是李群。
-    \item 
+    \item \emph{复一般线性群} $\GL(n,\mathbb{C})$ 是 $M(n,\mathbb{C})$
+    的开子流形，从而是 $2n^2$-维光滑流形，由于其矩阵乘法和求逆都是光滑的，
+    所以是一个李群。
+    \item 如果 $V$ 是实或者复向量空间，$\GL(V)$ 表示 $V$ 上可逆线性变换的集合。
+    如果 $V$ 的维数是 $n$，那么 $V$ 的任意一组基都确定了 $\GL(V)$ 到 $\GL(n,\mathbb{R})$
+    或者 $\GL(n,\mathbb{C})$ 的一个同构，所以 $\GL(V)$ 是李群。任意两个这样的
+    同构之间的转移映射形如 $A\mapsto BAB^{-1}$ （其中 $B$ 是两组基之间的过渡矩阵），
+    这是光滑的，所以 $\GL(V)$ 的光滑结构独立于基的选取。
+    \item Euclid 空间 $\mathbb{R}^n$ 在加法下是李群。类似的，$\mathbb{C}$
+    和 $\mathbb{C}^n$ 也是李群。
+    \item 圆周 $\mathbb{S}^1\subseteq \mathbb{C^*}$ 是光滑流形并且在
+    复数乘法下构成群。利用 $\mathbb{S}^1$ 的开子集上的适当的角度函数
+    作为局部坐标，乘法和求逆是光滑的，它们分别有表示 $(\theta_1,\theta_2)\mapsto\theta_1+\theta_2$
+    和 $\theta\mapsto -\theta$，因此 $\mathbb{S}^1$ 是李群，称为\emph{圆周群}。
+    \item 给定李群 $G_1,\dots,G_k$，定义\emph{直积}是积流形 $G_1\times\cdots\times G_k$
+    同时配备直积群的群结构，这是一个李群。
   \end{enumerate}
 \end{example}
 
@@ -138,6 +152,19 @@ $F$ 是\emph{李群同态}。如果 $F$ 还是微分同胚，那么我们说 $F$
   根据 \autoref{prop:image of immersion}，所以 $F(G)$ 有唯一的光滑结构
   使得 $F(G)$ 是 $H$ 的浸入子流形且 $F:G\to F(G)$ 是微分同胚。
 \end{proof}
+
+\begin{example}[嵌入李子群]
+  \mbox{}
+  \begin{enumerate}
+    \item 子群 $\GL^+(n,\mathbb{R})\subseteq \GL(n,\mathbb{R})$ 是开子群，
+    从而是嵌入李子群。
+    \item 圆周 $\mathbb{S}^1$ 是 $\mathbb{C}^*$ 的嵌入李子群，因为其是嵌入子流形。
+    \item 行列式为 $1$ 的实矩阵集合 $\SL(n,\mathbb{R})$ 被称为\emph{特殊线性群}。
+    因为 $\SL(n,\mathbb{R})$ 是李群满同态 $\det:\GL(n,\mathbb{R})\to \mathbb{R}^*$
+    的核，根据全局秩定理，$\det$ 是光滑浸没，所以 $\SL(n,\mathbb{R})$ 是维数
+    $n^2-1$ 的嵌入李子群。
+  \end{enumerate}
+\end{example}
 
 一般情况下，光滑子流形可以同时是非嵌入的以及闭的，例如八字曲线
 \ref{exa:eight-curve}，但是下面的定理表明对于李子群而言，
@@ -322,7 +349,7 @@ $\rho(G)$ 是 $\GL(V)$ 的李子群，且 $\rho:G\to \rho(G)$ 是李群同构。
   \end{enumerate}
 \end{example}
 
-
+\section{问题}
 
 \begin{problem}{}{}
   令 $\mathbb{H}=\mathbb{C}\times \mathbb{C}$(视为实向量空间)，定义

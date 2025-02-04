@@ -36,6 +36,7 @@
 \DeclareMathOperator\Alt{Alt}
 \DeclareMathOperator\Max{Max}
 \DeclareMathOperator\GL{GL}
+\DeclareMathOperator\SL{SL}
 \DeclareMathOperator\Orth{O}
 \DeclareMathOperator\SO{SO}
 \DeclareMathOperator\SU{SU}
@@ -50,6 +51,8 @@
 \DeclareMathOperator\rk{rank}
 \DeclareMathOperator\grad{grad}
 \DeclareMathOperator\Euc{E}
+\DeclareMathOperator\dive{div}
+\DeclareMathOperator\curl{curl}
 \newcommand{\LL}{{\mathrm{L}}}
 
 \newcommand{\ideal}[1]{\mathfrak{#1}}
@@ -64,6 +67,7 @@
 \setlist[enumerate]{nosep}
 
 %\DeclareMathAlphabet\mathcal{OMS}{cmsy}{m}{n}
+\DeclareMathSymbol{\into}{\mathbin}{AMSa}{"79}
 
 \newlength\stextwidth
 \newcommand\makesamewidth[3][c]{%
@@ -449,6 +453,100 @@ $\hat\theta$，如果对于任意 $X\in \lie g$，向量场 $\hat\theta(X)$
 令 $G$ 是李群，$\lie g$ 是它的李代数。对于任意 $g\in G$，
 共轭映射 $C_g:G\to G$ 定义为 $C_g(h)=ghg^{-1}$ 是一个李群同态。
 我们用 $\Ad(g)=(C_g)_*:\lie g\to \lie g$ 表示 $C_g$ 诱导的李代数同态。
+
+\begin{proposition}[伴随表示]
+  如果 $G$ 是李群，$\lie g$ 是对应的李代数，映射 $\Ad:G\to \GL(\lie g)$
+  是一个李群表示，被称为\emph{$G$ 的伴随表示}。
+\end{proposition}
+\begin{proof}
+  由于 $C_{g_1g_2}=C_{g_1}\circ C_{g_2}$，所以
+  \[
+    \Ad(g_1g_2)=\bigl(C_{g_1g_2}\bigr)_*=\bigl(C_{g_1}\bigr)_*\circ\bigl(C_{g_2}\bigr)_*=
+    \Ad(g_1)\circ \Ad(g_2).
+  \]
+  同时 $\Ad(g)$ 有逆 $\Ad(g^{-1})$，所以 $\Ad$ 是一个群同构。
+
+  下面我们说明 $\Ad$ 是光滑的。令 $C:G\times G\to G$ 是光滑映射
+  $C(g,h)=ghg^{-1}$。令 $X\in\lie g$ 和 $g\in G$，那么 $\Ad(g)X=\bigl(C_g\bigr)_*X$
+  满足
+  \[
+    \bigl((C_g)_*X\bigr)_e=\d(C_g)_e(X_e)=
+    \frac{\d}{\d t}\bigg|_{t=0}C(g,\exp tX)=
+    \d C_{(g,e)}(0,X_e),
+  \]
+  选取 $\lie g$ 的一组基 $(E_i)$ 后，$\GL(\lie g)$ 的坐标表示由对应的
+  矩阵表示给出，设 $(\varepsilon^j)$ 是对偶基，那么 $\Ad(g):\lie g\to\lie g$
+  的矩阵表示为 $\bigl(\Ad(g)\bigr)_i^j=\varepsilon^j\bigl(\Ad(g)E_i\bigr)$，
+  那么上面的计算表明 $\Ad(g)E_i=\d C_{(g,e)}(0,E_i|_e)$，
+  此时 $\d C:T(G\times G)\to TG$ 是光滑丛同态，所以 $\Ad(g)E_i$
+  是关于 $g$ 的光滑映射，所以 $\Ad$ 光滑。 
+\end{proof}
+
+对于李代数也有一个伴随表示。给定有限维李代数 $\lie g$，对于每个 $X\in \lie g$，
+定义映射 $\ad(X):\lie g\to \lie g$ 为 $\ad(X)Y=[X,Y]$。
+
+\begin{proposition}
+  对于任意李代数 $\lie g$，映射 $\ad:\lie g\to\lie{gl}(\lie g)$ 是
+  一个李代数表示，被称为\emph{$\lie g$ 的伴随表示}。
+\end{proposition}
+\begin{proof}
+  不难验证 $\ad$ 是线性映射。由于
+  \begin{align*}
+    \ad\bigl([X,Y]\bigr)Z&=[[X,Y],Z]=-[Z,[X,Y]]\\
+    &=[X,[Y,Z]]+[Y,[Z,X]]\\
+    &=[X,[Y,Z]]-[Y,[X,Z]]\\
+    &=[X,\ad(Y)Z]-[Y,\ad(X)Z]\\
+    &=\ad(X)\bigl(\ad(Y)Z\bigr)
+    -\ad(Y)\bigl(\ad(X)Z\bigr)\\
+    &=[\ad(X),\ad(Y)]Z,
+  \end{align*}
+  这表明 $\ad\bigl([X,Y]\bigr)=[\ad(X),\ad(Y)]$，所以 $\ad$ 是李代数同态。
+\end{proof}
+
+利用指数映射，我们可以证明这两个表示之间存在密切联系。
+
+\begin{theorem}
+  令 $G$ 是李群，$\lie g$ 是对应的李代数，$\Ad:G\to\GL(\lie g)$ 是
+  $G$ 的伴随表示。那么诱导的李代数表示 $\Ad_*:\lie g\to \lie{gl}(\lie g)$
+  为 $\Ad_*=\ad$。
+\end{theorem}
+\begin{proof}
+  任取 $X\in\lie g$，那么 $\Ad_*X$ 由其在单位元 $\Id:\lie g\to\lie g$ 处的值确定，
+  那么
+  \[
+    (\Ad_*X)_{\Id}=\d(\Ad)_e(X_e)=\frac{\d}{\d t}\bigg|_{t=0}\Ad(\exp tX),  
+  \]
+  于是任取 $Y\in\lie g$，有
+  \[
+    (\Ad_*X)Y
+    =\frac{\d}{\d t}\bigg|_{t=0}\bigl(\Ad(\exp tX)Y\bigr).
+  \]
+
+  由于 $\Ad(g)=(C_g)_*=(R_{g^{-1}})_*\circ (L_g)_*$，所以
+  \begin{align*}
+    \bigl(\Ad(\exp tX)Y\bigr)_{e}&=\d\bigl(R_{\exp(-t X)}\bigr)
+    \circ\d\bigl(L_{\exp tX}\bigr)(Y_e)\\
+    &=\d\bigl(R_{\exp(-t X)}\bigr)\bigl(Y_{\exp tX}\bigr),
+  \end{align*}
+  指数映射的性质表明 $X$ 的流为 $\theta_t(g)=R_{\exp tX}(g)$，所以
+  \[
+    \bigl(\Ad(\exp tX)Y\bigr)_{e}=\d(\theta_{-t})\bigl(Y_{\theta_t(e)}\bigr).
+  \]
+  于是
+  \[
+    \bigl((\Ad_*X)Y\bigr)_e=\frac{\d}{\d t}\bigg|_{t=0}\d(\theta_{-t})\bigl(Y_{\theta_t(e)}\bigr)
+    =(\mathcal{L}_XY)_e=[X,Y]_e,
+  \]
+  这就表明 $\Ad_*=\ad$。
+\end{proof}
+
+\subsection{理想和正规子群}
+
+\begin{theorem}[理想和正规子群]
+  令 $G$ 是连通李群，$H\subseteq G$ 是连通李子群。那么 $H$
+  是 $G$ 的正规子群当且仅当 $\Lie(H)$ 是 $\Lie(G)$ 的理想。
+\end{theorem}
+
 
 
 

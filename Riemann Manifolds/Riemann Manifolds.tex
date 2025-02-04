@@ -515,8 +515,43 @@ $\nabla$ 相对于这组标架的\emph{联络系数}。下面的命题表明联�
   根据张量表征引理即得。
 \end{proof}
 
+当我们在局部标架中书写全协变导数的分量的时候，一个标准记号是
+使用分号分隔前面的指标和做微分的指标。例如，如果 $Y=Y^iE_i$
+是向量场，那么 $(1,1)$-张量场 $\nabla Y$ 的分量写为 ${Y^i}_{;j}$，
+即
+\[
+  \nabla Y=  {Y^i}_{;j}E_i\otimes \varepsilon^j,
+\]
+此时
+\[
+  (\nabla Y)(\omega,X)={Y^i}_{;j} \omega(E_i)\varepsilon^j(X)
+  =\omega_i X^j{Y^i}_{;j},  
+\]
+又因为
+\[
+  \nabla_XY=\bigl(X(Y^k)+X^iY^j\Gamma_{ij}^k\bigr)  E_k,
+\]
+所以另一方面有
+\[  
+  (\nabla Y)(\omega,X)=(\nabla_XY)(\omega)=
+  \bigl(X(Y^k)+X^iY^j\Gamma_{ij}^k\bigr)\omega_k,
+\]
+对比系数即得
+\[
+  {Y^i}_{;j}=E_jY^i+Y^k\Gamma_{jk}^i.  
+\]
 
-
+\begin{proposition}\label{prop:components of total convariant derivative}
+  令 $M$ 是光滑流形，$\nabla$ 是 $TM$ 中的联络，$(E_i)$ 是 $TM$ 的光滑局部标架，
+  $\{\Gamma_{ij}^k\}$ 是联络系数。那么 $(k,l)$-张量场 $F$ 的全协变导数的分量
+  为
+  \[
+    F_{j_1\dots j_l;m}^{i_1\dots i_k}  =
+    E_m\Bigl(F_{j_1\dots j_l}^{i_1\dots i_k}\Bigr)
+    +\sum_{s=1}^k F_{j_1\dots j_l}^{i_1\dots p\dots i_k}\Gamma_{mp}^{i_s}
+    -\sum_{s=1}^l F_{j_1\dots p\dots j_l}^{i_1\dots i_k}\Gamma_{m j_s}^p.
+  \]
+\end{proposition}
 
 
 
@@ -720,20 +755,20 @@ $\nabla$，任取 $X,Y,Z\in \mathfrak{X}(M)$，如果有
 \end{equation}
 那么我们说 $\nabla$ 是\emph{与 $g$ 相容的}，或者说 $\nabla$ 是\emph{度量联络}。
 
-\begin{proposition}[度量联络的特征]
+\begin{proposition}[度量联络的特征]\label{prop:metric connection}
   令 $(M,g)$ 是黎曼流形或者伪黎曼流形，$\nabla$ 是 $TM$ 中的联络。那么下面的条件等价：
   \begin{enumerate}
     \item $\nabla$ 与 $g$ 相容：$\nabla_X\inn{Y,Z}=\inn{\nabla_XY,Z}+\inn{Y,\nabla_XZ}$。
     \item $g$ 相对于 $\nabla$ 平行：$\nabla g\equiv 0$。
-    \item 在光滑局部标架 $(E_i)$ 中，$\nabla $ 是联络系数满足
-    \begin{equation}
+    \item 在光滑局部标架 $(E_i)$ 中，$\nabla $ 的联络系数满足
+    \begin{equation}\label{eq:Delta g equiv 0}
       \Gamma_{ki}^lg_{lj}+\Gamma_{kj}^lg_{il}=E_k(g_{ij}).
     \end{equation}
     \item 如果 $V,W$ 是沿光滑曲线 $\gamma$ 的向量场，那么
     \begin{equation}
       \frac{\d}{\d t}\inn{V,W}=\inn{D_tV,W}+\inn{V,D_tW}.
     \end{equation}
-    \item 如果 $V,W$ 是沿光滑曲线 $\gamma$ 的向量场，那么 $\inn{V,W}$
+    \item 如果 $V,W$ 是沿光滑曲线 $\gamma$ 平行的向量场，那么 $\inn{V,W}$
     沿 $\gamma$ 是常数。
     \item 给定任意光滑曲线 $\gamma$，每个沿 $\gamma$ 的平行移动映射
     都是线性等距。
@@ -741,7 +776,246 @@ $\nabla$，任取 $X,Y,Z\in \mathfrak{X}(M)$，如果有
     正交基都可以延拓为一组沿 $\gamma$ 平行的正交标架。
   \end{enumerate}
 \end{proposition}
+\begin{proof}
+  首先证明 $(1)\Leftrightarrow (2)$。$(0,2)$-张量场 $g$ 的全协变导数
+  为
+  \[
+    (\nabla g)(Y,Z,X)=(\nabla_Xg)(Y,Z)  
+    =X\bigl(g(Y,Z)\bigr)-g\bigl(\nabla_XY,Z\bigr)
+    -g\bigl(Y,\nabla_XZ\bigr),
+  \]
+  所以 $\nabla$ 与 $g$ 相容当且仅当 $\nabla g\equiv 0$。
 
+  然后证明 $(2)\Leftrightarrow (3)$。\autoref{prop:components of total convariant derivative}
+  表明 $\nabla g$ 在局部标架 $(E_i)$ 中的分量为
+  \[
+    g_{ij;k}=E_k(g_{ij})-\Gamma_{ki}^lg_{lj}-\Gamma_{kj}^lg_{il}.  
+  \]
+  所以 $\nabla g\equiv 0$ 当且仅当 \eqref{eq:Delta g equiv 0} 式成立。
+
+  现在我们证明 $(1)\Leftrightarrow (4)$。假设 $(1)$ 成立。令 $V,W$
+  是沿光滑曲线 $\gamma:I\to M$ 的光滑向量场。给定 $t_0\in I$，在 $\gamma(t_0)$
+  的邻域中选取局部坐标 $(x^i)$，那么有 $V=V^i\partial_i$ 和 $W=W^j\partial_j$，其中 $V^i,W^j:I\to \mathbb{R}$
+  是光滑函数。注意这里我们将 $\partial_i$ 和 $\partial_i\circ\gamma$ 等同。那么
+  \begin{align*}
+    \frac{\d}{\d t}\inn{V,W}&=\frac{\d}{\d t}\bigl(V^iW^j\inn{\partial_i,\partial_j}\bigr)\\
+    &=\bigl(\dot V^iW^j+V^i\dot W^j\bigr)\inn{\partial_i,\partial_j}+
+    V^iW^j \nabla_{\gamma'(t)}\inn{\partial_i,\partial_j}\\
+    &=\bigl(\dot V^iW^j+V^i\dot W^j\bigr)\inn{\partial_i,\partial_j}+V^iW^j
+    \bigl(\inn{\nabla_{\gamma'(t)}\partial_i,\partial_j}+\inn{\partial_i,\nabla_{\gamma'(t)}\partial_j}\bigr)
+    \\
+    &=\inn{\dot V^i\partial_i,W}+\inn{V,\dot W^j\partial_j}+
+    \inn{V^i\nabla_{\gamma'(t)}\partial_i,W}+\inn{V,W^j\nabla_{\gamma'(t)}\partial_j}\\
+    &=\inn{D_tV,W}+\inn{V,D_tW}.
+  \end{align*}
+  反之，如果 $(4)$ 成立，根据 $D_tV=\nabla_{\gamma'(t)}\wtilde V$ 即得 (1)。
+
+  接下来我们证明 $(4)\Rightarrow (5)\Rightarrow(6)\Rightarrow(7)\Rightarrow(4)$。
+  假设 $(4)$ 成立。如果 $V,W$ 是沿 $\gamma$ 平行的，那么
+  \[
+    \frac{\d}{\d t}\inn{V,W}=\inn{D_tV,W}+\inn{V,D_tW}=0,
+  \]
+  所以 $\inn{V,W}$ 是沿 $\gamma$ 的常值函数。
+
+  假设 $(5)$ 成立。令 $v_0,w_0\in T_{\gamma(t_0)}M$，$V,W$ 是它们沿
+  $\gamma$ 的平行移动，即 $V(t_0)=v_0$，$W(t_0)=w_0$，$P_{t_0t_1}^\gamma(v_0)=V(t_1)$
+  以及 $P_{t_0t_1}^\gamma(w_0)=W(t_1)$。因为 $\inn{V,W}$ 沿 $\gamma$ 是常数，所以
+  \[
+    \inn{P_{t_0t_1}^\gamma(v_0),P_{t_0t_1}^\gamma(w_0)}  
+    =\inn{V(t_1),W(t_1)}=\inn{V(t_0),W(t_0)}=\inn{v_0,w_0},
+  \]
+  所以 $P_{t_0t_1}^\gamma$ 是线性等距。
+
+  假设 $(6)$ 成立。设 $(b_i)$ 是 $T_{\gamma(t_0)}M$ 的一组正交基。
+  对于每个 $b_i$，记 $E_i$ 是 $b_i$ 沿 $\gamma$ 的平行移动，由于
+  平行移动映射是线性等距，所以 $(E_i)$ 在 $\gamma$ 的每个点处
+  都是正交基。
+
+  最后假设 $(7)$ 成立。令 $(E_i)$ 是沿 $\gamma$ 平行的正交标架。
+  给定沿 $\gamma$ 的两个向量场 $V$ 和 $W$，我们可以将其表示为
+  $V=V^iE_i$ 以及 $W=W^jE_j$。$(E_i)$ 是正交标架表明沿 $\gamma$
+  时度量系数 $g_{ij}=\inn{E_i,E_j}$ 是常数 $\pm 1$ 或者 $0$。
+  $E_i$ 的平行性表明 $D_tV=\dot V^iE_i$ 以及 $D_tW=\dot W^iE_i$，
+  所以 
+  \begin{align*}
+    \frac{\d}{\d t}\inn{V,W}&=\frac{\d}{\d t}V^iW^j\inn{E_i,E_j}\\
+    &=\bigl(\dot V^iW^j+V^i\dot W^j\bigr)\inn{E_i,E_j}\\
+    &=\inn{D_tV,W}+\inn{V,D_tW}.\qedhere
+  \end{align*}
+\end{proof}
+ 
+\begin{corollary}
+  设 $(M,g)$ 是黎曼流形，$\nabla$ 是 $M$ 上的度量联络，$\gamma:I\to M$
+  是光滑曲线。
+  \begin{enumerate}
+    \item $|\gamma'(t)|$ 是常数当且仅当对于所有的 $t\in I$ 有 $D_t\gamma'(t)$ 正交于 $\gamma'(t)$。
+    \item 如果 $\gamma$ 是测地线，那么 $|\gamma'(t)|$ 是常数。
+  \end{enumerate}
+\end{corollary}
+\begin{proof}
+  (1) $|\gamma'(t)|$ 是常数当且仅当 $\d/\d t\inn{\gamma'(t),\gamma'(t)}\equiv 0$，
+  当且仅当
+  \[
+    \inn{D_t\gamma'(t),\gamma'(t)} \equiv 0,
+  \]
+  即 $D_t\gamma'(t)$ 正交于 $\gamma'(t)$。
+
+  (2) 若 $\gamma$ 是测地线，那么 $D_t\gamma'\equiv 0$，此时 $D_t\gamma'(t)$
+  始终正交于 $\gamma'(t)$，即 $|\gamma'(t)|$ 是常数。
+\end{proof}
+
+\subsection{对称联络}
+
+我们说 $TM$ 中的联络 $\nabla$ 是\emph{对称的}，如果
+\[
+  \nabla_XY-\nabla_YX\equiv [X,Y]\quad \forall X,Y\in \mathfrak{X}(M).  
+\]
+
+对称条件也可以使用\emph{挠率张量}表示。挠率张量是一个 $(1,2)$-张量场
+$\tau:\mathfrak{X}(M)\times \mathfrak{X}(M)\to \mathfrak{X}(M)$，定义为
+\[
+  \tau(X,Y)=\nabla_XY-\nabla_YX-[X,Y].  
+\]
+所以 $\nabla$ 是对称的当且仅当挠率张量为零。
+
+\begin{theorem}[黎曼几何基本定理]
+  令 $(M,g)$ 是黎曼流形或者伪黎曼流形，那么存在唯一的 $TM$ 中的联络
+  $\nabla$ 使得其与 $g$ 相容并且对称，这个联络被称为\emph{$g$ 的 Levi-Civita 联络}
+  （当 $g$ 是正定的时候，被称为\emph{黎曼联络}）。
+\end{theorem}
+\begin{proof}
+  我们首先通过推导 $\nabla$ 的公式证明唯一性。假设 $\nabla$ 是这样的联络
+  以及 $X,Y,Z\in \mathfrak{X}(M)$。根据相容性，我们有
+  \begin{align*}
+    X\inn{Y,Z}&=\inn{\nabla_XY,Z}+\inn{Y,\nabla_XZ},\\
+    Y\inn{Z,X}&=\inn{\nabla_YZ,X}+\inn{Z,\nabla_YX},\\
+    Z\inn{X,Y}&=\inn{\nabla_ZX,Y}+\inn{X,\nabla_ZY}.
+  \end{align*}
+  再根据对称性条件，有
+  \begin{align*}
+    X\inn{Y,Z}&=\inn{\nabla_XY,Z}+\inn{Y,\nabla_ZX}+\inn{Y,[X,Z]},\\
+    Y\inn{Z,X}&=\inn{\nabla_YZ,X}+\inn{Z,\nabla_XY}+\inn{Z,[Y,X]},\\
+    Z\inn{X,Y}&=\inn{\nabla_ZX,Y}+\inn{X,\nabla_YZ}+\inn{X,[Z,Y]}.
+  \end{align*}
+  把前两个式子相加减去第三个式子，得到
+  \begin{multline*}
+    X\inn{Y,Z}+Y\inn{Z,X}-Z\inn{X,Y}=\\
+    2\inn{\nabla_XY,Z}+\inn{Y,[X,Z]}+\inn{Z,[Y,X]}-
+    \inn{X,[Z,Y]},
+  \end{multline*}
+  这表明
+  \begin{multline}\label{eq:Levi-Civita connection}
+    \inn{\nabla_XY,Z}=\frac{1}{2}\Bigl(X\inn{Y,Z}+Y\inn{Z,X}-Z\inn{X,Y}\\
+    -\inn{Y,[X,Z]}-\inn{Z,[Y,X]}+
+    \inn{X,[Z,Y]}\Bigr).
+  \end{multline}
+
+  现在假设 $\nabla^1$ 和 $\nabla^2$ 都是与 $g$ 相容的对称的联络。由于
+  \eqref{eq:Levi-Civita connection} 式右端不依赖于联络，所以
+  $\inn{\nabla_X^1Y-\nabla_X^2Y,Z}=0$，这表明 $\nabla_X^1Y=\nabla_X^2Y$，
+  所以 $\nabla^1=\nabla^2$。
+
+  下面说明存在性。我们使用 \eqref{eq:Levi-Civita connection} 式或者其坐标版本。
+  只需要说明这样的联络在每个坐标卡中存在，然后唯一性保证它们在重合的坐标卡中
+  是一致的。
+
+  令 $(x^i)$ 是任意光滑坐标，将 \eqref{eq:Levi-Civita connection} 式写为坐标
+  版本，并注意到 $\bigl[\partial_i,\partial_j\bigr]=0$，所以
+  \begin{equation}\label{eq:coordinate version of Levi-Civita connection}
+    \inn{\nabla_{\partial_i}\partial_j,\partial_l}=
+    \frac{1}{2}\Bigl(\partial_i\inn{\partial_j,\partial_l}
+    +\partial_j\inn{\partial_l,\partial_i}-\partial_l\inn{\partial_i,\partial_j}\Bigr).  
+  \end{equation}
+  由于
+  \[
+    g_{ij}=\inn{\partial_i,\partial_j}, \qquad \nabla_{\partial_i}\partial_j=\Gamma_{ij}^m  \partial_m,
+  \]
+  代入 \eqref{eq:coordinate version of Levi-Civita connection} 式，得到
+  \begin{equation}
+    \Gamma_{ij}^m g_{ml}=\frac{1}{2}\bigl(\partial_i g_{jl}+\partial_j g_{li}-\partial_l g_{ij}\bigr).
+  \end{equation}
+  最后将等式两边乘以逆矩阵 $g^{kl}$，注意到 $g_{ml}g^{kl}=\delta^k_m$，所以
+  \begin{equation}
+    \Gamma_{ij}^k=\frac{1}{2}g^{kl}\bigl(\partial_i g_{jl}+\partial_j g_{li}-\partial_l g_{ij}\bigr).
+  \end{equation}
+
+  注意到 $\Gamma_{ij}^k=\Gamma_{ji}^k$，所以这是一个对称联络。接下来说明
+  $\nabla$ 与 $g$ 相容即可。我们有
+  \begin{align*}
+    \Gamma_{ki}^lg_{lj}+\Gamma_{kj}^lg_{il}&=\frac{1}{2}
+    \bigl(\partial_kg_{ij}+\partial_ig_{kj}-\partial_jg_{ki}\bigr)
+    +\frac{1}{2}
+    \bigl(\partial_kg_{ij}+\partial_jg_{ki}-\partial_ig_{kj}\bigr)\\
+    &=\partial_k g_{ij}.
+  \end{align*}
+  根据 \autoref{prop:metric connection}，所以 $\nabla$ 是度量联络。
+\end{proof}
+
+上述证明的过程给出了 Levi-Civita 联络的明确公式。
+
+\begin{corollary}[Levi-Civita 联络公式]
+  令 $(M,g)$ 是黎曼流形或者伪黎曼流形，$\nabla$ 是 Levi-Civita 联络。
+  \begin{enumerate}
+    \item \emph{(Koszul 公式)} 如果 $X,Y,Z$ 是光滑张量场，那么
+    \begin{multline}
+      \inn{\nabla_XY,Z}=\frac{1}{2}\Bigl(X\inn{Y,Z}+Y\inn{Z,X}-Z\inn{X,Y}\\
+      -\inn{Y,[X,Z]}-\inn{Z,[Y,X]}+
+      \inn{X,[Z,Y]}\Bigr).
+    \end{multline}
+    \item \emph{(坐标表示)} 在任意光滑坐标卡中，Levi-Civita 联络的系数
+    可以表示为
+    \begin{equation}
+      \Gamma_{ij}^k=\frac{1}{2}g^{kl}\bigl(\partial_i g_{jl}+\partial_j g_{li}-\partial_l g_{ij}\bigr).
+    \end{equation}
+    \item \emph{(局部标架表示)} 令 $(E_i)$ 是开集 $U\subseteq M$ 上的光滑局部标架，
+    $c_{ij}^k:U\to \mathbb{R}$ 是光滑函数，定义为
+    \begin{equation}
+      [E_i,E_j]=c_{ij}^kE_k.
+    \end{equation}
+    那么 Levi-Civita 联络在这个标架中的系数为
+    \begin{equation}
+      \Gamma_{ij}^k=\frac{1}{2}g^{kl}\bigl(E_ig_{jl}+E_jg_{il}-E_lg_{ij}-g_{jm}c_{il}^m-g_{lm}c_{ji}^m+g_{im}c_{lj}^m\bigr).
+    \end{equation}
+    \item \emph{(局部正交标架表示)} 如果 $g$ 是黎曼度量，$(E_i)$ 是光滑正交局部标架，
+    $c_{ij}^k$ 的定义不变，那么
+    \begin{equation}
+      \Gamma_{ij}^k=\frac{1}{2}\bigl(c_{ij}^k-c_{ik}^j-c_{jk}^i\bigr).
+    \end{equation}
+  \end{enumerate}
+\end{corollary}
+
+\section{指数映射}
+
+在本节中，我们令 $(M,g)$ 是一个黎曼流形或者伪黎曼流形，配备 Levi-Civita
+联络。我们已经知道每个点 $p\in M$ 和初速度 $v\in T_pM$ 都确定了唯一的
+极大测地线 $\gamma_v$。为了更深入的研究测地线，我们需要研究它们的集体行为，
+尤其是当我们改变初始点和初速度的时候测地线会如何改变。
+
+\begin{lemma}[缩放引理]
+  对于每个 $p\in M$，$v\in T_pM$ 和 $c,t\in \mathbb{R}$，当下面的式子两端都有
+  定义的时候，有
+  \begin{equation}
+    \gamma_{cv}(t)=\gamma_v(ct).
+  \end{equation}
+\end{lemma}
+\begin{proof}
+  
+\end{proof}
+
+注意到 $v\mapsto \gamma_v$ 定义了从 $TM$ 到测地线集合的一个映射。
+更重要的是，根据缩放引理，这允许我们定义从 $TM$ 的一个子集到 $M$ 的映射，
+其将 $T_pM$ 的每条过原点的直线送到一个测地线。
+
+定义子集 $\mathcal{E}\subseteq TM$ 为
+\[
+  \mathcal{E}=\bigl\{v\in TM\bigm| \text{$\gamma_v$ 定义在包含 $[0,1]$ 的某个开区间上}\bigr\} ,
+\]
+被称为\emph{指数映射的定义域}。定义\emph{指数映射} $\exp:\mathcal{E}\to M$ 为
+\[
+  \exp(v)=\gamma_v(1).  
+\]
+对于每个 $p\in M$，定义 \emph{$p$ 处的限制指数映射} $\exp_p$ 为 $\exp$
+在集合 $\mathcal{E}_p=\mathcal{E}\cap T_pM$ 上的限制。
 
 
 

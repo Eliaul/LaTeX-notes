@@ -124,7 +124,7 @@ $\delta_J^I=0$。在 $I,J$ 都没有重复指标且 $J=I_\sigma$ 的时候，有
   =\sum_{\{I\,|\, i_1<\cdots<i_k\}}  \alpha_I\varepsilon^I.
 \]
 
-\begin{proposition}[$\Lambda^k(V^*)$ 的一组基]
+\begin{proposition}[$\Lambda^k(V^*)$ 的一组基]\label{prop:basis of Lambda}
   令 $V$ 是有限维向量空间，$\bigl(\varepsilon^i\bigr)$ 是 $V^*$
   的任意一组基，那么对于每个正整数 $k\leq n$，$k$-余向量的集合
   \[
@@ -176,14 +176,14 @@ $\varepsilon^{1\dots n}$ 张成。根据定义，$\varepsilon^{1\dots n}$
 \begin{proof}
   任取 $V$ 的一组基 $(E_i)$，设 $\bigl(\varepsilon^i\bigr)$ 是对偶基。
   此时 $\omega=c\varepsilon^{1\dots n}$。记 $T$ 在 $(E_i)$ 下的表示矩阵为
-  $(T_i^j)$，即 $T_i=TE_i=T_i^jE_j$。我们只需要证明结论对基向量成立，此时右边为
+  $(T_j^i)$，即 $T_j=TE_j=T_j^iE_i$。我们只需要证明结论对基向量成立，此时右边为
   \[
     (\det T)c\varepsilon^{1\dots n}(E_1,\dots,E_n)=c(\det T).
   \]
   左边为
   \[
     \omega(TE_1,\dots,E_n)=c\varepsilon^{1\dots n}
-    (T_1,\dots,T_n)=c\det (T_i^j).  
+    (T_1,\dots,T_n)=c\det (T_j^i).  
   \]
   所以二者相等。
 \end{proof}
@@ -197,7 +197,7 @@ $\varepsilon^{1\dots n}$ 张成。根据定义，$\varepsilon^{1\dots n}$
 \end{equation}
 交错化前面的系数是为了下面的引理。
 
-\begin{lemma}
+\begin{lemma}\label{lemma:wedge}
   $V$ 是有限维向量空间，$\bigl(\varepsilon^1,\dots,\varepsilon^n\bigr)$
   是 $V^*$ 的一组基。对于任意多重指标 $I=(i_1,\dots,i_k)$ 和
   $J=(j_1,\dots,j_l)$，有
@@ -256,14 +256,469 @@ $\varepsilon^{1\dots n}$ 张成。根据定义，$\varepsilon^{1\dots n}$
   置换作用使得参数变为与 $IJ$ 的指标一致即可。
 \end{proof} 
 
-\begin{proposition}[楔积的性质]
+\begin{proposition}[楔积的性质]\label{prop:property of wedge}
   令 $\omega,\omega',\eta,\eta',\xi$ 是有限维向量空间 $V$ 上的多重余向量。
   \begin{enumerate}
-    \item 对于 $a,a'\in \mathbb{R}$，有
+    \item \emph{双线性性。} 对于 $a,a'\in \mathbb{R}$，有
     \begin{align*}
       (a\omega+a'\omega')\wedge\eta&=a(\omega\wedge\eta)+a'(\omega'\wedge\eta),\\
       \eta\wedge(a\omega+a'\omega')&=a(\eta\wedge\omega)+a'(\eta\wedge\omega').
     \end{align*}
+    \item \emph{结合律。}
+    \[
+      \omega\wedge(\eta\wedge\xi)=(\omega\wedge\eta)\wedge\xi.  
+    \]
+    \item \emph{反交换律。} 对于 $\omega\in\Lambda^k(V^*)$ 和
+    $\eta\in\Lambda^l(V^*)$，有
+    \begin{equation}
+      \omega\wedge\eta=(-1)^{kl}\eta\wedge\omega.
+    \end{equation}
+    \item 如果 $(\varepsilon^i)$ 是 $V$ 的任意一组基，$I=(i_1,\dots,i_k)$
+    是多重指标，那么
+    \begin{equation}
+      \varepsilon^{i_1} \wedge\cdots\wedge\varepsilon^{i_k}=\varepsilon^I. 
+    \end{equation}
+    \item 对于任意余向量 $\omega^1,\dots,\omega^k$ 和向量 $v_1,\dots,v_k$，有
+    \begin{equation}
+      \omega^1\wedge\cdots\wedge\omega^k(v_1,\dots,v_k)
+      =\det\bigl(\omega^i(v_j)\bigr).
+    \end{equation}
+  \end{enumerate} 
+\end{proposition}
+\begin{proof}
+  双线性性根据定义是显然的。对于结合律，我们有
+  \[
+    \bigl(\varepsilon^I\wedge\varepsilon^J\bigr)\wedge\varepsilon^K
+    =\varepsilon^{IJ}\wedge \varepsilon^K
+    =\varepsilon^{IJK}=\varepsilon^I\wedge\varepsilon^{JK}
+    =\varepsilon^I\wedge\bigl(\varepsilon^J\wedge\varepsilon^K\bigr),
+  \]
+  根据双线性性即可推得一般情况下的结合律。类似的，我们有
+  \[
+    \varepsilon^{I}\wedge\varepsilon^J=\varepsilon^{IJ}
+    =(\sgn\tau)\varepsilon^{JI}=(\sgn\tau)\varepsilon^J\wedge\varepsilon^I,  
+  \]
+  其中 $\tau$ 将 $IJ$ 置换为 $JI$。可以证明 $\sgn\tau=(-1)^{kl}$，因为
+  $\tau$ 可以分解为 $kl$ 个对换（$I$ 的每个指标都要移动经过 $J$ 的所有指标）的乘积，
+  一般的反交换律由双线性性得到。
+
+  (4) 是 \autoref{lemma:wedge} 的直接推论。对于 (5)，同样只需要证明
+  $\omega^j$ 取遍基 $\varepsilon^{i_j}$ 的情况即可，此时根据 (4) 即可证明。
+\end{proof}
+
+由于上述命题 (4) 的存在，以后我们混用 $\varepsilon^{i_1} \wedge\cdots\wedge\varepsilon^{i_k}$
+和 $\varepsilon^I$ 两种记号。
+
+一个 $k$-余向量 $\eta$ 如果可以表示为 $\eta=\omega^1\wedge\cdots\wedge\omega^k$
+的形式，那么我们说 $\eta$ 是\emph{可分解的}。值得注意的是当 $k>1$ 时不是所有 $k$-余向量都是可分解的。
+但是根据 \autoref{prop:property of wedge} 的 (4) 和 \autoref{prop:basis of Lambda}，
+任意 $k$-余向量都可以表示为一些可分解的 $k$-余向量的线性组合。
+
+对于 $n$-维向量空间 $V$，定义向量空间 $\Lambda(V^*)$ 为
+\[
+  \Lambda(V^*)=\bigoplus_{k=0}^n\Lambda^k(V^*).  
+\]
+那么 $\dim\Lambda(V^*)=\sum_{k=0}^n \binom{n}{k}=2^n$。楔积的性质
+表明 $\Lambda(V^*)$ 是一个结合代数，被称为\emph{$V$ 的外代数}。
+一个代数 $A$ 被称为\emph{分次的}，如果其有一个直和分解 $A=\bigoplus_{k\in \mathbb{Z}}A^k$
+使得 $\bigl(A^k\bigr)\bigl(A^l\bigr)\subseteq A^{k+l}$。如果乘积满足
+$ab=(-1)^{kl}ba$ （其中 $a\in A^k$，$b\in A^l$），那么我们说这个分次代数
+是\emph{反交换的}。我们已经表明 $\Lambda(V^*)$ 是一个反交换的分次代数。
+
+\subsection{内积}
+
+有一个重要的算符可以将向量和交错张量联系起来。令 $V$ 是有限维向量空间，
+对于每个 $v\in V$，我们定义线性映射 $i_v:\Lambda^k(V^*)\to\Lambda^{k-1}(V^*)$，
+称为\emph{通过 $v$ 的内积}，定义为
+\[
+  i_v\omega(w_1,\dots,w_{k-1})=\omega(v,w_1,\dots,w_{k-1}).
+\]
+换句话说，$i_v\omega$ 即将 $\omega$ 的第一个参数固定为 $v$ 得到的
+$k-1$ 多重线性映射。根据惯例，当 $\omega$ 是 $0$-余向量（一个数）的时候，
+我们将 $i_v\omega$ 解释为零。另一个常用的记号为
+\[
+  v\into\omega=i_v\omega.  
+\]
+
+\begin{lemma}
+  令 $V$ 是有限维向量空间， $v\in V$.
+  \begin{enumerate}
+    \item $i_v\circ i_v=0$。
+    \item 如果 $\omega\in \Lambda^k(V^*)$ 和 $\eta\in\Lambda^l(V^*)$，那么
+    \begin{equation}
+      i_v(\omega\wedge\eta)=(i_v\omega)\wedge\eta+(-1)^k\omega\wedge(i_v\eta).
+    \end{equation}
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  (1) 当 $k\geq 2$ 的时候，此时 $i_v(i_v\omega)=\omega(v,v,\dots)$，由于
+  $\omega$ 是交错的，所以 $i_v\circ i_v=0$。当 $k=1$ 或者 $0$ 的时候，
+  显然 $i_v\circ i_v=0$。
+
+  (2) 只需要考虑 $\omega,\eta$ 均为可分解的情况即可。对于余向量
+  $\omega^1,\dots,\omega^k$，任取向量 $v_2,\dots,v_k$，记
+  $v_1=v$，有 
+  \begin{align*}
+    \bigl(v\into\bigl(\omega^1\wedge\cdots\wedge\omega^k\bigr)\bigr)
+    (v_2,\dots,v_k)&=\bigl(\omega^1\wedge\cdots\wedge\omega^k\bigr)(v,v_2,\dots,v_k)\\
+    &=\det\bigl(\omega^i(v_j)\bigr)\\
+    &=\sum_{i=1}^k (-1)^{i-1}
+    \det\bigl(\omega^p(v_q)\bigr)_{p\ne i,q\neq 1},
+  \end{align*}
+  最后一步即将行列式按第一列展开，这就表明
+  \begin{equation*}
+    v\into\bigl(\omega^1\wedge\cdots\wedge\omega^k\bigr)
+    =\sum_{i=1}^k(-1)^{i-1}\omega^i(v)\omega^1\wedge\cdots\wedge
+    \hat\omega^i\wedge\cdots\wedge \omega^k,
+  \end{equation*}
+  其中的尖角符号表明 $\omega^i$ 被跳过。
+\end{proof}
+ 
+\section{流形上的微分形式}
+
+回到 $n$-维光滑流形 $M$ 上，记 $T^kT^*M$ 的由交错张量构成的子集为
+$\Lambda^kT^*M$：
+\[
+  \Lambda^k T^*M=\coprod_{p\in M}\Lambda^k\bigl(T_p^*M\bigr).
+\]
+这是 $T^kT^*M$ 的一个光滑子丛，且是 $M$ 上的秩 $\binom{n}{k}$ 的向量丛。
+
+$\Lambda^kT^*M$ 的截面被称为\emph{微分 $k$-形式}，或者简称为\emph{$k$-形式}。
+记所有光滑 $k$-形式的向量空间为
+\[
+  \Omega^k(M)=\Gamma\bigl(\Lambda^kT^*M\bigr)  .
+\]
+
+两个微分形式的楔积由逐点定义：$(\omega\wedge\eta)_p=\omega_p\wedge\eta_p$。
+因此 $k$-形式和 $l$-形式的楔积为 $(k+l)$-形式。如果 $f$ 是 $0$-形式，
+$\eta$ 是 $k$-形式，我们可以将楔积 $f\wedge \eta$ 视为通常的乘积
+$f\eta$。如果我们定义
+\begin{equation}
+  \Omega^*(M)=\bigoplus_{k=0}^n\Omega^k(M),
+\end{equation}
+那么 $\Omega^*(M)$ 是结合的反对称的分次代数。
+
+在任意光滑坐标卡中，一个 $k$-形式 $\omega$ 可以局部表示为
+\[
+  \omega=\sideset{}{'}\sum_I\omega_I\d x^{i_1}\wedge
+  \cdots\wedge \d x^{i_k}=\sideset{}{'}\sum_I\omega_I \d x^I.
+\]
+根据楔积的性质，我们有
+\[
+  \d x^{i_1}\wedge
+  \cdots\wedge \d x^{i_k}
+  \left(\frac{\partial}{\partial x^{j_1}},\dots,\frac{\partial}{\partial x^{j_k}}\right)
+  =\delta_J^I.
+\]
+因此 $\omega$ 的分量 $\omega_I$ 为
+\[
+  \omega_I=\omega\left(\frac{\partial}{\partial x^{i_1}},\dots,\frac{\partial}{\partial x^{i_k}}\right)  .
+\]
+
+\begin{example}
+  一个 $0$-形式就是连续的实值函数，一个 $1$-形式即余向量场。
+\end{example}
+
+如果 $F:M\to N$ 是光滑映射，$\omega$ 是 $N$ 上的微分形式，拉回
+$F^*\omega$ 是 $M$ 上的微分形式，定义为
+\[
+  (F^*\omega)_p(v_1,\dots,v_k)=\omega_{F(p)}\bigl(\d F_p(v_1),\dots,\d F_p(v_k)\bigr)  .
+\]
+
+\begin{lemma}
+  设 $F:M\to N$ 是光滑映射。
+  \begin{enumerate}
+    \item $F^*:\Omega^k(N)\to \Omega^k(M)$ 是线性映射。
+    \item $F^*(\omega\wedge\eta)=(F^*\omega)\wedge(F^*\eta)$。
+    \item 在任意光滑坐标卡中，
+    \[
+      F^*\left(\sideset{}{'}\sum_I\omega_I\d y^{i_1}\wedge\cdots\wedge\d y^{i_k}\right)  
+      =\sideset{}{'}\sum_I(\omega_I\circ F)\d\bigl(y^{i_1}\circ F\bigr)\wedge
+      \cdots\wedge \d \bigl(y^{i_k}\circ F\bigr).
+    \]
+  \end{enumerate}
+\end{lemma}
+
+这个引理告诉我们微分形式拉回的计算规则，与协变张量场拉回的计算规则是一致的。
+
+\begin{example}
+  定义 $F:\mathbb{R}^2\to \mathbb{R}^3$ 为 $F(u,v)=(u,v,u^2-v^2)$，令
+  $\omega=y\d x\wedge\d z+x\d y\wedge\d z$ 是 $\mathbb{R}^3$ 上的 $2$-形式，
+  那么拉回 $F^*\omega$ 为
+  \begin{align*}
+    F^*\omega&=v\d u\wedge\d (u^2-v^2)+u\d v\wedge\d (u^2-v^2)\\
+    &=v\d u\wedge(2u\d u-2v\d v)+u\d v\wedge(2u\d u-2v\d v)\\
+    &=-2v^2\d u\wedge\d v+2u^2\d v\wedge\d u,
+  \end{align*}
+  由于 $\d u\wedge\d v=-\d v\wedge \d u$，所以
+  \[
+    F^*\omega=-2(u^2+v^2)\d u\wedge\d v.  
+  \]
+\end{example}
+
+\section{外微分}
+
+回顾不是所有的 $1$-形式都是函数的微分：给定一个光滑 $1$-形式 $\omega$，
+存在光滑函数 $f$ 使得 $\omega=\d f$ 的一个必要条件是 $\omega$ 是\emph{闭的}，
+即在每个光滑坐标卡中都有
+\begin{equation}
+  \frac{\partial\omega_j}{\partial x^i}-\frac{\partial\omega_i}{\partial x^j}=0.
+\end{equation}
+注意到这个等式左边关于指标 $i,j$ 是反对称的，所以可以解释为一个交错张量场
+的 $ij$-分量。于是我们可以定义一个 $2$-形式 $\d\omega$，其在局部坐标卡中为
+\begin{equation}
+  \d\omega=\sum_{i<j}\left(\frac{\partial\omega_j}{\partial x^i}-\frac{\partial\omega_i}{\partial x^j}\right)
+  \d x^i\wedge\d x^j,
+\end{equation}
+此时 $\omega$ 是闭的当且仅当在每个坐标卡中有 $\d\omega=0$。
+
+事实证明 $\d\omega$ 实际上是全局定义的，独立于坐标卡的选择。对于光滑流形
+$M$，我们将证明存在一个可微的算子 $\d:\Omega^k(M)\to\Omega^{k+1}(M)$
+使得 $\d(\d\omega)=0$。因此，一个光滑 $k$-形式 $\omega$ 等于 $d\eta$（$\eta$ 是
+$(k-1)$-形式）的一个必要条件是 $\d\omega=0$。
+
+Euclid 空间中 $d$ 的定义是很直接的：如果 $\omega=\sideset{}{'}{\textstyle\sum_J}\omega_J\d x^J$
+是开集 $U\subseteq \mathbb{R}^n$ 上的光滑 $k$-形式，那么我们定义\emph{外微分}
+$\d\omega$ 为 $(k+1)$-形式：
+\begin{equation}\label{eq:exterior derivate}
+  \d\left(\sideset{}{'}{\sum}_J\omega_J\d x^J\right)=
+  \sideset{}{'}{\sum}_J\d\omega_J\wedge\d x^J,
+\end{equation}
+其中 $d\omega_J$ 是函数 $\omega_J$ 的微分。写的更详细一点，即
+\begin{equation}
+  \d\left(\sideset{}{'}{\sum}_J\omega_J\d x^{j_1}\wedge\cdots\wedge\d x^{j_k}\right)=
+  \sideset{}{'}{\sum}_J\sum_i\frac{\partial\omega_J}{\partial x^{i}}
+  \d x^i\wedge \d x^{j_1}\wedge\cdots\wedge\d x^{j_k}.
+\end{equation}
+注意到当 $\omega$ 是 $1$-形式的时候，这表明
+\begin{align*}
+  \d\bigl(\omega_j\d x^j\bigr)&=\sum_{i,j}\frac{\partial\omega_j}{\partial x^i}
+  \d x^i\wedge\d x^j\\
+  &=\sum_{i<j}\frac{\partial\omega_j}{\partial x^i}
+  \d x^i\wedge\d x^j+\sum_{i> j}\frac{\partial\omega_j}{\partial x^i}
+  \d x^i\wedge\d x^j\\
+  &=\sum_{i<j}\left(\frac{\partial\omega_j}{\partial x^i}-\frac{\partial\omega_i}{\partial x^j}\right)
+  \d x^i\wedge\d x^j,
+\end{align*}
+所以这与前面的定义是一致的。对于光滑 $0$-形式 $f$，则变为 
+\[
+  \d f=\frac{\partial f}{\partial x^i}\d x^i.  
+\]
+即函数的微分。
+
+\begin{proposition}[$\mathbb{R}^n$ 上的外微分的性质]
+  \mbox{}
+  \begin{enumerate}
+    \item $d$ 在 $\mathbb{R}$ 上是线性的。
+    \item 如果 $\omega$ 是光滑 $k$-形式，$\eta$ 是光滑 $1$-形式，那么
+    \[
+      \d(\omega\wedge\eta)=  \d\omega\wedge\eta+(-1)^k\omega\wedge\d \eta.
+    \]
+    \item $\d\circ\d \equiv 0$。
+    \item $d$ 和拉回操作交换：如果 $U\subseteq \mathbb{R}^n$ 和 $V\subseteq \mathbb{R}^m$
+    是开集，$F:U\to V$ 是光滑映射，$\omega\in\Omega^k(V)$，那么
+    \begin{equation}
+      F^*(\d\omega)=\d\bigl(F^*\omega\bigr).
+    \end{equation}
   \end{enumerate}
 \end{proposition}
+\begin{proof}
+  线性性是显然的。对于 (2)，由于线性性，我们只需要考虑 $\omega=u\d x^I\in\Omega^k(U)$
+  和 $\eta=v\d x^J\in\Omega^l(U)$ 的情况即可。首先，我们证明对于任意多重指标 $I$，
+  有 $\d(u\d x^I)=\d u\wedge\d x^I$。如果 $I$ 有重复指标，那么 $\d x^I=0$，所以
+  $\d(u\d x^I)=0=\d u\wedge\d x^I$。如果 $I$ 没有重复指标，设 $\sigma$
+  为将 $I$ 变为递增指标 $J$ 的置换，那么
+  \[
+    \d\bigl(u\d x^I\bigr)=(\sgn\sigma)\d\bigl(u\d x^J\bigr)
+    = (\sgn\sigma)\d u\wedge\d x^J=\d u\wedge\d x^I.
+  \]
+
+  利用这一点，我们计算得
+  \begin{align*}
+    \d(\omega\wedge\eta)&=\d\bigl((u\d x^I)\wedge (v\d x^J)\bigr)\\
+    &=\d\bigl(uv\d x^I\wedge\d x^J\bigr)\\
+    &=(u\d v+v\d u)\wedge \d x^I\wedge\d x^J\\
+    &=\bigl(\d u\wedge \d x^I\bigr)\wedge\bigl(v\d x^J\bigr)
+    +(-1)^k\bigl(u\d x^I\bigr)\wedge \bigl(\d v\wedge\d x^J\bigr)\\
+    &=\d \omega\wedge \eta+(-1)^k\omega\wedge \d\eta.
+  \end{align*}
+
+  对于 (3)，首先证明 $0$-形式的情况，此时
+  \begin{align*}
+    \d(\d u)&=\d \left(\frac{\partial u}{\partial x^j}\d x^j\right)
+    =\frac{\partial^2 f}{\partial x^i\partial x^j}\d x^i\wedge\d x^j\\
+    &=\sum_{i<j}\left(\frac{\partial^2 f}{\partial x^i\partial x^j}-\frac{\partial^2 f}{\partial x^j\partial x^i}\right)
+    \d x^i\wedge\d x^j=0.
+  \end{align*}
+  对于一般的情况，利用 (2)，我们有
+  \begin{align*}
+    \d(\d\omega)&=\d\left(\sideset{}{'}\sum_J\d\omega_J\wedge\d x^{j_1}\wedge\cdots\wedge\d x^{j_k}\right)\\
+    &=\sideset{}{'}\sum_J\d(\d\omega)\wedge\d x^{j_1}\wedge\cdots\wedge\d x^{j_k}+\\
+    &\hphantom{{}={}}\sideset{}{'}\sum_J
+    \sum_{i=1}^k(-1)^i\d\omega_J\wedge\d x^{j_1}\wedge\cdots\wedge
+    \d\bigl(\d x^{j_i}\bigr)\wedge\cdots\wedge \d x^{j_k}=0.
+  \end{align*}
+
+  对于 (4)，同样只需要考虑 $\omega=u\d x^{i_1}\wedge\cdots\wedge\d x^{i_k}$ 的情况，
+  此时
+  \begin{align*}
+    F^*\Bigl(\d\bigl(u\d x^{i_1}\wedge\cdots\wedge\d x^{i_k}\bigr)\Bigr)&=
+    F^*\bigl(\d u\wedge\d x^{i_1}\wedge\cdots\wedge\d x^{i_k} \bigr)\\
+    &=\d(u\circ F)\wedge \d\bigl(x^{i_1}\circ F\bigr)\wedge\cdots\wedge 
+    \d\bigl(x^{i_k}\circ F \bigr).
+  \end{align*}
+  另一方面，有
+  \begin{align*}
+    \d\Bigl(F^*\bigl(u\d x^{i_1}\wedge\cdots\wedge\d x^{i_k}\bigr)\Bigr)
+    &=\d\Bigl((u\circ F)\d\bigl(x^{i_1}\circ F\bigr)\wedge\cdots\wedge 
+    \d\bigl(x^{i_k}\circ F \Bigr)\\
+    &=\d(u\circ F)\wedge \d\bigl(x^{i_1}\circ F\bigr)\wedge\cdots\wedge 
+    \d\bigl(x^{i_k}\circ F \bigr),
+  \end{align*}
+  所以 $\d$ 和 $F^*$ 可交换。
+\end{proof}
+
+这些结果允许我们将外微分的定义转移到流形上。
+
+\begin{theorem}[外微分的存在唯一性]
+  令 $M$ 是光滑流形，对于所有的 $k$ 存在唯一的算子 $\d:\Omega^k(M)\to\Omega^{k+1}(M)$，
+  称为\emph{外微分}，其满足下面的四条性质：
+  \begin{enumerate}
+    \item $d$ 在 $\mathbb{R}$ 上是线性的。
+    \item 如果 $\omega\in\Omega^k(M)$ 和 $\eta\in\Omega^l(M)$，那么
+    \[
+      \d(\omega\wedge\eta)=\d\omega\wedge\eta+(-1)^k\omega\wedge \d\eta.  
+    \]
+    \item $\d\circ\d \equiv 0$。
+    \item 对于 $f\in\Omega^0(M)=C^\infty(M)$，$\d f$ 是 $f$ 的微分，即
+    $\d f(X)=Xf$。
+  \end{enumerate}
+\end{theorem}
+
+如果 $A=\bigoplus_k A^k$ 是分次代数，线性映射 $T:A\to A$ 如果对于每个 $k$，
+都有 $T(A^k)\subseteq A^{k+m}$，那么称 $T$ 是\emph{$m$ 次映射}。
+如果 $x\in A^k,y\in A^l$ 时有 $T(xy)=(Tx)y+(-1)^kx(Ty)$，那么称
+$T$ 是\emph{反导子}。前面的定理可以总结为函数的微分可以唯一地延拓为
+$\Omega^*(M)$ 上的一个 $1$ 次的反导子且平方为零。
+
+\begin{proposition}[外微分的自然性]
+  如果 $F:M\to N$ 是光滑映射，那么对于每个 $k$，拉回映射
+  $F^*:\Omega^k(N)\to\Omega^k(M)$ 与 $d$ 交换：对于任意 $\omega\in\Omega^k(N)$，
+  有
+  \begin{equation}
+    F^*(\d\omega)=\d (F^*\omega).
+  \end{equation}
+\end{proposition}
+
+现在我们可以把余向量场的术语进行一个延申。一个微分形式 $\omega\in\Omega^k(M)$
+如果使得 $\d\omega=0$，那么我们说 $\omega$ 是\emph{闭形式}。如果存在
+$(k-1)$-形式 $\eta$ 使得 $\omega=\d\eta$，那么我们说 $\omega$ 是\emph{恰当形式}。
+
+$\d\circ\d =0$ 表明恰当形式都是闭形式。我们已经看到闭形式不一定都是恰当形式。
+换句话说，序列
+\[
+  \begin{tikzcd}
+    \Omega^k(M)\arrow[r,"\d"] & \Omega^{k+1}(M)\arrow[r,"\d"]
+    & \Omega^{k+2}(M)
+  \end{tikzcd}  
+\]
+不是正合列。
+
+\subsection{$\mathbb{R}^3$ 中的外微分和向量微积分}
+
+\begin{example}
+  我们来计算 $\mathbb{R}^3$ 上任意 $1$-形式和 $2$-形式的外微分。
+  任意光滑 $1$-形式都形如
+  \[
+    \omega=P\d x+Q\d y+R\d z,  
+  \]
+  其中 $P,Q,R$ 是光滑函数。那么
+  \begin{align*}
+    \d\omega&=\d P\wedge\d x+\d Q\wedge\d y+\d R\wedge \d z\\
+    &=
+    \left(\frac{\partial P}{\partial x}\d x+\frac{\partial P}{\partial y}\d y+\frac{\partial P}{\partial z}\d z\right)
+    \wedge\d x+ 
+    \left(\frac{\partial Q}{\partial x}\d x+\frac{\partial Q}{\partial y}\d y+\frac{\partial Q}{\partial z}\d z\right)
+    \wedge\d y\\
+    &\hphantom{{}={}}+
+    \left(\frac{\partial R}{\partial x}\d x+\frac{\partial R}{\partial y}\d y+\frac{\partial R}{\partial z}\d z\right)
+    \wedge\d z\\
+    &=\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)\d x\wedge\d y
+    +\left(\frac{\partial R}{\partial x}-\frac{\partial P}{\partial z}\right)\d x\wedge\d z
+    +\left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)\d y\wedge\d z.
+  \end{align*}
+  任意光滑 $2$-形式可以写为
+  \[
+    \eta=u\d x\wedge\d y+v\d x\wedge\d z+w\d y\wedge\d z.  
+  \]
+  那么
+  \begin{align*}
+    \d \eta&=\d u\wedge\d x\wedge \d y+\d v\wedge\d x\wedge\d z+\d w\wedge\d y\wedge\d z\\
+    &=\left(\frac{\partial u}{\partial x}\d x+\frac{\partial u}{\partial y}\d y+\frac{\partial u}{\partial z}\d z\right)
+    \wedge \d x\wedge \d y\\
+    &\hphantom{{}={}}+\left(\frac{\partial v}{\partial x}\d x+\frac{\partial v}{\partial y}\d y+\frac{\partial v}{\partial z}\d z\right)
+    \wedge \d x\wedge \d z\\
+    &\hphantom{{}={}}+\left(\frac{\partial w}{\partial x}\d x+\frac{\partial w}{\partial y}\d y+\frac{\partial w}{\partial z}\d z\right)
+    \wedge \d y\wedge \d z\\
+    &=\left(\frac{\partial u}{\partial x}-\frac{\partial v}{\partial y}+\frac{\partial w}{\partial x}\right)
+    \d x\wedge\d y\wedge \d z.
+  \end{align*}
+\end{example}
+
+回顾 $\mathbb{R}^n$ 上的向量微积分算符：函数 $f\in C^\infty(\mathbb{R^n})$
+的 (Euclid) 梯度和向量场 $X\in \mathfrak{X}(\mathbb{R}^n)$ 的\emph{散度}
+分别定义为
+\begin{equation}
+  \grad f=\sum_{i=1}^n\frac{\partial f}{\partial x^i}\d x^i,\quad 
+  \dive X=\sum_{i=1}^n\frac{\partial X^i}{\partial x^i}.
+\end{equation}
+此外，在 $n=3$ 的时候，向量场 $X\in \mathfrak{X}(\mathbb{R}^3)$ 的\emph{旋度}
+被定义为
+\[
+  \curl X=\left(\frac{\partial X^3}{\partial y}-\frac{\partial X^2}{\partial z}\right)
+  \frac{\partial}{\partial x}+  \left(\frac{\partial X^1}{\partial z}-\frac{\partial X^3}{\partial x}\right)
+  \frac{\partial}{\partial y}+
+  \left(\frac{\partial X^2}{\partial x}-\frac{\partial X^1}{\partial y}\right)
+  \frac{\partial}{\partial z}.
+\]
+一个有趣的事实是，前面例子中 $2$-形式 $\d\omega$ 的分量正好是分量函数为
+$(P,Q,R)$ 的向量场的旋度的分量（除开可能相差一个符号之外）。类似的，
+除开符号差异之外，$\d\eta$ 的分量和向量场散度的分量也非常相似。
+这些相似性可以由下面的方式精确叙述。
+
+$\mathbb{R}^3$ 上的 Euclid 度量导出指标下降同构：
+$\flat:\mathfrak{X}(\mathbb{R}^3)\to \Omega^1(\mathbb{R}^3)$。
+即将向量场 $X=X^i\partial/\partial x^i$ 送到
+\[
+  X^\flat=X_j\d x^j=g_{ij}X^i\d x^j=\sum_{i=1}^3 X^i\d x^i.
+\]
+内积导出了另一个映射 $\beta:\mathfrak{X}(\mathbb{R}^3)\to \Omega^2(\mathbb{R}^3)$
+为
+\begin{equation}
+  \beta(X)=X\into (\d x\wedge\d y\wedge \d z).
+\end{equation}
+不难验证 $\beta$ 是 $C^\infty(\mathbb{R}^3)$-线性的，所以其对应一个
+光滑丛同态 $TM\to \Lambda^2T^*\mathbb{R}^3$。这是一个单射且
+$TM$ 和 $\Lambda^2T^*\mathbb{R}^3$ 的秩都是 $3$，所以这是一个丛同构。
+类似的，我们可以定义光滑丛同构 $*:C^\infty(\mathbb{R}^3)\to \Omega^3(\mathbb{R}^3)$
+为
+\begin{equation}
+  *(f)=f\d x\wedge\d y\wedge\d z.
+\end{equation}
+那么上述所有算符的关系可以总结为如下交换图：
+\begin{equation}
+  \begin{tikzcd}[row sep=large]
+    C^\infty(\mathbb{R}^3)\arrow[r,"\grad"]\arrow[d,"\Id"]
+    & \mathfrak{X}(\mathbb{R}^3)\arrow[r,"\curl"]\arrow[d,"\flat"]
+    & \mathfrak{X}(\mathbb{R}^3)\arrow[r,"\dive"]\arrow[d,"\beta"]
+    & C^\infty(\mathbb{R}^3)\arrow[d,"*"]
+    \\
+    \Omega^0(\mathbb{R}^3)\arrow[r,"\d"] & 
+    \Omega^1(\mathbb{R}^3)\arrow[r,"\d"] & 
+    \Omega^2(\mathbb{R}^3)\arrow[r,"\d"] & 
+    \Omega^3(\mathbb{R}^3)
+  \end{tikzcd}
+\end{equation}
+
+
 
