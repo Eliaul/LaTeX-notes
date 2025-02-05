@@ -275,6 +275,44 @@ $B$ \emph{同构}，记作 $A\cong B$。
   \end{itemize}
 \end{definition}
 
+\begin{remark}
+  我们已经熟悉将一种结构和保持结构的映射视为一个范畴（例如 $\cat{Grp}$，
+  $\cat{Ring}$ 等等），实际上，这种思想也可以应用于范畴和函子：
+  如果对象为范畴，态射是函子，这也构成一个范畴，我们记为 $\cat{CAT}$。
+  这一论断来源于函子的复合性，即给定函子
+  \begin{arr}[sep=small]
+    \cat{A}\arrow[r,"F"] & \cat{B}\arrow[r,"G"] & \cat{C}
+  \end{arr}，那么存在函子
+  \begin{arr}
+    \cat{A}\arrow[r,"G\circ F"] & \cat{C}
+  \end{arr}，$G\circ F$ 由自然的方式定义。此外，对于任意范畴
+  $\cat A$，存在单位态射 $1_{\cat A}:\cat A\to \cat A$。
+\end{remark}
+
+\begin{example}
+  最简单的函子的例子是\emph{遗忘函子}（这是一个非正式的用语，没有准确的定义）。
+  下面是一些例子：
+  \begin{enumerate}
+    \item 存在一个函子 $U:\cat{Grp}\to\cat{Set}$ 定义如下：
+    如果 $G$ 是一个群，那么 $U(G)$ 是 $G$ 的底集合。如果 $f:G\to H$
+    是群同态，那么 $U(f):U(G)\to U(H)$ 是将 $f$ 视为集合间的映射。
+    所以 $U$ 忘掉了群的群结构以及群同态作为同态的结构。
+    \item 类似的，存在函子 $\cat{Ring}\to\cat{Set}$ 忘掉环结构
+    以及函子 $\cat{Vect}_k\to\cat{Set}$ 忘掉向量空间结构。
+    \item 遗忘函子不必忘掉\emph{所有的}结构。例如，令 $\cat{Ab}$
+    是交换群范畴。那么存在函子 $\cat{Ring}\to\cat{Ab}$ 忘掉环
+    的所有结构，仅仅记住了环的加法群结构。或者，令 $\cat{Mon}$
+    是幺半群范畴，那么存在函子 $\cat{Ring}\to\cat{Mon}$
+    忘掉加法结构，仅仅记住环的乘法幺半群结构。
+    \item 存在一个包含函子 $U:\cat{Ab}\to\cat{Grp}$，将交换群
+    $A$ 送到 $U(A)=A$ 以及交换群同态 $f$ 送到 $U(f)=f$。
+    这忘掉了交换群是交换的。
+  \end{enumerate}
+\end{example}
+
+
+
+
 
 
 

@@ -166,7 +166,7 @@ $\delta_J^I=0$。在 $I,J$ 都没有重复指标且 $J=I_\sigma$ 的时候，有
 $\varepsilon^{1\dots n}$ 张成。根据定义，$\varepsilon^{1\dots n}$
 就是行列式函数。
 
-\begin{proposition}
+\begin{proposition}\label{prop:property of alt}
   设 $V$ 是 $n$ 维向量空间，$\omega\in \Lambda^n(V^*)$。如果 $T:V\to V$
   是线性映射，$v_1,\dots,v_n\in V$，那么
   \begin{equation}
@@ -626,7 +626,7 @@ $\d\circ\d =0$ 表明恰当形式都是闭形式。我们已经看到闭形式�
 
 \subsection{$\mathbb{R}^3$ 中的外微分和向量微积分}
 
-\begin{example}
+\begin{example}\label{exa:caculus on R3}
   我们来计算 $\mathbb{R}^3$ 上任意 $1$-形式和 $2$-形式的外微分。
   任意光滑 $1$-形式都形如
   \[
@@ -660,7 +660,7 @@ $\d\circ\d =0$ 表明恰当形式都是闭形式。我们已经看到闭形式�
     \wedge \d x\wedge \d z\\
     &\hphantom{{}={}}+\left(\frac{\partial w}{\partial x}\d x+\frac{\partial w}{\partial y}\d y+\frac{\partial w}{\partial z}\d z\right)
     \wedge \d y\wedge \d z\\
-    &=\left(\frac{\partial u}{\partial x}-\frac{\partial v}{\partial y}+\frac{\partial w}{\partial x}\right)
+    &=\left(\frac{\partial u}{\partial z}-\frac{\partial v}{\partial y}+\frac{\partial w}{\partial x}\right)
     \d x\wedge\d y\wedge \d z.
   \end{align*}
 \end{example}
@@ -719,6 +719,83 @@ $TM$ 和 $\Lambda^2T^*\mathbb{R}^3$ 的秩都是 $3$，所以这是一个丛同�
     \Omega^3(\mathbb{R}^3)
   \end{tikzcd}
 \end{equation}
+
+\begin{proof}
+  我们证明上面的图确实是交换的。首先任取 $f\in C^\infty(\mathbb{R}^3)$，
+  有 $(\grad f)^\flat =\d f$，这就表明左半部分是交换的。
+  然后任取 $X=P\partial/\partial x+Q\partial/\partial y+R\partial/\partial z\in \mathfrak{X}(\mathbb{R}^3)$，
+  我们有
+  \begin{align*}
+    \beta(\curl X)&=
+    \left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)
+    \frac{\partial}{\partial x}\into 
+    (\d x\wedge\d y\wedge\d z)\\
+    &\hphantom{{}={}}
+    +\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)
+    \frac{\partial}{\partial y}\into 
+    (\d x\wedge\d y\wedge\d z)\\
+    &\hphantom{{}={}}
+    +\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)
+    \frac{\partial}{\partial z}\into 
+    (\d x\wedge\d y\wedge\d z),
+  \end{align*}
+  由于
+  \begin{equation*}
+    \frac{\partial}{\partial x}\into\d x=1,\quad
+    \frac{\partial}{\partial x}\into\d y=0,\quad
+    \frac{\partial}{\partial x}\into\d z=0,
+  \end{equation*}
+  所以
+  \begin{equation*}
+    \frac{\partial}{\partial x}\into 
+    (\d x\wedge\d y\wedge\d z)=
+    \left(\frac{\partial}{\partial x}\into\d x\right)
+    \wedge\d y\wedge\d z=\d y\wedge \d z,
+  \end{equation*}
+  类似的有
+  \begin{align*}
+    \frac{\partial}{\partial y}\into 
+    (\d x\wedge\d y\wedge\d z)&=-\d x\wedge \d z,\\
+    \frac{\partial}{\partial z}\into 
+    (\d x\wedge\d y\wedge\d z)&=\d x\wedge \d y,
+  \end{align*}
+  所以 
+  \[
+    \beta(\curl X)= 
+    \left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)
+    \d y\wedge\d z
+    -\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)
+    \d x\wedge\d z
+    +\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)
+    \d x\wedge\d y.
+  \]
+  结合 \autoref{exa:caculus on R3}，所以 $\beta(\curl X)=\d(X^\flat)$。
+  这表明中间部分是交换的。
+
+  最后，我们有
+  \begin{align*}
+    *(\dive X)&=\left(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}\right)
+    \d x\wedge\d y\wedge\d z.
+  \end{align*}
+  另一方面，结合 \autoref{exa:caculus on R3}，有
+  \begin{align*}
+    \d(\beta(X))&=\d\bigl(P\d y\wedge\d z-Q\d x\wedge\d z+R\d x\wedge\d y\bigr)\\
+    &=\left(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}+\frac{\partial R}{\partial z}\right)
+    \d x\wedge\d y\wedge\d z\\
+    &=*(\dive X).
+  \end{align*}
+  这就表明右半部分是交换的。
+\end{proof}
+
+\begin{remark}
+  实际上，该图的左半部分和右半部分替换为 $\mathbb{R}^n$ 仍然是交换的。
+  将 $\mathbb{R}^3$ 上的向量微积分推广到更高维度也是微分形式理论发展
+  的主要动机之一。特别地，旋度仅仅在 $3$ 维空间的向量场上有意义，但是
+  外微分是不受维数限制的。
+\end{remark}
+
+
+
 
 
 

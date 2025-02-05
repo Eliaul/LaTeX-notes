@@ -1,0 +1,100 @@
+\chapter{定向}
+
+\section{向量空间的定向}
+
+令 $V$ 是维数 $n\ge 1$ 的向量空间。设
+$(E_1,\dots,E_n)$ 和 $\bigl(\wtilde E_1,\dots,\wtilde E_n\bigr)$
+是 $V$ 的两组有序基，
+如果过渡矩阵 $\bigl(B_j^i\bigr)$ 的行列式为正，那么我们说这两组基
+是\emph{一致定向的}，其中过渡矩阵定义为
+\[
+  E_j=B^i_j\wtilde E_i.  
+\]
+显然一致定向是 $V$ 的所有有序基集合上的一个等价关系。而且这个等价关系恰好
+划分了两个等价类，
+任取一组有序基 $(E_1,\dots,E_n)$，显然 $(-E_1,E_2,\dots,E_n)$
+和它不是一致定向的，所以这两个有序基处于不同的等价类。
+对于任意一组有序基 $\bigl(\wtilde E_1,\dots,\wtilde E_n\bigr)$，
+如果其不与 $(E_1,\dots,E_n)$ 一致定向，即 $(E_1,\dots,E_n)$
+到 $\bigl(\wtilde E_1,\dots,\wtilde E_n\bigr)$ 的过渡矩阵行列式为负，
+那么 $(-E_1,E_2,\dots,E_n)$ 到 $\bigl(\wtilde E_1,\dots,\wtilde E_n\bigr)$ 的过渡矩阵
+行列式为正，所以 $\bigl(\wtilde E_1,\dots,\wtilde E_n\bigr)$ 和
+$(-E_1,E_2,\dots,E_n)$ 一致定向，故这个等价关系划分了两个等价类。
+
+如果 $\dim V=n\ge 1$，定义 \emph{$V$ 的定向} 是有序基的一个等价类。
+如果 $(E_1,\dots,E_n)$ 是 $V$ 的任意一组有序基，我们记其确定的定向为
+$[E_1,\dots,E_n]$，以及其相反的定向为 $-[E_1,\dots,E_n]$。
+一个附带了定向的向量空间被称为\emph{定向向量空间}。如果 $V$
+是定向的，那么在给定定向中的任一有序基 $(E_1,\dots,E_n)$ 都被称为是
+\emph{定向的}或者\emph{正定向的}。不在给定定向中的任意基都被称为
+是\emph{负定向的}。
+
+对于零维向量空间 $V$ 的特殊情况，我们定义 $V$ 的定向在数 $\pm 1$
+中选取。
+
+\begin{example}
+  $\mathbb{R}^n$ 的由标准基确定的定向 $[e_1,\dots,e_n]$ 被称为\emph{标准定向}。
+  $\mathbb{R}^0$ 的标准定向被定义为 $+1$。
+\end{example}
+
+利用交错张量对参数顺序敏感的特性，定向和交错张量之间存在密切联系。
+
+\begin{proposition}
+  令 $V$ 是 $n$ 维向量空间。每个非零张量 $\omega\in\Lambda^n(V^*)$
+  都确定了一个定向 $\mathcal{O}_\omega$ 为：如果 $n\ge 1$，那么 
+  $\mathcal{O}_\omega$ 是有序基 $(E_1,\dots,E_n)$ 的集合，
+  其中 $\omega(E_1,\dots,E_n)>0$。如果 $n=0$，那么 $\omega>0$
+  的时候 $\mathcal{O}_\omega=+1$，$\omega<0$ 的时候 $\mathcal{O}_\omega=-1$。
+  两个非零 $n$-余向量确定了同一个定向当且仅当其中一个是另一个的正的倍数。 
+\end{proposition}
+\begin{proof}
+  $0$-维的情况是显然的，因为 $\Lambda^0(V^*)=\mathbb{R}$。
+  假设 $n\ge 1$，对于非零 $\omega\in \Lambda^n(V^*)$，
+  我们证明 $\mathcal{O}_\omega$ 确实是一个等价类。
+
+  假设 $(E_i)$ 和 $\bigl(\wtilde E_j\bigr)$ 是 $V$ 的两组有序基，
+  $B:V\to V$ 是将 $E_j$ 送到 $\wtilde E_j$ 的线性映射。
+  也就是说 $\wtilde E_j=BE_j=B^i_jE_i$，那么根据
+  \autoref{prop:property of alt}，有
+  \[
+    \omega\bigl(\wtilde E_1,\dots,\wtilde E_n\bigr)  =
+    (\det B)\omega(E_1,\dots,E_n).
+  \]
+  这表明 $\bigl(\wtilde E_j\bigr)$ 和 $(E_i)$ 是一致定向的当且仅当
+  $\omega\bigl(\wtilde E_1,\dots,\wtilde E_n\bigr)$ 和 $\omega(E_1,\dots,E_n)$
+  的符号相同，这就表明 $\mathcal{O}_\omega$ 确实是一个等价类。
+\end{proof}
+
+如果 $V$ 是定向的 $n$-维向量空间，$\omega$ 是上述确定了 $V$ 的定向的
+$n$-余向量，那么我们说 $\omega$ 是\emph{(正)定向的 $n$-余向量}。
+例如，$n$-余向量 $e^1\wedge\cdots\wedge e^n$ 是关于 $\mathbb{R}^n$
+的标准定向的正定向余向量。
+
+注意到 $\Lambda^n(V^*)$ 是 $1$ 维向量空间，所以选取 $V$ 的定向等价于选取
+$\Lambda^n(V^*) \smallsetminus\{0\}$ 的分支。
+
+\section{流形的定向}
+
+令 $M$ 是光滑流形。我们定义\emph{$M$ 上的逐点定向}是在每个切空间中的
+一个定向的选择。但是这并不是一个非常有用的概念，因为邻近点的定向可能
+没有任何关系。为了使得定向和光滑结构产生联系，我们需要额外的条件
+确保邻近切空间的定向是彼此一致的。
+
+令 $M$ 是光滑 $n$-流形，配备一个逐点定向。如果 $(E_i)$ 是 $TM$
+的一个局部标架，且对于每个 $p\in U$，$(E_1|_p,\dots,E_n|_p)$
+都是 $T_pM$ 的正定向的基，那么我们说 $(E_i)$ 是\emph{(正)定向的}。
+\emph{负定向}的概念做类似的定义。
+ 
+如果 $M$ 的每个点都在一个定向的局部标架的定义域中，那么我们说
+这个逐点定向是\emph{连续的}。定义\emph{$M$ 的定向}为一个连续的逐点定向。
+如果 $M$ 存在一个定向，那么我们说 $M$ 是\emph{可定向的}，否则称
+$M$ 是\emph{不可定向的}。一个\emph{定向流形}指的是有序对 $(M,\mathcal{O})$，
+其中 $M$ 是可定向的光滑流形，$\mathcal{O}$ 是 $M$ 的一个定向。
+对于每个 $p\in M$，由 $\mathcal{O}$ 确定的 $T_pM$ 的定向记为 $\mathcal{O}_p$。
+
+  
+
+
+
+
+
