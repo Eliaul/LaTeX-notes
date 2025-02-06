@@ -310,8 +310,55 @@ $B$ \emph{同构}，记作 $A\cong B$。
   \end{enumerate}
 \end{example}
 
+\begin{example}
+  \emph{自由函子}在某种意义上是遗忘函子的对偶概念。
+  \begin{enumerate}
+    \item 给定一个集合 $S$，我们可以构造一个 $S$ 上的\emph{自由群}
+    $F(S)$。$F(S)$ 的元素是一些\emph{字}的形式表达，例如
+    $x^{-4}yx^2zy^{-3}$，其中 $x,y,z\in S$。如果两个字可以通过
+    约化得到同一个字，那么说这两个字相等，例如
+    $x^3xy,x^4y,x^2y^{-1}yx^2y$ 表示 $F(S)$ 中同一个元素。
+    两个字的乘法定义为拼接运算，例如 $x^{-4}yx\cdot xzy^{-3}=x^{-4}yx^2zy^{-3}$。
 
+    这个构造给每个集合 $S$ 都分配了一个群 $F(S)$。实际上，$F$ 是一个函子：
+    任意集合的映射 $f:S\to S'$ 都可以提升为一个群同态 $F(f):F(S)\to F(S')$。
+    例如，定义映射 $f:\{w,x,y,z\}\to\{u,v\}$ 为 $f(w)=f(x)=f(y)=u$
+    以及 $f(z)=v$，那么这给出一个同态
+    $F(f)$，将 $x^{-4}yx^2zy^{-3}\in F(\{w,x,y,z\})$ 
+    送到 $u^{-4}uu^2vu^{-3}=u^{-1}vu^{-3}\in F(\{u,v\})$。
+    \item 类似的，我们可以构造集合 $S$ 上的一个自由交换环 $F(S)$，
+    给出一个从 $\cat{Set}$ 到交换环范畴 $\cat{CRing}$ 
+    的函子 $F$。实际上，$F(S)$ 就是 $\mathbb{Z}$ 上的以 $x_s\ (s\in S)$
+    为未定元的多项式环。例如，如果 $S$ 有两个元素，那么
+    $F(S)\simeq \mathbb{Z}[x,y]$。
+    \item 我们也可以构造一个集合上的自由向量空间。固定一个域 $k$。
+    自由函子 $F:\cat{Set}\to\cat{Vect}_k$ 将 $F(S)$ 作为有基 $S$
+    的向量空间。粗略地说，$F(S)$ 是所有的 $S$ 中元素的形式 $k$-线性组合，
+    即表达式
+    \[
+      \sum_{s\in S}\lambda_ss\quad \lambda_s\in k,  
+    \]
+    其中只有有限多个 $s$ 使得 $\lambda_s\neq 0$。
+    $F(S)$ 的元素可以相加：
+    \[
+      \sum_{s\in S}\lambda_ss+\sum_{s\in S}\mu_ss=\sum_{s\in S}
+      (\lambda_s+\mu_s)s.  
+    \]
+    也可以做标量乘法：
+    \[
+      c\sum_{s\in S}\lambda_ss=\sum_{s\in S}(c\lambda_s)s\quad c\in k.  
+    \]
+    通过这种方式，$F(S)$ 成为一个向量空间。
 
+    为了避免这种“形式定义”，我们也可以将 $F(S)$ 定义为所有使得集合
+    $\{s\in S\,|\, \lambda(s)\ne 0\}$ 为有限集的映射
+    $\lambda:S\to k$ 的集合。那么加法定义为
+    \[
+      (\lambda+\mu)(s)=\lambda(s)+\mu(s).  
+    \]
+    乘法定义为 $(c\lambda)(s)=c\lambda(s)$。
+  \end{enumerate}
+\end{example}
 
 
 

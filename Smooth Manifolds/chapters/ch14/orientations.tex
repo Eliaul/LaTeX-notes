@@ -92,7 +92,50 @@ $M$ 是\emph{不可定向的}。一个\emph{定向流形}指的是有序对 $(M,
 其中 $M$ 是可定向的光滑流形，$\mathcal{O}$ 是 $M$ 的一个定向。
 对于每个 $p\in M$，由 $\mathcal{O}$ 确定的 $T_pM$ 的定向记为 $\mathcal{O}_p$。
 
-  
+如果 $M$ 是零维的，那么定义 $M$ 的定向是在每个点处选取 $\pm 1$ 中的一个数。
+这种情况下连续性的概念是无意义的。
+
+\begin{proposition}[由 $n$-形式确定的定向]
+  令 $M$ 是一个光滑 $n$-流形，$M$ 上的任意非零的 $n$-形式 $\omega$ 都确定了唯一一个
+  $M$ 上的定向使得 $\omega$ 在每个点处是正定向的。反之，如果 $M$
+  有一个给定的定向，那么存在一个光滑的非零 $n$-形式使得在每个点处都是正定向的。
+\end{proposition}
+\begin{remark}
+  此时 $M$ 上的任意非零 $n$-形式都被称为\emph{定向形式}。如果 $M$ 是定向的，
+  $\omega$ 是确定了这个定向的定向形式，那么我们说 $\omega$ 是\emph{(正)定向的}。
+  如果 $\omega$ 和 $\tilde\omega$ 是两个正定向形式，那么显然有 
+  $\tilde\omega=f\omega$，其中 $f$ 是严格正值的光滑函数。
+\end{remark}
+\begin{proof}
+  令 $\omega$ 是非零 $n$-形式。那么 $\omega$ 定义了一个逐点定向，
+  我们只需要验证这是连续的。在 $n=0$ 时是平凡的。假设 $n\ge 1$，
+  给定 $p\in M$，设 $(E_i)$ 是 $p$ 的某个连通邻域 $U$ 上的局部标架，
+  $\bigl(\varepsilon^i\bigr)$ 是其对偶余标架。那么 $\omega$
+  在这个标架中表示为 $\omega=f\varepsilon^1\wedge\cdots\wedge\varepsilon^n$，
+  其中 $f$ 是连续函数。$\omega$ 非零表示 $f$ 非零，所以
+  对于所有 $U$ 中的点有
+  \[
+    \omega(E_1,\dots,E_n)=f\neq 0.
+  \]
+  因为 $U$ 连通，所以上述表达式一定恒正或者恒负，因此给定的标架
+  在 $U$ 上要么正定向要么负定向。如果是负定向的，我们可以将 $E_1$
+  替换为 $-E_1$ 得到一组新的正定向的标架。因此，由 $\omega$ 确定
+  的逐点定向是连续的。
+
+  反之，假设 $M$ 是定向的，令 $\Lambda_+^nT^*M\subseteq \Lambda^nT^*M$
+  是由所有点处的正定向的 $n$-余向量构成的开子集。在任意点 $p\in M$
+  处，$\Lambda_+^nT^*M$ 与纤维 $\Lambda^n(T_p^*M)$ 的交是上半平面，
+  因此是凸集。根据通常的单位分解，存在 $\Lambda_+^nT^*M$ 的一个光滑
+  全局截面，即一个正定向的光滑 $n$-形式。
+\end{proof}
+
+对于一个定向光滑流形上的光滑坐标卡，如果坐标标架 $\bigl(\partial/\partial x^i\bigr)$
+是正定向的，那么我们说这个坐标卡是\emph{正定向的}，如果
+坐标标架是负定向的，则称这个坐标卡是\emph{负定向的}。
+如果一个光滑图册 $\{(U_\alpha,\varphi_\alpha)\}$ 的任意转移映射
+$\varphi_\beta\circ\varphi_\alpha^{-1}$ 在 $\varphi_\alpha(U_\alpha\cap U_\beta)$
+中的每个点处都有正的 Jacobi 行列式，那么我们说这个图册是\emph{一致定向的}。
+
 
 
 
