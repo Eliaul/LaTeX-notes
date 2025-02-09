@@ -96,23 +96,23 @@ $M$ 是\emph{不可定向的}。一个\emph{定向流形}指的是有序对 $(M,
 这种情况下连续性的概念是无意义的。
 
 \begin{proposition}[由 $n$-形式确定的定向]
-  令 $M$ 是一个光滑 $n$-流形，$M$ 上的任意非零的 $n$-形式 $\omega$ 都确定了唯一一个
+  令 $M$ 是一个光滑 $n$-流形，$M$ 上的任意非消失的 $n$-形式 $\omega$ 都确定了唯一一个
   $M$ 上的定向使得 $\omega$ 在每个点处是正定向的。反之，如果 $M$
-  有一个给定的定向，那么存在一个光滑的非零 $n$-形式使得在每个点处都是正定向的。
+  有一个给定的定向，那么存在一个光滑的非消失 $n$-形式使得在每个点处都是正定向的。
 \end{proposition}
 \begin{remark}
-  此时 $M$ 上的任意非零 $n$-形式都被称为\emph{定向形式}。如果 $M$ 是定向的，
+  这里的非消失指的是处处非零。此时 $M$ 上的任意非消失 $n$-形式都被称为\emph{定向形式}。如果 $M$ 是定向的，
   $\omega$ 是确定了这个定向的定向形式，那么我们说 $\omega$ 是\emph{(正)定向的}。
   如果 $\omega$ 和 $\tilde\omega$ 是两个正定向形式，那么显然有 
   $\tilde\omega=f\omega$，其中 $f$ 是严格正值的光滑函数。
 \end{remark}
 \begin{proof}
-  令 $\omega$ 是非零 $n$-形式。那么 $\omega$ 定义了一个逐点定向，
+  令 $\omega$ 是非消失 $n$-形式。那么 $\omega$ 定义了一个逐点定向，
   我们只需要验证这是连续的。在 $n=0$ 时是平凡的。假设 $n\ge 1$，
   给定 $p\in M$，设 $(E_i)$ 是 $p$ 的某个连通邻域 $U$ 上的局部标架，
   $\bigl(\varepsilon^i\bigr)$ 是其对偶余标架。那么 $\omega$
   在这个标架中表示为 $\omega=f\varepsilon^1\wedge\cdots\wedge\varepsilon^n$，
-  其中 $f$ 是连续函数。$\omega$ 非零表示 $f$ 非零，所以
+  其中 $f$ 是连续函数。$\omega$ 非消失表示 $f$ 非处处非零，所以
   对于所有 $U$ 中的点有
   \[
     \omega(E_1,\dots,E_n)=f\neq 0.
@@ -136,8 +136,38 @@ $M$ 是\emph{不可定向的}。一个\emph{定向流形}指的是有序对 $(M,
 $\varphi_\beta\circ\varphi_\alpha^{-1}$ 在 $\varphi_\alpha(U_\alpha\cap U_\beta)$
 中的每个点处都有正的 Jacobi 行列式，那么我们说这个图册是\emph{一致定向的}。
 
+\begin{proposition}[通过坐标图册确定的定向]
+  令 $M$ 是光滑带边或者无边流形。给定 $M$ 的一个一致定向的光滑图册，
+  存在 $M$ 的一个定向使得给定图册中的每个坐标卡都是正定向的。反之，
+  如果 $M$ 是定向的并且 $\partial M=\emptyset$ 或者 $\dim M>1$，
+  那么所有定向的光滑坐标卡的集合是 $M$ 的一个一致定向图册。
+\end{proposition}
+\begin{proof}
+  首先假设 $M$ 有一个一致定向的光滑图册。那么图册中的每个坐标卡
+  都在定义域中的每个点处确定了一个定向。图册是一致定向的保证
+  在两个坐标卡重叠的区域中，两个坐标标架的转移矩阵是行列式为
+  正的 Jacobi 矩阵，所以这两个坐标卡在重叠区域确定了相同的定向。
+  由于每个点都被一个坐标卡包含，所以这个逐点定向是连续的。
 
+  反之，假设 $M$ 是定向的且 $\partial M=\emptyset$ 或者 $\dim M>1$。
+  根据连续性，每个点 $p\in M$ 都被一个定向的局部标架 $(E_1,\dots,E_n)$
+  包含，此时取 $p$ 处的一个坐标标架 $\bigl(\partial/\partial x^1,\dots,\partial/\partial x^n\bigr)$，
+  有 $E_j=B^i_j\partial/\partial x^i$，由于 $(B_j^i)$ 是连续函数，
+  假设这个局部坐标卡是连通的，所以 $\det(B_j^i)$ 恒正或者恒负，所以
+  坐标标架要么正定向要么负定向，如果负定向，则可以将坐标 $x^1$ 替换为 
+  $-x^1$ 得到一个正定向的坐标标架。于是所有正定向的光滑坐标卡覆盖 $M$，
+  且这些坐标卡的转移映射都有正的 Jacobi 行列式，所以构成一个一致定向图册。
+  （当 $\dim M=1$ 时对带边流形不适用，因为我们约定边界坐标卡中的最后一个坐标是非负的）
+\end{proof}
 
-
-
+\begin{proposition}[积定向]
+  假设 $M_1,\dots,M_k$ 是定向的光滑流形。那么 $M_1\times\cdots\times M_k$
+  上存在唯一的定向，被称为积定向，使得：如果 $\omega_i$ 是 $M_i$ 上给定定向的定向形式，那么
+  $\pi_1^*\omega_1\wedge\cdots\wedge\pi_k^*\omega_k$ 是积定向的定向形式。
+\end{proposition}
+\begin{proof}
+  此时 $M_i$ 的一致定向图册之积构成 $M_1\times\cdots\times M_k$
+  的一个一致定向图册，所以给出 $M_1\times\cdots\times M_k$ 上的一个定向。
+  任取 $(p_1,\dots,p_k)\in M_1\times\cdots\times M_k$，
+\end{proof}
 
