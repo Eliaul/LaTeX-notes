@@ -168,6 +168,39 @@ $\varphi_\beta\circ\varphi_\alpha^{-1}$ 在 $\varphi_\alpha(U_\alpha\cap U_\beta
 \begin{proof}
   此时 $M_i$ 的一致定向图册之积构成 $M_1\times\cdots\times M_k$
   的一个一致定向图册，所以给出 $M_1\times\cdots\times M_k$ 上的一个定向。
-  任取 $(p_1,\dots,p_k)\in M_1\times\cdots\times M_k$，
+  % 任取 $(p_1,\dots,p_k)\in M_1\times\cdots\times M_k$，那么
+  % $\omega_i|_{p_i}$ 是 $T_{p_i}M_i$ 上的定向 $n_i$-余向量 ($\dim M_i=n_i$)，
+  % 取 $T_{p_i}M_i$ 的一组定向基 $\bigl(E_1^{(i)},\dots,E_{n_i}^{(i)}\bigr)$，
+  % 那么
+  % \[
+  %   \omega_i|_p\bigl(E_1^{(i)},\dots,E_{n_i}^{(i)}\bigr)>0,
+  % \]
+  % 显然 $\bigl(E_1^{(1)},\dots,E_{n_1}^{(1)},\dots,E_1^{(k)},\dots,E_{n_k}^{(k)}\bigr)$
+  % 是 $T_{(p_1,\dots,p_k)}(M_1\times\cdots\times M_k)$ 的一组定向基，
+  % 由于 $\pi_i^*\omega_i$ 的参数存在 
+  % 我们有
+  % \[
+  %   \pi_1^*\omega_1\wedge\cdots\wedge \pi_k^*\omega_k
+  %   \bigl(E_1^{(1)},\dots,E_{n_1}^{(1)},\dots,E_1^{(k)},\dots,E_{n_k}^{(k)}\bigr)
+  %   =\prod_{i=1}^k
+  %   \pi_i^*\omega_i\bigl(E^{(i)}_{1},\dots,E_{n_i}^{(i)}\bigr)>0,
+  % \]
 \end{proof}
+
+\begin{proposition}
+  令 $M$ 是连通的定向光滑流形，那么 $M$ 恰有两个定向。如果 $M$
+  的两个定向在某个点处相同，那么它们相等。
+\end{proposition}
+\begin{proof}
+  设 $\mathcal{O}_1$ 和 $\mathcal{O}_2$ 是 $M$ 的两个定向。
+  对于任意的 $p\in M$，$\mathcal{O}_1|_p$ 和 $\mathcal{O}_2|_p$
+  要么相同要么相反，定义函数 $f:M\to \{\pm 1\}$ 为
+  \[
+    f(p)=\begin{cases}
+      1 & \mathcal{O}_1|_p=\mathcal{O}_2|_p,\\
+      -1 & \mathcal{O}_1|_p=-\mathcal{O}_2|_p
+    \end{cases}
+  \]
+\end{proof}
+
 
