@@ -192,15 +192,192 @@ $\varphi_\beta\circ\varphi_\alpha^{-1}$ 在 $\varphi_\alpha(U_\alpha\cap U_\beta
   的两个定向在某个点处相同，那么它们相等。
 \end{proposition}
 \begin{proof}
-  设 $\mathcal{O}_1$ 和 $\mathcal{O}_2$ 是 $M$ 的两个定向。
-  对于任意的 $p\in M$，$\mathcal{O}_1|_p$ 和 $\mathcal{O}_2|_p$
+  设 $\mathcal{O}$ 和 $\wtilde{\mathcal{O}}$ 是 $M$ 的两个定向。
+  对于任意的 $p\in M$，$\mathcal{O}_p$ 和 $\wtilde{\mathcal{O}}_p$
   要么相同要么相反，定义函数 $f:M\to \{\pm 1\}$ 为
   \[
     f(p)=\begin{cases}
-      1 & \mathcal{O}_1|_p=\mathcal{O}_2|_p,\\
-      -1 & \mathcal{O}_1|_p=-\mathcal{O}_2|_p
+      1 & \mathcal{O}_p=\wtilde{\mathcal{O}}_p,\\
+      -1 & \mathcal{O}_p=-\wtilde{\mathcal{O}}_p,
     \end{cases}
   \]
+  根据连续性，存在 $p$ 处的连通邻域 $U$ 上的定向局部标架
+  $\bigl(E_1,\dots,E_n\bigr)$ 和 $\bigl(\wtilde E_1,\dots,\wtilde E_n\bigr)$，
+  分别对应定向 $\mathcal{O}$ 和 $\wtilde{\mathcal{O}}$。
+  那么 $E_j=A_j^i\wtilde E_i$，其中 $(A_j^i):U\to \GL(n,\mathbb{R})$
+  是连续函数，所以行列式 $\det(A_j^i):U\to \mathbb{R}^\times$ 是连续函数，
+  $U$ 连通表明 $\det(A^i_j)$ 恒正或者恒负，这就表明在 
+  $U$ 上 $\mathcal{O}=\pm\wtilde{\mathcal{O}}$，所以 $f$ 是局部常值函数。
+  $M$ 连通表明 $f$ 是常值函数，这就说明 $M$ 恰有两个定向
+  且由其在任意点处的定向决定。
 \end{proof}
+
+\begin{proposition}[余维数 $0$ 的子流形的定向]
+  设 $M$ 是一个定向的带边或者无边光滑流形，$D\subseteq M$
+  是余维数为 $0$ 的带边或者无边光滑子流形。那么 $M$ 的定向限制到
+  $D$ 上是 $D$ 的一个定向。如果 $\omega$ 是 $M$ 上的定向形式，那么
+  $\iota_D^*\omega$ 是 $D$ 上的定向形式。
+\end{proposition}
+\begin{proof}
+  设 $\mathcal{O}$ 是 $M$ 上的定向，$\mathcal{O}|_D$ 是 $\mathcal{O}$
+  在 $D$ 上的限制。由于 $D$ 是余维数为 $0$ 的子流形，所以是嵌入子流形。
+  任取 $p\in D$，$T_pD$ 可以等同为 $T_pM$，所以 $\mathcal{O}|_D$
+  可以视为 $D$ 上的定向。
+\end{proof}
+
+令 $M,N$ 是一个定向的带边或者无边光滑流形，$F:M\to N$
+是局部微分同胚。如果对于每个 $p\in M$，同构 $\d F_p$
+将 $T_pM$ 的定向基送到 $T_{F(p)}N$ 的定向基，那么我们说 $F$
+是 \emph{保定向的}。如果 $\d F_p$ 将 $T_pM$ 的定向基送到 $T_{F(p)}N$ 的负定向基，
+那么我们说 $F$ 是 \emph{反定向的}。
+
+\begin{proposition}[拉回定向]
+  设 $M,N$ 是带边或者无边光滑流形。如果 $F:M\to N$ 是局部微分同胚且
+  $N$ 是定向的，那么 $M$ 有唯一的定向使得 $F$ 是保定向的映射，
+  这个定向被称为\emph{拉回定向}。
+\end{proposition}
+\begin{proof}
+  对于每个 $p\in M$，存在唯一的 $T_pM$ 上的定向使得同构 $\d F_p:T_pM\to T_{F(p)}N$
+  是保定向的，这定义了 $M$ 上的一个逐点定向。选取 $N$ 的一个定向形式 $\omega$，
+  那么 $F^*\omega$ 是 $M$ 上的确定了这个逐点定向的微分形式，所以这个逐点定向是连续的。
+\end{proof}
+
+在这种情况下，如果 $\mathcal{O}$ 是 $N$ 上的定向，那么 $M$ 上的拉回定向
+记为 $F^*\mathcal{O}$。
+
+回顾一个有光滑全局标架的光滑流形被称为\emph{可平行化的}。
+
+\begin{proposition}
+  每个可平行化的光滑流形都是可定向的。
+\end{proposition}
+\begin{proof}
+  设 $M$ 是光滑流形，$(E_1,\dots,E_n)$ 是 $M$ 的一个全局标架，
+  那么在每个点 $p\in M$ 处都确定了一个定向基 $\bigl(E_1|_p,\dots,E_n|_p\bigr)$，
+  这给出了 $M$ 的一个逐点定向。由于每个点都被这个全局标架包含，所以
+  这个逐点定向自然是连续的。
+\end{proof}
+
+特别地，这表明李群都是可定向的，因为李群有一个左不变向量场构成的全局标架。
+
+在李群的情况下，如果 $G$ 是李群，对于每个 $g\in G$，$L_g$
+都是保定向的，那么我们说这个定向是\emph{左不变的}。
+
+\begin{proposition}
+  每个李群恰有两个左不变定向，对应于其李代数的两个定向。
+\end{proposition}
+\begin{proof}
+  设 $[v_1,\dots,v_n]$ 和 $-[v_1,\dots,v_n]$ 是 $T_eG$ 的两个定向，
+  那么 $v_1^\LL,\dots,v_n^\LL$ 是 $G$ 的一个光滑全局标架且确定了
+  $G$ 上的一个定向 $\mathcal{O}$。我们说明这个定向是左不变的。任取 $g\in G$，
+  设 $\omega$ 是 $\mathcal{O}$ 的定向形式，那么对于任意
+  $g'\in G$，由于 $v_i^\LL|_{gg'}=\d (L_{gg'})_e(v_i)$，所以
+  \[
+    \omega_{gg'}\bigl(\d (L_{gg'})_e(v_1),\dots,\d (L_{gg'})_e(v_n)\bigr)>0,
+  \]
+  即
+  \[
+    (L_g^*\omega)_{g'}\bigl(\d (L_{g'})_e(v_1),\dots,\d (L_{g'})_e(v_n)\bigr)>0.
+  \]
+  任取定向基 $w_1,\dots,w_n\in T_{g'}G$，所以 $(w_1,\dots,w_n)$ 和 $\bigl(\d (L_{g'})_e(v_1),\dots,\d (L_{g'})_e(v_n)\bigr)$
+  是一致定向的，即有正行列式的过渡矩阵 $(B^i_j)$，所以
+  \[
+    (L_g^*\omega)_{g'}(w_1,\dots,w_n)=\det(B^i_j)\cdot (L_g^*\omega)_{g'}\bigl(\d (L_{g'})_e(v_1),\dots,\d (L_{g'})_e(v_n)\bigr)>0.
+  \]
+  这就表明 $L_g^*\omega$ 也是 $\mathcal{O}$ 的定向形式，即
+  $L_g^* \mathcal{O}=\mathcal{O}$，$\mathcal{O}$ 是左不变定向。
+  类似的，$-[v_1,\dots,v_n]$ 确定了另一个左不变定向。
+\end{proof}
+
+\subsection{超曲面的定向}
+
+如果 $M$ 是定向光滑流形，$S$ 是 $M$ 的一个光滑子流形（带边或者无边），
+那么 $S$ 也可能没有从 $M$ 继承的定向，即使 $S$ 是嵌入的。显然，
+简单的将 $M$ 的定向形式限制到 $S$ 上是不行的，因为 $n$-形式限制到
+低维上必然变成零。一个例子是 M\"obius 带，即使其可以嵌入到 $\mathbb{R}^3$
+中，其也不可定向。
+
+\section{黎曼体积形式}
+
+令 $(M,g)$ 是定向的黎曼流形。我们知道在 $M$ 的每个点的邻域中都存在
+一个光滑的正交标架 $(E_1,\dots,E_n)$。通过将 $E_1$ 替换为 $-E_1$，
+我们可以在每个点的邻域中找到一个定向的正交标架。
+
+\begin{proposition}
+  设 $(M,g)$ 是一个定向的黎曼 $n$-流形，且 $n\geq 1$。那么存在唯一的
+  光滑定向形式 $\omega_g\in\Omega^n(M)$，满足对于每个定向的局部正交标架
+  $(E_i)$ 都有
+  \begin{equation}\label{eq:riemann volumn form}
+    \omega_g(E_1,\dots,E_n)=1,
+  \end{equation}
+  这个定向形式被称为\emph{黎曼体积形式}。
+\end{proposition}
+\begin{proof}
+  首先说明 $\omega_g$ 的唯一性。如果 $(E_1,\dots,E_n)$ 是开集 $U\subseteq M$ 上的任意定向的
+  局部正交标架，$(\varepsilon^1,\dots,\varepsilon^n)$ 是其对偶余标架。
+  那么我们有局部表示 $\omega_g=f\varepsilon^1\wedge\cdots\wedge \varepsilon^n$，
+  \eqref{eq:riemann volumn form} 表明 $f=1$，所以
+  \begin{equation}\label{eq:riemann volumn form2}
+    \omega_g=\varepsilon^1\wedge\cdots\wedge\varepsilon^n.
+  \end{equation}
+  这表明 $\omega_g$ 是唯一确定的。
+
+  下面说明存在性，我们希望通过 \eqref{eq:riemann volumn form2} 式来在每个点的
+  邻域上定义 $\omega_g$，所以我们说明这个定义和定向正交标架的选取无关。
+  如果 $\bigl(\wtilde E_1,\dots,\wtilde E_n\bigr)$ 是另一组定向正交标架，
+  有对偶余标架 $\bigl(\tilde\varepsilon^1,\dots,\tilde\varepsilon^n\bigr)$，
+  令
+  \[
+    \wtilde\omega_g=\tilde\varepsilon^1\wedge\cdots\wedge \tilde\varepsilon^n.
+  \]
+  这两组正交标架之间有关系 $\wtilde E_j=A_j^iE_i$，正交性表明系数矩阵
+  $(A_j^i)$ 是正交矩阵，所以
+  \[
+    \omega_g\bigl(\wtilde E_1,\dots,\wtilde E_n\bigr)
+    =\det\bigl(\varepsilon^i(\wtilde E_j)\bigr)=
+    \det(A_j^i)=1=\wtilde\omega_g\bigl(
+      \wtilde E_1,\dots,\wtilde E_n
+    \bigr).
+  \]
+  这表明 $\omega_g=\wtilde\omega_g$，所以 \eqref{eq:riemann volumn form2} 式
+  是良好定义的，这给出了一个全局 $n$-形式且满足要求。
+\end{proof}
+
+\begin{proposition}
+  设 $(M,g)$ 是一个定向的黎曼 $n$-流形，且 $n\geq 1$。在任意定向光滑坐标 
+  $\bigl(x^i\bigr)$ 中，黎曼体积形式有局部表示
+  \[
+    \omega_g=\sqrt{\det(g_{ij})}\d x^1\wedge\cdots\wedge \d x^n.
+  \]
+\end{proposition}
+\begin{proof}
+  设 $\bigl(U,\bigl(x^i\bigr)\bigr)$ 是一个定向的光滑坐标卡，
+  令 $p\in M$。此时 $\omega_g$ 有局部表示 $\omega_g=f\d x^1\wedge\cdots\wedge \d x^n$，
+  其中 $f$ 是正值函数。令 $(E_i)$ 是定义在 $p$ 的某个邻域上的
+  定向正交标架，$\bigl(\varepsilon^i\bigr)$ 是其对偶余标架。
+  此时我们可以把坐标标架表示为
+  \[
+    \frac{\partial}{\partial x^j}=A^i_jE_i ,
+  \]
+  所以我们可以计算
+  \begin{equation*}
+    f=\omega_g\left( \frac{\partial}{\partial x^1},\dots, \frac{\partial}{\partial x^n}\right)
+    =\det(A^i_j)\ \omega_g(E_1,\dots,E_n)=\det(A_j^i).
+  \end{equation*}
+  另一方面，注意到
+  \[
+    g_{ij}=\inn{\frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j}}_g =
+    \inn{A^k_iE_k,A^l_jE_l}_g=A_i^kA_j^l\inn{E_k,E_l}_g
+    =\sum_{k=1}^n A_i^kA_j^k.
+  \]
+  于是 $g_{ij}$ 是 $A^TA$ 的第 $(i,j)$-元，所以
+  \[
+    \det(g_{ij})=\det(A^TA)=(\det A)^2,
+  \]
+  故 $f=\det A=\sqrt{\det(g_{ij})}$。
+\end{proof}
+
+
+
+
 
 
