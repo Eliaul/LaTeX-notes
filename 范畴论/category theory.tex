@@ -360,6 +360,29 @@ $B$ \emph{同构}，记作 $A\cong B$。
   \end{enumerate}
 \end{example}
 
+\begin{example}
+  任取多项式方程组，例如
+  \begin{align}
+    2x^2+y^2-3z^2&=1,\\
+    x^3+x&=y^2,
+  \end{align}
+  给出了一个函子 $F:\cat{CRing}\to\cat{Set}$。对于每个交换环
+  $A$，令 $F(A)$ 是方程组的零点集。此时若 $f:A\to B$ 是环同态
+  且 $(x,y,z)\in F(A)$，那么有 $(f(x),f(y),f(z))\in F(B)$，所以
+  诱导了映射 $F(f):F(A)\to F(B)$。这定义了函子 $F$。
+\end{example}
+
+\begin{definition}
+  令 $\cat A,\cat B$ 是范畴，函子 $\opcat A\to\opcat B$ 被称为
+  $\cat A$ 到 $\cat B$ 的\emph{逆变函子}。
+\end{definition}
+
+为了避免混淆，我们使用叙述“$\cat A$ 到 $\cat B$ 的逆变函子”
+而不是“$\cat A\to\cat B$ 的逆变函子”。出于强调意义，通常意义下 $\cat A\to\cat B$
+的函子被称为\emph{协变函子}。
+
+
+
 
 
 
