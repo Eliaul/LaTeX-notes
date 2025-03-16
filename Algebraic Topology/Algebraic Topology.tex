@@ -65,7 +65,7 @@
 \DeclareMathOperator\ob{ob}
 \newcommand{\LL}{{\mathrm{L}}}
 
-\newcommand{\ideal}[1]{\mathfrak{#1}}
+\newcommand{\norm}[1]{\lVert#1\rVert}
 \newcommand{\mat}[1]{\mathbold{#1}}
 \newcommand{\cat}[1]{\mathsf{#1}}
 \newcommand{\uline}{\underline{\hphantom{X}}}
@@ -431,6 +431,315 @@ $\Hom(X,Y)=[X,Y]$，复合为 $[g]\circ [f]=[g\circ f]$。
   $\mathbb{S}^1$，即 $\mathbb{C}\smallsetminus\{0\}$ 和 $\mathbb{S}^1$
   有相同的同伦型。
 \end{remark}
+
+拓扑学中一个常见的问题是将映射 $f:X\to Z$ 延拓到一个更大的空间 $Y$
+中，即是否存在 $g:Y\to Z$ 使得有下面的交换图
+\[
+  \begin{tikzcd}[column sep=large,row sep=large]
+    Y\arrow[dr,"g",dashrightarrow] & \\
+    X\arrow[u,hook]\arrow[r,"f"'] & Z  .
+  \end{tikzcd}
+\]
+同伦本身则引出了这样一个问题：如果 $f_0,f_1:X\to Z$ 且我们能够
+延拓 $f_0\cup f_1:X\times\{0\}\cup X\times\{1\}\to Z$ 到
+$X\times I$ 上，那么 $f_0\simeq f_1$。
+
+\begin{theorem}
+  令 $f:\mathbb{S}^n\to Y$ 是连续映射，下面的说法等价：
+  \begin{enumerate}
+    \item $f$ 是零伦的；
+    \item $f$ 可以延拓为一个连续映射 $D^{n+1}\to Y$；
+    \item 如果 $x_0\in \mathbb{S}^n$，$k:\mathbb{S}^n\to Y$
+    是 $f(x_0)$ 处的常值映射，那么存在一个同伦 $F:f\simeq k$
+    使得 $F(x_0,t)=f(x_0)$ 对于所有 $t\in I$ 成立。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  $(1)\Rightarrow(2)$ 假设 $F:f\simeq c$，其中 $c(x)=y_0$。定义
+  $g:D^{n+1}\to Y$ 为
+  \[
+    g(x)=\begin{cases}
+      y_0 & 0\leq \norm{x}\leq\frac{1}{2},\\
+      F\bigl(x/\norm{x},2-2\norm{x}\bigr) & 
+      \frac{1}{2}\leq\norm{x}\leq 1.
+    \end{cases}
+  \]
+  根据粘合引理，$g$ 是连续映射。如果 $x\in \mathbb{S}^n$，那么
+  $g(x)=F(x,0)=f(x)$，所以 $g$ 是 $f$ 的延拓。
+
+  $(2)\Rightarrow(3)$ 假设 $g:D^{n+1}\to Y$ 是 $f$ 的延拓。定义
+  $F:\mathbb{S}^{n}\times I\to Y$ 为 $F(x,t)=g((1-t)x+tx_0)$，
+  显然 $F$ 是连续映射。由于 $F(x,0)=g(x)=f(x)$，$F(x,1)=g(x_0)=f(x_0)$，
+  所以 $F:f\simeq k$。此外，$F(x_0,t)=g(x_0)=f(x_0)$。
+
+  $(3)\Rightarrow (1)$ 显然。
+\end{proof}
+
+我们可以把这个定理和 \autoref{lemma:S^n is not retract of D^n+1} 对比。
+如果 $Y=\mathbb{S}^n$ 以及 $f$ 是恒等映射，那么 \autoref{lemma:S^n is not retract of D^n+1}
+表明 $f$ 不是零伦的，否则 $f$ 延拓为连续映射 $D^{n+1}\to \mathbb{S}^n$，这表明
+$\mathbb{S}^n$ 是 $D^{n+1}$ 的收缩。
+
+\section{凸性、可缩性以及锥体}
+
+我们给上述证明中使用到的 $D^{n+1}$ 的一个性质起个名字。
+
+\begin{definition}
+  $\mathbb{R}^m$ 的子集 $X$ 被称为\emph{凸集}，如果任取 $x,y\in X$，
+  连接 $x,y$ 的线段都在 $X$ 中。换句话说，对于任意 $t\in I$，有
+  $tx+(1-t)y\in X$。
+\end{definition}
+
+凸集的例子有很多，例如 $I^n$，$\mathbb{R}^n$，$D^n$ 和 $\Delta^n$
+都是凸集。但是球面 $\mathbb{S}^n\subseteq \mathbb{R}^{n+1}$
+不是凸集。
+
+\begin{definition}
+  空间 $X$ 被称为\emph{可缩的}，如果 $1_X$ 是零伦的。
+\end{definition}
+
+\begin{theorem}
+  每个凸集 $X$ 都是可缩的。
+\end{theorem}
+\begin{proof}
+  任取 $x_0\in X$，定义 $c:X\to X$ 是常值映射 $c(x)=x_0$。
+  令 $F:X\times I\to X$ 为 $F(x,t)=tx_0+(1-t)x$，那么 $F:1_X\simeq c$。
+\end{proof}
+
+半球面是可缩的但是不是凸集，所以上述定理的逆命题不正确。后面我们会
+发现 \autoref{lemma:S^n is not retract of D^n+1} 实际上表明
+$\mathbb{S}^n$ 是不可缩的。
+
+\begin{problem}{}{}
+  (1) 如果 $X\approx Y$ 且 $X$ 可缩，那么 $Y$ 也可缩。
+
+  (2) 如果 $X,Y$ 是 Euclid 空间的子空间，$X\approx Y$ 且 $X$
+  是凸集，证明 $Y$ 可能不是凸集。 
+\end{problem}
+\begin{proof}
+  (1) 设 $c:X\to X$ 是常值映射 $c(x)=x_0$ 且 $1_X\simeq c$，
+  $f:X\to Y$ 是同伦等价。设 $g:Y\to X$
+  使得 $g\circ f\simeq 1_X$ 以及 $f\circ g\simeq 1_Y$。
+  记 $k:Y\to Y$ 是常值映射 $k(y)=f(x_0)$，那么
+  \[
+    1_Y=1_Y \circ 1_Y\simeq 
+    (f\circ g)\circ (f\circ g)\simeq f\circ 1_X\circ g
+    \simeq f\circ c\circ g=k,
+  \]
+  所以 $Y$ 可缩。
+\end{proof}
+
+\begin{problem}{}{}
+  令 $R:\mathbb{S}^1\to \mathbb{S}^1$ 表示旋转 $\alpha$ 弧度。证明
+  $R\simeq 1_{\mathbb{S}^1}$。由此得出每个连续映射 $f:\mathbb{S}^1\to \mathbb{S}^1$
+  都同伦于一个满足 $g(1)=1$ 的连续映射 $g:\mathbb{S}^1\to \mathbb{S}^1$。
+\end{problem}
+\begin{proof}
+  即 $R(e^{i\theta})=e^{i(\theta+\alpha)}$。定义 $F:\mathbb{S}^1\times I\to \mathbb{S}^1$
+  为 $F(e^{i\theta},t)=e^{i(\theta+t\alpha)}$，显然 $F$ 是连续映射，
+  所以 $F:1_{\mathbb{S}^1}\simeq R$。任取连续映射 $f:\mathbb{S}^1\to \mathbb{S}^1$，
+  设 $f(1)=e^{i\alpha}$，取 $R$ 为旋转 $-\alpha$，
+  那么 $1_{\mathbb{S}^1}\circ f\simeq R\circ f$，此时 $g=R\circ f$
+  满足 $g(1)=R(f(1))=1$。
+\end{proof}
+
+马上引入的锥体的构造将表明每个空间都可以嵌入到一个可缩空间中。
+我们先回顾一下商空间的构造。
+
+\begin{definition}
+  令 $X$ 是拓扑空间，$\sim$ 是一个等价关系，那么有一个自然映射
+  $\pi:X\to X/\sim$，即 $\pi(x)=[x]$。我们可以赋予 $X/\sim$ 一个\emph{商拓扑}，
+  即 $U\subseteq X/\sim$ 是开集当且仅当 $\pi^{-1}(U)$ 是 $X$
+  的开集。
+\end{definition}
+
+有一种特殊的情况需要单独提及。如果 $A\subseteq X$，那么我们记 $X/A$
+为划分 $\{A\}\cup \{\{x\}\,|\, x\in X \smallsetminus A\}$ 给出的商空间，
+也就是说，这个构造将 $A$ 压缩为一点，而 $X \smallsetminus A$ 中的点保持不变。
+
+\begin{definition}
+  连续满射 $f:X\to Y$ 被称为\emph{商映射}，如果 $U\subseteq Y$
+  是开集当且仅当 $f^{-1}(U)$ 是 $X$ 的开集。
+\end{definition}
+
+\begin{example}
+  \mbox{}
+  \begin{enumerate}
+    \item 自然映射 $\pi:X\to X/\sim$ 是商映射。
+    \item 如果连续满射 $f:X\to Y$ 是开映射或者闭映射，那么 $f$
+    是商映射。以开映射的情况为例，此时若 $U\subseteq Y$ 使得 $f^{-1}(U)$
+    是开集，那么 $U=f(f^{-1}(U))$ 是 $Y$ 的开集。
+    \item 如果连续映射 $f:X\to Y$ 有一个截面，即存在连续映射 $s:Y\to X$
+    使得 $f\circ s=1_Y$，那么 $f$ 是商映射。首先 $s$ 是 $f$ 是右逆保证了
+    $f$ 是满射。若 $U\subseteq Y$ 使得 $f^{-1}(U)$ 是开集，那么 
+    $U=1_Y^{-1}(U)=(f\circ s)^{-1}(U)$ 是 $Y$ 的开集，所以 $f$
+    是商映射。
+  \end{enumerate}
+\end{example}
+
+\begin{theorem}
+  令 $f:X\to Y$ 是连续满射。那么 $f$ 是商映射当且仅当：对于 
+  任意空间 $Z$ 和映射 $g:Y\to Z$，$g$ 连续当且仅当 $g\circ f$ 连续。
+  \[
+    \begin{tikzcd}[column sep=large,row sep=large]
+      X\arrow[d,"f"']\arrow[dr,"g\circ f"] & \\
+      Y\arrow[r,"g"'] & Z.
+    \end{tikzcd}
+  \]
+\end{theorem}
+\begin{proof}
+  假设 $f$ 是商映射。如果 $g$ 连续，显然 $g\circ f$ 连续。反之，如果
+  $g\circ f$ 连续，任取 $Z$ 的开集 $V$，那么 
+  $f^{-1}(g^{-1}(V))=(g\circ f)^{-1}(V)$ 是 $X$ 的开集，所以
+  $g^{-1}(V)$ 是 $Y$ 的开集，所以 $g$ 连续。
+
+  假设反过来成立。取 $Z=X/\sim$，$\sim$ 是映射 $f$ 的纤维诱导的 
+  $X$ 的划分。那么我们有交换图
+  \[
+    \begin{tikzcd}[sep=large]
+      X\arrow[d,"f"']\arrow[dr,"\pi"] &  \\
+      Y & X/\sim\arrow[l,"\bar f"],
+    \end{tikzcd}
+  \]
+  其中 $\bar f$ 是 $f$ 诱导的双射，此时 $\bar f^{-1}\circ f(x)=\pi(x)$，
+  根据假设，$\bar f^{-1}$ 是连续映射，所以 $\bar f$ 是同胚，所以
+  $f=\bar f\circ\pi$ 是商映射。
+\end{proof}
+
+\begin{corollary}
+  令 $f:X\to Y$ 是商映射，$h:X\to Z$ 是连续映射并且在 $f$
+  的每个纤维上是常值的，那么存在唯一的连续映射 $\bar h:Y\to Z$
+  使得 $h=\bar h\circ f$，即有交换图
+  \[
+    \begin{tikzcd}[sep=large]
+      X\arrow[d,"f"']\arrow[dr,"h"] &  \\
+      Y\arrow[r,"\bar h"',dashed] & Z.
+    \end{tikzcd}
+  \]
+  此外，$\bar h$ 是开（闭）映射当且仅当在
+  $U$ 是 $X$ 的形如 $U=f^{-1}(f(U))$ 的开（闭）集时，
+  $h(U)$ 是 $Z$ 的开（闭）集。
+\end{corollary}
+\begin{proof}
+  要保证 $h=\bar h\circ f$，即任取 $x\in X$，有 $\bar h(f(x))=h(x)$。
+  对于 $y=f(x)\in Y$，那么必须有 $\bar h(y)=\bar h(f(x))=h(x)$，
+  $h$ 在 $f$ 的纤维上是常值的表明这样的 $\bar h$ 是良好定义的，所以
+  $\bar h$ 唯一存在。$h=\bar h\circ f$ 连续表明 $\bar h$ 连续。
+
+  以开映射为例。若 $\bar h$ 是开映射且 $U=f^{-1}(f(U))$ 是
+  $X$ 的开集，那么 $h(U)=h(f^{-1}(f(U)))=\bar h(f(U))$，
+  由于 $f^{-1}(f(U))=U$ 是 $X$ 的开集，所以 $f(U)$ 是 $Y$
+  的开集，所以 $h(U)=\bar h(f(U))$ 是 $Z$ 的开集。
+  反之，任取 $V\subseteq Y$ 是开集，那么 $f^{-1}(V)$ 是 $X$
+  的开集且 $f^{-1}(V)=f^{-1}(f(f^{-1}(V)))$，
+  根据假设，有 $h(f^{-1}(V))$ 是 $Z$ 的开集，
+  于是 $\bar h(V)=\bar h(f(f^{-1}(V)))=h(f^{-1}(V))$
+  是 $Z$ 的开集，即 $\bar h$ 是开映射。
+\end{proof}
+
+\begin{corollary}
+  令 $X,Z$ 是拓扑空间，$h:X\to Z$ 是商映射，记 $X/\sim$ 是 $h$ 的纤维
+  导出的商空间，那么 $X/\sim$ 同胚于 $Z$，同胚映射为 $\varphi:[x]\mapsto h(x)$。
+\end{corollary}
+\begin{proof}
+  记自然映射 $\pi:X\to X/\sim$。由于 $h$ 在 $h$ 的纤维上是常值的，
+  所以存在唯一的连续映射 $\varphi:X/\sim\,\to Z$ 使得 $h=\varphi\circ\pi$，
+  即 $\varphi([x])=h(x)$。另一方面，$\pi$ 在 $h$ 的纤维上也是常值的，所以
+  存在唯一的连续映射 $\psi:Z\to X/\sim$ 使得 $\pi=\psi\circ h$，
+  所以 $h=\varphi\circ\pi=\varphi\circ\psi\circ h$，$h$
+  是满射表明存在右逆，所以 $\varphi\circ\psi=1_Z$。
+  同理可得 $\psi\circ\varphi=1_{X/\sim}$，所以 $\varphi$
+  和 $\psi$ 互为连续逆映射，故 $\varphi$ 是同胚。
+\end{proof}
+
+\begin{problem}{}{}
+  令 $f:X\to Y$ 是商映射，$g:Y\to Z$ 是连续满射，那么 $g$
+  是商映射当且仅当 $g\circ f$ 是商映射。 
+\end{problem}
+\begin{proof}
+  若 $g$ 是商映射，设 $W\in Z$ 使得 $(g\circ f)^{-1}(W)$
+  是 $X$ 的开集，即 $f^{-1}(g^{-1}(W))$ 是 $X$ 的开集，
+  所以 $g^{-1}(W)$ 是 $Y$ 的开集，所以 $W$ 是 $Z$
+  的开集，所以 $g\circ f$ 是商映射。
+
+  反之，若 $g\circ f$ 是商映射。设 $W\in Z$ 使得 $g^{-1}(W)$
+  是开集，那么 $(g\circ f)^{-1}(W)=f^{-1}(g^{-1}(W))$
+  是 $X$ 的开集，$g\circ f$ 是商映射表明 $W$ 是 $Z$ 的开集。
+\end{proof}
+
+\begin{problem}{}{}
+  设 $X$ 和 $Y$ 是拓扑空间，分别有等价关系 $\sim$ 和 $\sim'$，
+  $f:X\to Y$ 是保持关系的连续映射，即 $x\sim x'$ 能推出 $f(x)\sim' f(x')$。
+  证明其诱导的 $\bar f:X/\sim\,\to Y/\sim'$ 是连续映射。此外，
+  如果 $f$ 是商映射，那么 $\bar f$ 也是商映射。
+\end{problem}
+\begin{proof}
+  记 $\pi:X\to X/\sim$ 和 $\pi':Y\to Y/\sim'$ 是自然映射。
+  那么我们有交换图
+  \[
+    \begin{tikzcd}[sep=huge]
+      X\arrow[r,"f"]\arrow[d,"\pi"'] & Y\arrow[d,"\pi'"]\\
+      X/\sim\arrow[r,"\bar f"',dashed] & Y/\sim',
+    \end{tikzcd}
+  \] 
+  其中 $\bar f([x])=[f(x)]$。$f$ 保持关系表明 $\bar f$ 是良好定义的。
+  任取 $Y/\sim'$ 的开集 $V$，那么 
+  \[
+    \pi^{-1}(\bar f^{-1}(V))=(\bar f\circ\pi)^{-1}(V)=(\pi'\circ f)^{-1}(V)=f^{-1}(\pi'^{-1}(V))
+  \]
+  是 $X$ 的开集，所以 $\bar f^{-1}(V)$ 是 $X/\sim$ 的开集，
+  故 $\bar f$ 是连续映射。如果 $f$ 是商映射，那么
+  $\pi'\circ f$ 是商映射，再根据上一题，$\bar f$ 是商映射。
+\end{proof}
+
+\begin{definition}
+  若 $X$ 是拓扑空间，定义 $X\times I$ 上的等价关系为 $(x,t)\sim (x',t')$
+  当且仅当 $t=t'=1$。记 $(x,t)$ 所在的等价类为 $[x,t]$。
+  我们说商空间 $X\times I/\sim$ 是 $X$ 上的\emph{锥体}，记为 $CX$。
+\end{definition}
+
+实际上上面的定义表明 $CX$ 就是商空间 $X\times I/X\times\{1\}$。
+点 $[x,1]\in CX$ 被称为\emph{顶点}。我们基本上相当于引入了一个新的不在
+$x$ 中的点（顶点）$v$ 并且用线段连接了 $v$ 和 $X$ 中的每个点。
+
+\begin{theorem}
+  对于每个空间 $X$，锥体 $CX$ 都是可缩的。
+\end{theorem}
+\begin{proof}
+  定义 $F:CX\times I\to CX$ 为
+  $F([x,t],s)=[x,s+(1-s)t]$ 即可。
+\end{proof}
+
+下面的结果表明可缩空间是 $\cat{hTop}$ 中最简单的对象。
+
+\begin{theorem}
+  空间 $X$ 和单点空间有相同的同伦型当且仅当 $X$ 是可缩的。
+\end{theorem}
+\begin{proof}
+  设 $\{a\}$ 是单点空间。假设 $X$ 和 $\{a\}$ 有相同的同伦型，
+  即存在连续映射 $f:X\to\{a\}$ 和连续映射 $g:\{a\}\to X$
+  使得 $g\circ f\simeq 1_X$，由于 $g\circ f$ 显然是常值映射，
+  所以 $X$ 是可缩的。
+
+  假设 $X$ 是可缩的。设 $1_X\simeq c$，其中 $c:X\to X$ 是常值映射
+  $c(x)=x_0$。令 $f:X\to \{x_0\}$ 和 $g:\{x_0\}\to X$，
+  其中 $g(x_0)=x_0$。那么 $f\circ g=1_{\{x_0\}}$ 以及
+  $g\circ f=c\simeq 1_X$，所以 $f:X\to \{x_0\}$ 是同伦等价。
+\end{proof}
+
+下面的定理表明可缩空间可能和单点集的行为类似，尤其是以同伦的角度来看的时候。
+
+\begin{theorem}
+  如果 $Y$ 可缩，那么任意 $X\to Y$ 的两个连续映射都是同伦的，
+  等价地说，任意 $X\to Y$ 的连续映射都是零伦的。
+\end{theorem}
+\begin{proof}
+  $Y$ 可缩表明 $1_Y\simeq c$，设 $c(y)=y_0$ 是常值映射。
+  定义 $g:X\to Y$ 是常值映射 $g(x)=y_0$。任取连续映射 $f:X\to Y$，那么
+  $f=1_Y\circ f\simeq c\circ f=g$，所以任意连续映射 $f$
+  都同伦于 $g$。
+\end{proof}
+ 
 
 
 
