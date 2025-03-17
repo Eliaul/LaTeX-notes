@@ -702,6 +702,17 @@ $\mathbb{S}^n$ 是不可缩的。
 点 $[x,1]\in CX$ 被称为\emph{顶点}。我们基本上相当于引入了一个新的不在
 $x$ 中的点（顶点）$v$ 并且用线段连接了 $v$ 和 $X$ 中的每个点。
 
+\begin{example}
+  对于空间 $X$ 和 $Y$，任意连续映射 $f:X\times I\to Y$
+  如果满足 $f(x,1)=y_0$，那么都诱导了连续映射 $\bar f:CX\to Y$
+  为 $\bar f:[x,t]\mapsto f(x,t)$。特别地，令 $f:\mathbb{S}^{n}\times I\to D^{n+1}$
+  是映射 $(u,t)\mapsto (1-t)u$，因为 $f(u,1)\equiv 0$，所以诱导连续映射
+  $\bar f:C \mathbb{S}^n\to D^{n+1}$ 为 $[u,t]\mapsto (1-t)u$。实际上，
+  $\bar f$ 还是一个同胚。我们说明 $f$ 是商映射即可，由于 $f$
+  是紧空间到 Hausdorff 空间的连续映射，所以是闭映射，又因为 $f$
+  是满射，所以 $f$ 是商映射。
+\end{example}
+
 \begin{theorem}
   对于每个空间 $X$，锥体 $CX$ 都是可缩的。
 \end{theorem}
@@ -740,6 +751,199 @@ $x$ 中的点（顶点）$v$ 并且用线段连接了 $v$ 和 $X$ 中的每个�
   都同伦于 $g$。
 \end{proof}
  
+\section{道路和道路连通}
+
+\begin{definition}
+  $X$ 的一个\emph{道路}指的是一个连续映射 $f:I\to X$。如果 
+  $f(0)=a$，$f(1)=b$，那么我们说 $f$ 是从 $a$ 到 $b$ 的道路。
+\end{definition}
+
+\begin{definition}
+  如果对于任意 $a,b\in X$，都存在从 $a$ 到 $b$ 的道路，那么我们说
+  $X$ 是\emph{道路连通}的。
+\end{definition}
+
+\begin{theorem}
+  如果 $X$ 道路连通，那么 $X$ 连通。
+\end{theorem}
+\begin{proof}
+  假设 $X$ 不连通，那么存在分离开集 $A,B$ 使得 $X=A\cup B$。
+  取 $a\in A$ 和 $b\in B$，$X$ 道路连通表明存在从 $a$ 到 $b$
+  的道路 $f:I\to X$，那么 $f(I)$ 是连通子集，但是
+  $f(I)=\bigl(f(I)\cap A\bigr)\cup\bigl(f(I)\cap B\bigr)$，
+  这与 $f(I)$ 连通矛盾。
+\end{proof}
+
+\begin{example}
+  存在连通但是不道路连通的空间。\emph{拓扑学家的 sin 曲线}是一个
+  经典的例子。定义空间 $X=A\cup G\subseteq \mathbb{R}^2$ 由两部分构成，
+  其中 $A=\{(0,y)\,|\, -1\leq y\leq 1\}$，
+  $G=\{(x,\sin(1/x))\,|\, 0<x\leq 1/2\pi\}$。
+  不难证明 $X$ 是连通的，因为 $A\subseteq \wbar G$，
+  所以 $X=\wbar G$ 是连通的。但是 $X$ 不是道路连通的。
+  我们证明不存在从 $(0,0)$ 到 $(1/2\pi,0)$ 的道路。
+  假设 $f:I\to X$ 是这样的道路，取 $t_0=\sup\{t\in I\,|\, f(t)\in A\}$，
+  由于 $A$ 是 $X$ 的闭集，所以 $f^{-1}(A)\subseteq [0,t_0]$
+  是闭集，而 $t_0$ 是 $f^{-1}(A)$ 的极限点，所以 $f(t_0)\in A$。
+  同时，任意 $s\in (t_0,1]$ 都使得 $f(s)\in G$。那么我们可以选取
+  递减趋于 $t_0$ 的一列 $\{s_n\}$ 使得 $f(s_n)=\bigl(2/(2n+1)\pi,(-1)^n\bigr)$，
+  但是 $n\to\infty$ 的时候 $f(s_n)$ 并不收敛，这与 $f$ 的连续性矛盾。
+\end{example}
+
+\begin{problem}{}{}
+  (1) 空间 $X$ 是道路连通的当且仅当任意两个常值映射
+    $X\to X$ 是同伦的。
+
+  (2) 如果 $X$ 可缩，$Y$ 道路连通，那么任意两个连续映射 $X\to Y$
+  是同伦的。
+\end{problem}
+\begin{proof}
+  (1) 若 $X$ 道路连通，$c_1,c_2$ 分别是点 $x_1,x_2$ 处的常值映射。
+  设 $f:I\to X$ 是连接 $x_1,x_2$ 的道路，定义 $F:X\times I\to X$
+  为 $F(x,t)=f(t)$，那么 $F:c_1\simeq c_2$。
+  反之，若任意两个常值映射 $X\to Y$ 都同伦。任取 $x_1,x_2\in X$，
+  那么常值映射 $c_1(x)=x_1$ 和 $c_2(x)=x_2$ 同伦，设 
+  $F:c_1\simeq c_2$，那么 $f(t)=F(x_1,t)$ 就是连接 $x_1,x_2$ 的道路。
+
+  (2) $X$ 可缩表明 $1_X\simeq c$，其中 $c$ 是常值映射 $c(x)=x_0$。
+  任取连续映射 $f:X\to Y$，那么 $f=f\circ 1_X\simeq f\circ c$，
+  其中 $f\circ c$ 是常值映射，所以 $f$ 零伦。$Y$ 道路连通表明任意
+  $X\to Y$ 的两个常值映射同伦，所以任意两个连续映射 $X\to Y$
+  是同伦的。
+\end{proof}
+
+\begin{theorem}
+  $X$ 是拓扑空间，定义 $a\sim b$ 当且仅当存在从 $a$ 到 $b$
+  的道路，那么这是一个等价关系。
+\end{theorem}
+
+\begin{definition}
+  $X$ 在上述等价关系下的等价类被称为 $X$ 的\emph{道路连通分支}。 
+\end{definition}
+
+\begin{definition}
+  定义 $\pi_0(X)$ 是 $X$ 的道路连通分支集合。如果连续映射 $f:X\to Y$，
+  定义 $\pi_0(f):\pi_0(X)\to\pi_0(Y)$ 是将 $X$ 的道路连通分支 $C$
+  送到唯一的包含 $f(C)$ 的 $Y$ 的道路连通分支。
+\end{definition}
+
+\begin{theorem}
+  $\pi_0:\cat{Top}\to \cat{Set}$ 是一个函子。
+  此外，如果 $f\simeq g$，那么 $\pi_0(f)=\pi_0(g)$。 
+\end{theorem}
+\begin{proof}
+  设 $1_X$ 是恒等映射，显然有 $\pi_0(1_X)=1_{\pi_0(X)}$。
+  设 $f:X\to Y$ 和 $g:Y\to Z$ 是连续映射，$C$ 是 $X$ 的一个
+  道路连通分支，$D$ 是包含 $f(C)$ 的 $Y$ 的道路连通分支，
+  $E$ 是包含 $g(D)$ 的 $Z$ 的道路连通分支，那么
+  $E\supseteq g(D)\supseteq g(f(C))$ 是包含 $(g\circ f)(C)$
+  的道路连通分支，所以 $\pi_0(g\circ f)(C)=E=\pi_0(g)\circ \pi_0(f)(C)$。
+  故 $\pi_0$ 是一个函子。
+
+  假设 $F:f\simeq g$，设 $C$ 是 $X$ 的道路连通分支，那么 $C\times I$
+  道路连通，所以 $F(C\times I)$ 道路连通。由于
+  \[
+    f(C)=F(C\times\{0\})\subseteq F(C\times I),
+  \]
+  同理 $g(C)\subseteq F(C\times I)$，所以 $f(C)$ 和 $g(C)$
+  被同一个道路连通分支包含，故 $\pi_0(f)=\pi_0(g)$。
+\end{proof}
+
+\begin{corollary}
+  如果 $X,Y$ 有相同的同伦型，那么它们的道路连通分支个数相同。
+\end{corollary}
+\begin{proof}
+  设 $f:X\to Y$ 和 $g:Y\to X$ 使得 $f\circ g\simeq 1_Y$ 以及
+  $g\circ f\simeq 1_X$。那么 $\pi_0(f)\circ\pi_0(g)=\pi_0(1_Y)$
+  以及 $\pi_0(g)\circ\pi_0(f)=\pi_0(1_X)$，所以 $\pi_0(f)$
+  是双射。
+\end{proof}
+
+$\pi_0$ 并不是一个有很大吸引力的函子，因为其值在 $\cat{Set}$
+中，我们能做的仅仅是对集合进行计数。$\pi_0$ 是一系列函子的
+第一个（或许说第零个更合适）。下一个是 $\pi_1$，即基本群，
+其值在 $\cat{Grp}$ 中，然后是高阶同伦群 $\pi_2,\pi_3,\dots$，
+其值在 $\cat{Ab}$ 中。
+
+\begin{definition}
+  空间 $X$ 被称为\emph{局部道路连通}的，如果对于任意 $x\in X$
+  和 $x$ 的邻域 $U$，都存在一个道路连通开集 $V$ 使得 $x\in V\subseteq U$。
+\end{definition}
+
+\begin{theorem}
+  如果 $X$ 是局部道路连通的，那么 $X$
+  的道路连通分支是开集。
+\end{theorem}
+\begin{proof}
+  设 $C$ 是 $X$ 的道路连通分支，
+  任取 $x\in C$，存在道路连通开集 $V$ 使得 $x\in V\subseteq X$，
+  $V$ 道路连通表明 $V\subseteq C$，所以 $C$ 是开集。
+\end{proof}
+
+\begin{corollary}
+  如果 $X$ 局部道路连通，那么 $X$ 的连通分支和道路连通分支是相同的。
+\end{corollary}
+\begin{proof}
+  设 $C$ 是 $X$ 的一个连通分支，$\{A_i\}$ 是 $X$ 的所有道路连通分支，
+  那么 $C$ 是一些 $A_i$ 的无交并，$A_i$ 是 $X$ 的开集表明 $A_i$
+  是 $C$ 的开集，所以 $C$ 必须是某一个 $A_i$ 而不是多个 $A_i$
+  的无交并，否则与 $C$ 连通矛盾。故 $X$ 的每个连通分支都是道路连通分支。
+\end{proof}
+
+\begin{corollary}
+  若 $X$ 连通且局部道路连通，那么 $X$ 道路连通。
+\end{corollary}
+\begin{proof}
+  $X$ 连通且局部道路连通表明 $X$ 只有一个连通分支，从而只有一个
+  道路连通分支。
+\end{proof}
+
+\begin{definition}
+  令 $A$ 是 $X$ 的一个子空间，$\iota:A\hookrightarrow X$ 是包含映射。
+  如果存在连续映射 $r:X\to A$ 使得 $r\circ \iota=1_A$
+  以及 $\iota\circ r\simeq 1_X$，那么我们说 $A$ 是 $X$
+  的一个\emph{形变收缩}。
+\end{definition}
+
+显然，形变收缩都是收缩。我们可以将定义重新叙述为：存在一个
+连续映射 $F:X\times I\to X$ 使得 $F(x,0)=x$，
+$F(x,1)\in A$ 并且对于任意 $a\in A$ 有 $F(a,1)=a$。
+这两种说法的等价性是显然的，若 $A$ 是形变收缩，那么令
+$F:1_X\simeq \iota\circ r$ 即可。反之令 $r(x)=F(x,1)$
+即可。根据定义，我们显然有下面的结果。
+
+\begin{theorem}
+  若 $A$ 是 $X$ 的形变收缩，那么 $A$ 和 $X$ 有相同的同伦型。
+\end{theorem}
+
+\begin{corollary}
+  $\mathbb{S}^1$ 是 $\mathbb{C}\smallsetminus\{0\}$ 的形变收缩，
+  所以有相同的同伦型。
+\end{corollary}
+\begin{proof}
+  设复数 $z=re^{i\theta}$，其中 $r>0,0\leq \theta<2\pi$。
+  定义 $F:(\mathbb{C}\smallsetminus\{0\})\times I\to \mathbb{C}\smallsetminus\{0\}$
+  为
+  \[
+    F(re^{i\theta},t)=\bigl(t+(1-t)r\bigr)e^{i\theta},
+  \]
+  直觉上来看，就是把从原点出发的射线上的点随时间往 $\mathbb{S}^1$
+  上移动。此时 $F$ 使得 $\mathbb{S}^1$ 为 $\mathbb{C}\smallsetminus\{0\}$
+  的形变收缩。
+\end{proof}
+
+\begin{definition}
+  令 $f:X\to Y$ 是连续映射，定义
+  \[
+    M_f=\bigl((X\times I)\sqcup Y\bigr)/\sim,
+  \]
+  其中 $(x,t)\sim y$ 当且仅当 $t=1$ 且 $y=f(x)$。记 $(x,t)$ 在 $M_f$
+  中的等价类为 $[x,t]$，$y$ 在 $M_f$ 中的等价类为 $[y]$
+  （所以有 $[x,1]=[f(x)]$）。$M_f$ 被称为 $f$ 的\emph{映射柱}。
+\end{definition}
+
+
+\chapter{单形}
 
 
 
