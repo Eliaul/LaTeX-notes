@@ -1090,10 +1090,104 @@ $\{p_0,p_1,p_2,p_3\}$ 仿射无关当且仅当它们不共面。
     \]
   \end{enumerate}
 \end{theorem}
+\begin{proof}
+  $(1)\Rightarrow (3)$ 任取 $x\in A$，假设
+  \[
+    x=\sum t_i p_i=\sum t_i'p_i, \quad \sum t_i=\sum t_i'=1,
+  \]
+  那么
+  \[
+    \sum_{i=1}^m (t_i-t_i')(p_i-p_0)
+    =\sum_{i=0}^m (t_i-t_i')p_i-\sum_{i=0}^n(t_i-t_i')p_0
+    =0,
+  \]
+  $p_i-p_0$ 线性无关表明 $t_i=t_i'$，所以 $x$ 的表示方法唯一。
 
+  $(3)\Rightarrow (2)$ 对于每个 $p_i$，我们有
+  \[
+    p_i=p_i+\sum_{j=0}^m s_jp_j,
+  \]
+  由于 $1+\sum s_i=1$，且 $p_i$ 的表示方法唯一，所以
+  $s_0=\cdots=s_m=0$。
 
+  $(2)\Rightarrow (1)$ 假设 $\sum_{i=1}^m t_i(p_i-p_0)=0$，
+  即
+  \[
+    \sum_{i=1}^m t_ip_i-\sum_{i=1}^m t_ip_0=0,
+  \]
+  所以 $t_1=\cdots=t_m=0$，故 $\{p_0,p_1,\dots,p_m\}$ 仿射无关。
+\end{proof}
 
+\begin{corollary}
+  $\{p_0,p_1,\dots,p_m\}$ 的仿射无关性与点的次序无关。
+\end{corollary}
+\begin{proof}
+  上述定理的后两个刻画和次序无关。
+\end{proof}
 
+\begin{corollary}
+  如果 $A\subseteq \mathbb{R}^n$ 是仿射无关点集 $\{p_0,\dots,p_m\}$ 
+  张成的仿射集，那么 $A$ 是 $\mathbb{R}^n$ 的一个 $m$ 维子空间 $V$
+  的平移，即存在某个 $x_0\in \mathbb{R}^n$ 使得
+  \[
+    A=V+x_0.
+  \]
+\end{corollary}
+\begin{proof}
+  令 $V$ 为 $\{p_1-p_0,\dots,p_m-p_0\}$ 张成的 $m$ 维子空间，那么
+  任意 $x\in A$ 可以唯一表示为
+  \[
+    x=\sum_{i=0}^m t_ip_i=\sum_{i=1}^m t_i(p_i-p_0)+p_0\in V+ p_0.
+  \]
+  故 $A\subseteq V+p_0$。
+\end{proof}
+
+\begin{definition}
+  $\mathbb{R}^n$ 中的点集 $\{a_1,a_2,\dots,a_k\}$ 被称为是\emph{一般位置}的，
+  如果其中任意 $n+1$ 个点都是仿射无关的。
+\end{definition}
+
+注意一般位置的定义依赖于 $n$。假设 $\{a_1,a_2,\dots,a_k\}\subseteq \mathbb{R}^n$
+是一般位置的。如果 $n=1$，这意味着其中任意两个点都仿射无关，即都不同。
+如果 $n=2$，这意味着其中任意三个点都不共线。如果 $n=3$，
+这意味着其中任意四个点都不共面。
+
+令 $r_0,r_1,\dots,r_m$ 是实数。回顾 $m+1$ 阶 Vandermonde 矩阵
+$V$ 的第 $i$ 列为向量 $(1,r_i,r_i^2,\dots,r_i^m)$。我们有 
+$\det V=\prod_{j<i}(r_i-r_j)$。如果我们把 $V$ 的每一列（从第一列开始）都减去
+第零列，把右下角拿出来，得到 $m\times m$ 的新矩阵 $V^*$ 为
+\[
+  \begin{pmatrix}
+    r_1 -r_0 & r_2-r_0 & \cdots & r_m-r_0\\
+    r_1^2-r_0^2 & r_2^2-r_0^2 & \cdots & r_m^2-r_0^2\\
+    \vdots & \vdots & \ddots & \vdots \\
+    r_1^m-r_0^m & r_2^m-r_0^m & \cdots & r_m^m-r_0^m 
+  \end{pmatrix},
+\]
+此时 $\det V^*=\det V$，只需要把 $V$ 按第一行展开即可。
+
+\begin{theorem}
+  对于每个 $k\ge 0$，$\mathbb{R}^n$ 都包含 $k$ 个一般位置的点。
+\end{theorem}
+\begin{proof}
+  我们不妨假设 $k>n+1$，否则我们取零向量和另外 $k-1$ 个标准基向量即可。
+  首先选取 $k$ 个不同的实数 $r_1,r_2,\dots,r_k$，定义
+  \[
+    a_i=(r_i,r_i^2,\dots,r_i^n)\in \mathbb{R}^n.
+  \]
+  我们断言 $\{a_1,a_2,\dots,a_k\}$ 是一般位置的。如果它们不是一般位置的，
+  那么存在 $n+1$ 个点 $\{a_{i_0},a_{i_1},\dots,a_{i_n}\}$ 仿射相关，
+  即 $\{a_{i_1}-a_{i_0},\dots,a_{i_n}-a_{i_0}\}$ 线性相关。
+  所以存在不全为零的实数 $s_1,s_2,\dots,s_n$ 使得
+  \[
+    0=\sum s_j(a_{i_j}-a_{i_0})=
+    \left(\sum s_j(r_{i_j}-r_{i_0}),\dots,\sum s_j(r_{i_j}^n-r_{i_0}^n)\right),
+  \]
+  记 $V^*$ 是 $(n+1)\times (n+1)$ Vandermonde 矩阵的右下角 $n\times n$
+  子矩阵，$\sigma$ 为列向量 $(s_1,\dots,s_n)$，那么上面的等式表明
+  $V^*\sigma=0$。因为 $r_i$ 互不相同，所以 $V^*$ 可逆，所以 $\sigma=0$，
+  与 $s_i$ 不全为零矛盾。
+\end{proof}
 
 
 
