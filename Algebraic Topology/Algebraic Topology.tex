@@ -63,9 +63,10 @@
 \DeclareMathOperator\grad{grad}
 \DeclareMathOperator\Euc{E}
 \DeclareMathOperator\ob{ob}
+\DeclareMathOperator\diam{diam}
 \newcommand{\LL}{{\mathrm{L}}}
 
-\newcommand{\norm}[1]{\lVert#1\rVert}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\mat}[1]{\mathbold{#1}}
 \newcommand{\cat}[1]{\mathsf{#1}}
 \newcommand{\uline}{\underline{\hphantom{X}}}
@@ -1188,6 +1189,174 @@ $\det V=\prod_{j<i}(r_i-r_j)$。如果我们把 $V$ 的每一列（从第一列�
   $V^*\sigma=0$。因为 $r_i$ 互不相同，所以 $V^*$ 可逆，所以 $\sigma=0$，
   与 $s_i$ 不全为零矛盾。
 \end{proof}
+
+\begin{definition}
+  令 $\{p_0,p_1,\dots,p_m\}$ 是 $\mathbb{R}^n$ 中的仿射无关集，$A$
+  是这个子集张成的仿射集。如果 $x\in A$，那么存在唯一的表达 
+  $x=\sum t_ip_i$，其中 $\sum t_i=1$。这些 $t_i$ 被称为 $x$
+  相对于 $\{p_0,p_1,\dots,p_m\}$ 的\emph{重心坐标}。
+\end{definition}
+
+\begin{definition}
+  令 $\{p_0,p_1,\dots,p_m\}$ 是 $\mathbb{R}^n$ 中的仿射无关集，
+  它们张成的凸集 $[p_0,p_1,\dots,p_m]$ 被称为具有\emph{顶点}
+  $p_0,p_1,\dots,p_m$ 的\emph{$m$-单纯形}。
+\end{definition}
+
+\begin{theorem}
+  如果 $\{p_0,p_1,\dots,p_m\}$ 仿射无关，那么任意 $x\in [p_0,p_1,\dots,p_m]$
+  有唯一的表达
+  \[
+    x=\sum t_ip_i,\quad \sum t_i=1, t_i\geq 0.
+  \]
+\end{theorem}
+
+\begin{definition}
+  设 $\{p_0,p_1,\dots,p_m\}$ 仿射无关，定义 $[p_0,p_1,\dots,p_m]$
+  的\emph{重心}是 $(p_0+p_1+\cdots+p_m)/(m+1)$。
+\end{definition}
+
+\begin{definition}
+  令 $[p_0,p_1,\dots,p_m]$ 是 $m$-单纯形，定义 $p_i$ 的\emph{对面}
+  是
+  \[
+    [p_0,\dots,\hat p_i,\dots,p_m]=\left\{
+      \sum t_jp_j\,\middle|\, t_j\geq 0,\sum t_j=1, t_i=0
+    \right\}
+  \]
+  （尖尖符号表示删除这一项）。定义 $[p_0,p_1,\dots,p_m]$
+  的\emph{边界}是它的面的并集。
+\end{definition}
+
+显然，$m$-单纯形有 $m+1$ 个面。对于任意 $0\leq k\leq m-1$，
+我们有时候说 $[p_0,p_1,\dots,p_m]$ 的一个 $k$-面是
+其中 $k+1$ 个顶点张成的 $k$-单纯形。在这个术语下，
+上面定义的面是 $(m-1)$-面。
+
+下面的定理在我们讨论重心重分的时候会用到。
+
+\begin{theorem}
+  令 $S$ 是 $n$-单形 $[p_0,\dots,p_n]$。
+  \begin{enumerate}
+    \item 如果 $u,v\in S$，那么 $\norm{u-v}\leq\sup_i\norm{u-p_i}$。
+    \item $\diam S=\sup_{i,j}\norm{p_i-p_j}$。
+    \item 如果 $b$ 是 $S$ 的重心，那么 $\norm{b-p_i}\leq n\diam S/(n+1)$。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  (1) 设 $v=\sum t_ip_i$，其中 $t_i\geq 0$ 且 $\sum t_i=1$。那么
+  \begin{align*}
+    \norm{u-v}&=\norm{u-\sum t_ip_i}=
+    \norm{\sum t_i(u-p_i)}\\
+    &\leq \sum t_i\norm{u-p_i}\leq \sum t_i\sup_i\norm{u-p_i}\\
+    &=\sup_i\norm{u-p_i}.
+  \end{align*}
+
+  (2) 根据 (1) 显然。
+
+  (3) 由于 $b=\sum p_i/(n+1)$，所以
+  \begin{align*}
+    \norm{b-p_i}&=\norm{\sum_{j=0}^n p_j/(n+1)-p_i}
+    =\norm{\sum_{j=0}^n(p_j-p_i)/(n+1)}\\
+    &\leq \frac{1}{n+1}\sum_{j=0}^n\norm{p_j-p_i}\\
+    &\leq \frac{n}{n+1}\sup_{i,j}\norm{p_i-p_j}\\
+    &=\frac{n}{n+1}\diam S.\qedhere
+  \end{align*}
+\end{proof}
+
+\section{仿射映射}
+
+\begin{definition}
+  令 $\{p_0,p_1,\dots,p_m\}\subseteq \mathbb{R}^n$ 是仿射无关的，
+  $A$ 为它们张成的仿射集。\emph{仿射映射} $T:A\to \mathbb{R}^k$
+  指的是一个满足
+  \[
+    T\left(\sum t_jp_j\right)=\sum t_j T(p_j)
+  \]
+  的映射，其中 $\sum t_j=1$。$T$ 在 $[p_0,p_1,\dots,p_m]$
+  上的限制也被称为\emph{仿射映射}。
+\end{definition}
+
+仿射映射保持仿射组合，从而也保持凸组合。
+
+\begin{theorem}
+  如果 $[p_0,\dots,p_m]$ 是 $m$-单纯形，$[q_0,\dots,q_n]$
+  是 $n$-单纯形，$f:\{p_0,\dots,p_m\}\to\{q_0,\dots,q_n\}$
+  是任意映射，那么存在唯一的仿射映射 $T:[p_0,\dots,p_m]\to [q_0,\dots,q_n]$
+  使得 $T(p_i)=f(p_i)$。
+\end{theorem}
+\begin{proof}
+  定义 $T\left(\sum t_ip_i\right)=\sum t_i f(p_i)$，其中 $\sum t_ip_i$
+  是凸组合。
+\end{proof}
+
+\begin{problem}{}{}
+  如果 $T:\mathbb{R}^n\to \mathbb{R}^k$ 是仿射映射，
+  那么 $T(x)=\lambda(x)+y_0$，其中 $\lambda:\mathbb{R}^n\to \mathbb{R}^k$
+  是线性映射并且 $y_0\in \mathbb{R}^k$ 是固定的点。
+\end{problem}
+\begin{proof}
+  设 $e_1,\dots,e_n$ 是 $\mathbb{R}^n$ 的标准基，那么 $\{0,e_1,\dots,e_n\}$
+  是 $\mathbb{R}^n$ 的一个仿射无关子集且张成 $\mathbb{R}^n$。定义 
+  $\lambda(x)=T(x)-T(0)$。我们只需要验证 $\lambda$ 是线性映射。
+  任取 $x=\sum_{i=1}^n t_ie_i$ 和 $y=\sum_{i=1}^n s_ie_i$，
+  那么 
+  \begin{align*}
+    \lambda(x+y)&=T(x+y)-T(0)\\
+    &=
+    \sum_{i=1}^n (t_i+s_i)T(e_i)+\left(1-\sum_{i=1}^n(t_i+s_i)\right)T(0)-T(0)\\
+    &=\sum_{i=1}^n t_iT(e_i)+\left(1-\sum_{i=1}^n t_i\right)T(0)+\\
+    &\hphantom{{}={}}\sum_{i=1}^n s_iT(e_i)+\left(1-\sum_{i=1}^n s_i\right)T(0)
+    -2T(0)\\
+    &=T(x)-T(0)+T(y)-T(0)\\
+    &=\lambda(x)+\lambda(y).
+  \end{align*}
+  任取实数 $r$，那么 
+  \begin{align*}
+    \lambda(rx)&=T(rx)-T(0)\\
+    &=\sum_{i=1}^n rt_iT(e_i)+\left(1-\sum_{i=1}^nrt_i\right)T(0)-T(0)\\
+    &=r\sum_{i=1}^n t_iT(e_i)+r\left(1-\sum_{i=1}^n t_i\right)T(0)-rT(0)\\
+    &=r\bigl(T(x)-T(0)\bigr)=r\lambda(x).\qedhere
+  \end{align*}
+\end{proof}
+
+\begin{problem}{}{}
+  证明任意两个 $m$-单纯形都可以通过一个仿射映射同胚。
+\end{problem}
+\begin{proof}
+  设 $S_1=[p_0,p_1,\dots,p_m]$ 和 $S_2=[q_0,\dots,q_m]$ 是 $m$-单纯形。
+  定义映射 $f(p_i)=q_i$，那么存在仿射映射
+  $T:S_1\to S_2$ 为 $T(\sum t_ip_i)=\sum t_iq_i$。
+  反过来，存在仿射映射 $R:S_2\to S_1$ 为 $R(\sum t_iq_i)=\sum t_ip_i$。
+  显然 $R,T$ 互逆并且连续，所以是同胚。
+\end{proof}
+
+\begin{problem}{}{}
+  给出仿射映射 $\theta:\mathbb{R}\to \mathbb{R}$ 的精确公式，
+  设其把 $[s_1,s_2]$ 送到 $[t_1,t_2]$，$\theta(s_i)=t_i$。
+\end{problem}
+\begin{solution}
+  设 $\theta(x)=\lambda(x)+\theta(0)$，那么 $\lambda$ 是线性映射。
+  那么 $\lambda(s_i)=\theta(s_i)-\theta(0)=t_i-\theta(0)$。
+  而 $\lambda$ 是线性映射，所以
+  \[
+    \frac{t_1-\theta(0)}{s_1}=\frac{t_2-\theta(0)}{s_2},
+  \]
+  故 $\theta(0)=(s_1t_2-s_2t_1)/(s_1-s_2)$，以及
+  \[
+    \lambda(x)=\frac{t_1-t_2}{s_1-s_2}x,
+  \]
+  所以
+  \[
+    \theta(x)=\frac{t_1-t_2}{s_1-s_2}x+\frac{s_1t_2-s_2t_1}{s_1-s_2}.\qedhere
+  \]
+\end{solution}
+
+\chapter{基本群}
+
+\section{基本群胚}
+
+
 
 
 
