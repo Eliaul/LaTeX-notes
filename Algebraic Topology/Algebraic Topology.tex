@@ -64,6 +64,7 @@
 \DeclareMathOperator\Euc{E}
 \DeclareMathOperator\ob{ob}
 \DeclareMathOperator\diam{diam}
+\DeclareMathOperator\rel{rel}
 \newcommand{\LL}{{\mathrm{L}}}
 
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
@@ -73,6 +74,8 @@
 \newcommand{\abs}[1]{\left|#1\right|}
 \newcommand{\lie}[1]{\mathfrak{#1}}
 \newcommand{\inn}[1]{\left\langle #1\right\rangle}
+\newcommand{\partI}{\partial I}
+\newcommand{\relhomo}{\rel\partI}
 
 \usepackage{enumitem}
 
@@ -791,7 +794,7 @@ $x$ 中的点（顶点）$v$ 并且用线段连接了 $v$ 和 $X$ 中的每个�
   但是 $n\to\infty$ 的时候 $f(s_n)$ 并不收敛，这与 $f$ 的连续性矛盾。
 \end{example}
 
-\begin{problem}{}{}
+\begin{problem}{}{null}
   (1) 空间 $X$ 是道路连通的当且仅当任意两个常值映射
     $X\to X$ 是同伦的。
 
@@ -1355,6 +1358,93 @@ $\det V=\prod_{j<i}(r_i-r_j)$。如果我们把 $V$ 的每一列（从第一列�
 \chapter{基本群}
 
 \section{基本群胚}
+
+\begin{definition}
+  令 $f,g:I\to X$ 是满足 $f(1)=g(0)$ 的道路，定义道路 $f*g:I\to X$
+  为
+  \[
+    (f*g)(t)=\begin{cases}
+      f(2t) & 0\leq t\leq\frac{1}{2},\\
+      g(2t-1) & \frac{1}{2}\leq t\leq 1.
+    \end{cases}
+  \]
+\end{definition}
+
+我们的目的是构造一个群，其元素为 $X$ 中道路的同伦类，有二元运算
+$[f][g]=[f*g]$。如果我们假设 $X$ 是道路连通的，那么 $I$ 可缩表明所有的映射
+$I\to X$ 都是同伦的（\ref{prob:null}），也就是说这只有一个同伦类。
+这样的结果显然不会带来任何有效的信息，所以我们需要稍微严格一下
+我们的同伦定义。
+
+\begin{definition}
+  令 $A\subseteq X$ 和 $f_0,f_1:X\to Y$ 是连续映射并且 $f_0|_A=f_1|_A$，
+  我们用记号
+  \[
+    f_0\simeq f_1\rel A
+  \]
+  表示 $f_0$ 和 $f_1$ 相对于 $A$ 同伦。即存在严格连续映射
+  $F:X\times I\to Y$ 使得 $F:f_0\simeq f_1$ 并且
+  \[
+    F(a,t)=f_0(a)=f_1(a)\quad \forall a\in A,t\in I.
+  \] 
+\end{definition}
+
+这样的同伦 $F$ 被称为\emph{相对同伦}，与之对应的，之前的同伦定义
+被称为\emph{自由同伦}。固定 $A\subseteq X$，不难证明相对于 $A$ 同伦
+是连续映射集合 $X\to Y$ 上的一个等价关系。
+
+\begin{definition}
+  令 $\partI=\{0,1\}$ 是 $I$ 在 $\mathbb{R}$ 中的边界。道路
+  $f:I\to X\rel\partI$ 的等价类被称为 $f$ 的\emph{道路类}，
+  记为 $[f]$。
+\end{definition}
+
+注意我们用同样的记号表示道路类和道路的自由同伦类，但是这不会引起混淆，
+因为我们已经注意到自由同伦类总是是平凡的。
+
+\begin{theorem}
+  假设 $f_0,f_1,g_0,g_1$ 是 $X$ 中的道路并且
+  \[
+    f_0\simeq f_1\relhomo,\quad g_0\simeq g_1\relhomo.
+  \]
+  如果 $f_0(1)=f_1(1)=g_0(0)=g_1(0)$，那么 $f_0*g_0\simeq f_1*g_1\relhomo$。
+\end{theorem}
+\begin{proof}
+  设 $F:f_0\simeq f_1\relhomo$ 以及 $G:g_0\simeq g_1\relhomo$，
+  定义 $H:I\times I\to X$ 为
+  \[
+    H(s,t)=\begin{cases}
+      F(2s,t) & 0\leq s\leq \frac{1}{2},\\
+      G(2s-1,t) & \frac{1}{2}\leq s\leq 1.
+    \end{cases}
+  \]
+  那么 $H:f_0*g_0\simeq f_1*g_1\relhomo$。
+\end{proof}
+
+\begin{problem}{}{}
+  令 $A\subseteq X$ 和 $B\subseteq Y$，假设 $f_0,f_1:X\to Y$
+  满足 $f_0|_A=f_1|_A$ 以及 $f_i(A)\subseteq B$，$g_0,g_1:Y\to Z$
+  满足 $g_0|_B=g_1|_B$。如果 $f_0\simeq f_1\rel A$ 以及 $g_0\simeq g_1\rel B$，
+  那么 $g_0\circ f_0\simeq g_1\circ f_1\rel A$。
+\end{problem}
+\begin{proof}
+  设 $F:f_0\simeq f_1\rel A$ 以及 $G:g_0\simeq g_1\rel B$，
+  令 $H:X\times I\to Z$ 为
+  \[
+    H(x,t)=G(f_0(x),t),
+  \]
+  那么 $H(a,t)=G(f_0(a),t)=g_0(a)=g_1(a)$，所以 
+  $H:g_0\circ f_0\simeq g_1\circ f_0\rel A$。
+  令 $K:X\times I\to Z$ 为
+  \[
+    K(x,t)=g_1(F(x,t)),
+  \]
+  那么 $K(a,t)=g_1(F(a,t))=g_1(f_0(a))=g_1(f_1(a))$，所以
+  $K:g_1\circ f_0\simeq g_1\circ f_1\rel A$，根据相对同伦
+  的传递性，所以 $g_0\circ f_0\simeq g_1\circ f_1\rel A$。
+\end{proof}
+
+
 
 
 
