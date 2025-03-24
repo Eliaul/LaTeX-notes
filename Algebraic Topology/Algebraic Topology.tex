@@ -11,6 +11,7 @@
 \usetikzlibrary{matrix,calc}
 \usetikzlibrary{intersections}
 \usetikzlibrary{arrows.meta}
+\usetikzlibrary{decorations.markings}
 
 \input{font.def}
 
@@ -30,6 +31,9 @@
   point/.style={
     circle, fill, minimum width=5pt,
     inner sep=0pt
+  },
+  straight arrow/.style={
+    Straight Barb[scale=0.8]
   }
 }
 
@@ -448,7 +452,7 @@ $\Hom(X,Y)=[X,Y]$，复合为 $[g]\circ [f]=[g\circ f]$。
 延拓 $f_0\cup f_1:X\times\{0\}\cup X\times\{1\}\to Z$ 到
 $X\times I$ 上，那么 $f_0\simeq f_1$。
 
-\begin{theorem}
+\begin{theorem}\label{thm:S^n is nullhomotopic}
   令 $f:\mathbb{S}^n\to Y$ 是连续映射，下面的说法等价：
   \begin{enumerate}
     \item $f$ 是零伦的；
@@ -1382,7 +1386,7 @@ $I\to X$ 都是同伦的（\ref{prob:null}），也就是说这只有一个同�
   \[
     f_0\simeq f_1\rel A
   \]
-  表示 $f_0$ 和 $f_1$ 相对于 $A$ 同伦。即存在严格连续映射
+  表示 $f_0$ 和 $f_1$ 相对于 $A$ 同伦。即存在连续映射
   $F:X\times I\to Y$ 使得 $F:f_0\simeq f_1$ 并且
   \[
     F(a,t)=f_0(a)=f_1(a)\quad \forall a\in A,t\in I.
@@ -1444,7 +1448,101 @@ $I\to X$ 都是同伦的（\ref{prob:null}），也就是说这只有一个同�
   的传递性，所以 $g_0\circ f_0\simeq g_1\circ f_1\rel A$。
 \end{proof}
 
+\begin{problem}{}{}
+  \begin{enumerate}
+    \item 如果 $f:I\to X$ 是满足 $f(0)=f(1)=x_0\in X$ 的道路，
+    那么存在连续映射 $f':\mathbb{S}^1\to X$ 使得 $f'(e^{2\pi it})=f(t)$。
+    如果 $f,g:I\to X$ 是满足 $f(0)=f(1)=x_0=g(0)=g(1)$ 的道路并且
+    $f\simeq g\relhomo$，那么 $f'\simeq g'\rel\{1\}$。
+    \item 如果 $f,g$ 是上述映射，那么 $f\simeq f_1\relhomo$
+    并且 $g\simeq g_1\relhomo$ 表明 $f'*g'\simeq f_1'*g_1'\rel\{1\}$。
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  (1) 考虑映射 $h:I\to \mathbb{S}^1$ 为 $h(t)=e^{2\pi it}$，
+  那么 $h$ 是紧空间到 Hausdorff 空间的连续映射，所以是闭映射。
+  又因为 $h$ 是连续满射，所以是商映射。$h$ 的纤维导出的 $I$
+  的商空间为 $I/\{0,1\}$，所以有同胚 $\mathbb{S}^1\simeq I/\{0,1\}$。
+  $f$ 在 $h$ 的纤维上是常值的，所以存在唯一的连续映射 $f':\mathbb{S}^1\to X$
+  使得 $f=f'\circ h$，即 $f'(e^{2\pi i t})=f(t)$。
 
+  设 $F:f\simeq g\relhomo$，即 $F:I\times I\to X$ 满足
+  $F(x,0)=f(x)$，$F(x,1)=g(x)$ 并且 $F(0,t)=x_0=F(1,t)$。
+  类似的，考虑 $h:I\times I\to \mathbb{S}^1\times I$ 为
+  $h(s,t)=(e^{2\pi i s},t)$，那么 $h$ 是商映射。
+  此时 $F$ 在 $h$ 的纤维上是常值的，所以存在唯一的连续映射
+  $F':\mathbb{S}^1\times I\to X$ 使得 $F=F'\circ h$，
+  即 $F'(e^{2\pi i s},t)=F(s,t)$。此时
+  $F'(e^{2\pi is},0)=f(s)=f'(e^{2\pi i s})$，
+  $F'(e^{2\pi is},1)=g(s)=g'(e^{2\pi i s})$，
+  并且 $F'(1,t)=F(0,t)=x_0=f'(1)=g'(1)$，
+  所以 $F':f'\simeq g'\rel\{1\}$。
+\end{proof}
+
+\begin{definition}
+  如果 $f:I\to X$ 是从 $x_0$ 到 $x_1$ 的道路，我们说 $x_0$ 是 $f$
+  的\emph{起始点}并且记 $x_0=\alpha(f)$，$x_1$ 是 $f$ 的\emph{终点}
+  并且记 $x_1=\omega(f)$。$X$ 中的道路 $f$ 被称为在 $x_0$ 处\emph{闭合}，
+  如果 $\alpha(f)=x_0=\omega(f)$。
+\end{definition}
+
+显然如果 $f,g$ 是道路并且 $f\simeq g\relhomo$，那么 $\alpha(f)=\alpha(g)$
+并且 $\omega(f)=\omega(g)$。因此我们可以说道路类的起始点和终点，
+记为 $\alpha[f]$ 和 $\omega[f]$。
+
+\begin{definition}
+  如果 $p\in X$，那么常值函数 $i_p:I\to X$，$i_p(t)=p$ 被称为
+  $p$ 处的\emph{常值道路}。如果 $f:I\to X$ 是道路，定义 $f$ 的
+  \emph{逆道路}为 $f^-:I\to X$，$f^-(t)=f(1-t)$。
+\end{definition}
+
+\begin{problem}{}{}
+  令 $\sigma:\Delta^2\to X$ 是连续映射，$\Delta^2=[e_0,e_1,e_2]$。
+  定义 $\varepsilon_0:I\to \Delta^2$ 是满足 $\varepsilon_0(0)=e_1$
+  和 $\varepsilon_0(1)=e_2$ 的仿射映射，类似的，定义
+  $\varepsilon_1$ 满足 $\varepsilon_1(0)=e_0$ 和 $\varepsilon_1(1)=e_2$，
+  $\varepsilon_2$ 满足 $\varepsilon_2(0)=e_0$ 和 $\varepsilon_2(1)=e_1$。
+  最后，定义 $\sigma_i=\sigma\circ\varepsilon_i$。
+  注意，$\varepsilon_i$ 可以视为划去 $e_i$ 后得到的仿射映射。
+  \begin{center}
+    \begin{tikzpicture}[
+      scale=1.5,
+      decoration={markings,mark=at position 0.5 with {\arrow{Straight Barb[]}}},
+      circ/.style={circle,minimum width=3pt,inner sep=0pt}
+    ]
+      \draw (-30:1) node [circ,label=-90:$e_1$] (e1) {} 
+        -- (90:1) node [circ,label=90:$e_2$] (e2) {} 
+        -- (210:1) node [circ,label=-90:$e_0$] (e0) {} -- cycle;
+      \draw [postaction={decorate}] (e1) -- (e2) node [midway,sloped,above=3pt] {$\varepsilon_0$};
+      \draw [postaction={decorate}] (e0) -- (e2) node [midway,sloped,above=3pt] {$\varepsilon_1$};
+      \draw [postaction={decorate}] (e0) -- (e1) node [midway,sloped,below=3pt] {$\varepsilon_2$};
+    \end{tikzpicture}
+  \end{center}
+  \begin{enumerate}
+    \item 证明 $(\sigma_0*\sigma_1^-)*\sigma_2$ 相对于 $\partI$ 零伦。
+    \item 证明 $(\sigma_1*\sigma_0^-)*\sigma_2^-$ 相对于 $\partI$ 零伦。
+    \item 令 $F:I\times I\to X$ 是连续映射，按照上面的图定义 $X$ 中的
+    道路 $\alpha,\beta,\gamma,\delta$。也即 $\alpha(t)=F(t,0)$，
+    $\beta(t)=F(t,1)$，$\gamma(t)=F(0,t)$，$\delta(t)=F(1,t)$。
+    证明 $\alpha\simeq \gamma *\beta *\delta^{-}\relhomo$。
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  (1) 注意到
+  \[
+    \bigl((\sigma_0*\sigma_1^-)*\sigma_2\bigr)(s)
+    =\begin{cases}
+      \sigma\circ\varepsilon_0(4s) & 0\leq s\leq \frac{1}{4},\\
+      \sigma\circ\varepsilon_1(2-4s) & \frac{1}{4}\leq s\leq \frac{1}{2},\\
+      \sigma\circ\varepsilon_2(2s-1) & \frac{1}{2}\leq s\leq 1,
+    \end{cases}
+  \]
+  所以 $(\sigma_0*\sigma_1^-)*\sigma_2=\sigma\circ\bigl((\varepsilon_0*\varepsilon_1^-)*\varepsilon_2\bigr)$。
+  所以只需要说明
+\end{proof}
+
+
+ 
 
 
 
