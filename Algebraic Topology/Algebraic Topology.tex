@@ -1528,21 +1528,95 @@ $I\to X$ 都是同伦的（\ref{prob:null}），也就是说这只有一个同�
   \end{enumerate}
 \end{problem}
 \begin{proof}
-  (1) 注意到
+  (1) 考虑下图所示的同伦：
+  \begin{center}
+    \begin{tikzpicture}[
+      scale=1.5,
+      decoration={markings,mark=at position 0.5 with {\arrow{Straight Barb[]}}},
+      circ/.style={circle,minimum width=3pt,inner sep=0pt}
+    ]
+      \draw[dashed] (-30:1) node [circ,label=-90:$e_1$] (e1) {} 
+      -- (90:1) node [circ,label=90:$e_2$] (e2) {} 
+      -- (210:1) node [circ,label=-90:$e_0$] (e0) {} -- cycle;
+      \draw [dashed,decorate] (e1) -- (e2) node [midway,sloped,above=3pt] {$\sigma_0$};
+      \draw [dashed,decorate] (e2) -- (e0) node [midway,sloped,above=3pt] {$\sigma_1^-$};
+      \draw [dashed,decorate] (e0) -- (e1) node [midway,sloped,below=3pt] {$\sigma_2$};
+      \draw [red] (e1) -- ($(e1)!0.8!(e2)$);
+      \draw [red,postaction=decorate] ($(e1)!0.8!(e2)$) -- ($(e1)!0.8!(e0)$);
+      \draw [red] ($(e1)!0.8!(e0)$) -- (e1);
+    \end{tikzpicture}
+  \end{center}
+  也即定义 $H:I\times I\to X$ 为
   \[
-    \bigl((\sigma_0*\sigma_1^-)*\sigma_2\bigr)(s)
-    =\begin{cases}
-      \sigma\circ\varepsilon_0(4s) & 0\leq s\leq \frac{1}{4},\\
-      \sigma\circ\varepsilon_1(2-4s) & \frac{1}{4}\leq s\leq \frac{1}{2},\\
-      \sigma\circ\varepsilon_2(2s-1) & \frac{1}{2}\leq s\leq 1,
+    H(s,t)=\begin{cases}
+      \sigma\bigl((1-4s)e_1+4s\varepsilon_0(1-t)\bigr) & 0\leq s\leq \frac{1}{4},\\
+      \sigma\bigl((2-4s)\varepsilon_0(1-t)+(4s-1)\varepsilon_2(t)\bigr)
+      & \frac{1}{4}\leq s\leq \frac{1}{2},\\
+      \sigma\bigl((2-2s)\varepsilon_2(t)+(2s-1)e_1\bigr) &
+      \frac{1}{2}\leq s\leq 1.
     \end{cases}
   \]
-  所以 $(\sigma_0*\sigma_1^-)*\sigma_2=\sigma\circ\bigl((\varepsilon_0*\varepsilon_1^-)*\varepsilon_2\bigr)$。
-  所以只需要说明
+  此时 $H$ 是 $(\sigma_0*\sigma_1^-)*\sigma_2$ 到 $e_1$ 的常值环道的相对同伦。
+
+  (2) 与 (1) 同理。
 \end{proof}
 
+\begin{problem}{}{* is not a group}
+  \begin{enumerate}
+    \item (1) 如果 $f\simeq g\relhomo$，那么
+    $f^-\simeq g^-\relhomo$。
+    \item 如果道路 $f,g$ 满足 $\omega(f)=\alpha(g)$，那么
+    \[
+      (f*g)^{-}=g^-*f^-.
+    \]
+    \item 给出一个环道 $f$ 使得 $f*f^-\neq f^-*f$ 的例子。
+    \item 如果 $\alpha(f)=p$ 且 $f$ 不是常值，那么 $i_p*f\neq f$。
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  (1) 设 $H:f\simeq g\relhomo$，定义 
+  $ G(s,t)=H(1-s,t) $ 即可。
 
- 
+  (2) 我们有
+  \[
+    (f*g)^-(s)=f*g(1-s)=\begin{cases}
+      g(1-2s) & 0\leq s\leq \frac{1}{2},\\
+      f(2-2s) & \frac{1}{2}\leq s\leq 1.
+    \end{cases}
+  \]
+  另一方面，有
+  \[
+    (g^-*f^-)(s)=\begin{cases}
+      g^-(2s) & s\leq \frac{1}{2}\\
+      f^-(2s-1) & s\geq \frac{1}{2}
+    \end{cases}=\begin{cases}
+      g(1-2s) & 0\leq s\leq \frac{1}{2},\\
+      f(2-2s) & \frac{1}{2}\leq s\leq 1.
+    \end{cases}.
+  \]
+
+  (3) 
+\end{proof}
+
+\ref{prob:* is not a group} 表明在道路乘法 $*$ 的作用下道路集合不能形成
+一个群。但是下面的定理告诉我们对于道路类来说可以解决大部分问题。
+
+\begin{theorem}
+  $X$ 是空间，那么 $X$ 的所有道路类集合在乘法 $[f][g]=[f*g]$ 下形成
+  一个群胚，其满足下面的性质：
+  \begin{enumerate}
+    \item 每个道路类 $[f]$ 有一个起始点 $\alpha[f]=p\in X$ 
+    以及终点 $\omega[f]=q\in X$，并且
+    \[
+      [i_p][f]=[f]=[f][i_q];
+    \]
+    \item 当道路乘法有意义的时候，结合律总是成立；
+    \item 如果 $p=\alpha[f]$ 以及 $q=\omega[f]$，那么
+    \[
+      [f][f^-]=[i_p],\quad [f^-][f]=[i_q].
+    \]
+  \end{enumerate}
+\end{theorem}
 
 
 
