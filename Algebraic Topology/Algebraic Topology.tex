@@ -1338,7 +1338,7 @@ $\det V=\prod_{j<i}(r_i-r_j)$。如果我们把 $V$ 的每一列（从第一列�
   显然 $R,T$ 互逆并且连续，所以是同胚。
 \end{proof}
 
-\begin{problem}{}{}
+\begin{problem}{}{affine expr}
   给出仿射映射 $\theta:\mathbb{R}\to \mathbb{R}$ 的精确公式，
   设其把 $[s_1,s_2]$ 送到 $[t_1,t_2]$，$\theta(s_i)=t_i$。
 \end{problem}
@@ -1482,7 +1482,7 @@ $I\to X$ 都是同伦的（\ref{prob:null}），也就是说这只有一个同�
 \begin{definition}
   如果 $f:I\to X$ 是从 $x_0$ 到 $x_1$ 的道路，我们说 $x_0$ 是 $f$
   的\emph{起始点}并且记 $x_0=\alpha(f)$，$x_1$ 是 $f$ 的\emph{终点}
-  并且记 $x_1=\omega(f)$。$X$ 中的道路 $f$ 被称为在 $x_0$ 处\emph{闭合}，
+  并且记 $x_1=\omega(f)$。$X$ 中的道路 $f$ 被称为是 $x_0$ 处的\emph{环道}，
   如果 $\alpha(f)=x_0=\omega(f)$。
 \end{definition}
 
@@ -1601,7 +1601,7 @@ $I\to X$ 都是同伦的（\ref{prob:null}），也就是说这只有一个同�
 \ref{prob:* is not a group} 表明在道路乘法 $*$ 的作用下道路集合不能形成
 一个群。但是下面的定理告诉我们对于道路类来说可以解决大部分问题。
 
-\begin{theorem}
+\begin{theorem}\label{thm:groupoid}
   $X$ 是空间，那么 $X$ 的所有道路类集合在乘法 $[f][g]=[f*g]$ 下形成
   一个群胚，其满足下面的性质：
   \begin{enumerate}
@@ -1617,6 +1617,122 @@ $I\to X$ 都是同伦的（\ref{prob:null}），也就是说这只有一个同�
     \]
   \end{enumerate}
 \end{theorem}
+\begin{proof}
+  (1) 我们证明 $i_p*f\simeq f\relhomo$ 即可。我们可以画出下面的图来理解。
+  \begin{center}
+    \begin{tikzpicture}[scale=3]
+      \draw (0,0) coordinate(O) rectangle (1,1) coordinate(P);
+      \draw[-stealth] (O) -- (1.2,0) node [right]{$s$};
+      \draw[-stealth] (O) -- (0,1.2) node [above]{$t$};
+      \node[below] at (O-|P) {$(1,0)$};
+      \node[below] at (O) {$(0,0)$};
+      \node[below] at ($(O)!0.5!(O-|P)$) {$(\frac{1}{2},0)$};
+      \node[left] at (O|-P) {$(0,1)$};
+      \draw[postaction=decorate] ($(O)!0.5!(O-|P)$) coordinate (S) -- (O|-P);
+      \coordinate (T) at ($(S)!0.3!(O|-P)$);
+      \draw (T) -- (T-|P) node[right] {$(1,t)$};
+    \end{tikzpicture}
+  \end{center}
+  对于固定的 $t\in I$，我们需要一个仿射映射 $\theta_t:[(1-t)/2,1]\to [0,1]$，这样
+  $f(\theta_t(s))$ 就是一个道路。根据 \ref{prob:affine expr}，我们有
+  \[
+    \theta_t(s)=\frac{2}{1+t}s+\frac{t-1}{t+1}.
+  \]
+  于是定义 $H:I\times I\to X$ 为
+  \[
+    H(s,t)=\begin{cases}
+      p & s\leq \frac{1-t}{2},\\
+      f(\theta_t(s)) & s\geq \frac{1-t}{2},
+    \end{cases}
+  \]
+  就有 $H:i_p*f\simeq f\relhomo$。对于 $[f][i_q]=[f]$ 类似。
+
+  (2) 我们需要证明 $\bigl([f][g]\bigr)[h]=[f]\bigl([g][h]\bigr)$，即
+  证明 $(f*g)*h\simeq f*(g*h)\relhomo$。
+  画图可得
+  \begin{center}
+    \begin{tikzpicture}[scale=3]
+      \draw (0,0) coordinate(O) rectangle (1,1) coordinate(P);
+      \draw[-stealth] (O) -- (1.2,0) node [right]{$s$};
+      \draw[-stealth] (O) -- (0,1.2) node [above]{$t$};
+      \node[below] at (O-|P) {$1$};
+      \node[below] at (O) {$0$};
+      \node[left] at (O|-P) {$1$};
+      \coordinate[label={[below]$\frac{1}{2}$}] (1/2) at ($(O)!0.5!(O-|P)$); 
+      \coordinate[label={[below]$\frac{1}{4}$}] (1/4) at ($(O)!0.25!(O-|P)$); 
+      \coordinate[label={[above]$\frac{1}{2}$}] (1/2u) at ($(O|-P)!0.5!(P)$); 
+      \coordinate[label={[above]$\frac{3}{4}$}] (3/4) at ($(O|-P)!0.75!(P)$); 
+      \draw (1/4) -- (1/2u);
+      \draw (1/2) -- (3/4);
+      \draw (0,0.3) node[left]{$t$} -- (1,0.3);
+    \end{tikzpicture}
+  \end{center}
+  令 $\theta_t:[0,(1+t)/4]\to [0,1]$，$\sigma_t:[(1+t)/4,(2+t)/4]\to [0,1]$，
+  $\mu_t:[(2+t)/4,1]\to [0,1]$ 是仿射映射，那么
+  \[
+    H(s,t)=\begin{cases}
+      f(\theta_t(s)) & s\leq \frac{1+t}{4},\\
+      g(\sigma_t(s)) & \frac{1+t}{4}\leq s\leq\frac{2+t}{4},\\
+      h(\mu_t(s)) & s\geq \frac{2+t}{4}
+    \end{cases}
+  \]
+  即为所求的相对同伦。
+
+  (3) 我们证明 $f*f^-\simeq i_p\relhomo$。画图可得
+  \begin{center}
+    \begin{tikzpicture}[scale=3]
+      \draw (0,0) coordinate(O) rectangle (1,1) coordinate(P);
+      \draw[-stealth] (O) -- (1.2,0) node [right]{$s$};
+      \draw[-stealth] (O) -- (0,1.2) node [above]{$t$};
+      \node[below] at (O-|P) {$1$};
+      \node[below] at (O) {$0$};
+      \node[left] at (O|-P) {$1$};
+      \coordinate[label={[below]$\frac{1}{2}$}] (1/2) at ($(O)!0.5!(O-|P)$); 
+      \draw (1/2) -- (O|-P);
+      \draw (1/2) -- (P);
+      \draw (0,0.3) node[left]{$t$} -- (1,0.3);
+    \end{tikzpicture}
+  \end{center}
+  令 $\theta_t:[0,(1-t)/2]\to [0,1]$，$\sigma_t:[(1-t)/2,(1+t)/2]\to [0,1]$，
+  $\mu_t:[(1+t)/2,1]\to [0,1]$ 是仿射映射，那么
+  \[
+    H(s,t)=\begin{cases}
+      f(\theta_t(s)) & s\leq \frac{1-t}{2},\\
+      i_q(\sigma_t(s)) & \frac{1-t}{2}\leq s\leq\frac{1+t}{2},\\
+      f^-(\mu_t(s)) & s\geq \frac{1+t}{2}
+    \end{cases}
+  \]
+  即为所求的相对同伦。
+\end{proof}
+
+\autoref{thm:groupoid} 中的道路类并不构成群，因为道路类的乘法并不总是有定义。我们以最简单的
+方式弥补这一点，即只关注环道。
+
+\begin{definition}
+  固定一个点 $x_0\in X$，这个点被称为\emph{基点}。定义 $X$ 在基点 $x_0$ 处的\emph{基本群}为
+  \[
+    \pi_1(X,x_0)=\bigl\{[f]\,|\,\alpha[f]=x_0=\omega[f]\bigr\}.
+  \]
+  群乘法为
+  \[
+    [f][g]=[f*g].
+  \]
+\end{definition}
+
+根据 \autoref{thm:groupoid}，我们知道 $\pi_1(X,x_0)$ 确实是一个群。
+
+
+\section{函子 \texorpdfstring{$\pi_1$}{pi}}
+
+我们已经引入了带点拓扑范畴 $\cat{Top_*}$，此时态射 $f:(X,x_0)\to (Y,y_0)$
+是保持基点的连续映射 $f:X\to Y$，即 $f(x_0)=y_0$。在 $\cat{Top_*}$ 中，
+我们通常选择 $0$ 作为 $I$ 的基点，$1$ 作为 $\mathbb{S}^1$ 的基点。
+
+\begin{theorem}
+  $\pi_1:\cat{Top_*}\to\cat{Grp}$ 是一个协变函子。此外，如果 $h,k:(X,x_0)\to (Y,y_0)$
+  满足 $h\simeq k\rel\{x_0\}$，那么 $\pi_1(h)=\pi_1(k)$。
+\end{theorem}
+ 
 
 
 
