@@ -1991,17 +1991,18 @@ $\iota:(A,x_0)\to (X,x_0)$ 是带点映射，因此诱导了同态 $\iota_*:\pi_
 因为 $\pi_1(X,x_0)$ 由所有映射 $\mathbb{S}^1\to X$ 的相对同伦类构成，
 所以考虑 $X=\mathbb{S}^1$ 本身的时候是自然的。
 
-\begin{lemma}
+\begin{lemma}\label{lemma:lift of X}
   令 $X$ 是 $\mathbb{R}^k$ 的一个紧凸集，$f:(X,x_0)\to (\mathbb{S}^1,1)$
   是连续映射，令 $t_0\in \mathbb{Z}$，那么存在唯一的连续映射
   $\tilde f:(X,x_0)\to (\mathbb{R},t_0)$ 使得 $\exp 2\pi i \tilde f=f$。
   \[
     \begin{tikzcd}[sep=large]
-      & (\mathbb{R},t_0)\arrow[d,"\exp 2\pi i"] \\
+      & (\mathbb{R},t_0)\arrow[d,"\pi"] \\
       (X,x_0)\arrow[ur,"\tilde f",dashed]\arrow[r,"f"']
       & (\mathbb{S}^1,1).
     \end{tikzcd}
   \]
+  其中 $\pi$ 表示 $\pi(x)=\exp 2\pi i x$。
 \end{lemma}
 \begin{remark}
   \begin{enumerate}
@@ -2010,8 +2011,137 @@ $\iota:(A,x_0)\to (X,x_0)$ 是带点映射，因此诱导了同态 $\iota_*:\pi_
     $t_0$ 必须是整数。
   \end{enumerate}
 \end{remark}
+\begin{proof}
+  思路是将 $\pi$ 限制在 $(-\frac{1}{2},\frac{1}{2})$ 上，此时 $\pi$ 是到 $\mathbb{S}^1 \smallsetminus\{-1\}$
+  是同胚映射，我们直接考虑其逆映射 $\lambda$。此时我们自然地想定义 $\tilde f(x)=t_0+\lambda(f(x))$，
+  因为这使得 $\tilde f(x_0)=t_0+\lambda(1)=t_0$。但是问题在于可能存在 $f(x)=-1$ 的情况，所以我们需要
+  做一点技术性的处理。
+  
+  因为 $X$ 是紧的，所以 $f$ 一致连续，所以存在 $\varepsilon>0$ 使得 $\norm{x-x'}<\varepsilon$ 的时候有
+  $\norm{f(x)-f(x')}<2$，这里选取 $2$ 是因为这保证 $f(x),f(x')$ 不会是对径点。$X$
+  有界表明存在 $n$ 使得 $\norm{x-x_0}/n<\varepsilon$。
+
+  对于每个 $x\in X$，我们连接 $x_0$ 到 $x$ 的线段，$X$ 的凸性保证了这仍然在 $X$ 中。将这个线段 $n$ 等分，
+  设等分点为 $x_0,x_1,\dots,x_n=x$。那么 $\norm{x_j-x_{j+1}}=\norm{x-x_0}/n<\varepsilon$，所以
+  $f(x_j)$ 和 $f(x_{j+1})$ 不会是对径点，也即 $f(x_j)^{-1}f(x_{j+1})\neq -1$。
+  这就表明 $f(x_j)^{-1}f(x_{j+1})\in \mathbb{S}^1 \smallsetminus\{-1\}$。注意到
+  \[
+    f(x)=f(x_0)\bigl[f(x_0)^{-1}f(x_1)\bigr]\bigl[f(x_1)^{-1}f(x_2)\bigr]\cdots\bigl[f(x_{n-1})^{-1}f(x_n)\bigr],
+  \]
+  所以我们定义 $g_j:X\to \mathbb{S}^1 \smallsetminus\{-1\}$ 为
+  $g_j(x)=f(x_j)^{-1}f(x_{j+1})$，所以
+  \[
+    f(x)=f(x_0)g_0(x)g_1(x)\cdots g_{n-1}(x).
+  \]
+  于是我们定义 $\tilde{f}:X\to \mathbb{R}$ 为
+  \[
+    \tilde{f}(x)=t_0+\lambda(g_0(x))+\lambda_1(g_1(x))+\cdots+\lambda(g_{n-1}(x)),
+  \]
+  此时便有 $\tilde{f}(x_0)=t_0$。
+
+  下面证明唯一性即可。假设 $\tilde g:X\to \mathbb{R}$ 也是满足上述交换图的带点连续映射。定义
+  $h:X\to \mathbb{R}$ 为 $h(x)=\tilde{f}(x)-\tilde{g}(x)$。此时
+  \[
+    \pi h(x)=\pi\bigl(\tilde{f}(x)-\tilde{g}(x)\bigr)=\pi \tilde{f}(x)/\pi \tilde{g}(x)=1,
+  \]
+  所以 $h$ 的取值一定是整数，又因为 $X$ 是连通的，所以 $h$ 一定是常值的且值为某个整数。
+  而 $h(x_0)=\tilde{f}(x_0)-\tilde{g}(x_0)=t_0-t_0=0$，所以 $\tilde{f}=\tilde{g}$。
+\end{proof}
+
+\begin{corollary}\label{coro:lift of path}
+  令 $f:(I,\partI)\to (\mathbb{S}^1,1)$ 是连续映射。
+  \begin{enumerate}
+    \item 存在唯一的连续映射 $\tilde{f}:I\to \mathbb{R}$ 使得 $\exp 2\pi i \tilde{f}=f$
+    并且 $\tilde{f}(0)=0$。
+    \item 如果 $g:(I,\partI)\to (\mathbb{S}^1,1)$ 是连续映射并且 $f\simeq g\relhomo$，
+    那么 $\tilde{f}\simeq \tilde{g}\relhomo$，此外 $\tilde{f}(1)=\tilde{g}(1)$。
+  \end{enumerate}
+\end{corollary}
+\begin{proof}
+  (1) 利用上面的引理即得。
+
+  (2) 设 $F:I\times I\to \mathbb{S}^1$ 是相对同伦，于是 $F(0,0)=f(0)=1$。引理表明存在连续映射 $\wtilde F:I\times I\to \mathbb{R}$
+  使得 $\wtilde F(0,0)=0$ 且 $\exp 2\pi i \wtilde F=F$。我们证明 $\wtilde F:\tilde f\simeq \tilde g\relhomo$。
+
+  考虑 $\varphi_0(s)=\wtilde F(s,0)$，那么  $\exp 2\pi i\varphi_0(s)=\exp 2\pi i\wtilde F(s,0)=F(s,0)=f(s)$，
+  根据提升的唯一性，所以 $\varphi_0=\tilde f$。类似的，可以证明 $\wtilde F(s,1)=\tilde g$。
+  下面我们还要说明 $\wtilde F$ 是相对同伦。考虑 $\theta_0(t)=\wtilde F(0,t)$，
+  那么 $\exp 2\pi i \theta_0(t)=F(0,t)=1$，结合 $\theta_0(0)=0$，所以
+  $\theta_0(t)=0$。类似的可以证明 $\wtilde F(1,t)=0$。这就表明 $\wtilde F:\tilde f\simeq \tilde g\relhomo$。
+  此外，还有 $\tilde f(1)=\wtilde F(1,t)=g(1)$。
+\end{proof}
+
+直观上来说，这意味着如果 $f,g$ 相对同伦，那么它们的提升的终点一定相同，也即“缠绕的圈数”一定相同。
+
+\begin{definition}
+  如果 $f:(I,\partI)\to (\mathbb{S}^1,1)$ 是连续映射，定义 $f$ 的\emph{映射度}为
+  \[
+    \deg f=\tilde f(1),
+  \]
+  其中 $\tilde f$ 是 $f$ 的唯一满足 $\tilde f(0)=0$ 的提升。
+\end{definition}
+
+注意到 $\exp 2\pi i \tilde f(1)=f(1)=1$，所以 $\deg f$ 一定是整数。
+
+\begin{theorem}
+  定义函数 $d:\pi_1(\mathbb{S}^1,1)\to \mathbb{Z}$ 为 $[f]\mapsto \deg f$，这是一个群同构。
+  特别地，有 $\deg (f*g)=\deg f+\deg g$。
+\end{theorem}
+\begin{proof}
+  \autoref{coro:lift of path} 告诉我们 $d$ 是良好定义的。然后我们说明 $d$ 是满射。
+  对于任意 $m\in \mathbb{Z}$，函数 $f(s)=\exp 2\pi i ms$ 有映射度 $m$，
+  所以 $d$ 是满射。现在先假设 $d$ 是同态，说明 $d$ 是单射。令 $\deg f=0$，那么
+  $f$ 的提升满足 $\tilde f(1)=0$，于是 $\tilde f$ 是 $\mathbb{R}$ 中以 $0$ 为基点的环道。
+  现在 $\pi:(\mathbb{R},0)\to (\mathbb{S}^1,1)$ 诱导出群同态 $\pi_1(\mathbb{R},0)\to \pi_1(\mathbb{S}^1,1)$
+  使得 $[\tilde f]\mapsto [\pi\circ \tilde f]=[f]$，$\mathbb{R}$ 可缩表明 $\pi_1(\mathbb{R},0)$
+  是平凡群，所以 $[f]=1$ 是 $\pi_1(\mathbb{S}^1,1)$ 的单位元，故 $d$ 是单射。
+  
+  现在只需要说明 $d$ 是群同态。假设 $f,g$ 分别是 $\mathbb{S}^1$ 中以 $1$ 为基点的映射度为
+  $m,n$ 的环道。我们需要计算 $\deg(f*g)$，也即寻找道路 $\tilde h:I\to \mathbb{R}$ 使得
+  $\exp 2\pi i \tilde h=f*g$ 且 $\tilde h(0)=0$。设 $\tilde g$ 是 $g$ 的提升且 $\tilde g(0)=0$，
+  定义 $\tilde \gamma:I\to \mathbb{R}$ 是 $\tilde{\gamma}(s)=m+\tilde g(s)$，此时
+  $\tilde{\gamma}$ 是从 $m$ 到 $m+n$ 的道路。令 $\tilde f$ 是 $f$ 的提升且 $\tilde f(0)=0$，
+  那么 $\tilde f*\tilde \gamma$ 有意义（因为 $\tilde f(1)=\deg f=m$）且 
+  $\tilde f*\tilde \gamma(0)=0$，$\tilde f*\tilde \gamma(1)=m+n$。我们断言
+  $\tilde{f}*\tilde{\gamma}$ 是 $f*g$ 的提升即可。这只需要直接验证：
+  \[
+    \exp\bigl(2\pi i(\tilde f*\tilde \gamma)(s)\bigr)=\begin{cases}
+      f(2s) & 0\leq s\leq \frac{1}{2},\\
+      g(2s-1) & \frac{1}{2}\leq s\leq 1.
+    \end{cases}
+  \]
+  这就说明了 $d$ 是群同构。
+\end{proof}
+
+\begin{corollary}
+  $\mathbb{S}^1$ 不是单连通的。
+\end{corollary}
+
+\begin{corollary}
+  $\mathbb{S}^1$ 中的两个以 $1$ 为基点的环道相对同伦当且仅当它们有相同的映射度。
+\end{corollary}
+\begin{proof}
+  如果 $f\simeq g\relhomo$，根据 \autoref{coro:lift of path}，就有 $\deg f=\deg g$。
+  反之，若 $\deg f=\deg g$，那么 $[f]=[g]$。
+\end{proof}
 
 
+\begin{definition}
+  一个\emph{拓扑群}指的是群 $G$ 同时是一个拓扑空间，满足：
+  \begin{enumerate}
+    \item 乘法映射 $\mu:G\times G\to G$ 是连续映射；
+    \item 逆映射 $i:G\to G$ 是连续映射。
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}
+  对于一个带点空间 $(X,x_0)$，如果存在一个带点映射
+  $m:\bigl(X\times X,(x_0,x_0)\bigr)\to (X,x_0)$ 使得 $(X,x_0)$ 上的带点映射
+  $m(x_0,\cdot)$ 和 $m(\cdot,x_0)$ 都相对 $\{x_0\}$ 同伦于 $1_X$，那么
+  我们说 $(X,x_0)$ 是\emph{$H$-空间}，$x_0$ 是\emph{同伦单位元}。
+\end{definition}
+
+显然，任意拓扑群 $X$ 带上单位元 $x_0$ 和群乘法 $m$ 都是 $H$-空间。
 
 
 
