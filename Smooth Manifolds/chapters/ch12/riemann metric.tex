@@ -256,13 +256,20 @@ $(M,g)$ 被称为\emph{平坦黎曼流形}，$g$ 被称为\emph{平坦度量}。
 \[
   \hat g(v)(w)=g_p(v,w)\quad w\in T_pM.  
 \]
-任取 $X\in \mathfrak{X}(M)$，诱导了 $\mathfrak{X}^*(M) \to C^\infty(M)$ 的映射 $\hat g(X)$：
+$\hat g$ 诱导了 $\mathfrak{X}(M)\to \mathfrak{X}^*(M)$ 的映射：
 \[
-  \hat g(X)(Y)=g(X,Y).   
+  \hat g(X)(Y)=g(X,Y),\quad X,Y\in \mathfrak{X}(M).
 \]
-我们使用同一个记号来表示这个映射。
+我们使用同一个记号来表示这个映射。由于 $\hat g(X):\mathfrak{X}(M)\to C^\infty(M)$
+是 $C^\infty(M)$-线性的，根据张量表征引理，$\hat g(X)$ 是一个光滑余向量场。
+又因为 $\hat g$ 是 $C^\infty(M)$-线性的，根据丛同态表征引理，
+$\hat g$ 是一个光滑丛同态。
 
-注意到 $\hat g$ 在每个点处是单射，所以也是满射，所以 $\hat g$ 是双射，
+设 $v\in T_pM$ 使得 $\hat g(v)=0$，那么
+\[
+  0=\hat g(v)(v)=g_p(v,v),
+\]
+所以 $v=0$，所以 $\hat g$ 在每个点处是单射，再根据维数相同，所以 $\hat g$ 是双射，
 从而是丛同构。
 
 在任意光滑坐标 $(x^i)$ 中，我们可以写为 $g=g_{ij}\d x^i\d x^j$，
@@ -357,7 +364,7 @@ $\hat g^{-1}(\omega)$，我们说 $\omega^\sharp$ 是 $\omega$
 \end{example}
 
 黎曼流形上函数 $f$ 的梯度实际上与 Euclid 空间中的梯度有相同的几何性质：
-其指向 $f$ 下降最快的方向，正交于 $f$ 的水平集，并且其长度是 $f$ 在任意方向上的
+其指向 $f$ 上升最快的方向，正交于 $f$ 的水平集，并且其长度是 $f$ 在任意方向上的
 方向导数的最大值。要看出这一点，任取 $p\in M$ 和 $v\in T_pM$，有
 \[
   vf=\d f_p(v)=  \inn{\grad f|_p,v}_g,

@@ -669,7 +669,7 @@ $\d\circ\d =0$ 表明恰当形式都是闭形式。我们已经看到闭形式�
 的 (Euclid) 梯度和向量场 $X\in \mathfrak{X}(\mathbb{R}^n)$ 的\emph{散度}
 分别定义为
 \begin{equation}
-  \grad f=\sum_{i=1}^n\frac{\partial f}{\partial x^i}\d x^i,\quad 
+  \grad f=\sum_{i=1}^n\frac{\partial f}{\partial x^i}\frac{\partial}{\partial x^i},\quad 
   \dive X=\sum_{i=1}^n\frac{\partial X^i}{\partial x^i}.
 \end{equation}
 此外，在 $n=3$ 的时候，向量场 $X\in \mathfrak{X}(\mathbb{R}^3)$ 的\emph{旋度}
@@ -698,8 +698,8 @@ $\flat:\mathfrak{X}(\mathbb{R}^3)\to \Omega^1(\mathbb{R}^3)$。
   \beta(X)=X\into (\d x\wedge\d y\wedge \d z).
 \end{equation}
 不难验证 $\beta$ 是 $C^\infty(\mathbb{R}^3)$-线性的，所以其对应一个
-光滑丛同态 $TM\to \Lambda^2T^*\mathbb{R}^3$。这是一个单射且
-$TM$ 和 $\Lambda^2T^*\mathbb{R}^3$ 的秩都是 $3$，所以这是一个丛同构。
+光滑丛同态 $T \mathbb{R}^3\to \Lambda^2T^*\mathbb{R}^3$。这是一个单射且
+$T \mathbb{R}^3$ 和 $\Lambda^2T^*\mathbb{R}^3$ 的秩都是 $3$，所以这是一个丛同构。
 类似的，我们可以定义光滑丛同构 $*:C^\infty(\mathbb{R}^3)\to \Omega^3(\mathbb{R}^3)$
 为
 \begin{equation}

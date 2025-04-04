@@ -238,12 +238,12 @@ $F:E\to E'$ 同时是（光滑）丛同构，那么我们说 $E$ 和 $E'$
   $F$ 是双射表明任取 $p\in M$，$F|_{E_p}:E_p\to E_{F(p)}'$ 是双射的线性映射，
   所以 $F|_{E_p}$ 是同构，所以 $F^{-1}|_{E_{F(p)}'}$ 是同构，故
   $F^{-1}$ 是双射的丛同态，所以 $F$ 是丛同构。
-  任取 $p\in M$，设 $\varPhi$ 是 $E$ 在 $U$ 上的局部平凡化，
-  $\varPhi'$ 是 $E'$ 在 $U'$ 上的局部平凡化，那么 
-  $F$ 在 $U\cap U'$ 中的坐标表示为
+  任取 $p\in M$，设 $\varPhi$ 是 $E$ 在 $(U,\varphi)$ 上的局部平凡化，
+  $\varPhi'$ 是 $E'$ 在 $(V,\psi)$ 上的局部平凡化，那么 
+  $F$ 在 $U\cap V$ 中的坐标表示为
   \[
-    (x,v)\mapsto (p,\varPhi^{-1}(v))\mapsto \bigl(p,F\circ\varPhi^{-1}(v)\bigr)  
-    \mapsto \bigl(x,\varPhi'\circ F\circ\varPhi^{-1}(v)\bigr),
+    (x,v)\mapsto (\varphi^{-1}(x),\varPhi^{-1}(v))\mapsto \bigl(\varphi^{-1}(x),F\circ\varPhi^{-1}(v)\bigr)  
+    \mapsto \bigl(\psi\circ\varphi^{-1}(x),\varPhi'\circ F\circ\varPhi^{-1}(v)\bigr),
   \]
   注意到 $\varPhi'\circ F\circ\varPhi^{-1}:\mathbb{R}^m\to \mathbb{R}^{n}$
   是双射的线性映射，所以 $F$ 是微分同胚。
@@ -260,6 +260,31 @@ $F:E\to E'$ 同时是（光滑）丛同构，那么我们说 $E$ 和 $E'$
   \end{enumerate}
 \end{example}
 
+设 $E\to M$ 和 $E'\to M$ 是光滑流形 $M$ 上的光滑向量丛，
+令 $\Gamma(E),\Gamma(E')$ 表示它们的光滑全局截面。如果
+$F:E\to E'$ 是光滑丛同态，那么诱导出一个映射 $\wtilde F:\Gamma(E)\to\Gamma(E')$
+为
+\begin{equation}
+  \wtilde F(\sigma)(p)=(F\circ\sigma)(p).
+\end{equation}
+不难验证 $\wtilde F(\sigma)$ 是 $E'$ 的一个截面，并且是光滑截面。
+
+因为丛同态在纤维上是线性映射，所以上述截面上的映射 $\wtilde F$ 在
+$\mathbb{R}$ 上是线性的。实际上它们满足更强的线性性，即在 $C^\infty(M)$
+上是线性的。即任取 $f\in C^\infty(M)$，有
+\[
+  \wtilde F(f\sigma)(p)=F\bigl(f(p)\sigma(p)\bigr)
+  =f(p)F(\sigma(p))=\bigl(f\wtilde{F}(\sigma)\bigr)(p),
+\]
+所以这表明 $\wtilde F(f\sigma)=f\wtilde F(\sigma)$。
+实际上，这个 $C^\infty(M)$-线性性完全刻画了丛同态。
+
+\begin{lemma}[丛同态表征引理]
+  令 $\pi:E\to M$ 和 $\pi':E\to M$ 是光滑流形 $M$ 上的光滑向量丛，
+  映射 $\mathcal{F}:\Gamma(E)\to\Gamma(E')$ 在 $C^\infty(M)$
+  上是线性的当且仅当存在一个光滑丛同态 $F:E\to E'$
+  使得对于所有 $\sigma\in\Gamma(E)$ 有 $\mathcal{F}(\sigma)=F\circ\sigma$。
+\end{lemma}
 
 
 

@@ -51,10 +51,12 @@
 \DeclareMathOperator\rad{rad}
 \DeclareMathOperator\Alt{Alt}
 \DeclareMathOperator\Max{Max}
+\DeclareMathOperator\card{card}
 \DeclareMathOperator\GL{GL}
 \DeclareMathOperator\Orth{O}
 \DeclareMathOperator\SO{SO}
 \DeclareMathOperator\SU{SU}
+\DeclareMathOperator\cls{cls}
 \DeclareMathOperator\Lie{Lie}
 \DeclareMathOperator\End{End}
 \DeclareMathOperator\Int{Int}
@@ -65,6 +67,7 @@
 \DeclareMathOperator\Id{Id}
 \DeclareMathOperator\rk{rank}
 \DeclareMathOperator\grad{grad}
+\DeclareMathOperator\rank{rank}
 \DeclareMathOperator\Euc{E}
 \DeclareMathOperator\ob{ob}
 \DeclareMathOperator\diam{diam}
@@ -2142,6 +2145,446 @@ $\iota:(A,x_0)\to (X,x_0)$ 是带点映射，因此诱导了同态 $\iota_*:\pi_
 \end{definition}
 
 显然，任意拓扑群 $X$ 带上单位元 $x_0$ 和群乘法 $m$ 都是 $H$-空间。
+
+如果 $k:X\to X$ 是 $x_0$ 处的常值映射，记 $(k,1_X):X\to X\times X$
+是映射 $x\mapsto (x_0,x)$，那么 $m(x_0,\cdot)=m\circ (k,1_X)$。
+同理，有 $m(\cdot,x_0)=m\circ (1_X,k)$。
+
+\begin{theorem}
+  如果 $(X,x_0)$ 是 $H$-空间，那么 $\pi_1(X,x_0)$ 是交换群。
+\end{theorem}
+\begin{proof}
+  我们已经证明了 $\theta:\pi_1(X,x_0)\times\pi_1(X,x_0)\to\pi_1\bigl(X\times X,(x_0,x_0)\bigr)$
+  是同构映射，满足 $\bigl([f],[g]\bigr)\mapsto [(f,g)]$。
+  任取 $[f],[g]\in\pi_1(X,x_0)$，那么我们有
+  \begin{align*}
+    [g]&=[1_X\circ g]=[m(x_0,\cdot)\circ g]=\bigl(m\circ (k,1_X)\bigr)_*[g]
+    \\
+    &=m_*(k,1_X)_*[g]=m_*[(kg,g)]=m_*\theta\bigl([kg],[g]\bigr)\\
+    &=m_*\theta(e,[g]).
+  \end{align*}
+  其中 $e=[kg]$ 是 $\pi_1(X,x_0)$ 的单位元。类似的，还有
+  \[
+    [f]=m_*\theta([f],e).
+  \]
+  因为 $m_*\theta$ 是群同态，所以
+  \begin{align*}
+    m_*\theta\bigl([f],[g]\bigr)&=m_*\theta\bigl((e,[g])([f],e)\bigr)\\
+    &=m_*\theta(e,[g])m_*\theta([f],e)=[g][f],
+  \end{align*}
+  另一方面利用 $([f],[g])=([f],e)(e,[g])$，可以得出
+  $m_*\theta\bigl([f],[g]\bigr)=[f][g]$，所以
+  $[f][g]=[g][f]$，即 $\pi_1(X,x_0)$ 是交换群。
+\end{proof}
+
+\begin{corollary}
+  如果 $G$ 是拓扑群，那么 $\pi_1(G,e)$ 是交换群。
+\end{corollary}
+
+上述推论的逆否命题更有趣。如果 $X$ 是拓扑空间，但是 $\pi_1(X,x_0)$
+不交换，这意味着无法在 $X$ 上定义一个群结构使得其成为一个拓扑群。
+
+\chapter{奇异同调}
+
+\section{奇异复形和同调函子}
+
+\begin{definition}
+  $\Delta^n=[e_0,e_1,\dots,e_n]$ 的一个\emph{定向}指的是一组有序的顶点。
+\end{definition}
+
+\begin{definition}
+  $\Delta^n$ 的两个定向是\emph{相同的}，如果它们作为
+  $\{e_0,e_1,\dots,e_n\}$ 上的置换有相同的奇偶性。否则
+  说它们是\emph{相反的}。
+\end{definition}
+
+给定一个 $\Delta^n$ 的定向，可以诱导出其 $i$-面上的定向，即
+$(-1)^i[e_0,\dots,\hat e_i,\dots,e_n]$。例如，假设 $\Delta^2$
+被逆时针定向：
+\begin{center}
+  \begin{tikzpicture}[scale=2]
+    \draw (-30:1) node [right] {$e_1$} -- (90:1) node[above]{$e_2$} -- (210:1) node[left]{$e_0$} -- cycle;
+    \draw[-stealth] (-150:0.3) arc(-150:150:0.3);
+  \end{tikzpicture} 
+\end{center}
+那么 $\Delta^2$ 的 $0$-面是 $[\hat e_0,e_1,e_2]=[e_1,e_2]$，定向为
+$[e_1,e_2]$。$1$-面是 $[e_0,\hat e_1,e_2]=[e_0,e_2]$，定向为
+$-[e_0,e_2]=[e_2,e_0]$。$2$-面是 $[e_0,e_1,\hat e_2]=[e_0,e_1]$，
+定向为 $[e_0,e_1]$。
+
+于是 $\Delta^2$ 的边界为 
+\[
+  [\hat e_0,e_1,e_2]\cup [e_0,\hat e_1,e_2]\cup [e_0,e_1,\hat e_2],
+\]
+定向边界为
+\[
+  [\hat e_0,e_1,e_2]\cup -[e_0,\hat e_1,e_2]\cup [e_0,e_1,\hat e_2].
+\]
+一般的，可以定义 $\Delta^n=[e_0,e_1,\dots,e_n]$ 的边界为
+$\bigcup_{i=0}^n [e_0,\dots,\hat e_i,\dots,e_n]$，
+定向边界为 $\bigcup_{i=0}^n (-1)^i[e_0,\dots,\hat e_i,\dots,e_n]$。
+
+\begin{definition}
+  令 $X$ 是拓扑空间，$X$ 中的一个\emph{（奇异）$n$-单纯形}指的是
+  连续映射 $\sigma:\Delta^n\to X$，其中 $\Delta^n$ 是标准 $n$-单纯形。
+\end{definition}
+
+因为 $\Delta^1$ 就是闭区间，所以 $X$ 中的奇异 1-单纯形本质上就是 $X$
+中的一个道路。因为 $\Delta^0$ 是单点集，所以奇异 0-单纯形被视为 $X$
+中的一个点。
+
+\begin{definition}
+  令 $X$ 是拓扑空间，对于每个 $n\geq 0$，定义 $S_n(X)$
+  是以 $X$ 中的奇异 $n$-单纯形为基生成的自由 Abelian 群。
+  定义 $S_{-1}(X)=0$。$S_n(X)$ 的元素被称为 $X$
+  中的\emph{（奇异）$n$-链}。
+\end{definition}
+
+一个奇异 $n$-单纯形 $\sigma:\Delta^n\to X$ 的定向边界应该为
+$\sum_{i=0}^n(-1)^i\sigma|_{[e_0,\dots,\hat e_i,\dots,e_n]}$，
+但是 $[e_0,\dots,\hat e_i,\dots,e_n]$ 不是标准 $(n-1)$-单纯形 $\Delta^{n-1}$。
+不过我们可以通过一些简单的技巧弥补这一点。对于每个 $n$ 和 $i$，定义
+$i$-面映射
+\[
+  \varepsilon_i^n:\Delta^{n-1}\to \Delta^n 
+\]
+为将 $\Delta^{n-1}$ 的顶点 $\{e_0,\dots,e_{n-1}\}$ 送到 $\Delta^n$
+的顶点 $\{e_0,\dots,\hat e_i,\dots,e_n\}$ 的仿射映射，并且其保持
+坐标的顺序：
+\begin{align*}
+  &\varepsilon_0^n:(t_0,\dots,t_{n-1})\mapsto (0,t_0,\dots,t_{n-1});\\
+  &\varepsilon_in:(t_0,\dots,t_{n-1})\mapsto (t_0,\dots,t_{i-1},0,t_{i+1},\dots,t_{n-1}).
+\end{align*}
+例如，面映射 $\varepsilon_i^2:\Delta^1\to \Delta^2$ 满足
+$\varepsilon_0^2:[e_0,e_1]\mapsto [e_1,e_2]$，
+$\varepsilon_1^2:[e_0,e_1]\mapsto [e_0,e_2]$，
+$\varepsilon_2^2:[e_0,e_1]\mapsto [e_0,e_1]$。
+注意上述例子中左右两端的 $e_i$ 表示的含义是不同的。
+
+\begin{definition}
+  如果 $\sigma:\Delta^n\to X$ 是连续映射并且 $n>0$，定义\emph{边界}为
+  \[
+    \partial_n\sigma=\sum_{i=0}^n (-1)^i\sigma\varepsilon_i^n\in S_{n-1}(X).
+  \]
+  如果 $n=0$，定义 $\partial_0\sigma=0$。
+\end{definition}
+
+注意到当 $X=\Delta^n$ 且 $\delta:\Delta^n\to\Delta^n$ 是恒等映射的时候，
+有
+\[
+  \partial_n\delta=\sum_{i=0}^{n} (-1)^i\varepsilon_i^n,
+\]
+这和定向边界的定义是一致的。
+
+\begin{theorem}
+  对于每个 $n\geq 0$，存在唯一的同态 $\partial_n:S_n(X)\to S_{n-1}(X)$
+  使得对于任意奇异 $n$-单纯形 $\sigma$ 有 
+  $\partial_n\sigma=\sum_{i=0}^n(-1)^i\sigma\varepsilon_i^n$ 成立。
+\end{theorem}
+
+同态 $\partial_n:S_n(X)\to S_{n-1}(X)$ 被称为\emph{边界算子}。
+对于空间 $X$，我们构造了一系列自由 Abelian 群和同态
+\[
+  \begin{tikzcd}
+    \cdots\arrow[r] & S_n(X)\arrow[r,"\partial_n"] & S_{n-1}(X)
+    \arrow[r] & \cdots\arrow[r] & S_1(X)\arrow[r,"\partial_1"]
+    & S_0(X)\arrow[r,"\partial_0"] & 0.
+  \end{tikzcd}
+\]
+这个链被称为 $X$ 的\emph{奇异复形}，记为 $(S_*(X),\partial)$，
+或者简记为 $S_*(X)$。
+
+\begin{lemma}
+  如果 $k<j$，那么面映射满足
+  \[
+    \varepsilon_j^{n+1}\varepsilon_k^n=\varepsilon_k^{n+1}\varepsilon_{j-1}^n
+    :\Delta^{n-1}\to\Delta^{n+1}.
+  \]
+\end{lemma}
+
+\begin{theorem}
+  对于所有 $n\ge 0$，我们有 $\partial_n\circ \partial_{n+1}=0$。
+\end{theorem}
+\begin{proof}
+  只需要对 $(n+1)$-单纯形 $\sigma$ 证明结论成立即可。根据上面的引理，我们有
+  \begin{align*}
+    \partial_n\partial_{n+1}\sigma&=
+    \partial_n\left(\sum_j(-1)^j\sigma\varepsilon_j^{n+1}\right)\\
+    &=\sum_{j,k}(-1)^{j+k}\sigma\varepsilon_j^{n+1}\varepsilon_k^n\\
+    &=\sum_{j\leq k}(-1)^{j+k}\sigma\varepsilon_j^{n+1}\varepsilon_k^n
+    +\sum_{k<j} (-1)^{j+k}\sigma\varepsilon_j^{n+1}\varepsilon_k^n\\
+    &=\sum_{j\le k}(-1)^{j+k}\sigma\varepsilon_j^{n+1}\varepsilon_k^n
+    +\sum_{k<j} (-1)^{j+k}\sigma\varepsilon_k^{n+1}\varepsilon_{j-1}^n\\
+    &=\sum_{j\le k}(-1)^{j+k}\sigma\varepsilon_j^{n+1}\varepsilon_k^n
+    +\sum_{p\leq q}(-1)^{p+q-1}\sigma\varepsilon_p^{n+1}\varepsilon_q^n\\
+    &=0.\qedhere
+  \end{align*}
+\end{proof}
+
+\begin{definition}
+  对于空间 $X$，记 $Z_n(X)=\ker\partial_n$，被称为\emph{（奇异）$n$-圈}。
+  记 $B_n(X)=\im\partial_{n+1}$，被称为\emph{（奇异）$n$-边界}。
+\end{definition}
+
+\begin{corollary}
+  对于空间 $X$ 和每个 $n\geq 0$，有
+  \[
+    B_n(X)\subseteq Z_n(X).
+  \]
+\end{corollary}
+
+\begin{definition}
+  对于每个 $n\geq 0$，定义 $X$ 的 $n$-阶\emph{（奇异）同调群}为
+  \[
+    H_n(X)=\frac{Z_n(X)}{B_n(X)}=\frac{\ker\partial_n}{\im\partial_{n+1}}.
+  \]
+  陪集 $z_n+B_n(X)$ 被称为 $z_n$ 的\emph{同调类}，记为 $\cls z_n$。
+\end{definition}
+
+我们的下一个目的是证明 $H_n$ 实际上是一个函子 $\cat{Top}\to\cat{Ab}$。
+如果 $f:X\to Y$ 是连续映射，$\sigma:\Delta^n\to X$ 是 $n$-单纯形，
+那么 $f\circ \sigma:\Delta^n\to Y$ 是 $Y$ 中的 $n$-单纯形。
+根据线性性可以拓展为一个同态 $f_\#:S_n(X)\to S_n(Y)$
+为
+\[
+  f_\#\bigl(\sum m_\sigma\sigma\bigr)=\sum m_\sigma (f\circ\sigma),
+  \quad m_\sigma\in \mathbb{Z}.
+\]
+
+\begin{lemma}
+  如果 $f:X\to Y$ 连续，那么 $\partial_n f_\#=f_\#\partial_n$，
+  也即有下面的交换图
+  \[
+    \begin{tikzcd}[sep=large]
+     S_n(X)\arrow[r,"\partial_n"]\arrow[d,"f_\#"']
+     & S_{n-1}(X)\arrow[d,"f_\#"] \\
+     S_n(Y)\arrow[r,"\partial_n"] & S_{n-1}(Y). 
+    \end{tikzcd}
+  \]
+\end{lemma}
+\begin{proof}
+  只需要对 $S_n(X)$ 的生成元 $\sigma$ 证明即可。我们有
+  \[
+    \partial_n f_\#(\sigma)=\partial_n(f\circ\sigma)
+    =\sum (-1)^i f\circ\sigma \circ\varepsilon_i^{n},
+  \]
+  另一方面，有
+  \[
+    f_\#\partial_n(\sigma)=f_\#\left(\sum(-1)^i\sigma\varepsilon_i^n\right)
+    =\sum (-1)^i f\circ\sigma\circ\varepsilon_i^n.\qedhere
+  \]
+\end{proof}
+
+\begin{lemma}\label{lemma:f sharp}
+  如果 $f:X\to Y$ 是连续映射，那么
+  \[
+    f_\#(Z_n(X))\subseteq Z_n(Y),\quad 
+    f_\#(B_n(X))\subseteq B_n(Y).
+  \]
+\end{lemma}
+\begin{proof}
+  任取 $\alpha\in Z_n(X)$，那么 $\partial_n\alpha=0$，所以
+  $\partial_n(f_\#\alpha)=f_\#(\partial_n\alpha)=f_\#(0)=0$，
+  所以 $f_\#(\alpha)\in Z_n(Y)$。
+  任取 $\beta\in B_n(X)$，那么存在 $\gamma\in S_{n+1}(X)$
+  使得 $\beta=\partial_{n+1}\gamma$，所以
+  $f_\#(\beta)=f_\#(\partial_{n+1}\gamma)=\partial_{n+1}(f_\#\gamma)$，
+  故 $f_{\#}(\beta)\in\im\partial_{n+1}=B_n(Y)$。
+\end{proof}
+
+\begin{theorem}
+  $H_n:\cat{Top}\to\cat{Ab}$ 是函子。
+\end{theorem}
+\begin{proof}
+  如果 $f:X\to Y$ 是连续映射，定义
+  \[
+    H_n(f):H_n(X)\to H_n(Y)
+  \]
+  为 $z_n+B_n(X)\mapsto f_\# (z_n)+B_n(Y)$。
+
+  \autoref{lemma:f sharp} 表明 $H_n(f)$ 是良定义的，即
+  $f_\#(z_n)$ 确实在 $Z_n(Y)$ 中并且不依赖于代表元的选取。
+  现在只需要逐条验证 $H_n(f)$ 是同态，保持态射复合和单位元即可，
+  这只需要按照定义验证。
+\end{proof}
+
+\begin{corollary}
+  如果 $X,Y$ 同胚，那么 $H_n(X)\simeq H_n(Y)$。
+\end{corollary}
+
+所以每个同调群 $H_n(X)$ 都是空间 $X$ 的一个拓扑不变量。
+这也表明 $\rank H_n(X)$ 是 $X$ 的拓扑不变量。
+
+\begin{definition}
+  对于每个 $n\geq 0$，$\rank H_n(X)$ 被称为 $X$ 的 $n$ 
+  阶 \emph{Betti 数}。
+\end{definition}
+
+\section{维数公理和紧支}
+
+我们在上面利用\emph{奇异理论}定义了同调群，优点在于对于任意
+拓扑空间都可以定义同调群。但是这种理论的缺点在于通常很难计算
+特定空间 $X$ 的同调群 $H_n(X)$。如果我们仅仅将注意力限制在
+多面体或者 CW 复形（稍后定义）上，那么针对 $H_n(X)$ 有其他的
+定义方式（单纯理论和胞腔理论），此时计算 $H_n(X)$ 会更加容易。
+
+\begin{theorem}[维数公理]
+  如果 $X$ 是单点空间，那么对于所有 $n\geq 1$ 都有 $H_n(X)=0$。
+\end{theorem}
+\begin{proof}
+  对于每个 $n\geq 0$，此时只有一个奇异 $n$-单纯形 $\sigma_n:\Delta^n\to X$，
+  因此 $S_n(X)=\langle \sigma_n\rangle$ 是循环群。那么
+  \[
+    \partial_n\sigma_n=\sum_{i=0}^i(-1)^n\sigma_n\varepsilon_i^n
+    =\sum_{i=0}^n (-1)^i \sigma_{n-1},
+  \]
+  最后一个等号是因为 $\sigma_n\varepsilon_i^n$ 是 $(n-1)$-单纯形，
+  所以必须等于 $\sigma_{n-1}$。这表明 
+  \[
+    \partial_n\sigma_n=\begin{cases}
+      0 & \text{$n$ is odd}\\
+      \sigma_{n-1} & \text{$n$ is even}.
+    \end{cases}
+  \]
+  所以 $n$ 是奇数的时候 $\partial_n=0$，$n$ 是偶数的时候 $\partial_n$
+  是同构。当 $n>0$ 的时候，考虑链
+  \[
+    \begin{tikzcd}
+      S_{n+1}(X)\arrow[r,"\partial_{n+1}"] & S_n(X)
+      \arrow[r,"\partial_n"] & S_{n-1}(X).
+    \end{tikzcd}
+  \]
+  如果 $n$ 是奇数，那么 $S_n(X)=\ker\partial_n=Z_n(X)$
+  并且 $\partial_{n+1}$ 是同构，所以 $S_n(X)=\im\partial_{n+1}=\ker\partial_n$，
+  即 $H_n(X)=0$。如果 $n$ 是偶数，那么 $\partial_n$ 是同构且
+  $\im\partial_{n+1}=0$，所以 $\ker\partial_n=0=\im\partial_{n+1}$，即
+  $H_n(X)=0$。
+\end{proof}
+
+\begin{definition}
+  空间 $X$ 被称为\emph{无环的}，如果对于所有的 $n\ge 1$，
+  有 $H_n(X)=0$。
+\end{definition}
+
+\begin{problem}{}{}
+  如果 $X=\emptyset$，证明对于所有的 $n\geq 0$ 有 $H_n(X)=0$。
+\end{problem}
+\begin{proof}
+  此时不存在奇异 $n$-单纯形 $\sigma:\Delta^n\to X$，所以
+  $S_n(X)=0$ 是平凡群。所以 $H_n(X)=0$。
+\end{proof}
+
+\begin{problem}{}{}
+  如果 $X$ 是单点空间，那么 $H_0(X)\simeq \mathbb{Z}$。
+\end{problem}
+\begin{proof}
+  此时 $H_0(X)=S_0(X)/B_0(X)$。由于 $\partial_1=0$，所以
+  $B_0(X)=0$，所以 $H_0(X)=S_0(X)$ 是无限阶循环群，即
+  同构于 $\mathbb{Z}$。
+\end{proof}
+
+\begin{problem}{}{}
+  对于每个 $n\geq 0$，证明 $S_n:\cat{Top}\to \cat{Ab}$ 是函子。
+\end{problem}
+\begin{proof}
+  定义 $S_n(f)=f_\#$。直接验证 $S_n$ 的函子性即可。
+\end{proof}
+
+\begin{theorem}\label{thm:H0 of component}
+  如果 $\{X_\lambda\}$ 是 $X$ 的道路连通分支集合，那么对于每个
+  $n\geq 0$，我们有
+  \[
+    H_n(X)\simeq \bigoplus_\lambda H_n(X_\lambda).
+  \]
+\end{theorem}
+\begin{proof}
+  如果 $\gamma=\sum m_i\sigma_i\in S_n(X)$，那么每个 $\im\sigma_i$
+  都被 $X$ 的某个唯一的道路连通分支包含，设 $\gamma=\sum \gamma_\lambda$，
+  其中每个 $\gamma_\lambda$ 表示一些组成 $\gamma$ 的满足 $\im\sigma_i\subseteq X_\lambda$ 
+  的 $m_i\sigma_i$ 之和。不难发现映射 $\gamma\mapsto (\gamma_\lambda)$
+  是同构 $S_n(X)\to \bigoplus_\gamma S_n(X_\gamma)$。
+  现在我们说明 $\gamma$ 是圈当且仅每个 $\gamma_\lambda$ 是圈：因为
+  $\partial_n\gamma_\lambda\in S_{n-1}(X_\lambda)$，所以 $\partial_n\gamma=\sum\partial_n\gamma_\lambda=0$
+  当且仅当每个 $\partial_n\gamma_\lambda=0$。
+  定义映射 $\theta_n:H_n(X)\to \bigoplus_\lambda H_n(X_\lambda)$ 为
+  $\gamma+B_n(X)\mapsto \bigl(\gamma_\lambda+B_n(X_\lambda)\bigr)$，
+  上面的叙述表明 $\theta_n$ 是良定义的并且是单射。$\theta_n$ 显然是满射，
+  所以 $\theta_n$ 是同构。
+\end{proof}
+
+\begin{problem}{}{}
+  计算 $H_n(\mathbb{S}^0)$。
+\end{problem}
+\begin{solution}
+  $H_n(\mathbb{S}^0)=H_n(\{-1,1\})\simeq \mathbb{Z}\oplus \mathbb{Z}$。
+\end{solution}
+
+当然，即使在 $X$ 道路连通的情况下，计算 $H_n(X)$ 通常也是困难的。
+但是，我们总是可以计算 $H_0(X)$。
+
+\begin{theorem}
+  \mbox{}
+  \begin{enumerate}
+    \item 如果 $X$ 是非空道路连通空间，那么 $H_0(X)\simeq \mathbb{Z}$。
+    此外，如果 $x_0,x_1\in X$，那么 $x_0+B_0(X)=x_1+B_0(X)$ 
+    是 $H_0(X)$ 的生成元。
+    \item 对于任意空间 $X$，群 $H_0(X)$ 是秩 $\card\Lambda$ 的自由
+    Abelian 群，其中 $\{X_\lambda\}_{\lambda\in \Lambda}$
+    是连通分支族。
+    \item 如果 $X,Y$ 道路连通并且 $f:X\to Y$ 是连续的，那么
+    $f_*:H_0(X)\to H_0(Y)$ 把 $H_0(X)$ 的生成元送到 $H_0(Y)$ 的生成元。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  (1) 考虑奇异复形的末端
+  \[
+    \begin{tikzcd}
+      S_1(X)\arrow[r,"\partial_1"] & S_0(X)\arrow[r,"\partial_0"] & 0,
+    \end{tikzcd}
+  \]
+  此时 $H_0(X)=Z_0(X)/B_0(X)=S_0(X)/B_0(X)$。
+  要证明 $H_0(X)\simeq \mathbb{Z}$，我们构造一个
+  核为 $B_0(X)$ 的满同态 $S_0(X)\to \mathbb{Z}$ 即可。
+  任取 $\gamma=\sum m_xx\in S_0(X)$，注意只有有限个 $m_x$ 不为零。
+  定义同态 $\theta:S_0(X)\to \mathbb{Z}$ 为
+  \[
+    \theta(\gamma)=\sum m_x.
+  \]
+  不难发现这是一个满同态。我们只需要说明
+  \[
+    B_0(X)=\left\{\gamma\in S_0(X)\,\middle|\, \sum m_x=0\right\}
+  \]
+  即可。
+
+  首先假设 $\gamma=\sum_i m_i x_i$ 使得 $\sum m_i=0$。任取 $x\in X$，
+  设 $\sigma_i$ 是 $x$ 到 $x_i$ 的道路。注意到 $\partial_1\sigma_i=\sigma_i(e_1)-\sigma_i(e_0)=x_i-x$。
+  现在考虑 $\sum m_i\sigma_i\in S_1(X)$，那么 
+  \[
+    \partial_1\bigl(\sum m_i\sigma_i\bigr)
+    =\sum m_i\partial_1\sigma_i=\sum m_i(x_i-x)=
+    \sum m_ix_i-\bigl(\sum m_i\bigr)x=\gamma,
+  \]
+  所以 $\gamma\in B_0(X)$。反之，设 $\gamma\in B_0(X)$，那么
+  存在 $\sum n_i\tau_i$ 使得 $\gamma=\partial_1\bigl(\sum n_i\tau_i\bigr)$，
+  即
+  \[
+    \gamma=\sum n_i\bigl(\tau_i(e_1)-\tau_i(e_0)\bigr)=
+    \sum_i n_i\tau_i(e_1)-\sum_i n_i\tau_i(e_0),
+  \]
+  所以 $\gamma$ 的系数之和为零。
+
+  令 $x_0,x_1\in X$。设 $\sigma$ 是从 $x_0$ 到 $x_1$ 的道路，
+  那么 $x_0-x_1=\partial_1\sigma\in B_0(X)$，所以
+  $x_0+B_0(X)=x_1+B_0(X)$。如果 $\gamma=\sum m_ix_i$ 给出 $H_0(X)$
+  的生成元 $\gamma+B_0(X)$，那么 $\theta(\gamma)=\sum m_i=\pm 1$。通过给 $\gamma$
+  添加负号，不妨设 $\sum m_i=1$。此时 $\gamma-x_0$ 的系数之和为零，
+  所以 $\gamma-x_0\in B_0(X)$，所以 $x_0+B_0(X)=\gamma+B_0(X)$ 是生成元。
+
+  (2) 根据 (1) 和 \autoref{thm:H0 of component} 即得。
+
+  (3) 由 (1) 即得。
+\end{proof}
+
 
 
 
