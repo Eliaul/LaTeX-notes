@@ -4,7 +4,8 @@
 \section{嵌入子流形}
 
 设 $M$ 是带边或者无边光滑流形，$M$ 的\emph{嵌入子流形}
-指的是子集 $S\subseteq M$，其配备子空间拓扑和使得包含映射 $S\hookrightarrow M$
+指的是子集 $S\subseteq M$，其配备子空间拓扑使得 $S$ 成为一个（无边）流形，
+配备使得包含映射 $S\hookrightarrow M$
 为光滑嵌入的光滑结构。嵌入子流形也被称为\emph{正则子流形}。
 
 如果 $S$ 是 $M$ 的嵌入子流形，那么 $\dim M-\dim S$ 被称为 $S$ 在 $M$
@@ -51,7 +52,7 @@
 \end{proof}
 
 \begin{proposition}[图像作为子流形]\label{prop:graph is submanifold}
-  设 $M$ 是光滑 $n$-流形，$N$ 是光滑带边或者无边 $n$-流形，$U\subseteq M$
+  设 $M$ 是光滑（无边） $m$-流形，$N$ 是光滑带边或者无边 $n$-流形，$U\subseteq M$
   是开集，$f:U\to N$ 是光滑映射。令 $\Gamma(f)\subseteq M\times N$ 为 $f$
   的图像：
   \[
@@ -71,6 +72,25 @@
   $\pi_M|_{\Gamma(f)}$ 为 $\gamma_f$ 的逆映射。所以 $\Gamma(f)$
   是同胚于 $U$ 的嵌入子流形。
 \end{proof}
+
+有时候仅仅是嵌入还不够，我们定义更强的嵌入。如果嵌入子流形 $S\subseteq M$ 使得
+包含映射 $S\hookrightarrow M$ 是恰当映射，那么我们说 $S$ 是\emph{恰当嵌入的}。
+
+\begin{proposition}
+  假设 $M$ 是带边或者无边光滑流形，$S\subseteq M$ 是嵌入子流形，那么 $S$ 是恰当嵌入
+  当且仅当其是 $M$ 的闭子集。
+\end{proposition} 
+\begin{proof}
+  如果 $S$ 是恰当嵌入的，利用结论：到局部紧的 Hausdorff 空间的恰当映射是闭映射，所以 $S$
+  是闭子集。如果 $S$ 是闭子集，任取 $M$ 的紧子集 $K$，此时 $K\cap S$ 是 $S$ 的闭子集，
+  从而是 $M$ 的闭子集，所以 $K\cap S$ 是紧子集 $K$ 的闭子集，所以 $K\cap S$ 是紧子集，所以
+  $S\hookrightarrow M$ 是恰当映射。
+\end{proof}
+
+\begin{corollary}
+  任意紧的嵌入子流形是恰当嵌入的。
+\end{corollary}
+
 
 \subsection{嵌入子流形的切片坐标卡}
 
@@ -192,6 +212,23 @@ $\left(x^1,\dots,x^n\right)$ 被称为\emph{切片坐标}。
   \]
   是 $\varphi_i^\pm\left(V_i^\pm\right)$ 的 $n$-切片。
 \end{example}
+
+如果 $M$ 是带边的光滑流形并且 $S\subseteq M$ 是嵌入子流形，那么 $S$ 可能通过非常复杂的方式与 $\partial M$
+相交，所以我们不会证明一般情况下 $S$ 在 $M$ 中的切片坐标卡。然而，在子流形本身就是 $M$ 的边界的情况下，
+$M$ 的边界坐标卡就扮演了 $\partial M$ 在 $M$ 中的切片坐标卡的角色。
+
+\begin{theorem}
+  如果 $M$ 是带边的光滑 $n$-流形，那么在子空间拓扑下，$\partial M$ 是（无边的）拓扑 $(n-1)$-流形，
+  并且有一个光滑结构使得其是 $M$ 的恰当嵌入子流形。
+\end{theorem}
+\begin{proof}
+  $\partial M$ 是拓扑 $(n-1)$-流形是第一章的结论。任取 $p\in \partial M$，那么存在包含 $p$ 的边界
+  坐标卡 $(U,\varphi)$，满足 $\varphi(U)$ 是 $\mathbb{H}^n$ 的开集并且 $\varphi(p)\in\partial \mathbb{H}^n$。
+  此时 $U\cap\partial M$ 是 $\partial M$ 的开集，并且 $\varphi(U\cap\partial M)=\varphi(U)\cap \partial \mathbb{H}^n$ 
+  是 $\varphi(U)$ 的 $(n-1)$-切片，所以 $(U,\varphi)$ 是 $\partial M$ 在 $M$ 中的切片坐标卡，
+  所以 $\partial M$ 是 $M$ 的嵌入子流形。又因为 $\partial M$ 是 $M$ 的闭子集，
+  所以 $\partial M$ 是恰当嵌入。
+\end{proof}
 
 
 \subsection{水平集}
