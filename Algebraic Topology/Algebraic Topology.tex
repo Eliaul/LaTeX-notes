@@ -2530,7 +2530,7 @@ $\varepsilon_2^2:[e_0,e_1]\mapsto [e_0,e_1]$。
     是 $H_0(X)$ 的生成元。
     \item 对于任意空间 $X$，群 $H_0(X)$ 是秩 $\card\Lambda$ 的自由
     Abelian 群，其中 $\{X_\lambda\}_{\lambda\in \Lambda}$
-    是连通分支族。
+    是道路连通分支族。
     \item 如果 $X,Y$ 道路连通并且 $f:X\to Y$ 是连续的，那么
     $f_*:H_0(X)\to H_0(Y)$ 把 $H_0(X)$ 的生成元送到 $H_0(Y)$ 的生成元。
   \end{enumerate}
@@ -2585,7 +2585,33 @@ $\varepsilon_2^2:[e_0,e_1]\mapsto [e_0,e_1]$。
   (3) 由 (1) 即得。
 \end{proof}
 
+我们可以比较函子 $\pi_0$ 和 $H_0$：$\pi_0(X)$ 是 $X$ 的道路连通分支的集合，
+$H_0(X)$ 是一些 $\mathbb{Z}$ 的直和，直和取遍道路连通分支的个数。
+这两个函子实际上捕捉了相同的信息，即道路连通分支的个数。
 
+\begin{lemma}
+  若 $A$ 是 $X$ 的子空间，包含映射 $\iota:A\hookrightarrow X$，那么
+  对于任意 $n\geq 0$，$\iota_\#:S_n(A)\to S_n(X)$ 是单射。
+\end{lemma}
+\begin{proof}
+  设 $\gamma=\sum m_i\sigma_i\in S_n(A)$ 使得 $\iota_\#(\gamma)=0$，
+  那么 $\sum m_i(\iota\circ\sigma_i)=0$，这就表明 $m_i=0$，
+  即 $\gamma=0$，所以 $\iota_\#$ 是单射。
+\end{proof}
+
+注意上述引理经常被使用，但是我们不会再显式地引用它。
+
+\begin{definition}
+  如果 $\zeta=\sum m_i\sigma_i\in S_n(X)$，那么定义 $\zeta$ 的
+  \emph{支集} 为 $\supp\zeta=\bigcup \sigma_i(\Delta^n)$。
+\end{definition}
+
+显然 $\supp\zeta$ 是 $X$ 的紧子集，因为 $\supp\zeta$ 是紧集的有限并。
+
+\begin{theorem}
+  如果 $\zeta+B_n(X)\in H_n(X)$，那么存在 $X$ 的紧子集 $A$ 使得
+  $\zeta+B_n(X)\in\im\iota_*$，其中 $\iota:A\hookrightarrow X$ 是包含映射。
+\end{theorem}
 
 
 

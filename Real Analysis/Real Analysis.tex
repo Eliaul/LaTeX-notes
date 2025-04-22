@@ -1,0 +1,522 @@
+\documentclass[fontset=none]{Notes}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\usepackage{tikz-cd,wrapstuff}
+\usepackage{siunitx,tikz,nicematrix}
+\usetikzlibrary{matrix,calc}
+\usetikzlibrary{intersections}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{decorations.markings}
+
+\input{font.def}
+
+\usepackage[subscriptcorrection,nofontinfo,mtpbb,mtpfrak]{mtpro2}
+\usepackage[normal]{fixdif}
+
+\tikzcdset{
+  arrow style=tikz,
+  diagrams={>={Straight Barb[scale=0.8]}}
+}
+
+\tikzset{
+  every picture/.style={
+    thick,
+    >={Latex[width=6pt, length=8pt]}
+  },
+  point/.style={
+    circle, fill, minimum width=5pt,
+    inner sep=0pt
+  },
+  straight arrow/.style={
+    Straight Barb[scale=0.8]
+  }
+}
+
+\allowdisplaybreaks[1]
+
+\newlength{\mymathln}
+\newcommand{\aligninside}[2]{
+  \settowidth{\mymathln}{#2}
+  \mathmakebox[\mymathln]{#1}
+}
+
+\DeclareMathOperator\Spec{Spec}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\sgn{sgn}
+\DeclareMathOperator\rad{rad}
+\DeclareMathOperator\Alt{Alt}
+\DeclareMathOperator\Max{Max}
+\DeclareMathOperator\card{card}
+\DeclareMathOperator\GL{GL}
+\DeclareMathOperator\Orth{O}
+\DeclareMathOperator\SO{SO}
+\DeclareMathOperator\SU{SU}
+\DeclareMathOperator\cls{cls}
+\DeclareMathOperator\Lie{Lie}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Int{Int}
+\DeclareMathOperator\Sym{Sym}
+\DeclareMathOperator\tr{tr}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\supp{supp}
+\DeclareMathOperator\Id{Id}
+\DeclareMathOperator\rk{rank}
+\DeclareMathOperator\grad{grad}
+\DeclareMathOperator\rank{rank}
+\DeclareMathOperator\Euc{E}
+\DeclareMathOperator\ob{ob}
+\DeclareMathOperator\diam{diam}
+\DeclareMathOperator\rel{rel}
+\newcommand{\LL}{{\mathrm{L}}}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\mat}[1]{\mathbold{#1}}
+\newcommand{\cat}[1]{\mathsf{#1}}
+\newcommand{\uline}{\underline{\hphantom{X}}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\lie}[1]{\mathfrak{#1}}
+\newcommand{\inn}[1]{\left\langle #1\right\rangle}
+\newcommand{\partI}{\partial I}
+\newcommand{\relhomo}{\rel\partI}
+
+\usepackage{enumitem}
+
+\setlist[enumerate]{nosep}
+
+%\DeclareMathAlphabet\mathcal{OMS}{cmsy}{m}{n}
+
+\newlength\stextwidth
+\newcommand\makesamewidth[3][c]{%
+  \settowidth{\stextwidth}{#2}%
+  \makebox[\stextwidth][#1]{#3}%
+}
+
+
+
+\begin{document}
+
+\frontmatter
+
+\tableofcontents
+
+\mainmatter
+
+\chapter{黎曼积分}
+
+\section{黎曼积分回顾}
+
+\begin{definition}
+  设 $f:[a,b]\to \mathbb{R}$ 是有界函数，$P$ 是 $[a,b]$ 的一个划分
+  $x_0,\dots,x_n$，定义 \emph{黎曼下和} $L(f,P,[a,b])$ 和 \emph{黎曼上和}
+  $U(f,P,[a,b])$ 为
+  \begin{align*}
+    L(f,P,[a,b])&=\sum_{i=1}^{n} (x_i-x_{i-1})\inf_{[x_{i-1},x_i]}f,\\
+    U(f,P,[a,b])&=\sum_{i=1}^{n} (x_i-x_{i-1})\sup_{[x_{i-1},x_i]}f.
+  \end{align*}
+\end{definition}
+
+\begin{lemma}[黎曼和不等式]
+  设 $f:[a,b]\to \mathbb{R}$ 是有界函数，$P,P'$ 是 $[a,b]$ 的两个划分，
+  且 $P$ 确定的点列是 $P'$ 确定的点列的一个子列（即 $P'$ 划分的更细），那么
+  \[
+    L(f,P,[a,b])\leq L(f,P',[a,b])\leq U(f,P',[a,b])\leq U(f,P,[a,b]).
+  \]
+\end{lemma}
+\begin{proof}
+  假设 $P$ 给出划分 $x_0,\dots,x_n$，$P'$ 给出划分 $x_0',\dots,x_N'$，
+  那么对于每个 $1\leq i\leq n$，都存在整数 $k,m$ 使得
+  $x_{i-1}=x_k'< x_{k+1}'<\cdots<x_{k+m}'=x_i$，
+  所以
+  \begin{align*}
+    (x_{i-1}-x_i)\inf_{[x_{i-1},x_i]}f&=\sum_{j=1}^m (x_{k+j}'-x_{k+j-1}')
+    \inf_{[x_{i-1},x_i]}f\\
+    &\leq \sum_{j=1}^m (x_{k+j}'-x_{k+j-1}')\inf_{[x_{k+j-1}',x_{k+j}']}f,
+  \end{align*}
+  这就表明 $L(f,P,[a,b])\leq L(f,P',[a,b])$。对于上和有类似的估计。
+\end{proof}
+
+\begin{lemma}[黎曼下和小于黎曼上和]\label{lemma:lower sum leq upper sum}
+  设 $f:[a,b]\to \mathbb{R}$ 是有界函数，$P,P'$ 是 $[a,b]$ 的两个划分，那么
+  \[
+    L(f,P,[a,b])\leq U(f,P',[a,b]).
+  \]
+\end{lemma}
+\begin{proof}
+  令 $P''$ 是 $P,P'$ 合并得到的划分，那么
+  \[
+    L(f,P,[a,b])\leq L(f,P'',[a,b])\leq U(f,P'',[a,b])\leq U
+    (f,P',[a,b]).\qedhere
+  \]
+\end{proof}
+
+\begin{definition}
+  设 $f:[a,b]\to \mathbb{R}$ 是有界函数，定义 $f$ 的\emph{黎曼下积分}
+  $L(f,[a,b])$ 和\emph{黎曼上积分} $U(f,[a,b])$ 分别为
+  \begin{equation*}
+    L(f,[a,b])=\sup_P L(f,P,[a,b]),\quad  
+    U(f,[a,b])=\inf_P U(f,P,[a,b]).
+  \end{equation*}
+  其中上下确界取遍 $[a,b]$ 的所有划分 $P$。
+\end{definition}
+
+\begin{proposition}[黎曼下积分小于黎曼上积分]\label{prop:lower integral leq upper integral}
+  设 $f:[a,b]\to \mathbb{R}$ 是有界函数，那么
+  \[
+    L(f,[a,b])\leq U(f,[a,b]).
+  \]
+\end{proposition}
+\begin{proof}
+  根据 \autoref{lemma:lower sum leq upper sum} 即得。
+\end{proof}
+
+\begin{definition}
+  对于闭区间上的有界函数，如果其黎曼下积分和黎曼上积分相等，那么我们说
+  它是\emph{黎曼可积的}。
+  如果 $f:[a,b]\to \mathbb{R}$ 是黎曼可积的，那么定义\emph{黎曼积分}为
+  \[
+    \int_a^b f =L(f,[a,b])=U(f,[a,b]).
+  \]
+\end{definition}
+
+\begin{example}\label{exa:integral of x2}
+  计算 $f:[0,1]\to \mathbb{R}$，$f(x)=x^2$ 的黎曼积分。
+\end{example}
+\begin{solution}
+  记 $P_n$ 是 $[0,1]$ 的划分 $0,1/n,2/n,\dots,n/n=1$，那么
+  黎曼下和
+  \[
+    L(f,P_n,[0,1])=\sum_{i=1}^n\frac{1}{n}\inf_{[i/n,(i-1)/n]} f=
+    \sum_{i=1}^n \frac{(i-1)^2}{n^3}=\frac{2n^2-3n+1}{6n^2},
+  \]
+  黎曼上和
+  \[
+    U(f,P_n,[0,1])=\sum_{i=1}^n\frac{1}{n}\sup_{[i/n,(i-1)/n]} f=
+    \sum_{i=1}^n \frac{i^2}{n^3}=\frac{2n^2+3n+1}{6n^2},
+  \]
+  于是
+  \[
+    L(f,[0,1])\geq \sup_{n\geq 1} L(f,P_n,[0,1])=
+    \sup_{n\geq 1}\frac{2n^2-3n+1}{6n^2}=\frac{1}{3},
+  \]
+  以及
+  \[
+    U(f,[0,1])\leq \inf_{n\geq 1} U(f,P_n,[0,1])=
+    \inf_{n\geq 1} \frac{2n^2+3n+1}{6n^2}=\frac{1}{3},
+  \]
+  所以
+  \[
+    U(f,[0,1])\leq \frac{1}{3}\leq L(f,[0,1]),
+  \]
+  再结合 \autoref{prop:lower integral leq upper integral}，所以
+  $f$ 黎曼可积，并且
+  \[
+    \int_0^1 f=\frac{1}{3}.\qedhere
+  \]
+\end{solution}
+
+\begin{theorem}[连续函数黎曼可积]
+  闭区间上的实值连续函数是黎曼可积的。
+\end{theorem}
+\begin{proof}
+  设 $f:[a,b]\to \mathbb{R}$ 连续，那么 $f$ 有界且一致连续。
+  与 \autoref{exa:integral of x2} 的计算类似，我们寻求一系列等距划分 $P_n$
+  进行计算即可。
+
+  由于 $f$ 一致连续，所以任取 $\varepsilon>0$，都存在 $\delta>0$
+  使得 $|x-y|<\delta$ 的时候有 $|f(x)-f(y)|<\varepsilon$。
+  此时存在 $n$ 使得 $(b-a)/n<\delta$，记 $P_n$ 是 $[a,b]$ 的 $n$ 等分划分，
+  那么
+  \begin{align*}
+    \abs{L(f,P_n,[a,b])-U(f,P_n,[a,b])}&\leq 
+    \sum_{i=1}^n\frac{b-a}{n}\abs{\inf_{[x_{i-1},x_i]}f-\sup_{[x_{i-1},x_i]} f}\\
+    &\leq  \sum_{i=1}^n\frac{b-a}{n}\varepsilon=(b-a)\varepsilon,
+  \end{align*}
+  这表明
+  \[
+    \abs{L(f,[a,b])-U(f,[a,b])}\leq \abs{L(f,P_n,[a,b])-U(f,P_n,[a,b])}\leq
+    \varepsilon,
+  \]
+  所以 $L(f,[a,b])=U(f,[a,b])$，即 $f$ 黎曼可积。
+\end{proof}
+
+\begin{proposition}
+  假设 $f:[a,b]\to \mathbb{R}$ 黎曼可积，那么
+  \[
+    (b-a)\inf_{[a,b]}f\leq \int_a^b f\leq (b-a)\sup_{[a,b]}f.
+  \]
+\end{proposition}
+\begin{proof}
+  取 $P$ 是平凡划分 $x_0=a,x_1=b$，那么 
+  \[
+    (b-a)\inf_{[a,b]}f=L(f,P,[a,b])\leq L(f,[a,b])=\int_a^b f
+    .\qedhere
+  \]
+\end{proof}
+
+\begin{problem}{}{}
+  设 $f:[a,b]\to \mathbb{R}$ 是有界函数且对于某个 $[a,b]$ 的划分 $P$
+  有
+  \[
+    L(f,P,[a,b])=U(f,P,[a,b]),
+  \]
+  证明 $f$ 在 $[a,b]$ 上是常值函数。
+\end{problem}
+\begin{proof}
+  这表明我们有
+  \[
+    \sum_{i=1}^n (x_i-x_{i-1})\left(\sup_{[x_{i-1},x_i]}f-\inf_{[x_{i-1},x_i]}f\right)=0,
+  \]
+  这个求和项中每一项都大于等于 $0$，所以必须有
+  \[
+    \sup_{[x_{i-1},x_i]}f=\inf_{[x_{i-1},x_i]}f,
+  \]
+  所以 $f$ 在每个 $[x_{i-1},x_i]$ 上都是常值函数，即 $f$ 在 $[a,b]$ 上是常值函数。
+\end{proof}
+
+\begin{problem}{}{}
+  设 $a\leq s<t\leq b$，定义 $f:[a,b]\to \mathbb{R}$ 为
+  \[
+    f(x)=\begin{cases}
+      1 & \text{if $s<x<t$},\\
+      0 & \text{otherwise}.
+    \end{cases}
+  \]
+  证明 $f$ 在 $[a,b]$ 上黎曼可积并且 $\int_a^b f=t-s$。
+\end{problem}
+\begin{proof}
+  设 $P$ 是 $[s,t]$ 的任意划分，那么 $P$ 附带 $a,b$ 构成 $[a,b]$
+  的划分 $P'$，此时有
+  \[
+    L(f,P',[a,b])=t-s=U(f,P',[a,b]),
+  \]
+  所以 $L(f,[a,b])\geq t-s\geq U(f,[a,b])$，故 $f$ 黎曼可积且
+  $\int_a^b f=t-s$。
+\end{proof}
+
+\begin{problem}{}{}
+  设 $f:[a,b]\to \mathbb{R}$ 是有界函数，证明 $f$ 是黎曼可积的当且仅当
+  对于任意 $\varepsilon>0$，存在 $[a,b]$ 的划分 $P$ 使得
+  \begin{equation}\label{eq:prob1-3}
+    U(f,P,[a,b])-L(f,P,[a,b])<\varepsilon.
+  \end{equation}
+\end{problem}
+\begin{proof}
+  若 $f$ 黎曼可积，那么 $L(f,[a,b])=U(f,[a,b])$。根据上下积分的定义，
+  对于任意 $\varepsilon>0$，都存在划分 $P$ 使得
+  \[
+    L(f,P,[a,b])>L(f,[a,b])-\varepsilon/2,\quad U(f,P,[a,b])<U(f,[a,b])+\varepsilon/2,
+  \]
+  故 
+  \[
+    U(f,P,[a,b])-L(f,P,[a,b])<\varepsilon.
+  \]
+
+  反之，若对于任意 $\varepsilon>0$，都存在划分 $P$ 使得
+  \eqref{eq:prob1-3} 式成立。由于 
+  $L(f,[a,b])\geq L(f,P,[a,b])$ 以及 $U(f,[a,b])\leq U(f,P,[a,b])$，
+  所以
+  \[
+    U(f,[a,b])-L(f,[a,b])\leq U(f,P,[a,b])-L(f,P,[a,b])<\varepsilon,
+  \]
+  即 $L(f,[a,b])=U(f,[a,b])$，$f$ 黎曼可积。
+\end{proof}
+
+\begin{problem}{}{}
+  设 $f,g:[a,b]\to \mathbb{R}$ 黎曼可积，证明 $f+g$ 黎曼可积，并且
+  \[
+    \int_a^b(f+g)=\int_a^b f+\int_a^b g.
+  \]
+\end{problem}
+\begin{proof}
+  记 $\int_a^b f=I,\int_a^b g=J$。任取 $\varepsilon>0$，那么存在划分 $P$ 使得 
+  \[
+    I-\varepsilon<L(f,P,[a,b])\leq U(f,P,[a,b])<I+\varepsilon,
+  \]
+  同理存在划分 $P'$ 使得
+  \[
+    J-\varepsilon<L(g,P',[a,b])\leq U(g,P',[a,b])<J+\varepsilon,
+  \]
+  将划分 $P,P'$ 合并，得到划分 $P''$ 使得
+  \begin{gather*}
+    I-\varepsilon<L(f,P'',[a,b])\leq U(f,P'',[a,b])<I+\varepsilon,\\
+    J-\varepsilon<L(g,P'',[a,b])\leq U(g,P'',[a,b])<J+\varepsilon.
+  \end{gather*}
+  于是 
+  \begin{align*}
+    L(f+g,P'',[a,b])&\geq L(f,P'',[a,b])+L(g,P'',[a,b])>I+J-2\varepsilon,\\
+    U(f+g,P'',[a,b])&\leq U(f,P'',[a,b])+U(g,P'',[a,b])<I+J+2\varepsilon,
+  \end{align*}
+  这就表明 $f+g$ 可积且 $\int_a^b (f+g)=I+J$。
+\end{proof}
+
+
+
+
+
+\section{黎曼积分还不够好}
+
+黎曼积分有下列三个主要缺陷：
+\begin{itemize}
+  \item 黎曼积分不能处理函数有太多不连续点的情况；
+  \item 黎曼积分不能处理无界函数；
+  \item 黎曼积分与极限的相容性不够好。
+\end{itemize}
+
+\begin{example}[一个不黎曼可积的函数]
+  定义 $f:[0,1]\to \mathbb{R}$ 为
+  \[
+    f(x)=\begin{cases}
+      1 & \text{$x$ is rational},\\
+      0 & \text{$x$ is irrational}.
+    \end{cases}
+  \]
+  对于任意子区间 $[a,b]\subseteq [0,1]$，都有
+  \[
+    \inf_{[a,b]}f=0,\quad \sup_{[a,b]}f=1.
+  \]
+  所以对于 $[0,1]$ 的任意划分 $P$ 都有 $L(f,P,[0,1])=0$ 以及
+  $U(f,P,[0,1])=1$。所以 $L(f,[0,1])=0$ 以及 $U(f,[0,1])=1$，
+  故 $f$ 不是黎曼可积的。
+
+  这个例子令人困扰，因为直觉上有理数远少于无理数，所以 $f$ 的积分
+  在某种意义上应该是 0，但是实际上黎曼积分确是没有定义的。
+\end{example}
+
+\begin{example}[黎曼积分不能处理无界函数]
+  定义 $f:[0,1]\to \mathbb{R}$ 为
+  \[
+    f(x)=\begin{cases}
+      \frac{1}{\sqrt{x}} & 0<x\leq 1,\\
+      0 & x=0.
+    \end{cases}
+  \]
+  如果 $x_0,x_1,\dots,x_n$ 是 $[0,1]$ 的划分，那么 $\sup_{[x_0,x_1]}f=\infty$，
+  所以对于任意划分 $P$ 都有 $U(f,P,[0,1])=\infty$。
+
+  但是，我们可以发现 $f$ 的图像面积应该是 $2$ 而不是 $\infty$。因为
+  \[
+    \lim_{a\downarrow  0}\int_a^1 f=\lim_{a\downarrow 0}(2-2\sqrt{a})=2.
+  \]
+  
+\end{example}
+
+
+\chapter{测度}
+
+\section{$\mathbb{R}$ 上的外测度}
+
+\subsection{外测度的定义}
+
+黎曼积分来源于使用长方形面积的和来估计函数图像的面积，这些长方形
+的高是函数在定义域的某个子区间上的值，宽是对应子区间的长度，即
+$x_i-x_{i-1}$。
+
+为了让更多的函数可以做积分，我们将把函数的定义域写为更加复杂的一些
+子集的并，而不仅仅是使用子区间。我们将为这样的每个子集分配一个大小，
+其大小是区间长度的某种扩展定义。例如，我们期望
+$(1,3)\cup(7,10)$ 的大小是 $2+3=5$。
+
+为 $\mathbb{R}$ 的子集分配大小是一件不平凡的任务。本章我们处理这个任务，并且
+将其延伸到其他内容。在下一章，我们将看到本章发展的工具创造了丰富的积分理论。
+
+我们先叙述我们期望给出的开区间的长度定义。
+
+\begin{definition}
+  一个开区间 $I$ 的\emph{长度} $\ell(I)$ 定义为
+  \[
+    \ell(I)=\begin{cases}
+      b-a & \text{if $I=(a,b)$ for some $a,b\in \mathbb{R}$ with $a<b$},\\
+      0 & \text{if $I=\emptyset$},\\
+      \infty & \text{if $I=(-\infty,a)$ or $I=(a,\infty)$ for some $a\in \mathbb{R}$},\\
+      \infty & \text{if $I=(-\infty,\infty)$}.
+    \end{cases}
+  \]
+\end{definition}
+
+假设 $A\subseteq \mathbb{R}$，$A$ 的大小至多也只能是一列并起来包含 $A$
+的开区间的长度之和，所以将所有这样可能的和取下确界，有理由将其作为 $A$
+的大小的定义，我们记为 $|A|$。
+
+\begin{definition}
+  集合 $A\subseteq \mathbb{R}$ 的\emph{外测度} $|A|$ 定义为
+  \[
+    |A|=\inf\left\{\sum_{k=1}^\infty\ell(I_k) \middle| \text{$I_1,I_2,\dots$ are open intervals such that $A\subseteq\bigcup_{k=1}^\infty I_k$}\right\}.
+  \]
+\end{definition}
+
+外测度的定义涉及到无限和，对于无限和 $\sum_{k=1}^\infty t_k$，
+其中 $t_i\in[0,\infty]$。如果某个 $t_k=\infty$，定义求和结果为 $\infty$。
+否则定义为普通的级数求和。
+
+\begin{example}[有限集的外测度为零]
+  假设 $A=\{a_1,\dots,a_n\}$ 是有限集。任取 $\varepsilon>0$，$k\leq n$ 时定义
+  $I_k=(a_k-\varepsilon,a_k+\varepsilon)$，$k>n$ 时定义 $I_k=\emptyset$，那么
+  $\sum \ell(I_k)=2n\varepsilon$，所以 $|A|\leq 2n\varepsilon$，
+  即 $|A|=0$。
+\end{example}
+
+\subsection{外测度的良好性质}
+
+外测度有一些很好的性质，我们首先改进上一个例子的结果。
+
+\begin{proposition}[可数集的外测度为零]
+  $\mathbb{R}$ 的任意可数子集的外测度是零。
+\end{proposition}
+\begin{proof}
+  设 $A=\{a_1,a_2,\dots\}$ 是可数集。任取 $\varepsilon>0$，
+  定义 $I_k=(a_k-\varepsilon/2^k,a_k+\varepsilon/2^k)$，那么
+  \[
+    \sum_{k=1}^\infty \ell(I_k)=\sum_{k=1}^\infty\frac{\varepsilon}{2^{k-1}}
+    =2\varepsilon,
+  \]
+  所以 $|A|\leq 2\varepsilon$，故 $|A|=0$。
+\end{proof}
+
+\begin{proposition}[外测度保序]
+  假设 $A\subseteq B$，那么 $|A|\leq|B|$。
+\end{proposition}
+\begin{proof}
+  设 $I_1,I_2,\dots$ 是覆盖 $B$ 的开区间，那么也覆盖 $A$，所以
+  \[
+    |A|\leq\sum_{k=1}^\infty\ell(I_k),
+  \]
+  对所有覆盖 $B$ 的一列开区间取下确界，所以 $|A|\leq|B|$。
+\end{proof}
+
+我们还希望 $\mathbb{R}$ 的子集的大小应该具有平移不变性，外测度
+恰好满足这个性质。
+
+\begin{proposition}[外测度具有平移不变性]
+  设 $t\in \mathbb{R}$ 且 $A\subseteq \mathbb{R}$，那么 
+  $|t+A|=|A|$。
+\end{proposition}
+\begin{proof}
+  假设 $I_1,I_2,\dots$ 是一列覆盖 $A$ 的开区间，那么 $t+I_1,t+I_2,\dots$
+  是覆盖 $t+A$ 的一列开区间，所以
+  \[
+    |t+A|\leq \sum_{k=1}^\infty\ell(t+I_k)=\sum_{k=1}^\infty \ell(I_k),
+  \]
+  这表明 $|t+A|\leq |A|$。
+
+  另一边，我们有 $A=-t+(t+A)$，由此可得 $|A|\leq |t+A|$，所以
+  $|t+A|=|A|$。
+\end{proof}
+
+\begin{proposition}[外测度的次可加性]
+  设 $A_1,A_2,\dots$ 是 $\mathbb{R}$ 的一列子集，那么
+  \[
+    \left|\bigcup_{k=1}^\infty A_k\right|\leq\sum_{k=1}^\infty|A_k|.
+  \]
+\end{proposition}
+\begin{proof}
+  
+\end{proof}
+
+
+
+\end{document}
