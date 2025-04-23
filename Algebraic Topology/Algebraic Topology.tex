@@ -1377,6 +1377,18 @@ $\det V=\prod_{j<i}(r_i-r_j)$。如果我们把 $V$ 的每一列（从第一列�
   所以 $T(X)$ 是仿射集（或者凸集）。
 \end{proof}
 
+\begin{problem}{}{}
+  证明：对于 $0\leq i\leq m$，$[p_0,\dots,p_m]$ 同胚于以 $p_i$
+  为顶点的锥体 $C[p_0,\dots,\hat p_i,\dots,p_m]$。
+\end{problem}
+\begin{proof}
+  定义映射 $f:[p_0,\dots,\hat p_i,\dots,p_m]\times I\to [p_0,\dots,p_m]$ 为
+  \[
+    \left(t_0,\dots,t_{i-1},t_{i+1},\dots,t_m,t\right)
+    \mapsto t(0,\dots,1,\dots,0)+(1-t)\left(t_0,\dots,t_{i-1},0,t_{i+1},\dots,t_m\right)
+  \]
+\end{proof}
+
 
 
 \chapter{基本群}
@@ -2522,7 +2534,7 @@ $\varepsilon_2^2:[e_0,e_1]\mapsto [e_0,e_1]$。
 当然，即使在 $X$ 道路连通的情况下，计算 $H_n(X)$ 通常也是困难的。
 但是，我们总是可以计算 $H_0(X)$。
 
-\begin{theorem}
+\begin{theorem}\label{thm:H0 of space}
   \mbox{}
   \begin{enumerate}
     \item 如果 $X$ 是非空道路连通空间，那么 $H_0(X)\simeq \mathbb{Z}$。
@@ -2612,6 +2624,23 @@ $H_0(X)$ 是一些 $\mathbb{Z}$ 的直和，直和取遍道路连通分支的个
   如果 $\zeta+B_n(X)\in H_n(X)$，那么存在 $X$ 的紧子集 $A$ 使得
   $\zeta+B_n(X)\in\im\iota_*$，其中 $\iota:A\hookrightarrow X$ 是包含映射。
 \end{theorem}
+
+\section{同伦公理}
+
+我们的下一个目标是证明当 $f,g$ 同伦的时候对于所有的 $n$
+有 $H_n(f)=H_n(g)$。
+
+\begin{theorem}
+  如果 $X$ 是 Euclid 空间的有界凸集，那么对于所有 $n\geq 1$ 有 $H_n(X)=0$。
+  特别的，对于所有 $n\geq 1$ 和 $k$ 有 $H_n(D^k)=0$。
+\end{theorem}
+\begin{remark}
+  如果 $X\neq\emptyset$，\autoref{thm:H0 of space} 表明 $H_0(X)=\mathbb{Z}$。
+\end{remark}
+\begin{proof}
+  
+\end{proof}
+
 
 
 
