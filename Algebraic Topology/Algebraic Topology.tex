@@ -1377,7 +1377,7 @@ $\det V=\prod_{j<i}(r_i-r_j)$。如果我们把 $V$ 的每一列（从第一列�
   所以 $T(X)$ 是仿射集（或者凸集）。
 \end{proof}
 
-\begin{problem}{}{}
+\begin{problem}{}{cone of simplex}
   证明：对于 $0\leq i\leq m$，$[p_0,\dots,p_m]$ 同胚于以 $p_i$
   为顶点的锥体 $C[p_0,\dots,\hat p_i,\dots,p_m]$。
 \end{problem}
@@ -1385,7 +1385,26 @@ $\det V=\prod_{j<i}(r_i-r_j)$。如果我们把 $V$ 的每一列（从第一列�
   定义映射 $f:[p_0,\dots,\hat p_i,\dots,p_m]\times I\to [p_0,\dots,p_m]$ 为
   \[
     \left(t_0,\dots,t_{i-1},t_{i+1},\dots,t_m,t\right)
-    \mapsto t(0,\dots,1,\dots,0)+(1-t)\left(t_0,\dots,t_{i-1},0,t_{i+1},\dots,t_m\right)
+    \mapsto t(0,\dots,1,\dots,0)+(1-t)\left(t_0,\dots,t_{i-1},0,t_{i+1},\dots,t_m\right),
+  \]
+  显然 $f$ 是商映射，所以其导出同胚 $\tilde f:C[p_0,\dots,\hat p_i,\dots,p_m]\to [p_0,\dots,p_m]$
+  为
+  \[
+    [t_0,\dots,t_{i-1},t_{i+1},\dots,t_m,t]\mapsto 
+    t(0,\dots,1,\dots,0)+(1-t)\left(t_0,\dots,t_{i-1},0,t_{i+1},\dots,t_m\right).
+  \]
+  $\tilde f$ 的逆映射为
+  \[
+    (t_0,\dots,t_m)\mapsto
+    \begin{dcases}
+      [1,\dots,0,1]
+      &\text{if $t_i=1$},
+      \\
+      \left[
+        \frac{t_0}{1-t_i},\dots,\frac{t_{i-1}}{1-t_i},\frac{t_{i+1}}{1-t_i},
+        \dots,\frac{t_m}{1-t_i},t_i
+      \right] & \text{if $t_i\neq 1$}.
+    \end{dcases}\qedhere
   \]
 \end{proof}
 
@@ -2638,7 +2657,18 @@ $H_0(X)$ 是一些 $\mathbb{Z}$ 的直和，直和取遍道路连通分支的个
   如果 $X\neq\emptyset$，\autoref{thm:H0 of space} 表明 $H_0(X)=\mathbb{Z}$。
 \end{remark}
 \begin{proof}
-  
+  选取点 $b\in X$。对于每个 $n$-单纯形 $\sigma:\Delta^n\to X$，回顾
+  问题 \ref{prob:cone of simplex}，$\Delta^{n+1}$ 可以视为 $\Delta^n$
+  的一个锥体，于是我们考虑“以 $b$ 为顶点的 $\sigma$ 的锥体”。定义
+  $(n+1)$-单纯形 $\sigma_b:\Delta^{n+1}\to X$ 为
+  \[
+    \sigma_b(t_0,t_1,\dots,t_{n+1})=\begin{dcases}
+      b & \text{if $t_0=1$},\\
+      t_0b+(1-t_0)\sigma\left(
+        \frac{t_1}{1-t_0},\dots,\frac{t_{n+1}}{1-t_0}
+      \right) & \text{if $t_0\neq 1$}.
+    \end{dcases}
+  \]
 \end{proof}
 
 
