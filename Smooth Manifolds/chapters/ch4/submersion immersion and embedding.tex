@@ -27,7 +27,7 @@ $dF_p$ 的秩等于 $\min\{\dim M,\dim N\}$，那么我们说\emph{$F$ 在 $p$ �
   在 $U$ 中任意点都满秩，此时 $F|_U$ 为浸没或者浸入。
 \end{proof}
 
-\begin{example}[浸没和浸入]
+\begin{example}[浸没和浸入]\label{exa:submersion and immersion}
   \mbox{}
   \begin{enumerate}
     \item 设 $M_1,\dots,M_k$ 是光滑流形，那么每个投影映射 $\pi_i:M_1\times\cdots\times M_k\to M_i$
@@ -39,6 +39,33 @@ $dF_p$ 的秩等于 $\min\{\dim M,\dim N\}$，那么我们说\emph{$F$ 在 $p$ �
     中的光滑结构，那么投影 $\pi:TM\to M$ 是光滑浸没。对于 $M$ 的任意光滑坐标卡
     $(U,(x^i))$ 和对应的 $TM$ 的光滑坐标卡 $(\pi^{-1}(U),(x^i,v^i))$，$\pi$
     的坐标表示为 $\hat \pi(x,v)=x$，其 Jacobi 矩阵是行满秩矩阵。
+    \item 定义光滑映射 $X:\mathbb{R}^2\to \mathbb{R}^3$ 为
+    \[
+      X(u,v)=\bigl(
+        (2+\cos2\pi u)\cos2\pi v,(2+\cos2\pi u)\sin 2\pi v,
+        \sin 2\pi u
+      \bigr),
+    \]
+    那么 $X$ 的像集是 $yz$-平面的圆 $(y-2)^2+z^2=1$ 绕 $z$-轴旋转一圈得到的
+    环面。容易计算 $X$ 在 $(u,v)$ 处的 Jacobi 矩阵为
+    \[
+      DX(u,v)=2\pi\begin{pmatrix}
+        -\cos 2\pi v\sin2\pi u & -\sin2\pi v(2+\cos2\pi u)\\
+        -\sin 2\pi v\sin2\pi u & \cos2\pi v(2+\cos2\pi u) \\
+        \cos2\pi u & 0
+      \end{pmatrix},
+    \]
+    显然 $\cos2\pi u\neq 0$ 的时候，$DX(u,v)$ 的秩为 $2$。
+    当 $\cos2\pi u=0$ 的时候，有
+    \[
+      DX(u,v)=2\pi\begin{pmatrix}
+        -\cos2\pi v & -2\sin 2\pi v\\
+        -\sin 2\pi v & 2\cos2\pi v \\
+        0 & 0
+      \end{pmatrix},
+    \]
+    此时 $DX(u,v)$ 的一个 2-阶子式不为零，所以秩也为 $2$。
+    所以 $DX(u,v)$ 的秩始终为 $2$，即 $X$ 是光滑浸入。
   \end{enumerate}
 \end{example}
 
@@ -283,6 +310,9 @@ $dF_p$ 的秩等于 $\min\{\dim M,\dim N\}$，那么我们说\emph{$F$ 在 $p$ �
       \iota_j(q)=(p_1,\dots,p_{j-1},q,p_{j+1},\dots,p_k),  
     \]
     那么 $\iota_j$ 是光滑嵌入。
+    \item \autoref{exa:submersion and immersion} 的 (4) 定义的映射
+    $X:\mathbb{R}^2\to \mathbb{R}^3$ 可以下降为一个 $\mathbb{S}^1\times \mathbb{S}^1$
+    到 $\mathbb{R}^3$ 的光滑嵌入。
   \end{enumerate}
 \end{example}
 
@@ -431,3 +461,63 @@ $dF_p$ 的秩等于 $\min\{\dim M,\dim N\}$，那么我们说\emph{$F$ 在 $p$ �
   所以 $q\in\sigma^{-1}(W)\subseteq \pi(W)$，这表明 $\pi(W)$
   是开集，即 $\pi$ 是开映射。
 \end{proof}
+
+下面的定理反映了光滑浸没的重要特征，即满射的光滑浸没在光滑流形中
+的行为类似于商映射在拓扑学中的行为。
+
+\begin{theorem}[满射光滑浸没的刻画]\label{thm:character of surjective submersion}
+  设 $M,N$ 是光滑流形，$\pi:M\to N$ 是满射的光滑浸没。对于任意
+  带边或者无边光滑流形 $P$，映射 $F:N\to P$ 光滑当且仅当 $F\circ\pi$
+  光滑：
+  \[
+    \begin{tikzcd}[sep=large]
+      M\arrow[dr,"F\circ\pi"]\arrow[d,"\pi"'] & \\
+      N\arrow[r,"F"'] & P.
+    \end{tikzcd}
+  \]
+\end{theorem}
+\begin{proof}
+  如果 $F$ 光滑，那么 $F\circ\pi$ 作为光滑映射的复合也光滑。
+  如果 $F\circ\pi$ 光滑，任取 $q\in N$，设 $p\in M$ 使得 $\pi(p)=q$，
+  根据局部截面定理，存在 $\pi$ 的光滑局部截面 $\sigma:U\to M$
+  使得 $p\in \sigma(U)$，此时 $F|_U=F\circ \pi\circ\sigma$
+  是光滑映射，这表明 $F$ 是局部光滑的，所以 $F$ 光滑。
+\end{proof}
+
+\begin{theorem}\label{thm:pass to the quotient}
+  设 $M,N$ 是光滑流形并且 $\pi:M\to N$ 是满的光滑浸没，如果 $P$
+  是带边或者无边光滑流形且 $F:M\to P$ 是在 $\pi$ 的每个纤维上为常值
+  的光滑映射，那么存在唯一的光滑映射 $\wtilde F:N\to P$ 使得
+  $\wtilde F\circ\pi=F$：
+  \[
+    \begin{tikzcd}[sep=large]
+      M\arrow[dr,"F"]\arrow[d,"\pi"'] & \\
+      N\arrow[r,"\wtilde F"',dashed] & P.
+    \end{tikzcd}
+  \]
+\end{theorem}
+\begin{proof}
+  由于满的光滑浸没是商映射，所以存在唯一的连续映射 $\wtilde F:N\to P$
+  使得 $\wtilde F\circ\pi=F$。根据 \autoref{thm:character of surjective submersion}，
+  $F$ 光滑表明 $\wtilde F$ 光滑。
+\end{proof}
+
+\begin{theorem}
+  设 $M,N_1,N_2$ 是光滑流形，$\pi_1:M\to N_1$ 和 $\pi_2:M\to N_2$
+  是满的光滑浸没，并且 $\pi_1,\pi_2$ 在对方的每个纤维上是常值映射，
+  那么存在唯一的微分同胚 $F:N_1\to N_2$ 使得 $F\circ \pi_1=\pi_2$。
+\end{theorem}
+\begin{proof}
+  根据 \autoref{thm:pass to the quotient}，存在光滑映射 $F:N_1\to N_2$
+  满足 $F\circ\pi_1=\pi_2$ 以及光滑映射 $G:N_2\to N_1$ 满足
+  $G\circ\pi_2=\pi_1$，所以 $F\circ G\circ\pi_2=\pi_2$，
+  那么 $F\circ G=\Id_{N_2}$，类似的有 $G\circ F=\Id_{N_1}$，所以
+  $F$ 是微分同胚。
+\end{proof}
+
+\section{光滑覆盖映射}
+
+
+
+
+

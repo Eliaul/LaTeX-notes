@@ -514,8 +514,222 @@ $(1,3)\cup(7,10)$ 的大小是 $2+3=5$。
   \]
 \end{proposition}
 \begin{proof}
-  
+  若其中某个 $|A_k|=\infty$，那么不等式显然成立。下面假设所有 $|A_k|<\infty$。
+
+  任取 $\varepsilon>0$，对于每个 $k$，令 $I_{1,k},I_{2,k},\dots$ 是一列
+  并集包含 $A_k$ 的开区间，并且满足
+  \[
+    \sum_{j=1}^\infty \ell(I_{j,k})\leq\frac{\varepsilon}{2^k}+|A_k|,
+  \]
+  所以
+  \begin{equation*}
+    \sum_{k=1}^\infty\sum_{j=1}^\infty\ell(I_{j,k})\leq\varepsilon+
+    \sum_{k=1}^\infty|A_k|.
+  \end{equation*}
+  那么 
+  \[
+    \bigcup_{k=1}^\infty A_k\subseteq \bigcup_{k,j}I_{j,k},
+  \]
+  所以
+  \[
+    \abs{\bigcup_{k=1}^\infty A_k}\leq \sum_{k,j}\ell(I_{j,k})
+    \leq \varepsilon+\sum_{k=1}^\infty |A_k|,
+  \]
+  $\varepsilon$ 的任意性即表明 $\left|\bigcup_{k=1}^\infty A_k\right|\leq\sum_{k=1}^\infty|A_k|$。
 \end{proof}
+
+\subsection{有界闭区间的外测度}
+
+我们将证明如果 $a<b$，那么 $[a,b]$ 有外测度 $b-a$。实际上，
+如果 $\varepsilon>0$，那么 $(a-\varepsilon,b+\varepsilon),\emptyset,\emptyset,\dots$
+是并集包含 $[a,b]$ 的开区间，所以 $\abs{[a,b]}\leq b-a+2\varepsilon$，于是我们得到
+\[
+  \abs{[a,b]}\leq b-a.
+\]
+
+\begin{proposition}
+  设 $a<b$，那么 $\abs{[a,b]}=b-a$。
+\end{proposition}
+\begin{proof}
+  我们只需要说明 $\abs{[a,b]}\geq b-a$。设 $I_1,I_2,\dots$ 是一列开区间使得
+  $[a,b]\subseteq\bigcup_{k=1}^\infty I_k$，由于 $[a,b]$ 是紧集，所以存在
+  $n$ 使得
+  \[
+    [a,b]\subseteq I_1\cup \cdots \cup I_n,
+  \]
+  下面我们证明 $\sum_{k=1}^n\ell(I_k)\geq b-a$，从而说明 $\sum_{k=1}^\infty\ell(I_k)$，
+  即 $\abs{[a,b]}\geq b-a$。
+
+  对 $n$ 进行归纳，当 $n=1$ 的时候，那么 $[a,b]\subseteq I_1$ 显然表明
+  $\ell(I_1)\geq b-a$。假设 $n>1$ 的时候成立，那么在 $n+1$ 的时候有
+  \[
+    [a,b]\subseteq I_1\cup\cdots\cup I_n\cup I_{n+1},
+  \]
+  那么 $b$ 至少在其中一个 $I_1,\dots,I_{n+1}$ 中，通过重新编排顺序，不妨假设
+  $b\in I_{n+1}$。设 $I_{n+1}=(c,d)$，如果 $c\leq a$，那么 $\ell(I_{n+1})\geq b-a$，
+  即结论成立。若 $a<c<b<d$，那么
+  \[
+    [a,c]\subseteq I_1\cup\cdots \cup I_n,
+  \]
+  根据归纳假设，有 $\sum_{k=1}^n\ell(I_k)\geq c-a$，所以
+  \[
+    \sum_{k=1}^{n+1}\ell(I_k)\geq (c-a)+\ell(I_{n+1})
+    =d-a\geq b-a.\qedhere
+  \]
+\end{proof}
+
+\begin{corollary}
+  设 $a<b$，那么 $\abs{(a,b)}=\abs{(a,b]}=\abs{[a,b)}=b-a$。
+\end{corollary}
+\begin{proof}
+  由于 $(a,b)\cup\{a\}\cup\{b\}=[a,b]$，所以 
+  \[
+    \abs{[a,b]}\leq \abs{(a,b)}+\abs{\{a\}}+\abs{\{b\}}=\abs{(a,b)},
+  \]
+  $(a,b)\subseteq [a,b]$ 又表明 $\abs{(a,b)}\leq \abs{[a,b]}$。
+  对于其他的情况同理。
+\end{proof}
+
+\subsection{外测度没有可加性}
+
+我们已经看到外测度有很多良好的性质，现在我们发现外测度的一个不尽人意的性质。
+
+如果外测度可以完美地为集合分配大小的概念，那么两个不相交集合的并集的外测度
+理应等于两个集合的外测度之和，但是，下面的结果表明外测度并没有这种性质。
+
+\begin{theorem}\label{thm:Vitali set}
+  存在 $\mathbb{R}$ 的两个不相交子集 $A,B$ 使得
+  \[
+    \abs{A\cup B}\neq\abs{A}+\abs{B}.
+  \]
+\end{theorem}
+\begin{remark}
+  这样的两个子集是十分“病态的”，因为可以证明，只要 $A,B$ 之间的距离大于零，
+  那么一定有 $\abs{A\cup B}=\abs{A}+\abs{B}$ （见 Stein 的《Real Analysis》），
+  实际上，该定理的证明需要使用选择公理。
+\end{remark}
+\begin{proof}
+  对于 $a\in [-1,1]$，记 $\bar a$ 为等价类 $a+\mathbb{Q}$，即
+  \[
+    \bar a=\{c\in [-1,1]\,|\, a-c\in \mathbb{Q}\}.
+  \]
+
+  如果 $a,b\in[-1,1]$ 且 $\bar a\cap\bar b\neq\emptyset$，那么存在 $c\in [-1,1]$
+  使得 $c-a\in \mathbb{Q}$ 以及 $c-b\in \mathbb{Q}$，所以 $a-b=(a-c)-(b-c)\in \mathbb{Q}$，
+  所以 $\bar a=\bar b$。
+
+  显然 $[-1,1]=\bigcup_{a\in[-1,1]}\bar a$，把这些子集搜集起来：
+  \[
+    \{\bar a\,|\, a\in[-1,1]\},
+  \]
+  在每个 $\bar a$ 中取一个代表元，放到一个新的集合中，记为 $V$。
+  换句话说，对于每个 $a\in [-1,1]$，$V\cap\bar a$ 恰有一个元素。
+  注意，这里 $V$ 的构造\emph{使用了选择公理}。
+
+  令 $r_1,r_2,\dots$ 是一列不同的有理数使得
+  \[
+    [-2,2]\cap \mathbb{Q}=\{r_1,r_2,\dots\},
+  \]
+  那么
+  \[
+    [-1,1]\subseteq\bigcup_{k=1}^\infty (r_k+V),
+  \]
+  这是因为如果 $a\in [-1,1]$，设 $v\in V\cap \bar a$，那么 $a-v\in \mathbb{Q}$，
+  这就表明存在某个 $k$ 使得 $a=r_k+v\in r_k+V$。
+
+  根据外测度的次可加性和平移不变性，有
+  \[
+    2=\abs{[-1,1]}\leq\sum_{k=1}^\infty \abs{r_k+V}=\sum_{k=1}^\infty\abs{V},
+  \]
+  这表明 $\abs{V}>0$。
+
+  注意到 $r_1+V,r_2+V,\dots$ 是互不相交的。若 $t\in (r_k+V)\cap (r_j+V)$，
+  那么 $t-r_k\in V$ 以及 $t-r_j\in V$，于是 $(t-r_k)-(t-r_j)=r_j-r_k\in \mathbb{Q}$，
+  根据 $V$ 的构造，有 $t-r_k=t-r_j$，即 $r_k=r_j$。
+
+  令 $n\geq 1$，因为 $V\subseteq [-1,1]$ 以及 $r_k\in [-2,2]$，所以
+  \[
+    \bigcup_{k=1}^n(r_k+V)\subseteq [-3,3],
+  \]
+  所以
+  \[
+    \abs{\bigcup_{k=1}^n(r_k+V)}\leq 6.
+  \]  
+  但是
+  \[
+    \sum_{k=1}^n\abs{r_k+V}=\sum_{k=1}^n\abs{V}=n\abs{V},
+  \]
+  这暗示我们选取足够大的 $n$ 使得 $n\abs{V}>6$，所以 
+  \[
+    \abs{\bigcup_{k=1}^n(r_k+V)}<\sum_{k=1}^n\abs{r_k+V}.
+  \]
+
+  也就是说，如果对于所有不相交的子集 $A,B$ 有 $\abs{A\cup B}=\abs{A}+\abs{B}$，
+  那么归纳可得对于不相交子集 $A_1,\dots,A_n$ 有 $\abs{\bigcup_{k=1}^n A_k}=\sum_{k=1}^n\abs{A_k}$，
+  这与上面的严格不等号矛盾。所以存在不相交子集 $A,B$ 使得 $\abs{A\cup B}\neq\abs{A}+\abs{B}$。
+\end{proof}
+
+\section{可测空间和函数}
+
+上一节的结果表明外测度不是可加的。那么这个漏洞能否使用其他的某种“测量方式”
+弥补？下面的结果表明不存在满足所有期望属性的测量方式。
+
+\begin{theorem}[不可能对 $\mathbb{R}$ 的所有子集都赋予一个大小的概念]\label{thm:noexistence of size}
+  不存在 $\mathbb{R}$ 的幂集上的函数 $\mu$ 同时满足下面的性质：
+  \begin{enumerate}
+    \item $\mu$ 是到 $[0,\infty]$ 的函数。
+    \item 对于每个开区间 $I$ 有 $\mu(I)=\ell(I)$。
+    \item 对于不相交子集 $A_1,A_2,\dots$ 有 $\mu\left(\bigcup_{k=1}^\infty A_k\right)=\sum_{k=1}^\infty\mu(A_k)$。
+    \item 对于每个 $A\subseteq \mathbb{R}$ 和 $t\in \mathbb{R}$ 有 $\mu(t+A)=\mu(A)$。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  假设 $\mu$ 同时满足上面的性质。如果 $A\subseteq B$，那么 $\mu(A)\leq\mu(B)$，
+  这是因为对于 $A,B\setminus A,\emptyset,\emptyset,\dots$，所以 
+  \[
+    \mu(B)=\mu(A)+\mu(B\setminus A)+0+0+\cdots=\mu(A)+\mu(B\setminus A)\geq \mu(A).
+  \]
+
+  如果 $a<b$，那么对于任意 $\varepsilon>0$ 有 $(a,b)\subseteq [a,b]\subseteq (a-\varepsilon,b+\varepsilon)$，
+  所以 $b-a\leq \mu([a,b])\leq b-a+2\varepsilon$，所以 $\mu([a,b])=b-a$。
+
+  如果 $A_1,A_2,\dots$ 是一列子集，那么 $A_1,A_2\setminus A_1,A_3\setminus (A_1\cup A_2),\dots$
+  是一列不相交的子集，并且它们的并集是 $\bigcup_{k=1}^\infty A_k$，所以
+  \begin{align*}
+    \mu\left(\bigcup_{k=1}^\infty A_k\right)&=\mu\bigl(A_1\cup(A_2\setminus A_1)\cup(A_3\setminus(A_1\cup A_2))\cup\cdots\bigr)\\
+    &=\mu(A_1)+\mu(A_2\setminus A_1)+\mu(A_3\setminus (A_1\cup A_2))+\cdots \\
+    &\leq\sum_{k=1}^\infty\mu(A_k).
+  \end{align*}
+
+  这意味着这样的函数 $\mu$ 实际上满足外测度的所有性质，那么采用
+  \autoref{thm:Vitali set} 相同的构造，即可发现存在不相交子集 $A,B$
+  使得 $\mu(A\cup B)\neq\mu(A)+\mu(B)$，这与性质 (3) 矛盾。
+\end{proof}
+
+\subsection{$\sigma$-代数}
+
+上面的结果表明我们必须放弃把区间长度的概念延申到 $\mathbb{R}$ 的每个子集上。
+但是，我们不能放弃 \autoref{thm:noexistence of size} 的性质 (2)，因为我们希望
+区间的大小是它们的长度。我们也不能放弃 \autoref{thm:noexistence of size} 的
+性质 (3)，因为可数可加性需要用于证明与极限相关的定理。我们还不能放弃
+\autoref{thm:noexistence of size} 的性质 (4)，因为不满足平移不变性的大小概念
+与我们的直觉严重不符。
+
+这表明我们除开放宽 \autoref{thm:noexistence of size} 的性质 (1) 之外别无选择，
+即必须存在一些子集使得它们没有大小的概念。大量的经验表明为了允许取极限的操作，
+可定义长度的子集族必须满足对补和可数并操作封闭，于是我们给出下面的定义。
+
+\begin{definition}
+  设 $X$ 是一个集合，$\mathcal{S}$ 是 $X$ 的一个子集族，如果 $\mathcal{S}$
+  满足：
+  \begin{enumerate}
+    \item $\emptyset\in \mathcal{S}$；
+    \item 如果 $E\in \mathcal{S}$，那么 $X\setminus E\in \mathcal{S}$；
+    \item 如果 $E_1,E_2,\dots$ 是 $\mathcal{S}$ 中的一列子集，
+    那么 $\bigcup_{k=1}^\infty E_k\in \mathcal{S}$，
+  \end{enumerate}
+  那么我们说 $\mathcal{S}$ 是 $X$ 上的一个\emph{$\sigma$-代数}。
+\end{definition}
 
 
 
