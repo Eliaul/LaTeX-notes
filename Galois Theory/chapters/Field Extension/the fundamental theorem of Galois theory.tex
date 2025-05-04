@@ -1,0 +1,24 @@
+\section{Galois 理论基本定理}
+
+\begin{theorem}[Galois 理论基本定理]
+  令 $K/F$ 是有限 Galois 扩张，$G=\Gal(K/F)$，那么在 $K/F$ 的中间域
+  和 $G$ 的子群之间存在一一对应，由 $L\mapsto \Gal(K/L)$ 和 $H\mapsto\Fix(H)$
+  给出。如果 $L\leftrightarrow H$，那么 $[K:L]=|H|$ 并且 $[L:F]=[G:H]$。
+  此外，$H$ 是 $G$ 的正规子群当且仅当 $L/F$ 是 Galois 扩张，此时
+  $\Gal(L/F)\simeq G/H$。
+\end{theorem}
+
+\begin{center}
+  \begin{tikzcd}
+    K\arrow[r,leftrightarrow] & \Gal(K/K) \mathmakebox[0pt][l]{{}=0} \\
+    L\arrow[u,symbol=\subseteq]\arrow[r,leftrightarrow] & \Gal(K/L)\arrow[u,symbol=>]\mathmakebox[0pt][l]{{}=H} \\
+    F\arrow[u,symbol=\subseteq]\arrow[r,leftrightarrow] & \Gal(K/F)\arrow[u,symbol=>]\mathmakebox[0pt][l]{{}=G}
+  \end{tikzcd}
+\end{center}
+
+
+
+
+
+
+

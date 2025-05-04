@@ -1,0 +1,75 @@
+\documentclass[fontset=none]{Notes}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\usepackage{tikz-cd,wrapstuff}
+\usepackage{fixdif,siunitx,tikz,nicematrix}
+
+\input{font.def}
+
+\tikzcdset{
+  arrow style=tikz,
+  diagrams={>={Straight Barb[scale=0.8]}}
+}
+\tikzset{
+  symbol/.style={
+    draw=none,
+    every to/.append style={
+      edge node={node [sloped, allow upside down, auto=false]{$#1$}}}
+  }
+}
+
+\allowdisplaybreaks[1]
+
+\newlength{\mymathln}
+\newcommand{\aligninside}[2]{
+  \settowidth{\mymathln}{#2}
+  \mathmakebox[\mymathln]{#1}
+}
+
+\DeclareMathOperator\spa{span}
+\DeclareMathOperator\im{image}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Aut{Aut}
+\DeclareMathOperator\id{id}
+\DeclareMathOperator\Gal{Gal}
+\DeclareMathOperator\Fix{Fix}
+\DeclareMathOperator\rank{rank}
+\DeclareMathOperator\cha{char}
+
+\usepackage{enumitem}
+
+\setlist[enumerate]{nosep,label=(\arabic*)}
+\setlist[itemize]{nosep}
+
+\usepackage[subscriptcorrection,nofontinfo,mtpbb]{mtpro2}
+
+
+%\DeclareMathAlphabet\mathcal{OMS}{cmsy}{m}{n}
+
+%\includeonly{chapters/group}
+
+\newcommand{\uline}{\underline{\hphantom{X}}}
+
+\usepackage[subscriptcorrection,nofontinfo,mtpbb]{mtpro2}
+
+\begin{document}
+
+\frontmatter
+
+\tableofcontents
+
+\mainmatter
+
+\include{chapters/field extension.tex}
+
+
+
+
+
+
+\end{document}

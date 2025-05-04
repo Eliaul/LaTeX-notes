@@ -1,0 +1,265 @@
+\section{可分与不可分扩张}
+
+本节我们研究 \autoref{exa:nonGalois has repeat roots} 之前所说的
+阻止 $F(a)/F$ 成为 Galois 扩张的第二种情况，即
+$\min(F,a)$ 零点在 $F(a)$ 中有重根。
+
+令 $f(x)\in F[x]$，$f$ 的根 $\alpha$ 如果满足 $(x-\alpha)^m\mid f(x)$
+但是 $(x-\alpha)^{m+1}\nmid f(x)$，那么我们说 $\alpha$ 是 $f$ 的 $m$ 重根。
+若 $m >1$，那么我们说 $\alpha$ 是 $f$ 的重根。注意，对于 $f(x)\in F[x]$，如果
+$f$ 在 $F$ 中有 $m$ 重根 $\alpha$，那么其在 $F$ 的任意扩域 $K$ 中仍然有 $m$ 重根 $\alpha$。
+反之，如果 $f$ 在扩域 $K$ 中有 $m$ 重根 $\alpha$，并且 $\alpha\in F$，那么
+$f$ 在 $F$ 中也有 $m$ 重根 $\alpha$。这是由域上多项式环的唯一因子分解性质决定的。
+
+\begin{definition}
+  令 $F$ 是域，不可约多项式 $f(x)\in F[x]$ 如果在分裂域中没有重根，那么
+  我们说 $f$ 在 $F$ 上是\emph{可分的}。如果多项式 $g(x)\in F[x]$ 的所有不可约因子
+  在 $F$ 上都是可分的，那么我们说 $g$ 在 $F$ 上是\emph{可分的}。
+\end{definition}
+
+根据上面的叙述，不难验证上述定义等价于 $f$ 在 $\bar F$ 中无重根。
+
+\begin{example}\label{exa:separable or not polynomial}
+  $x^2-2,(x-1)^9$ 在 $\mathbb{Q}$ 上是可分的。$x^2+x+1$ 在 $\mathbb{F}_2$ 上是可分的。
+  下面是一个不可分多项式的例子。令 $k$ 是特征 $p$ 的域，考虑 $k(t^p)[x]$ 中的多项式
+  $x^p-t^p$。$x^p-t^p$ 的分裂域为 $k(t)$，因为在 $k(t)[x]$ 中有
+  $x^p-t^p=(x-t)^p$。如果 $f(x)\in k(t^p)[x]$ 是 $x^p-t^p$ 的因子，
+  那么在 $k(t)[x]$ 中有 $f\mid (x-t)^p$，所以 $f(x)=(x-t)^k\in k(t)[x]$，
+  但是 $1<k<p$ 时 $f(x)\notin k(t^p)[x]$，所以只可能 $f(x)=1$ 或者
+  $f(x)=x^p-t^p$。这表明 $x^p-t^p$ 是 $k(t^p)$ 上的不可约多项式，
+  但是其在分裂域 $k(t)$ 中有重根 $t$，所以这是不可分多项式。
+
+  更一般地，若 $\cha{F}=p$ 且 $a\in F\setminus F^p$，那么 $x^p-a$ 不可约
+  并且不可分，因为它在任意 $F$ 的扩域中至多只有一个根：若 $r^p-a=s^p-a$，
+  那么 $(r-s)^p=r^p-s^p=0$，所以 $r=s$。
+\end{example}
+
+\begin{lemma}
+  令 $f(x),g(x)\in F[x]$，那么
+  \begin{enumerate}
+    \item 如果 $f$ 在分裂域中没有重根，那么 $f$ 在 $F$ 上可分。
+    \item 如果 $g\mid f$ 并且 $f$ 在 $F$ 上可分，那么 $g$ 在 $F$ 上可分。
+    \item 如果 $f_1,\dots,f_n$ 在 $F$ 上可分，那么 $f_1\cdots f_n$ 在 $F$ 上可分。
+    \item 如果 $f$ 在 $F$ 上可分，那么 $f$ 在 $F$ 的任意扩域上可分。
+    \item 如果 $f$ 在 $F$ 的某个扩域上可分，那么 $f$ 在 $F$ 上可分。
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  (1) 对于 $f$ 的不可约因子 $p$，$p$ 的分裂域被 $f$ 的分裂域包含，所以 $p$
+  在分裂域中没有重根，即 $p$ 在 $F$ 上可分，所以 $f$ 在 $F$ 上可分。
+
+  (2) $g$ 的不可约因子也是 $f$ 的不可约因子，所以 $g$ 在 $F$ 上可分。
+
+  (3) $f_1\cdots f_n$ 的不可约因子必为 $f_1,\dots,f_n$ 中某个多项式的不可约因子，
+  所以 $f_1\cdots f_n$ 在 $F$ 上可分。
+
+  (4) 令 $K$ 是 $F$ 的扩域。设 $p$ 是 $f\in K[x]$ 的不可约因子，令 $\alpha$
+  是 $p(x)$ 在 $\bar K$ 中的根，那么在 $K[x]$ 中有 $p(x)\mid \min(F,\alpha)$，
+  而 $\min(F,\alpha)$ 在 $F$ 上可分，所以 $\min(F,\alpha)$ 在 $\bar F$
+  中没有重根，那么 $\min(F,\alpha)$ 在 $\bar K$ 中也没有重根，所以 $p(x)$
+  在 $\bar K$ 中没有重根，故 $p$ 在 $K$ 上可分，所以 $f$ 在 $K$ 上可分。
+
+  (5) 设 $K$ 是 $F$ 的扩域，$f$ 在 $K$ 上可分。设 $p$ 是 $f$ 的不可约因子。
+  那么 $p$ 在 $F$ 上的分裂域 $L_1$
+  被 $p$ 在 $K$ 上的分裂域 $L_2$ 包含，所以 $p$ 在 $L_1$ 中无重根，
+  即 $p$ 在 $F$ 上可分，所以 $f$ 在 $F$ 上可分。
+\end{proof}
+
+为了有效地判断多项式的可分性，我们需要引入形式导数。
+
+\begin{definition}
+  对于 $f(x)=a_0+a_1x+\cdots+a_nx^n\in F[x]$，$f(x)$ 的\emph{形式导数}定义为
+  $f'(x)=a_1+2a_2x+\cdots+na_nx^{n-1}$。
+\end{definition}
+
+在特征零的域中，上述定义和微积分中利用极限求得的导数没有区别。但是在特征 $p$
+的域中，我们需要注意：$x^p$ 的形式导数为 $px^{p-1}=0$。
+
+形式导数满足与微积分中导数同样的性质：如果 $f(x),g(x)\in F[x]$，那么
+\begin{enumerate}
+  \item $(af(x)+bg(x))'=af'(x)+bg'(x)$；
+  \item $(f(x)g(x))'=f'(x)g(x)+f(x)g'(x)$；
+  \item $(f(g(x)))'=f'(g(x))g'(x)$。
+\end{enumerate}
+利用形式导数，我们可以非常方便地判断多项式是否有重根。若 $f(x)\in F[x]$
+在 $f$ 的分裂域 $K$ 中有根 $\alpha$，那么在 $K[x]$ 中可设 $f(x)=(x-\alpha)^mg(x)$，
+其中 $m\geq 1$ 以及 $(x-\alpha)\nmid g(x)$。此时 $f'(x)=m(x-\alpha)^{m-1}g(x)+(x-\alpha)^mg'(x)$，
+不难注意到 $\alpha$ 是重根当且仅当 $m\geq 2$ 当且仅当 $(x-\alpha)\mid f'(x)$
+当且仅当 $f,f'$ 在 $K$ 中有公共根。
+
+\begin{lemma}\label{lemma:gcd is invariant}
+  令 $f(x),g(x)\in F[x]$，$K$ 是 $F$ 的任意扩域。
+  设 $F[x]$ 中 $\gcd(f,g)=d$， $K[x]$ 中 $\gcd(f,g)=d'$，那么实际上有
+  $d'=d\in F[x]$。
+\end{lemma}
+\begin{proof}
+  由于 $d\in F[x]\subseteq K[x]$
+  是 $f,g$ 的公因子，所以 $d\mid d'$。另一方面，
+  $F[x]$ 中 $\gcd(f,g)=d$ 表明存在 $h_1,h_2\in F[x]$
+  使得 $fh_1+gh_2=d$，所以在 $K[x]$ 中有 $d'\mid (fh_1+gh_2)=d$，
+  故 $d'=d$。
+\end{proof}
+
+\begin{proposition}\label{prop:separable polynomial test}
+  令 $f(x)\in F[x]$ 是非常数多项式，那么 $f$ 在分裂域中无重根当且仅当
+  $\gcd(f,f')=1$。
+\end{proposition}
+\begin{proof}
+  若 $f$ 无重根，令 $K$ 为 $\{f,f'\}$ 在 $F$ 上的分裂域，那么 $f$
+  在 $K$ 上可分，所以 $f,f'$ 在 $K$ 中没有公共根。令 $d$
+  是 $f,f'$ 在 $K[x]$ 中的最大公因子。由于 $f,f'$ 在 $K$ 上分裂，所以
+  $d$ 也在 $K$ 上分裂。若 $\deg d\geq 1$，那么 $d$ 的任意根都是
+  $f,f'$ 的公共根，与上面矛盾。所以 $d=1$。根据 \autoref{lemma:gcd is invariant}，
+  在 $F[x]$ 中也有 $\gcd(f,f')=1$。
+
+  若 $F[x]$ 中有 $\gcd(f,f')=1$，同样令 $K$ 为 $\{f,f'\}$ 在 $F$ 上的分裂域。
+  根据 \autoref{lemma:gcd is invariant}，在 $K[x]$ 中有
+  $\gcd(f,f')=1$，这表明 $f,f'$ 在 $K$ 中没有公共根，从而在
+  $f$ 的分裂域中也没有公共根，所以 $f$ 无重根。
+\end{proof}
+
+\begin{proposition}\label{prop:separable of irreducible polynomial}
+  $f(x)\in F[x]$ 是不可约多项式。
+  \begin{enumerate}
+    \item 如果 $\cha(F)=0$，那么 $f$ 在 $F$ 上可分。如果 $\cha(F)=p>0$，
+    那么 $f$ 在 $F$ 上可分当且仅当 $f'(x)\neq 0$，当且仅当
+    $f(x)\notin F[x^p]$。
+    \item 如果 $\cha(F)=p$，那么存在 $m\geq 0$ 和不可约的可分多项式 $g(x)\in F[x]$，
+    使得 $f(x)=g(x^{p^m})$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 因为 $f$ 不可约，所以 $\gcd(f,f')$ 作为 $f$ 的因子只可能等于 $1$ 或者
+  $f$ 。如果 $\cha(F)=0$，那么 $\deg f'=\deg f-1$，所以 $f\nmid f'$，所以
+  $\gcd(f,f')=1$，根据 \autoref{prop:separable polynomial test}，
+  $f$ 可分。如果 $\cha(F)=p$，那么 $f$ 不可分当且仅当 $\gcd(f,f')= f$，
+  当且仅当 $f\mid f'$，当且仅当 $f'(x)=0$，当且仅当 $f(x)\in F[x^p]$。
+
+  (2) 对于 $r\geq 0$，注意到 $F[x^{p^r}]$ 中非常数多项式至少是 $p^r$ 次的，
+  所以只可能存在有限多个 $r_1,\dots,r_k$ 使得 $f(x)\in F[x^{p^{r_i}}]$，由于
+  $f(x)\in F[x]$，所以 $k\geq 1$。令 $m=\max\{r_1,\dots,r_k\}$。
+  设 $f(x)=g(x^{p^m})$，那么 $g(x)\notin F[x^p]$，否则与 $m$ 的最大性矛盾。
+  由 (1)，$g$ 在 $F$ 上可分。
+\end{proof}
+
+\begin{definition}
+  $K/F$ 是域扩张，$\alpha\in K$。如果 $\min(F,\alpha)$ 在 $F$ 上可分，
+  那么我们说 $\alpha$ 在 $F$ 上可分。如果每个 $\alpha\in K$ 都在 $F$
+  上可分，那么我们说 $K/F$ 是\emph{可分扩张}。
+\end{definition}
+
+\begin{example}
+  如果 $\cha(F)=0$，根据 \autoref{prop:separable of irreducible polynomial}，
+  $F$ 的任意代数扩张都是可分扩张。如果 $\cha(F)=p$，根据 \autoref{exa:separable or not polynomial}，
+  对于域 $k$，扩张 $k(t)/k(t^p)$ 不是可分扩张，因为元素 $t$ 在 $k(t^p)$
+  上不可分。
+\end{example}
+
+现在我们可以说明 Galois 的代数扩张等价于正规可分扩张，这是我们判断
+一个代数扩张是否为 Galois 扩张的一个最普遍的方法。
+
+\begin{theorem}
+  $K/F$ 是代数扩张，那么下面的说法是等价的。
+  \begin{enumerate}
+    \item $K/F$ 是 Galois 扩张。
+    \item $K/F$ 是正规可分扩张。
+    \item $K$ 是 $F$ 上某一族可分多项式集合的分裂域。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  $(1)\Rightarrow (2)$ 若 $K/F$ 是 Galois 扩张。任取 $\alpha\in K$，
+  设 $\min(F,\alpha)$ 在 $K$ 中的所有不同的根为 $\alpha_1=\alpha,\dots,\alpha_n$。
+  令 $f(x)=\prod(x-\alpha_i)=x^n+\beta_{n-1}x^{n-1}+\cdots+\beta_0\in K[x]$。
+  任取 $\sigma\in\Gal(K/F)$，由于 $\sigma$ 是 $\alpha_1,\dots,\alpha_n$ 的一个置换，
+  所以 $\sigma(f)=f$。根据 $\sigma$ 的任意性，有 $\beta_i\in\Fix(\Gal(K/F))=F$，
+  所以 $f(x)\in F[x]$。因为 $f(\alpha)=0$，所以 $\min(F,\alpha)\mid f(x)$。
+  另一方面，在 $K[x]$ 中有 $f(x)\mid \min(F,\alpha)$，所以 $f(x)=\min(F,\alpha)$。
+  这表明 $\min(F,\alpha)$ 无重根且在 $K$ 上分裂，所以 $K/F$ 是可分扩张，
+  同时 $K$ 是 $\{\min(F,\alpha)\,|\,\alpha\in K\}$ 在 $F$ 上的分裂域。
+  故 $K/F$ 为正规可分扩张。
+
+  $(2)\Rightarrow (3)$ 若 $K/F$ 为正规可分扩张。那么 $K$ 是可分多项式
+  集合 $\{\min(F,\alpha)\,|\,\alpha\in K\}$ 在 $F$ 上的分裂域。
+
+  $(3)\Rightarrow (1)$ 首先假设 $[K:F]<\infty$。对 $n=[K:F]$ 归纳。若 $n=1$，
+  那么 $K=F$，此时 $K/F$ 当然是 Galois 扩张。现在假设 $n>1$ 且结论对
+  所有小于 $n$ 的扩张成立。若 $K$ 是可分多项式集合 $\{f_i(x)\}$ 的分裂域
+  且 $[K:F]=n$。$n>1$ 表明存在某个 $f_i$ 的根 $\alpha$ 不在 $F$ 中，令 
+  $L=F(\alpha)$，那么 $[L:F]>1$，所以 $[K:L]<n$。此时 $K$ 是 $\{f_i\}$
+  在 $L$ 上的分裂域，根据归纳假设，$K/L$ 是 Galois 扩张。令 $H=\Gal(K/L)$
+  是 $\Gal(K/F)$ 的子群，$\alpha_1,\dots,\alpha_r\in L$ 是 $\min(F,\alpha)$
+  的不同的根。由于 $\alpha$ 在 $F$ 上可分，所以 $[L:F]=r$。根据同构延拓定理，
+  存在 $\tau_i\in\Gal(K/F)$ 使得 $\tau_i(\alpha)=\alpha_i$。注意到陪集
+  $\tau_iH$ 互不相同，因为若 $\tau_i^{-1}\tau_j\in H$，那么 $\tau_i^{-1}\tau_j(\alpha)=\alpha$，
+  即 $\alpha_i=\tau_i(\alpha)=\tau_j(\alpha)=\alpha_j$。令 $G=\Gal(K/F)$，我们有
+  \[
+    |G|=[G:H]|H|\geq r|H|=[L:F][K:L]=[K:F],
+  \]
+  又因为总是有 $|G|\leq [K:F]$，所以 $|G|=[K:F]$，即 $K/F$ 是 Galois 扩张。
+
+  现在假设 $K/F$ 是任意代数扩张。
+\end{proof}
+
+\begin{corollary}
+  令 $L/F$ 是有限扩张。
+  \begin{enumerate}
+    \item $L/F$ 可分当且仅当 $L$ 被 $F$ 的某个 Galois 扩张包含。
+    \item 如果 $L=F(\alpha_1,\dots,\alpha_n)$，其中 $\alpha_i$ 在 $F$ 上可分，
+    那么 $L/F$ 可分。
+  \end{enumerate}
+\end{corollary}
+\begin{proof}
+  (1) 若 $L\subseteq K$ 且 $K/F$ 是 Galois 扩张，那么 $K/F$ 可分，所以 $L/F$ 可分。
+  反之，若 $L/F$ 可分，因为 $[L:F]<\infty$，所以可以假设 $L=F(\alpha_1,\dots,\alpha_n)$，
+  其中每个 $\alpha_i$ 都在 $F$ 上可分。令 $K$ 是 $\{\min(F,\alpha_i)\}$ 在 $F$ 上的分裂域，
+  那么 $K/F$ 正规可分，所以是 Galois 扩张，所以 $L$ 被 Galois 扩张 $K$ 包含。
+
+  (2) 和 (1) 的证明一致。
+\end{proof}
+
+那些所有代数扩张都可分的域是性质良好的，我们现在来确定哪些域有这样的属性。
+
+\begin{definition}
+  对于域 $F$，如果 $F$ 的每个代数扩张都是可分扩张，那么说 $F$ 是完全域。
+\end{definition}
+
+\begin{example}
+  根据 \autoref{prop:separable of irreducible polynomial}，特征零的域都是完全域。
+  任意代数闭域都是完全域，因为它的代数扩张只有本身。
+\end{example}
+
+下面的定理刻画了素特征的完全域。我们在 \autoref{exa:separable or not polynomial} 中已经发现，如果 $a\in F\setminus F^p$，
+那么 $x^p-a$ 是不可分的不可约多项式。因此，若 $F$ 是完全域，那么必须有 $F^p=F$。
+我们现在证明这其实是一个充分必要条件。
+
+\begin{theorem}
+  令 $F$ 是特征 $p$ 的域，那么 $F$ 是完全域当且仅当 $F^p=F$。
+\end{theorem}
+\begin{proof}
+  假设 $F$ 是完全域，若 $F^p\neq F$，取 $a\in F^p\setminus F$，令 $K$
+  是 $x^p-a$ 在 $F$ 上的分裂域，那么 $a^{1/p}\in K$ 不可分，因为 $\min(F,a^{1/p})=x^p-a$
+  有重根，这与 $F$ 是完全域矛盾，所以 $F^p=F$。
+
+  反之，若 $F^p=F$。令 $K/F$ 是代数扩张，任取 $\alpha\in K$，$p(x)=\min(F,\alpha)$。
+  根据 \autoref{prop:separable of irreducible polynomial}，存在 $g(x)\in F[x]$
+  使得 $p(x)=g(x^{p^m})$，其中 $g$ 不可约且可分。如果 $g(x)=a_0+a_1x+\cdots+x^r$，
+  由于 $a_i\in F=F^p$，所以存在 $b_i\in F$ 使得 $a_i=b_i^p$，所以
+  \[
+    p(x)=b_0^p+b_1^px^{p^m}+\cdots+x^{rp^{m}}=\bigl(b_0+b_1x^{p^{m-1}}+\cdots+x^{rp^{m-1}}\bigr)^p,
+  \]
+  而 $p$ 不可约，所以 $m=0$，即 $p=g$ 在 $F$ 上可分。这就表明 $K/F$ 是可分扩张。
+\end{proof}
+
+\begin{example}
+  任意有限域都是完全域。设 $F$ 是有限域，$\varphi:F\to F$ 为 $\varphi(a)=a^p$，
+  那么 $\varphi$ 是单射，$F$ 是有限集表明 $\varphi$ 是满射，所以 $F=F^p$，
+  即 $F$ 是完全域。
+\end{example}
+
+\subsection{纯不可分扩张}
+
+
+
+
+
+
