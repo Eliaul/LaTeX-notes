@@ -1,0 +1,187 @@
+
+\section{有限域}
+
+如果 $F$ 是特征 $p$ 的有限域，那么 $F$ 包含 $\mathbb{F}_p$，所以 $F$
+可以视为 $\mathbb{F}_p$-向量空间，$F$ 有限表明维数是有限维的，即可以假设
+$[F:\mathbb{F}_p]=n$。根据线性代数的基本知识，我们知道 $F$ 同构于
+$\mathbb{F}_p^n$，所以 $|F|=p^n$。
+为了研究有限域，我们首先研究 $F^\times$ 的群结构，实际上有限域的乘法群的群结构
+决定了有限域的很多性质。
+
+首先证明一个群论的结论。
+
+\begin{lemma}
+  设 $G$ 是 $n$ 阶有限群，如果对于任意正整数 $m$，方程 $x^m=e$ 在 $G$
+  中最多只有 $m$ 个解，那么 $G$ 是循环群。
+\end{lemma}
+\begin{proof}
+  记集合
+  \[
+    A_d=\{g\in G\,|\, \mathrm{ord}(g)=d\},\quad S_d=\{g\in G\,|\, g^d=e\}.
+  \]
+  显然 $A_d\subseteq S_d$。若 $d\nmid n$，那么 $A_d=\emptyset$。若 $d\mid n$
+  且 $A_d\neq\emptyset$，设 $a\in A_d$，那么 $\langle a\rangle\subseteq S_d$。
+  根据条件，我们有 $|S_d|\leq d=|\langle a\rangle|$，所以 $S_d=\langle a\rangle$。
+  于是 $A_d\subseteq \langle a\rangle$。$\langle a\rangle$ 的生成元有
+  $\varphi(d)$ 个，所以 $|A_d|=\varphi(d)$。这表明 $d\mid n$ 的时候，
+  要么 $|A_d|=0$，要么 $|A_d|=\varphi(d)$。
+
+  又因为 $G=\bigcup_{d\mid n}A_d$，所以
+  \[
+    n=|G|=\sum_{d\mid n}|A_d|\leq\sum_{d\mid n}\varphi(d)=n,
+  \]
+  所以 $d\mid n$ 的时候必须有 $|A_d|=\varphi(d)$。这表明 $|A_n|\neq 0$，
+  即 $G$ 中存在 $n$ 阶元。
+\end{proof}
+
+\begin{corollary}
+  若 $F$ 是有限域，那么 $F^\times $ 是循环群。
+\end{corollary}
+\begin{proof}
+  对于任意正整数 $m$，方程 $x^m=1$ 在 $F$ 中最多只有 $m$ 个解，所以在
+  $F^\times$ 中最多也只有 $m$ 个解，所以 $F^\times$ 是循环群。
+\end{proof}
+
+\begin{example}
+  $\mathbb{F}_p^\times$ 的生成元被称为\emph{模 $p$ 的原根}。例如，
+  $\mathbb{F}_5^\times=\{1,2,3,4\}=\langle 2\rangle$，即 $2$ 是模 $5$
+  的原根。又比如 $3$ 是模 $7$ 的原根。一般来说，没有一种简单的方式去寻找
+  模 $p$ 的原根。
+\end{example}
+
+\autoref{thm:primitive element} 证明了无限域情况下的本原元定理，下面我们证明
+有限域情况下的。注意到如果 $K/F$ 是有限域的扩张，那么 $K/F$ 显然只有有限个中间域，
+因此本原元定理的假设始终成立。下面的推论完成了有限域情况下的本原元定理。
+
+\begin{corollary}
+  如果 $K/F$ 是有限域的扩张，那么 $K$ 是 $F$ 的单扩张。
+\end{corollary}
+\begin{proof}
+  设 $K^\times=\langle\alpha\rangle$，那么 $K$ 的任意非零元都是 $\alpha$
+  的幂次，所以 $K=F(\alpha)$。
+\end{proof}
+
+\begin{theorem}[有限域的结构定理]\label{thm:structure of finite field}
+  令 $F$ 的特征 $p$ 的有限域，设 $|F|=p^n$。那么 $F$ 是可分多项式 $x^{p^n}-x$
+  在 $\mathbb{F}_p$ 上的分裂域，所以 $F/\mathbb{F}_p$ 是 Galois 扩张。
+  此外，如果定义 $\sigma:F\to F$ 为 $\sigma(a)=a^p$，
+  那么 $\sigma$ 生成 $\Gal(F/\mathbb{F}_p)$，故 Galois 群 $\Gal(F/\mathbb{F}_p)$
+  是循环群。这个自同构 $\sigma$ 被称为\emph{Frobenius 自同构}。
+\end{theorem}
+\begin{proof}
+  根据导数判别法，$x^{p^n}-x$ 是可分多项式。由于 $|F^\times|=p^n-1$，所以任意 $a\in F^\times$ 满足
+  $a^{p^n-1}=1$，也即 $a^{p^n}-a=0$，显然 $0$ 也满足这个方程，所以 $F$ 的元素均为
+  $x^{p^n}-x$ 的零点。又因为 $x^{p^n}-x$ 至多只有 $p^n$ 个零点，所以 $F$ 的元素
+  恰为 $x^{p^n}-x$ 的全部零点，故 $F$ 是 $x^{p^n}-x$ 的分裂域。根据 \autoref{thm:normal separable extension}，
+  $F/\mathbb{F}_p$ 是 Galois 扩张。 
+
+  不难验证 $\sigma$ 是一个 $\mathbb{F}_p$-单同态。$F$ 有限表明 $\sigma$ 是满射，
+  所以是 $\mathbb{F}_p$-自同构，所以 $\sigma\in \Gal(F/\mathbb{F}_p)$。
+  注意到 $\Fix(\langle\sigma\rangle)=\{a\in F\,|\, a^p=a\}\supseteq \mathbb{F}_p$，
+  且 $x^p-x$ 最多只有 $p$ 个零点，所以 $\mathbb{F}_p=\Fix(\langle\sigma\rangle)$。
+  所以 $\Gal(F/\mathbb{F}_p)=\Gal(F/\Fix(\langle \sigma\rangle))=\langle\sigma\rangle$。 
+\end{proof} 
+
+\begin{corollary}
+  任意两个相同大小的有限域是同构的。
+\end{corollary}
+\begin{proof}
+  $p^n$ 阶有限域是 $x^{p^n}-x$ 在 $\mathbb{F}_p$ 上的分裂域，所以它们是同构的。
+\end{proof}
+
+实际上 \autoref{thm:structure of finite field} 可以刻画任意有限域的扩张，
+而不必从 $\mathbb{F}_p$ 开始。
+
+\begin{corollary}\label{coro:extension of finite field}
+  如果 $K/F$ 是有限域的域扩张，那么 $K/F$ 是具有循环 Galois 群的 Galois 扩张。
+  此外，如果 $\cha(F)=p$ 以及 $|F|=p^n$，那么 $\Gal(K/F)$ 由自同构 $\tau$ 生成，
+  其中 $\tau(a)=a^{p^n}$。
+\end{corollary}
+\begin{proof}
+  设 $[K:\mathbb{F}_p]=m$，那么 $K$ 是 $x^{p^m}-x$ 在 $\mathbb{F}_p$ 上的分裂域，
+  从而也是 $x^{p^m}-x$ 在 $F$ 上的分裂域，所以 $K/F$ 是 Galois 扩张。
+  由于 $\Gal(K/F)$ 是 $\Gal(K/\mathbb{F}_p)$ 的子群，所以 $\Gal(K/F)$ 是循环群。
+  记 $\sigma$ 是 Frobenius 自同构，设 $s=\lvert\Gal(K/F)\rvert=[K:F]$，那么
+  $m=ns$，所以 $\Gal(K/F)$ 的生成元是 $\sigma^n$，满足 $\sigma^n(a)=a^{p^n}$。
+\end{proof}
+
+我们已经描述了有限域作为 $\mathbb{F}_p$ 的扩域时的结构，并且知道 $\mathbb{F}_p$
+的任意有限扩张都有 $p^n$ 个元素。但是，我们还没有确定是否对于每个 $n$，
+都存在 $p^n$ 个元素的有限域。利用基本定理和有限域的结构定理，我们现在证明对于每个
+$n$，确实存在唯一的 $p^n$ 个元素的有限域。
+
+\begin{theorem}
+  令 $N$ 是 $\mathbb{F}_p$ 的代数闭包。对于每个正整数 $n$，存在唯一的 $p^n$
+  个元素的 $N$ 的子域。如果 $K,L$ 分别是 $p^m,p^n$ 阶子域，那么 $K\subseteq L$
+  当且仅当 $m\mid n$。此时，$L/K$ 是 Galois 扩张，并且 $\Gal(L/K)=\langle \tau\rangle$，
+  其中 $\tau(a)=a^{p^m}$。
+\end{theorem}
+\begin{proof}
+  对于每个正整数 $n$，多项式 $x^{p^n}-x$ 在 $N$ 中有 $p^n$ 个根，这些根的集合
+  构成一个域，即 $p^n$ 个元素的子域。根据 \autoref{thm:structure of finite field}，
+  $N$ 的任意 $p^n$ 阶子域都由 $x^{p^n}-x$ 的所有根组成，所以是唯一的。
+
+  若 $K,L$ 分别是 $p^m,p^n$ 阶子域。假设 $K\subseteq L$，那么 $\mathbb{F}_p\subseteq K\subseteq L$，所以
+  \[
+    n=[L:\mathbb{F}_p]=[L:K][K:\mathbb{F}_p]=[L:K]m,
+  \]
+  所以 $m\mid n$。反之，若 $m\mid n$，任取 $a\in K$，那么 $a^{p^m}=a$，
+  从而 $a^{p^n}=a$，所以 $a\in L$，即 $K\subseteq L$。
+  根据 \autoref{coro:extension of finite field}，$L/K$ 是 Galois 扩张，
+  并且 $\Gal(L/K)$ 由 $\tau(a)=a^{p^m}$ 生成。
+\end{proof}
+
+\begin{corollary}
+  令 $F$ 是有限域，$f(x)$ 是 $F$ 上的 $n$ 次首一不可约多项式。
+  \begin{enumerate}
+    \item 如果 $a$ 是 $f$ 在 $F$ 的任意扩域中的根，那么 $F(a)$ 是 $f$
+    在 $F$ 上的分裂域。因此，如果 $K$ 是 $f$ 在 $F$ 上的分裂域，那么
+    $[K:F]=n$。
+    \item 如果 $|F|=q$，那么 $f$ 的根的集合为 $\big\{a^{q^r}\,|\, r\geq 1\big\}$。
+  \end{enumerate}
+\end{corollary}
+\begin{proof}
+  令 $K$ 是 $f$ 在 $F$ 上的分裂域。若 $a\in K$ 是 $f$ 的根，考虑 $F(a)$，
+  此时 $[F(a):F]=n$，所以 $|F(a)|=q^n$。由于 $F(a)/F$ 是 Galois 扩张，所以 
+  $f=\min(F,a)$ 在 $F(a)$ 中分裂，所以 $K\subseteq F(a)$，故 $F(a)=K$
+  是 $f$ 在 $F$ 上的分裂域以及 $[K:F]=n$。
+
+  由于 $\Gal(K/F)=\langle\tau\rangle$，对于 $x\in K$ 有 $\tau(x)=x^{q}$。由于 $a\in K$
+  是 $f$ 的根，所以对于任意 $r\geq 1$，$a^{q^r}=\tau^r(a)$ 都是 $f$ 的根。
+  再根据同构延拓定理，对于 $f$ 的任意根 $a'$，都存在某个 $r$ 使得 $\tau^r(a)=a'$，
+  故 $f$ 的根的集合恰为 $\big\{a^{q^r}\,|\, r\geq 1\big\}$。
+\end{proof}
+
+\begin{example}
+  考虑 $K=\mathbb{F}_2(\alpha)$，其中 $\alpha$ 是 $f(x)=x^3+x^2+1$ 的根。
+  多项式 $f$ 在 $\mathbb{F}_2$ 中没有零点，直接计算可知 $f$ 是不可约多项式，
+  所以 $[K:\mathbb{F}_2]=3$。现在我们知道 $K$ 是 $f$ 在 $\mathbb{F}_2$ 上的分裂域，
+  并且 $f$ 的所有根为 $\alpha,\alpha^2,\alpha^4$。我们可以验证这一点。
+  因为 $\alpha^3+\alpha^2+1=0$，所以 
+  \begin{gather*}
+    \alpha^6+\alpha^4+1=(\alpha^3+\alpha^2)^2+1=0,\\
+    \alpha^{12}+\alpha^8+1=(\alpha^3+\alpha^2)^4+1=0.
+  \end{gather*}
+  注意到 $\alpha^4=(\alpha^2+1)\alpha=\alpha^2+\alpha+1$，所以 
+  $\{1,\alpha,\alpha^2\}$ 构成 $K/\mathbb{F}_2$ 的一组基，这就表明 $\mathbb{F}_2(\alpha)$
+  确实是 $f$ 在 $\mathbb{F}_2$ 上的分裂域。
+\end{example}
+
+
+\section{分圆扩张}
+
+一个域的 $n$ 次单位根指的是满足 $\omega^n=1$ 的元素 $\omega$。例如，复数 $\zeta_n=e^{2\pi i/n}$ 是一个 $n$ 次单位根。
+本节我们研究域扩张 $F(\omega)/F$。这个扩张在 Galois 理论的应用中扮演着重要角色，
+尤其是在多项式方程的可解性问题上。
+
+\begin{definition}
+  如果 $\omega\in F$ 满足 $\omega=1$，那么说 $\omega$ 是 $n$ 次单位根。
+  如果 $\zeta_n$ 是乘法群 $F^\times$ 的 $n$ 阶元，那么说 $\zeta_n$ 是 
+  $n$ 次本原单位根。对于任意单位根 $\omega$，域扩张 $F(\omega)/F$ 被称为
+  分圆扩张。
+\end{definition}
+
+
+
+
+

@@ -17,6 +17,53 @@
 \end{center}
 
 
+\begin{theorem}[本原元定理]\label{thm:primitive element}
+  有限扩张 $K/F$ 是单扩张当且仅当只存在有限多个中间域 $L$ 使得 $F\subseteq L\subseteq K$。
+\end{theorem}
+\begin{proof}
+  我们仅对无限域的情况做证明，有限域的情况留到下一节中。
+  由于 $[K:F]<\infty$，所以设 $K=F(\alpha_1,\dots,\alpha_n)$。对 $n$ 归纳，
+  当 $n=1$ 时结论显然成立。假设 $n-1$ 时成立，对于 $n>1$ 的时候，根据假设，
+  有 $\beta\in K$ 使得 $F(\beta)=F(\alpha_1,\dots,\alpha_{n-1})$，
+  所以 $K=F(\alpha_n,\beta)$。任取 $a\in F$，考虑 $M_a=F(\alpha_n+a\beta)$，
+  显然 $F\subseteq M_a\subseteq K$。
+  由于 $F$ 有无限个元素，所以一定存在 $a\neq b$ 使得 $M_a=M_b$。注意到
+  \[
+    \beta=\frac{(\alpha_n+a\beta)-(\alpha_n+b\beta)}{a-b}\in M_a,
+  \]
+  所以 $\alpha_n=(\alpha_n+a\beta)-a\beta\in M_a$，所以 $K=M_a$，
+  即 $K$ 是 $F$ 的单扩张。
+
+  反之，假设存在某个 $\alpha\in K$ 使得 $K=F(\alpha)$。设 $M$ 使得 $F\subseteq M\subseteq K$，
+  那么 $K=M(\alpha)$。记 $q(x)=\min(M,\alpha)\in M[x]$，设 $q(x)=a_0+a_1x+\cdots+x^r$，
+  考虑 $M_0=F(a_0,\dots,a_{r-1})$，那么 $M_0\subseteq M$ 且 $q(x)\in M_0[x]$。
+  因为 $\min(M_0,\alpha)\mid q(x)$，所以 
+  \begin{equation*}
+    [K:M]=q\geq \deg (\min(M_0,\alpha))=[K:M_0]=[K:M][M:M_0],
+  \end{equation*}
+  所以 $M=M_0$，这表明 $M$ 完全由多项式 $q$ 确定。记 $p(x)=\min(F,\alpha)$，
+  那么 $q\mid p$，所以这样的 $q$ 只有有限多个，即 $K/F$ 只有有限多个中间域。
+\end{proof}
+
+\begin{corollary}
+  若 $K/F$ 是有限可分扩张，那么 $K/F$ 是单扩张。
+\end{corollary}
+\begin{proof}
+  设 $K=F(\alpha_1,\dots,\alpha_n)$，令 $N$ 为 $\{\min(F,\alpha_i)\}$
+  在 $F$ 上的分裂域，根据 \autoref{thm:normal separable extension}，
+  $N/F$ 是 Galois 扩张。此时 $F\subseteq K\subseteq N$。根据基本定理，
+  $N/F$ 的中间域和有限群 $\Gal(N/F)$ 的子群一一对应，所以 $N/F$ 只有有限多个
+  中间域，即 $K/F$ 只有有限多个中间域，所以 $K/F$ 是单扩张。
+\end{proof}
+
+\begin{corollary}
+  如果 $K/F$ 是有限扩张且 $\cha(F)=0$，那么 $K/F$ 是单扩张。
+\end{corollary}
+\begin{proof}
+  特征零的域都是完全域。
+\end{proof}
+
+
 
 
 
