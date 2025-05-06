@@ -1,0 +1,37 @@
+\section{范数与迹}
+
+注意到在 \autoref{exa:Q7} 和 \autoref{exa:Q8} 中，我们使用形如 $\sum_{\sigma\in H}\sigma(\zeta_n)$
+的元素来生成分圆扩张的中间域 $\Fix(H)$。我们将看到这个和 $\sum_{\sigma\in H}\sigma(\zeta_n)$
+就是 $\zeta_n$ 在扩张 $\mathbb{Q}(\zeta_n)/\Fix(H)$ 下的迹。
+
+令 $K$ 是 $F$ 的扩域且 $[K:F]=n$。如果 $a\in K$，记 $L_a$ 为映射
+$L_a:K\to K$，满足 $L_a(b)=ab$。容易验证 $L_a$ 是 $F$-线性映射。$L_a$
+作为有限维向量空间之间的线性映射，其可以表示为一个矩阵，从而可以计算矩阵的行列式和迹。
+
+\begin{definition}
+  令 $K$ 是 $F$ 的扩域，对于 $a\in K$，定义 $a$ 的范数 $N_{K/F}$ 和 $T_{K/F}$ 分别为
+  \[
+    N_{K/F}(a)=\det(L_a),\ T_{K/F}(a)=\mathrm{Tr}(L_a).
+  \]
+\end{definition}
+
+\begin{example}
+  设 $F$ 是域，对于 $d\in F\setminus F^2$，令 $K=F(\sqrt{d})$，那么 $K$ 的一组基为
+  $\{1,\sqrt{d}\}$。如果 $\alpha=a+b\sqrt{d}$，其中 $a,b\in F$，我们来计算 $\alpha$ 的
+  范数和迹。由于 $L_\alpha(1)=\alpha=a+b\sqrt{d}$，以及 $L_\alpha(\sqrt{d})=\alpha\sqrt{d}=bd+a\sqrt{d}$，
+  所以 $L_\alpha$ 的表示矩阵为
+  \[
+    \begin{pmatrix}
+      a & bd \\
+      b & a
+    \end{pmatrix},
+  \]
+  所以 $N_{K/F}(\alpha)=a^2-b^2d$ 以及 $T_{K/F}(\alpha)=2a$。
+\end{example}
+
+
+
+
+
+
+

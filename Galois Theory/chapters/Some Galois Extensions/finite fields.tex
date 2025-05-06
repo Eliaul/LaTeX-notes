@@ -167,19 +167,14 @@ $n$，确实存在唯一的 $p^n$ 个元素的有限域。
   确实是 $f$ 在 $\mathbb{F}_2$ 上的分裂域。
 \end{example}
 
+\begin{example}
+  令 $f(x)=x^2+1$，如果 $p$ 是奇素数，我们证明 $f$ 在 $\mathbb{F}_p$ 上可约当且仅当 $p\equiv 1\pmod 4$。
+  设 $a\in \mathbb{F}_p$ 是 $f$ 的零点，那么 $a^4=1$，即 $a$ 是 $\mathbb{F}_p^\times$ 的 $4$ 阶元，
+  所以 $4\mid p-1$，即 $p\equiv 1\pmod 4$。反之，若 $p\equiv 1\pmod 4$，由于 $\mathbb{F}_p^\times$
+  是 $p-1$ 阶循环群，所以存在 $4$ 阶元 $a$，那么 $a^2\neq 1$，这只可能 $a^2=-1$，所以 $a$
+  是 $f$ 的零点。
+\end{example}
 
-\section{分圆扩张}
-
-一个域的 $n$ 次单位根指的是满足 $\omega^n=1$ 的元素 $\omega$。例如，复数 $\zeta_n=e^{2\pi i/n}$ 是一个 $n$ 次单位根。
-本节我们研究域扩张 $F(\omega)/F$。这个扩张在 Galois 理论的应用中扮演着重要角色，
-尤其是在多项式方程的可解性问题上。
-
-\begin{definition}
-  如果 $\omega\in F$ 满足 $\omega=1$，那么说 $\omega$ 是 $n$ 次单位根。
-  如果 $\zeta_n$ 是乘法群 $F^\times$ 的 $n$ 阶元，那么说 $\zeta_n$ 是 
-  $n$ 次本原单位根。对于任意单位根 $\omega$，域扩张 $F(\omega)/F$ 被称为
-  分圆扩张。
-\end{definition}
 
 
 

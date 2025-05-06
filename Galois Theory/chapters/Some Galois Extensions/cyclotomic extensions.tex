@@ -1,0 +1,171 @@
+\section{分圆扩张}
+
+一个域的 $n$ 次单位根指的是满足 $\omega^n=1$ 的元素 $\omega$，为了强调 $n$，有时我们写作 $\omega_n$。
+例如，复数 $\zeta_n=e^{2\pi i/n}$ 是一个 $n$ 次单位根。
+本节我们研究域扩张 $F(\omega)/F$。这个扩张在 Galois 理论的应用中扮演着重要角色，
+尤其是在多项式方程的可解性问题上。
+
+\begin{definition}
+  如果 $\omega\in F$ 满足 $\omega^n=1$，那么说 $\omega$ 是 $n$ 次单位根。
+  如果 $\zeta_n$ 是乘法群 $F^\times$ 的 $n$ 阶元，那么说 $\zeta_n$ 是 
+  $n$ 次本原单位根。对于任意单位根 $\omega$，域扩张 $F(\omega)/F$ 被称为
+  分圆扩张。
+\end{definition}
+
+我们首先指出关于单位根的两个事实。第一点，如果 $\zeta_n\in F$ 是本原单位根，那么 $\cha(F)\nmid n$。
+这是因为如果特征 $p\mid n$，设 $n=pm$，那么 $(\zeta_n^m-1)^p=\zeta_n^n-1=0$，所以 $\zeta_n^m=1$，
+这与 $\zeta_n$ 是本原单位根矛盾。第二点，如果 $\omega_n$ 是单位根，那么 $\omega_n$ 在 $F^\times$
+中的阶整除 $n$，并且设 $\omega_n$ 的阶是 $m\mid n$，那么 $\omega_n$ 实际上是 $m$ 次本原单位根。
+
+注意到域 $F$ 的 $n$ 次单位根就是 $x^n-1$ 的根的集合，不难验证所有的 $n$ 次单位根构成一个群，其作为
+$F^\times$ 的有限子群，是一个循环群，此时这个循环群的生成元就是一个 $n$ 次本原单位根。
+
+\begin{proposition}
+  设 $\cha(F)\nmid n$，$K$ 是 $x^n-1$ 在 $F$ 上的分裂域，那么 $K/F$ 是 Galois 扩张并且
+  $K=F(\zeta_n)$，$\Gal(K/F)$ 同构于 $(\mathbb{Z}/n \mathbb{Z})^\times$ 的一个子群。
+  因此，$\Gal(K/F)$ 是 Abelian 群并且 $[K:F]\mid \varphi(n)$。
+\end{proposition}
+\begin{proof}
+  根据导数判别法，$x^n-1$ 是可分多项式，所以 $K/F$ 是 Galois 扩张。由于 $\zeta_n$ 是本原单位根，
+  所以 $x^n-1$ 的任意根都是 $\zeta_n$ 的幂次，所以 $K=F(\zeta_n)$。
+  
+  任取 $\sigma\in\Gal(K/F)$，
+  $\sigma$ 由 $\sigma(\zeta_n)$ 完全确定。$\sigma$ 是自同构表明 $\sigma$ 把 $\zeta_n$ 送到另一个
+  本原单位根，故 $\sigma(\zeta_n)=\zeta_n^t$，其中 $(t,n)=1$。定义 $\theta:\Gal(K/F)\to (\mathbb{Z}/n \mathbb{Z})^\times$
+  为 $\sigma\mapsto t$。设 $\sigma(\zeta_n)=\zeta_n^t$ 以及 $\tau(\zeta_n)=\zeta_n^s$，那么
+  $\sigma\tau(\zeta_n)=\zeta_n^{st}$，这表明 $\theta$ 是群同态。若 $\theta(\sigma)=0$，
+  那么 $\sigma(\zeta_n)=\zeta_n$，所以 $\theta$ 是单同态，这就表明 $\Gal(K/F)$ 同构于 
+  $(\mathbb{Z}/n \mathbb{Z})^\times$ 的一个子群。
+\end{proof}
+
+\begin{example}
+  设 $n\geq 3$，那么 $\mathbb{R}(\zeta_n)=\mathbb{C}$，因为 $\mathbb{R}(\zeta_n)\subseteq \mathbb{C}$ 并且
+  $[\mathbb{C}:\mathbb{R}]=2$，所以 $\zeta_n\notin \mathbb{R}$ 就表明 $\mathbb{R}(\zeta_n)=\mathbb{C}$。
+\end{example}
+
+\begin{example}
+  考虑 $\mathbb{F}_2(\zeta_7)$。计算可得 $x^7-1$ 有分解
+  \[
+    x^7-1=(x-1)(x^3+x+1)(x^3+x^2+1),
+  \]
+  所以 $\min(\mathbb{F}_2,\zeta_7)=x^3+x+1$ 或者 $\min(\mathbb{F}_2,\zeta_7)=x^3+x^2+1$，
+  即 $[\mathbb{F}_2(\zeta_7):\mathbb{F}_2]=3$。这表明 $\mathbb{F}_2$ 上的 $7$ 次本原单位根
+  有 $6$ 个，其中 $3$ 个是多项式 $x^3+x+1$ 的根，另外 $3$ 个是多项式 $x^3+x^2+1$ 的根，
+  所以造成扩张次数是 $3$ 而不是 $\varphi(7)=6$。我们将看到，这与 $\mathbb{Q}$ 上的情况大不相同，
+  即 $\mathbb{Q}$ 上的分圆扩张的次数 $[\mathbb{Q}(\zeta_n),\mathbb{Q}]$ 一定等于 $\varphi(n)$。
+\end{example}
+
+现在我们研究 $\mathbb{Q}$ 的分圆扩张，令 $\zeta_n$ 是 $\mathbb{C}$
+中的 $n$ 次本原单位根，那么 $\zeta_{n}=e^{2k\pi i/n}$，其中 $(k,n)=1$。
+
+\begin{definition}
+  定义 $n$ 次分圆多项式 $\Phi_n(x)=\prod (x-\zeta_n)\in \mathbb{C}[x]$，其中乘积取遍所有的 $n$ 次本原单位根。
+\end{definition}
+
+例如：
+\begin{align*}
+  \Phi_1(x)&=x-1,\\
+  \Phi_2(x)&=x+1,\\
+  \Phi_4(x)&=(x-i)(x+i)=x^2+1.
+\end{align*}
+此外，如果 $p$ 是素数，那么 $p$ 次本原单位根恰为所有的 $e^{2k\pi i/p}\ (1\leq k\leq p-1)$，
+所以
+\[
+  \Phi_p(x)=\frac{x^n-1}{x-1}=x^{p-1}+x^{p-2}+\cdots+x+1.
+\]
+
+\begin{lemma}
+  我们有 $x^n-1=\prod_{d\mid n}\Phi_d(x)$。此外，$\Phi_n(x)\in \mathbb{Z}[x]$。
+\end{lemma}
+\begin{proof}
+  由于 $x^n-1=\prod (x-\omega_n)$，乘积取遍所有的 $n$ 次单位根。对于每个 $d\mid n$，把 $d$
+  次本原单位根的乘积合在一起，即得 $x^n-1=\prod_{d\mid n}\Phi_d(x)$。
+  
+  对 $n$ 归纳。显然 $\Phi_1(x)\in \mathbb{Z}[x]$。假设在 $d<n$ 的时候有 $\Phi_d(x)\in \mathbb{Z}[x]$，那么
+  \[
+    x^n-1=\left(\prod_{d\mid n,d<n}\Phi_d(x)\right)\Phi_n(x),
+  \]
+  由于 $x^n-1$ 和 $\prod_{d\mid n,d<n}\Phi_d(x)$ 都在 $\mathbb{Z}[x]$ 中，根据带余除法，
+  就有 $\Phi_n(x)\in \mathbb{Z}[x]$。
+\end{proof}
+
+\begin{theorem}
+  $\Phi_n(x)$ 在 $\mathbb{Q}$ 上不可约。
+\end{theorem}
+
+\begin{corollary}
+  如果 $K=\mathbb{Q}(\zeta_n)$ 是 $x^n-1$ 在 $\mathbb{Q}$ 上的分裂域，那么 $[K:\mathbb{Q}]=\varphi(n)$
+  且 $\Gal(K/\mathbb{Q})\simeq (\mathbb{Z}/n \mathbb{Z})^\times$。此外，$\Gal(K/\mathbb{Q})=\{\sigma_i\,|\, (i,n)=1\}$，
+  其中 $\sigma_i$ 满足 $\sigma_i(\zeta_n)=\zeta_n^i$。
+\end{corollary}
+\begin{proof}
+  $\Phi_n(x)$ 不可约就表明 $\min(\mathbb{Q},\zeta_n)=\Phi_n(x)$，所以 $[K:\mathbb{Q}]=\deg\Phi_n(x)=\varphi(n)$。
+  所以 $\Gal(K/\mathbb{Q})$ 有 $\varphi(n)$ 个元素，从而必须有 $\Gal(K/\mathbb{Q})\simeq (\mathbb{Z}/n \mathbb{Z})^\times$。
+\end{proof}
+
+\begin{example}\label{exa:Q7}
+  我们研究 $\mathbb{Q}(\zeta_7)/\mathbb{Q}$。此时 $\Gal(\mathbb{Q}(\zeta_7)/\mathbb{Q})\simeq \mathbb{F}_7^\times$ 是循环群。
+  记 $\Gal(\mathbb{Q}(\zeta_7)/\mathbb{Q})=\{\sigma_1,\dots,\sigma_6\}$，由于 $\mathbb{F}_7^\times=\langle 3\rangle$，所以
+  $\Gal(\mathbb{Q}(\zeta_7)/\mathbb{Q})=\langle\sigma_3\rangle$，满足 $\sigma_3(\zeta_7)=\zeta_7^3$。
+  于是 $\Gal(\mathbb{Q}(\zeta_7)/\mathbb{Q})$ 的所有子群为
+  \[
+    0,\ \langle \sigma_3^3\rangle,\ \langle\sigma_3^2\rangle,\ \langle\sigma_3\rangle.
+  \]
+  我们寻找对应的中间域。记 $L=\Fix(\sigma_3^3)=\Fix(\sigma_6)$，那么 $[\mathbb{Q}(\zeta_7):L]=|\langle\sigma_6\rangle|=2$
+  以及 $\Gal(\mathbb{Q}(\zeta_7)/L)=\langle\sigma_6\rangle$，
+  这意味着 $\min(L,\zeta_7)$ 是 $2$ 次多项式并且有根 $\zeta_7,\zeta_7^6=\sigma_6(\zeta_7)$，所以 
+  \[
+    \min(L,\zeta_7)=(x-\zeta_7)(x-\zeta_7^6)=x^2-(\zeta_7+\zeta_7^6)x+1,
+  \]
+  所以 $\zeta_7+\zeta_7^6\in L$。如果令 $\zeta_7=e^{2\pi i/7}$，那么 
+  $\zeta_7+\zeta_7^6=2\cos(2\pi/7)$。因此 $\mathbb{Q}(\cos(2\pi/7))\subseteq L$。此时
+  $\min(L,\zeta_7)$ 也是 $\mathbb{Q}(\cos(2\pi/7))$ 上的多项式，所以 $[\mathbb{Q}(\zeta_7):\mathbb{Q}(\cos 2\pi/7)]$
+  最多是 $2$ 次的，这就表明 $L=\mathbb{Q}(\cos 2\pi/7)$。
+
+  记 $K=\Fix(\sigma_3^2)=\Fix(\sigma_2)$，那么 $[\mathbb{Q}(\zeta_7):K]=|\langle\sigma_2\rangle|=3$
+  以及 $\Gal(\mathbb{Q}(\zeta_7)/K)=\langle\sigma_2\rangle$。于是
+  \[
+    \min(K,\zeta_7)=(x-\zeta_7)(x-\zeta_7^2)(x-\zeta_7^4),
+  \]
+  所以常数项 $\zeta_7+\zeta_7^2+\zeta_7^4\in K$。此时 $[K:\mathbb{Q}]=2$，我们只需要说明
+  $\zeta_7+\zeta_7^2+\zeta_7^4\notin \mathbb{Q}$ 即可表明 $K=\mathbb{Q}(\zeta_7+\zeta_7^2+\zeta_7^4)$。
+  注意到
+  \[
+    \sigma_6(\zeta_7+\zeta_7^2+\zeta_7^4)=\zeta_7^6+\zeta_7^5+\zeta_7^3,
+  \]
+  如果 $\zeta_7+\zeta_7^2+\zeta_7^4\in \mathbb{Q}$，那么 $\sigma_6(\zeta_7+\zeta_7^2+\zeta_7^4)=\zeta_7+\zeta_7^2+\zeta_7^4$，
+  即 $\zeta_7$ 适合一个 $6$ 次多项式 $x^6+x^5-x^4+x^3-x^2-x$，同时 $\zeta_7$ 适合不可约多项式 $\Phi_7(x)=x^6+\cdots+x+1$，
+  显然 $\Phi_7(x)$ 不整除这个 $6$ 次多项式，产生矛盾。这就表明 $K=\mathbb{Q}(\zeta_7+\zeta_7^2+\zeta_7^4)$。
+
+  因此，$\mathbb{Q}(\zeta_7)/\mathbb{Q}$ 的所有中间域为
+  \[
+    \mathbb{Q}(\zeta_7),\ \mathbb{Q}(\cos(2\pi/7)),\ \mathbb{Q}(\zeta_7+\zeta_7^2+\zeta_7^4),\ \mathbb{Q}.
+  \]
+\end{example}
+
+\begin{example}\label{exa:Q8}
+  考虑 $\mathbb{Q}(\zeta_8)/\mathbb{Q}$。此时 $\Gal(\mathbb{Q}(\zeta_8)/\mathbb{Q})=\{\sigma_1,\sigma_3,\sigma_5,\sigma_7\}$，
+  其中除开 $\sigma_1$ 都是 $2$ 阶元。那么它的所有子群为
+  \[
+    0,\ \langle\sigma_3\rangle,\ \langle\sigma_5\rangle,\ \langle\sigma_7\rangle,\ 
+    \Gal(\mathbb{Q}(\zeta_8)/\mathbb{Q}).
+  \]
+  中间三个子群对应的中间域在 $\mathbb{Q}$ 上都是 $2$ 次的。令 $\zeta_8=e^{\pi i/4}=(1+i)/\sqrt{2}$，注意到 $\sigma_5(\zeta_8^2)=\zeta_8^2=i$，
+  所以 $\Fix(\sigma_5)\supseteq \mathbb{Q}(\zeta_8^2)=\mathbb{Q}(i)$。又因为 $[\Fix(\sigma_5):\mathbb{Q}]=2$
+  且 $\mathbb{Q}(i)\neq \mathbb{Q}$，所以 $\Fix(\sigma_5)=\mathbb{Q}(i)$。
+
+  剩下两个中间域的计算和上例相同。记 $L=\Fix(\sigma_3)$，那么 $\Gal(\mathbb{Q}(\zeta_8)/L)=\{\sigma_1,\sigma_3\}$，
+  所以 $\min(L,\zeta_8)=(x-\zeta_8)(x-\zeta_8^3)\in L[x]$，所以 $\zeta_8+\zeta_8^3\in L$，
+  故 $\mathbb{Q}(\zeta_8+\zeta_8^3)\subseteq L$。同时 $\zeta_8+\zeta_8^3=\sqrt{2}i\notin \mathbb{Q}$，
+  所以 $\Fix(\sigma_3)=\mathbb{Q}(\zeta_8+\zeta_8^3)=\mathbb{Q}(\sqrt{-2})$。
+  同理不难得到 $\Fix(\sigma_7)=\mathbb{Q}(\zeta_8+\zeta_8^7)=\mathbb{Q}(\sqrt{2})$。
+
+  于是 $\mathbb{Q}(\zeta_8)/\mathbb{Q}$ 的所有中间域为
+  \[
+    \mathbb{Q}(\zeta_8),\ \mathbb{Q}(\sqrt{-2}),\ \mathbb{Q}(\sqrt{-1}),\ 
+    \mathbb{Q}(\sqrt{2}),\ \mathbb{Q}.
+  \]
+\end{example}
+
+
+
