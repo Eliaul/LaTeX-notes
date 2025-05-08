@@ -731,6 +731,205 @@ $(1,3)\cup(7,10)$ 的大小是 $2+3=5$。
   那么我们说 $\mathcal{S}$ 是 $X$ 上的一个\emph{$\sigma$-代数}。
 \end{definition}
 
+\begin{proposition}
+  设 $\mathcal{S}$ 是 $X$ 上的 $\sigma$-代数，那么
+  \begin{enumerate}
+    \item $X\in \mathcal{S}$；
+    \item 如果 $D,E\in \mathcal{S}$，那么 $D\cup E,D\cap E,D \setminus E\in \mathcal{S}$；
+    \item 如果 $E_1,E_2,\dots$ 是一列 $\mathcal{S}$ 中的元素，那么 $\bigcap_{k=1}^\infty E_k\in \mathcal{S}$。
+  \end{enumerate}
+\end{proposition}
+
+
+\begin{definition}
+  一个可测空间指的是有序对 $(X,\mathcal{S})$，其中 $\mathcal{S}$ 是 $X$
+  上的 $\sigma$-代数。
+\end{definition}
+
+\subsection{$\mathbb{R}$ 的 Borel 子集}
+
+\begin{theorem}
+  设 $X$ 是集合，$\mathcal{A}$ 是 $X$ 上的一个子集族，那么 $X$ 上的所有
+  包含 $\mathcal{A}$ 的 $\sigma$-代数的交集是一个 $\sigma$-代数。
+\end{theorem}
+
+出于上面的定理，我们使用包含 $\mathcal{A}$ 的最小的 $\sigma$-代数或者
+$\mathcal{A}$ 生成的 $\sigma$-代数来指代
+所有包含 $\mathcal{A}$ 的 $\sigma$-代数的交集，记作 $\sigma(\mathcal{A})$。
+
+\begin{example}
+  设 $X$ 是集合，$\mathcal{A}=\{\{x\}\,|\, x\in X\}$，那么包含 $\mathcal{A}$
+  的最小的 $\sigma$-代数为
+  \[
+    \sigma(\mathcal{A})=\{E\subseteq X\,|\, \text{$E$ 可数或者 $X\setminus E$ 可数}\}.
+  \]
+  记上述子集族为 $\mathcal{S}$，首先不难验证 $\mathcal{S}$ 是 $\sigma$-代数且包含 $\mathcal{A}$，
+  所以 $\sigma(\mathcal{A})\subseteq \mathcal{S}$。另一方面，任取 $E\in \mathcal{S}$，
+  如果 $E$ 可数，那么 $E=\bigcup_{x\in E}\{x\}\in \sigma(\mathcal{A})$。如果
+  $X\setminus E$ 可数，那么 $E=X\setminus (X\setminus E)\in \sigma(\mathcal{A})$。
+  这就表明 $\mathcal{S}\subseteq \sigma(\mathcal{A})$。
+\end{example}
+
+\begin{definition}
+  $\mathbb{R}$ 上的由所有开子集生成的 $\sigma$-代数被称为\emph{Borel $\sigma$-代数}，
+  记为 $\mathcal{B}(\mathbb{R})$，
+  $\mathcal{B}(\mathbb{R})$ 的元素被称为\emph{Borel 子集}。
+\end{definition}
+
+\begin{example}[Borel 子集的例子]
+  \mbox{}
+  \begin{enumerate}
+    \item $\mathbb{R}$ 的任意闭子集都是 Borel 子集。因为闭集的补集是开集。
+    \item $\mathbb{R}$ 的任意可数子集是 Borel 子集。因为可数集是单点集（闭集）
+    的可数并。
+    \item 半开半闭区间 $[a,b)$ 是 Borel 子集，因为 $[a,b)=\bigcap_{k=1}^\infty (a-1/k,b)$。
+    \item 如果 $f:\mathbb{R}\to \mathbb{R}$ 是任意函数，那么 $f$ 的所有连续点的集合是 Borel 子集。
+    见习题。
+  \end{enumerate}
+\end{example}
+
+我们将在后面看到存在 $\mathbb{R}$ 的子集不是 Borel 子集，但是，
+你能够用一种具体的描述写下的 $\mathbb{R}$ 的任意子集都是 Borel 子集。
+
+\subsection{可测函数}
+
+\begin{definition}
+  设 $(X,\mathcal{S})$ 是可测空间，映射 $f:X\to \mathbb{R}$ 被称为
+  $\mathcal{S}$-可测的，如果对于任意 Borel 子集 $B\subseteq \mathbb{R}$
+  有 $f^{-1}(B)\in \mathcal{S}$。
+\end{definition}
+
+\begin{definition}
+  设 $E$ 是集合 $X$ 的子集，定义 $E$ 上的\emph{特征函数}为 $\chi_E:X\to \mathbb{R}$
+  满足 
+  \[
+    \chi_E(x)=\begin{cases}
+      1 & x\in E,\\
+      0 & x\notin E.
+    \end{cases}
+  \]
+\end{definition}
+
+\begin{example}
+  设 $(X,\mathcal{S})$ 是可测空间，那么 $\chi_E$ 可测当且仅当 $E\in \mathcal{S}$。
+  这是因为对于任意子集 $B\subseteq \mathbb{R}$，有
+  \[
+    \chi_E^{-1}(B)=\begin{cases}
+      E & \text{if $0\notin B$, $1\in B$},\\
+      X \setminus E & \text{if $0\in B$, $1\notin B$},\\
+      X & \text{if $0\in B$, $1\in B$},\\
+      \emptyset & \text{if $0\notin B$, $1\notin B$}.
+    \end{cases}
+  \]
+\end{example}
+
+$\mathcal{S}$-可测函数的定义需要我们对 $\mathbb{R}$ 的所有 Borel
+子集进行验证，这是十分庞大的，下面的定理告诉我们实际上只需要在
+一类小得多的集合上验证即可。
+
+\begin{theorem}
+  设 $(X,\mathcal{S})$ 是可测空间，$f:X\to \mathbb{R}$ 满足对于任意
+  $a\in \mathbb{R}$，有
+  \[
+    f^{-1}((a,\infty))\in \mathcal{S},
+  \]
+  那么 $f$ 是 $\mathcal{S}$-可测的。
+\end{theorem}
+
+假设 $X$ 是 $\mathbb{R}$ 的 Borel 子集，$\mathcal{S}$ 是 $\mathcal{B}(\mathbb{R})$
+中被 $X$ 包含的所有 Borel 子集构成的子集族，那么可以验证 $\mathcal{S}$
+是 $X$ 上的一个 $\sigma$-代数。这种情况下的 $\mathcal{S}$-可测函数被称为
+Borel 可测函数。
+
+\begin{definition}
+  设 $X\subseteq \mathbb{R}$，如果 $f:X\to \mathbb{R}$ 满足：对于每个
+  Borel 子集 $B\subseteq \mathbb{R}$，$f^{-1}(B)$ 是 Borel 子集，
+  那么说 $f$ 是 \emph{Borel 可测的}。
+\end{definition}
+
+注意，上述定义已经隐含了 $X$ 是 Borel 子集，因为 $X=f^{-1}(\mathbb{R})$。
+
+设 $X$ 是集合，$f:X\to \mathbb{R}$，那么 $f$ 的可测性依赖于 $X$ 上的
+$\sigma$-代数的选取。如果 $X$ 上的 $\sigma$-代数称为 $\mathcal{S}$，那么
+我们讨论的 $f$ 的 $\mathcal{S}$-可测性。如果 $X$ 是 $\mathbb{R}$ 的 Borel 子集，
+$\mathcal{S}$ 是被 $X$ 包含的 Borel 子集的集合，那么此时 Borel 可测
+和 $\mathcal{S}$-可测的概念是相同的。
+
+\begin{theorem}
+  设 $X\subseteq \mathbb{R}$ 是 Borel 子集，$f:X\to \mathbb{R}$ 是连续函数，
+  那么 $f$ 是 Borel 可测的。 
+\end{theorem}
+
+\begin{theorem}
+  设 $X\subseteq \mathbb{R}$ 是 Borel 子集，$f:X\to \mathbb{R}$ 是递增函数，
+  那么 $f$ 是 Borel 可测的。 
+\end{theorem}
+\begin{proof}
+  任取 $a\in \mathbb{R}$，记 $b=\inf f^{-1}((a,\infty))$，那么
+  \[
+    f^{-1}((a,\infty))=(b,\infty)\cap X\ \text{or} \ 
+    f^{-1}((a,\infty))=[b,\infty)\cap X.
+  \]
+  这表明 $f^{-1}((a,\infty))$ 始终是 Borel 子集，所以 $f$ 是
+  Borel 可测的。
+\end{proof}
+
+下面的结果表明一列 $\mathcal{S}$-可测函数的逐点极限是 $\mathcal{S}$-可测的。
+我们知道一列连续函数的逐点极限不一定连续（例如 $[0,1]\to \mathbb{R}$ 的函数 $x\mapsto x^n$），所以这是一个非常好的性质。
+
+\begin{theorem}
+  设 $(X,\mathcal{S})$ 是可测空间，$f_1,f_2,\dots$ 是一列 $X\to \mathbb{R}$
+  的 $\mathcal{S}$-可测函数，定义 $f:X\to \mathbb{R}$ 为
+  \[
+    f(x)=\lim_{k\to \infty} f_k(x).
+  \]
+  那么 $f$ 是 $\mathcal{S}$-可测函数。
+\end{theorem}
+
+\begin{definition}
+  如果 $[-\infty,\infty]$ 的子集 $B$ 与 $\mathbb{R}$ 的交集 $B\cap \mathbb{R}$
+  是 Borel 子集，那么我们说 $B$ 是 Borel 子集。
+\end{definition}
+
+\section{测度及其性质}
+
+\begin{definition}
+  令 $(X,\mathcal{S})$ 是可测空间，$(X,\mathcal{S})$ 上的测度指的是一个
+  函数 $\mu:\mathcal{S}\to [0,\infty]$ 满足 $\mu(\emptyset)=0$，以及
+  对于任意不相交的集合 $E_1,E_2,\dots,\in \mathcal{S}$，有
+  \[
+    \mu\left(\bigcup_{k=1}^\infty E_k\right)=\sum_{k=1}^\infty\mu(E_k).
+  \]
+\end{definition}
+
+\begin{example}
+  \mbox{}
+  \begin{enumerate}
+    \item 如果 $X$ 是集合，考虑可测空间 $(X,\mathcal{P}(E))$，我们可以定义
+    计数测度，对于 $n$ 个元素的有限集 $E$，定义 $\mu(E)=n$，对于无限集 $E$
+    定义 $\mu(E)=\infty$。
+    \item 设 $(X,\mathcal{S})$ 是可测空间，$c\in X$。定义 Dirac 测度 $\delta_c$
+    为
+    \[
+      \delta_c(E)=\begin{cases}
+        1 & c\in E,\\
+        0 & c\notin E.
+      \end{cases}
+    \]
+    \item 
+  \end{enumerate}
+\end{example}
+
+\begin{definition}
+  一个\emph{测度空间}指的是三元组 $(X,\mathcal{S},\mu)$，其中 $(X,\mathcal{S})$
+  是可测空间，$\mu$ 是 $(X,\mathcal{S})$ 上的测度。
+\end{definition}
+
+\subsection{测度的性质}
+
+
+
+
 
 
 \end{document}
