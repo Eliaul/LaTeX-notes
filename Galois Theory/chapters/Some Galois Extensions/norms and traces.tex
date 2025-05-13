@@ -11,7 +11,7 @@ $L_a:K\to K$，满足 $L_a(b)=ab$。容易验证 $L_a$ 是 $F$-线性映射。$L
 \begin{definition}
   令 $K$ 是 $F$ 的扩域，对于 $a\in K$，定义 $a$ 的范数 $N_{K/F}$ 和 $T_{K/F}$ 分别为
   \[
-    N_{K/F}(a)=\det(L_a),\ T_{K/F}(a)=\mathrm{Tr}(L_a).
+    \N_{K/F}(a)=\det(L_a),\ \Tr_{K/F}(a)=\mathrm{Tr}(L_a).
   \]
 \end{definition}
 
@@ -26,9 +26,26 @@ $L_a:K\to K$，满足 $L_a(b)=ab$。容易验证 $L_a$ 是 $F$-线性映射。$L
       b & a
     \end{pmatrix},
   \]
-  所以 $N_{K/F}(\alpha)=a^2-b^2d$ 以及 $T_{K/F}(\alpha)=2a$。
+  所以 $\N_{K/F}(\alpha)=a^2-b^2d$ 以及 $\Tr_{K/F}(\alpha)=2a$。
 \end{example}
 
+\begin{example}
+  对于域扩张 $\mathbb{Q}(\sqrt[3]{2})/\mathbb{Q}$，计算 $\sqrt[3]{2}$ 的范数与迹。
+  由于 $\mathbb{Q}(\sqrt[3]{2})$ 有基 $\{1,\sqrt[3]{2},\sqrt[3]{4}\}$，所以
+  $L_{\sqrt[3]{2}}$ 的表示矩阵为
+  \[
+    \begin{pmatrix}
+      0 & 0 & 2 \\
+      1 & 0 & 0 \\
+      0 & 1 & 0
+    \end{pmatrix},
+  \]
+  所以 $\N_{\mathbb{Q}(\sqrt[3]{2})/\mathbb{Q}}(\sqrt[3]{2})=2$ 以及 $\Tr_{\mathbb{Q}(\sqrt[3]{2})/\mathbb{Q}}(\sqrt[3]{2})=0$。
+\end{example}
+
+\begin{example}
+  令 $F$ 是特征 $p>0$ 的域，$K/F$ 是次数为 $p$ 的纯不可分扩张。
+\end{example}
 
 
 
