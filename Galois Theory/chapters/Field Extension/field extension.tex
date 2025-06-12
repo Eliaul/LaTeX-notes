@@ -221,7 +221,39 @@ $\mathbb{A}$，下面我们证明 $F$ 在 $K$ 中的代数闭包确实是一个�
 $L_1L_2=L_1(L_2)=L_2(L_1)$。
 
 
+\section*{问题}
 
+\begin{problem}
+  令 $K$ 是 $F$ 的扩域，证明 $[K:F]=1$ 当且仅当 $K=F$。
+\end{problem}
+\begin{proof}
+  若 $K=F$，那么 $K$ 作为 $F$-向量空间有基 $\{1\}$，所以 $[K:F]=1$。
+  若 $[K:F]=1$，那么 $K$ 作为 $F$-向量空间是 $1$ 维的，设 $K$ 的基为 $\{\alpha\}$，
+  那么 $1\in K$ 满足 $1=a\alpha$，其中 $a\in F$。所以 $\alpha=a^{-1}\in F$，
+  故 $K=F$。
+\end{proof}
 
+\begin{problem}
+  证明 $\mathbb{Q}(\sqrt{5},\sqrt{7})=\mathbb{Q}(\sqrt{5}+\sqrt{7})$。
+\end{problem}
+\begin{proof}
+  显然 $\mathbb{Q}(\sqrt{5}+\sqrt{7})\subseteq \mathbb{Q}(\sqrt{5},\sqrt{7})$。
+  设 $x=\sqrt{5}+\sqrt{7}$，那么 $(x-\sqrt{7})^2=5$，即 $x^2-2\sqrt{7}x+2=0$，即
+  \[
+    \sqrt{7}=\frac{x^2+2}{2x}\in \mathbb{Q}(\sqrt{5}+\sqrt{7}),
+  \]
+  同理 $\sqrt{5}\in \mathbb{Q}(\sqrt{5}+\sqrt{7})$，所以 $\mathbb{Q}(\sqrt{5},\sqrt{7})=\mathbb{Q}(\sqrt{5}+\sqrt{7})$。
+\end{proof}
+
+\begin{problem}
+  验证下列多项式环的泛性质：
+  \begin{enumerate}
+    \item 令 $A$ 是包含域 $F$ 的环。如果 $a_1,\dots,a_n\in A$，证明存在唯一的环同态
+    $\varphi:F[x_1,\dots,x_n]\to A$ 使得 $\varphi(x_i)=a_i$。
+    \item 此外，假设 $B$ 是包含 $F$ 的环，有一个函数 $f:\{x_1,\dots,x_n\}\to B$
+    满足：对于任意包含 $F$ 的环 $A$ 和 $a_1,\dots,a_n\in A$，都存在唯一的环同态
+    $\varphi:B\to A$ 满足 $\varphi(f(x_i))=a_i$。证明 $B$ 同构于 $F[x_1,\dots,x_n]$。
+  \end{enumerate}
+\end{problem}
 
 

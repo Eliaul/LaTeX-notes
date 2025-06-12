@@ -180,8 +180,8 @@
   headformat=\NAME~\NUMBER
 ]{problemstyle}
 \declaretheorem[
-  numberwithin=section,
-  name={Ex},
+  % numberwithin=section,
+  name={},
   style=problemstyle,
   refname={练习}
 ]{problem}
