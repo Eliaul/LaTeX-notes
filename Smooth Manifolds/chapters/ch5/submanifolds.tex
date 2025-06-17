@@ -290,7 +290,7 @@ $\varPhi^{-1}(c)$ 中的每个点都是正则点，否则被称为\emph{$\varPhi
   是光滑嵌入，所以 $\varPhi^{-1}(c)$ 是 $M$ 的嵌入子流形。
 \end{proof}
 
-\begin{example}[球面]
+\begin{example}[球面]\label{exa:sphere}
   现在我们可以更简单地证明 $\mathbb{S}^n$ 是 $\mathbb{R}^{n+1}$ 的嵌入子流形。
   定义光滑函数 $f:\mathbb{R}^{n+1}\to\mathbb{R}$ 为 $f(x)=\abs{x}^2$，因为
   $df_x(v)=2\sum_i x^iv^i$，所以 $x\neq 0$ 时 $df_x$ 都是满射，所以
@@ -317,11 +317,36 @@ $\varPhi^{-1}(c)$ 中的每个点都是正则点，否则被称为\emph{$\varPhi
 
 若 $S\subseteq M$ 是嵌入子流形，光滑映射 $\varPhi:M\to N$ 使得 $S$ 是 $\varPhi$
 的正则水平集，那么 $\varPhi$ 被称为 $S$ 的\emph{定义映射}。特别地，在 $N=\mathbb{R}^{m-k}$
-的情况下，$\varPhi$ 被称为 $S$ 的\emph{定义函数}。若 $U$ 是 $M$ 的开子集，
+的情况下，$\varPhi$ 被称为 $S$ 的\emph{定义函数}。\autoref{exa:sphere} 表明
+$f(x)=|x|^2$ 是球面的定义函数。若 $U$ 是 $M$ 的开子集，
 $\varPhi:U\to N$ 是使得 $S\cap U$ 为正则水平集的光滑映射，那么 $\varPhi$
 被称为 $S$ 的\emph{局部定义映射}。
 
-
+\begin{example}[旋转曲面]
+  令 $H$ 是半平面 $\{(r,z)\,|\, r>0\}$，$C\subseteq H$ 是嵌入的 $1$-维子流形。
+  定义 $C$ 确定的\emph{旋转曲面}为子集
+  \[
+    S_C=\left\{(x,y,z)\middle|\left(\sqrt{x^2+y^2},z\right)\in C\right\}\subseteq \mathbb{R}^3.
+  \]
+  $C$ 被称为\emph{生成曲线}。如果 $\varphi:U\to \mathbb{R}$ 是任意关于 $C$ 在 $H$ 中的局部定义函数，
+  那么我们可以得到关于 $S_C$ 的定义函数 $\varPhi$ 为
+  \[
+    \varPhi(x,y,z)=\varphi\left(\sqrt{x^2+y^2},z\right).
+  \]
+  $\varPhi$ 定义在开集
+  \[
+    \wtilde U=\left\{(x,y,z)\middle|\left(\sqrt{x^2+y^2},z\right)\in U\right\}
+  \]
+  上。计算可得 $\varPhi$ 的 Jacobi 矩阵为
+  \[
+    D\varPhi(x,y,z)=\left(\frac{x}{r}\frac{\partial\varphi}{\partial r}(r,z),
+    \frac{y}{r}\frac{\partial\varphi}{\partial r}(r,z),
+    \frac{\partial\varphi}{\partial z}(r,z)\right),
+  \]
+  其中 $r=\sqrt{x^2+y^2}$。由于 $\varphi$ 是局部定义函数，所以
+  $D\varPhi(x,y,z)$ 满秩，所以 $S_C$ 是 $\varPhi$ 的正则水平集，
+  也是 $\mathbb{R}^3$ 的 $2$-维嵌入子流形。
+\end{example}
 
 
 \section{浸入子流形}
@@ -434,6 +459,13 @@ $X$ 是\emph{光滑局部参数化}。如果 $X$ 的像集是整个 $S$，那么
   是 $\mathbb{S}^2$ 的光滑局部参数化，其像集为上半开球面。
 \end{example} 
 
+\begin{example}[八字曲线的参数化]
+  令 $S\subseteq \mathbb{R}^2$ 是 \autoref{exa:eight-curve} 中的八字曲线，
+  将其视为 $\mathbb{R}^2$ 的浸入子流形。那么 \autoref{exa:eight-curve} 中的
+  $\beta:(-\pi,\pi)\to \mathbb{R}^2$ 是 $S$ 的光滑全局参数化。
+\end{example}
+
+
 
 \section{将映射限制在子流形上}
 
@@ -445,6 +477,20 @@ $X$ 是\emph{光滑局部参数化}。如果 $X$ 的像集是整个 $S$，那么
   注意到 $F|_S=F\circ\iota$，其中 $\iota:S\hookrightarrow M$ 是包含映射。
   那么 $F|_S$ 作为光滑映射的复合是光滑的。
 \end{proof}
+
+当光滑映射限制值域的时候，得到的映射并不总是光滑的，我们有下面的例子。
+
+\begin{example}
+  令 $S\subseteq \mathbb{R}^2$ 是八字曲线，其拓扑和光滑结构由 \autoref{exa:eight-curve}
+  中的 $\beta$ 诱导。定义映射 $G:\mathbb{R}\to \mathbb{R}^2$ 为
+  \[
+    G(t)=(\sin 2t,\sin t).
+  \]
+  这与 $\beta$ 的形式一致，但是定义域扩大到了整个实数。显然 $G$ 的像集在 $S$
+  中，但是 $G$ 视为 $\mathbb{R}\to S$ 的映射不是光滑的，甚至不是连续的。
+  这是因为 $-\pi+2n\pi<t<\pi+2n\pi$ 时 $\beta^{-1}\circ G(t)=t-2n\pi$，
+  $t=\pm\pi+2n\pi$ 时 $\beta^{-1}\circ G(t)=0$。
+\end{example}
 
 \begin{theorem}[光滑映射限制值域]
   设 $M$ 是光滑流形，$S\subseteq M$ 是浸入子流形，$F:N\to M$
