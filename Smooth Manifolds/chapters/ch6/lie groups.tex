@@ -4,6 +4,34 @@
 
 \section{基本定义}
 
+一个\emph{李群}指的是一个（无边的）光滑流形 $G$，同时也是一个群，有乘法
+$m:G\times G\to G$ 和求逆映射 $i:G\to G$：
+\[
+  m(g,h)=gh, \quad i(g)=g^{-1},
+\]
+并且它们都是光滑映射。李群也是拓扑群（一个拓扑空间有一个群结构，并且乘法和求逆
+映射是连续映射）。
+
+\begin{proposition}
+  如果 $G$ 是光滑流形并且有一个群结构使得 $G\times G\to G$，
+  $(g,h)\mapsto gh^{-1}$ 是光滑映射，那么 $G$ 是李群。
+\end{proposition}
+\begin{proof}
+  记 $f:(g,h)\mapsto gh^{-1}$。那么
+  $i(g)=g^{-1}=f(e,g)$，所以 $i$ 光滑。另一方面，
+  $m(g,h)=gh=f(g,h^{-1})=f(g,i(h))$，
+  所以 $m$ 光滑。
+\end{proof}
+
+如果 $G$ 是李群，任意 $g\in G$ 都定义了 $L_g,R_g:G\to G$，分别称为\emph{左平移}和\emph{右平移}：
+\[
+  L_g(h)=gh,\quad R_g(h)=hg.
+\]
+因为 $L_g$ 可以表示为复合映射 $m\circ\iota_g$，其中 $\iota_g(h)=(g,h)$，所以 $L_g$
+光滑。由于 $L_{g^{-1}}$ 是 $L_g$ 的光滑逆映射，所以 $L_g$ 是微分同胚。
+同理 $R_g$ 也是微分同胚。我们将看到，李群的许多良好的性质都来源于这两个从一点到
+任意一点的全局的微分同胚。
+
 \begin{example}[李群]
   \mbox{}
   \begin{enumerate}
@@ -41,6 +69,22 @@
 $F$ 是\emph{李群同态}。如果 $F$ 还是微分同胚，那么我们说 $F$
 是\emph{李群同构}。
 
+\begin{example}[李群同态]
+  \mbox{}
+  \begin{enumerate}
+    \item 包含映射 $\iota:\mathbb{S}^1\hookrightarrow \mathbb{C}^\times$ 是李群同态。
+    \item 考虑加法李群 $\mathbb{R}$ 和乘法李群 $\mathbb{R}^\times$，映射 $\exp:\mathbb{R}\to \mathbb{R}^\times$
+    为 $\exp t=e^t$，这是一个李群同态，因为 $e^{t+s}=e^te^s$。$\exp$ 的像集是正实数乘法群 $\mathbb{R}^+$，
+    此时 $\exp:\mathbb{R}\to \mathbb{R}^+$ 是李群同构，有逆映射 $\log:\mathbb{R}^+\to \mathbb{R}$。
+    \item 类似的，$\exp:\mathbb{C}\to \mathbb{C}^\times$ 为 $\exp(z)=e^z$ 是李群同态。
+    这是一个满射但是不是单射，它的核由 $2k\pi i$ 组成。
+    \item 映射 $\varepsilon:\mathbb{R}\to \mathbb{S}^1$ 为 $\varepsilon(t)=e^{2\pi it}$
+    是李群同态，核是 $\mathbb{Z}$。类似的，映射 $\varepsilon^n:\mathbb{R}^n\to \mathbb{T}^n$
+    为 $\varepsilon^n(x^1,\dots,x^n)=(e^{2\pi ix^1},\dots,e^{2\pi ix^n})$ 是李群同态，
+    核为 $\mathbb{Z}^n$。
+  \end{enumerate}
+\end{example}
+
 \begin{theorem}
   李群同态是常秩映射。
 \end{theorem} 
@@ -64,6 +108,120 @@ $F$ 是\emph{李群同态}。如果 $F$ 还是微分同胚，那么我们说 $F$
 \begin{proof}
   全局秩定理表明双射的常秩映射是微分同胚。
 \end{proof}
+
+\subsection{万有覆盖群}
+
+\begin{theorem}[万有覆盖群的存在性]
+  令 $G$ 是连通李群，那么存在一个单连通李群 $\wtilde G$，使得光滑覆盖映射 $\pi:\wtilde G\to G$
+  同时是李群同态。这个李群 $\wtilde G$ 被称为 \emph{万有覆盖群}。
+\end{theorem}
+\begin{proof}
+  令 $\wtilde G$ 是 $G$ 的万有覆盖流形，$\pi:\wtilde G\to G$ 是对应的光滑覆盖映射。
+  此时 $\pi\times\pi:\wtilde G\times\wtilde G\to G\times G$ 也是光滑覆盖映射。
+  
+  令 $m:G\times G\to G$ 和 $i:G\to G$ 分别代表乘法和求逆映射，$\tilde e$ 是 $\pi^{-1}(e)$
+  中的任意元素。因为 $\wtilde G$ 是单连通的，所以覆盖映射的提升判别法保证了 
+  $m\circ(\pi\times \pi):\wtilde G\times\wtilde G\to G$ 有唯一的连续提升 
+  $\wtilde m:\wtilde G\times\wtilde G\to \wtilde G$ 使得 $\wtilde m(\tilde e,\tilde e)=\tilde e$
+  并且 $\pi\circ\wtilde m=m\circ(\pi\times\pi)$：
+  \[
+    \begin{tikzcd}
+      \wtilde G\times\wtilde G\arrow[r,"\wtilde m"]\arrow[d,"\pi\times\pi"']
+       & \wtilde G\arrow[d,"\pi"] \\
+      G\times G\arrow[r,"m"'] & G.
+    \end{tikzcd}
+  \]
+  因为 $\pi$ 是局部微分同胚，$\pi\circ\wtilde m=m\circ(\pi\times\pi)$ 是光滑映射，所以
+  $\wtilde m$ 是光滑映射。同样可知 $i\circ\pi:\wtilde G\to G$ 有光滑提升
+  $\tilde i:\wtilde G\to\wtilde G$ 使得 $\tilde i(\tilde e)=\tilde e$ 并且 $\pi\circ\tilde i=i\circ\pi$：
+  \[
+    \begin{tikzcd}
+      \wtilde G\arrow[r,"\tilde i"]\arrow[d,"\pi"'] 
+      & \wtilde G\arrow[d,"\pi"] \\
+      G\arrow[r,"i"'] & G.
+    \end{tikzcd}
+  \]
+
+  于是我们定义 $\wtilde G$ 上的乘法和求逆为 $xy=\wtilde m(x,y)$ 以及 $x^{-1}=\tilde i(x)$。
+  那么 $\pi(xy)=\pi(x)\pi(y)$ 以及 $\pi(x^{-1})=\pi(x)^{-1}$。
+  下面只需要说明 $\wtilde G$ 是一个群。
+
+  首先说明 $\tilde e$ 是 $\wtilde G$ 的单位元。考虑映射 $f:\wtilde G\to\wtilde G$
+  为 $f(x)=\tilde ex$。那么 $\pi\circ f(x)=\pi(\tilde e)\pi(x)=e\pi(x)=\pi(x)$，
+  所以 $f$ 是 $\pi:\wtilde G\to G$ 的提升。同时 $\Id_{\wtilde G}$ 是 $\pi$ 的另一个
+  提升，并且与 $f$ 在 $\tilde e$ 处的取值相同，即 $f(\tilde e)=\wtilde m(\tilde e,\tilde e)=\tilde e$，
+  所以提升的唯一性表明 $f=\Id_{\wtilde G}$，即 $\tilde ex=x$。同理可得
+  $x\tilde e=x$。
+
+  现在说明 $\wtilde G$ 的乘法是结合的。考虑两个映射 $\alpha_L,\alpha_R:\wtilde G\times \wtilde G\times \wtilde G\to\wtilde G$
+  为
+  \[
+    \alpha_L(x,y,z)=(xy)z,\quad \alpha_R(x,y,z)=x(yz).
+  \]
+  那么 
+  \[
+    \pi\circ\alpha_L(x,y,z)=\bigl(\pi(x)\pi(y)\bigr)\pi(z)
+    =\pi(x)\bigl(\pi(y)\pi(z)\bigr)=\pi\circ\alpha_R(x,y,z),
+  \]
+  所以 $\alpha_L,\alpha_R$ 都是映射 $\alpha(x,y,z)=\pi(x)\pi(y)\pi(z)$
+  的提升。又因为 $\alpha_L,\alpha_R$ 在 $(\tilde e,\tilde e,\tilde e)$
+  处的取值相同，所以 $\alpha_L=\alpha_R$。
+  
+  最后说明 $\wtilde G$ 的任意元素都可逆。考虑映射 $\beta:\wtilde G\to\wtilde G$
+  为 $ \beta(x)=x^{-1}x $。
+  那么 $ \pi\circ\beta(x)=e$，
+  所以 $\beta$ 是常值映射 $c(x)=e$ 的提升。
+  又因为 $\tilde c(x)=\tilde e$ 也是 $c$ 的提升且 $\tilde c(\tilde e)=\tilde e=\beta(\tilde e)$，
+  所以 $\beta=\tilde c$。所以 $\wtilde G$ 是一个群。
+\end{proof}
+
+\begin{theorem}[万有覆盖群的唯一性]
+  对于任意连通李群 $G$，万有覆盖群在以下意义上是唯一的：如果 $\wtilde G$
+  和 $\wtilde G'$ 是单连通李群且有光滑覆盖映射 $\pi:\wtilde G\to G$
+  以及 $\pi':\wtilde G'\to G$ 使得它们同时是李群同态，那么存在唯一的李群
+  同构 $\varPhi:\wtilde G\to \wtilde G'$ 使得 $\pi'\circ\varPhi=\pi$。
+\end{theorem}
+\begin{proof}
+  根据万有覆盖空间的唯一性，存在唯一的同胚 $\varPhi:\wtilde G\to\wtilde G'$
+  使得 $\pi'\circ\varPhi =\pi$。$\pi'$ 是局部微分同胚，$\pi'\circ\varPhi=\pi$
+  光滑表明 $\varPhi$ 光滑。另一方面，有 $\pi\circ\varPhi^{-1}=\pi'$，
+  同理可得 $\varPhi^{-1}$ 光滑。这表明 $\varPhi$ 是微分同胚。
+  下面只需要说明 $\varPhi$ 是李群同态。记 $\wtilde G,\wtilde G'$ 上的单位元
+  分别是 $\wtilde e,\wtilde e'$。首先说明 $\varPhi(\tilde e)=\tilde e'$。
+  由于 $\pi'\circ\varPhi(\tilde e)=\pi(\tilde e)=e$，所以 $\varPhi(\tilde e)\in\pi'^{-1}(e)$
+  是 $\wtilde G'$ 的单位元 $\tilde e'$。
+  
+  记 $\wtilde G,\wtilde G'$ 上的乘法
+  映射分别是 $\wtilde m,\wtilde m'$，于是我们要说明 $\varPhi\circ\wtilde m=\wtilde m'\circ(\varPhi\times\varPhi)$。
+  由于
+  \[
+    \pi'\circ (\varPhi\circ\wtilde m)
+    (x,y)=\pi(xy)=\pi(x)\pi(y),
+  \]
+  以及
+  \[
+    \pi'\circ \wtilde m'\circ(\varPhi\times\varPhi)(x,y)
+    =\pi'(\varPhi(x)\varPhi(y))=\pi'(\varPhi(x))\pi'(\varPhi(y))=\pi(x)\pi(y),
+  \]
+  所以 $\varPhi\circ\wtilde m$ 和 $\wtilde m'\circ(\varPhi\times\varPhi)$
+  都是 $f(x,y)=\pi(x)\pi(y)$ 的提升。又因为它们在 $(\tilde e,\tilde e)$
+  上的取值相等，所以 $\varPhi\circ\wtilde m=\wtilde m'\circ(\varPhi\times\varPhi)$，
+  即 $\varPhi$ 是李群同态。
+\end{proof}
+
+
+\begin{example}[万有覆盖群]
+  \mbox{}
+  \begin{enumerate}
+    \item 映射 $\varepsilon^n:\mathbb{R}^n\to \mathbb{T}^n$
+    为 $\varepsilon^n(x^1,\dots,x^n)=(e^{2\pi ix^1},\dots,e^{2\pi ix^n})$ 是李群同态
+    并且是光滑覆盖映射，因为 $\mathbb{R}^n$ 单连通，所以 $\mathbb{T}^n$ 的万有覆盖群
+    是 $\mathbb{R}^n$。
+    \item 李群同态 $\exp:\mathbb{C}\to \mathbb{C}^\times$ 也是光滑覆盖映射，
+    所以 $\mathbb{C}$ 是 $\mathbb{C}^\times $ 的万有覆盖群。
+  \end{enumerate}
+\end{example}
+
 
 \section{李子群}
 
@@ -164,6 +322,13 @@ $F$ 是\emph{李群同态}。如果 $F$ 还是微分同胚，那么我们说 $F$
     的核，根据全局秩定理，$\det$ 是光滑浸没，所以 $\SL(n,\mathbb{R})$ 是维数
     $n^2-1$ 的嵌入李子群。
   \end{enumerate}
+\end{example}
+
+\begin{example}[环面的稠密李子群]
+  令 $H\subseteq \mathbb{T}^2$ 是环面的一个稠密子流形：$H$ 为
+  \autoref{exa:dense curve on torus} 中的浸入 $\gamma:\mathbb{R}\to \mathbb{T}^2$
+  的像集。容易证明 $\gamma$ 是单射的李群同态，所以 $H$ 是 $\mathbb T^2$
+  的一个浸入李子群。
 \end{example}
 
 一般情况下，光滑子流形可以同时是非嵌入的以及闭的，例如八字曲线
@@ -269,7 +434,7 @@ $G$-作用，映射 $F:M\to N$ 被称为\emph{等变的}，如果对于每个 $g
   \]
   这就表明 $\varPhi$ 是等变映射，根据等变秩定理，$\varPhi$
   确实是常秩映射。因此，$\Orth(n)$ 是 $\GL(n,\mathbb{R})$
-  的嵌入李子群。此外，不难发现 $\Orth(n)$ 是紧的。
+  的嵌入李子群。此外，不难发现 $\Orth(n)$ 是紧的，故 $\Orth(n)$ 还是恰当嵌入的李子群。
 
   为了确定 $\Orth(n)$ 的维数，还需要确定 $\varPhi$ 的秩，即
   微分 $d\varPhi_{I_n}$ 的像空间的维数。对于 $B\in T_{I_n}\GL(n,\mathbb{R})=M(n,\mathbb{R})$，
@@ -298,6 +463,50 @@ $G$-作用，映射 $F:M\to N$ 被称为\emph{等变的}，如果对于每个 $g
   $\dim \SO(n)=\dim\Orth(n)=(n^2-n)/2$。同时，$\SO(n)$
   也是 $\Orth(n)$ 的闭子集，所以也是紧的。
 \end{example}
+
+\begin{example}[酉群]
+  对于任意复矩阵 $A$，记 $A^*=\bar A ^T$ 为 $A$ 的共轭转置。
+  定义 $n$ 阶\emph{酉群}是子群 $\U(n)\subseteq \GL(n,\mathbb{C})$，
+  由所有的酉矩阵构成，即 $A^*A=I_n$ 的矩阵。我们说明 $\U(n)$ 是 $\GL(n,\mathbb{C})$
+  的 $n^2$ 维恰当嵌入李子群。
+  定义映射 $\varPhi:\GL(n,\mathbb{C})\to M(n,\mathbb{C})$ 为 $\varPhi(A)=A^*A$。
+  与 \autoref{exa:orthogonal group} 一样，可知 $\varPhi$ 是等变映射，
+  故 $\varPhi$ 是常秩映射，所以 $\U(n)=\varPhi^{-1}(I_n)$
+  是嵌入李子群。同样 $\U(n)$ 是紧（有界闭）的，所以是恰当嵌入的。
+
+  任取 $B\in T_{I_n}\GL(n,\mathbb{C})=M(n,\mathbb{C})$，设 $\gamma$ 是光滑曲线
+  $\gamma(t)=I_n+tB$，那么 
+  \[
+    d\varPhi_{I_n}(B)=\frac{d}{dt}\bigg|_{t=0}(I_n+tB^*)(I_n+tB)=B+B^*,
+  \]
+  所以 $\im d\varPhi_{I_n}$ 被 Hermite 矩阵空间包含。反之，对于 Hermite 矩阵 $B$，
+  有 $d\varPhi_{I_n}(B/2)=B$，
+  所以 $\im d\varPhi_{I_n}$ 是 Hermite 矩阵空间。所以 $\rk \varPhi=n^2$，故 
+  $\dim \U(n)=2n^2-n^2=n^2$。
+\end{example}
+
+\begin{example}[特殊酉群]
+  群 $\SU(n)=\U(n)\cap\SL(n,\mathbb{C})$ 被称为\emph{特殊酉群}。映射
+  $\det:\U(n)\to \mathbb{C}$ 是光滑映射且 $\SU(n)=\det^{-1}(1)$。我们确定 $\det$ 的秩。
+  任取 $A\in T_{I_n}\U(n)$，上例表明 $A$ 是反 Hermite 矩阵，即 $A^*=-A$。
+  设 $\gamma(t)=I_n+tA$ 是光滑曲线，那么
+  \[
+    d(\det)_{I_n}(A)=\frac{d}{dt}\bigg|_{t=0}\det(I_n+tA), 
+  \]
+  注意到 $\det(I_n+tA)$ 展开后常数项的导数为零，且大于等于 $2$ 次的项在 $t=0$ 处的导数均为零，所以
+  上述结果为一次项 $t$ 的系数，而 $t$ 的一次项只可能由 $(1+tA_1^1)\cdots (1+tA_n^n)$
+  产生，即 $\sum_iA_i^i=\tr A$，故
+  \[
+    d(\det)_{I_n}(A)=\tr A,
+  \]
+  $A^*=-A$ 表明 $\tr A$ 是纯虚数，所以 $\im d(\det)_{I_n}= \mathbb{R}i$，故 $\rk\det =1$，
+  所以 $\SU(n)$ 是 $\U(n)$ 的 $n^2-1$ 维恰当嵌入李子群。
+\end{example}
+
+\subsection{半直积}
+
+
+
 
 \subsection{表示}
 

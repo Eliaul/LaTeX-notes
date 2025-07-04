@@ -410,3 +410,80 @@ $\Fix$ 是 $\Gal$ 的左逆。为此，我们做出以下定义。
   所以 $k(s_1,\dots,s_n)\subseteq F$。我们将在下一节看到实际上有
   $F=k(s_1,\dots,s_n)$，也就是说每个对称函数实际上都是基本对称多项式的加减乘除构成的。
 \end{example}
+
+\section*{问题}
+
+\setcounter{problem}{0}
+
+\begin{problem}
+  令 $k$ 是域，$K=k(x)$ 是 $k$ 上的有理函数域。令 $\sigma$ 和 $\tau$ 分别是 $K$ 上由
+  $\sigma(f(x)/g(x))=f(1/x)\big/ g(1/x)$ 和 $\tau(f(x)/g(x))=f(1-x)/g(1-x)$ 定义的自同构。
+  确定 $\{\sigma,\tau\}$ 的不动域 $F$ 以及 $\Gal(K/F)$。找到一个 $h\in F$ 使得 $F=k(h)$。
+\end{problem}
+\begin{proof}
+  首先我们寻找 $\sigma,\tau$ 生成的子群。
+  注意到 $\sigma\tau(x)=1/(1-x)$ 且 $(\sigma\tau)^3(x)=x$，
+  $\sigma(\sigma\tau)(x)=1-x=(\sigma\tau)^2\sigma(x)$，
+  所以 $\langle\sigma,\tau\rangle=\langle\sigma\tau,\sigma\rangle\simeq S_3$。
+  根据 \autoref{prop:when Gal equal to K/F}，$K/F$ 是 Galois 扩张，$\Gal(K/F)\simeq S_3$
+  以及 $[K:F]=6$。
+
+  $\langle\sigma,\tau\rangle$ 在 $x$ 上作用的结果为：
+  \[
+    x_1=x,x_2=\frac{1}{x},x_3=1-x,x_4=\frac{x-1}{x},x_5=\frac{1}{1-x},x_6=\frac{x}{x-1}.
+  \]
+  于是 $x_1,\dots,x_6$ 生成的基本对称多项式都在 $\langle\sigma,\tau\rangle$ 的作用下不动，
+  记 $s_1=x_1+\cdots+x_6,\dots,s_6=x_1\cdots x_6$ 是基本对称多项式，那么
+  $k(s_1,\dots,s_6)\subseteq F$。另一方面，$x$ 是多项式 $(t-x_1)(t-x_2)\cdots(t-x_6)\in k(s_1,\dots,s_6)[t]$
+  的零点，所以 $[K:k(s_1,\dots,s_6)]\leq 6$。所以 $[K:k(s_1,\dots,s_6)]=6$
+  以及 $F=k(s_1,\dots,s_6)$。
+
+  注意到
+  \[
+    s_2=-\frac{x^6-3x^5+5x^3-3x+1}{x^2(x-1)^2},
+  \]
+  那么根据 \autoref{exa:degree of rational function}，有
+  $[K:k(s_2)]=6$。所以 $F=k(s_1,\dots,s_6)=k(s_2)$。
+\end{proof}
+
+\begin{problem}
+  令 $k$ 是域，$K=k(x)$ 是有理函数域。如果 $u\in K$，证明 $K=k(u)$ 当且仅当
+  $u=(ax+b)/(cx+d)$，其中 $a,b,c,d\in k$ 且 $\det \begin{psmallmatrix}
+    a & b \\ c & d
+  \end{psmallmatrix}\neq 0$。
+\end{problem}
+\begin{proof}
+  若 $u=(ax+b)/(cx+d)$ 且 $ad-bc\neq 0$。那么向量 
+  $\begin{psmallmatrix}
+    a \\ b
+  \end{psmallmatrix}$
+  和
+  $\begin{psmallmatrix}
+    c \\ d
+  \end{psmallmatrix}$
+  线性无关，所以 $\gcd(ax+b,cx+d)=1$，根据 \autoref{exa:degree of rational function}，
+  有 $[K:k(u)]=1$，所以 $K=k(u)$。
+
+  反之，若 $K=k(u)$。设 $u=f/g$ 且 $\gcd(f,g)=1$，再根据 \autoref{exa:degree of rational function}，
+  $[K:k(u)]=\max\{f,g\}=1$。于是可设 $u=(ax+b)/(cx+d)$，$\gcd(ax+b,cx+d)=1$  就表明
+  $ad-bc\neq 0$。
+\end{proof}
+
+\begin{problem}
+  使用上一个问题证明任意 $2\times 2$ 可逆矩阵 
+  $\begin{psmallmatrix}
+    a & b \\ c & d
+  \end{psmallmatrix}
+  $ 都确定了 $\Gal(k(x)/k)$ 的元素满足 $x\mapsto (ax+b)/(cx+d)$。此外，证明
+  $\Gal(k(x)/k)$ 的任意元素都由上面的公式给出。证明从 $k$ 上 $2\times 2$ 可逆矩阵
+  $\GL_2(k)$ 到 $\Gal(k(x)/k)$ 的映射 
+  $\begin{psmallmatrix}
+    a & b \\ c & d
+  \end{psmallmatrix}\mapsto\varphi$，
+  其中 $\varphi(x)=(ax+b)/(cx+d)$，是一个群同态。确定这个群同态的核从而得到
+  $\Gal(k(x)/k)\simeq \PGL_2(k)$，即 $k$ 上的 $2\times 2$ 可逆矩阵群模去数量矩阵。
+\end{problem}
+
+
+
+

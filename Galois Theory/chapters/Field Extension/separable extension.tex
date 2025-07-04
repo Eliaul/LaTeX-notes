@@ -200,7 +200,7 @@ $f$ 在 $F$ 中也有 $m$ 重根 $\alpha$。这是由域上多项式环的唯一
   现在假设 $K/F$ 是任意代数扩张。
 \end{proof}
 
-\begin{corollary}
+\begin{corollary}\label{coro:generators are separable}
   令 $L/F$ 是有限扩张。
   \begin{enumerate}
     \item $L/F$ 可分当且仅当 $L$ 被 $F$ 的某个 Galois 扩张包含。
@@ -259,6 +259,132 @@ $f$ 在 $F$ 中也有 $m$ 重根 $\alpha$。这是由域上多项式环的唯一
 \subsection{纯不可分扩张}
 
 现在我们讨论与可分性完全相反的概念。这种情况只与素特征相关，因为特征 $0$ 的任意代数扩张都是可分扩张。
+如果 $F$ 是特征 $p>0$ 的域，$a\in F$，那么 $x^p-a$ 在任意分裂域中只有一个根。这是因为
+如果 $\alpha$ 是一个根，那么 $\alpha^p=a$，即 $x^p-a=(x-\alpha)^p$。
+
+\begin{definition}
+  令 $K/F$ 是代数扩张，如果 $\alpha\in K$ 使得 $\min (F,\alpha)$ 只有一个零点，那么
+  我们说 $\alpha$ 在 $F$ 上\emph{纯不可分}。如果 $K$ 的每个元素在 $F$ 上都纯不可分，
+  那么我们说 $K/F$ 是纯不可分扩张。
+\end{definition}
+
+\begin{lemma}\label{lemma:polynomial of inseparable element}
+  令 $F$ 是特征 $p$ 的域。如果 $\alpha$ 在 $F$ 上是代数的，那么 $\alpha$ 纯不可分当且仅当
+  存在某个 $n$ 使得 $\alpha^{p^n}\in F$。此时存在 $m$ 使得 $\min(F,\alpha)=(x-\alpha)^{p^m}$。
+\end{lemma}
+\begin{proof}
+  根据 \autoref{prop:separable of irreducible polynomial}，存在不可约的可分多项式
+  $g(x)\in F[x]$ 使得 $\min(F,\alpha)=g(x^{p^n})$。若 $g(x)$ 在分裂域中分裂为 
+  $g(x)=(x-a_1)\cdots(x-a_r)$，其中 $a_1,\dots,a_r$ 互不相同。
+  于是 $\min(F,\alpha)$ 的零点为 $x^{p^n}=a_i$ 的所有解。
+  $\alpha$ 纯不可分当且仅当 $\min(F,\alpha)$ 只有 $\alpha$ 一个零点，
+  所以 $r=1$ 并且 $\alpha^{p^n}=a_1$，此时 $\min(F,\alpha)=x^{p^n}-a_1\in F[x]$，
+  故 $\alpha^{p^n}=a_1\in F$。
+
+  反之，若 $\alpha^{p^n}\in F$，那么 $\alpha$ 是多项式 $x^{p^n}-\alpha^{p^n}\in F[x]$
+  的零点，所以 $\min (F,\alpha)\mid (x-\alpha)^{p^n}$，所以 $\min(F,\alpha)$ 只有 $\alpha$
+  一个零点，即 $\alpha$ 纯不可分。
+\end{proof}
+
+\begin{lemma}\label{lemma:property of purely inseparable}
+  令 $K/F$ 是代数扩张。
+  \begin{enumerate}
+    \item 如果 $\alpha\in K$ 在 $F$ 上同时可分以及纯不可分，那么 $\alpha\in F$。
+    \item 如果 $K/F$ 纯不可分，那么 $K/F$ 是正规扩张并且 $\Gal(K/F)=\{\id\}$。
+    此外，如果 $[K:F]<\infty$，$\cha(F)=p$，那么 $[K:F]=p^n$。
+    \item 如果 $K=F(X)$，其中每个 $\alpha\in X$ 都在 $F$ 上纯不可分，那么 $K/F$
+    纯不可分。
+    \item 如果 $F\subseteq L\subseteq K$ 是域，那么 $K/F$ 纯不可分当且仅当 $K/L$ 和
+    $L/F$ 都纯不可分。
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  (1) $\alpha$ 同时可分和纯不可分表明 $\min(F,\alpha)$ 无重根且只有 $\alpha$ 一个零点，所以
+  $\min(F,\alpha)=x-\alpha$，即 $\alpha\in F$。
+
+  (2) 任取 $\alpha\in K$，根据 \autoref{lemma:polynomial of inseparable element}，
+  $\alpha$ 纯不可分表明 $\min(F,\alpha)=(x-\alpha)^{p^m}$，所以 $\min(F,\alpha)$
+  在 $K$ 上分裂，故 $K/F$ 是正规扩张。任取 $\sigma\in\Gal(K/F)$，那么对于任意 $\alpha\in K$
+  $\sigma(\alpha)$ 是 $\min(F,\alpha)$ 的根，所以 $\sigma(\alpha)=\alpha$，即 $\sigma=\id$，
+  即 $\Gal(K/F)=\{\id\}$。若 $[K:F]<\infty$，设 $K=F(\alpha_1,\dots,\alpha_n)$。
+  由于 $[F(\alpha_1,\dots,\alpha_i):F(\alpha_1,\dots,\alpha_{i-1})]$
+  都是 $p$ 的幂次，所以 $[K:F]$ 是 $p$ 的幂次。
+
+  (3) 任取 $a\in K$，那么存在 $\alpha_1,\dots,\alpha_n\in X$ 使得 $a\in F(\alpha_1,\dots,\alpha_n)$。
+  对于每个 $\alpha_i$，存在 $m_i$ 使得 $\alpha_i^{p^{m_i}}\in F$，那么 $a$ 作为 $\alpha_1,\dots,\alpha_n$
+  的多项式，自然有 $a^{p^m}\in F$，所以 $a$ 在 $F$ 上纯不可分。
+
+  (4) 若 $K/F$ 纯不可分。任取 $\alpha\in K$，那么 $\alpha^{p^n}\in F\subseteq L$，
+  所以 $\alpha$ 在 $L$ 上纯不可分。$L/F$ 纯不可分也是显然的。反之，若 $K/L,L/F$ 纯不可分。
+  任取 $\alpha\in K$，那么 $\alpha^{p^n}\in L$，进而 $(\alpha^{p^n})^{p^m}\in F$，
+  即 $\alpha^{p^{m+n}}\in F$，所以 $\alpha$ 在 $F$ 上纯不可分。
+\end{proof}
+
+\begin{example}
+  域扩张可能是既不可分又不是纯不可分的。例如，若 $F=\mathbb{F}_2(x)$，$K=F(x^{1/6})$。
+  那么 $K=\mathbb{F}_2(x^{1/6})=\mathbb{F}_2(\sqrt{x},\sqrt[3]{x})$。
+  此时 $\sqrt{x}$ 在 $F$ 上纯不可分，$\sqrt[3]{x}$ 在 $F$ 上可分。故
+  $F(\sqrt{x})/F$ 是纯不可分扩张，$F(\sqrt[3]{x})/F$ 是可分扩张，
+  这表明 $K/F$ 既不是纯不可分扩张又不是可分扩张。
+\end{example}
+
+\begin{definition}
+  令 $K/F$ 是域扩张。那么 $F$ 在 $K$ 中的\emph{可分闭包}定义为集合
+  \[ 
+    \{a\in K\,|\, \text{$a$ is separable over $F$}\}.
+  \]$F$ 在 $K$ 中的\emph{纯不可分闭包}
+  定义为集合 
+  \[
+    \{a\in K\,|\, \text{$a$ is purely inseparable over $F$}\}.
+  \]
+\end{definition}
+
+\begin{proposition}\label{prop:K/S is purely inseparable}
+  $K/F$ 是域扩张。设 $S,I$ 分别是 $F$ 在 $K$ 中的可分闭包与纯不可分闭包。那么 $S,I$
+  是 $F$ 的扩域且 $S/F$ 可分，$I/F$ 纯不可分，以及 $S\cap I=F$。如果 $K/F$
+  是代数扩张，那么 $K/S$ 是纯不可分扩张。
+\end{proposition}
+\begin{proof}
+  任取 $a,b\in S$，根据 \autoref{coro:generators are separable}，$F(a,b)/F$
+  是可分扩张，所以 $S$ 是域。任取 $c,d\in I$，那么 $c^{p^n},d^{p^m}\in F$，
+  于是 $(c\pm d)^{p^{n+m}}\in F$，以及 $(cd)^{p^{n+m}},(c/d)^{p^{n+m}}\in F$，
+  所以 $c\pm d,cd,c/d\in I$，所以 $I$ 也是域。根据定义，$S/F$ 可分，$I/F$ 纯不可分。
+  根据 \autoref{lemma:property of purely inseparable}，有 $S\cap I=F$。
+
+  若 $K/F$ 是代数扩张。任取 $\alpha\in K$，设 $\min(F,\alpha)=g(x^{p^m})$，其中 $g$
+  是不可约的可分多项式。由于 $\alpha^{p^m}$ 是 $g$ 的零点，所以 $g(x)$ 
+  是 $\alpha^{p^m}$ 在 $F$ 上的最小多项式，所以 $\alpha^{p^m}$ 在 $F$ 上可分，故
+  $\alpha^{p^m}\in S$，所以 $\alpha$ 在 $S$ 上纯不可分。 
+\end{proof}
+
+如果 $K/F$ 是代数扩张，那么我们可以把 $K/F$ 分为可分扩张 $S/F$ 以及一个纯不可分扩张 $K/S$。
+可分闭包是一个处理可分性问题的非常棒的工具。例如，我们证明可分性是可以传递的。
+
+\begin{proposition}
+  如果 $F\subseteq L\subseteq K$ 是域且 $L/F,K/L$ 是可分扩张，那么 $K/F$ 可分。
+\end{proposition}
+\begin{proof}
+  记 $S$ 是 $F$ 在 $K$ 中的可分闭包。那么 $L\subseteq S\subseteq K$。$K/L$
+  可分表明 $K/S$ 可分，同时 $K/S$ 又纯不可分，所以 $S=K$，即 $K/F$ 可分。
+\end{proof}
+
+\autoref{prop:K/S is purely inseparable} 告诉我们 $K/S$ 纯不可分。一个自然的问题
+是 $K/I$ 是否可分。一般情况下这是不对的，但是在 $K/F$ 是正规扩张的情况下是正确的。
+
+\begin{theorem}\label{thm:Gal(K/I)}
+  $K/F$ 是正规扩张，$S,I$ 分别是 $F$ 在 $K$ 中的可分闭包与纯不可分闭包。那么 $S/F$
+  是 Galois 扩张，$I=\Fix(\Gal(K/F))$，并且 $\Gal(S/F)\simeq \Gal(K/I)$。
+  因此，$K/I$ 是 Galois 扩张。此外，还有 $K=SI$。
+\end{theorem}
+
+$K/F$ 是域扩张。设 $S,I$ 分别是 $F$ 在 $K$ 中的可分闭包与纯不可分闭包。
+我们可以定义 $K/F$ 的\emph{可分次数} $[K:F]_s$ 为 $[S:F]$，以及\emph{不可分次数}
+$[K:F]_i$ 为 $[K:S]$。那么我们有 $[K:F]=[K:F]_i[K:F]_s$。\autoref{thm:Gal(K/I)}
+还告诉我们在 $K/F$ 正规的时候，有 $[K:I]=[S:F]$，因此有 $[K:S]=[I:F]$。
+需要注意一般情况下并没有 $[K:S]=[I:F]$ ！将不可分次数定义为 $[K:S]$ 而不是 $[I:F]$
+是因为 $[K:S]$ 通常可以更好的衡量 $K/F$ 距离可分扩张有多远。下面的例子表明在 $K/F$
+不可分的时候也有可能有 $I=F$。
+
 
 
 

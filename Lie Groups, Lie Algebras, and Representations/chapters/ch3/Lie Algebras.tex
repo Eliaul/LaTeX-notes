@@ -1,0 +1,313 @@
+\chapter{李代数}
+
+\section{定义和初步例子}
+
+\begin{definition}
+  一个\emph{有限维实或者复李代数}指的是一个有限维的实或者复向量空间 $\lie g$，
+  配备一个映射 $[\cdot,\cdot]:\lie g\times \lie g\to\lie g$，
+  满足：
+  \begin{enumerate}
+    \item $[\cdot,\cdot]$ 是双线性的。
+    \item $[\cdot,\cdot]$ 是反对称的：对于任意 $X,Y\in\lie g$ 有 $[X,Y]=-[Y,X]$。
+    \item Jacobi 恒等式：对于任意 $X,Y,Z\in \lie g$ 有 
+    \[
+      [X,[Y,Z]]+[Y,[Z,X]]+[Z,[X,Y]]=0.
+    \]
+  \end{enumerate}
+  若 $[X,Y]=0$，那么我们说 $X,Y$ 是\emph{可交换的}。如果对于所有 $X,Y\in\lie g$
+  都有 $[X,Y]=0$，那么我们说 $\lie g$ 是\emph{可交换的}。
+\end{definition}
+
+$[\cdot,\cdot]$ 通常被称为 $\lie g$ 上的李括号。注意到反对称性表明
+$[X,X]=0$。李括号运算通常不满足结合律，然而 Jacobi 恒等式可以被视为结合律
+的替代方案。
+
+\begin{example}
+  令 $\lie g= \mathbb{R}^3$，$[\cdot,\cdot]:\mathbb{R}^3\times \mathbb{R}^3\to \mathbb{R}^3$
+  定义为
+  \[
+    [x,y]=x\times y,
+  \]
+  其中 $x\times y$ 是向量叉乘。那么 $\lie g$ 是一个李代数。
+\end{example}
+\begin{proof}
+  双线性性和反对称性是显然的。根据双线性性，只需要对基向量 $e_1,e_2,e_3$
+  验证 Jacobi 恒等式即可。如果 $j,k,l$ 互不相同，那么 $e_j,e_k,e_l$ 
+  中任意两个的叉乘等于第三个或者第三个的相反方向，所以 Jacobi 恒等式中每一项
+  都是 $0$。于是只需要验证 $j,k,l$ 中有两个相同的情况即可，通过重新排序，
+  只需要验证
+  \[
+    [e_j,[e_j,e_k]]+[e_j,[e_k,e_j]]+[e_k,[e_j,e_j]]=0,
+  \]
+  上式的前两项相反，第三项为零，故叉乘满足 Jacobi 恒等式。
+\end{proof}
+
+\begin{example}\label{exa:lie algebra of associative algebra}
+  令 $\mathcal A$ 是结合代数，$\lie g$ 是 $\mathcal A$ 的一个子空间，使得
+  任意的 $X,Y\in\lie g$ 有 $XY-YX\in\lie g$。那么 $\lie g$ 是一个李代数，有李括号
+  \[
+    [X,Y]=XY-YX.
+  \]
+\end{example}
+\begin{proof}
+  双线性性和反对称性是显然的。对于 Jacobi 恒等式，每个双层李括号会产生 4 项，
+  所以总共有 12 项，即
+  \[
+    [X,[Y,Z]]=[X,YZ-ZY]=XYZ-XZY-YZX+ZYX,
+  \]
+  对 $X,Y,Z$ 进行轮换，那么正项负项刚好抵消，故这是一个李代数。
+\end{proof}
+
+如果我们仔细观察 Jacobi 恒等式的证明，我们会发现 $XYZ$ 实际上以两种方式出现，
+一种是 $X(YZ)$，一种是 $(XY)Z$。所以代数 $\mathcal A$ 的结合性是重要的。
+对于任意李代数，Jacobi 恒等式意味着李括号的行为\emph{就像}在某个结合代数
+中的 $XY-YX$ 一样，即使这个李括号本身不是这样定义的（比如叉乘）。
+实际上，可以证明每个李代数 $\lie g$ 都可以嵌入到一个结合代数 $\mathcal A$
+中，使得其李括号变成 $XY-YX$。
+
+\begin{example}
+  令 $\lie{sl}(n,\mathbb{C})$ 是所有满足 $\tr X=0$ 的 $X\in M_n(\mathbb{C})$
+  构成的空间。那么 $\lie{sl}(n,\mathbb{C})$ 是李代数，有李括号
+  $[X,Y]=XY-YX$。
+\end{example}
+\begin{proof}
+  我们有
+  \[
+    \tr(XY-YX)=\tr(XY)-\tr(YX)=0,
+  \]
+  所以可以应用 \autoref{exa:lie algebra of associative algebra}。
+\end{proof}
+
+\begin{definition}
+  实或者复李代数 $\lie g$ 的一个\emph{子代数}指的是一个子空间 $\lie h$
+  使得任取 $H_1,H_2\in\lie h$ 有 $[H_1,H_2]\in\lie h$。如果 $\lie g$
+  是复李代数，$\lie h$ 是 $\lie g$ 的实子空间并且对李括号封闭，那么
+  $\lie h$ 被称为 $\lie g$ 的\emph{实子代数}。
+
+  李代数 $\lie g$ 的一个子代数 $\lie h$ 被称为 $\lie g$ 中的\emph{理想}，
+  如果对于任意 $H\in \lie h,X\in\lie g$ 有 $[X,H]\in\lie h$。
+
+  李代数 $\lie g$ 的\emph{中心}指的是一些 $X\in\lie g$ 的集合，对于每个
+  $X$，其使得任取 $Y\in\lie g$，有 $[X,Y]=0$。
+\end{definition}
+
+\begin{definition}
+  如果 $\lie g,\lie h$ 是李代数，线性映射 $\phi:\lie g\to\lie h$ 
+  满足 $\phi([X,Y])=[\phi(X),\phi(Y)]$，那么 $\phi$ 被称为\emph{李代数同态}。
+  此外，如果 $\phi$ 是双射，那么 $\phi$ 被称为\emph{李代数同构}。
+\end{definition}
+
+\begin{definition}
+  如果 $\lie g$ 是李代数，$X\in\lie g$，定义线性映射 $\ad_X:\lie g\to\lie g$
+  为 
+  \[
+    \ad_X(Y)=[X,Y].
+  \]
+  映射 $X\mapsto \ad_X$ 被称为\emph{伴随映射}或者\emph{伴随表示}。
+\end{definition}
+
+虽然 $\ad_X(Y)$ 就是 $[X,Y]$，但是 $\ad$ 的记号是有方便的。例如，我们可以把
+\[ 
+[X,[X,[X,[X,Y]]]]
+\]  
+写为 $(\ad_X)^4(Y)$。此外，映射 $X\mapsto \ad_X$ 可以视为 $\lie g\to\End(\lie g)$
+的映射。Jacobi 恒等式等价于 $\ad_X$ 是李括号的\emph{导子}：
+\begin{equation}\label{eq:Jacobi identity of ad}
+  \ad_X([Y,Z])=[\ad_X(Y),Z]+[Y,\ad_X(Z)].
+\end{equation}
+
+\begin{proposition}
+  如果 $\lie g$ 是李代数，那么
+  \[
+    \ad_{[X,Y]}=\ad_X\ad_Y-\ad_Y\ad_X=[\ad_X,\ad_Y],
+  \]
+  也就是说 $\ad:\lie g\to\End(\lie g)$ 是李代数同态。
+\end{proposition}
+\begin{proof}
+  注意到
+  \[
+    \ad_{[X,Y]}(Z)=[[X,Y],Z],
+  \]
+  并且
+  \[
+    [\ad_X,\ad_Y](Z)=[X,[Y,Z]]-[Y,[X,Z]],
+  \]
+  所以上式等价于 Jacobi 恒等式。
+\end{proof}
+
+\begin{definition}
+  如果 $\lie g_1,\lie g_2$ 是李代数，那么直和 $\lie g_1\oplus\lie g_2$
+  也是李代数，配备李括号
+  \[
+    [(X_1,X_2),(Y_1,Y_2)]=([X_1,Y_1],[X_2,Y_2]).
+  \]
+  如果 $\lie g$ 是李代数，$\lie g_1,\lie g_2$ 是两个子代数，
+  作为向量空间有 $\lie g=\lie g_1\oplus\lie g_2$ 并且对于 $X_1\in\lie g_1,X_2\in\lie g_2$
+  有 $[X_1,X_2]=0$，那么我们说 $\lie g$ 分解为 $\lie g_1$ 和 $\lie g_2$
+  的直和。
+\end{definition}
+
+\begin{definition}
+  令 $\lie g$ 是有限维实或者复李代数，$X_1,\dots,X_N$ 是 $\lie g$ 的一组基，
+  那么有唯一的常数 $c_{jkl}$ 使得 
+  \[
+    [X_j,X_k]=\sum_{l=1}^N c_{jkl}X_l,
+  \]
+  $c_{jkl}$ 被称为 $\lie g$ 的\emph{结构常数}。
+\end{definition}
+
+虽然我们不会经常遇到结构常数，但是在物理课程中会经常使用。结构常数满足下面两个恒等式：
+对于 $j,k,l,m$ 有 
+\begin{align*}
+  c_{jkl}+c_{kjl}&=0,\\
+  \sum_n (c_{jkn}c_{nlm}+c_{kln}c_{njm}+c_{ljn}c_{nkm})&=0,
+\end{align*}
+第一个式子来源于反对称性，第二个式子来源于 Jacobi 恒等式。
+
+\section{单、可解和幂零的李代数}
+
+\begin{definition}
+  一个李代数 $\lie g$ 被称为\emph{不可约的}，如果 $\lie g$ 中的理想只有
+  $\lie g$ 和 $\{0\}$。$\lie g$ 被称为\emph{单的}，如果 $\lie g$
+  是不可约的且 $\dim \lie g\geq 2$。
+\end{definition}
+
+一维的李代数一定是不可约的，因为它没有非平凡的子空间，所以没有非平凡的子代数，
+进而没有非平凡的理想。但是，根据定义，一维的李代数不被认为是单的！
+
+此外，还可以注意到一维李代数 $\lie g$ 一定是可交换的，因为对于任意
+$X\in\lie g$ 和标量 $a,b$ 都有 $[aX,bX]=ab[X,X]=0$。另一方面，如果 $\lie g$
+是可交换的，那么 $\lie g$ 的任意子空间都是理想，所以对于可交换的李代数而言，
+只有一维的情况才是不可约的。因此，单李代数的等价定义是其\emph{不可约且不交换}。
+
+显然，这些概念在群论中有对应的类比。其中子群类比于子代数，正规子群类比于理想。
+（例如，李代数同态的核总是是一个理想，群同态的核总是为正规子群）。
+群论中没有非平凡正规子群的群被称为单群，李代数中没有非平凡理想的李代数被称为
+单李代数。
+
+\begin{proposition}
+  李代数 $\lie{sl}(2,\mathbb{C})$ 是单的。
+\end{proposition}
+\begin{proof}
+  我们使用下列 $\lie{sl}(2,\mathbb{C})$ 的基：
+  \[
+    X=\begin{pmatrix}
+      0 & 1 \\ 0 & 0
+    \end{pmatrix},\quad
+    Y=\begin{pmatrix}
+      0 & 0 \\ 1 & 0
+    \end{pmatrix},\quad
+    H=\begin{pmatrix}
+      1 & 0 \\ 0 & -1
+    \end{pmatrix}.
+  \]
+  计算可知它们满足 $[X,Y]=H,[H,X]=2X,[H,Y]=-2Y$。设 $\lie h$
+  是 $\lie{sl}(2,\mathbb{C})$ 中的理想并且 $\lie h$ 包含元素 $Z=aX+bH+cY$，
+  其中 $a,b,c\in \mathbb{C}$ 是不全为零的复数。
+  首先假设 $c\neq 0$，那么
+  \[
+    [X,[X,Z]]=[X,-2bX+cH]=-2cX
+  \]
+  是 $X$ 的非零倍数。$\lie h$ 是理想表明 $X\in\lie h$。另一方面，
+  有 $[Y,X]=-H$ 以及 $[Y,[Y,X]]=2Y$，所以 $Y,H\in \lie h$。
+  这表明此时 $\lie h=\lie{sl}(2,\mathbb{C})$。
+
+  现在假设 $c=0,b\neq 0$。那么 $[X,Z]=-2bX$ 表明 $X\in\lie h$，
+  然后同样可得 $\lie h=\lie{sl}(2,\mathbb{C})$。
+  最后，如果 $c=b=0$ 但是 $a\neq 0$，那么 $X=Z/a\in\lie h$，仍然得到 
+  $\lie h=\lie{sl}(2,\mathbb{C})$。这就表明 $\lie{sl}(2,\mathbb{C})$
+  是单李代数。
+\end{proof}
+
+\begin{definition}
+  如果 $\lie g$ 是李代数，那么 $\lie g$ 中的\emph{换位子理想} $[\lie g,\lie g]$
+  定义为所有换位子的线性组合张成的空间，即 $Z\in[\lie g,\lie g]$ 当且仅当
+  \[
+    Z=c_1[X_1,Y_1]+\cdots+c_m[X_m,Y_m].
+  \]
+\end{definition}
+
+对于任意 $X,Y\in\lie g$，换位子 $[X,Y]\in[\lie g,\lie g]$，这表明
+$[\lie g,\lie g]$ 确实是一个理想。
+
+\begin{definition}
+  对于李代数 $\lie g$，我们定义一个子代数序列 $\lie g_0,\lie g_1,\lie g_2,\dots$
+  为：$\lie g_0=\lie g$，$\lie g_1=[\lie g_0,\lie g_0]$，
+  $\lie g_2=[\lie g_1,\lie g_1]$，等等。这些子代数被称为 $\lie g$ 的\emph{导出列}。
+  如果对于某个 $j$ 使得 $\lie g_j=\{0\}$，那么我们说 $\lie g$ 是\emph{可解的}。
+\end{definition}
+
+利用 Jacobi 恒等式不难证明每个 $\lie g_j$ 都是 $\lie g$ 的理想，例如对于
+$[X,Y]\in\lie g_2$，其中 $X,Y\in\lie g_1$，那么对于任意 $Z\in \lie g$，有
+\[
+  [Z,[X,Y]]=-[X,[Y,Z]]-[Y,[Z,X]]\in\lie g_2.
+\]
+
+\begin{definition}
+  对于任意李代数 $\lie g$，定义理想序列 $\lie g^j$ 为：
+  $\lie g^0=\lie g$，$\lie g^{j+1}$ 为所有的形如 $[X,Y]$ 的换位子的线性组合
+  构成的空间，其中 $X\in\lie g$ 以及 $Y\in\lie g^j$。这些子代数被称为
+  $\lie g$ 的\emph{上中心列}。如果对于某个 $j$ 有 $\lie g^j=\{0\}$，那么
+  我们说 $\lie g$ 是\emph{幂零的}。
+\end{definition}
+
+等价地说，$\lie g^j$ 由所有的 $j$-重换位子张成：
+\[
+  [X_1,[X_2,[X_3,\dots,[X_j,X_{j+1}]\dots]]].
+\]
+注意到 $j$-重换位子也是 $(j-1)$-重换位子，所以 $\lie g^{j-1}\supseteq \lie g^j$。
+对于任意 $X\in\lie g$ 和 $Y\in\lie g^j$，我们有 $[X,Y]\in \lie g^{j+1}\subseteq\lie g^j$，
+所以 $\lie g^j$ 是 $\lie g$ 的理想。此外，显然有 $\lie g_j\subseteq \lie g^j$，
+因此幂零李代数都是可解的。
+
+\begin{proposition}
+  如果 $\lie g\subseteq M_3(\mathbb{R})$ 是 $3\times 3$ 上三角矩阵并且对角线为零。
+  那么 $\lie g$ 满足 \autoref{exa:lie algebra of associative algebra}，
+  并且是一个幂零李代数。
+\end{proposition}
+\begin{proof}
+  显然 $\lie g$ 是李代数。我们选取基
+  \[
+    X=\begin{pmatrix}
+      0 & 1 & 0 \\
+      0 & 0 & 0 \\
+      0 & 0 & 0 
+    \end{pmatrix},\quad 
+    Y=\begin{pmatrix}
+      0 & 0 & 1 \\
+      0 & 0 & 0 \\
+      0 & 0 & 0 
+    \end{pmatrix},\quad
+    Z=\begin{pmatrix}
+      0 & 0 & 0 \\
+      0 & 0 & 1 \\
+      0 & 0 & 0 
+    \end{pmatrix}.
+  \]
+  直接计算得 $[X,Y]=Z$ 以及 $[X,Z]=[Y,Z]=0$。
+  故 $[\lie g,\lie g]$ 由 $Z$ 张成，进而 $[\lie g,[\lie g,\lie g]]=0$，
+  所以 $\lie g$ 是幂零的。
+\end{proof}
+
+\begin{proposition}
+  如果 $\lie g\subseteq  M_2(\mathbb{C})$ 是形如
+  \[
+    \begin{pmatrix}
+      a & b \\ 0 & c
+    \end{pmatrix}\quad a,b,c\in \mathbb{C}
+  \]
+  的 $2\times 2$ 矩阵，那么 $\lie g$ 满足 \autoref{exa:lie algebra of associative algebra}，
+  并且是可解但不幂零的李代数。
+\end{proposition}
+
+
+
+
+
+
+
+ 
+
+
+
+
