@@ -299,6 +299,35 @@ $[X,Y]\in\lie g_2$，其中 $X,Y\in\lie g_1$，那么对于任意 $Z\in \lie g$�
   的 $2\times 2$ 矩阵，那么 $\lie g$ 满足 \autoref{exa:lie algebra of associative algebra}，
   并且是可解但不幂零的李代数。
 \end{proposition}
+\begin{proof}
+  直接计算得 
+  \[
+    \left[\begin{pmatrix}
+      a & b \\ 0 & c
+    \end{pmatrix},\begin{pmatrix}
+      d & e \\ 0 & f
+    \end{pmatrix}\right]=\begin{pmatrix}
+      0 & h \\ 0 & 0 
+    \end{pmatrix},
+  \]
+  其中 $h=ae+bf-bd-ce$，这表明 $\lie g$ 是一个子代数。此外，
+  还表明换位子理想 $[\lie g,\lie g]$ 是一维的，所以是可交换的。
+  因此 $\lie g_2=0$，故 $\lie g$ 是可解的。另一方面，考虑
+  \[
+    H=\begin{pmatrix}
+      1 & 0 \\ 0 & -1
+    \end{pmatrix},\quad
+    X=\begin{pmatrix}
+      0 & 1 \\ 0 & 0
+    \end{pmatrix}.
+  \]
+  我们有 $[H,X]=2X$，所以
+  \[
+    [H,[H,[H,\dots,[H,X]\dots]]]
+  \]
+  永远是 $X$ 的非零倍数，所以对于任意 $j$ 都有 $\lie g^j\neq 0$，故 $\lie g$ 不是幂零的。
+\end{proof}
+
 
 
 
