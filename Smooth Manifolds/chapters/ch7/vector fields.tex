@@ -58,7 +58,7 @@ $U\to TU$ 的映射也可以被视为 $U\to TM$ 的映射。如果 $X$ 是 $M$ �
 在 $V\cap A$ 上和 $X$ 重合，那么我们说 $X$ 是\emph{沿 $A$ 的光滑向量场}。
 
 \begin{lemma}[向量场的延拓引理]
-  $M$ 是带边或者无边光滑流形，$A\subseteq M$ 是闭子集。假设 $X$ 是沿 $A$ 的向量场。给定
+  $M$ 是带边或者无边光滑流形，$A\subseteq M$ 是闭子集。假设 $X$ 是沿 $A$ 的光滑向量场。给定
   包含 $A$ 的开集 $U$，存在 $M$ 上的全局光滑向量场 $\tilde X$ 使得 $\tilde X|_A=X$
   以及 $\supp \tilde X\subseteq U$。
 \end{lemma}
@@ -70,8 +70,11 @@ $U\to TU$ 的映射也可以被视为 $U\to TM$ 的映射。如果 $X$ 是 $M$ �
   使得 $X_p=v$。
 \end{proposition}
 \begin{proof}
-  我们只需要说明向量场 $p\mapsto v$ 是光滑的。任取 $p$ 处的光滑坐标卡 $(U,\varphi)$，
-  令 $U$ 上的向量场为常系数的向量场，此时便可以使用延拓引理。
+  令 $A=\{p\}$，令 $X$ 是沿 $A$ 的向量场 $p\mapsto v$。
+  我们先说明向量场 $X$ 是光滑的，任取 $p$ 处的光滑坐标卡 $(U,\varphi)$，
+  令 $U$ 上的向量场为常系数的向量场，此时其在 $A$ 上与 $X$ 重合，故
+  $X$ 是光滑的。使用延拓引理便可得到 $M$ 上的向量场 $\wtilde X$
+  满足 $\wtilde X_p=v$。
 \end{proof}
  
 $M$ 是带边或者无边光滑流形，使用记号 $\mathfrak{X}(M)$ 来表示 $M$ 上的光滑向量场全体。
@@ -133,7 +136,49 @@ $(E_1,\dots,E_n)$ 是局部标架只需要说明线性无关或者张成切丛�
   \end{enumerate}
 \end{example}
 
-\subsection{向量场作为 $C^\infty(M)$ 的导子}
+\begin{proposition}[局部标架的完备性]\label{prop:local frame}
+  令 $M$ 是 $n$-维带边或者无边光滑流形。
+  \begin{enumerate}
+    \item 如果 $(X_1,\dots,X_k)$ 是开集 $U\subseteq M$ 上的 $k$ 个线性无关
+    的光滑向量场并且 $1\leq k<n$，那么对于每个 $p\in U$，都存在 $p$
+    的某个邻域 $V$ 上的光滑向量场 $X_{k+1},\dots,X_n$ 使得
+    $(X_1,\dots,X_n)$ 是 $U\cap V$ 上的光滑局部标架。
+    \item 如果 $(v_1,\dots,v_k)$ 是 $T_pM$ 中的 $k$ 个线性无关的向量并且
+    $1\leq k<n$，那么存在 $p$ 的某个邻域上的光滑局部标架 $(X_i)$
+    使得 $X_i|_p=v_i$。
+    \item 如果 $(X_1,\dots,X_n)$ 是沿闭集 $A\subseteq M$ 的线性无关的光滑向量场，
+    那么存在 $A$ 的某个邻域上的光滑局部标架 $(\wtilde X_1,\dots,\wtilde X_n)$
+    使得 $\wtilde X_i|_A=X_i$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 任取 $p\in U$，那么 $X_1|_p,\dots,X_k|_p\in T_pM$ 是线性无关的向量，
+  将其扩充为 $T_pM$ 的一组基 $X_1|_p,\dots,X_k|_p,v_{k+1},\dots,v_n$，
+  令 $X_{k+1},\dots,X_n$ 分别是 $M$ 上的使得 $X_{k+1}|_p=v_{k+1},\dots,X_n|_p=v_n$
+  的光滑向量场。任取 $p$ 的一个 $U$ 中的坐标卡 $(W,(x^i))$，设
+  $X_j=X_j^i\partial/\partial x^i$，定义光滑映射 $f:W\to \mathbb R $ 为
+  $f(q)=\det (X_j^i(q))$。
+  $X_1|_p,\dots,X_n|_p$ 线性无关表明 $f(p)\neq 0$，所以存在 $p$
+  处的一个邻域 $V$ 使得 $f(V)\neq 0$，即 $(X_1,\dots,X_n)$ 是
+  $V$ 上的光滑局部标架。
+
+  (2) 将 $v_1,\dots,v_k$ 扩充为 $T_pM$ 的一组基 $(v_1,\dots,v_n)$，
+  令 $X_1,\dots,X_n\in \mathfrak{X}(M)$ 使得 $X_i|_p=v_i$，那么重复 (1)
+  的做法即可。
+
+  (3) 根据延拓引理，存在 $A$ 的邻域 $U_i$ 使得 $\wtilde X_i\in \mathfrak{X}(M)$ 是
+  光滑向量场且 $\wtilde X_i|_A=X_i$。对于每个 $p\in A$，取 $p$ 处的坐标卡 $(U_p,(x^i))$，
+  还是重复 (1) 的做法，使得 $(\wtilde X_1|_q,\dots,\wtilde X_n|_q)$ 线性无关
+  的 $q\in U_p$ 的集合是包含 $U_p\cap A$ 的开集，这就表明 $(\wtilde X_1,\dots,\wtilde X_n)$
+  是开集 $\bigcup_{p\in A} U_p$ 上的局部标架。
+\end{proof}
+
+通过 \autoref{prop:local frame}，我们发现光滑局部标架是非常多的，但是
+全局标架不是这样。如果一个带边或者无边光滑流形有一个光滑的全局标架，那么
+我们说这个流形是\emph{可平行化的}。我们将看到李群都是可平行化的。但是大部分
+光滑流形都不是可平行化的。
+
+\subsection{向量场作为 \texorpdfstring{$C^\infty(M)$}{Cinfty(M)} 的导子}
 
 向量场的一个基本性质是它们在光滑实值函数空间上定义算子。
 如果 $X\in \mathfrak X(M)$ 以及 $f$ 是定义在开子集 $U\subseteq M$ 上的光滑实值函数，
@@ -218,8 +263,8 @@ $Xf$ 也是由局部确定的。特别地，对于任意开子集 $V\subseteq U$
 对于每个 $p\in M$，如果有 $dF_p(X_p)=Y_{F(p)}$，那么我们说 $X$ 和 $Y$
 是\emph{$F$-相关的}。下面的命题说明了 $F$-相关的向量场如何作用在光滑函数上。
 
-\begin{proposition}
-  设 $F:M\to N$ 是光滑映射，$X\in \mathfrak X(M)$ 和 $Y\in \mathfrak X(N)$。
+\begin{proposition}\label{prop:F-related}
+  设 $F:M\to N$ 是带边或者无边流形之间的光滑映射，$X\in \mathfrak X(M)$ 和 $Y\in \mathfrak X(N)$。
   那么 $X$ 和 $Y$ 是 $F$-相关的当且仅当对于每个定义在 $N$ 的某个开子集上的光滑
   实值函数 $f$，有
   \[
@@ -238,6 +283,31 @@ $Xf$ 也是由局部确定的。特别地，对于任意开子集 $V\subseteq U$
   所以 $X(f\circ F)=(Yf)\circ F$ 对于任意的 $f$ 成立当且仅当
   $dF_p(X_p)=Y_{F(p)}$，即 $X$ 和 $Y$ 是 $F$-相关的。
 \end{proof}
+
+\begin{example}
+  令 $F:\mathbb{R}\to \mathbb{R}^2$ 是光滑映射 $F(t)=(\cos t,\sin t)$。
+  那么 $d/dt\in \mathfrak{X}(\mathbb{R})$ $F$-相关于向量场
+  \[
+    Y=x\frac{\partial}{\partial y}-y\frac{\partial}{\partial x}\in
+    \mathfrak{X}(\mathbb{R}^2).
+  \]
+
+  我们可以直接验证，任取 $t_0\in \mathbb{R}$，记 $p=F(t_0)=(\cos t_0,\sin t_0)$，那么
+  \[
+    dF_{t_0}\left(\frac{d}{dt}\bigg|_{t_0}\right)
+    =-\sin t_0 \frac{\partial}{\partial x}\bigg|_p
+    +\cos t_0 \frac{\partial}{\partial y}\bigg|_p=Y_{p},
+  \]
+  这就说明 $Y$ 与 $d/dt$ 是 $F$-相关的。
+
+  也可以利用 \autoref{prop:F-related} 验证。任取 $f\in C^\infty(U)$，
+  其中 $U$ 是 $\mathbb{R}^2$ 的开集。那么
+  \[
+    \frac{d}{dt} f(\cos t,\sin t)=-\sin t\frac{\partial f}{\partial x}
+    +\cos t \frac{\partial f}{\partial y}=(Yf)\circ F.
+  \]
+  这也表明 $Y$ 与 $d/dt$ 是 $F$-相关的。
+\end{example}
 
 需要注意的是对于一个光滑映射 $F:M\to N$ 和向量场 $X\in \mathfrak X(M)$，
 可能出现 $N$ 上的任意向量场都不与 $X$ 是 $F$-相关的情况。然而， 
@@ -620,8 +690,42 @@ $\Lie(\GL(n,\mathbb{R}))\simeq \mathfrak{gl}(n,\mathbb{R})$.
   的李代数同构。
 \end{proposition}
 \begin{proof}
-  
+  记 $\lie g$ 是 $\GL(n,\mathbb{R})$ 的李代数。任意 $A=(A^i_j)\in\lie{gl}(n,\mathbb{R})$
+  都确定了一个左不变向量场 $A^\LL\in\lie g$，其满足
+  \[
+    A^\LL|_X=d(L_X)_{I_n}(A)=XA=
+    X^i_jA^j_k\frac{\partial}{\partial X_{k}^i}\bigg|_{X}.
+  \]
+
+  任取 $A,B\in\lie{gl}(n,\mathbb{R})$，我们有
+  \begin{align*}
+    \left[A^\LL,B^\LL\right]_X&=\left[
+      X^i_jA^j_k\frac{\partial}{\partial X_{k}^i}\bigg|_X,
+      X^p_qB^q_r\frac{\partial}{\partial X_{r}^p}\bigg|_X
+    \right]\\
+    &= X^i_jA^j_k\frac{\partial}{\partial X_{k}^i}\bigg|_X
+    X^p_qB^q_r\frac{\partial}{\partial X_{r}^p}\bigg|_X-
+    X^p_qB^q_r\frac{\partial}{\partial X_{r}^p}\bigg|_X
+    X^i_jA^j_k\frac{\partial}{\partial X_{k}^i}\bigg|_X\\
+    &=
+    X_j^iA_k^jB_r^k\frac{\partial}{\partial X^i_r}\bigg|_X-
+    X_q^pB_r^qA_k^r\frac{\partial}{\partial X_k^p}\bigg|_X\\
+    &=\left(X_j^iA_k^jB_r^k-X_j^iB_k^jA_r^k\right)\frac{\partial}{\partial X^i_r}\bigg|_X\\
+    &=\bigl(X\left(AB-BA\right)\bigr)_r^i\frac{\partial}{\partial X^i_r}\bigg|_X\\
+    &=d (L_X)_{I_n}([A,B])=[A,B]^\LL\big|_X,
+  \end{align*}
+  故 $[A^\LL,B^\LL]=[A,B]^\LL$，这就表明上述映射是李代数同构。
 \end{proof}
+
+对于抽象向量空间来说有同样的结果。如果 $V$ 是有限维实向量空间，回顾
+$\GL(V)$ 是 $V$ 上所有可逆线性变换构成的李群，$\lie{gl}(V)$ 是 $V$
+上所有线性变换构成的李代数。与 $\GL(n,\mathbb{R})$ 的情况一样，
+我们把 $\GL(V)$ 视为 $\lie{gl}(V)$ 的开子流形，于是我们有
+典范的向量空间同构
+\[
+  \Lie(\GL(V))\to T_{\Id}\GL(V)\to \lie{gl}(V).
+\]
+那么 $\Lie(\GL(V))$ 和 $\lie{gl}(V)$ 也是李代数同构。
 
 \subsection{诱导的李代数同态}
 
