@@ -355,6 +355,35 @@ $\gamma(t)=e^{tX}$ 是以单位元为起点的切向量为 $X$ 的光滑曲线�
     \item $XY-YX\in\lie g$。
   \end{enumerate}
 \end{theorem}
+\begin{proof}
+  (1) 对于任意的实数 $t$，我们有
+  \[
+    e^{t(AXA^{-1})}=Ae^{tX}A^{-1}\in G,
+  \]
+  所以 $AXA^{-1}\in\lie g$。
+
+  (2) 任取实数 $t$，有 $
+    e^{t(sX)}=e^{(ts)X}\in G
+  $，所以 $sX\in\lie g$。
+
+  (3) 任取实数 $t$，利用李乘积公式，有
+  \[
+    e^{t(X+Y)}=\lim_{m\to\infty}\left(e^{t\frac{X}{m}}e^{t\frac{Y}{m}}\right)^m,
+  \]
+  由于 $e^{tX/m}e^{tY/m}\in G$，所以右端是 $G$ 中点列的极限，由于 $G$
+  是闭集，所以 $e^{t(X+Y)}\in G$，所以 $X+Y\in\lie g $。
+
+  (4) 我们有
+  \[
+    \frac{d}{dt}\bigg|_{t=0}\left(e^{tX}Ye^{-tX}\right)=
+    (XY)e^0+(e^0Y)(-X)=XY-YX,
+  \]
+  由 (1)，$e^{tX}Ye^{-tX}\in\lie g$。由 (2) 和 (3)，$\lie g$ 是
+  $M_n(\mathbb C)$ 的实向量子空间，所以是闭集，所以
+  \[
+    XY-YX=\lim_{h\to 0}\frac{e^{hX}Ye^{-hX}- Y}{h}\in \lie g.\qedhere
+  \]
+\end{proof}
 
 注意到 \autoref{thm:lie algebra of matrix group} 的第二点表明即使
 $G$ 的元素是复矩阵，$\lie g$ 也不需要是复向量空间。不过，在一些情况下
@@ -371,7 +400,7 @@ $\lie g$ 确实是一个复向量空间。
 \begin{proof}
   对于任意两个 $X,Y\in M_n(\mathbb{C})$，那么换位子为
   \[
-    [X,Y]=\frac{d}{dt}\bigg|_{t=0}\left(\frac{d}{dt}\bigg|_{s=0}e^{tX}e^{sY}e^{-tX}\right),
+    [X,Y]=\frac{d}{dt}\bigg|_{t=0}\left(\frac{d}{ds}\bigg|_{s=0}e^{tX}e^{sY}e^{-tX}\right),
   \]
   如果 $G$ 可交换，那么 $e^{tX}e^{sY}e^{-tX}=e^{sY}$ 与 $t$ 无关，所以 
   $[X,Y]=0$。
@@ -379,12 +408,363 @@ $\lie g$ 确实是一个复向量空间。
 
 \section{示例}
 
+\begin{example}\label{exa:base of su2 and so3}
+  由于 $\lie{su}(2)=\{A\in M_2(\mathbb C)\,|\, A^*+A=0,\tr A=0\}$
+  以及 $\lie{so}(3)=\{A\in M_3(\mathbb R)\,|\, A^T+A=0\}$。
+  所以 $\lie{su}(2)$ 有基
+  \[
+    E_1=\frac{1}{2}\begin{pmatrix}
+      i & 0 \\
+      0 & -i
+    \end{pmatrix},\quad
+    E_2=\frac{1}{2}\begin{pmatrix}
+      0 & i \\
+      i & 0
+    \end{pmatrix},\quad
+    E_3=\frac{1}{2}\begin{pmatrix}
+      0 & -1 \\
+      1 & 0
+    \end{pmatrix},
+  \]
+  它们满足 $[E_1,E_2]=E_3,[E_2,E_3]=E_1,[E_3,E_1]=E_2$。
+  $\lie{so}(3)$ 有基
+  \[
+    F_1=\begin{pmatrix}
+      0 & 0 & 0 \\
+      0 & 0 & -1 \\
+      0& 1 & 0
+    \end{pmatrix},\quad
+    F_2=\begin{pmatrix}
+      0 & 0 & 1 \\
+      0 & 0 & 0 \\
+      -1 & 0 & 0 
+    \end{pmatrix},\quad
+    F_3=\begin{pmatrix}
+      0 & -1 & 0\\
+      1 & 0 & 0 \\
+      0 & 0 & 0
+    \end{pmatrix},
+  \]
+  它们满足 $[F_1,F_2]=F_3,[F_2,F_3]=F_1,[F_3,F_1]=F_2$。
 
+  注意到 $E_1,E_2,E_3$ 和 $F_1,F_2,F_3$ 有相同的交换关系，所以这两个李代数是同构的。
+\end{example}
 
+\section{李群和李代数同态}
 
+\begin{theorem}
+  令 $G,H$ 是矩阵李群，分别有李代数 $\lie g,\lie h$。
+  设 $\Phi:G\to H$ 是李群同态。那么存在唯一的实线性映射 $\phi:\lie g\to\lie h$
+  使得对所有的 $X\in\lie g$ 有
+  \[
+    \Phi(e^X)=e^{\phi(X)}.
+  \]
+  并且 $\phi$ 有性质：
+  \begin{enumerate}
+    \item 对于所有 $X\in\lie g,A\in G$ 有
+    $\phi(AXA^{-1})=\Phi(A)\phi(X)\Phi(A)^{-1}$。
+    \item 对于所有 $X,Y\in\lie g$ 有 $\phi([X,Y])=[\phi(X),\phi(Y)]$。
+    \item 对于所有 $X\in\lie g$ 有 $\phi(X)=\frac{d}{dt}\big|_{t=0}\Phi(e^{tX})$。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  
+\end{proof}
 
+\begin{example}\label{exa:homo of SU2 and SO3}
+  我们构造一个 $\SU(2)\to \SO(3)$ 的满同态。这是一个非常重要的例子。
+  我们知道 $\Orth(3)$ 可以视为 $V\to V$ 的正交变换群，其中 $V$
+  是 $3$ 维实内积空间。我们定义 $V$ 是 $2\times 2$ 的迹为零的 Hermite 矩阵
+  全体，即 $X\in V$ 当且仅当 $X^*=X$ 以及 $\tr X=0$，故可设
+  \begin{equation}\label{eq:expr of X}
+    X=\begin{pmatrix}
+      x_1 & x_2+ix_3\\
+      x_2-ix_3 & -x_1
+    \end{pmatrix}.    
+  \end{equation}
+  此时 $\mathbb{R}^3$ 上的标准内积对应于
+  \[
+    \langle X_1,X_2\rangle =\frac{1}{2}\tr(X_1X_2).
+  \]
+  这是因为
+  \[
+    \frac{1}{2}\tr\left(
+      \begin{pmatrix}
+        x_1 & x_2+ix_3\\
+        x_2-ix_3 & -x_1
+      \end{pmatrix}
+      \begin{pmatrix}
+        x_1' & x_2'+ix_3'\\
+        x_2'-ix_3' & -x_1'
+      \end{pmatrix}
+    \right)=x_1x_1'+x_2x_2'+x_3x_3'.
+  \]
 
- 
+  对于每个 $U\in \SU(2)$，我们定义线性映射 $\Phi_U:V\to V$
+  为
+  \[
+      \Phi_U(X)=UXU^{-1}.
+  \]
+  因为 $U$ 是酉矩阵，所以 $(UXU^{-1})^*=(UXU^*)^*=UXU^{-1}$，
+  并且 $\tr(UXU^{-1})=\tr(X)=0$，所以 $\Phi_U(X)$ 确实是 $V$ 的元素。
+
+  注意到
+  \[
+      \frac{1}{2}\tr\left(
+        \Phi_U(X_1)\Phi_U(X_2)
+      \right)=\frac{1}{2}\tr\left(UX_1X_2U^{-1}\right)
+      =\frac{1}{2}\tr(X_1X_2),
+  \]
+  所以 $\Phi_U$ 保内积，即 $\Phi_U\in\Orth(3)$ 是正交变换。
+  故我们定义了一个映射 $\SU(2)\to\Orth(3)$ 满足 $U\mapsto\Phi_U$。
+  不难验证 $\Phi_{U_1U_2}=\Phi_{U_1}\Phi_{U_2}$，所以这是一个群同态。
+  因为 $\SU(2)$ 同胚于球面 $\mathbb S^3$ 是连通的，所以上述映射的像集
+  处于 $\Orth(3)$ 的单位分支中，即这实际上是一个 $\SU(2)\to\SO(3)$
+  的群同态。
+
+  下面我们说明这是一个满同态。任取 $R\in\SO(3)$，根据正交变换的性质，
+  $R$ 有一个特征值为 $1$ 的特征向量，设 $X\in V$ 使得 $RX=X$。
+  不妨设 $X$ 模长为 $1$。将其扩充为 $V$ 的一组标准正交基 $\{X,Y,Z\}$，
+  那么 $R$ 相当于 $Y,Z$-平面的旋转。也即 $R$ 在这组基下有表示矩阵 
+  \[
+      \begin{pmatrix}
+      1 & 0 & 0 \\
+      0 &  \cos\theta & -\sin\theta \\
+      0 & \sin\theta & \cos\theta 
+      \end{pmatrix}.
+  \]
+  设 $X$ 为 \eqref{eq:expr of X} 式。令 
+  \[
+      U=\begin{pmatrix}
+        e^{i\theta/2} & 0 \\
+        0 & e^{-i\theta/2}
+      \end{pmatrix},
+  \]
+  那么
+  \[
+      UXU^{-1}=\begin{pmatrix}
+        x_1' & x_2'+ix_3' \\
+        x_2'-ix_3' & -x_1'
+      \end{pmatrix},
+  \]
+  其中 $x_1'=x_1$，
+  \[
+      x_2'+ix_3'=(x_2\cos\theta-x_3\sin\theta) +i(x_2\sin\theta+x_3\cos\theta).
+  \]
+  这就表明 $\Phi_U$ 的表示矩阵和 $R$ 相同，所以 $R=\Phi_U$，即这是一个满同态。
+
+  若 $\Phi_U=\mathrm{id}_V$，设 
+  \[
+      U=\begin{pmatrix}
+        \alpha & \beta \\
+        -\bar\beta & \bar\alpha
+      \end{pmatrix},\quad |\alpha|^2+|\beta|^2=1,
+  \]
+  那么 
+  \[
+      U\begin{pmatrix}
+        1 & 0 \\
+        0 & -1
+      \end{pmatrix}U^{-1}=
+      % \begin{pmatrix}
+      %   \alpha & -\beta \\
+      %   -\bar\beta & -\bar\alpha
+      % \end{pmatrix}
+      % \begin{pmatrix}
+      %   \bar\alpha & -\beta \\
+      %   \bar\beta & \alpha
+      % \end{pmatrix}
+      \begin{pmatrix}
+        |\alpha|^2-|\beta|^2 & -2\alpha\beta \\
+        -2\bar\alpha\bar\beta & |\beta|^2-|\alpha|^2
+      \end{pmatrix}=
+      \begin{pmatrix}
+        1 & 0 \\
+        0 & -1
+      \end{pmatrix},
+  \]
+  这表明 $\beta=0$，$|\alpha|=1$。又因为
+  以及
+  \[
+      U\begin{pmatrix}
+        0 & 1 \\
+        1 & 0
+      \end{pmatrix}U^{-1}=
+      % \begin{pmatrix}
+      %   0 & \alpha \\
+      %   \bar\alpha & 0
+      % \end{pmatrix}
+      % \begin{pmatrix}
+      %   \bar\alpha & 0 \\
+      %   0 & \alpha
+      % \end{pmatrix}
+      \begin{pmatrix}
+        0 & \alpha^2 \\
+        \bar\alpha^2 & 0
+      \end{pmatrix}
+      =
+      \begin{pmatrix}
+        0 & 1 \\
+        1 & 0
+      \end{pmatrix},
+  \]
+  所以 $\alpha=\pm 1$，故 $U=\pm I_2$。所以同态核为 $\{\pm I_2\}$。
+\end{example}
+
+\begin{example}
+  令 $\Phi:\SU(2)\to\SO(3)$ 是上例的群同态。那么诱导一个李代数同态
+  $\phi:\lie{su}(2)\to\lie{so}(3)$，满足
+  \[
+    \phi(E_j)=F_j,\quad j=1,2,3.
+  \]
+  其中 $\{E_1,E_2,E_3\}$ 和 $\{F_1,F_2,F_3\}$ 是 \autoref{exa:base of su2 and so3}
+  中的基矩阵。我们看到 $\phi$ 把基送到基，所以是李代数同构，虽然 $\Phi$
+  并不是李群同构。
+\end{example}
+\begin{proof}
+  任取 $X\in\lie{su}(2)$，$Y\in V$，其中 $V$ 是 \autoref{exa:homo of SU2 and SO3}
+  中的向量空间。那么
+  \[
+    \phi(X)Y=\frac{d}{dt}\bigg|_{t=0}\Phi(e^{tX})Y
+    =\frac{d}{dt}\bigg|_{t=0} e^{tX}Ye^{-tX}=[X,Y],
+  \]
+  这表明 $\phi(X):Y\mapsto [X,Y]$ 是 $V\to V$ 的线性映射。
+  若 $X=E_1$，那么
+  \[
+    \left[E_1,
+    \begin{pmatrix}
+      x_1 & x_2+ix_3\\
+      x_2-ix_3 & -x_1 
+    \end{pmatrix}
+    \right]=\begin{pmatrix}
+      0 & -x_3+ix_2\\
+      -x_3-ix_2 & 0
+    \end{pmatrix},
+  \]
+  这表明 $\phi(E_1)$ 对应矩阵
+  \[
+    F_1=\begin{pmatrix}
+      0 & 0 & 0 \\
+      0 & 0 & -1 \\
+      0 & 1 & 0
+    \end{pmatrix},
+  \] 
+  故 $\phi(E_1)=F_1$。对于其余两个同理。
+\end{proof}
+
+\begin{proposition}
+  假设 $G,H,K$ 是矩阵李群，$\Phi:H\to K$ 和 $\Psi:G\to H$ 是李群同态。
+  令 $\Lambda:G\to K$ 是复合 $\Psi\circ\Phi$，$\phi,\psi,\lambda$
+  分别是 $\Phi,\Psi,\Lambda$ 诱导的李代数同态，那么我们有
+  \[
+    \lambda=\psi\circ \phi.
+  \]
+\end{proposition}
+\begin{proof}
+  任取 $X\in\lie g$，那么
+  \[
+    \lambda(X)=\frac{d}{dt}\bigg|_{t=0}\Lambda(e^{tX})
+    =\frac{d}{dt}\bigg|_{t=0}\Psi(\Phi(e^{tX}))
+    =\frac{d}{dt}\bigg|_{t=0}\Psi(e^{t\phi(X)})
+    =\psi(\phi(X)),
+  \]
+  即 $\lambda=\psi\circ\phi$。
+\end{proof}
+
+\begin{definition}
+  令 $G$ 是矩阵李群，有李代数 $\lie g$。那么对于每个 $A\in G$，
+  定义线性映射 $\Ad_A:\lie g\to\lie g$ 为
+  \[
+    \Ad_A(X)=AXA^{-1}.
+  \]
+\end{definition}
+
+\begin{proposition}
+  令 $G$ 是矩阵李群，有李代数 $\lie g$。那么映射 $A\mapsto \Ad_A$
+  是 $G\to\GL(\lie g)$ 的同态。此外，对于每个 $A\in G$，
+  $\Ad_A$ 满足 $\Ad_A([X,Y])=[\Ad_AX,\Ad_AY]$。
+\end{proposition}
+
+由于 $\Ad:G\to\GL(\lie g)$ 是李群同态，所以诱导一个李代数同态
+$\ad:\lie g\to \lie{gl}(\lie g)$，记为 $X\mapsto \ad_X$。那么它们满足
+\begin{equation}\label{eq:exp(ad)}
+  e^{\ad_X}=\Ad_{e^X}.
+\end{equation} 
+
+\begin{proposition}
+  令 $G$ 是矩阵李群，$\lie g$ 是李代数。那么对于 $X,Y\in\lie g$ 有
+  \[
+    \ad_X(Y)=[X,Y].
+  \]
+\end{proposition}
+\begin{proof}
+  我们有
+  \[
+    \ad_X=\frac{d}{dt}\bigg|_{t=0}\Ad({e^{tX}}),
+  \]
+  所以
+  \[
+    \ad_X(Y)=\frac{d}{dt}\bigg|_{t=0}\Ad({e^{tX}})(Y)
+    =\frac{d}{dt}\bigg|_{t=0} e^{tX}Ye^{-tX}=[X,Y].\qedhere
+  \]
+\end{proof}
+
+\begin{proposition}
+  对于任意 $X\in M_n(\mathbb{C})$，令 $\ad_X:M_n(\mathbb{C})\to M_n(\mathbb{C})$
+  为 $\ad_XY=[X,Y]$。那么对于任意 $Y\in M_n(\mathbb{C})$，我们有
+  \[
+    e^XYe^{-X}=\Ad_{e^X}(Y)=e^{\ad_X}Y,
+  \]
+  其中
+  \[
+    e^{\ad_X}(Y)=Y+[X,Y]+\frac{1}{2}[X,[X,Y]]+\cdots.
+  \]
+\end{proposition}
+
+\section{实李代数的复化}
+
+\begin{definition}
+  如果 $V$ 是有限维实向量空间，那么定义 $V$ 的\emph{复化} $V_{\mathbb{C}}$
+  是所有的形式线性组合
+  \[
+    v_1+iv_2\quad v_1,v_2\in V
+  \]
+  的集合。这显然构成一个实向量空间。我们定义 
+  \[
+    i(v_1+iv_2)=-v_2+iv_1,
+  \]
+  此时 $V_{\mathbb{C}}$ 是一个复向量空间。
+\end{definition}
+
+\begin{proposition}
+  令 $\lie g$ 是一个有限维的实李代数，$\lie g_{\mathbb{C}}$ 是复化。
+  那么 $\lie g$ 上的李括号在 $\lie g_{\mathbb{C}}$ 上有一个唯一的延拓，
+  使得 $\lie g_{\mathbb{C}}$ 是一个复李代数。此时 $\lie g_{\mathbb{C}}$
+  被称为 $\lie g$ 的\emph{复化}。
+\end{proposition}
+\begin{proof}
+  唯一性是显然的，因为根据双线性性，必须有
+  \[
+    [X_1+iX_2,Y_1+iY_2]=[X_1,Y_1]-[X_2,Y_2]+i\bigl(
+      [X_1,Y_2]+[X_2,Y_1]
+    \bigr).
+  \]
+  下面我们只需要验证上述定义满足反对称性和 Jacobi 恒等式。
+  反对称性也是显然的。对于 Jacobi 恒等式，利用复线性性，
+  当 $X\in\lie g_{\mathbb{C}},Y,Z\in\lie g$ 的时候有
+  \[
+    [X,[Y,Z]]+[Y,[Z,X]]+[Z,[X,Y]]=0,
+  \]
+  同理可得一般情况下的 Jacobi 恒等式。
+\end{proof}
+
+\begin{proposition}
+  设 $\lie g\subseteq M_n(\mathbb{C})$ 是实李代数并且对于非零的 $X\in\lie g$
+  有 $iX\notin\lie g$。那么 $\lie g_{\mathbb{C}}$ 同构于集合
+  \[
+    \bigl\{X+iY\bigm| X,Y\in\lie g\bigr\}.
+  \]
+\end{proposition}
 
 
 
