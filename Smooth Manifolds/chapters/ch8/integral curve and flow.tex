@@ -65,7 +65,7 @@ $\gamma'(t)=V_{\gamma(t)}$ 当且仅当
   令 $V,M,J$ 和 $\gamma$ 的含义同上一个引理。对于任意
   $b\in \mathbb{R}$，定义曲线 $\hat\gamma:\hat J\to M$
   为 $\hat \gamma(t)=\gamma(t+b)$，其中
-  $\hat J=\{t\,|\, t+b\in J\}$，那么 $\hat J$ 是向量场
+  $\hat J=\{t\,|\, t+b\in J\}$，那么 $\hat \gamma$ 是向量场
   $V$ 的积分曲线。
 \end{lemma}
 
@@ -135,7 +135,7 @@ $\theta^{(q)}(t)=\theta^{(p)}(t+s)$，也就是
 \]
 那么 $p\mapsto V_p$ 是 $M$ 上的一个向量场，被称为\emph{$\theta$ 的无穷小生成元}。
 
-\begin{proposition}
+\begin{proposition}\label{prop:infinite generator}
   令 $\theta:\mathbb{R}\times M\to M$ 是光滑的全局流，那么
   $\theta$ 的无穷小生成元 $V$ 是 $M$ 上的光滑向量场，并且每个
   曲线 $\theta^{(p)}$ 都是 $V$ 的积分曲线。
@@ -208,6 +208,19 @@ $s+t\in \mathcal{D}^{(p)}$，那么
   如果 $\theta:\mathcal{D}\to M$ 是光滑流，那么无穷小生成元 $V$ 是光滑向量场，并且
   每条曲线 $\theta^{(p)}$ 都是 $V$ 的积分曲线。
 \end{proposition}
+\begin{proof}
+  与 \autoref{prop:infinite generator} 的证明基本类似。在说明 $V$
+  是光滑向量场的时候，只需要注意到对于任意 $p_0\in M$，有 $(0,p_0)\in \mathcal{D}$。
+  又因为 $\mathcal{D}$ 是开集，所以存在 $(0,p_0)$ 处的邻域使得这个邻域中的所有 $(t,p)\in \mathcal{D}$，
+  此时重复 \autoref{prop:infinite generator} 的证明即可得到 $V$ 是光滑向量场。
+  在证明 $\theta^{(p)}$ 是 $V$ 的积分曲线的时候，只需要说明
+  \autoref{prop:infinite generator} 的证明中的式子有意义即可。
+  假设 $t_0\in \mathcal{D}^{(p)}$。因为 $\mathcal{D}^{(p)}$ 和 $\mathcal{D}^{(\theta_{t_0}(p))}$
+  是包含 $0$ 的开区间，所以存在正数 $\varepsilon$ 使得 $|t|<\varepsilon$
+  的时候有 $t+t_0\in \mathcal{D}^{(p)}$ 以及 $t\in \mathcal{D}^{(\theta_{t_0}(p))}$，
+  那么根据局部流的定义，有 $\theta(t+t_0,p)=\theta(t,\theta(t_0,p))$，
+  这便保证我们可以重复 \autoref{prop:infinite generator} 的证明。
+\end{proof}
 
 下面的定理是本节的主要结果。\emph{极大积分曲线}指的是不能延拓到任意更大开区间的一条积分曲线，
 \emph{极大流}指的是不能延拓到任意更大流域的流。
@@ -267,10 +280,47 @@ $s+t\in \mathcal{D}^{(p)}$，那么
 它的极大积分曲线对所有的 $t\in \mathbb{R}$ 都有定义。
 我们将表明所有的紧支向量场是完备的，因此紧流形上的所有光滑向量场都是完备的。
 
+\begin{lemma}[一致时间引理]
+  令 $V$ 是光滑流形 $M$ 上的光滑向量场，$\theta$ 是 $V$ 的流。
+  假设存在正数 $\varepsilon$ 使得对于每个 $p\in M$，
+  $\theta^{(p)}$ 的定义域包含 $(-\varepsilon,\varepsilon)$，那么 $V$
+  是完备的。
+\end{lemma}
+\begin{proof}
+  假设这样的 $V$ 不是完备的，即存在 $p\in M$ 使得 $\theta^{(p)}$ 的定义域
+  $\mathcal{D}^{(p)}$ 是有上界或者有下界的，不妨设开集 $\mathcal D^{(p)}$ 有上界。令 $b=\sup \mathcal{D}^{(p)}$，
+  那么对于正数 $\varepsilon$，存在 $t_0$ 使得 $b-\varepsilon<t_0<b$
+  且 $t_0\in \mathcal D^{(p)}$。令 $q=\theta^{(p)}(t_0)$。
+  根据假设，$\theta^{(q)}$ 的定义域包含 $(-\varepsilon,\varepsilon)$。
+  令 $\gamma:(-\varepsilon,t_0+\varepsilon)\to M$ 为
+  \[
+    \gamma(t)=\begin{cases}
+      \theta^{(p)}(t) & -\varepsilon<t< b,\\
+      \theta^{(q)}(t-t_0) & t_0-\varepsilon< t<t+\varepsilon.
+    \end{cases}
+  \]
+  首先，在两个定义重合的时候，即 $t_0-\varepsilon<t<b$ 的时候，
+  有 $t\in \mathcal{D}^{(p)}$，所以 $\theta^{(q)}(t-t_0)
+  =\theta(t-t_0,\theta(t_0,p))=\theta^{(p)}(t)$，
+  所以 $\gamma$ 是良定义的。再根据平移引理，所以 $\gamma$
+  是以 $p$ 为起点的一条积分曲线，但是 $t_0+\varepsilon>b$，
+  这与 $\theta^{(p)}$ 的极大性矛盾。
+\end{proof}
 
 \begin{theorem}
   光滑流形上的紧支光滑向量场是完备的。
 \end{theorem}
+\begin{proof}
+  假设 $V$ 光滑流形 $M$ 上的光滑紧支向量场，$K=\supp V$。
+  对于每个 $p\in K$，都存在一个邻域 $U_p$ 和正数 $\varepsilon_p$
+  使得 $V$ 的流至少定义在 $(-\varepsilon_p,\varepsilon_p)\times U_p$ 上。
+  根据 $K$ 的紧性，存在有限多个 $U_{p_1},\dots,U_{p_k}$ 覆盖 $K$。
+  令 $\varepsilon=\min\{\varepsilon_{p_1},\dots,\varepsilon_{p_k}\}$，
+  这表明以 $K$ 中点为起点的每条极大积分曲线至少定义在 $(-\varepsilon,\varepsilon)$
+  上。因为在 $M\smallsetminus K$ 上 $V$ 恒为零，所以以 $M\smallsetminus K$ 
+  中点为起点的每条极大积分曲线都可以定义在 $\mathbb{R}$ 上。于是
+  $V$ 满足一致时间引理，所以是完备向量场。
+\end{proof}
 
 \begin{corollary}
   紧流形上的光滑向量场是完备的。
@@ -281,4 +331,50 @@ $s+t\in \mathcal{D}^{(p)}$，那么
 \begin{theorem}
   李群上的左不变向量场是完备的。
 \end{theorem}
+\begin{proof}
+  令 $G$ 是李群，$X\in\Lie(G)$，$\theta:\mathcal{D}\to G$ 是 $X$ 的流。
+  那么存在 $\varepsilon>0$ 使得 $\theta^{(e)}$ 在 $(-\varepsilon,\varepsilon)$ 上有定义。
+
+  任取 $g\in G$，那么 $X$ 与自身是 $L_g$-相关的，根据积分曲线的自然性，
+  所以 $L_g\circ \theta^{(e)}$ 是 $X$ 的以 $g$ 为起点的积分曲线，
+  故 $\theta^{(g)}$ 在 $(-\varepsilon,\varepsilon)$ 上有定义，再根据
+  一致时间引理，所以 $X$ 是完备的。
+\end{proof}
+
+\begin{lemma}[逃脱引理]
+  设 $M$ 是光滑流形并且 $V\in \mathfrak{X}(M)$。如果 $\gamma:J\to M$
+  是 $V$ 的一条极大积分曲线并且定义域 $J$ 有有限的上确界 $b$，那么
+  对于任意 $t_0\in J$，$\gamma\bigl([t_0,b)\bigr)$ 不被 $M$
+  的任意紧子集包含。
+\end{lemma}
+\begin{proof}
+  设某个 $t_0\in J$ 使得 $\gamma\bigl([t_0,b)\bigr)$ 被某个紧子集包含。
+  取 $[t_0,b)$ 中的一个点列 $\{t_n\}$ 使得 $t_n\to b$，
+  那么此时存在 $p\in K$ 使得 $\gamma(t_n)\to p$。
+  设 $\theta: \mathcal{D}\to M$ 是 $V$ 的流， $\varepsilon>0$ 和 $p$
+  处的邻域 $U$ 使得 $(-\varepsilon,\varepsilon)\times U\subseteq \mathcal{D}$。
+  于是存在足够大的 $n$ 使得 $b-\varepsilon<t_n<b$ 并且 $\gamma(t_n)\in U$，
+  定义 $\tilde{\gamma}:J\cup (t_n-\varepsilon,t_n+\varepsilon)$，
+  为
+  \[
+    \tilde{\gamma}(t)=\begin{cases}
+      \gamma(t) & t\in J,\\
+      \theta^{(\gamma(t_n))}(t-t_n) & t_n-\varepsilon<t<t_n+\varepsilon,
+    \end{cases}
+  \]
+  注意我们有 $\theta^{(\gamma(0))}=\gamma$。此时 $\tilde \gamma$ 也是 $V$
+  的积分曲线且比 $\gamma$ 的定义域更大，矛盾。  
+\end{proof}
+
+\section{流出}
+
+
+
+\section{李导数}
+
+
+
+
+
+
 
