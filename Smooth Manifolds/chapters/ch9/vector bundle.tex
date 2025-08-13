@@ -23,8 +23,10 @@ $E$ 附带一个连续满射 $\pi:E\to M$，其满足下面的条件：
 选取为微分同胚，那么 $E$ 被称为\emph{光滑向量丛}。在这种情况下，
 我们将局部平凡化成为\emph{光滑局部平凡化}。
 
+秩 $1$ 的向量丛被称为\emph{线丛}。
 空间 $E$ 被称为\emph{丛的全空间}，$M$ 被称为\emph{底空间}，
-$\pi$ 被称为\emph{投影}。
+$\pi$ 被称为\emph{投影}。为了简洁，我们通常写作“$E$ 是 $M$ 上的一个向量丛”
+或者 “$E\to M$ 是一个向量丛” 或者 “$\pi:E\to M$ 是一个向量丛”。
 
 \begin{exercise}
   设 $E$ 是 $M$ 上的光滑向量丛，证明投影 $\pi:E\to M$
@@ -41,12 +43,36 @@ $\pi$ 被称为\emph{投影}。
 那么 $E$ 被称为\emph{平凡丛}。在这种情况下，$E$ 本身同胚于
 $M\times \mathbb{R}^k$。如果 $E\to M$ 是光滑丛并且有一个光滑
 的全局平凡化，那么我们说 $E$ 是\emph{光滑平凡丛}，此时
-$E$ 微分同胚于 $M\times \mathbb{R}^k$。
+$E$ 微分同胚于 $M\times \mathbb{R}^k$。为了简洁起见，我们说一个光滑丛是平凡的时候，
+总是指它在光滑意义上平凡而不是拓扑意义上。
 
 \begin{example}[积丛]
   任意空间 $M$ 上的最简单的秩 $k$ 的向量丛是积空间 $E=M\times \mathbb{R}^k$，
   投影 $\pi=\pi_1:M\times \mathbb{R}^k\to M$。这样的丛被称为\emph{积丛}，那么恒等映射
   $\Id_E$ 就是一个全局平凡化，所以积丛是平凡丛。
+\end{example}
+
+\begin{example}[M\"obius 丛]
+  定义 $\mathbb{R}^2$ 上的等价关系为：$(x,y)\sim (x',y')$ 当且仅当存在 $n\in \mathbb{Z}$ 使得 
+  $(x',y')=\bigl(x+n,(-1)^ny\bigr)$。令 $E=\mathbb{R}^2/\sim$ 是商空间，$q:\mathbb{R}^2\to E$
+  是商映射。
+
+  为了可视化 $E$，令 $S$ 是带子 $[0,1]\times \mathbb{R}\subseteq \mathbb{R}^2$。$q$ 在 $S$
+  上的限制是满射且是闭映射，所以 $q|_S$ 是商映射。显然 $q|_S$ 造成的非平凡的粘合只会在 $S$
+  的边界上出现，因此我们可以把 $E$ 视为将 $S$ 的右边界上下翻转然后与左边界粘合得到的。
+
+  考虑交换图：
+  \[
+    \begin{tikzcd}
+      \mathbb{R}^2\arrow[r,"q"]\arrow[d,"\pi_1"'] & E\arrow[d,dashed,"\pi"] \\
+      \mathbb{R}\arrow[r,"\varepsilon"] & \mathbb{S}^1,
+    \end{tikzcd}
+  \]
+  其中 $\pi_1$ 是第一个分量的投影，$\varepsilon: \mathbb{R}\to \mathbb{S}^1$ 是光滑覆盖映射
+  $\varepsilon(x)=e^{2\pi ix}$。因为 $\varepsilon\circ\pi_1$ 在 $q$ 的每个纤维上是常值的，所以
+  其下降到一个连续映射 $\pi:E\to \mathbb{S}^1$。直接验证可知 $E$ 有唯一的光滑结构使得
+  $q$ 是光滑覆盖映射并且 $\pi:E\to \mathbb{S}^1$ 是光滑实线丛，被称为\emph{M\"obius 丛}。
+  
 \end{example}
 
 \begin{proposition}[切丛作为向量丛]
