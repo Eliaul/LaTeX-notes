@@ -171,7 +171,7 @@ $B$ \emph{同构}，记作 $A\cong B$。
 \emph{范畴的对象不必类似于集合，态射也不必类似于映射}。
 下面的例子解释了这些观点。
 
-\begin{example}[范畴作为数学结构]
+\begin{example}[范畴作为数学结构]\label{exa:cat as structure}
   \begin{enumerate}
     \item 一个范畴可以通过直接说出对象、态射、复合和单位来指定。
     例如空范畴 $\emptyset$，其没有任何对象或者态射。
@@ -373,13 +373,104 @@ $B$ \emph{同构}，记作 $A\cong B$。
 \end{example}
 
 \begin{definition}
-  令 $\cat A,\cat B$ 是范畴，函子 $\opcat A\to\opcat B$ 被称为
+  令 $\cat A,\cat B$ 是范畴，函子 $\opcat A\to\cat B$ 被称为
   $\cat A$ 到 $\cat B$ 的\emph{逆变函子}。
 \end{definition}
 
 为了避免混淆，我们使用叙述“$\cat A$ 到 $\cat B$ 的逆变函子”
 而不是“$\cat A\to\cat B$ 的逆变函子”。出于强调意义，通常意义下 $\cat A\to\cat B$
 的函子被称为\emph{协变函子}。
+
+\begin{example}
+  通过研究空间上的函数，我们可以研究该空间的很多性质。这一原则在 20 世纪和 21 世纪的数学中具有十分重要的地位。
+
+  例如，给定拓扑空间 $X$，令 $C(X)$ 是 $X$ 上的实值函数环。环上的运算是逐点定义的，例如 $p_1,p_2:X\to \mathbb{R}$
+  是连续函数，定义 $p_1+p_2:X\to \mathbb{R}$ 为 $(p_1+p_2)(x)=p_1(x)+p_2(x)$。
+  一个连续映射 $f:X\to Y$ 诱导了环同态 $C(f):C(Y)\to C(X)$，定义为 $(C(f))(q)=q\circ f$。
+  注意 $C(f)$ 改变了 $f$ 的方向，即将   
+  \begin{arr}[sep=small]
+    X\arrow[r,"f"] & Y
+  \end{arr}
+  变成了 
+  \begin{arr}
+    C(Y)\arrow[r,"C(f)"] & C(X)
+  \end{arr}。可以验证 $C$ 是 $\cat{Top}$ 到 $\cat{Ring}$ 的逆变函子。
+
+  对于某类特别的空间而言，从 $X$ 变换到函数环 $C(X)$ 不会丢失任何信息：即存在一种从 $C(X)$
+  重构原空间 $X$ 的方法。基于这一点，人们有时会说“代数--几何对偶”。
+\end{example}
+
+\begin{example}
+  令 $k$ 是域。对于两个 $k$ 上的两个向量空间 $V$ 和 $W$，考虑向量空间 $\Hom(V,W)$。
+  现在固定向量空间 $W$。任意线性映射 $f:V\to V'$ 可以诱导线性映射
+  \[
+    f^*:\Hom(V',W)\to \Hom(V,W),
+  \]
+  定义为 $f^*(q)=q\circ f$。这定义了函子
+  \[
+    \Hom(-,W):\opcat{\cat{Vect}}_k\to \cat{Vect}_k.
+  \]
+  当 $W=k$ 的时候，向量空间 $\Hom(V,k)$ 就是 $V$ 的对偶空间，即 $V^*$。
+  此时 $\Hom(-,k)$ 就是逆变函子 $(\cdot)^*$。
+\end{example}
+
+
+\begin{definition}
+  令 $\cat{A}$ 是范畴，函子 $\opcat A\to \cat{Set}$ 被称为 $\cat A$ 上的一个\emph{预层}。
+\end{definition}
+
+这个名字来源于下面的特殊情况。令 $X$ 是拓扑空间。记 $\mathcal O(X)$ 是 $X$ 的开子集在包含关系下
+构成的偏序集。按照 \autoref{exa:cat as structure} 中的做法，将 $\mathcal O(X)$ 视为一个范畴。
+此时 $X$ 上的\emph{预层}指的是范畴 $\mathcal O(X)$ 上的预层。例如，给定空间 $X$，
+定义 $X$ 上的预层 $F$ 为：任取 $U\in\mathcal O(X)$，定义 $F(U)$ 为 $U\to \mathbb{R}$
+的连续函数集合。当 $U\subseteq U'$ 的时候，定义映射 $F(U')\to F(U)$ 是限制映射。
+预层以及一类被称为层的特殊预层，是现代几何学中的重要概念。
+
+\begin{definition}
+  函子 $F:\cat A\to\cat B$ 被称为\emph{忠实的}（\emph{满的}），如果对于每个 $A,A'\in\cat A$，函数
+  \begin{align*}
+    \Hom(A,A')&\to \Hom(F(A),F(A'))\\
+    f&\mapsto F(f)
+  \end{align*}
+  是单射（满射）。
+\end{definition}
+
+\begin{definition}
+  令 $\cat A$ 是范畴。$\cat A$ 的一个\emph{子范畴} $\cat S$ 指的是 $\ob(\cat A)$ 的一个子类 $\ob(\cat S)$，
+  并且对于每个 $S,S'\in\ob(\cat S)$，有一个子集 $\Hom_{\cat S}(S,S')\subseteq \Hom_{\cat A}(S,S')$
+  使得其对于复合封闭并且有单位态射。如果对于所有 $S,S'\in\cat S$ 都有 $\Hom_{\cat S}(S,S')=\Hom_{\cat A}(S,S')$，
+  那么说 $\cat S$ 是\emph{满}的子范畴。
+\end{definition}
+
+因此，满的子范畴由所有对象挑选而来并且保留它们之间的所有态射。例如，$\cat{Ab}$ 就是 $\cat{Grp}$ 的满的子范畴。
+
+当 $\cat S$ 是 $\cat A$ 的子范畴的时候，存在一个包含函子 $I:\cat S\to\cat A$，定义为 $I(S)=S$
+以及 $I(f)=f$。这自动成为忠实函子，并且 $I$ 是满函子当且仅当 $\cat S$ 是满的子范畴。
+
+\section{自然变换}
+
+\begin{definition}
+  令 $\cat A,\cat B$ 是范畴，
+  \begin{arr}
+    \cat A\arrow[r,yshift=2pt,"F"]\arrow[r,yshift=-2pt,"G"'] & \cat B
+  \end{arr}
+  是函子。一个\emph{自然变换} $\alpha:F\to G$ 指的是 $\cat B$ 中的一族态射
+  $\left(
+    \begin{tikzcd}[sep=small,cramped]
+      F(\cat A)\arrow[r,"\alpha_A"] & G(A)
+    \end{tikzcd}
+  \right)_{A\in\cat A}$，其满足：对于每个态射 
+  \begin{arr}[sep=small]
+    A\arrow[r,"f"] & A'
+  \end{arr}，有交换图
+  \[
+    \begin{tikzcd}
+      F(A)\arrow[r,"F(f)"]\arrow[d,"\alpha_A"'] & F(A')\arrow[d,"\alpha_{A'}"] \\
+      G(A)\arrow[r,"G(f)"] & G(A').
+    \end{tikzcd}
+  \]
+\end{definition}
+
 
 
 
