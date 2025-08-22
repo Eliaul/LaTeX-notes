@@ -525,6 +525,27 @@ $E$ 的子丛被称为\emph{光滑子丛}当且仅当它是一个光滑向量丛
   是 $E$ 的光滑子丛。
 \end{proof}
 
+\begin{lemma}[正交补丛]
+  令 $M$ 是 $\mathbb{R}^n$ 的带边或者无边浸入子流形，$D$ 是 $T\mathbb R^n|_M$ 的
+  秩 $k$ 的光滑子丛。对于每个 $p\in M$，令 $D_p^\bot$ 是 $D_p$ 在 $T_p \mathbb{R}^n$
+  （配备 Euclid 内积）中的正交补，$D^\bot\subseteq T \mathbb{R}^n|_M$ 是子集
+  \[
+    D^\bot=\left\{(p,v)\in T \mathbb{R}^n\,|\, p\in M, v\in D_p^\bot\right\}.
+  \] 
+  那么 $D^\bot$ 是 $T \mathbb{R}^n|_M$ 的秩 $(n-k)$ 的光滑子丛。对于每个 $p\in M$，
+  存在 $D^\bot$ 的在 $p$ 的某个邻域上的光滑正交标架。
+\end{lemma}
+\begin{proof}
+  任取 $p\in M$，令 $(X_1,\dots,X_k)$ 是 $D$ 的在 $p\in M$ 的某个邻域 $V$ 上的光滑局部标架。
+  因为浸入是局部的嵌入，所以通过缩小 $V$，可以假设 $V$ 是某个坐标球或者坐标半球 $U\subseteq \mathbb{R}^n$
+  的切片。因为 $V$ 是 $U$ 的闭集，根据 \autoref{prop:local frame} 的 (3)，我们可以将
+  $(X_1,\dots,X_k)$ 完备化为 $T \mathbb{R}^n$ 的在 $U$ 上的光滑局部标架 $\bigl(\wtilde X_1,\dots,\wtilde X_n\bigr)$。
+  然后我们将其正交化为 $U$ 上的光滑正交标架 $(E_j)$。对于每个 $q\in V$，有
+  $\spn\{E_1|_p,\dots,E_k|_q\}=\spn\{X_1|_q,\dots,X_k|_q\}=D_q$。这表明 $(E_{k+1},\dots,E_n)$
+  可以限制到 $D^\bot$ 在 $V$ 上的一个光滑正交标架。因此 $D^\bot$ 满足局部标架判别法，
+  是 $T \mathbb{R}^n|_M$ 的光滑子丛。
+\end{proof}
+
 
 
 
