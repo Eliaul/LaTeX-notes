@@ -66,8 +66,26 @@ $g$ 是 $M$ 上的一个黎曼度量。
 \end{example}
 
 \begin{proposition}[黎曼度量的存在性]
-  每个光滑流形都存在一个黎曼度量。
+  每个带边或者无边光滑流形都存在一个黎曼度量。
 \end{proposition}
+\begin{proof}
+  令 $M$ 是带边或者无边光滑流形，选取覆盖 $M$ 的一族光滑坐标卡 $(U_\alpha,\varphi_\alpha)$。
+  在每个坐标系中，都存在一个黎曼度量 $g_\alpha=\varphi_\alpha^*\bar g$，其坐标表示为
+  $g_\alpha=\delta_{ij}dx^idx^j$。令 $\{\psi\}_\alpha$ 是从属于开覆盖 $\{U_\alpha\}$
+  的单位分解，定义
+  \[
+    g=\sum_\alpha \psi_\alpha g_\alpha,
+  \]
+  每一个求和项在 $\supp\psi_\alpha$ 外的时候解释为零。根据局部有限性，在每个点的
+  邻域中只有有限个求和项，所以上述表达式定义了一个光滑张量场。这显然是对称的，
+  下面只需要检查正定性。如果 $v\in T_pM$ 非零，那么 
+  \[
+    g_p(v,v)=\sum_\alpha\psi_\alpha(p)g_\alpha|_p(v,v),
+  \]
+  因为每一个求和项都非负，所以 $g_p(v,v)\geq 0$。此时至少有一个 $\psi_\alpha(p)>0$
+  （因为所有的 $\psi_\alpha(p)$ 求和为 $1$），所以至少有一个 $\psi_\alpha(p)g_\alpha|_p(v,v)>0$。
+  这就表明 $g$ 确实是一个黎曼度量。
+\end{proof}
 
 下面是可以定义在黎曼流形 $(M,g)$ 上的一些几何结构。
 \begin{itemize}[noitemsep]
