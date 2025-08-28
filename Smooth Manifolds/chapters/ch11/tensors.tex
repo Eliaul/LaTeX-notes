@@ -175,7 +175,7 @@ $\beta\in \Sigma^l(V^*)$，我们定义\emph{对称积} $\alpha\beta$
 
 \subsection{交错张量}
 
-$V$ 上的协变 $k$-张量 $\alpha$ 如果满足：
+$V$ 上的协变 $k$-张量 $\alpha$ 如果满足：对于任意不同的指标 $i,j$，有
 \[
   \alpha(v_1,\dots,v_i,\dots,v_j,\dots,v_k)=
   -\alpha(v_1,\dots,v_j,\dots,v_i,\dots,v_k),
@@ -492,4 +492,28 @@ $f\otimes B$ 和 $fB$ 可以等同，$F^*f$ 和 $f\circ F$ 可以等同。
     +\d\theta\otimes\d\theta.
   \end{align*}
 \end{example}
+
+\section{张量场的李导数}
+
+李导数算符可以延拓到任意秩的张量场上。通常来说，我们仅关注协变张量，对应的逆变或者混合张量的
+结果只需要由镜像的操作得到。
+
+假设 $M$ 是光滑流形，$V$ 是 $M$ 上的光滑向量场，$\theta$ 是 $V$ 的流。对于任意 $p\in M$，如果
+$t$ 充分接近零，那么 $\theta_t$ 是从 $p$ 的一个邻域到 $\theta_t(p)$ 的一个邻域的微分同胚，所以
+$d(\theta_t)_p^*$ 把 $\theta_t(p)$ 处的张量拉回到 $p$ 处的张量：
+\begin{align*}
+  (\theta_t^*A)_p(v_1,\dots,v_k)&=  d(\theta_t)_p^*\bigl(A_{\theta_t(p)}\bigr)(v_1,\dots,v_k)\\
+  &=A_{\theta_t(p)}\bigl(
+    d(\theta_t)_p(v_1),\dots,d(\theta_t)_p(v_k)
+  \bigr).
+\end{align*}
+
+给定 $M$ 上的光滑协变张量场 $A$，我们定义 \emph{$A$ 相对于 $V$ 的李导数}，记为 $\mathcal L_VA$：
+\begin{equation}
+  (\mathcal L_VA)_p=\frac{d}{dt}\bigg|_{t=0}(\theta_t^*A)_p=\lim_{t\to 0}
+  \frac{d(\theta_t)_p^*(A_{\theta_t(p)})-A_p}{t}.
+\end{equation}
+
+
+
 
