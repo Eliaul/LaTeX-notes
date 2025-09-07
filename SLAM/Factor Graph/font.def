@@ -59,6 +59,12 @@
   BoldItalicFont=* Bold Italic,
   SmallCapsFont=Alegreya Sans SC
 ]
+\setmonofont{Ubuntu Mono}[
+  UprightFont=*,
+  ItalicFont=* Italic,
+  BoldFont=* Bold,
+  BoldItalicFont=* Bold Italic
+]
 %\setmathfont{texgyretermes-math.otf}
 %\setmathfont[range={\mathcal,\mathbfcal,\mathfrak},StylisticSet=1]{XITSMath-Regular.otf}
 %\setmathfont[range={\mathbb}]{KpMath-Sans.otf}

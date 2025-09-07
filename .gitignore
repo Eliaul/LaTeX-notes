@@ -1,5 +1,7 @@
 *.synctex.gz
+*.synctex(busy)
 *.toc
 *.out
 *.log
 *.aux
+_minted*/
