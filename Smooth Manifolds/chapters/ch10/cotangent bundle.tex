@@ -104,6 +104,7 @@ $\omega=\omega_i\lambda^i$，其中 $\omega_i:U\to \mathbb{R}$
   \begin{enumerate}
     \item $\omega$ 是光滑的。
     \item 在每个光滑坐标卡下，$\omega$ 的分量都是光滑的。
+    \item $M$ 的每个点都能被某个坐标卡包含，$\omega$ 在这个坐标卡中有光滑的分量函数。
     \item 对于每个光滑向量场 $X\in \mathfrak{X}(M)$，
     函数 $\omega(X)$ 是光滑函数。
     \item 对于每个开集 $U\subseteq M$ 和光滑向量场 $X\in \mathfrak{X}(U)$，
@@ -119,6 +120,25 @@ $\omega=\omega_i\lambda^i$，其中 $\omega_i:U\to \mathbb{R}$
     (x^1,\dots,x^n)\mapsto \bigl(x^1,\dots,x^n,\omega_1(x),\dots,\omega_n(x)\bigr)
   \]
   是光滑的，这就表明 $\omega_i$ 都是光滑的。
+
+  $(2)\Rightarrow (3)\Rightarrow (1)$ 显然。
+
+  $(3)\Rightarrow (4)$ 任取 $p\in M$，存在坐标卡 $(U,(x^i))$ 使得 $\omega=\omega_idx^i$，其中 $\omega_i$ 是光滑函数。
+  此时还有 $X=X^j\partial/\partial x^j$ 且 $X^j$ 是光滑函数，所以
+  \[
+    \omega (X)=\omega_idx^i\left(X^j\frac{\partial}{\partial x^j}\right)=\omega_iX^i,
+  \]
+  即 $\omega(X)$ 的坐标表示是光滑函数，所以 $\omega(X)$ 是光滑函数。
+
+  $(4)\Rightarrow (5)$ 任取 $p\in U$，设 $\psi$ 是关于 $p$ 的某个邻域的支在 $U$ 中的光滑鼓包函数，那么 $\psi X$
+  和 $X$ 在 $p$ 的某个邻域上相等。由于 $\omega(X)$ 和 $\omega(\psi X)$ 在 $p$ 的某个邻域上相等且
+  $\omega(\psi X)$ 光滑，所以 $\omega(X)$ 在 $p$ 的某个邻域上的光滑，这就表明 $\omega(X)$ 在 $U$ 上光滑。
+
+  $(5)\Rightarrow (2)$ 任取光滑坐标卡 $(U,(x^i))$，设 $\omega=\omega_idx^i$，那么
+  \[
+    \omega_i=\omega\left(\frac{\partial}{\partial x^i }\right)
+  \]
+  是光滑函数。
 \end{proof}
 
 \subsection{余标架}
@@ -791,4 +811,38 @@ $U$ 中。例如，每个凸集都是星形的。
   如果 $U$ 是 $\mathbb{R}^n$ 或者 $\mathbb{H}^n$ 的星形开子集，
   那么 $U$ 上的闭余向量场都是恰当的。
 \end{theorem}
+\begin{proof}
+  假设 $U$ 是相对于 $c\in U$ 的星形开子集，$\omega=\omega_idx^i$ 是 $U$ 上的闭余向量场。
+
+  因为微分同胚把闭形式送到闭形式、恰当形式送到恰当形式，所以我们可以把 $U$ 平移到以 $c=0$ 为星形的中心。
+  对于每个 $x\in U$，令 $\gamma_x:[0,1]\to U$ 是从 $0$ 到 $x$ 的直线段，参数化为 $\gamma_x(t)=tx$。
+  $U$ 是星形子集表明 $\gamma_x$ 的像集在 $U$ 中。定义函数 $f:U\to \mathbb R$ 为
+  \[
+    f(x)=\int_{\gamma_x}\omega.
+  \]
+
+  我们证明 $f$ 就是 $\omega$ 的势函数，即 $\partial f/\partial x^j=\omega_j$。首先，我们计算
+  \[
+    f(x)=\int_0^1\omega_{\gamma_x(t)}\bigl(\gamma_x'(t)\bigr) \d t
+    =\int_0^1 \omega_i(tx) x^i \d t .
+  \]
+  因为被积函数是光滑的，所以可以交换求导和积分的顺序，得到
+  \[
+    \frac{\partial f}{\partial x^j}(x)=\int_0^1\left(
+      t\frac{\partial \omega_i}{\partial x^j}(tx)x^i+\omega_j(tx)
+    \right)\d t.
+  \]
+  $\omega$ 是闭的，所以 
+  \begin{align*}
+    \frac{\partial f}{\partial x^j}(x)&=\int_0^1\left(
+      t\frac{\partial \omega_j}{\partial x^i}(tx)x^i+\omega_j(tx)
+    \right)\d t\\
+    &=\int_0^1\frac{d}{dt}\bigl(t\omega_j(tx)\bigr) \d t=\omega_j(x).\qedhere
+  \end{align*}
+\end{proof}
+
+
+
+
+
 
