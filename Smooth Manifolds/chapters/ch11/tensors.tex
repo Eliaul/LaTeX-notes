@@ -514,6 +514,43 @@ $d(\theta_t)_p^*$ 把 $\theta_t(p)$ 处的张量拉回到 $p$ 处的张量：
   \frac{d(\theta_t)_p^*(A_{\theta_t(p)})-A_p}{t}.
 \end{equation}
 
+\begin{lemma}
+  $M,V,A$ 的定义如上，那么李导数 $\mathcal L_VA$ 是光滑张量场。
+\end{lemma}
+
+\begin{proposition}
+  令 $M$ 是光滑流形，$V\in \mathfrak X(M)$。设 $f$ 是 $M$ 上的光滑实值函数（视为 $0$-张量场），
+  $A,B$ 是 $M$ 上的光滑协变张量场。
+  \begin{enumerate}
+    \item $\mathcal L_Vf=Vf$。
+    \item $\mathcal L_V(fA)=(\mathcal L_Vf)A+f\mathcal L_VA$。
+    \item $\mathcal L_V(A\otimes B)=\mathcal L_VA\otimes B+A\otimes \mathcal L_VB$。
+    \item 如果 $X_1,\dots,X_k$ 是光滑向量场，$A$ 是光滑 $k$-张量场，那么
+    \begin{align*}
+      \mathcal L_V\bigl(A(X_1,\dots,X_k)\bigr)={}&(\mathcal L_VA)(X_1,\dots,X_k)+A(\mathcal L_VX_1,\dots,X_k)\\
+      &+\cdots+ A(X_1,\dots,\mathcal L_VX_k).
+    \end{align*}
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 设 $\theta$ 是 $V$ 的流，那么
+  \[
+    (\theta_t^*f)(p)=f(\theta_t(p))=f\circ\theta^{(p)}(t),
+  \]
+  所以
+  \[
+    (\mathcal L_Vf)(p)=\frac{d}{dt}\bigg|_{t=0}\bigl(f\circ\theta^{(p)}\bigr)'(t)
+    =df_p(V_p)=V_pf.
+  \]
+
+  (2) 
+\end{proof}
+
+
+
+
+
+
 
 
 
