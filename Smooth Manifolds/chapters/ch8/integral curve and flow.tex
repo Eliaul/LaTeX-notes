@@ -732,6 +732,24 @@ $[V,W]\equiv 0$。如果 $\theta$ 是一个光滑流，如果向量场 $W$ 在�
   所以 $(\mathcal{L}_VW)_p=0$，即 $V,W$ 可交换。
 \end{proof}
 
+\subsection{可交换标架}
+
+假设 $M$ 是光滑 $n$-流形。回顾 $M$ 的一个局部标架指的是一个定义在开集
+$U\subseteq M$ 上的向量场的 $n$-元组 $(E_i)$，使得对于每个 $p\in U$，
+$(E_i|_p)$ 都构成了 $T_pM$ 的一组基。如果对于所有 $i,j$，都有 $[E_i,E_j]=0$，
+那么我们说这是一个 \emph{可交换标架}。
+
+\begin{theorem}[可交换向量场的典范形式]\label{thm:canonical form for vector fields}
+  令 $M$ 是一个光滑 $n$-流形，$(V_1,\dots,V_k)$ 是开子集 $W\subseteq M$ 上
+  的线性无关的光滑可交换向量场。对于每个 $p\in W$，都存在一个以 $p$
+  为中心的光滑坐标卡 $\bigl(U,(s^i)\bigr)$，使得对于每个 $i=1,\dots,k$
+  都有 $V_i=\partial/\partial s^i$。如果 $S\subseteq W$ 是嵌入的余维数
+  $k$ 的子流形，$p\in S$ 使得 $T_pS$ 是 $\bigl(V_1|_p,\dots,V_k|_p\bigr)$
+  张成空间的补空间，那么上述坐标卡可以被选取为使得 $S\cap U$ 
+  是 $s^1=\cdots=s^k=0$ 定义的切片。
+\end{theorem}
+
+
 
 
 

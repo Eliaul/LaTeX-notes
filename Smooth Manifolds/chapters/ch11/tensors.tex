@@ -272,7 +272,7 @@ $X_i,X_i'\in \mathfrak{X}(M)$，我们有
 \end{align*}
 这个性质实际上是光滑张量场的特征。
 
-\begin{lemma}[张量表征引理]
+\begin{lemma}[张量表征引理]\label{lemma:tensor characterization 1}
   映射
   \begin{align*}
     \mathcal{A}:\underbrace{\mathfrak{X}(M)\times\cdots\times \mathfrak{X}(M)}
@@ -518,7 +518,7 @@ $d(\theta_t)_p^*$ 把 $\theta_t(p)$ 处的张量拉回到 $p$ 处的张量：
   $M,V,A$ 的定义如上，那么李导数 $\mathcal L_VA$ 是光滑张量场。
 \end{lemma}
 
-\begin{proposition}
+\begin{proposition}\label{prop:lie derivative of tensor}
   令 $M$ 是光滑流形，$V\in \mathfrak X(M)$。设 $f$ 是 $M$ 上的光滑实值函数（视为 $0$-张量场），
   $A,B$ 是 $M$ 上的光滑协变张量场。
   \begin{enumerate}
@@ -543,14 +543,60 @@ $d(\theta_t)_p^*$ 把 $\theta_t(p)$ 处的张量拉回到 $p$ 处的张量：
     =df_p(V_p)=V_pf.
   \]
 
-  (2) 
+  (2)(3)(4) 其他的结论可以仿照 \autoref{thm:lie derivation} 证明。假设 $V$ 在正则
+  点处的某个邻域坐标 $(u^i)$ 中有 $V=\partial/\partial u^1$，那么根据定义立即得到
+  $\mathcal L_V$ 作用在一个张量场上的结果为对 $u^1$ 的分量函数求偏导，那么
+  (2)(3)(4) 就是通常的乘积法则。根据 $V$ 的连续性，这些结果在 $V$ 的支集上也成立。
+  在 $V$ 的支集的补集上，$V$ 的流是平凡的，所以结论也成立。
 \end{proof}
 
+\begin{corollary}
+  如果 $V$ 是光滑向量场，$A$ 是光滑协变 $k$-张量场，那么对于任意光滑向量场
+  $X_1,\dots,X_k$，有
+  \begin{align}
+    (\mathcal L_VA)(X_1,\dots,X_k)&=V\bigl(A(X_1,\dots,X_k)\bigr)-
+    A\bigl([V,X_1],\dots,X_k\bigr)\notag\\
+    &\phantom{{}=}-\cdots-A\bigl(X_1,\dots,[V,X_k]\bigr).
+    \label{eq:formula of lie derivative of tensor}
+  \end{align}
+\end{corollary}
+\begin{proof}
+  根据 \autoref{prop:lie derivative of tensor} 的 (4) 即可得到。
+\end{proof}
 
+\begin{corollary}
+  如果 $f\in C^\infty(M)$，那么 $\mathcal L_V(df)=d\bigl(\mathcal L_Vf\bigr)$。
+\end{corollary}
+\begin{proof}
+  任取光滑向量场 $X$，有 
+  \begin{align*}
+    \bigl(\mathcal L_V(df)\bigr)(X)&=V\bigl(df(X)\bigr)-df\bigl([V,X]\bigr)\\
+    &=V(Xf)-[V,X]f=X(Vf)\\
+    &=d(Vf)(X)=d\bigl(\mathcal L_Vf\bigr)(X).\qedhere
+  \end{align*}
+\end{proof}
 
+\eqref{eq:formula of lie derivative of tensor} 式的一个缺点是为了计算
+$\mathcal L_VA$ 在点 $p\in M$ 处的切向量 $v_1,\dots,v_k$ 上的值，
+我们需要将它们延拓为 $p$ 的某个邻域上的向量场。但是在坐标中，任意
+张量场都可以表示为恰当 1-张量场的张量积的线性组合，所以我们可以很方便
+地计算李导数在坐标中的表示。
 
-
-
+\begin{example}
+  假设 $A$ 是任意光滑协变 $2$-张量场，$V$ 是光滑向量场。我们计算
+  $\mathcal L_VA$ 在局部坐标 $(x^i)$ 中的结果。首先，注意到
+  $\mathcal L_V(dx^i)=d(\mathcal L_Vx^i)=d V^i$，所以 
+  \begin{align*}
+    \mathcal L_VA&=\mathcal L_V\bigl(A_{ij}dx^i\otimes dx^j\bigr)\\
+    &=\mathcal L_V (A_{ij})dx^i\otimes dx^j+A_{ij}(\mathcal L_V dx^i)\otimes
+    dx^j+A_{ij} \d x^i\otimes (\mathcal L_Vdx^j)\\
+    &=VA_{ij} \d x^i\otimes d x^j+A_{ij}dV^i\otimes dx^j+A_{ij}dx^i\otimes dV^j\\
+    &=\left(
+      VA_{ij}+A_{kj}\frac{\partial V^k}{\partial x^i}+A_{ik}
+      \frac{\partial V^k}{\partial x^j}
+    \right)dx^i\otimes dx^j.
+  \end{align*}
+\end{example}
 
 
 

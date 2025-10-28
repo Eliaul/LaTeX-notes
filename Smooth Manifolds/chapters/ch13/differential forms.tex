@@ -325,11 +325,11 @@ $\varepsilon^{1\dots n}$ 张成。根据定义，$\varepsilon^{1\dots n}$
 $ab=(-1)^{kl}ba$ （其中 $a\in A^k$，$b\in A^l$），那么我们说这个分次代数
 是\emph{反交换的}。我们已经表明 $\Lambda(V^*)$ 是一个反交换的分次代数。
 
-\subsection{内积}
+\subsection{内乘法}
 
 有一个重要的算符可以将向量和交错张量联系起来。令 $V$ 是有限维向量空间，
 对于每个 $v\in V$，我们定义线性映射 $i_v:\Lambda^k(V^*)\to\Lambda^{k-1}(V^*)$，
-称为\emph{通过 $v$ 的内积}，定义为
+称为\emph{通过 $v$ 的内乘法}，定义为
 \[
   i_v\omega(w_1,\dots,w_{k-1})=\omega(v,w_1,\dots,w_{k-1}).
 \]
@@ -345,7 +345,7 @@ $k-1$ 多重线性映射。根据惯例，当 $\omega$ 是 $0$-余向量（一�
   \begin{enumerate}
     \item $i_v\circ i_v=0$。
     \item 如果 $\omega\in \Lambda^k(V^*)$ 和 $\eta\in\Lambda^l(V^*)$，那么
-    \begin{equation}
+    \begin{equation}\label{eq:interior multiplication}
       i_v(\omega\wedge\eta)=(i_v\omega)\wedge\eta+(-1)^k\omega\wedge(i_v\eta).
     \end{equation}
   \end{enumerate}
@@ -362,15 +362,15 @@ $k-1$ 多重线性映射。根据惯例，当 $\omega$ 是 $0$-余向量（一�
     \bigl(v\into\bigl(\omega^1\wedge\cdots\wedge\omega^k\bigr)\bigr)
     (v_2,\dots,v_k)&=\bigl(\omega^1\wedge\cdots\wedge\omega^k\bigr)(v,v_2,\dots,v_k)\\
     &=\det\bigl(\omega^i(v_j)\bigr)\\
-    &=\sum_{i=1}^k (-1)^{i-1}
+    &=\sum_{i=1}^k (-1)^{i-1}\omega^i(v_1)
     \det\bigl(\omega^p(v_q)\bigr)_{p\ne i,q\neq 1},
   \end{align*}
   最后一步即将行列式按第一列展开，这就表明
-  \begin{equation*}
+  \begin{equation}\label{eq:i_v}
     v\into\bigl(\omega^1\wedge\cdots\wedge\omega^k\bigr)
     =\sum_{i=1}^k(-1)^{i-1}\omega^i(v)\omega^1\wedge\cdots\wedge
     \hat\omega^i\wedge\cdots\wedge \omega^k,
-  \end{equation*}
+  \end{equation}
   其中的尖角符号表明 $\omega^i$ 被跳过。
 \end{proof}
  
@@ -417,6 +417,7 @@ $f\eta$。如果我们定义
 
 \begin{example}
   一个 $0$-形式就是连续的实值函数，一个 $1$-形式即余向量场。
+  $\mathbb{R}^3$ 上的每个 $3$-形式都是 $dx\wedge dy\wedge dz$ 的一个连续实值函数倍。
 \end{example}
 
 如果 $F:M\to N$ 是光滑映射，$\omega$ 是 $N$ 上的微分形式，拉回
@@ -425,7 +426,7 @@ $F^*\omega$ 是 $M$ 上的微分形式，定义为
   (F^*\omega)_p(v_1,\dots,v_k)=\omega_{F(p)}\bigl(\d F_p(v_1),\dots,\d F_p(v_k)\bigr)  .
 \]
 
-\begin{lemma}
+\begin{lemma}\label{lemma:pullback of form}
   设 $F:M\to N$ 是光滑映射。
   \begin{enumerate}
     \item $F^*:\Omega^k(N)\to \Omega^k(M)$ 是线性映射。
@@ -455,6 +456,72 @@ $F^*\omega$ 是 $M$ 上的微分形式，定义为
     F^*\omega=-2(u^2+v^2)\d u\wedge\d v.  
   \]
 \end{example}
+
+\begin{example}
+  令 $\omega=dx\wedge dy$ 是 $\mathbb{R}^2$ 上的 $2$-形式。考虑极坐标变换
+  $x=r\cos\theta,y=r\sin\theta$，在极坐标中，我们有
+  \begin{align*}
+    dx\wedge dy&=d(r\cos\theta)\wedge d(r\sin\theta)\\
+    &=(\cos\theta \d r-r\sin\theta\d \theta)\wedge (\sin\theta\d r+r\cos\theta \d\theta)\\
+    &=r\d r\wedge\d \theta.
+  \end{align*}
+\end{example}
+
+令人惊讶的是，上述公式和二重积分的极坐标换元公式是一致的！下面的命题推广了这一点。
+
+\begin{proposition}[满次形式的拉回公式]\label{prop:pullback of top form}
+  令 $F:M\to N$ 是带边或者无边 $n$-流形之间的光滑映射。如果 $(x^i)$ 和 $(y^j)$
+  分别是开子集 $U\subseteq M$ 和 $V\subseteq N$ 上的光滑坐标，$u$ 是 $V$
+  上的连续实值函数，那么在 $U\cap F^{-1}(V)$ 上有：
+  \begin{equation}
+    F^*\bigl(u\d y^1\wedge\cdots\wedge \d y^n\bigr)
+    =(u\circ F) (\det DF)\d x^1\wedge\cdots\wedge \d x^n,
+  \end{equation}
+  其中 $DF$ 是 $F$ 在这个坐标中的 Jacobi 矩阵。
+\end{proposition}
+\begin{proof}
+  根据 \autoref{lemma:pullback of form}，有
+  \[
+    F^*\bigl(u\d y^1\wedge\cdots\wedge \d y^n\bigr)
+    =(u\circ F) \d F^1\wedge\cdots\wedge \d F^n.
+  \]
+  我们还有
+  \[
+    \d F^i=\frac{\partial F^i}{\partial x^j}\d x^j,
+  \]
+  所以 
+  \begin{align*}
+        \d F^1\wedge\cdots\wedge\d F^n&=
+    \left(\frac{\partial F^1}{\partial x^{j_1}}\d x^{j_1}\right)
+    \wedge\cdots\wedge \left(\frac{\partial F^n}{\partial x^{j_n}}\d x^{j_n}\right)\\
+    &=\sum_{\sigma\in S_n} \frac{\partial F^1}{\partial x^{j_{\sigma(1)}}}
+    \cdots \frac{\partial F^n}{\partial x^{j_{\sigma(n)}}}
+    \d x^{j_{\sigma(1)}}\wedge \cdots\wedge \d x^{j_{\sigma(n)}}\\
+    &=\left(\sum_{\sigma\in S_n} (\sgn\sigma)\frac{\partial F^1}{\partial x^{j_{\sigma(1)}}}
+    \cdots \frac{\partial F^n}{\partial x^{j_{\sigma(n)}}}\right)
+    \d x^1\wedge \cdots\wedge \d x^n\\
+    &=\det(DF)\d x^1\wedge \cdots\wedge \d x^n.\qedhere
+  \end{align*}
+\end{proof}
+
+\begin{corollary}
+  如果 $\bigl(U,(x^j)\bigr)$ 和 $\bigl(\wtilde U,(\tilde x^i)\bigr)$ 是 $M$
+  上的两个重叠的坐标卡，那么在 $U\cap\wtilde U$ 上有
+  \begin{equation}
+    \d \tilde x^1\wedge\cdots\wedge \d \tilde x^n=
+    \det\left(\frac{\partial\tilde x^i}{\partial x^j}\right) 
+    \d x^1\wedge\cdots\wedge \d x^n.
+  \end{equation}
+\end{corollary}
+
+内乘法也可以自然地拓展到向量场和微分形式上，只需要进行逐点的定义：
+如果 $X\in \mathfrak{X}(M)$ 和 $\omega\in \Omega^k(M)$，那么定义一个
+$(k-1)$-形式 $X\into\omega=i_X \omega$ 为
+\[
+  (X\into \omega)_p=X_p\into \omega_p.
+\]
+
+
 
 \section{外微分}
 
@@ -506,7 +573,7 @@ $\d\omega$ 为 $(k+1)$-形式：
 \]
 即函数的微分。
 
-\begin{proposition}[$\mathbb{R}^n$ 上的外微分的性质]
+\begin{proposition}[$\mathbb{R}^n$ 上的外微分的性质]\label{prop:property of d}
   \mbox{}
   \begin{enumerate}
     \item $d$ 在 $\mathbb{R}$ 上是线性的。
@@ -593,7 +660,43 @@ $\d\omega$ 为 $(k+1)$-形式：
     \item 对于 $f\in\Omega^0(M)=C^\infty(M)$，$\d f$ 是 $f$ 的微分，即
     $\d f(X)=Xf$。
   \end{enumerate}
+  在任意光滑坐标卡中，$\d$ 由 \eqref{eq:exterior derivate} 给出。
 \end{theorem}
+\begin{proof}
+  首先，我们证明存在性。假设 $\omega\in\Omega^k(M)$。我们希望在每个坐标卡
+  中依据 \eqref{eq:exterior derivate} 定义 $\d\omega$。更准确地说，这意味着
+  对于每个光滑坐标卡 $(U,\varphi)$，我们希望定义
+  \begin{equation}
+    \d\omega=\varphi^*\d\left({\varphi^{-1}}^*\omega\right).
+  \end{equation}
+  为了说明这是良定义的，我们只需要注意到对于任意其他的光滑坐标卡 $(V,\psi)$，
+  映射 $\varphi\circ\psi^{-1}$ 是 $\mathbb{R}^n$ 或者 $\mathbb{H}^n$
+  的开子集之间的微分同胚，所以 \autoref{prop:property of d} 的 (4) 表明
+  \[
+    {\psi^{-1}}^*\varphi^*\d\bigl({\varphi^{-1}}^*\omega\bigr)=
+    \bigl(\varphi\circ\psi^{-1}\bigr)^*\d\bigl({\varphi^{-1}}^*\omega\bigr)
+    =\d\bigl({\psi^{-1}}^*\omega\bigr).
+  \]
+  这就表明 $\varphi^*\d\bigl({\varphi^{-1}}^*\omega\bigr)=\psi^*\d\bigl({\psi^{-1}}^*\omega\bigr)$，
+  所以 $\d\omega$ 是良定义的。
+  根据 \autoref{prop:property of d}，$\d$ 自然满足性质 (1)--(4)。
+
+  为了证明唯一性，假设 $\d$ 是另一个满足 (1)--(4) 的算子。首先我们说明
+  $\d\omega$ 是局部定义的：如果 $k$-形式 $\omega_1$ 和 $\omega_2$ 在某个开集 $U\subseteq M$
+  上相等，那么在 $U$ 上有 $\d\omega_1=\d\omega_2$。为了说明这一点，
+  任取 $p\in U$，令 $\eta=\omega_1-\omega_2$，$\psi\in C^\infty(M)$
+  是 $p$ 的某个邻域上为 $1$ 的支在 $U$ 中的鼓包函数。那么 $\psi\eta$
+  恒等于零，所以性质 (1)--(4) 导出 $0=\d(\psi\eta)=\d\psi\wedge\eta+\psi\d\eta$。
+  观察其在 $p$ 处的值，利用 $\psi(p)=1$ 以及 $\d\psi_p=0$，我们得到
+  $\d\omega_1|_p-\d\omega_2|_p=\d\eta_p=0$。
+
+  现在令 $\omega\in\Omega^k(M)$ 是任意 $k$-形式，$(U,\varphi)$ 是任意光滑坐标卡。
+  在 $U$ 上，$\omega$ 可以写为 $\sideset{}{'}{\sum}_I\omega_I\d x^I$。对于 
+  任意 $p\in U$，我们可以利用鼓包函数构造 $M$ 上的全局的光滑函数 $\tilde\omega_I$
+  和 $\tilde{x}^i$ 使得他们在 $p$ 的某个邻域上和 $\omega_I$ 以及 $x^i$ 相等。
+  根据性质 (1)--(4) 以及上一段的叙述，在 $p$ 处我们有 \eqref{eq:exterior derivate}
+  式。因为 $p$ 的任意性，所以 $\d$ 必须等于我们最开始定义的外微分。
+\end{proof}
 
 如果 $A=\bigoplus_k A^k$ 是分次代数，线性映射 $T:A\to A$ 如果对于每个 $k$，
 都有 $T(A^k)\subseteq A^{k+m}$，那么称 $T$ 是\emph{$m$ 次映射}。
@@ -605,10 +708,22 @@ $\Omega^*(M)$ 上的一个 $1$ 次的反导子且平方为零。
   如果 $F:M\to N$ 是光滑映射，那么对于每个 $k$，拉回映射
   $F^*:\Omega^k(N)\to\Omega^k(M)$ 与 $d$ 交换：对于任意 $\omega\in\Omega^k(N)$，
   有
-  \begin{equation}
+  \begin{equation}\label{eq:naturality of d}
     F^*(\d\omega)=\d (F^*\omega).
   \end{equation}
 \end{proposition}
+\begin{proof}
+  如果 $(U,\varphi)$ 和 $(V,\psi)$ 分别是 $M$ 和 $N$ 上的光滑坐标卡，
+  我们将 \autoref{prop:property of d} 的 (4) 应用于坐标表示 $\psi\circ F\circ\varphi^{-1}$。
+  在 $U\cap F^{-1}(V)$ 上，我们有
+  \begin{align*}
+    F^*(\d\omega)&=F^*\psi^*\d\bigl({\psi^{-1}}^*\omega\bigr)\\
+    &=\varphi^*(\psi\circ F\circ\varphi^{-1})^*\d\bigl({\psi^{-1}}^*\omega\bigr)\\
+    &=\varphi^*\d\bigl((\psi\circ F\circ\varphi^{-1})^*{\psi^{-1}}^*\omega\bigr)\\
+    &=\varphi^*\d\bigl({\varphi^{-1}}^*F^*\omega\bigr)\\
+    &=\d(F^*\omega).\qedhere
+  \end{align*}
+\end{proof}
 
 现在我们可以把余向量场的术语进行一个延申。一个微分形式 $\omega\in\Omega^k(M)$
 如果使得 $\d\omega=0$，那么我们说 $\omega$ 是\emph{闭形式}。如果存在
@@ -692,7 +807,7 @@ $\flat:\mathfrak{X}(\mathbb{R}^3)\to \Omega^1(\mathbb{R}^3)$。
 \[
   X^\flat=X_j\d x^j=g_{ij}X^i\d x^j=\sum_{i=1}^3 X^i\d x^i.
 \]
-内积导出了另一个映射 $\beta:\mathfrak{X}(\mathbb{R}^3)\to \Omega^2(\mathbb{R}^3)$
+内乘法导出了另一个映射 $\beta:\mathfrak{X}(\mathbb{R}^3)\to \Omega^2(\mathbb{R}^3)$
 为
 \begin{equation}
   \beta(X)=X\into (\d x\wedge\d y\wedge \d z).
@@ -794,7 +909,18 @@ $T \mathbb{R}^3$ 和 $\Lambda^2T^*\mathbb{R}^3$ 的秩都是 $3$，所以这是�
   外微分是不受维数限制的。
 \end{remark}
 
+\subsection{外微分的形式不变性}
 
+除开我们使用的 $\d$ 的坐标定义 \eqref{eq:exterior derivate} 式，
+还存在常用的 $\d$ 的另一个公式，这个公式是坐标无关的。我们从 $1$-形式的
+外微分开始。
+
+\begin{proposition}[$1$-形式的外微分]
+  对于任意光滑 $1$-形式 $\omega$ 和任意光滑向量场 $X,Y$，有
+  \begin{equation}
+    \d\omega(X,Y)=X(\omega(Y))-Y(\omega(X))-\omega([X,Y]).
+  \end{equation}
+\end{proposition}
 
 
 

@@ -1,3 +1,311 @@
 \chapter{流形上的积分}
 
-\section{}
+\section{微分形式的积分}
+
+回顾 $\mathbb{R}^n$ 中的一个积分区域指的是一个边界为测度零的有界子集。
+令 $D\subseteq \mathbb{R}^n$ 是积分区域，$\omega$ 是 $\bar D$ 上的
+一个（连续）$n$-形式。那么存在某个连续函数 $f:\bar D\to \mathbb{R}$
+使得 $\omega=f\d x^1\wedge\cdots\wedge \d x^n$。我们定义 $\omega$
+在 $D$ 上的\emph{积分}为
+\[
+  \int_D\omega=\int_D f\d V.
+\]
+这也可以写为
+\[
+  \int_D f\d x^1\wedge\cdots\wedge \d x^n=\int_D f\d x^1\cdots \d x^n.
+\]
+注意，我们通常会省略“楔积”的符号。
+
+更一般的，令 $U$ 是 $\mathbb{R}^n$ 或者 $\mathbb{H}^n$ 的一个开子集，
+$\omega$ 是 $U$ 上的一个紧支撑 $n$-形式。我们定义
+\[
+  \int_U \omega=\int_D \omega,
+\]
+其中 $D\subseteq \mathbb{R}^n$ 或者 $\mathbb{H}^n$ 是任意包含 $\supp\omega$
+的积分区域，并且 $\omega$ 在支集外延拓为零。不难验证这个定义与选取的
+积分区域 $D$ 无关。
+
+\begin{proposition}\label{prop:change of variables for top form}
+  设 $D$ 和 $E$ 是 $\mathbb{R}^n$ 或者 $\mathbb{H}^n$ 中的两个开积分区域，
+  令 $G:\bar D\to \bar E$ 是光滑映射并且限制为 $D\to E$ 是保定向的
+  或者反定向的。如果 $\omega$ 是 $\bar E$ 上的一个 $n$-形式，那么
+  \[
+    \int_D G^*\omega=\begin{dcases}
+      \int_E\omega & \text{如果 $G$ 保定向},\\
+      -\int_E\omega & \text{如果 $G$ 反定向}.
+    \end{dcases}
+  \]
+\end{proposition}
+\begin{proof}
+  令 $\bigl(y^1,\dots,y^n\bigr)$ 表示 $E$ 上的标准坐标，$\bigl(x^1,\dots,x^n\bigr)$
+  表示 $D$ 上的标准坐标。首先假设 $G$ 是保定向的。
+  设 $\omega=f\d y^1\wedge\cdots\wedge \d y^n$，那么根据重积分的换元公式
+  以及满次形式的拉回公式 \ref{prop:pullback of top form}，有
+  \begin{align*}
+    \int_D G^*\omega
+    &=\int_D (f\circ G)(\det DG)\d x^1\wedge\cdots \wedge\d x^n\\
+    &=\int_D (f\circ G)|\det DG|\d V=\int_E f\d V=\int_E \omega.
+  \end{align*}
+  如果 $G$ 是反定向的，那么上述绝对值解开后会多一个负号。
+\end{proof}
+
+我们想要把这个定理拓展到定义在开子集上的紧支 $n$-形式。但是，因为我们不能
+保证任意开子集或者任意紧子集都是积分区域，所以我们需要下面的引理。
+
+\begin{lemma}
+  设 $U$ 是 $\mathbb{R}^n$ 或者 $\mathbb{H}^n$ 的一个开子集，$K\subseteq U$
+  是一个紧子集。那么存在一个开积分区域 $D$ 使得 $K\subseteq D\subseteq\bar D\subseteq U$。
+\end{lemma}
+\begin{proof}
+  对于每个 $p\in K$，都存在包含 $p$ 的某个开球或者半球，且其闭包包含在 $U$ 中。
+  由 $K$ 的紧性可知，存在有限个这样的开球或者半球 $B_1,\dots,B_m$ 覆盖 $K$。
+  这些开球或者半球的边界都是测度零的，所以集合 $D=B_1\cup\cdots\cup B_m$
+  就是需要的积分区域。
+\end{proof}
+
+\begin{proposition}\label{prop:change of variables for top form on open set}
+  设 $U$ 和 $V$ 分别是 $\mathbb{R}^n$ 或者 $\mathbb{H}^n$ 的两个开子集，
+  令 $G:U\to V$ 是保定向或者反定向的微分同胚。
+  如果 $\omega$ 是 $V$ 上的一个紧支撑 $n$-形式，那么
+  \[
+    \int_V\omega=\pm\int_U G^*\omega,
+  \]
+  其中正号当且仅当 $G$ 保定向，负号当且仅当 $G$ 反定向。
+\end{proposition}
+\begin{proof}
+  令 $E$ 是满足 $\supp\omega\subseteq E\subseteq \bar E\subseteq V$
+  的开积分区域。因为微分同胚把内部映射为内部，边界映射为边界，
+  零测集映射为零测集，所以 $D=G^{-1}(E)\subseteq U$ 也是一个开积分区域
+  且包含 $\supp G^*\omega$，再根据 \autoref{prop:change of variables for top form}
+  即可。
+\end{proof}
+
+\subsection{流形上的积分}
+
+使用前面的结果，我们现在可以定义定向流形上微分形式的积分。令
+$M$ 是定向的带边或者无边 $n$-流形，$\omega$ 是 $M$ 上的 $n$-形式。
+首先假设 $\omega$ 在某个单个光滑坐标卡 $(U,\varphi)$ 中是紧支的，
+且这个坐标卡是正定向或者负定向的。我们定义 $\omega$ 在 $M$ 上的\emph{积分}为
+\begin{equation}
+  \int_M\omega=\pm\int_{\varphi(U)}(\varphi^{-1})^*\omega,
+\end{equation}
+其中正号对应于正定向的坐标卡，负号对应于负定向的坐标卡。因为
+$(\varphi^{-1})^*\omega$ 是在开集 $\varphi(U)\subseteq \mathbb{R}^n$
+或者 $\mathbb{H}^n$ 上紧支的 $n$-形式，所以上面的积分是有意义的。
+
+\begin{proposition}\label{prop:well-definedness of integral on manifold}
+  在上述定义下，$\int_M\omega$ 不依赖于包含 $\supp\omega$ 的光滑坐标卡的选取。
+\end{proposition}
+\begin{proof}
+  设 $(U,\varphi)$ 和 $(\wtilde U,\tilde\varphi)$ 是两个光滑坐标卡且使得
+  $\supp\omega\subseteq U\cap\wtilde U$。如果它们都是正定向的或者都是反定向的，
+  那么 $\tilde\varphi\circ\varphi^{-1}$ 是从 $\varphi\bigl( U\cap\wtilde U\bigr)$
+  到 $\tilde\varphi\bigl( U\cap\wtilde U\bigr)$ 的保定向微分同胚，所以
+  \autoref{prop:change of variables for top form on open set} 表明
+  \begin{align*}
+    \int_{\tilde\varphi(\wtilde U)}\bigl(\tilde{\varphi}^{-1}\bigr)^*\omega
+    &=\int_{\tilde{\varphi}(U\cap\wtilde U)} \bigl(\tilde{\varphi}^{-1}\bigr)^*\omega
+    =\int_{\varphi(U\cap\wtilde U)} 
+    \bigl(\tilde\varphi\circ\varphi^{-1}\bigr)^*\bigl(\tilde\varphi^{-1}\bigr)^*\omega\\
+    &=\int_{\varphi(U\cap\wtilde U)} (\varphi^{-1})^*\omega 
+    =\int_{\varphi(U)} (\varphi^{-1})^*\omega.
+  \end{align*}
+  如果这两个坐标卡的定向相反，那么 $\tilde\varphi\circ\varphi^{-1}$ 是
+  反定向的微分同胚，所以上面的等式最后乘以 $-1$ 即可。
+\end{proof}
+
+为了在整个流形上进行积分，我们需要使用单位分解组合前面的定义。
+令 $M$ 是定向的带边或者无边 $n$-流形，$\omega$ 是 $M$ 上的紧支 $n$-形式。
+令 $\{U_i\}$ 是由正定向或者负定向的光滑坐标卡组成的 $\supp\omega$ 的一个
+有限开覆盖，$\{\psi_i\}$ 是从属于这个开覆盖的光滑单位分解。定义
+$\omega$ 在 $M$ 上的\emph{积分}为
+\begin{equation}
+  \int_M\omega=\sum_i\int_M\psi_i\omega.
+\end{equation}
+因为对于每个 $i$，$n$-形式 $\psi_i\omega$ 在 $U_i$ 中是紧支的，
+所以上述求和的每一项都是我们前面所定义的。
+
+\begin{proposition}
+  定义 $\int_M\omega$ 不依赖于开覆盖或者单位分解的选取。
+\end{proposition}
+\begin{proof}
+  假设 $\{\wtilde U_j\}$ 是另一个由正定向或者负定向的光滑坐标卡组成的
+  $\supp\omega$ 的有限开覆盖，$\{\tilde\psi_j\}$ 是从属于这个开覆盖的光滑单位分解。
+  对于每个 $i$，我们有
+  \[
+    \int_M\psi_i\omega=\int_M\left(\sum_j\tilde\psi_j\right)\psi_i\omega
+    =\sum_j \int_M \tilde\psi_j\psi_i\omega.
+  \]
+  对 $i$ 求和，我们得到
+  \[
+    \sum_i\int_M\psi_i\omega=\sum_{i,j}\int_M\tilde{\psi}_j\psi_i\omega.
+  \]
+  注意到每一项的积分 $\int_M \tilde\psi_j\psi_i\omega$ 都是在某个单个 
+  光滑坐标卡 (例如 $U_i$) 中紧支的形式 $\tilde\psi_j\psi_i\omega$ 的积分，
+  所以根据 \autoref{prop:well-definedness of integral on manifold}，每一项
+  都是良定义的，与坐标映射的选取无关。从 $\int_M\tilde\psi_j\omega$
+  出发，做同样的计算，我们得到
+  \[
+    \sum_j\int_M\tilde\psi_j\omega=\sum_{i,j}\int_M\tilde{\psi}_j\psi_i\omega.
+  \]
+  因此，两种定义都给出了 $\int_M\omega$ 的相同值。
+\end{proof}
+
+令 $S\subseteq M$ 是定向的浸入 $k$-子流形（带边或者无边），$\omega$
+是 $M$ 上的 $k$-形式且限制到 $S$ 上是紧支的。我们将 $\int_S\omega$
+解释为 $\int_S\iota_S^*\omega$，其中 $\iota:S\hookrightarrow M$
+是包含映射。特别的，如果 $M$ 是紧的、定向的、带边的光滑 $n$-流形，
+$\omega$ 是 $M$ 上的 $(n-1)$-形式，我们可以把 $\int_{\partial M}\omega$
+无歧义地解释为 $\int_{\partial M}\iota_{\partial M}^*\omega$，其中
+$\partial M$ 总是理解为附带诱导定向。
+
+\begin{proposition}[形式积分的性质]
+  设 $M$ 和 $N$ 是非空的定向的带边或者无边 $n$-流形，$\omega$ 和 $\eta$
+  是 $M$ 上的紧支 $n$-形式。
+  \begin{enumerate}
+    \item \textbf{线性性}：如果 $a,b\in\mathbb{R}$，那么
+    \[
+      \int_M a\omega+b\eta=a\int_M \omega+b\int_M \eta.
+    \]
+    \item \textbf{定向反转性}：如果 $-M$ 是 $M$ 的反定向，那么
+    \[
+      \int_{-M}\omega=-\int_M \omega.
+    \]
+    \item \textbf{正定性}：如果 $\omega$ 是正定向的定向形式，那么
+    $\int_M\omega>0$。
+    \item \textbf{微分同胚不变性}：如果 $F:N\to M$ 是保定向或者反定向的微分同胚，那么
+    \[
+      \int_M\omega=\begin{dcases}
+        \int_N F^*\omega & \text{如果 $F$ 保定向},\\
+        -\int_N F^*\omega & \text{如果 $F$ 反定向}.
+      \end{dcases}
+    \]
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 显然 $a\omega+b\eta$ 也是紧支的 $n$-形式，因为 
+  $\supp(a\omega+b\eta)\subseteq \supp\omega\cup\supp\eta$
+  是紧集的闭子集，从而是紧集。任取 $\supp\omega\cup\supp\eta$ 的一个由正定向或者负定向坐标卡
+  组成的有限开覆盖 $\{U_i\}$ 以及从属于它的光滑单位分解 $\{\psi_i\}$。那么
+  $\{U_i\}$ 同时是 $\supp(a\omega+b\eta),\supp\omega,\supp\eta$ 的有限开覆盖。
+  因此，我们有
+  \begin{align*}
+    \int_M a\omega+b\eta&=\sum_i\int_M \psi_i(a\omega+b\eta)
+    =\sum_i \left(a\int_M \psi_i\omega+b\int_M \psi_i\eta\right)\\
+    &=a\int_M \omega+b\int_M \eta.
+  \end{align*}
+
+  (2) 取 $\supp\omega$ 的一个由正定向或者负定向坐标卡组成的有限开覆盖 $\{U_i\}$
+  以及从属于它的光滑单位分解 $\{\psi_i\}$。那么在 $-M$ 上，每个 $U_i$ 的定向性与之前相反，
+  从而每个积分项满足 $\int_M \psi_i\omega=-\int_{-M}\psi_i\omega$，故最终的结果相差
+  一个负号。
+
+  (3) $\omega$ 是正定向的定向形式意味着对于每个正定向的坐标卡 $(U,\varphi)$，
+  $(\varphi^{-1})^*\omega$ 是一个正值函数乘以 $\d x^1\wedge\cdots\wedge \d x^n$，
+  对于负定向的坐标卡则是负值函数乘以 $\d x^1\wedge\cdots\wedge \d x^n$。因此，
+  $\int_M\omega$ 的每一个求和项 $\int_M\psi_i\omega$ 都是正数，所以 $\int_M\omega>0$。
+
+  (4) 只需要假设 $\omega$ 是在单个正定向或者负定向坐标卡中紧支的即可，因为
+  $M$ 上的任意紧支 $n$-形式都可以凭借单位分解写成这样的形式的有限和。
+  因此，假设 $(U,\varphi)$ 是正定向的坐标卡，其包含 $\supp\omega$。当
+  $F$ 保定向的时候，容易验证 $\bigl(F^{-1}(U),\varphi\circ F\bigr)$
+  是 $N$ 上的正定向坐标卡，且包含 $\supp F^*\omega$。最后根据
+  \autoref{prop:change of variables for top form on open set} 即可。
+\end{proof}
+
+虽然通过单位分解定义形式的积分非常便于理论分析，但是在实际计算中基本无法发挥作用。
+一个一般性的难点是很难显式地写出一个光滑单位分解，并且即使写出了，我们也必须
+计算多个积分项的和。
+
+出于计算的目的，一种更方便的方法是将流形划分为有限多片，其中每一片的边界
+都是零测集，并且利用局部参数化计算每一片上的积分。
+
+\begin{proposition}[参数化上的积分]\label{prop:integration on manifold by parametrization}
+  令 $M$ 是定向的带边或者无边 $n$-流形，$\omega$ 是 $M$ 上的紧支 $n$-形式。
+  假设 $D_1,\dots,D_k$ 是 $\mathbb{R}^n$ 中的开积分区域，并且对于
+  $i=1,\dots,k$，有光滑映射 $F_i:\bar D_i\to M$ 使得
+  \begin{enumerate}
+    \item $F_i$ 限制到 $D_i$ 到某个开子集 $W_i\subseteq M$ 上时是保定向的微分同胚；
+    \item 当 $i\neq j$ 时，有 $W_i\cap W_j=\emptyset$；
+    \item $\supp\omega\subseteq \wbar W_1\cup\cdots\cup\wbar W_k$。
+  \end{enumerate}
+  那么
+  \begin{equation}
+    \int_M\omega=\sum_{i=1}^k \int_{D_i} F_i^*\omega.
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  与前一个证明一样，只需要假设 $\omega$ 在某个正定向或者负定向坐标卡
+  $(U,\varphi)$ 中紧支即可。实际上，通过充分收缩坐标卡，我们可以假设 $U$
+  是预紧的，$Y=\varphi(U)$ 是 $\mathbb{R}^n$ 或者 $\mathbb{H}^n$ 中的积分区域，
+  $\varphi$ 延拓为 $\bar U$ 到 $\bar Y$ 的微分同胚。
+
+  对于每个 $i$，定义开子集 $A_i\subseteq D_i$，$B_i\subseteq W_i$ 和 
+  $C_i\subseteq Y$ 为 
+  \[
+    A_i=F_i^{-1}(W_i\cap U),\quad B_i=U\cap W_i=F_i(A_i),
+    \quad C_i=\varphi(B_i)=\varphi\bigl(F_i(A_i)\bigr).
+  \]
+  因为 $\bar D_i$ 是紧的，所以可以直接验证得 $\partial W_i\subseteq F_i(\partial D_i)$，
+  因此 $\partial W_i$ 是 $M$ 中的零测集，$\partial C_i=\varphi(\partial B_i)$
+  是 $\mathbb{R}^n$ 中的零测集。
+
+  $\bigl(\varphi^{-1}\bigr)^*\omega$ 的支集被 $\bar C_1\cup\cdots\cup \bar C_k$
+  包含，并且其中任意两个集合仅在它们的边界上相交，所以是零测集。因此，我们有 
+  \[
+    \int_M\omega=\int_Y\bigl(\varphi^{-1}\bigr)^*\omega=\sum_{i=1}^k \int_{C_i}\bigl(\varphi^{-1}\bigr)^*\omega.
+  \]
+  由于 $\varphi\circ F_i:A_i\to C_i$ 是微分同胚，所以
+  \[
+    \int_{C_i}\bigl(\varphi^{-1}\bigr)^*\omega=\int_{A_i} F_i^*\varphi^*\bigl(\varphi^{-1}\bigr)^*\omega
+    =\int_{A_i} F_i^*\omega=\int_{D_i} F_i^*\omega.
+  \]
+  将这些等式代入前面的求和式中，即可得到所需的结果。
+\end{proof}
+
+\begin{example}
+  我们计算 $\mathbb{S}^2$ 上 $2$-形式的积分，配备 $\bar{\mathbb{B}}^3$ 的边界定向。
+  令 $\omega$ 是 $\mathbb{R}^3$ 上的 $2$-形式
+  \[
+    \omega=x\d y\wedge \d z+y\d z\wedge \d x+z\d x\wedge \d y.
+  \]
+  令 $D$ 是开矩形 $(0,\pi)\times (0,2\pi)$，$F:\bar D\to \mathbb{S}^2$
+  是球坐标参数化 
+  \[ 
+    F(\varphi,\theta)=(\sin\varphi\cos\theta,\sin\varphi\sin\theta,\cos\varphi).
+  \]
+  \autoref{exa:orientation of sphere} 表明 $F|_D$ 是保定向的，所以满足
+  \autoref{prop:integration on manifold by parametrization} 的条件。注意到 
+  \begin{align*}
+    F^*\d x&=\cos\varphi\cos\theta\d \varphi-\sin\varphi\sin\theta\d \theta,\\
+    F^*\d y&=\cos\varphi\sin\theta\d \varphi+\sin\varphi\cos\theta\d \theta,\\
+    F^*\d z&=-\sin\varphi\d \varphi,
+  \end{align*}
+  因此，有
+  \begin{align*}
+    \int_{\mathbb{S}^2}\omega&=\int_D\bigl(
+      -\sin^3\varphi\cos^2\theta\d\theta\wedge\d\varphi
+      +\sin^3\varphi\sin^2\theta\d\varphi\wedge\d\theta
+    \bigr.\\
+    &=\bigl.
+      +\cos^2\varphi\sin\varphi\cos^2\theta\d\varphi\wedge\d\theta
+      -\cos^2\varphi\sin\varphi\sin^2\theta\d\theta\wedge\d\varphi
+    \bigr)\\
+    &=\int_D\sin\varphi\d\varphi\wedge\d\theta=
+    \int_0^{2\pi}\int_0^\pi \sin\varphi\d\varphi\d\theta=4\pi.
+  \end{align*}
+\end{example} 
+
+\section{Stokes 定理}
+
+\begin{theorem}[Stokes 定理]
+  令 $M$ 是定向的带边光滑 $n$-流形，$\omega$ 是 $M$ 上的紧支 $(n-1)$-形式。
+  那么 
+  \begin{equation}
+    \int_M\d\omega=\int_{\partial M}\omega.
+  \end{equation}
+\end{theorem}
+
+
+
+

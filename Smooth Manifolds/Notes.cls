@@ -20,13 +20,15 @@
   subcaption,
   mathtools,
   zhlineskip,
-  tcolorbox
+  tcolorbox,
+  aliascnt
 }
 \tcbuselibrary{theorems}
 \tcbuselibrary{skins}
 %\RequirePackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
 
 \RequirePackage[colorlinks]{hyperref}
+\usepackage[capitalize,nameinlink]{cleveref}
 
 \renewcommand\contentsname{Contents}
 \cftpagenumbersoff{part}
@@ -147,6 +149,7 @@
   name=定理,
   style=theoremstyle
 ]{theorem}
+\counterwithin{theorem}{chapter}
 \declaretheorem[
   sibling=theorem,
   name=推论,

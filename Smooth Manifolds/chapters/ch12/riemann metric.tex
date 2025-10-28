@@ -137,6 +137,25 @@ $g$ 是 $M$ 上的一个黎曼度量。
   $(F^*g)_p$ 是正定的，所以 $F^*g$ 是 $M$ 上的黎曼度量。
 \end{proof}
 
+\begin{example}
+  考虑光滑映射 $F: \mathbb{R}^2\to \mathbb{R}^3$ 为
+  \[
+    F(u,v)=(u\cos v,u\sin v,v).
+  \]
+  这是一个恰当的单射的光滑浸入，因此是一个嵌入。它的图像被称为\emph{螺旋面}。
+  此时拉回度量 $F^*\bar g$ 可以计算为：
+  \begin{align*}
+    F^*\bar g&=d(u\cos v)^2+d(u\sin v)^2+dv^2\\
+    &=(\cos v\d u-u\sin v\d v)^2+(\sin v\d u+u\cos v\d v)^2+\d v^2\\
+    &=\cos^2 v\d u^2-2u\sin v\cos v\d u\d v+u^2\sin^2 v\d v^2\\
+    &\hphantom{{}=}+\sin^2 v\d u^2+2u\sin v\cos v\d u\d v+u^2\cos^2 v\d v^2 
+    +\d v^2\\
+    &=\d u^2+(1+u^2)\d v^2.
+  \end{align*}
+  需要注意，当 $u$ 是实值函数的时候，记号 $\d u^2$ 表示对称积 $\d u\d u$
+  而不是 $\d (u^2)$。
+\end{example}
+
 \begin{example}\label{exa:polar coordinate of euclid metric}
   我们计算 $\mathbb{R}^2$ 上的 Euclid 度量 $\bar g=\d x^2+\d y^2$
   在极坐标中的表示，那么 $x=r\cos\theta$，$y=r\sin\theta$ 表明
@@ -157,7 +176,7 @@ $F$ 是一个局部微分同胚且满足 $F^*\tilde{g}=g$。
 一个黎曼流形 $(M,g)$ 如果局部等距于 $(\mathbb{R}^n,\bar g)$，那么
 $(M,g)$ 被称为\emph{平坦黎曼流形}，$g$ 被称为\emph{平坦度量}。
 
-\begin{theorem}
+\begin{theorem}\label{thm:flat metric}
   对于一个黎曼流形 $(M,g)$，下面的说法等价：
   \begin{enumerate}
     \item $g$ 是平坦的。
@@ -174,9 +193,43 @@ $(M,g)$ 被称为\emph{平坦黎曼流形}，$g$ 被称为\emph{平坦度量}。
   此时 $g$ 的坐标表示为
   \[
     g=(\delta_{ij}\circ F) \d F^i\otimes \d F^j=\sum_{i=1}^n
-    \d F^i\otimes \d F^i.\qedhere
+    \d F^i\otimes \d F^i.
   \]
+
+  $(2)\Rightarrow (3)$ 假设 $p\in M$ 处有坐标卡 $(x^i)$ 使得 $g=\delta_{ij}\d x^i\d x^j$，
+  那么
+  \[
+    \inn{\frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j}}
+    =\delta_{kl}\d x^k\d x^l\left(
+      \frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j}
+    \right)
+    =\begin{cases}
+      1, & i=j,\\
+      0, & i\neq j.
+    \end{cases}
+  \]
+  这就表明 $(\partial/\partial x^i)$ 是正交标架。
+
+  $(3)\Rightarrow (4)$ 坐标标架都是可交换的标架。
+
+  $(4)\Rightarrow (1)$ 需要使用 \autoref{thm:canonical form for vector fields}：如果
+  $(E_i)$ 是一个定义在开集 $U\subseteq M$ 上的可交换的正交标架，那么
+  每个 $p\in U$ 都被包含在一个光滑坐标卡 $(U,\varphi)$ 中，使得
+  坐标标架为 $(E_i)$。注意 
+  $\varphi:U\to\varphi(U)$ 是微分同胚，这表明 $\varphi_*E_i=\partial/\partial x^i$，所以
+  \[
+    \varphi^*\bar g(E_i,E_j)=\bar g(\varphi_*E_i,\varphi_*E_j)
+    =\bar g\left(
+      \frac{\partial}{\partial x^i},\frac{\partial}{\partial x^j}
+    \right)=\delta_{ij}=g(E_i,E_j).
+  \]
+  这就表明 $\varphi^*\bar g=g$，所以 $\varphi$ 是 $(U,g|_U)$ 和 
+  $\varphi(U)$ 配备 Euclid 度量之间的等距。这就表明 $g$ 是平坦的。
 \end{proof}
+
+根据定义，存在非平坦的黎曼度量并不显然。实际上，在 $1$-维的情况下，
+每个度量都是平坦的。后面我们将利用 \autoref{thm:flat metric}
+来说明 $\mathbb R^3$ 中的大部分旋转曲面，包括 $\mathbb S^2$，都不是平坦的。
 
 
 \subsection{黎曼子流形}
@@ -225,6 +278,119 @@ $(M,g)$ 被称为\emph{平坦黎曼流形}，$g$ 被称为\emph{平坦度量}。
   \end{align*}
 \end{example}
 
+\begin{example}[旋转曲面上的诱导度量]\label{exa:metric on surface}
+  令 $C$ 是半平面 $\{(r,z)\,|\, r >0\}$ 的 $1$-维嵌入子流形，$S_C$
+  是由 $C$ 生成的旋转曲面。为了计算 $S_C$ 上的诱导度量，选取 $C$
+  的一个光滑局部参数化 $\gamma(t)=(a(t),b(t))$，记映射
+  $X(t,\theta)=\bigl(a(t)\cos\theta,a(t)\sin\theta,b(t)\bigr)$ 是
+  $S_C$ 的光滑局部参数化，只要把 $(t,\theta)$ 限制在充分小的开集上即可。
+  那么我们可以计算
+  \begin{align*}
+    X^*\bar g&=\d\bigl(a(t)\cos\theta\bigr)^2+\d\left(a(t)\sin\theta\right)^2
+    +\d \bigl(b(t)\bigr)^2\\
+    &=\bigl(a'(t)\cos\theta \d t-a(t)\sin\theta \d\theta\bigr)^2\\
+    &\hphantom{{}=}+\bigl(a'(t)\sin\theta\d t+a(t)\cos\theta \d\theta\bigr)^2 
+    +b'(t)^2\d t^2\\
+    &=\bigl(a'(t)^2+b'(t)^2\bigr)\d t^2+a(t)^2\d\theta^2.
+  \end{align*}
+  特别地，如果 $\gamma$ 是单位速度的曲线，即 $|\gamma'(t)|^2=a'(t)^2+b'(t)^2=1$，
+  那么上述结果可以简化为 $\d t^2+a(t)^2\d\theta^2$。
+
+  下面有一些简单的例子。
+  \begin{enumerate}
+    \item 环面可以视为圆周 $(r-2)^2+z^2=1$ 生成的旋转曲面。使用参数化
+    $\gamma(t)=(2+\cos t,\sin t)$，我们得到环面上的诱导度量
+    $\d t^2+(2+\cos t)^2\d\theta^2$。
+    \item 单位球面（挖去北极点和南极点）是由参数曲线 $\gamma(t)=(\sin t,\cos t)\ (0<t<\pi)$
+    生成的旋转曲面，此时诱导度量为 $dt^2+\sin^2 t\d\theta^2$。
+    \item 单位圆柱面 $x^2+y^2=1$ 是由参数化直线 $\gamma(t)=(1,t)$ 生成的旋转曲面，
+    诱导度量为 $\d t^2+\d\theta^2$。
+  \end{enumerate}
+\end{example}
+
+观察上例中的最后一条。对于圆柱面的每个局部参数化 $X(t,\theta)=(\cos\theta,\sin\theta,t)$，
+诱导度量 $X^*\bar g$ 都是 $(t,\theta)$-平面的 Euclid 度量。换句话说，对于每个
+圆柱面中的点 $p$，总有 $X$ 的一个合适的限制给出了 $(\mathbb R^2,\bar g)$ 的某个
+开子集和 $p$ 的某个邻域配备诱导度量之间的黎曼等距。因此，圆柱面
+上的诱导度量是平坦的。这意味着一个生活在圆柱面上的二维生物不可能通过
+局部的几何测量得知其生活的空间是否为 Euclid 空间。这个例子阐述了
+确定一个度量是否平坦有时候有一个意外的答案。
+
+要确定什么样的度量是平坦或者不平坦的需要的技术超出了本书的范围。
+就像证明两个拓扑空间是否同胚需要寻找拓扑不变量一样，为了证明
+两个黎曼流形不是局部等距的，我们必须引入黎曼等距所保持的局部不变量，
+然后证明不同的度量有不同的不变量。黎曼度量的一个基本不变量是曲率，
+这是一个衡量度量与平坦性相差多远的量。在 Lee 的《黎曼流形导论》中有更深入的介绍。
+
+\begin{proposition}[旋转曲面的平坦性判别]
+  令 $C\subseteq H$ 是半平面 $H=\{(r,z)\,|\, r>0\}$ 中的连通的
+  $1$-维嵌入子流形，$S_C$ 是 $C$ 生成的旋转曲面。$S_C$ 上的诱导度量
+  是平坦的当且仅当 $C$ 是直线的一部分。
+\end{proposition}
+\begin{proof}
+  首先假设 $C$ 是直线的一部分。那么存在常数 $P,Q,K,L$ 且 $P,Q$ 不同时为零，
+  使得 $\gamma(t)=(Pt+K,Qt+L)$。通过对 $\gamma$ 进行缩放，我们可以假设 
+  $\gamma$ 是单位速度的。如果 $Q=0$，那么 $S_C$ 是平面 $z=L$ 的开子集，因此
+  是平坦的。如果 $P=0$，那么 $S_C$ 是圆柱面 $x^2+y^2=K^2$ 的一部分，我们已经
+  说明了圆柱面是平坦的。如果 $P,Q\neq 0$，那么 \autoref{exa:metric on surface}
+  表明诱导度量为 $\d t^2+(Pt+K)^2\d \theta^2$。在任意点的某个邻域中，
+  考虑坐标变换 $(u,v)=\bigl((t+K/P)\cos P\theta,(t+K/P)\sin P\theta\bigr)$，
+  这把 Euclid 度量 $\d u^2+\d v^2$ 拉回到 $\d t^2+(Pt+K)^2\d\theta^2$，
+  所以这个度量是平坦的。
+
+  反之，假设 $S_C$ 是平坦的，设 $\gamma(t)=(a(t),b(t))$ 是 $C$ 的局部参数化。
+  我们可以假设 $\gamma$ 是单位速度的，即 $a'(t)^2+b'(t)^2=1$。此时由 \autoref{exa:metric on surface}，
+  诱导度量为 $\d t^2+a(t)^2\d\theta^2$。因此，定义局部标架 $(E_1,E_2)$ 为
+  \[
+    E_1=\frac{\partial}{\partial t},\quad E_2=\frac{1}{a}\frac{\partial}{\partial\theta},
+  \]
+  这是一组正交标架。任意其他的正交标架 $\bigl(\wtilde{E}_1,\wtilde{E}_2\bigr)$ 可以被表示为
+  \begin{align*}
+    \wtilde E_1&=uE_1+vE_2=u\frac{\partial}{\partial t}+\frac{v}{a}\frac{\partial}{\partial\theta},\\
+    \pm\wtilde E_2&=vE_1-uE_2=v\frac{\partial}{\partial t}-\frac{u}{a}\frac{\partial}{\partial\theta}.
+  \end{align*}
+  其中 $u,v$ 是关于 $(t,\theta)$ 的光滑函数并且 $u^2+v^2=1$。因为 $S_C$ 是平坦的，根据 
+  \autoref{thm:flat metric}，存在 $u,v$ 使得 $\bigl(\wtilde E_1,\wtilde E_2\bigr)$
+  是可交换的正交标架。根据李括号的坐标公式 \ref{prop:coordinate formula for lie bracket}，有
+  \begin{align*}
+    0=\pm \bigl[\wtilde E_1,\wtilde E_2\bigr]&=
+    \left(u\frac{\partial v}{\partial t}+\frac{v}{a}\frac{\partial v}{\partial\theta}
+    -v\frac{\partial u}{\partial t}+\frac{u}{a}\frac{\partial u}{\partial\theta}
+    \right)\frac{\partial}{\partial t}\\
+    &\hphantom{{}=}-\left(
+      u\frac{\partial}{\partial t}\left(\frac{u}{a}\right)+\frac{v}{a}\frac{\partial}{\partial \theta}\left(\frac{u}{a}\right)
+      +v\frac{\partial}{\partial t}\left(\frac{v}{a}\right)-\frac{u}{a}\frac{\partial}{\partial \theta}\left(\frac{v}{a}\right)
+    \right)\frac{\partial}{\partial \theta}.
+  \end{align*}
+  记 $f_\theta=\partial f/\partial\theta$ 以及 $f_t=\partial f/\partial t$。
+  注意到 $u^2+v^2=1$ 表明 $uu_t+vv_t=uu_\theta+vv_\theta=0$，此外，$a$ 只依赖于
+  $t$ 表明 $a_\theta=0$ 以及 $a_t=a'$。那么我们得到
+  \[
+    0=(uv_t-vu_t)\frac{\partial}{\partial t}+\frac{a'-vu_\theta+uv_\theta}{a^2}
+    \frac{\partial}{\partial\theta},
+  \]
+  这表明
+  \begin{align}
+    uv_t-vu_t&=0,\label{eq:tmp1 in ch metric}\\
+    vu_\theta-uv_\theta&=a'\label{eq:tmp2 in ch metric}.
+  \end{align}
+
+  因为 $u^2+v^2=1$，所以每个点处都有一个邻域使得 $u$ 或者 $v$ 非零。
+  假设 $v\neq 0$，那么 \eqref{eq:tmp1 in ch metric} 表明 $u/v$ 对 $t$ 的偏导数
+  是零，所以我们可以假设 $u=fv$，其中 $f$ 是 $\theta$ 的函数。那么 $u^2+v^2=1$
+  表明 $v^2(f^2+1)=1$，所以 $v=\pm 1/\sqrt{f^2+1}$ 是 $\theta$ 的函数，所以
+  $u=\pm\sqrt{1-v^2}$ 也是 $\theta$ 的函数。当 $u\neq 0$ 的时候有类似的论述。
+  但是 \eqref{eq:tmp2 in ch metric} 表明 $a'$ 依赖于 $t$，所以 $a'$ 是常值函数，
+  所以 $b'=\pm\sqrt{1-(a')^2}$ 也是常值函数，这表明 $a,b$ 都是 $t$ 的仿射函数。
+  所以 $C$ 的每个点都有一个邻域被一个直线包含。因为 $C$ 是连通的，所以 $C$
+  被一条直线包含。 
+\end{proof}
+
+\begin{corollary}
+  $\mathbb{S}^2$ 上的圆度量不是平坦的。
+\end{corollary}
+
+
 \subsection{法丛}
 
 设 $(M,g)$ 是 $n$ 维黎曼流形，$S\subseteq M$ 是 $k$ 维黎曼子流形。
@@ -242,28 +408,116 @@ $(M,g)$ 被称为\emph{平坦黎曼流形}，$g$ 被称为\emph{平坦度量}。
 \[
   \LL_g(\gamma)=\int_a^b|\gamma'(t)|_g \d t.  
 \]
+因为 $|\gamma'(t)|_g$ 在除开有限多个 $t$ 处都是连续的，并且在这些点处
+的左右极限都存在，所以这个积分是良定义的。
 
-现在我们可以定义黎曼流形中两点之间的距离。设 $(M,g)$ 是连通的黎曼流形，
+一个非常重要的事实是长度与参数化的方式是无关的。在 \ref{sec:line integral}
+中我们定义了一个分段光滑曲线段 $\gamma:[a,b]\to M$ 的重参数化为形如
+$\tilde\gamma=\gamma\circ\varphi$ 的曲线段，其中 $\varphi:[a,b]\to [c,d]$
+是微分同胚。
+
+\begin{proposition}[长度的参数化无关性]
+  令 $(M,g)$ 是一个带边或者无边的黎曼流形，$\gamma:[a,b]\to M$ 是分段光滑曲线段。
+  如果 $\tilde\gamma$ 是 $\gamma$ 的重参数化，那么 $\LL_g(\tilde \gamma)=\LL_g(\gamma)$。
+\end{proposition}
+\begin{proof}
+  首先假设 $\gamma$ 是光滑的，$\varphi:[c,d]\to [a,b]$ 是微分同胚使得
+  $\tilde{\gamma}=\gamma\circ\varphi$。$\varphi$ 是微分同胚表明 $\varphi'>0$
+  或者 $\varphi'<0$。假设 $\varphi'>0$，那么
+  \begin{align*}
+    \LL_g(\tilde\gamma)&=\int_c^d \bigl|\tilde\gamma'(t)\bigr|_g\d t=
+    \int_c^d \bigl|\gamma'(\varphi(t))\varphi'(t)\bigr|_g\d t\\
+    &=\int_c^d \bigl|\gamma'(\varphi(t))\bigr|_g\varphi'(t)\d t=
+    \int_c^d \bigl|\gamma'(\varphi(t))\bigr|_g\d\varphi(t)\\
+    &=\int_a^b|\gamma'(s)|_g\d s=\LL_g(\gamma).
+  \end{align*}
+  若 $\gamma'<0$，那么 $|\varphi'(t)|=-\varphi'(t)$，同时换元积分时
+  也会出现一个负号，所以最后的结果也是不变的。若 $\gamma$ 是分段光滑的，
+  只需要把每个子区间的结果加起来。
+\end{proof}
+
+
+现在我们可以定义黎曼流形中两点之间的距离。设 $(M,g)$ 是连通的黎曼流形
+（当 $\partial M=\emptyset$ 的时候这个理论更加的直接，所以本节我们都做这个假设），
 对于任意 $p,q\in M$，定义 \emph{$p$ 到 $q$ 的距离} 为所有从 $p$
 到 $q$ 的分段光滑曲线段 $\gamma$ 的长度 $\LL_g(\gamma)$ 的下确界，
 记为 $d_g(p,q)$。因为连通光滑流形中任意两点都可以用分段光滑曲线段连接，
 所以这个定义是有意义的。
 
+\begin{example}
+  在 $(\mathbb{R}^n,\bar g)$ 中，直线段是在其两个端点之间的最短的分段光滑曲线段。
+  因此，距离函数 $d_{\bar g}$ 等于通常的 Euclid 距离：
+  \[
+    d_{\bar g}(x,y)=|x-y|.
+  \]
+\end{example}
+
+\begin{exercise}
+  假设 $(M,g)$ 和 $\bigl(\wtilde M,\tilde g\bigr)$ 是连通的黎曼流形并且
+  $F:M\to\wtilde M$ 是黎曼等距，证明：对于任意 $p,q\in M$，有
+  $d_{\wtilde g}(F(p),F(q))=d_g(p,q)$。
+\end{exercise}
+\begin{proof}
+  设 $\gamma:[a,b]\to M$ 是分段光滑曲线段，对于任意 $t\in [a,b]$，有
+  \begin{align*}
+    g_{\gamma(t)}(\gamma'(t),\gamma'(t))&=(F^*\tilde g)_{\gamma(t)}(\gamma'(t),\gamma'(t))\\
+    &=\tilde g_{F(\gamma(t))}\bigl((F\circ\gamma)'(t),(F\circ\gamma)'(t)\bigr),
+  \end{align*}
+  所以
+  \[
+    \LL_g(\gamma)=\int_a^b |\gamma'(t)|_g \d t
+    =\int_a^b \bigl|(F\circ\gamma)'(t)\bigr|_{\tilde g} \d t=
+    \LL_{\tilde g}\bigl(F\circ\gamma\bigr).
+  \]
+  $F$ 是微分同胚表明 $p,q$ 之间的分段光滑曲线段和 $F(p),F(q)$ 之间的分段光滑曲线段
+  是一一对应的，所以 $d_{\wtilde g}(F(p),F(q))=d_g(p,q)$。
+\end{proof}
+
 我们将看到黎曼距离函数将 $M$ 变成为一个度量空间，其度量诱导的拓扑与给定的流形拓扑相同。
 关键在于下面的技术性引理，它表明每个黎曼度量在坐标上都可以局部地与 Euclid 度量相比较。
 
-\begin{lemma}
+\begin{lemma}\label{lemma:compare with euclid metric}
   令 $g$ 是开子集 $U\subseteq \mathbb{R}^n$ 上的一个黎曼度量。给定紧子集 
   $K\subseteq U$，存在正常数 $c,C$ 使得对于任意 $x\in K$ 和 $v\in T_x \mathbb{R}^n$，有
   \[
     c|v|_{\bar g}\leq |v|_g\leq C|v|_{\bar g}.  
   \]
 \end{lemma}
+\begin{proof}
+  
+\end{proof}
 
-\begin{theorem}[黎曼流形作为度量空间]
+\begin{theorem}[黎曼流形作为度量空间]\label{thm:metric space of riemann manifolds}
   设 $(M,g)$ 是连通的黎曼流形，在黎曼距离函数下，$M$ 成为一个度量空间，
   并且这个度量诱导的拓扑和流形自带的拓扑相同。
 \end{theorem}
+
+这个定理表明度量空间上的所有技术都可以搬运到连通的黎曼流形上。因此，
+一个连通的黎曼流形 $(M,g)$ 被称为是\emph{完备的}，$g$ 被称为是\emph{完备的黎曼度量}，
+如果 $(M,d_g)$ 是完备的度量空间。子集 $B\subseteq M$ 被称为是\emph{有界的}，
+如果存在常数 $K$ 使得对于所有 $x,y\in B$ 都有 $d_g(x,y)\leq K$。
+实际上每个连通的黎曼流形都有一个完备的黎曼度量。
+
+回顾一个拓扑空间是\emph{可度量化的}，如果其存在一个度量使得度量拓扑和原本的拓扑
+相同。
+
+\begin{corollary}
+  任意带边或者无边光滑流形都是可度量化的。
+\end{corollary}
+\begin{proof}
+  首先假设 $M$ 是无边的。选取 $M$ 上的一个黎曼度量 $g$。如果 $M$
+  是连通的，那么 \autoref{thm:metric space of riemann manifolds} 就表明 $M$
+  是可度量化的。更一般的，设 $\{M_i\}$ 是 $M$ 的连通分支，在每个 $M_i$ 中选取
+  一个点 $p_i$。对于 $x\in M_i,y\in M_j$，若 $i=j$，则定义 $d_g(x,y)$ 为这个连通分支
+  上的度量，否则则定义为
+  \[
+    d_g(x,y)=d_g(x,p_i)+1+d_g(p_j,y).
+  \]
+  可以直接验证这是一个度量并且诱导了和 $M$ 相同的拓扑。最后，若 $M$
+  有非空的边界，只需要将 $M$ 嵌入到它的加倍中，然后注意到度量空间的子空间
+  仍然是度量空间即可。
+\end{proof}
+
 
 
 \section{切丛-余切丛同构}
@@ -279,8 +533,8 @@ $\hat g$ 诱导了 $\mathfrak{X}(M)\to \mathfrak{X}^*(M)$ 的映射：
   \hat g(X)(Y)=g(X,Y),\quad X,Y\in \mathfrak{X}(M).
 \]
 我们使用同一个记号来表示这个映射。由于 $\hat g(X):\mathfrak{X}(M)\to C^\infty(M)$
-是 $C^\infty(M)$-线性的，根据张量表征引理，$\hat g(X)$ 是一个光滑余向量场。
-又因为 $\hat g$ 是 $C^\infty(M)$-线性的，根据丛同态表征引理，
+是 $C^\infty(M)$-线性的，根据张量表征引理 \ref{lemma:tensor characterization 1}，$\hat g(X)$ 是一个光滑余向量场。
+又因为 $\hat g$ 是 $C^\infty(M)$-线性的，根据丛同态表征引理 \ref{lemma:bundle homomorphism characterization}，
 $\hat g$ 是一个光滑丛同态。
 
 设 $v\in T_pM$ 使得 $\hat g(v)=0$，那么
@@ -387,10 +641,15 @@ $\hat g^{-1}(\omega)$，我们说 $\omega^\sharp$ 是 $\omega$
 \[
   vf=\d f_p(v)=  \inn{\grad f|_p,v}_g,
 \]
-所以 $v=\grad f|_p$ 的时候 $vf$ 取得最大值，此时最大值
+所以 $v=\grad f|_p$ 的时候 $vf$ 取得最大值，此时最大值为
 \[
   vf=\bigl|\grad f|_p\bigr|_g^2.
 \]
+记水平集 $S=f^{-1}(f(p))$，那么对于任意 $w\in T_pS=\ker \d f_p$，有 $wf=0$，所以
+\[
+  0=wf=\d f_p(w)=\inn{\grad f|_p,w}_g,
+\]
+所以 $\grad f|_p$ 正交于 $T_pS$。
 
 指标上升和指标下降算符可以扩展到混合张量场上。如果 $F$ 是 $(k,l)$-张量场，
 $i\in\{1,\dots,k+l\}$ 是 $F$ 的某个协变指标，我们可以构造一个新的 $(k+1,l-1)$-张量场
