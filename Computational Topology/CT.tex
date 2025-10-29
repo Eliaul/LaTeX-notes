@@ -1,0 +1,125 @@
+\documentclass[fontset=none]{Notes}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\usepackage{tikz-cd,wrapstuff}
+\usepackage{siunitx,tikz,nicematrix}
+\usetikzlibrary{matrix,calc}
+\usetikzlibrary{intersections}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{decorations.markings}
+
+\input{font.def}
+
+\usepackage[subscriptcorrection,nofontinfo,mtpbb,mtpfrak]{mtpro2}
+\usepackage[normal]{fixdif}
+
+\tikzcdset{
+  arrow style=tikz,
+  diagrams={>={Straight Barb[scale=0.8]}}
+}
+
+\tikzset{
+  every picture/.style={
+    thick,
+    >={Latex[width=6pt, length=8pt]}
+  },
+  point/.style={
+    circle, fill, minimum width=5pt,
+    inner sep=0pt
+  },
+  straight arrow/.style={
+    Straight Barb[scale=0.8]
+  }
+}
+
+\allowdisplaybreaks[1]
+
+\newlength{\mymathln}
+\newcommand{\aligninside}[2]{
+  \settowidth{\mymathln}{#2}
+  \mathmakebox[\mymathln]{#1}
+}
+
+\DeclareMathOperator\Spec{Spec}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\sgn{sgn}
+\DeclareMathOperator\rad{rad}
+\DeclareMathOperator\Alt{Alt}
+\DeclareMathOperator\Max{Max}
+\DeclareMathOperator\card{card}
+\DeclareMathOperator\GL{GL}
+\DeclareMathOperator\Orth{O}
+\DeclareMathOperator\SO{SO}
+\DeclareMathOperator\SU{SU}
+\DeclareMathOperator\cls{cls}
+\DeclareMathOperator\Lie{Lie}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Int{Int}
+\DeclareMathOperator\Sym{Sym}
+\DeclareMathOperator\tr{tr}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\supp{supp}
+\DeclareMathOperator\Id{Id}
+\DeclareMathOperator\rk{rank}
+\DeclareMathOperator\grad{grad}
+\DeclareMathOperator\rank{rank}
+\DeclareMathOperator\Euc{E}
+\DeclareMathOperator\ob{ob}
+\DeclareMathOperator\diam{diam}
+\DeclareMathOperator\rel{rel}
+\newcommand{\LL}{{\mathrm{L}}}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\mat}[1]{\mathbold{#1}}
+\newcommand{\cat}[1]{\mathsf{#1}}
+\newcommand{\uline}{\underline{\hphantom{X}}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\lie}[1]{\mathfrak{#1}}
+\newcommand{\inn}[1]{\left\langle #1\right\rangle}
+\newcommand{\partI}{\partial I}
+\newcommand{\relhomo}{\rel\partI}
+
+\usepackage{enumitem}
+
+\setlist[enumerate]{nosep}
+
+%\DeclareMathAlphabet\mathcal{OMS}{cmsy}{m}{n}
+
+\newlength\stextwidth
+\newcommand\makesamewidth[3][c]{%
+  \settowidth{\stextwidth}{#2}%
+  \makebox[\stextwidth][#1]{#3}%
+}
+
+
+
+\begin{document}
+
+\frontmatter
+
+\tableofcontents
+
+\mainmatter
+
+\chapter{复形}
+
+\section{单纯复形}
+
+\paragraph{单纯形}
+令 $u_0,u_1,\dots,u_k$ 是 $\mathbb{R}^d$ 中的点。一个点 $x=\sum_{i=0}^k\lambda_i u_i$
+被称为 $u_i$ 的\emph{仿射组合}，如果 $\sum \lambda_i=1$。仿射组合的几何被称为 \emph{仿射包}。
+$k+1$ 个点如果满足 $u_i-u_0\ (1\leq i\leq k)$ 是线性无关的，那么说它们是\emph{仿射无关}的。
+在 $\mathbb{R}^d$ 中最多有 $d$ 个线性无关的向量，所以最多有 $d+1$ 个放射无关的点。
+
+仿射组合 $x=\sum\lambda_i u_i$ 的所有系数如果满足 $\lambda_i\geq 0$，那么说这是一个\emph{凸组合}。
+凸组合的集合被称为\emph{凸包}。 $k+1$ 个仿射无关点的凸包被称为 \emph{$k$-单纯形}，记为
+$\sigma=[u_0,u_1,\dots,u_k]$。
+
+
+
+\end{document}
