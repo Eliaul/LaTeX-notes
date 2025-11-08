@@ -75,8 +75,13 @@
 \DeclareMathOperator\inte{int}
 \DeclareMathOperator\bd{bd}
 \DeclareMathOperator\St{St}
+\DeclareMathOperator\Sd{Sd}
 \DeclareMathOperator\Lk{Lk}
 \DeclareMathOperator\Ver{Vert}
+\DeclareMathOperator\Nrv{Nrv}
+\DeclareMathOperator\Alpha{Alpha}
+\DeclareMathOperator\Rips{Rips}
+\DeclareMathOperator\Cech{\text{\v Cech}}
 \newcommand{\LL}{{\mathrm{L}}}
 
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
@@ -147,7 +152,8 @@ $\sigma,\sigma_0\in K$ 表明 $\sigma\cap\sigma_0$ 要么是空集要么
 
 $K$ 的\emph{维数}被定义为 $K$ 中单纯形的最大维数。
 $K$ 的\emph{底空间} $|K|$ 定义为 $K$ 中所有单纯形的并集，
-并且继承 $\mathbb{R}^d$ 的子空间拓扑。一个\emph{多面体}指的是
+并且继承 $\mathbb{R}^d$ 的子空间拓扑。一个\emph{多面体}指的是单纯复形
+的底空间。
 对于一个拓扑空间 $X$，如果 $X$ 和 $|K|$ 同胚，那么我们说 $X$
 的\emph{三角化}是单纯复形 $K$ 附带这个同胚。如果拓扑空间有一个三角化，
 那么说这个空间是\emph{可三角化的}。 $K$ 的\emph{子复形}
@@ -182,7 +188,7 @@ $K^{(j)}=\{\sigma\in K\,|\, \dim\sigma\leq j\}$。$0$-骨架也被称为\emph{�
 欧式空间。
 
 一个\emph{抽象单纯复形}指的是一个由有限个集合组成的集合族 $A$，
-满足：$\alpha\in A$ 和 $\beta\subseteq A$ 能够推出 $\beta\in A$。
+满足：$\alpha\in A$ 和 $\beta\subseteq \alpha$ 能够推出 $\beta\in A$。
 
 $A$ 中的集合被称为\emph{单纯形}。单纯形 $\alpha\in A$ 的\emph{维数}
 定义为 $\dim\alpha=\operatorname{card}\alpha-1$，单纯复形的维数定义为
@@ -201,6 +207,387 @@ $A$ 中的集合被称为\emph{单纯形}。单纯形 $\alpha\in A$ 的\emph{维
 \begin{theorem}[几何实现定理]
   维数 $d$ 的抽象单纯复形在 $\mathbb{R}^{2d+1}$ 中有一个几何实现。
 \end{theorem}
+
+\paragraph{单纯映射}
+令 $K$ 是具有顶点 $u_0,u_1,\dots,u_n$ 的单纯复形。每个点 $x\in |K|$
+都属于 $K$ 中某一个单纯形的内部。令 $\sigma=[u_{i_0},u_{i_1},\dots,u_{i_k}]$
+是这样一个单纯形，那么 $x=\sum \lambda_ju_{i_j}$，满足 $\sum \lambda_j=1$ 并且
+每个 $\lambda_j>0$。当 $j\in\{i_0,\dots,i_k\}$ 的时候令 $b_j(x)=\lambda_j$，
+否则令 $b_j(x)=0$。那么 $x=\sum_{j=0}^k b_j(x)u_j$。我们说 $b_j(x)$
+是 $x$ 在 $K$ 中的\emph{重心坐标}。
+
+对于两个单纯复形 $K$ 和 $L$，映射 $\varphi:\Ver K\to\Ver L$ 如果满足：
+$K$ 中每个单纯形的顶点都被送到 $L$ 中某个单纯形的顶点，那么
+说 $\varphi$ 是\emph{顶点映射}。那么 $\varphi$ 可以被拓展到
+一个连续映射 $f:|K|\to |L|$，定义为
+\[
+  f(x)=\sum_{i=0}^n b_i(x)\varphi(u_i),
+\]
+我们说 $f$ 是 $\varphi$ 诱导的\emph{单纯映射}。
+我们也简记为 $f:K\to L$。一个单纯映射 $f:[0,1]^2\to \mathbb{T}^2$
+的例子如图 \ref{fig:simplicial map on torus} 所示。
+给定顶点映射，单纯映射是唯一确定的并且将方形的三角化黏合得到
+环面的一个三角化。如果顶点映射 $\varphi:\Ver K\to\Ver L$ 是双射，
+并且 $\varphi^{-1}$ 也是顶点映射，并且诱导的单纯映射 $f$ 是同胚，
+我们说 $f$ 是\emph{单纯同胚}或者 $K$ 和 $L$ 之间的\emph{同构}。 
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.8\linewidth]{figures/simplicial map to torus.png}
+  \caption{从正方形到环面的顶点映射以及诱导的单纯映射。}
+  \label{fig:simplicial map on torus}
+\end{figure}
+
+\paragraph{剖分}
+我们说单纯复形 $L$ 是单纯复形 $K$ 的\emph{剖分}，
+如果 $|L|=|K|$ 并且 $L$ 的每个单纯形都被包含在 $K$ 中
+的某个单纯形中。一个经典的剖分方法是\emph{重心重分}，
+记作 $L=\Sd K$。对于一个 $n$ 维单纯形 $\Delta=[p_0,\dots,p_n]$，
+定义重心 $b_\Delta=(p_0+\cdots+p_n)/(n+1)$。对于 $0$ 维单纯形，
+定义其重心重分为本身。然后我们递归地定义 $n$ 维单纯形 $\Delta$ 
+的重心重分。假设 $\Delta$ 的 $(n-1)$ 维面 $\Delta_i$ 的重心重分已经定义。
+此时，有单纯形 $\Delta_{i,1},\dots,\Delta_{i,n!}$ 覆盖 $\Delta_i$。
+对于每一对 $i\in \{0,\dots,n\},j\in\{1,\dots,n!\}$，
+考虑 $\Delta_{i,j}\cup b_\Delta$ 的凸包，这些凸包的并集构成的单纯复形我们称作
+$\Delta$ 的\emph{重心重分}，所以将会有 $(n+1)!$ 个单纯形覆盖 $\Delta$。
+对于单纯复形 $K$ 而言，重心重分 $L=\St K$ 定义为对每个单纯形进行重心重分的并集，
+如图 \ref{fig:barycentric subdivisions} 所示。
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.7\linewidth]{figures/barycentric subdivisions.png}
+  \caption{单纯复形的重心重分。}\label{fig:barycentric subdivisions}
+\end{figure}
+
+给定任意集合 $S\subseteq  \mathbb{R}^n$，$S$ 的直径被定义为其中两点
+距离的上确界：$\diam S=\sup_{x,y\in S} |x-y|$。对于单纯复形 $K$，
+定义 $K$ 的\emph{格网}是其中单纯形的最大直径，等价的说，是其最长边的长度。
+
+\begin{theorem}[格网引理]
+  令 $\delta$ 是 $d$-维单纯复形 $K$ 的格网，那么 $\Sd K$ 的格网
+  小于等于 $\frac{d}{d+1}\delta$。
+\end{theorem}
+\begin{proof}
+  对于 $k$-单纯形 $[p_0,\dots,p_k]$，$k\leq d$，那么重心 $b=\sum_i p_i/(k+1)$，那么
+  \[
+    |b-p_0|=\left|
+    \frac{1}{k+1}\sum_{i=1}^k (p_i-p_0)
+    \right|\leq \frac{k}{k+1}\max_i |p_i-p_0|
+    \leq \frac{d}{d+1}\max_i |p_i-p_0|,
+  \]
+  这就表明 $K$ 的格网最多也只能是原来的 $d/(d+1)$ 倍。
+\end{proof}
+
+根据格网定理，我们可以通过迭代重心重分的操作使得单纯复形的格网
+足够小到任意程度，因此我们定义 $\Sd^n K=\Sd(\Sd^{n-1}K)$。
+
+\paragraph{单纯逼近}
+有时候将顶点星形考虑为一个开集是更方便的。定义
+$N(u)=\bigcup_{\sigma\in \St u}\inte \sigma$。
+令 $K$ 和 $L$ 是单纯复形。我们称连续映射 $g:|K|\to |L|$
+满足\emph{星形条件}，如果 $K$ 中每个顶点星形的像都被包含在
+$L$ 中的某个顶点星形中。也就是说，对于每个顶点 $u\in K$，
+存在一个顶点 $v\in L$ 使得 $g(N(u))\subseteq N(v)$。
+根据星形条件，$\varphi:\Ver K\to \Ver L$ 将 $u$ 送到顶点
+$\varphi(u)=v$。根据定义，$\sigma\in K$ 的每个顶点 $u$
+都被送到 $\tau\in L$ 的顶点 $\varphi(u)$。因此 $\varphi$
+是顶点映射并且诱导一个单纯映射 $f:K\to L$。这个映射
+满足 $g(N(u))\subseteq N(f(u))$，被称为 $g$ 的\emph{单纯逼近}。
+如图 \ref{fig:simplicial approx} 所示。
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.7\linewidth]{figures/simplicial approx.png}
+  \caption{单纯逼近。其中映射 $g$ 是把左边的 $1$-单纯复形送到右边的曲线圈，映射 $f$
+  是把左边的 $1$-单纯复形送到右边的加粗线段。注意顶点映射和 $f$ 的画法不一定唯一。}
+  \label{fig:simplicial approx}
+\end{figure}
+
+从直觉上来说，对于连续映射 $g:|K|\to |L|$，我们应该可以把 $K$ 剖分的足够细，
+来得到一个 $g$ 的单纯逼近。
+
+\begin{theorem}[单纯逼近定理]
+  如果 $g:|K|\to |L|$ 是连续映射，那么存在充分大的 $n$
+  使得 $g$ 有一个单纯逼近 $f:\Sd^nK\to L$。
+\end{theorem}
+\begin{proof}
+  $|K|$ 可以被开集 $g^{-1}(N(v))$ 覆盖，其中 $v\in\Ver L$。
+  因为 $|K|$ 是紧集，所以存在正实数 $\lambda$ 使得 $K$ 中任意直径小于 $\lambda$
+  的集合都被某一个开集 $g^{-1}(N(v))$ 覆盖。选取 $n$ 
+  使得 $\Sd^n K$ 的格网小于 $\lambda/2$。那么 $K$ 中的每个星形
+  的直径都小于 $\lambda$，所以在某个 $g^{-1}(N(v))$ 中。这就表明 $g$
+  满足星形条件，从而存在单纯逼近。
+\end{proof}
+
+\section{凸集系}
+
+一种方便的构造大的单纯复形的方式是通过指定集合以及
+记录它们的相交情况。
+
+\paragraph{神经}
+令 $F=(U_i)_{i\in I}$ 是一族集合，定义 $F$ 的\emph{神经}为： 
+\[
+  \Nrv F=\left\{J\subseteq I\,\middle|\, \bigcap_{j\in J}U_j\neq\emptyset,\card J<\infty\right\}.
+\]
+如果 $J\in\Nrv F$ 并且 $J_0\subseteq J$，那么显然有
+\[
+  \bigcap_{j\in J_0} U_j\supseteq \bigcap_{j\in J}U_j\neq\emptyset,
+\]
+所以 $J_0\in \Nrv F$，所以 $\Nrv F$ 是一个抽象单纯复形。
+
+\begin{example}
+  \mbox{}
+  \begin{enumerate}
+    \item 令 $X= \mathbb{S}^1$ 并且 $F=\{U_1,U_2\}$，其中 $U_1= \mathbb{S}^1\setminus\{-i\}$，
+    $U_2=\mathbb{S}^1\setminus\{i\}$。那么 $\Nrv F=\{\{1\},\{2\},\{1,2\}\}$，
+    这是一个抽象 $1$-单纯形。
+    \item 如图 \ref{fig:nerve} 所示。令 $F=\{C_1,\dots,C_{12}\}$ 是图中的圆盘集合，
+    那么神经 $\Nrv F$ 的几何实现就是把圆心相连得到的单纯复形，
+    其中两个圆 $C_i,C_j$ 能够相连当且仅当 $\{i,j\}\in\Nrv F$。
+    \begin{figure}[htb]
+      \centering
+      \includegraphics[width=.7\linewidth]{figures/nerve.png}
+      \caption{12 个圆盘构成的集合族的神经。将圆盘的中心连接得到神经的几何实现。}
+      \label{fig:nerve}
+    \end{figure}
+  \end{enumerate}
+\end{example}
+
+\begin{theorem}[神经定理]
+  如果 $\Nrv F$ 中的任意集合的交集都是可缩的，那么 $\Nrv F$
+  和 $\bigcup F$ 同伦等价。
+\end{theorem}
+
+\paragraph{有公共点的集合}
+$d$-维欧式空间中的凸集的相交方式是有限制的。例如，如果三个
+闭区间两两相交，那么它们三个的交集一定非空。
+
+\begin{theorem}[Helly 定理]
+  令 $F$ 是 $\mathbb{R}^d$ 中的有限个闭的凸集构成的集合族。
+  那么任意 $d+1$ 个集合有非空交集当且仅当 $\bigcap F\neq\emptyset$。
+\end{theorem}
+
+\paragraph{\v Cech 复形}
+令 $F$ 是 $\mathbb{R}^d$ 中有限个闭的单位球构成的集合族。
+显然，这些单位球有非空的交集当且仅当它们的中心都处于一个
+公共单位球中。这是因为 $y\in\bigcap F$ 当且仅当对于所有球心
+$x$ 有 $|x-y|\leq 1$。根据 Helly 定理，我们有以下结果。
+
+\begin{theorem}[Jung 定理]
+  令 $S$ 是 $\mathbb{R}^d$ 中的有限点集。其中任意 $d+1$
+  个点在一个公共单位球中当且仅当 $S$ 的所有点都在一个公共单位球中。
+\end{theorem}
+\begin{proof}
+  以每个点为球心构造一个单位球，那么任意 $d+1$ 个点在一个公共单位球中
+  表明这 $d+1$ 个单位球有非空交集，根据 Helly 定理，这表明 $S$
+  中所有点代表的单位球有非空交集，所以 $S$ 中的所有点都在一个公共单位球中。
+\end{proof}
+
+以 $x\in \mathbb{R}^d$ 为球心半径 $r$ 的闭单位球，记为 $B_r(x)$。
+对于有限点集 $S\subseteq \mathbb{R}^d$，给定非负实数 $r$，
+定义 $S$ 和 $r$ 的\emph{\v Cech 复形}为
+\[
+  \Cech (r)=\left\{\sigma\subseteq S\,\middle|\,\bigcap_{x\in\sigma}B_r(x)\neq\emptyset\right\}.
+\]
+换言之，这是集合族 $\{B_r(x)\}_{x\in S}$ 的神经。这个复形在
+$\mathbb{R}^d$ 中不一定有几何实现，所以作为抽象单纯复形是更好的。
+一个例子如图 \ref{fig:cech complex} 所示。显然，随着半径
+$r$ 的增大圆盘也会增大，那么就会创造更多的重叠区域。
+因此 $r_0\leq r$ 的时候有 $\Cech(r_0)\subseteq \Cech(r)$。
+如果我们连续地从 $0$ 到 $\infty$ 增大半径，我们将会得到一个
+嵌套的 \v Cech 复形序列。 
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.6\linewidth]{figures/cech complex.png}
+  \caption{八个点导出的 \v Cech 复形。其中两个点有连线当且仅当它们代表的圆
+  是相交的。注意，其中也有三个点构成的面，只要它们代表的圆相交。}
+  \label{fig:cech complex}
+\end{figure}
+
+\paragraph{Rips 复形}
+$S$ 和 $r$ 的\emph{Rips 复形}定义为
+\[
+  \Rips(r)=\{\sigma\subseteq S\,|\, \diam\sigma\leq 2r\}.
+\]
+显然，当 $\sigma\in\Cech(r)$ 的时候，所有点 $x\in \sigma$ 
+都处于某个半径 $r$ 的球体中，所以有 $\diam\sigma\leq 2r$，
+这表明始终有 $\Cech (r)\subseteq \Rips(r)$。
+实际上，还可以证明 $\Rips(r)\subseteq \Cech(\sqrt{2}r)$。
+
+\section{Delaunay 复形}
+
+\paragraph{Voronoi 图}
+对于有限点集 $S\subseteq \mathbb{R}^d$，点 $p\in S$
+的\emph{Voronoi 胞腔}定义为距离 $p$ 最近的点的集合：
+\[
+  V_p=\left\{
+    x\in \mathbb{R}^d\,\middle|\,
+    \forall q\in S,|x-p|\leq |x-q|.
+  \right\}.
+\]
+可以证明 $V_p$ 是 $\mathbb{R}^d$ 中的凸多面体。任意两个
+Voronoi 胞腔最多只会在它们的边界的一部分相交，并且
+所有点的 Voronoi 胞腔会覆盖整个空间，如图 \ref{fig:Voronoi} 所示。
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.6\linewidth]{figures/Voronoi diagram.png}
+  \caption{Voronoi 图。}\label{fig:Voronoi}
+\end{figure}
+
+\paragraph{加权 Voronoi 图}
+有时候考虑权重是必要的。假设每个点 $p\in S$ 有一个权重 $w_p$，
+那么定义 $x\in \mathbb{R}^d$ 与 $p$ 之间的\emph{加权平方距离}
+为 $\pi_p(x)=|x-p|^2-w_p$。对于正的权重我们把权重点解释为
+以 $p$ 为中心半径 $\sqrt{w_p}$ 的球体。对于球面外的点 $x$，其
+加权平方距离为正并且等于从 $x$ 到球面的切线的长度平方。
+对于球面上的点 $x$，其加权平方距离为零。对于球面内的点 $x$，
+加权平方距离为负。两个加权点的\emph{平分线}定义为与它们加权
+平方距离相同的点的集合。与非加权的情况相同，平分线是与
+两个点连线垂直的平面。如图 \ref{fig:bisector} 所示。
+此时，我们定义 \emph{加权 Voronoi 胞腔} 为与 $p$
+的加权平方距离最近的点的集合：
+\[
+  V_p=\left\{
+    x\in \mathbb{R}^d\,\middle|\,
+    \forall q\in S,\pi_p(x)\leq \pi_q(x).
+  \right\}.
+\]
+一般而言，加权 Voronoi 图很难用眼睛分辨点所在的胞腔是哪个。
+并且对于非加权的 Voronoi 图，每个点一定有非空的 Voronoi 胞腔，
+但是对于加权 Voronoi 图，可能存在点的 Voronoi 胞腔为空。
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.8\linewidth]{figures/bisector.png}
+  \caption{两个加权的平分线。}\label{fig:bisector}
+\end{figure}
+
+\paragraph{Delaunay 三角形}
+有限点集 $S\subseteq \mathbb{R}^d$ 的\emph{Delaunay 复形}
+定义为同构于 Voronoi 胞腔集合的神经：
+\[
+  \mathrm{Delaunay}=\left\{
+    \sigma\subseteq S\,\middle|\, 
+    \bigcap_{p\in\sigma} V_p\neq\emptyset
+  \right\}.
+\]
+我们说集合 $S$ 是一般位置的，如果其中任意 $d+2$ 个点都不处于
+一个公共的 $(d-1)$-球面中。以 $\mathbb{R}^2$ 的情况为例，
+此时任意 $4$ 个点都不共圆，这意味着没有点到这 $4$ 个点的距离相等，
+所以这 $4$ 个点的 Voronoi 胞腔不会有公共点。于是，
+一般位置的假设表明任意 $d+2$ 个 Voronoi 胞腔都没有公共点。
+等价的说，这表明 Delaunay 复形中的任意单纯形的维数最大是 $d$ 维。
+在假设一般位置的情况下，我们可以取点的凸包得到一个几何实现。
+得到的结果通常被称为 $S$ 的\emph{Delaunay 三角形}。图 \ref{fig:Delaunay triangulation} 展示了二维的情况。
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.65\linewidth]{figures/Delaunay triangulation.png}
+  \caption{一般位置点集的 Delaunay 三角形。其中没有四个点可以共圆，所以其在 $\mathbb{R}^2$ 中有几何实现。}
+  \label{fig:Delaunay triangulation}
+\end{figure}
+
+\section{Alpha 复形}
+
+在本节，我们使用半径限制来得到 Delaunay 复形的一族子复形。
+这个复形与 \v Cech 复形很像，但是拥有更加自然的几何实现。
+
+\paragraph{球体的并}
+令 $S\subseteq \mathbb{R}^d$ 是有限点集，$r$ 是非负实数。
+对于每个 $p\in S$，令 $B_p(r)$ 是以 $p$ 为中心半径 $r$
+的闭球。这些闭球的并是空间中与 $S$ 中至少一个点的距离小于
+$r$ 的点的集合：
+\[
+  \mathrm{Union}(r)=\left\{
+    x\in \mathbb{R}^d\middle|\,
+    \exists p\in S, |x-p|\leq r
+  \right\}.
+\]
+为了分解这个并集，我们将每个球和对应的 Voronoi 胞腔
+相交，得到 $R_p(r)=B_p(r)\cap V_p$。因为球和 Voronoi 胞腔
+都是凸集，所以 $R_p(r)$ 仍然是凸集。任意两个这样的集合
+要么不相交要么在它们边界上的一段重叠，并且所有这样的 $R_p(r)$
+可以覆盖整个球体的并集，如图 \ref{fig:union of disk} 所示。
+定义 \emph{alpha 复形} 同构于这个覆盖的神经：
+\[
+  \Alpha(r)=\left\{
+    \sigma\subseteq S\,\middle|\,
+    \bigcap_{p\in\sigma} R_p(r)\neq \emptyset
+  \right\}.
+\]
+因为 $R_r(p)\subseteq V_p$，所以 alpha 复形是 Delaunay 复形的子复形。
+这表明，对于一般位置的集合 $S$，我们可以通过取凸包得到一个几何实现。
+此外，$R_p(r)\subseteq B_p(r)$ 还表明 $\Alpha(r)\subseteq \Cech(r)$。
+因为 $R_p(r)$ 是闭的以及凸的，并且能够覆盖球形的并集，根据神经定理，
+这表明 $\mathrm{Union}(r)$ 和 $\Alpha(r)$ 有相同的同伦型。
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.65\linewidth]{figures/union of disk.png}
+  \caption{圆盘的并集通过 Voronoi 胞腔分解为一些凸集。注意图中左上角实际上少连了一条线。}
+  \label{fig:union of disk}
+\end{figure}
+
+\paragraph{加权 alpha 复形}
+对于许多应用，我们允许球体有不同的大小。
+
+\paragraph{滤网}
+给定有限点集 $S\subseteq \mathbb{R}^d$，我们可以连续地增长半径
+得到一族嵌套的并集。对应的，得到一族嵌套的 alpha 复形。
+因为它们都是 Delaunay 复形（这是有限的）的子复形，所以
+只有有限多个 alpha 复形的不同的。把序列中的第 $i$ 个 alpha
+复形记为 $K^i$，那么我们得到
+\[
+  \emptyset=K^0\subseteq K^1\subseteq \cdots 
+  \subseteq K^m,
+\]
+我们称为 $K^m= \mathrm{Delaunay}$ 的\emph{滤网}。
+
+滤网的构造在不加权的情况下是直接的，也可以拓展为加权的情况。
+我们对滤网中两个连续复形的差更为感兴趣，即 $K^{i+1}\setminus K^i$。
+我们将看到一般来说这个差要么是一个单纯形要么是一族单纯形并且构成
+一个反坍缩。
+
+\paragraph{坍缩}
+
+
+\chapter{同调}
+
+\section{同调群}
+
+令 $K$ 是单纯复形，一个 $p$-链群指的是 $K$ 中所有 $p$-单纯形
+生成的自由 $\mathbb{F}_2$-向量空间，记作 $C_p$。
+剩下的奇异同调的定义和标准代数拓扑中的一样，只不过由于 $\mathbb{F}_2$
+的性质，边界算子不需要处理正负号的问题。这个同调群实际上应该
+被称为模 $2$ 的奇异同调群。
+
+
+\section{矩阵约化}
+
+\paragraph{边界矩阵}
+将边界算子表示为一个矩阵来记录两个单纯形之间的事件是方便的
+（因为边界算子是线性映射）。
+使用初等行和列变换，我们可以提取出链群和边界群的秩，
+从而计算 Betti 数。令 $K$ 是单纯复形，它的 $p$-次边界矩阵
+以 $(p-1)$-单纯形作为行，$p$-单纯形作为列。
+假设每个维数的单纯形按固定顺序排列，矩阵 $\partial_p=[a_i^j]$，
+其中 $i$ 从 $1$ 到 $n_{p-1}$，$j$ 从 $1$ 到 $n_p$。
+定义 $a_i^j=1$ 当且仅当第 $i$ 个 $(p-1)$-单纯形是第 $j$
+个 $p$-单纯形的一个面。这其实就是边界算子的表示矩阵。
+
+\paragraph{Smith 标准型}
+使用初等行和列变换，边界矩阵始终可以变为 Smith 标准型，
+此时可以清晰地反应秩的信息，如图 \ref{fig:smith} 所示。
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.6\linewidth]{figures/smith form.png}
+  \caption{Smith 标准型。}\label{fig:smith}
+\end{figure}
+
+
 
 
 

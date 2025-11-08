@@ -1,0 +1,367 @@
+\documentclass[fontset=none,zihao=-4]{Notes}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\usepackage{tikz-cd,wrapstuff}
+\usepackage{fixdif,siunitx,tikz,nicematrix}
+
+\usetikzlibrary{hobby,calc,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.pathreplacing}
+
+\input{font.def}
+
+\DeclareMathOperator\Int{Int}
+\DeclareMathOperator\supp{supp}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Ann{Ann}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\diag{diag}
+\DeclareMathOperator\Or{O}
+\DeclareMathOperator\rank{rank}
+\DeclareMathOperator\Ob{Ob}
+\DeclareMathOperator\id{id}
+
+\newcommand{\cat}[1]{\mathsf{#1}}
+
+\newcommand{\inn}[1]{\left\langle#1\right\rangle}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\spa}[1]{\operatorname{span}\left(#1\right)}
+
+
+\makeatletter
+\DeclareRobustCommand\bigop[2][1]{%
+  \mathop{\vphantom{\sum}\mathpalette\bigop@{{#1}{#2}}}\slimits@
+}
+\newcommand{\bigop@}[2]{\bigop@@#1#2}
+\newcommand{\bigop@@}[3]{%
+  \vcenter{%
+    \sbox\z@{$#1\sum$}%
+    \hbox{\resizebox{\ifx#1\displaystyle#2\fi\dimexpr\ht\z@+\dp\z@}{!}{$\m@th#3$}}%
+  }%
+}
+\makeatother
+
+\newcommand{\fprod}{\DOTSB\bigop[1.05]{\ast}}
+
+\tikzcdset{
+  arrow style=tikz,
+  diagrams={>={Straight Barb[scale=0.8]}}
+}
+
+\tikzset{
+  point/.style={
+    circle,fill,inner sep=0pt,minimum width=5pt
+  }
+}
+
+\usepackage[subscriptcorrection,nofontinfo,mtpbb]{mtpro2}
+
+
+
+\setlist[enumerate]{nosep,label=(\arabic*)}
+\setlist[itemize]{nosep}
+
+\title{\sffamily 范畴中的积与余积}
+\author{Eliauk}
+
+
+\begin{document}
+
+\maketitle
+
+% \tableofcontents
+
+\section{积}
+
+\begin{definition}
+  令 $\cat C$ 是范畴，$\{X_i\}_{i\in I}$ 是 $\cat C$
+  中的一族对象。如果对象 $P\in \Ob(\cat C)$ 和一族态射 $\{p_i:P\to X_i\}_{i\in I}$ 
+  满足下面的范性质：给定任意 $Z\in\Ob(\cat C)$ 和一族态射
+  $\{f_i:Z\to X_i\}_{i\in I}$，都存在唯一的态射 $\Phi:Z\to P$
+  使得对于每个 $i\in I$ 都有 $f_i=p_i\circ\Phi$，也即下面的交换图成立：
+  \[
+    \begin{tikzcd}[column sep=huge]
+    Z\arrow[r,"\exists !\Phi",dashed]\arrow[dr,"f_i"'] & P\arrow[d,"p_i"] \\
+    & X_i.
+    \end{tikzcd}
+  \]
+  那么我们说 $\bigl(P,\{p_i:P\to X_i\}_{i\in I}\bigr)$ 是 $\{X_i\}_{i\in I}$ 的积。通常我们记作
+  $\prod_{i\in I} X_i$，态射 $p_i:\prod_{i\in I}X_i\to X_i$
+  被称为自然投影。
+\end{definition}
+
+\begin{lemma}[积的唯一性]
+  令 $\cat C$ 是范畴，$\{X_i\}_{i\in I}$ 是一族对象。如果
+  有两个积 $\bigl(P,\{p_i:P\to X_i\}_{i\in I}\bigr)$ 和
+  $\bigl(\wtilde P,\{\tilde p_i:\wtilde P\to X_i\}_{i\in I}\bigr)$，
+  那么存在唯一的同构 $\Phi:\wtilde P\to P$ 和 $\wtilde \Phi:P\to\wtilde P$，
+  使得它们互逆并且对于每个 $i\in I$ 都满足下面的交换图：
+  \[
+    \begin{tikzcd}[column sep=huge]
+      \wtilde P\arrow[rr,"\Phi",yshift=2pt]
+      \arrow[dr,"\tilde p_i"'] & 
+      & P\arrow[ll,"\wtilde\Phi",yshift=-2pt]\arrow[dl,"p_i"] \\
+      & X_i.
+    \end{tikzcd}
+  \]
+\end{lemma}
+\begin{proof}
+  根据范性质，对于每个 $i\in I$，存在唯一的 $\Phi:\wtilde P\to P$ 使得
+  $\tilde p_i=p_i\circ\Phi$，同时也存在唯一的 $\wtilde\Phi:P\to\wtilde P$
+  使得 $p_i=\tilde p_i\circ\wtilde \Phi$。所以 $p_i=p_i\circ\bigl(\Phi\circ\wtilde\Phi\bigr)$，
+  同时 $p_i=p_i\circ \id_P$，根据唯一性，所以 $\id_P=\Phi\circ\wtilde \Phi$。
+  同理，有 $\id_{\wtilde P}=\wtilde{\Phi}\circ\Phi$。于是 $\Phi,\wtilde\Phi$
+  是同构。
+\end{proof}
+
+\begin{proposition}[集合范畴的积]
+  令 $\{X_i\}_{i\in I}$ 是 $\cat{Set}$ 中的一族对象。
+  那么 $\cat{Set}$ 中的积就是集合的直积：
+  \[
+    \prod_{i\in I}X_i=\left\{
+      f:I\to\bigcup_{i\in I} X_i\,\middle|\,
+      \forall i\in I,f(i)\in X_i.
+    \right\},
+  \]
+  附带显然的投影映射 $p_i:f\mapsto f(i)$。
+\end{proposition}
+\begin{proof}
+  令 $Z\in\Ob(\cat{Set})$ 和 $\{f_i:Z\to X_i\}_{i\in I}$ 是一族映射，
+  定义 $\Phi:Z\to \prod_{i\in I}X_i$ 为
+  \[
+    \Phi(z)=\bigl(
+      i\mapsto f_i(z)
+    \bigr).
+  \]
+  根据定义，显然有 $f_i=p_i\circ \Phi$。下面只需要说明 $\Phi$
+  是唯一的。假设 $\Psi:Z\to\prod_{i\in I}X_i$ 也满足 $f_i=p_i\circ\Psi$。
+  那么对于每个 $z\in Z$ 和 $i\in I$，有 $f_i(z)=p_i(\Psi(z))=\bigl(\Psi(z)\bigr)(i)$。
+  另一方面，还有 $f_i(z)=p_i(\Phi(z))=\bigl(\Phi(z)\bigr)(i)$，
+  所以 $\Phi(z)(i)=\Psi(z)(i)$，所以 $\Psi=\Phi$。 
+\end{proof}
+
+\begin{proposition}[群范畴和向量空间范畴的积]
+  群范畴和向量空间范畴的积的构造与集合范畴一致，
+  运算按照逐分量定义。
+\end{proposition}
+
+\begin{example}
+  令 $(P,\leq)$ 是偏序集，其可以视为一个范畴。给定一族对象
+  $\{X_i\}_{i\in I}$，也即 $P$ 中的一些元素。可以证明
+  \[
+    \prod_{i\in I} X_i=
+    \begin{cases}
+      \inf \bigl(\{X_i\}_{i\in I}\bigr) & 
+      \text{$\{X_i\}_{i\in I}$ 的最大的下界},\\
+      \emptyset & \text{若不存在下确界}.
+    \end{cases}
+  \]
+  对于任意对象 $Z\in P$，若 $f_i:Z\to X_i$ 是态射，
+  也即 $Z\leq X_i$，那么 $Z\leq \prod_{i\in I}X_i$，
+  这表明存在态射 $\Phi:Z\to \prod_{i\in I}X_i$，于是
+  $Z\leq \prod_{i\in I}X_i\leq X_i$，
+  即 $f_i=p_i\circ\Phi$。
+\end{example}
+
+\section{余积}
+
+\begin{definition}
+  令 $\cat C$ 是范畴，$\{X_i\}_{i\in I}$ 是 $\cat C$
+  中的一族对象。如果对象 $C\in \Ob(\cat C)$ 和一族态射 $\{\iota_i:X_i\to C\}_{i\in I}$ 
+  满足下面的范性质：给定任意 $Z\in\Ob(\cat C)$ 和一族态射
+  $\{f_i:X_i\to Z\}_{i\in I}$，都存在唯一的态射 $\Phi:C\to Z$
+  使得对于每个 $i\in I$ 都有 $f_i=\Phi\circ\iota_i$，也即下面的交换图成立：
+  \[
+    \begin{tikzcd}[column sep=huge]
+    X_i\arrow[d,"\iota_i"']\arrow[dr,"f_i"] & \\
+    C\arrow[r,"\exists !\Phi"',dashed] & Z.
+    \end{tikzcd}
+  \]
+  那么我们说 $\bigl(C,\{\iota_i:X_i\to C\}_{i\in I}\bigr)$ 是 $\{X_i\}_{i\in I}$ 的余积。
+\end{definition}
+
+可以看出，$\cat C$ 中的余积实际上就是反范畴 $\cat C^{\mathrm{op}}$
+中的积。所以不难证明余积也是唯一的。
+
+\begin{proposition}[集合范畴的余积]
+  令 $\{X_i\}_{i\in I}$ 是 $\cat{Set}$ 中的一族对象。
+  那么 $\cat{Set}$ 中的余积是集合的无交并：
+  \[
+    \coprod_{i\in I}X_i=\bigcup_{i\in I} \bigl(
+      X_i\times \{i\}
+    \bigr),
+  \]
+  附带自然的嵌入映射。
+\end{proposition}
+\begin{proof}
+  任取 $Z\in\Ob(\cat{Set})$ 以及态射 $\{f_i:X_i\to Z\}_{i\in I}$，
+  定义 $\Phi:\coprod_{i\in I}X_i\to Z$ 为
+  \[
+    \Phi(x_i,i)=f_i(x_i).
+  \]
+  根据定义立马得出 $f_i=\Phi\circ\iota_i$。假设 $\Psi:\coprod_{i\in I}X_i\to Z$
+  也满足 $f_i=\Psi\circ\iota_i$。那么对于每个 $i\in I$
+  和 $x_i\in X_i$，有 $\Phi(x_i,i)=f_i(x_i)=\Psi(x_i,i)$，
+  这就表明 $\Psi=\Phi$。
+\end{proof}
+
+\begin{proposition}[Abel 群范畴的余积]
+  令 $\{X_i\}_{i\in I}$ 是 $\cat{Ab}$ 中的一族对象，那么
+  $\cat{Ab}$ 中的余积是直和
+  \[
+    \bigoplus_{i\in I} X_i=
+    \left\{
+      (g_i)_{i\in I}\in\prod_{i\in I} X_i\,\middle|\,
+      \text{只有有限多个 $g_i$ 是非平凡的}
+    \right\}.
+  \]
+  附带同态映射 $\iota_i:X_i\to \bigoplus_{i\in I}X_i$ 为 
+  \[
+    \iota_i(x_i)(j)=\begin{cases}
+      x_i & j=i,\\
+      0_{X_i} & j\neq i.
+    \end{cases} 
+  \] 
+\end{proposition}
+\begin{proof}
+  任取 $Z\in\Ob(\cat{Ab})$ 以及态射 $\{f_i:X_i\to Z\}_{i\in I}$，
+  定义 $\Phi:\bigoplus_{i\in I}X_i\to Z$ 为 
+  \[
+    \Phi\bigl((g_i)_{i\in I}\bigr)=
+    \sum_{i\in I} f_i\bigl(g_i(i)\bigr).
+  \]
+  注意右边只有有限多项不为 $0_Z$，所以求和是有意义的。
+  根据定义，对于每个 $j\in I$，有
+  \[
+    \Phi\circ\iota_j(x_j)=\sum_{i\in I}f_i\bigl(\iota_j(x_j)(i)\bigr)
+    =f_j\bigl(\iota_j(x_j)(j)\bigr)=f_j(x_j),
+  \]
+  所以 $f_j=\Phi\circ \iota_j$。假设 $\Psi:\bigoplus_{i\in I}X_i\to Z$
+  也满足 $f_j=\Psi\circ \iota_j$。对于任意 $(g_i)_{i\in I}\in \bigoplus_{i\in I}X_i$，
+  假设 $g_{i_1},\dots,g_{i_k}$ 是非平凡的，那么有 
+  \[
+    \Psi\bigl((g_i)_{i\in I}\bigr)=\Psi\left(
+      \sum_{r=1}^k g_{i_r}
+    \right)=\sum_{r=1}^k\Psi\bigl(g_{i_r}\bigr)
+    =\sum_{r=1}^k\Psi\circ\iota_{i_r}\bigl(g_{i_r}(i_r)\bigr)
+    =\sum_{r=1}^k f_{i_r}\bigl(g_{i_r}(i_r)\bigr)=\Phi\bigl((g_i)_{i\in I}\bigr),
+  \]
+  这就表明 $\Psi=\Phi$。
+\end{proof}
+
+\begin{proposition}
+  向量空间范畴的余积和 Abel 群范畴的余积构造相同。
+\end{proposition}
+
+注意，群范畴中的余积并不是 Abel 群范畴中直和的构造。在 $\cat{Ab}$ 中，对于直和 $X_1\oplus X_2$，
+同态 $f_1:X_1\to Z$ 和 $f_2:X_2\to Z$ 导出同态 $f:X_1\oplus X_2\to Z$，满足
+$f(x_1,x_2)=f_1(x_1)+f_2(x_2)$。而 $f$ 是群同态要求 
+\[
+  f(x_1+y_1,x_2+y_2)=f_1(x_1+y_1)+f_2(x_2+y_2)=f_1(x_1)+f_2(x_2)+f_1(y_1)+f_2(y_2),
+\]
+这里是使用了 $Z$ 的交换性的。所以说这种构造不适用于一般的群范畴。
+为了构造群范畴的余积，我们需要定义一种名为\emph{自由积}的新概念。
+
+\begin{definition}
+  令 $\{X_s\}_{s\in S}$ 的一族群。
+  \begin{enumerate}
+    \item $\{X_s\}_{s\in S}$ 中的\emph{既约字}指的是一个有限长序列 $(x_1,\dots,x_m)$ 满足：
+    \begin{itemize}
+      \item 每个 $x_i$ 都是某个群 $X_s$ 中的元素，
+      \item 每个 $x_i$ 都不是某个群 $X_s$ 的单位元，
+      \item 任意两个连续的 $x_j$ 是两个不同群的元素。
+    \end{itemize}
+    此外，我们允许空序列 $()$。
+    \item 记 $\fprod_{s\in S}X_s$ 为所有既约字的集合。
+    \item 令 $(x_1,\dots,x_m)$ 和 $(y_1,\dots,y_n)$ 是 $\fprod_{s\in S} X_s$ 中的两个元素。
+    我们定义乘法如下：
+    \begin{enumerate}[label=(\alph*)]
+      \item 若 $x_m$ 和 $y_1$ 属于不同的群，那么定义
+      \[
+        (x_1,\dots,x_m)\cdot (y_1,\dots,y_n)=(x_1,\dots,x_m,y_1,\dots,y_n).
+      \]
+      \item 若 $x_m$ 和 $y_1$ 是同一个群的元素。令 $j\in \{1,\dots,\min\{m,n\}\}$
+      是使得 $x_{m+1-i}$ 和 $y_i$ 处于同一个群并且 $x_{m+1-i}=y_i^{-1}$ 的最大的数。
+      如果 $j<\min\{m,n\}$，那么定义
+      \[
+        (x_1,\dots,x_m)\cdot (y_1,\dots,y_n)=(x_1,\dots,x_{m-j}\cdot y_{j+1},\dots,y_n).
+      \]
+      如果 $j=m$，那么定义
+      \[
+        (x_1,\dots,x_m)\cdot (y_1,\dots,y_n)=(y_{m+1},\dots,y_n).
+      \]
+      如果 $j=n$，那么定义
+      \[
+        (x_1,\dots,x_m)\cdots (y_1,\dots,y_n)=(x_1,\dots,x_{m-n}).
+      \]
+    \end{enumerate}
+    \item 我们说 $\fprod_{s\in S}X_s$ 附带上述乘法是 $X_s$ 的自由积。
+    对于有限多个 $X_1,\dots,X_k$，记作 $X_1\ast \cdots\ast X_k$。
+  \end{enumerate}
+\end{definition}
+
+\begin{example}
+  考虑自由积 $\langle {\color{blue}s}\rangle \ast \langle {\color{red} t}\rangle$。其中的元素形如
+  $({\color{blue} s^3},{\color{red} t^{-5}},{\color{blue} s^2})$ 以及 $({\color{blue} s^{-2}},{\color{red} t^4},{\color{blue} s^2},{\color{red} t^{-1}})$。
+  它们的自由积为
+  \[
+    ({\color{blue} s^3},{\color{red} t^{-5}},{\color{blue} s^2})\cdot ({\color{blue} s^{-2}},{\color{red} t^4},{\color{blue} s^2},{\color{red} t^{-1}})
+    =({\color{blue} s^3},{\color{red} t^{-1}},{\color{blue} s^2},{\color{red} t^{-1}}).
+  \]
+  注意 $({\color{blue} s})\cdot ({\color{red} t})=({\color{blue} s},{\color{red} t})\neq ({\color{red} t},{\color{blue} s})=({\color{red} t})\cdot ({\color{blue} s})$，
+  所以自由积一般来说是高度非交换的。
+\end{example}
+
+\begin{lemma}
+  令 $\{X_s\}_{s\in S}$ 是一族群。那么自由积 $\fprod_{s\in S}X_s$ 确实是一个群。
+  $\fprod_{s\in S}X_s$ 的单位元是空序列 $()$。$(x_1,\dots,x_m)\in \fprod_{s\in S}X_s$
+  的逆元是 $(x_m^{-1},\dots,x_1^{-1})\in \fprod_{s\in S}X_s$。
+\end{lemma}
+\begin{proof}
+  验证结合律是非常繁琐的，这里略去。
+\end{proof}
+
+\begin{proposition}[群范畴的余积]
+  令 $\{X_s\}_{s\in S}$ 是一族群。对于任意 $t\in S$，定义映射
+  $\iota_t:X_t\to \fprod_{s\in S}X_s$ 为
+  \[
+    \iota_t(x_t)=\begin{cases}
+      (x_t) & x_t\neq e,\\
+      () & x_t=e.
+    \end{cases}
+  \]
+  那么 $\iota_t$ 是单同态。并且 $\fprod_{s\in S}X_s$ 附带同态 
+  $\iota_t:X_t\to\fprod_{s\in S}X_s$ 是 $\cat{Grp}$ 中的余积。
+\end{proposition}
+\begin{proof}
+  验证 $\iota_t$ 是单同态只需要按照定义即可。任取 $Z\in\Ob(\cat{Grp})$
+  和一族群同态 $\{f_s:X_s\to Z\}_{s\in S}$，定义 $\Phi:\fprod_{s\in S}X_s\to Z$
+  为 
+  \[
+    \Phi(x_1,\dots,x_m)=f_{s_1}(x_1)\cdots f_{s_m}(x_m),
+  \]
+  其中 $x_i\in X_{s_i}$。不难验证 $\Phi$ 是群同态。任取 $s\in S$，有
+  \[
+    \Phi(\iota_s(x_s))=\Phi((x_s))=f_s(x_s),
+  \]
+  所以 $f_s=\Phi\circ\iota_s$。下面只需要说明 $\Phi$ 的唯一性。
+  假设群同态 $\Psi:\fprod_{s\in S}\to Z$ 也满足 $f_s=\Psi\circ\iota_s$。
+  那么对于任意 $s\in S$，有
+  \[
+    \Psi(x_1,\dots,x_m)=\Psi\left(\iota_{s_1}(x_1)\cdots\iota_{s_m}(x_m)\right)
+    =f_{s_1}(x_1)\cdots f_{s_m}(x_m)=\Phi(x_1,\dots,x_m),
+  \]
+  所以 $\Psi=\Phi$。
+\end{proof}
+
+
+
+
+\end{document}

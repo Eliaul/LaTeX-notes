@@ -456,6 +456,25 @@ $M$ 上的定向导出超曲面上的一个定向。
   \]
   那么 $F(1,\varphi,\theta)=X(\varphi,\theta)$。由于 $F$ 的 Jacobi 行列式是
   $\rho^2\sin\varphi>0$，所以 $F$ 是保定向的。根据上面的引理，$X$ 也是保定向的。
+
+  也可以直接计算。$X$ 的 Jacobi 矩阵为
+  \[
+    JX(\theta,\varphi)=\begin{pmatrix}
+      \cos\varphi\cos\theta & -\sin\varphi\sin\theta \\
+      \cos\varphi\sin\theta & \sin\varphi\cos\theta \\
+      -\sin\varphi & 0
+    \end{pmatrix},
+  \]
+  与 $X(\varphi,\theta)$ 共同构成 $\mathbb{R}^3$ 的积向量
+  \[
+    \begin{pmatrix}
+      \sin\varphi\cos\theta & \cos\varphi\cos\theta & -\sin\varphi\sin\theta \\
+      \sin\varphi\sin\theta & \cos\varphi\sin\theta & \sin\varphi\cos\theta \\
+      \cos\varphi & -\sin\varphi & 0
+    \end{pmatrix}.
+  \]
+  上述矩阵有行列式 $\sin\varphi>0$，所以是正定向的基。
+  这表明 $X$ 是保定向的。
 \end{example}
 
 
@@ -540,8 +559,41 @@ $M$ 上的定向导出超曲面上的一个定向。
   故 $f=\det A=\sqrt{\det(g_{ij})}$。
 \end{proof}
 
+\subsection{黎曼流形中的超曲面}
 
+令 $(M,g)$ 是定向的带边或者无边黎曼流形，$S\subseteq M$
+是浸入的带边或者无边超曲面。任意沿 $S$ 的单位法向量场
+都与 $S$ 处处不相切，所以确定了 $S$ 的一个定向。
+下面的命题给出了在这个定向下 $S$ 上诱导黎曼度量的
+体积形式。
 
+\begin{proposition}\label{prop:volumn form on submanifolds}
+  令 $(M,g)$ 是定向的带边或者无边黎曼流形，$S\subseteq M$
+  是浸入的带边或者无边超曲面，$\tilde g$ 是 $S$ 上的诱导黎曼度量。
+  假设 $N$ 是光滑的沿 $S$ 的单位法向量场。相对于 $S$ 的由 $N$
+  确定的定向，$(S,\tilde g)$ 的体积形式为 
+  \[
+    \omega_{\tilde{g}}=\iota_S^*(N\into \omega_g).
+  \]
+\end{proposition}
+\begin{proof}
+  \autoref{prop:induced orientation on hypersurface} 已经表明
+  $\iota_S^*(N\into \omega_g)$ 是 $S$ 上的定向形式。
+  假设 $(E_1,\dots,E_{n-1})$ 是 $S$ 上的定向正交标架，那么对于任意 $p\in S$，
+  $(N_p,E_1|_p,\dots,E_{n-1}|_p)$ 是 $T_pM$ 的定向正交基，所以
+  \[
+    \iota_S^*(N\into\omega_g)(E_1,\dots,E_{n-1})
+    =\omega_g(N,E_1,\dots,E_{n-1})=1.
+  \]
+  这就表明 $\omega_{\tilde g}$ 是体积形式。
+\end{proof}
 
+\begin{proposition}
+  设 $M$ 是带边的黎曼流形，存在唯一的沿 $\partial M$
+  的向外的光滑法向量场 $N$。
+\end{proposition}
+\begin{proof}
+  首先证明唯一性。
+\end{proof}
 
 

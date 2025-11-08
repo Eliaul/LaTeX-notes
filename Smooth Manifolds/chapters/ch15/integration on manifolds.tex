@@ -287,7 +287,7 @@ $\partial M$ 总是理解为附带诱导定向。
       -\sin^3\varphi\cos^2\theta\d\theta\wedge\d\varphi
       +\sin^3\varphi\sin^2\theta\d\varphi\wedge\d\theta
     \bigr.\\
-    &=\bigl.
+    &\bigl.
       +\cos^2\varphi\sin\varphi\cos^2\theta\d\varphi\wedge\d\theta
       -\cos^2\varphi\sin\varphi\sin^2\theta\d\theta\wedge\d\varphi
     \bigr)\\
@@ -295,6 +295,17 @@ $\partial M$ 总是理解为附带诱导定向。
     \int_0^{2\pi}\int_0^\pi \sin\varphi\d\varphi\d\theta=4\pi.
   \end{align*}
 \end{example} 
+
+\subsection{李群上的积分}
+
+令 $G$ 是李群。$G$ 上的协变张量场 $A$ 如果使得任取 $g\in G$ 有 $L_g^*A=A$，
+那么说 $A$ 是左不变的。
+
+\begin{proposition}
+  令 $G$ 的紧李群配备一个左不变定向。那么 $G$ 有唯一的正定向的
+  左不变 $n$-形式 $\omega_G$，满足 $\int_G\omega_G=1$。
+\end{proposition}
+
 
 \section{Stokes 定理}
 
@@ -305,6 +316,14 @@ $\partial M$ 总是理解为附带诱导定向。
     \int_M\d\omega=\int_{\partial M}\omega.
   \end{equation}
 \end{theorem}
+\begin{remark}
+  $\partial M$ 应当理解为配备诱导的 Stokes 定向，并且
+  右端的 $\omega$ 应到理解为 $\iota_{\partial M}^*\omega$。
+  如果 $\partial M=\emptyset$，右端理解为零。
+\end{remark}
+
+
+
 
 
 
