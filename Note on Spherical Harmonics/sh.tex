@@ -1,0 +1,123 @@
+\documentclass[fontset=none,zihao=-4]{Notes}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\usepackage{tikz-cd,wrapstuff}
+\usepackage{fixdif,siunitx,tikz,nicematrix}
+
+\usetikzlibrary{hobby,calc,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.pathreplacing}
+
+\input{font.def}
+
+\DeclareMathOperator\Int{Int}
+\DeclareMathOperator\supp{supp}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Ann{Ann}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\diag{diag}
+\DeclareMathOperator\Or{O}
+\DeclareMathOperator\rank{rank}
+\DeclareMathOperator\Ob{Ob}
+\DeclareMathOperator\id{id}
+
+\newcommand{\cat}[1]{\mathsf{#1}}
+
+\newcommand{\inn}[1]{\left\langle#1\right\rangle}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\spa}[1]{\operatorname{span}\left(#1\right)}
+
+
+\makeatletter
+\DeclareRobustCommand\bigop[2][1]{%
+  \mathop{\vphantom{\sum}\mathpalette\bigop@{{#1}{#2}}}\slimits@
+}
+\newcommand{\bigop@}[2]{\bigop@@#1#2}
+\newcommand{\bigop@@}[3]{%
+  \vcenter{%
+    \sbox\z@{$#1\sum$}%
+    \hbox{\resizebox{\ifx#1\displaystyle#2\fi\dimexpr\ht\z@+\dp\z@}{!}{$\m@th#3$}}%
+  }%
+}
+\makeatother
+
+\newcommand{\fprod}{\DOTSB\bigop[1.05]{\ast}}
+
+\tikzcdset{
+  arrow style=tikz,
+  diagrams={>={Straight Barb[scale=0.8]}}
+}
+
+\tikzset{
+  point/.style={
+    circle,fill,inner sep=0pt,minimum width=5pt
+  }
+}
+
+\usepackage[subscriptcorrection,nofontinfo,mtpbb]{mtpro2}
+
+
+
+\setlist[enumerate]{nosep,label=(\arabic*)}
+\setlist[itemize]{nosep}
+
+\title{\sffamily 球谐函数笔记}
+\author{Eliauk}
+
+
+\begin{document}
+
+\maketitle
+
+% \tableofcontents
+
+\section{圆上的调和函数}
+
+Joseph Fourier (1768--1830) 在研究热传导问题时引入了 Fourier 级数的概念。使用 Fourier 级数，
+每个平方可积的周期函数 $f$ 都可以唯一地表示为级数
+\[
+  f(\theta)=a_0+\sum_{k=1}^\infty\left(a_k\cos k\theta+b_k\sin k\theta\right),
+\]
+其中 Fourier 系数 $a_k,b_k$ 由下式给出：
+\[
+  a_0=\frac{1}{2\pi}\int_{-\pi}^{\pi}f(\theta) \d\theta,\quad
+  a_k=\frac{1}{\pi}\int_{-\pi}^{\pi}f(\theta)\cos k\theta \d\theta,\quad
+  b_k=\frac{1}{\pi}\int_{-\pi}^{\pi}f(\theta)\sin k\theta \d\theta.
+\]
+
+这个惊人的发现在物理学、信号处理、工程学等领域有着广泛的理论和实际应用，
+但是 Fourier 级数的数学内涵远不止于此。
+我们引入平方可积函数的内积
+\[
+  \langle f,g\rangle=\int_{-\pi}^{\pi}f(\theta)g(\theta)\d\theta,
+\]
+也记为
+\[
+  \langle f,g\rangle=\int_{\mathbb{S}^1}f(\theta)g(\theta)\d\theta,
+\]
+其中 $\mathbb{S}^1$ 是单位圆。实际上上述记法就是在 $\mathbb{S}^1$ 流形
+上的积分。通过这个内积，空间 $L^2(\mathbb{S}^1)$ 是一个完备的赋范向量空间，
+也即 Hilbert 空间。进一步的，我们定义 $L^2(\mathbb{S}^1)$ 的子空间 
+$\mathcal{H}_k(\mathbb{S}^1)$ 为：$\mathcal{H}_0(\mathbb{S}^1)=\mathbb{R}$
+是所有常值函数的空间，$\mathcal{H}_k(\mathbb{S}^1)$ 是由函数 $\cos k\theta$ 
+和 $\sin k\theta$ 张成的二维空间。那么，Fourier 级数告诉我们有正交直和分解
+\[
+  L^2(\mathbb{S}^1)=\bigoplus_{k=0}^\infty \mathcal{H}_k(\mathbb{S}^1).
+\]
+
+对于空间 $\mathcal{H}_k(\mathbb{S}^1)$，我们
+
+
+
+
+
+
+
+\end{document}
