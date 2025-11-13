@@ -27,6 +27,10 @@
 \DeclareMathOperator\rank{rank}
 \DeclareMathOperator\Ob{Ob}
 \DeclareMathOperator\id{id}
+\DeclareMathOperator\SO{SO}
+\DeclareMathOperator\SU{SU}
+\DeclareMathOperator\GL{GL}
+\DeclareMathOperator\SL{SL}
 
 \newcommand{\cat}[1]{\mathsf{#1}}
 
@@ -61,7 +65,7 @@
   }
 }
 
-\usepackage[subscriptcorrection,nofontinfo,mtpbb]{mtpro2}
+\usepackage[subscriptcorrection,nofontinfo,mtpbb,mtpfrak]{mtpro2}
 
 
 
@@ -76,7 +80,7 @@
 
 \maketitle
 
-% \tableofcontents
+\tableofcontents
 
 \section{圆上的调和函数}
 
@@ -112,7 +116,613 @@ $\mathcal{H}_k(\mathbb{S}^1)$ 为：$\mathcal{H}_0(\mathbb{S}^1)=\mathbb{R}$
   L^2(\mathbb{S}^1)=\bigoplus_{k=0}^\infty \mathcal{H}_k(\mathbb{S}^1).
 \]
 
-对于空间 $\mathcal{H}_k(\mathbb{S}^1)$，我们
+空间 $\mathcal{H}_k(\mathbb{S}^1)$ 会自然地出现在 $\mathbb{R}^2$ 上的 Laplace 方程中，
+即 $\Delta f=0$。大致来说，$\mathbb{R}^2$ 中的齐次函数 $f:\mathbb{R}^2\to \mathbb{R}$
+在极坐标 $(r,\theta)$ 中有形式
+\[
+  f(r,\theta)=r^kg(\theta).
+\]
+极坐标中的 Laplace 算子为
+\[
+  \Delta f=\frac{1}{r}\frac{\partial}{\partial r}\left(r\frac{\partial f}{\partial r}\right)
+  +\frac{1}{r^2}\frac{\partial^2 f}{\partial \theta^2}.
+\]
+当然，我们要求 $f\in C^2$ 是二阶连续可微的。如果我们把 $f$ 限制在单位圆 $\mathbb{S}^1$ 上，
+那么 $\mathbb{S}^1$ 上的 Laplace 算子为
+\[
+  \Delta_{\mathbb{S}^1} f=\frac{\partial^2 f}{\partial \theta^2}.
+\]
+下面我们将看到空间 $\mathcal{H}_k(\mathbb{S}^1)$ 实际上是 $\Delta_{\mathbb{S}^1}:L^2(\mathbb{S}^1)\to L^2(\mathbb{S}^1)$ 的特征值
+$-k^2$ 的特征函数空间。
+
+对于方程 $\Delta f=0$，采用分离变量法，设 $f(r,\theta)=F(r)g(\theta)$。
+假设 $F(r)=r^k$，其中 $k\geq 0$ 是整数，这意味着 $f$ 是 $k$ 次齐次函数。
+其中 $g:\mathbb{S}^1\to \mathbb{R}$ 是圆上的函数。现在，将 $f$ 代入 Laplace 算子，有
+\[
+  \Delta f=r^{k-2}\left(k^2g(\theta)+g''(\theta)\right)
+  =r^{k-2}\left(-\Delta_{\mathbb{S}^1}g(\theta)+k^2g(\theta)\right).
+\]
+于是我们得到 
+\[
+  \Delta f=0\Longleftrightarrow \Delta_{\mathbb{S}^1}g=-k^2g.
+\]
+即，$g$ 是 $\Delta_{\mathbb{S}^1}$ 的特征值 $-k^2$ 的特征函数。这等价于一个
+二阶微分方程：
+\[
+  \frac{\d^2 g}{\d\theta^2}+k^2g=0,
+\]
+有通解
+\[
+  g(\theta)=a_k\cos k\theta+b_k\sin k\theta.
+\]
+因此，我们发现 $0,-1,-4,\dots,-k^2,\dots$ 是 $\Delta_{\mathbb{S}^1}$ 的特征值，
+并且函数 $\cos k\theta$ 和 $\sin k\theta$ 是对应的特征函数。所以，
+$k=0$ 的时候特征空间是 $1$ 维的，而 $k\geq 1$ 的时候特征空间是 $2$ 维的。
+可以证明 $\Delta_{\mathbb{S}^1}$ 没有其他的特征值。
+
+回到齐次调和函数 $f(r,\theta)=r^kg(\theta)$ 上，我们注意到这些函数构成的空间由
+\[
+  u_k=r^k\cos k\theta,\quad v_k=r^k\sin k\theta
+\]
+张成。因为 $(x+iy)^k=r^k(\cos k\theta+i\sin k\theta)=u_k+i v_k$，
+由于复可微函数的实部和虚部都是调和函数，所以 $u_k$ 和 $v_k$ 都是 $\mathbb{R}^2$ 上的调和函数。
+因此，$u_k,v_k$ 实际上还给出了 $\mathbb{R}^2$ 上所有 $k$ 次齐次调和多项式的一个基。
+其中一些低次的齐次调和多项式如下：
+\begin{alignat*}{2}
+  k&=0 &\qquad& 1 \\
+  k&=1 &\qquad& x,\,y \\
+  k&=2 &\qquad& x^2-y^2,\,xy \\
+  k&=3 &\qquad& x^3-3xy^2,\,3x^2y-y^3 \\
+  k&=4 &\qquad& x^4-6x^2y^2+y^4,\,x^3 y-xy^3.
+\end{alignat*}
+于是，我们发现 $\mathbb{S}^1$ 上的 Laplace 算子的特征函数是 $\mathbb{R}^2$ 上
+调和多项式在 $\mathbb{S}^1$ 上的限制，并且有 Hilbert 空间分解
+$L^2(\mathbb{S}^1)=\bigoplus_{k=0}^\infty \mathcal{H}_k(\mathbb{S}^1)$。
+这意味着我们可以在球面 $\mathbb{S}^2$ 上寻找类似的分解。
+
+\section{球面上的球谐函数}
+
+我们的目标是寻找 $\mathbb{R}^3$ 中 Laplace 方程 $\Delta f=0$ 的齐次解，并且
+证明它们对应于 $2$-球面上的 Laplace 算子 $\Delta_{\mathbb{S}^2}$ 的特征函数空间 $\mathcal{H}_k(\mathbb{S}^2)$。
+那么空间 $\mathcal{H}_k(\mathbb{S}^2)$ 将给出 $L^2(\mathbb{S}^2)$ 的 Hilbert 直和分解。
+这是 Fourier 级数在球面上的推广，$\mathcal{H}_k(\mathbb{S}^2)$ 中的函数被称为\emph{球谐函数}。
+
+在 $\mathbb{R}^3$ 中，采用球坐标 $(r,\theta,\varphi)$，那么
+\[
+  x=r\sin\theta\cos\varphi,\quad y=r\sin\theta\sin\varphi,\quad z=r\cos\theta,
+\]
+并且要求 $0\leq \theta<\pi$，$0\leq\varphi<2\pi$ 以及 $r>0$。那么球坐标中
+Laplace 算子为
+\[
+  \Delta f=\frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial f}{\partial r}\right)
+  +\frac{1}{r^2}\Delta_{\mathbb{S}^2}f,
+\]
+其中 $\mathbb{S}^2$ 上的 Laplace 算子为
+\[
+  \Delta_{\mathbb{S}^2}f=\frac{1}{\sin\theta}\frac{\partial}{\partial \theta}
+  \left(\sin\theta\frac{\partial f}{\partial \theta}\right)
+  +\frac{1}{\sin^2\theta}\frac{\partial^2 f}{\partial \varphi^2}.
+\]
+同样，我们寻找齐次调和函数 $f(r,\theta,\varphi)=r^kg(\theta,\varphi)$。
+将 $f$ 代入 Laplace 方程，有
+\begin{align*}
+  \Delta f&=\frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial (r^k g)}{\partial r}\right)
+  +\frac{1}{r^2}\Delta_{\mathbb{S}^2}(r^k g) \\
+  &=\frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2 k r^{k-1} g\right)
+  +\frac{1}{r^2}r^k \Delta_{\mathbb{S}^2} g \\
+  &=r^{k-2}\left(k(k+1)g+\Delta_{\mathbb{S}^2}g\right).
+\end{align*}
+因此
+\[
+  \Delta f=0\Longleftrightarrow \Delta_{\mathbb{S}^2}g=-k(k+1)g.
+\]
+也即，$g$ 是 $\Delta_{\mathbb{S}^2}$ 的特征值 $-k(k+1)$ 的特征函数。
+
+我们采用分离变量法寻找上述方程的解。令 $g(\theta,\varphi)=\Theta(\theta)\Phi(\varphi)$，那么得到方程
+\[
+  \frac{\Phi}{\sin\theta}\frac{\d}{\d \theta}\left(\sin\theta\frac{\d \Theta}{\d \theta}\right)
+  +\frac{\Theta}{\sin^2\theta}\frac{\d^2 \Phi}{\d \varphi^2}=-k(k+1)\Theta\Phi,
+\]
+两边除以 $\Theta\Phi$ 并且乘以 $\sin^2\theta$，得到
+\[
+  \frac{\sin\theta}{\Theta}\frac{\d}{\d \theta}\left(\sin\theta\frac{\d \Theta}{\d \theta}\right)
+  +k(k+1)\sin^2\theta=-\frac{1}{\Phi}\frac{\d^2 \Phi}{\d \varphi^2}.
+\]
+因为左边只含有 $\theta$，右边只含有 $\varphi$，所以两边只可能都等于一个常数，
+记为 $\mu$。那么我们得到两个常微分方程：
+\begin{align*}
+  &\frac{\d^2 \Phi}{\d\varphi^2}+\mu \Phi=0, \\
+  &\sin\theta\frac{\d}{\d \theta}\left(\sin\theta\frac{\d \Theta}{\d \theta}\right)
+  +\left(k(k+1)\sin^2\theta-\mu\right)\Theta=0.
+\end{align*}
+因为我们考虑的是球面 $\mathbb{S}^2$ 上的函数，所以 $\Phi$ 是 $2\pi$-周期的，
+所以必须有 $\mu=m^2$，其中 $m$ 是非负整数。那么，我们知道方程
+\[
+  \frac{\d^2\Phi}{\d\varphi^2}+m^2\Phi=0
+\]
+的解是 $2$ 维的，由下面两个函数张成：
+\[
+  \Phi(\varphi)=\cos m\varphi,\quad \Phi(\varphi)=\sin m\varphi.
+\]
+接下来，我们考虑 $\Theta$ 的方程：
+\[
+  \sin\theta\frac{\d}{\d \theta}\left(\sin\theta\frac{\d \Theta}{\d \theta}\right)
+  +\left(k(k+1)\sin^2\theta - m^2\right)\Theta=0. 
+\]
+这等价于
+\[
+  \sin^2\theta \Theta''+\sin\theta\cos\theta \Theta'
+  +\left(k(k+1)\sin^2\theta - m^2\right)\Theta=0.
+\]
+这是 Legendre 方程的一个变体。令 $t=\cos\theta$，考虑函数 $u(\cos\theta)=\Theta(\theta)$，
+注意 $0\leq\theta<\pi$，那么我们得到二阶微分方程
+\[
+  (1-t^2)u''-2tu'+\left(k(k+1)-\frac{m^2}{1-t^2}\right)u=0.
+\]
+这被称为\emph{连带 Legendre 方程}。解这个方程的技巧是采用代换
+$u(t)=(1-t^2)^{m/2}v(t)$，那么得到
+\[
+  (1-t^2)v''-2(m+1)tv'+(k(k+1)-m(m+1))v=0.
+\]
+当 $m=0$ 的时候，我们得到\emph{Legendre 方程}：
+\[
+  (1-t^2)v''-2tv'+k(k+1)v=0.
+\]
+这个方程有两个基本解 $P_k(t)$ 和 $Q_k(t)$，被称为\emph{第一类和第二类 Legendre 函数}。
+$P_k(t)$ 实际上是多项式，$Q_k(t)$ 由一个在 $t=1$ 处发散的幂级数给出，
+所以我们也把 $P_k(t)$ 称作\emph{Legendre 多项式}。Legendre 多项式有许多种定义形式，
+其中一种定义由 \emph{Rodrigues 公式} 给出：
+\[
+  P_n(t)=\frac{1}{2^nn!}\frac{\d^n}{\d t^n}(t^2-1)^n.
+\]
+Legendre 多项式满足 $P_n(1)=1$ 以及递推关系
+\begin{align*}
+  P_0&=1,\quad P_1=t, \\
+  (n+1)P_{n+1}&=(2n+1)tP_n - n P_{n-1} \quad n\geq 1.
+\end{align*}
+前六个 Legendre 多项式如下：
+\[
+  1,\, t,\, \frac{1}{2}(3t^2-1),\, \frac{1}{2}(5t^3-3t),\, \frac{1}{8}(35t^4-30t^2+3),\, \frac{1}{8}(63t^5-70t^3+15t).
+\]
+
+现在我们回到微分方程
+\begin{equation}\label{eq:associated-Legendre}
+  (1-t^2)v''-2(m+1)tv'+(k(k+1)-m(m+1))v=0.
+\end{equation}
+对 $t$ 微分，得到
+\[
+  (1-t^2)v'''-2(m+2)tv''+(k(k+1)-(m+1)(m+2))v'=0.
+\]
+这表明如果 $v$ 是 \eqref{eq:associated-Legendre} 式在 $k,m$ 情况下的解，
+那么 $v'$ 是 \eqref{eq:associated-Legendre} 式在 $k,m+1$ 情况下的解。
+因此，如果 $P_k(t)$ 在 $k$ 和 $m=0$ 的情况下是 \eqref{eq:associated-Legendre} 式的解，
+那么 $P_k'(t)$ 在 $k$ 和 $m=1$ 的情况下是解，$P_k''(t)$ 在 $k$ 和 $m=2$ 的情况下是解，依此类推，
+$\d^m/\d t^m \bigl(P_k(t)\bigr)$ 在 $k$ 和 $m$ 的情况下是解。于是，对于最开始的方程
+\begin{equation}\label{eq:associated-Legendre-original}
+  (1-t^2)u''-2tu'+\left(k(k+1)-\frac{m^2}{1-t^2}\right)u=0,
+\end{equation}
+有解 
+\[
+  u(t)=(-1)^m(1-t^2)^{m/2}\frac{\d^m}{\d t^m}\bigl(P_k(t)\bigr).
+\]
+这个函数 $u(t)$ 通常记为 $P_k^m(t)$，被称为\emph{连带 Legendre 函数}。
+因为 $P_k(t)$ 是 $k$ 次多项式，所以在 $m>k$ 的情况下有 $P_k^m(t)\equiv 0$。
+由于 $(1-t^2)^{m/2}$ 的存在，所以连带 Legendre 函数 $P_k^m(t)$ 一般来说
+不是多项式并且只定义在闭区间 $[-1,1]$ 上。
+
+连带 Legendre 函数满足许多的关系式。例如，对于 $m\geq 0$，有递推
+\[
+  (k-m+1)P_{k+1}^m(t)=(2k+1)tP_k^m(t)-(k+m)P_{k-1}^m(t),\quad k\geq 1.
+\]
+对于 $k\geq 2$，有
+\[
+  P_k^{m+2}(t)=-\frac{2(m+1)t}{(1-t^2)^{1/2}}P_k^{m+1}(t)
+  -(k-m)(k+m+1)P_k^m(t),\quad 0\leq m\leq k-2.
+\]
+这些递推式可以用于从初始形式
+\begin{align*}
+  P_k^0(t)&=P_k(t), \\
+  P_k^1(t)&=\frac{kt}{(t^2-1)^{1/2}}P_k(t)-\frac{k}{(t^2-1)^{1/2}}P_{k-1}(t)
+\end{align*}
+计算任意的连带 Legendre 函数 $P_k^m(t)$。
+注意到 $k=m$ 的时候，有
+\[
+  P_{m+1}^m(t)=(2m+1)tP_m^m(t),
+\]
+所以还有
+\[
+  P_m^m(t)=(-1)^m(2m-1)!! (1-t^2)^{m/2}.
+\]
+
+再回到球谐函数的求解上，我们需要解方程
+\[
+  \sin^2\theta\Theta''+\sin\theta\cos\theta \Theta'
+  +\left(k(k+1)\sin^2\theta - m^2\right)\Theta=0,
+\]
+我们使用了替换 $u(\cos\theta)=\Theta(\theta)$，并且得到了连带 Legendre 方程的解
+为 $u(t)=P_k^m(t)$，所以我们有解
+\[
+  \Theta(\theta)=P_k^m(\cos\theta).
+\]
+将所有的结果综合起来，我们得到齐次函数 $f(r,\theta,\varphi)=r^k\Theta(\theta)\Phi(\varphi)$
+为
+\[
+  f(r,\theta,\varphi)=r^k \cos m\varphi P_k^m(\cos\theta),\quad
+  f(r,\theta,\varphi)=r^k \sin m\varphi P_k^m(\cos\theta),
+\]
+它们都是 $\mathbb{R}^3$ 上的调和函数，并且函数
+\[
+  \cos m\varphi P_k^m(\cos\theta),\quad \sin m\varphi P_k^m(\cos\theta)
+\]
+是球面上 Laplace 算子 $\Delta_{\mathbb{S}^2}$ 的特征值 $-k(k+1)$ 的特征函数。
+对于固定的 $k$，取遍 $0\leq m\leq k$，我们得到 $2k+1$ 个线性无关的特征函数。
+
+处于不同的用途，我们通常对球谐函数进行归一化处理。我们使用记号 $Y_l^m$，
+其中 $l$ 是非负整数，$m$ 是整数且满足 $-l\leq m\leq l$。定义
+\[
+  Y_{lm}(\theta,\varphi)=\begin{cases}
+    N_l^0 P_l^0(\cos\theta), & m=0, \\
+    (-1)^m\sqrt{2} N_l^m \cos m\varphi P_l^m(\cos\theta), & m>0, \\
+    (-1)^m\sqrt{2} N_l^{-m} \sin (-m\varphi) P_l^{-m}(\cos\theta), & m<0,
+  \end{cases}
+\]
+其中 $N_l^m$ 是标量因子，通常被选为
+\[
+  N_l^m=\sqrt{\frac{(2l+1)}{4\pi}\frac{(l-m)!}{(l+m)!}}.
+\]
+函数 $Y_{lm}$ 被称为\emph{$l$ 次 $m$ 阶实球谐函数}。
+
+函数 $Y_l^m$ 有许多非常漂亮的性质，为了解释它们，我们需要回顾 $L^2(\mathbb{S}^2)$
+空间上的结构。$L^2(\mathbb{S}^2)$ 上的内积定义为
+\[
+  \langle f,g\rangle=\int_{\mathbb{S}^2} fg \d \Omega_2
+  =\int_0^{2\pi}\int_0^\pi f(\theta,\varphi)g(\theta,\varphi)\sin\theta \d\theta \d\varphi.
+\]
+其中 $f,g\in L^2(\mathbb{S}^2)$，$\d\Omega_2$ 是 $\mathbb{S}^2$ 上的体积形式。
+使用这个内积，空间 $L^2(\mathbb{S}^2)$ 是一个 Hilbert 空间。
+可以证明 Laplace 算子 $\Delta_{\mathbb{S}^2}$ 相对于这个内积是自伴算子。
+因为当 $l_1\neq l_2$ 的时候，函数 $Y_{l_1m_1}$ 和 $Y_{l_2m_2}$
+是对应于不同特征值 $-l_1(l_1+1)$ 和 $-l_2(l_2+1)$ 的特征函数，所以它们
+是正交的，也即
+\[
+  \left\langle Y_{l_1m_1},Y_{l_2m_2}\right\rangle=0,\quad l_1\neq l_2.
+\]
+同样不难证明对于固定的 $l$，有
+\[
+  \left\langle Y_{lm_1},Y_{lm_2}\right\rangle=\delta_{m_1 m_2}.
+\]
+也就是说，函数 $Y_{lm}$ 构成了一个正交函数系，我们记 $\mathcal{H}_l(\mathbb{S}^2)$
+表示由这些函数张成的 $(2l+1)$-维空间。总的来说，$\Delta_{\mathbb{S}^2}$
+的特征值仅有 $-l(l+1)$，并且对应的特征空间为 $E_l=\mathcal{H}_l(\mathbb{S}^2)$，
+由基函数 $Y_l^m$ 张成，其中 $-l\leq m\leq l$。与圆上的情况类似，我们有
+\[
+  L^2(\mathbb{S}^2)=\bigoplus_{l=0}^\infty \mathcal{H}_l(\mathbb{S}^2).
+\]
+即任取函数 $f\in L^2(\mathbb{S}^2)$，都可以唯一表示为
+\[
+  f=\sum_{l=0}^\infty\sum_{-l\leq m\leq l}a_{lm} Y_{lm},
+\]
+这被称为\emph{球面上的 Fourier 分解}。此时 Fourier 系数计算为
+\[
+  a_{lm}=\langle f,Y_{lm}\rangle=\int_{\mathbb{S}^2} f(\theta,\varphi) Y_{lm}(\theta,\varphi) \d \Omega_2.
+\]
+
+当然，我们也有对应的 $\mathbb{R}^3$ 上的齐次球谐函数 $H_l^m(r,\theta,\varphi)$：
+\[
+  H_l^m(r,\theta,\varphi)=r^l Y_{lm}(\theta,\varphi).
+\]
+可以证明 $H_l^m$ 在直角坐标 $xyz$ 下总可以表示为齐次多项式！这表明：
+Laplace 算子 $\Delta_{\mathbb{S}^2}$ 的特征函数（球谐函数）是 $\mathbb{R}^3$
+上齐次调和多项式的限制。下面是一些低次的齐次调和多项式：
+\begin{alignat*}{2}
+  k&=0 &\qquad& 1 \\
+  k&=1 &\qquad& x,\, y,\, z \\
+  k&=2 &\qquad& x^2-y^2,\, x^2-z^2,\, xy,\, xz,\, yz \\
+  k&=3 &\qquad& x^3-3xy^2,\, 3x^2y - y^3,\, x^3-3xz^2,\, 3x^2z - z^3,\, y^3-3yz^2,\, 3y^2z - z^3,\, xyz\\
+\end{alignat*}
+
+我们也可以定义对应的复球谐函数 $Y_l^m:\mathbb{S}^2\to \mathbb{C}$，其中 $-l\leq m\leq l$：
+\[
+  Y_l^m(\theta,\varphi)=N_l^m P_l^m(\cos\theta) e^{i m \varphi},
+\]
+其与实球谐函数的关系为
+\[
+  Y_l^m=\begin{dcases}
+    \frac{(-1)^m}{\sqrt{2}}\left(Y_{l|m|}+i Y_{l,-|m|}\right), & m>0, \\
+    Y_{l0}, & m=0, \\
+    \frac{1}{\sqrt{2}}\left(Y_{l|m|}-i Y_{l,-|m|}\right), & m<0.
+  \end{dcases}
+\]
+考虑复 Hilbert 空间 $L^2_{\mathbb{C}}(\mathbb{S}^2)$，内积由 Hermite 内积定义：
+\[
+  \langle f,g\rangle=\int_{\mathbb{S}^2} f\bar g \d \Omega_2.
+\]
+此时，复球谐函数 $Y_l^m$ 也是 $L_{\mathbb{C}}^2(\mathbb{S}^2)$ 上 Laplace 算子 $\Delta_{\mathbb{S}^2}$ 的特征值 $-l(l+1)$
+的特征函数，并且是正交归一的。
+
+\section{一点李群表示论}
+
+\begin{definition}
+  李群 $G$ 的一个表示指的是一个向量空间 $V$ 附带一个同态 $\rho:G\to\GL(V)$。
+  李代数 $\mathfrak{g}$ 的一个表示指的是一个向量空间 $V$ 附带一个同态
+  $\rho:\mathfrak{g}\to \mathfrak{gl}(V)$。
+\end{definition}
+
+李群 $G$ 的两个表示 $V,W$ 之间的 $G$-线性映射指的是一个线性映射 $f:V\to W$
+与 $G$ 的作用交换：即对于任意 $g\in G$，都有 $f\circ \rho_V(g)=\rho_W(g)\circ f$。
+对李代数的表示同样有类似的定义。$V$ 和 $W$ 之间的所有 $G$-线性映射构成一个向量空间，记为 $\Hom_G(V,W)$。
+类似的，李代数的表示之间的线性映射构成向量空间 $\Hom_{\mathfrak{g}}(V,W)$。
+
+不加说明的情况下，总是假设 $V$ 是复向量空间，此时 $G\to\GL(V)$ 理解为
+一个光滑映射，$\GL(V)$ 是 $2n^2$-维光滑流形。
+
+李群表示和李代数表示之间有如下重要联系。
+
+\begin{theorem}
+  令 $G$ 是李群，有李代数 $\mathfrak{g}$。
+  \begin{enumerate}
+    \item 每个表示 $\rho:G\to\GL(V)$ 都定义了一个李代数表示
+      $\rho_*:\mathfrak{g}\to \mathfrak{gl}(V)$，并且每个 $G$-线性映射
+      也是 $\mathfrak{g}$-线性映射。
+    \item 如果 $G$ 是连通并且单连通的，那么 $\rho\mapsto \rho_*$ 给出了
+      李群表示与李代数表示之间的一一对应，特别的，$\mathfrak{g}$
+      的每个表示都可以唯一提升为 $G$ 的一个表示。
+  \end{enumerate}
+\end{theorem}
+
+这是一个非常重要的定理，因为李代数作为有限维向量空间往往更容易处理。
+例如，这个定理表明 $\SU(2)$ 的表示和 $\mathfrak{su}(2)$ 的表示相同，
+而 $\mathfrak{su}(2)$ 是一个 $3$ 维的实向量空间。
+
+这个定理也可以用于研究连通但是不是单连通的李群的表示。实际上，对于这样的
+李群 $G$，存在一个单连通的李群 $\tilde G$ 使得 $G=\tilde G/Z$，
+其中 $Z\subseteq G$ 是离散的中心子群。因此，$G$ 的表示和 $\tilde{G}$
+的满足 $\rho(Z)=\mathrm{id}$ 的表示相同。一个非常重要的例子
+就是二重覆盖 $\SU(2)\to \SO(3)$。
+
+\begin{lemma}
+  令 $\mathfrak{g}$ 是实李代数，$\mathfrak{g}_{ \mathbb{C}}$ 是它的复化。
+  那么 $\mathfrak{g}$ 的任意复表示都可以提升为 $\mathfrak{g}_{\mathbb{C}}$ 的表示，
+  并且 $\Hom_{\mathfrak{g}}(V,W)=\Hom_{\mathfrak{g}_{\mathbb{C}}}(V,W)$。
+\end{lemma}
+\begin{proof}
+  令 $\rho:\mathfrak{g}\to \mathfrak{gl}(V)$ 是 $\mathfrak{g}$ 的一个复表示。
+  延拓为 $\rho(x+iy)=\rho(x)+i\rho(y)$，这成为 $\mathfrak{g}_{\mathbb{C}}$ 的一个表示。
+\end{proof}
+
+我们重点关注 $\mathfrak{su}(2)$ 和 $\mathfrak{sl}(2,\mathbb{C})$。
+$\mathfrak{su}(2)$ 的基（作为实向量空间）由 Pauli 矩阵给出：
+\[
+  i\sigma_1=\begin{pmatrix}
+    0 & i \\ i & 0
+  \end{pmatrix},\quad
+  i\sigma_2=\begin{pmatrix}
+    0 & 1 \\ -1 & 0
+  \end{pmatrix},\quad
+  i\sigma_3=\begin{pmatrix}
+    i & 0 \\ 0 & -i
+  \end{pmatrix}.
+\]
+满足对易关系
+\[
+  [i\sigma_1,i\sigma_2]=2i\sigma_3  ,\quad
+  [i\sigma_2,i\sigma_3]=2i\sigma_1 ,\quad
+  [i\sigma_3,i\sigma_1]=2i\sigma_2.
+\]
+$\mathfrak{sl}(2,\mathbb{C})$ 的基（作为复向量空间）为
+\[
+  E=\begin{pmatrix}
+    0 & 1 \\ 0 & 0
+  \end{pmatrix},\quad
+  F=\begin{pmatrix}
+    0 & 0 \\ 1 & 0
+  \end{pmatrix},\quad
+  H=\begin{pmatrix}
+    1 & 0 \\ 0 & -1
+  \end{pmatrix}.
+\]
+满足对易关系
+\[
+  [H,E]=2E,\quad [H,F]=-2F,\quad [E,F]=H.
+\]
+由于 $E=\frac{1}{2}(i\sigma_2-i(i\sigma_1))$，$F=\frac{1}{2}(-i\sigma_2-i(i\sigma_1))$
+以及 $H=-i(i\sigma_3)$，所以 $\mathfrak{sl}(2,\mathbb{C})$ 是 $\mathfrak{su}(2)$ 的复化。
+根据前面的结论，$\mathfrak{su}(2)$ 的表示和 $\mathfrak{sl}(2,\mathbb{C})$ 的表示是一样的。
+同时 $\SU(2)$ 和 $\SL(2,\mathbb{C})$ 都是连通且单连通的李群，所以它们的表示
+也和 $\mathfrak{su}(2)$ 的表示是一一对应的。也就是说，研究 $\SU(2)$，$\SL(2,\mathbb{C})$，
+$\mathfrak{su}(2)$ 和 $\mathfrak{sl}(2,\mathbb{C})$ 的表示是等价的，
+我们只需要选择其中一个来研究即可。
+
+\begin{definition}
+  令 $V$ 是 $G$（或者 $\mathfrak{g}$）的一个表示，如果子空间 $W\subseteq V$
+  满足：对于任意 $g\in G$，有 $\rho(g)W\subseteq W$（或者对于任意 $x\in \mathfrak{g}$，有 $\rho(x)W\subseteq W$），
+  那么称 $W$ 是 $V$ 的一个子表示。如果 $V$ 没有非平凡的子表示（即 $V$ 的子表示只有 $0$ 和 $V$），那么称 $V$ 是不可约的。
+\end{definition}
+
+例如 $\mathbb{C}^n$ 考虑为 $\SL(n,\mathbb{C})$ 的表示的时候，是不可约的。
+因为可以证明，对于任意非零向量 $v\in \mathbb{C}^n$，都存在一个行列式为 $1$ 的矩阵 $A\in \SL(n,\mathbb{C})$，
+使得 $Av$ 是任意一个标准基向量。因此，任意非零子空间 $W\subseteq \mathbb{C}^n$ 都包含所有的标准基向量，
+所以 $W=\mathbb{C}^n$。
+
+对于 $G$ 或者 $\mathfrak{g}$ 的两个表示 $V$ 和 $W$，它们的直和 $V\oplus W$ 也是一个表示，
+只需要定义 $G$ 在 $V\oplus W$ 上的作用为
+\[
+  \rho_{V\oplus W}(g)(v,w)=(\rho_V  (g)v,\rho_W(g)w).
+\]
+  
+\begin{definition}
+  一个表示如果同构于若干不可约表示的直和，即存在不可约表示 $V_i$
+  使得 $V\simeq\bigoplus_i V_i$，那么称它是完全可约的。
+\end{definition}
+
+通常来说，我们可以把直和项中同构的空间合并，记为 $V\simeq\bigoplus n_iV_i$，
+其中 $V_i$ 是两两不同构的不可约表示，$n_i$ 是它们的重数。
+
+令 $G=\mathbb{R}$，那么 $\mathfrak{g}=\mathbb{R}$。此时 $\mathfrak{g}$
+的表示就是一个向量空间 $V$ 附带线性映射 $\mathbb{R}\to\End(V)$，
+显然，这样的映射一定形如 $t\mapsto tA$，其中 $A\in \End(V)$。
+所以对应的 $\mathbb{R}$ 的表示一定形如 $t\mapsto \exp(tA)$。也就是说，
+分类 $\mathbb{R}$ 的表示等价于分类线性映射 $V\to V$。这样的分类
+可以通过 Jordan 标准型完成。如果 $v$
+是 $A$ 的一个特征向量，那么一维空间 $\mathbb{C}v\subseteq V$
+在 $A$ 的作用下是不变的，所以 $\mathbb{C}v$ 是 $V$ 的一个子表示。
+因此，$\mathbb{R}$ 的任意大于 $1$ 维的表示都有非平凡的子表示，
+也即 $\mathbb{R}$ 的不可约表示都是 $1$ 维的。
+因此，把表示 $t\mapsto \exp(tA)$ 写成一些不可约表示的直和等价于把矩阵 $A$ 对角化。
+所以 $\mathbb{R}$ 的表示完全可约当且仅当矩阵 $A$ 可对角化。
+
+\begin{lemma}
+  令 $\rho:G\to\GL(V)$ 是 $G$ （或者 $\mathfrak{g}$）的表示，
+  $A:V\to V$ 是可对角化的 $G$-线性映射。令 $V_\lambda\subseteq V$
+  是 $A$ 的特征值 $\lambda$ 的特征空间，那么 $V_\lambda$ 是一个子表示，
+  所以 $V=\bigoplus V_\lambda$ 是表示的一个直和分解。
+\end{lemma}
+\begin{proof}
+  任取 $v\in V_\lambda$，那么 $Av=\lambda v$。对于任意 $g\in G$，有
+  \[ 
+    A(\rho(g)v)=\rho(g)(Av)=\rho(g)(\lambda v)=\lambda (\rho(g)v),
+  \]
+  所以 $\rho(g)v\in V_\lambda$，也即 $V_\lambda$ 是一个子表示。
+  $A$ 可对角化意味着 $V=\bigoplus V_\lambda$，所以这是一个直和分解。
+\end{proof}
+
+\begin{lemma}[Schur 引理]
+  \mbox{}
+  \begin{enumerate}
+    \item 令 $V$ 是 $G$ 的一个不可约复表示，那么 $\Hom_G(V,V)=\mathbb{C}\mathrm{id}$，
+    即 $G$ 的不可约表示的自同态只有数乘同态。
+    \item 如果 $V$ 和 $W$ 是两个不同构的不可约复表示，那么 $\Hom_G(V,W)=0$。
+  \end{enumerate}
+  类似的结果对于李代数 $\mathfrak{g}$ 也成立。
+\end{lemma}
+\begin{proof}
+  如果 $\Phi:V\to W$ 是 $G$-线性映射，那么 $\ker\Phi$ 和 $\mathrm{im}\,\Phi$
+  分别是 $V$ 和 $W$ 的子表示。如果 $V$ 不可约，那么 $\ker\Phi$ 是 $V$ 或者 $0$，
+  所以 $\Phi$ 要么是 $0$，要么是单射。同样地，如果 $W$ 不可约，那么 $\mathrm{im}\,\Phi$
+  是 $0$ 或者 $W$，所以 $\Phi$ 要么是 $0$，要么是满射。
+  
+  因此，如果 $V$ 和 $W$ 不同构并且都不可约，那么 $\Phi$ 只能是 $0$，所以 $\Hom_G(V,W)=0$。
+  如果 $V$ 不可约，那么 $\Phi:V\to V$ 要么是 $0$，要么是同构。设 $\lambda$ 是 $\Phi$ 的一个特征值，
+  那么 $\Phi-\lambda \mathrm{id}$ 不是同构，所以只能是 $0$，也即 $\Phi=\lambda \mathrm{id}$。
+\end{proof}
+
+Schur 引理有下述重要推论。
+
+\begin{proposition}
+  如果 $G$ 是交换群，那么 $G$ 的任意不可约复表示都是 $1$ 维的。
+  类似地，如果 $\mathfrak{g}$ 是交换李代数，那么 $\mathfrak{g}$ 的任意不可约复表示都是 $1$ 维的。
+\end{proposition}
+\begin{proof}
+  设 $\rho:G\to\GL(V)$ 是不可约复表示，任取 $g\in G$，那么 $\rho(g):V\to V$
+  是 $G$-线性映射。因为对于任意 $h\in G$ 和 $v\in V$，
+  都有 $\rho(g)(\rho(h)v)=\rho(gh)v=\rho(hg)v=\rho(h)(\rho(g)v)$。
+  根据 Schur 引理，$\rho(g)=\lambda_g \mathrm{id}$，其中 $\lambda_g\in \mathbb{C}$。
+  而 $V$ 不可约，所以 $V$ 是 $1$ 维的。
+\end{proof}
+
+还是考虑 $G=\mathbb{R}$。我们已经知道 $\mathbb{R}$ 的不可约表示都是 $1$ 维的。
+实际上，任意 $1$ 维表示对应的李代数表示都是形如 $a\mapsto \lambda a$ 的映射，
+其中 $\lambda\in \mathbb{C}$。因此，$\mathbb{R}$ 的任意不可约表示都形如 $V_\lambda$，
+其中 $\lambda\in \mathbb{C}$ 并且 $V_\lambda$ 是 $1$ 维的复向量空间，
+附带表示作用 $\rho(a)=e^{\lambda a}$。
+
+类似地，我们可以描述 $\mathbb{S}^1=\mathbb{R}/\mathbb{Z}$ 的不可约表示。
+此时，任意表示 $\tau:\mathbb{S}^1\to \GL(V)$ 都可以通过商映射
+$\pi:\mathbb{R}\to \mathbb{S}^1$ 提升为 $\mathbb{R}$ 的表示 $\tau\circ\pi$。
+并且对于任意 $a\in \mathbb{Z}$ 有 $\tau\circ\pi(a)=\tau(1)=\mathrm{id}$。
+所以说 $\mathbb{S}^1$ 的表示必须是 $\mathbb{R}$ 的满足 $\rho(a)=\mathrm{id}$ 的表示。
+因此，$\mathbb{S}^1$ 的不可约表示都是 $1$ 维的，形如 $V_k$，
+其中 $k\in \mathbb{Z}$ 并且 $V_k$ 是 $1$ 维复向量空间，附带表示作用
+$\tau\circ\pi(x)=e^{2\pi ikx}$，或者说 $\tau(z)=z^k$。
+
+\section{Peter-Weyl 定理}
+
+\begin{definition}
+  一个李群 $G$ 的复表示 $V$ 如果存在一个 $G$-不变的 Hermite 内积，
+  即对于任意 $g\in G$ 和 $v,w\in V$，都有
+  \[
+    \langle \rho(g)v,\rho(g)w\rangle=\langle v,w\rangle,
+  \]
+  那么称 $V$ 是{酉表示}。类似地，一个李代数 $\mathfrak{g}$ 的复表示 $V$
+  如果存在一个 $\mathfrak{g}$-不变的 Hermite 内积
+  \[
+    \langle \rho(x)v,w\rangle + \langle v,\rho(x)w\rangle=0,\quad \forall x\in \mathfrak{g},\, v,w\in V,
+  \]
+  那么称 $V$ 是{酉表示}。
+\end{definition}
+
+酉表示的重要性体现在下面的定理。
+
+\begin{theorem}
+  每个酉表示都是完全可约的。
+\end{theorem}
+\begin{proof}
+  对 $V$ 的维数归纳。对于 $\dim V=1$ 的情况，显然成立。假设对于 $\dim V<n$ 的情况成立。
+  若 $\dim V=n$，如果 $V$ 是不可约的，那么结论成立。否则，存在非平凡子表示 $W\subseteq V$，
+  那么 $V=W\oplus W^\bot$。如果 $v\in W^\bot$，那么任取 $w\in W$，有
+  $\langle gv,w\rangle=\langle v,g^{-1}w\rangle=0$，所以 $gv\in W^\bot$，
+  所以 $W^\bot$ 也是 $V$ 的子表示。根据归纳假设，$W$ 和 $W^\bot$ 都是完全可约的，
+  所以 $V$ 也是完全可约的。对于李代数的情况同理。
+\end{proof}
+
+对于有限群而言，可以证明有限群的任意表示都是酉表示。其中需要对 $G$
+上的函数平均化处理得到一个 $G$-不变的内积，从而得到酉表示结构。
+然而，对于无限群，这种平均并不能通过求和完成，所以我们需要引入 Haar 测度。
+
+\begin{definition}
+  李群 $G$ 上的一个右 Haar 测度指的是 $G$ 上的一个 Borel 测度 $\d g$，
+  其在右平移作用下不变：即对于任意 Borel 集合 $E\subseteq G$ 和任意 $h\in G$，
+  都有 $\d g(Eh)=\d g(E)$。
+\end{definition}
+
+显然右 Haar 测度等价于对于任意 $h\in G$ 和可积函数 $f$，有
+$\int f(gh)\d g=\int f(g)\d g$。类似地可以定义左 Haar 测度。
+
+对于紧李群而言，从微分几何中的知识可知，$G$ 上存在唯一一个
+双不变（同时左不变和右不变）的体积形式 $\omega$，使得 $\int_G\omega=1$。
+这个体积形式可以构造一个双不变的 Haar 测度 $\d g$，满足对于任意连续函数 $f$，都有
+$\int_G f\d g=\int_G f\omega$。
+
+\begin{theorem}
+  令 $G$ 是一个紧李群，那么 $G$ 的任意表示都是酉表示并且是完全可约的。
+\end{theorem}
+\begin{proof}
+  令 $B(v,w)$ 是 $V$ 上的一个 Hermite 内积，将其平均化，定义
+  \[
+    \tilde{B}(v,w)=\int_G B(gv,gw)\d g.
+  \]
+  根据 Haar 测度的性质，$\tilde{B}$ 是一个 $G$-不变的 Hermite 内积，所以 $V$ 是酉表示。
+\end{proof}
+
+利用这个定理，紧李群的任意表示都可以写成不可约表示的直和
+$V\simeq \bigoplus n_iV_i$，其中 $n_i\in \mathbb{Z}$，$V_i$ 是两两不同构的不可约表示。
+下面我们研究如何构造这个直和分解。
+
+令 $v_i$ 是 $V$ 的一组基，将映射 $\rho(g):V\to V$ 在这组基下
+表示为矩阵 $\rho(g)=(\rho_{ij}(g))$。也就是说，我们考虑 $G$
+上的标量函数 $\rho_{ij}:G\to \mathbb{C}$，这被称为矩阵系数。
+
+\begin{theorem}
+  \mbox{}
+  \begin{enumerate}
+    \item 令 $V,W$ 是 $G$ 的不同构的不可约表示。选取基 $v_i\in V\ (i=1,\dots,n)$
+    和 $w_a\in W\ (a=1,\dots,m)$。那么矩阵系数 $\rho_{ij}^V$ 和 $\rho_{ab}^W$
+    是正交的：$\langle \rho_{ij}^V,\rho_{ab}^W\rangle=0$，其中 $C^\infty(G,\mathbb{C})$
+    上的内积定义为
+    \[
+      \langle f,h\rangle=\int_G f(g)\overline{h(g)}\d g.
+    \]
+    \item 令 $V$ 是 $G$ 的不可约表示。选取基 $v_i\in V$ 是一个
+    相对于某个 $G$-不变内积的正交基。那么矩阵系数 $\rho_{ij}^V$ 是两两正交的
+    并且每个的模长平方为 $1/{\dim V}$：
+    \[
+      \langle \rho_{ij}^V,\rho_{ab}^V\rangle=\frac{1}{\dim V}\delta_{ia}\delta_{jb}.
+    \]
+  \end{enumerate}
+\end{theorem}
+
+
+
 
 
 
