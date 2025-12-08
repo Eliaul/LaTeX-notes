@@ -1,0 +1,767 @@
+\chapter{可测函数的积分}
+
+\section{非负函数的积分}
+
+在本章中，我们考虑配备正测度 $\mu$ 的可测空间 $(E,\mathcal{A})$。
+
+\paragraph{简单函数}
+如果可测函数 $f:E\to \mathbb{R}$ 的值域是有限集，那么我们说 $f$ 的\emph{简单函数}。
+假设 $f$ 的所有可能的取值为 $\alpha_1,\dots,\alpha_n$，不妨假设 $\alpha_1<\alpha_2<\cdots<\alpha_n$。
+那么 $f$ 可以表示为
+\[
+  f(x)=\sum_{i=1}^n \alpha_i\mathbold 1_{A_i}(x),
+\]
+其中 $A_i=f^{-1}(\{\alpha_i\})\in \mathcal{A}$。注意到 $E$ 是 $A_1,\dots,A_n$ 的无交并。
+上述公式 $f=\sum_{i=1}^n \alpha_i\mathbold 1_{A_i}$ 被称为 $f$ 的标准表示。
+
+\begin{definition}
+  令 $f$ 是取值在 $\mathbb{R}_+$ 中的简单函数，标准表示为 $f=\sum_{i=1}^n \alpha_i\mathbold 1_{A_i}$。
+  定义\emph{$\mathbold f$ 相对于 $\mathbold\mu$ 的积分}为
+  \[
+    \int f\d\mu=\sum_{i=1}^n\alpha_i\mu(A_i).
+  \]
+  在 $\alpha_i=0$ 和 $\mu(A_i)=\infty$ 的情况下，约定 $0\times\infty=0$。
+\end{definition}
+
+注意上述定义中 $\sum_{i=1}^n\alpha_i\mu(A_i)$ 的取值为 $[0,\infty]$。所以在上述定义中
+我们只考虑非负的简单函数，这是为了避免出现 $\infty-\infty$ 之类的表达式。
+
+值得注意的是，如果简单函数 $f$ 有表达
+\[
+  f=\sum_{j=1}^m\beta_j\mathbold 1_{B_j},
+\]
+其中 $B_j$ 仍然构成 $E$ 的一个划分，但是 $\beta_j$ 不再是两两不同的。此时
+$f$ 的积分仍然为
+\[
+  \int f\d\mu=\sum_{j=1}^m\beta_j\mu(B_j).
+\]
+这是因为对于每个 $A_i$，某些 $B_j$ 构成了 $A_i$ 的划分，即
+\[
+  A_i=\bigcup_{\{j\,|\,\beta_j=\alpha_i\}}B_j,
+\]
+那么
+\[
+  \alpha_i\mu(A_i)=\alpha_i\sum_{\{j\,|\,\beta_j=\alpha_i\}}\mu( B_j)=
+  \sum_{\{j\,|\,\beta_j=\alpha_i\}}\beta_j\mu( B_j).
+\]
+
+非负简单函数的积分满足下面的一些基本的性质。
+
+\begin{proposition}
+  令 $f,g$ 是 $E$ 上的非负简单函数。
+  \begin{enumerate}
+    \item 对于每个 $a,b\in \mathbb{R}_+$，有
+    \[
+      \int(af+bg)\d\mu=a\int f\d\mu+b\int g\d\mu.
+    \]
+    \item 如果 $f\leq g$，那么
+    \[
+      \int f\d\mu\leq \int g\d\mu.
+    \]
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 设 $f,g$ 的标准表示分别为
+  \[
+    f=\sum_{i=1}^n\alpha_i\mathbold 1_{A_i},\quad  
+    g=\sum_{j=1}^m\beta_j\mathbold 1_{B_j}.  
+  \]
+  那么每个 $A_i$ 都是某些 $A_i\cap B_j$ 的无交并，同理，
+  每个 $B_j$ 都是某些 $A_i\cap B_j$ 的无交并，于是我们可以
+  使用一个新的划分 $\{C_1,\dots,C_p\}$ 使得
+  \[
+    f=\sum_{k=1}^p \gamma_k\mathbold 1_{C_k} ,\quad
+    g=\sum_{k=1}^p \theta_k\mathbold 1_{C_k} ,
+  \]
+  此时 $\gamma_k$ 不一定互不相同，$\theta_k$ 也不一定互不相同，
+  根据命题前面的叙述，我们有
+  \begin{align*}
+    \int
+    (af+bg)\d\mu&=\sum_{k=1}^p(a\gamma_k+b\theta_k)  \mu(C_k)\\&=
+    a\sum_{k=1}^p\gamma_k\mu(C_k)+b\sum_{k=1}^p\theta_k\mu(C_k)\\
+    &=a\int f\d\mu+b\int g\d\mu.
+  \end{align*}
+
+  (2) 由 (1)，有
+  \[
+    \int g\d\mu=\int(g-f)\d\mu+\int f\d\mu\geq \int f\d\mu.\qedhere  
+  \]
+\end{proof}
+
+我们用 $\mathcal{E}_+$ 来表示 $E$ 上的非负简单函数的集合。
+
+\begin{definition}
+  令 $f:E\to[0,\infty]$ 是可测函数，定义\emph{$\mathbold f$ 相对于 $\mathbold\mu$ 的积分}
+  为
+  \[
+    \int f\d\mu=\sup_{h\in \mathcal{E}_+,h\leq f}\int h\d\mu.
+  \]
+\end{definition}
+
+$f$ 相对于 $\mu$ 的积分通常有很多写法，下面的表达
+\[
+  \int f\d\mu,\ \int f(x)\d\mu(x),\ \int f(x)\mu(\d x),\ \int\mu(\d x)f(x)
+\]
+表示的含义是完全相同的。此外，如果 $A$ 是 $E$ 的可测子集，我们定义
+\[
+  \int_A f\d\mu=\int f\mathbold 1_A\d\mu.
+\]
+
+从现在开始，我们用非负可测函数表示 $E\to [0,\infty]$ 的可测函数(值可以为无穷)。
+需要注意的是，我们前面定义的非负简单函数值必须有限。
+
+\begin{proposition}\label{prop:elementary property of positive measurable function}
+  令 $f,g$ 是 $E$ 上的非负可测函数。
+  \begin{enumerate}
+    \item 如果 $f\leq g$，那么 $\int f\d\mu\leq \int g\d\mu$。
+    \item 如果 $\mu(\{x\in E\,|\, f(x)> 0\})=0$，那么 $\int f\d\mu=0$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 显然
+  \[
+      \bigl\{h\in \mathcal{E}_+\,|\, h\leq f\bigr\}\subseteq 
+      \bigl\{h\in \mathcal{E}_+\,|\, h\leq g\bigr\},
+  \]
+  根据定义即得 $\int f\d\mu\leq \int g\d\mu$。
+
+  (2) 设 $h\in \mathcal{E}_+$ 且 $h\leq f$，设 $h$ 的标准表示
+  为 $h=\sum_{i=1}^n \alpha_i\mathbold 1_{A_i}$，若 $\alpha_i> 0$，那么
+  \[
+    \mu(A_i)\leq   \mu (\{x\in E\,|\, h(x)> 0\})\leq \mu(\{x\in E\,|\, f(x)> 0\})=0,
+  \]
+  所以
+  \[
+    \int h\d\mu=\sum_{\{i\,|\,\alpha_i=0\}}\alpha_i\mu(A_i)+
+    \sum_{\{i\,|\,\alpha_i>0\}}\alpha_i\mu(A_i)=0+0=0,
+  \]
+  故 $\int f\d\mu=0$。
+\end{proof}
+
+下面的单调收敛定理是测度论中的一个极为重要的基本定理，其表明
+对于一列递增的非负可测函数，极限和积分可以交换次序。
+
+\begin{theorem}[单调收敛定理]\label{thm:monotone convergence thm}
+  令 $(f_n)_{n\in \mathbb{N}}$ 是 $E$ 上的一列递增的非负可测函数，即 $f_n\leq f_{n+1}$，
+  记 $f=\ulim f_n$，那么
+  \[
+    \int f\d\mu=\ulim[n\to\infty]\int f_n\d\mu.
+  \]
+\end{theorem}
+\begin{proof}
+  由于 $f_n\leq f$，所以 $\int f_n\d\mu\leq\int f\d\mu$，
+  所以 $\ulim \int f_n\d\mu\leq\int f\d\mu$，于是我们只需要证明
+  反向的不等式。
+
+  假设非负可测函数 $h=\sum_{i=1}^k \alpha_i\mathbold 1_{A_i}$
+  满足 $h\leq f$，任取 $a\in[0,1)$，定义一列可测集
+  \[
+    E_n=\{x\in E\,|\, ah(x)\leq f_n(x)\}  ,
+  \]
+  此时对于任意的 $x\in E$，都有 $ah(x)<h(x)\leq f(x)$，而 $f=\ulim f_n$，
+  所以总存在足够大的 $n$，使得 $ah(x)\leq f_n(x)$，这表明 $E=\bigcup_{n\in \mathbb{N}}E_n$。
+  此外，$f_n\leq f_{n+1}$ 表明 $E_n\subseteq E_{n+1}$。
+
+  显然 $f_n\geq ah\mathbold 1_{E_n}$，所以
+  \[
+    \int f_n\d\mu\geq a\int_{E_n} h\d\mu=
+    a\sum_{i=1}^k\alpha_i\mu(A_i\cap E_n),  
+  \]
+  由于 $A_i=A_i\cap E=\bigcup_{n\in \mathbb{N}}(A_i\cap E_n)$，
+  所以
+  \[
+    \mu(A_i)=\mu\biggl(\bigcup_{n\in \mathbb{N}}(A_i\cap E_n)\biggr)
+    =\ulim[n\to\infty]\mu(A_i\cap E_n),
+  \]
+  于是
+  \[
+    \ulim[n\to\infty]\int f_n\d\mu\geq a\sum_{i=1}^k
+    \alpha_i\ulim[n\to\infty]\mu(A_i\cap E_n)
+    =  a\sum_{i=1}^k\alpha_i\mu(A_i)
+    =a\int h\d\mu,
+  \]
+  由于 $a$ 可以任意接近 $1$，所以
+  \[
+    \ulim[n\to\infty]\int f_n\d\mu\geq \int h\d\mu,
+  \]
+  所以
+  \[
+    \ulim[n\to\infty]\int f_n\d\mu\geq \int f\d\mu=
+    \sup_{h\in \mathcal{E}_+,h\leq f}\int h\d\mu.\qedhere
+  \]
+\end{proof}
+
+
+\begin{proposition}\label{prop:property of integral of positive function}
+  \mbox{}
+  \begin{enumerate}
+    \item 设 $f$ 是 $E$ 上的非负可测函数，那么存在一列递增的非负简单函数 $(f_n)_{n\in \mathbb{N}}$
+    使得 $f=\ulim f_n$。如果 $f$ 有界，那么 $f_n\to f$ 一致收敛。
+    \item 令 $f,g$ 是两个 $E$ 上的非负可测函数，$a,b\in \mathbb{R}_+$，那么
+    \[
+      \int (af+bg)\d\mu=a\int f\d\mu+b\int g\d\mu.
+    \]
+    \item 令 $(f_n)_{n\in \mathbb{N}}$ 是一列 $E$ 上的非负可测函数，那么
+    \[
+      \int\biggl(\sum_{n\in \mathbb{N}}f_n\biggr)\d\mu=\sum_{n\in \mathbb{N}}\int f_n\d\mu.
+    \]
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 令 $d_n:[0,\infty]\to \mathbb{R}_+$ 为
+  \[
+    d_n=\sum_{k=1}^{n2^n}\frac{k-1}{2^n}  
+    \mathbold 1_{\left[\frac{k-1}{2^n},\frac{k}{2^n}\right)}+
+    n\mathbold 1_{[n,\infty]},
+  \]
+  显然 $d_n$ 是非负简单函数。直观上来看，$d_n$ 将区间 $[0,n]$
+  等分为了 $n2^n$ 份，即将 $[0,1]$ 等分为了 $2^n$ 份。
+  那么对于 $x\in [0,n)$，总存在唯一的 $k_n$ 使得 
+  $(k_n-1)/2^n\leq x< k_n/2^n$，此时 $k_{n+1}=2k_n$
+  或者 $k_{n+1}=2k_n-1$，所以
+  \[
+    d_{n+1}(x)  =\frac{k_{n+1}-1}{2^{n+1}}\geq \frac{k_n-1 }{2^n}
+    =d_n(x),
+  \]
+  这表明 $d_n\leq d_{n+1}$。此外，不难看出 $\lim d_n(x)=x$。
+  
+  令 $f_n=d_n\circ f$，由于 $f_n$ 只有有限多个取值，所以
+  $f_n$ 是非负简单函数。$d_n\leq d_{n+1}$ 表明
+  $f_n\leq f_{n+1}$。且 $\lim f_n=\lim d_n\circ f=f$，
+  所以 $f_n$ 就是一列递增的非负简单函数且 $f=\ulim f_n$。
+  $f$ 有界表明在 $n$ 足够大的时候有 $0\leq f-f_n\leq 2^{-n}$，
+  即 $f_n\to f$ 一致收敛。
+
+  (2) 由 (1)，设 $f=\ulim f_n$，$g=\ulim g_n$，其中 $(f_n),(g_n)$
+  均为一列递增的简单函数，那么
+  \[
+    \int (af_n+bg_n)\d\mu=a\int f_n\d\mu+b\int g_n\d\mu,  
+  \]
+  令 $n\to\infty$，再根据单调收敛定理，就有
+  \[
+    \int (af+bg)\d\mu=a\int f\d\mu+b\int g\d\mu.
+  \]
+
+  (3) 根据 (2)，有
+  \[
+    \int\biggl(\sum_{n=1}^m f_n\biggr)  \d\mu=
+    \sum_{n=1}^m \int f_n\d\mu,
+  \]
+  令 $m\to\infty$，再根据单调收敛定理，就有
+  \[
+    \int\biggl(\sum_{n\in \mathbb{N}}f_n\biggr)\d\mu=\sum_{n\in \mathbb{N}}\int f_n\d\mu.
+    \qedhere
+  \]
+\end{proof}
+
+\begin{remark}
+  \autoref{prop:property of integral of positive function} 和
+  单调收敛定理 \ref{thm:monotone convergence thm} 给出了证明
+  关于非负可测函数积分的命题的一种基本范式，即根据
+  \autoref{prop:property of integral of positive function} 的 (1)，
+  假设一列非负简单函数逼近原函数，先证明命题对非负简单函数成立，
+  这通常是非常容易的，再使用单调收敛定理证明命题对所有的
+  非负可测函数成立。
+\end{remark}
+
+下面的推论在概率论中十分有用，其对应于随机变量的概率密度函数。其
+证明是上述注释中技巧的一个典型运用。
+
+\begin{corollary}\label{coro:density of measure}
+  令 $g$ 是非负可测函数，对于 $A\in \mathcal{A}$，令
+  \[
+    \nu(A)=\int_A g\d\mu=\int g\mathbold 1_A \d\mu,
+  \]
+  那么 $\nu$ 是 $E$ 上的正测度，被称为密度 $g$ 相对于 $\mu$
+  的测度，记为 $\nu=g\cdot \mu$。此外，对于非负可测函数
+  $f$，有
+  \[
+    \int f\d\nu=\int fg\d\mu.
+  \]
+\end{corollary}
+\begin{proof}
+  显然 $\nu(\emptyset)=0$。任取一列不相交的 $A_n\in \mathcal{A}$，
+  那么
+  \[
+    \nu\biggl(\bigcup_{n\in \mathbb{N}}A_n\biggr)  
+    =\int \biggl(\sum_{n\in \mathbb{N}}g\mathbold 1_{A_n}\biggr)
+    \d\mu=\sum_{n\in \mathbb{N}}\int g\mathbold 1_{A_n}\d\mu
+    =\sum_{n\in \mathbb{N}}\nu(A_n),
+  \]
+  这就表明 $\nu$ 是 $E$ 上的正测度。
+
+  对于任意示性函数 $\mathbold 1_A$，有
+  \[
+    \int \indicator{A}\d\nu=\nu(A)=\int \indicator{A}g\d\mu,
+  \]
+  进一步的，令 $f=\ulim f_n$，其中 $f_n$ 是非负简单函数，
+  对于每个 $f_n$，根据积分的线性性，都有
+  \[
+    \int f_n \d\nu=\int f_ng\d\mu, 
+  \]
+  令 $n\to\infty$，根据单调收敛定理，就有 
+  \[
+    \int f\d\nu=\int fg\d\mu.\qedhere
+  \]
+\end{proof}
+\begin{remark}
+  在实际中，我们通常也会写作 $\nu(\d x)=g(x)\mu(\d x)$，或者
+  $g=\d\nu/\d\mu$。
+\end{remark}
+
+在测度论中，命题通常在\emph{几乎处处}(almost everywhere)的意义下成立，也就是说，
+对于不满足该命题的所有 $x\in E$ 的集合，这个集合的 $\mu$-测度为 $0$，
+我们使用简写 $\alev{\mu}$ 来表示这个意思。也就是说，当我们
+写到 $f=g,\ \alev{\mu}$ 的时候，我们表示的意思实际上是
+\[
+  \mu\bigl(\{x\in E\,|\, f(x)\neq g(x)\}\bigr)=0.
+\]
+
+\begin{proposition}
+  令 $f$ 是非负可测函数。
+  \begin{enumerate}
+    \item 对于每个 $a\in(0,\infty)$，有
+    \[
+      \mu(\{x\in E\,|\, f(x)\geq a\})\leq \frac{1}{a}\int f\d\mu.
+    \]
+    \item 我们有
+    \[
+      \int f\d\mu<\infty\Rightarrow f<\infty,\ \text{$\mu$ a.e.}
+    \]
+    \item 我们有
+    \[
+      \int f\d\mu=0\Leftrightarrow f=0,\ \text{$\mu$ a.e.}
+    \]
+    \item 如果 $g$ 是非负可测函数，
+    \[
+      f=g,\ \text{$\mu$ a.e.}\Rightarrow \int f\d\mu=\int g\d\mu.
+    \]
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 令可测集
+  $
+    A=\{x\in E\,|\, f(x)\geq a\}
+  $，
+  那么 $f\geq a\indicator{A}$，所以
+  \[
+    \int f\d\mu\geq a\int \indicator{A}\d\mu  
+    =a\mu(A).
+  \]
+
+  (2) 令可测集
+  $
+    A_n=\{x\in E\,|\, f(x)\geq n\}  
+  $ 以及 $A_\infty=\{x\in E\,|\, f(x)=\infty\}$，
+  那么 $A_{n+1}\subseteq A_n$ 且 $A_\infty=\bigcap_{n\in \mathbb{N}}A_n$。
+  根据 (1)，有
+  \[
+    \mu(A_1)\leq \int f\d\mu<\infty,  
+  \]
+  所以
+  \[
+    \mu(A_\infty)=\dlim[n\to\infty] \mu(A_n)\leq
+    \dlim[n\to\infty]\frac{1}{n}\int f\d\mu=0, 
+  \]
+  所以 $\mu(A_\infty)=0$，即 $f<\infty,\ \alev{\mu}$。
+
+  (3) 充分性由 \autoref{prop:property of integral of positive function} 的 (2) 保证。
+  下证必要性。令可测集
+  $
+    A_n=\{x\in E\,|\, f(x)\geq 1/n\}  
+  $ 以及
+  $A_\infty=\{x\in E\,|\, f(x)\neq 0\}$，那么
+  $A_n\subseteq A_{n+1}$ 且 $A_\infty=\bigcup_{n\in \mathbb{N}}A_n$。
+  根据 (1)，有
+  \[
+    \mu(A_\infty)=\ulim[n\to\infty]\mu(A_n)\leq
+    \ulim[n\to\infty]n\int f\d\mu=0,
+  \]
+  所以 $\mu(A_\infty)=0$。
+
+  (4) 记 $f\wedge g=\min(f,g)$ 及 $f\vee g=\max(f,g)$，那么
+  $f=g,\ \alev{\mu}$ 表明  $f\vee g=f\wedge g,\ \alev{\mu}$。
+  根据 (3)，有
+  \[
+    \int f\vee g\d\mu=\int f\wedge g\d\mu+\int (f\vee g-f\wedge g)\d\mu
+    =\int f\wedge g\d\mu,  
+  \]
+  又因为 $\int f\wedge g\d\mu\leq \int f\d\mu\leq \int f\vee g\d\mu$，
+  对于 $g$ 类似，所以
+  \[
+    \int f\d\mu=\int g\d\mu.\qedhere  
+  \]
+\end{proof}
+
+\begin{theorem}[Fatou 引理]
+  令 $(f_n)_{n\in \mathbb{N}}$ 是一列非负可测函数，那么
+  \[
+    \int \liminf f_n\d\mu\leq \liminf \int f_n\d\mu.
+  \]
+\end{theorem}
+\begin{proof}
+  只需证明
+  \[
+    \int\lim_{n\to\infty}\inf_{k\geq n}f_k \d\mu\leq 
+    \lim_{n\to\infty}\inf_{k\geq n}\int f_k\d\mu,  
+  \]
+  令 $g_n=\inf_{k\geq n}f_k$，那么 $g_n\leq g_{n+1}$，根据
+  单调收敛定理，有
+  \[
+    \int \lim_{n\to\infty}g_n\d\mu=\ulim[n\to\infty]\int g_n\d\mu.
+  \]
+  对于任意 $n$ 和 $k\geq n$，有 $\int g_n\d\mu\leq \int f_k\d\mu$，所以
+  \[
+    \int \lim_{n\to\infty}g_n\d\mu=\ulim[n\to\infty]\int g_n\d\mu
+    \leq\inf_{k\geq n} \int f_k\d\mu,
+  \]
+  令 $n\to\infty$，即可得到
+  \[
+    \int \liminf f_n\d\mu\leq \liminf \int f_n\d\mu.\qedhere
+  \]
+\end{proof}
+
+可以用一个简单的例子理解 Fatou 引理。考虑 $f_n=\mathbold 1_{[n,n+1]}$，
+那么对于任意 $x\in \mathbb R$，有 $\liminf f_n(x)=0$，此时显然有
+\[
+  0=\int \liminf f_n\d\mu \leq \liminf \int f_n\d\mu=1.
+\]
+直观上来看，就是把函数压扁（取极限）再求和（积分），得到的总和通常会变小，因为
+在这个过程中，有些原本存在的面积可能逃逸或者坍缩掉了。
+
+
+\begin{proposition}\label{prop:change variable}
+  令 $(F,\mathcal{B})$ 是可测空间，$\varphi:E\to F$ 是可测映射。令
+  $\nu$ 是 $\mu$ 在 $\varphi$ 下的推前。那么，对于任意 $F$ 上的非负可测函数 $h$，
+  我们有
+  \[
+    \int_Eh(\varphi(x))\mu(\d x)=\int_Fh(y)\nu(\d y).
+  \]
+\end{proposition}
+\begin{proof}
+  若 $h=\indicator{B}$ 是示性函数，那么
+  \[
+    \int_E h(\varphi(x))\mu(\d x)=
+    \mu(\varphi^{-1}(B)) =\nu(B)=\int_F h(y)\nu(\d y).
+  \]
+  若 $h=\sum_{i=1}^n\alpha_i\indicator{B_i}$ 是非负简单函数，
+  那么根据积分的线性性，结论也成立。
+  若 $h$ 是一般的非负可测函数，设 $(h_n)_{n\in \mathbb{N}}$ 是一列递增的非负简单函数
+  且 $h=\ulim h_n$，根据单调收敛定理，即可证明结论。
+\end{proof}
+
+
+
+\section{可积函数}
+
+本节我们讨论可变号的可测函数。
+如果 $f:E\to \mathbb{R}$ 是可测函数，记 $f$ 正部分 $f^+=\max(f,0)$，
+负部分 $f^-=\max(-f,0)$，需要注意 $f^+$ 和 $f^-$ 此时都是非负可测函数
+并且 $f=f^+-f^-$，$|f|=f^++f^-$。
+
+\begin{definition}
+  令 $f:E\to \mathbb{R}$ 是可测函数，如果
+  \[
+    \int|f|\d\mu<\infty,
+  \]
+  那么我们说 $f$ 相对于 $\mu$ \emph{可积}。在这种情况下，
+  我们定义
+  \[
+    \int f\d\mu=\int f^+\d\mu-\int f^-\d\mu.
+  \]
+  如果 $A\in \mathcal{A}$，记
+  \[
+    \int_A f\d\mu=\int f\mathbold 1_A\d\mu.
+  \]
+\end{definition}
+
+我们使用 $\mathcal{L}^1(E,\mathcal{A},\mu)$ 来表示所有可积函数
+$f:E\to \mathbb{R}$ 构成的空间。$\mathcal{L}_+^1(E,\mathcal{A},\mu)$ 来表示
+所有非负可积函数构成的空间。
+
+\begin{proposition}[可积函数的性质]
+  \mbox{}
+  \begin{enumerate}
+    \item 对于任意 $f\in \mathcal{L}^1(E,\mathcal{A},\mu)$，有
+    $\bigl|\int f\d\mu\bigr|\leq \int |f|\d\mu$。
+    \item $\mathcal{L}^1(E,\mathcal{A},\mu)$ 是 $\mathbb{R}$-向量空间。
+    \item 如果 $f,g\in \mathcal{L}^1(E,\mathcal{A},\mu)$ 且
+    $f\leq g$，那么 $\int f\d\mu\leq \int g\d\mu$。
+    \item 如果 $f\in \mathcal{L}^1(E,\mathcal{A},\mu)$，$g:E\to [0,\infty]$
+    是非负可测函数使得 $f=g,\ \alev{\mu}$，那么
+    $g\in \mathcal{L}^1(E,\mathcal{A},\mu)$ 且 $\int f\d\mu=\int g\d\mu$。
+    \item 令 $(F,\mathcal{B})$ 是可测空间，$\varphi:E\to F$ 是可测映射。令
+    $\nu$ 是 $\mu$ 在 $\varphi$ 下的推前。那么，对于任意可测函数 $h:F\to \mathbb{R}$，
+    $h$ 是 $\nu$-可积的当且仅当 $h\circ\varphi$ 是 $\mu$-可积的，并且我们有
+    \[
+      \int_Eh(\varphi(x))\mu(\d x)=\int_Fh(y)\nu(\d y).
+    \]
+  \end{enumerate}
+\end{proposition}
+
+\paragraph{延拓到复值函数} 
+令 $f:E\to \mathbb{C}$ 是可测函数（这等价于实部 $\Re f$ 和虚部 $\Im f$ 都是可测的），
+如果
+\[
+  \int |f|\d \mu <\infty,
+\]
+那么我们说 $f$ 是可积的。在这种情况下，我们定义
+\[
+  \int f\d\mu=\int \Re(f)\d \mu+i\int \Im (f)\d\mu.
+\]
+记复值可积函数空间为 $\mathcal L_{\mathbb{C}}^1(E,\mathcal{A},\mu)$，
+那么上述命题对复值可积函数依然成立。并且 $\mathcal L_{\mathbb{C}}^1(E,\mathcal{A},\mu)$
+是一个复向量空间。
+
+
+
+\begin{theorem}[控制收敛定理]
+  令 $(f_n)_{n\in \mathbb{N}}$ 是 $\mathcal{L}^1(E,\mathcal{A},\mu)$
+  中的一列函数(对于 $\mathcal{L}_{\mathbb{C}}^1(E,\mathcal{A},\mu)$ 也成立)，如果：
+  \begin{enumerate}
+    \item 存在可测函数 $f:E\to \mathbb{R}$ 使得
+    \[
+      f_n(x)\to f(x),\quad\alev{\mu}  
+    \]
+    \item 存在非负可测函数 $g$ 使得 $\int g\d\mu<\infty$，并且
+    对于每个 $n\in \mathbb{N}$，都有
+    \[
+      |f_n(x)|\leq g(x),\quad \alev{\mu}   
+    \]
+  \end{enumerate}
+  那么 $f\in \mathcal{L}^1(E,\mathcal{A},\mu)$ 且我们有
+  \[
+    \lim_{n\to\infty}\int f_n\d\mu=\int f\d\mu,\quad
+    \lim_{n\to\infty}\int |f_n-f|\d\mu=0.  
+  \]
+\end{theorem}
+\begin{proof}
+  我们首先将两个条件中的几乎处处去掉，证明结论成立。
+  由于 $|f_n|\leq g$，所以 $|f|=\lim|f_n|\leq g$，所以
+  $\int |f|\d\mu\leq \int g\d\mu<\infty$，故
+  $f\in L^1(E,\mathcal{A},\mu)$。由于 $|f-f_n|\leq 2g$
+  以及 $\lim |f-f_n|=0$，根据 Fatou 引理，有
+  \[
+    \liminf \int\bigl(2g-|f-f_n|\bigr)\d\mu\geq
+    \int \bigl(2g-\limsup|f-f_n|\bigr)\d\mu 
+    =\int 2g\d\mu,
+  \]
+  再根据积分的线性性，有
+  \[
+    \int 2g\d\mu-\limsup\int|f-f_n|\d\mu\geq \int 2g\d\mu,  
+  \]
+  这表明
+  \[
+    \limsup\int |f-f_n|\d\mu = 0,  
+  \]
+  所以 $\lim \int |f-f_n|\d\mu$ 存在且为 $0$。最后，我们有
+  \[
+    \left|\int f\d\mu-\int f_n\d\mu\right|\leq \int |f-f_n|\d\mu\to 0,
+  \]
+  所以 $\int f\d\mu=\lim\int f_n\d\mu$。
+
+  现在我们证明几乎处处的情况。记
+  \[
+    A=\big\{x\in E\,|\, f_n(x)\to f(x),|f_n(x)|\leq g(x)\big\}  ,
+  \]
+  那么 $A$ 可测且条件表明 $\mu(A^c)=0$。定义
+  \[
+    \tilde f_n(x)=\indicator{A}(x)f_n(x),\quad \tilde{f}(x)=\indicator{A}(x)f(x),  
+  \]
+  于是在几乎处处的意义下有 $f_n=\tilde{f}_n$ 以及 $f=\tilde{f}$，
+  所以 $\int f_n\d\mu=\int\tilde{f}_n\d\mu$，
+  $\int f\d\mu=\int\tilde f\d\mu$ 以及 $\int|f-f_n|\d\mu=\int|\tilde f-\tilde f_n|\d\mu$。
+  对 $\tilde{f}_n$ 和 $\tilde{f}$ 应用上面的结论即可。
+\end{proof}
+
+\section{含参积分}
+
+我们考虑带有一个参数的函数的积分。
+设 $(U,d)$ 是一个度量空间，参数位于这个空间中。
+
+\begin{theorem}[含参积分的连续性]
+  令 $f:U\times E\to \mathbb{R}$ (or $\mathbb{C}$)，$u_0\in U$。假设：
+  \begin{enumerate}
+    \item 对于每个 $u\in U$，函数 $x\mapsto f(u,x)$ 可测；
+    \item $\alev{\mu(\d x)}$，函数 $u\mapsto f(u,x)$ 在 $u_0$ 处连续；
+    \item 存在函数 $g\in \mathcal{L}_+^1(E,\mathcal{A},\mu)$
+    使得任取 $u\in U$ 有
+    \[
+      |f(u,x)|\leq g(x)\quad \alev{\mu(\d x)}  
+    \]
+  \end{enumerate}
+  那么函数 $F(u)=\int f(u,x)\mu(\d x)$ 是良好定义的且在 $u_0$
+  处连续。
+\end{theorem}
+\begin{proof}
+  条件 (1) 保证了 $x\mapsto f(u,x)$ 是可测的，所以 $F(u)$ 是良好定义的。
+  设 $(u_n)_{n\in \mathbb{N}}$ 是任意趋于 $u_0$ 的点列，那么 
+  对于几乎处处的 $x$，$u\mapsto f(u,x)$ 连续表明 $f(u_n,x)\to f(u,x)$，
+  再根据条件 (3) 和控制收敛定理，就有
+  \[
+    F(u_0)=\int \lim_{n\to\infty} f(u_n,x)\mu(\d x)
+    =  \lim_{n\to\infty}\int f(u_n,x)\mu(\d x)=\lim_{n\to\infty}F(u_n),
+  \]
+  这就表明 $F(u)$ 在 $u_0$ 处连续。
+\end{proof}
+
+\begin{example}
+  \mbox{}
+  \begin{enumerate}
+    \item 令 $\mu$ 是 $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ 上的扩散测度并且
+    $\varphi\in \mathcal{L}^1(\mathbb{R},\mathcal{B}(\mathbb{R}),\mu)$。
+    定义函数 $F:\mathbb{R}\to \mathbb{R}$ 为
+    \[
+      F(u)=\int_{(\infty,u]}\varphi(x)\mu(\d x)=
+      \int \idf_{(-\infty,u]}(x)\varphi(x)\mu(\d x).
+    \]
+    令 $f(u,x)=\idf_{(-\infty,u]}(x)\varphi(x)$，
+    那么任取 $u,x\in  \mathbb{R}$ 有 $|f(u,x)|\leq |\varphi(x)|$。
+    此外，对于任意 $u_0\in \mathbb{R}$，当 $x\in \mathbb{R}\setminus\{u_0\}$
+    时，函数 $u\mapsto f(u,x)$ 在 $u_0$ 处连续，由于 $\mu$ 是扩散测度，
+    即 $\mu(\{u_0\})=0$，所以满足条件 (2)。根据上述定理，$F$ 在 $\mathbb{R}$ 上连续。 
+    \item \emph{Fourier 变换}。令 $\lambda$ 表示 $\mathbb{R}$ 上的 Lebesgue 测度。
+    如果 $\varphi\in \mathcal{L}^1(\mathbb{R},\mathcal{B}(\mathbb{R}),\lambda)$，
+    定义函数 $\hat\varphi:\mathbb{R}\to \mathbb{C}$ 为：
+    \[
+      \hat\varphi(u)=\int e^{iux}\varphi(x)\lambda(\d x),  
+    \]
+    根据上面的定理，$\hat\varphi$ 是连续函数。函数 $\hat\varphi$ 被称为 $\varphi$
+    的 \emph{Fourier 变换}。在概率论中，我们经常会考虑有限测度的 Fourier 变换。
+    如果 $\mu$ 是 $\mathbb{R}$ 上的有限测度，定义 $\mu$ 的 Fourier 变换为
+    \[
+      \hat{\mu}(u)=\int e^{iux}\mu(\d x)\quad u\in \mathbb{R}.  
+    \]
+    此时 $|e^{iux}|\leq \indicator{\mathbb{R}}$ 是可积函数，所以
+    $\hat\mu$ 是连续函数。
+    \item \emph{卷积}。令 $\varphi\in \mathcal{L}^1(\mathbb{R},\mathcal{B}(\mathbb{R}),\lambda)$，
+    $h: \mathbb{R}\to \mathbb{R}$ 是有界连续函数，那么定义函数 $h*\varphi$ 为
+    \[
+      h*\varphi(u)=\int h(u-x)\varphi(x)\lambda(\d x),  
+    \]
+    这是一个连续函数。
+  \end{enumerate}
+\end{example}
+
+下面我们叙述含参积分的可微性。令 $I\subseteq \mathbb{R}$ 是开区间。
+
+\begin{theorem}
+  考虑函数 $f:I\times E\to \mathbb{R}$，$u_0\in I$，假设
+  \begin{enumerate}
+    \item 对于每个 $u\in I$，函数 $x\mapsto f(u,x)$ 是可积函数；
+    \item $\alev{\mu(\d x)}$，函数 $u\mapsto f(u,x)$ 在 $u_0$ 处可导，
+    导数记为
+    \[
+      \frac{\partial f}{\partial u}(u_0,x);  
+    \]
+    \item 存在函数 $g\in \mathcal{L}_+^1(E,\mathcal{A},\mu)$ 使得
+    对于任意 $u\in I$ 有
+    \[
+      |f(u,x)-f(u_0,x)|\leq g(x)|u-u_0|,\quad \alev{\mu(\d x)}  
+    \]
+  \end{enumerate}
+  那么函数 $F(u)=\int f(u,x)\mu(\d x)$ 在 $u_0$ 处可导，并且
+  \[
+    F'(u_0)=\int \frac{\partial f}{\partial u}(u_0,x)\mu(\d x).
+  \]
+\end{theorem}
+\begin{remark}
+  (2) 中的 $\partial f/\partial u(u_0,x)$ 只在某个 $\mu$-零可测集 $H$ 的补集
+  上有定义。当 $x\in H$ 的时候，我们定义其为 $0$，这样就可以保证
+  $x\mapsto \partial f/\partial u(u_0,x)$ 在整个 $E$ 上都有定义。
+  利用下面证明中的 $\varphi_n$ 和 \autoref{lemma:pointwise limit measurable}，
+  $x\mapsto \partial f/\partial u(u_0,x)$ 是可测的。
+  再利用条件 (3)，这个函数也是可积的，这使得 $F'(u_0)$ 有意义。
+  我们也可以把这个定理推广到复数情形，只需要对实部和虚部分别应用该定理即可。
+\end{remark}
+
+\begin{proof}
+  令 $(u_n)_{n\geq 1}$ 是 $I\setminus\{u_0\}$ 中收敛到 $u_0$ 的序列，令
+  \[
+    \varphi_n(x)=\frac{f(u_n,x)-f(u_0,x)}{u_n-u_0}.
+  \]
+  那么对于几乎处处的 $x$，有
+  \[
+    \lim_{n\to\infty}\varphi_n(x)=\frac{\partial f}{\partial u}(u_0,x).  
+  \]
+  根据条件 (3)，对于任意 $n$，都有
+  \[
+    |\varphi_n(x)|\leq g(x),\quad \alev{\mu(\d x)}.  
+  \]
+  根据控制收敛定理，有
+  \[
+    \lim_{n\to\infty}\int \varphi_n(x)\mu(\d x)=
+    \int \frac{\partial f}{\partial u}(u_0,x)\mu(\d x).
+  \]
+  注意到
+  \[
+    \int \varphi_n(x)\mu(\d x)=\frac{F(u_n)-F(u_0)}{u_n-u_0},  
+  \]
+  所以
+  \[
+    F'(u_0)=\int \frac{\partial f}{\partial u}(u_0,x)\mu(\d x).\qedhere  
+  \]
+\end{proof}
+
+
+在许多应用中，条件 (2) 和 (3) 通常以下更易验证的形式出现：
+\begin{enumerate}
+  \item[(2$'$)] $\alev{\mu(\d x)}$，函数 $u\mapsto f(u,x)$ 在 $I$ 上可微；
+  \item[(3$'$)] 存在函数 $g\in \mathcal{L}_+^1(E,\mathcal{A},\mu)$ 使得
+  对于任意 $u\in I$ 有
+  \[
+    \left|\frac{\partial f}{\partial u}(u,x)\right|\leq g(x),\quad \alev{\mu(\d x)}.  
+  \]
+\end{enumerate}
+
+\begin{example}
+  \mbox{}
+  \begin{enumerate}
+    \item 令 $\varphi\in \mathcal{L}^1(\mathbb{R},\mathcal{B}(\mathbb{R}),\lambda)$ 使得
+    \[
+      \int |x\varphi(x)|\lambda(\d x)<\infty.
+    \]
+    那么 Fourier 变换 $\hat\varphi(u)$ 在 $\mathbb{R}$ 中可微，并且
+    \[
+      \hat\varphi'(u)=\int ixe^{iux}\varphi(x)\lambda(\d x).
+    \]
+    \item 令 $\varphi\in \mathcal{L}^1(\mathbb{R},\mathcal{B}(\mathbb{R}),\lambda)$，
+    $h:\mathbb{R}\to \mathbb{R}$ 是连续可微函数，并且 $h$ 和 $h'$ 都有界，那么
+    卷积 $h*\varphi$ 在 $\mathbb{R}$ 上可微，并且
+    \[
+      (h*\varphi)'= h'*\varphi.
+    \]
+    这个论证可以递归下去。例如，如果 $h$ 是无穷可微且紧支的，那么 $h*\varphi$
+    也是无穷可微的。
+  \end{enumerate}
+\end{example}
+
+
+\begin{exercise}
+  计算
+  \[
+    \lim_{n\to\infty}\int_0^n\left(1+\frac{x}{n}\right)^ne^{-2x}\d x.  
+  \]
+  令 $\alpha\in \mathbb{R}$，证明极限
+  \[
+    \lim_{n\to\infty}\int_0^n\left(1-\frac{x}{n}\right)^n x^{\alpha-1}\d x  
+  \]
+  在 $[0,\infty]$ 上存在，且极限值有限当且仅当 $\alpha>0$。
+\end{exercise}
+\begin{proof}
+  令
+  \[
+    f_n(x)=\idf_{[0,n]}(x)\left(1+\frac{x}{n}\right)^n e^{-2x},
+  \]
+  那么对于任意 $x\geq 0$，都有 $\lim_{n\to\infty}f_n(x)=e^{-x}$。
+  此外，对于任意 $x\geq 0$，还有
+  \[
+    |f_n(x)|\leq (e^{x/n})^ne^{-2x}=e^{-x},
+  \]
+  所以可以选控制函数为 $g(x)=e^{-x}$。根据控制收敛定理，有
+  \[
+    \lim_{n\to\infty}\int_0^n\left(1+\frac{x}{n}\right)^ne^{-2x}\d x=
+    \int_0^\infty e^{-x}\d x=1.
+  \]
+\end{proof}
+

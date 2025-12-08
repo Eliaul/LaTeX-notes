@@ -1,0 +1,402 @@
+
+\chapter{$L^p$ 空间}
+
+\section{定义与 H\"older 不等式}
+
+在本章中，我们考虑测度空间 $(E,\mathcal{A},\mu)$。对于实数 $p\geq 1$，
+我们令 $\mathcal{L}^p(E,\mathcal{A},\mu)$ 表示所有满足
+\[
+  \int |f|^p\d\mu<\infty  
+\]
+的可测函数 $f:E\to \mathbb{R}$ 构成的空间。
+此外，我们引入 $\mathcal{L}^\infty(E,\mathcal{A},\mu)$ 表示所有
+几乎处处有界的可测函数 $f:E\to \mathbb{R}$ 构成的空间，即存在
+常数 $C\in \mathbb{R}_+$ 使得
+\[
+  |f|\leq C,\ \alev{\mu}  
+\]
+同样，我们可以引入复值函数空间 $\mathcal{L}_{\mathbb{C}}^p(E,\mathcal{A},\mu)$
+以及 $\mathcal{L}_{\mathbb{C}}^\infty(E,\mathcal{A},\mu)$。
+
+对于每个 $p\in [1,\infty]$，我们可以定义 $\mathcal{L}^p$ 上
+的一个等价关系：
+\[
+  f\sim g\Leftrightarrow f=g,\ \alev{\mu}  
+\]
+于是我们可以考虑商空间
+\[
+  L^p(E,\mathcal{A},\mu)=\mathcal{L}^p(E,\mathcal{A},\mu)/\sim.  
+\]
+也就是说，我们只考虑几乎处处相等意义上的函数，如果两个函数几乎处处
+相等，那么我们认为这是同一个函数。通常情况下，我们把 $L^p(E,\mathcal{A},\mu)$
+中的元素视为其在 $\mathcal{L}^p(E,\mathcal{A},\mu)$ 中的任意代表元：
+当我们谈及 $L^p(E,\mathcal{A},\mu)$ 中的函数时，这意味着我们在 $\mathcal{L}^p(E,\mathcal{A},\mu)$
+中选取了一个代表元，并且得到的结论和这个代表元的选取无关。
+
+在没有歧义的情况下，我们使用 $L^p(\mu)$ 或者 $L^p$ 表示
+$L^p(E,\mathcal{A},\mu)$。注意到 $L^1$ 就是所有可积函数
+构成的空间。
+
+对于可测函数 $f:E\to \mathbb{R}$ 和 $p\in [1,\infty)$，我们定义
+\[
+  \norm{f}_p=\left(\int |f|^p\d\mu\right)^{1/p}  .
+\]
+约定 $\infty^{1/p}=\infty$。定义
+\[
+  \norm{f}_\infty=\inf\big\{C\in[0,\infty]\,\big|\, |f|\leq C,\ \alev{\mu}\big\}  .
+\]
+显然有 $|f|\leq \norm{f}_\infty$ 并且 $\norm{f}_{\infty}$ 是 $[0,\infty]$
+中满足这个性质的最小值。
+如果 $f,g$ 是两个几乎处处相等的可测函数，那么有 $\norm{f}_p=\norm{g}_p$，
+所以我们可以针对 $f\in L^p(E,\mathcal{A},\mu)$ 良好的定义 $\norm{f}_p$。
+
+对于 $p,q\in [1,\infty]$，我们说 $p$ 和 $q$ 是\emph{共轭指数}，如果
+\[
+  \frac{1}{p}+\frac{1}{q}=1.  
+\]
+特别地，$1$ 和 $\infty$ 是共轭的。
+
+\begin{theorem}[H\"older 不等式]
+  令 $p,q$ 是共轭指数，$f,g$ 是两个 $E\to \mathbb{R}$ 的可测函数，那么
+  \[
+    \int|fg|\d\mu\leq \norm{f}_p\norm{g}_q.  
+  \]
+  特别地，如果 $f\in L^p$ 以及 $g\in L^q$，那么
+  $fg\in L^1$。
+\end{theorem}
+\begin{proof}
+  若 $\norm{f}_p=0$，那么 $|f|=0\,\ \alev{\mu}$，这表明 
+  $\int |fg|\d\mu=0$，结论显然成立，所以我们不妨假设
+  $\norm{f}_p>0$ 以及 $\norm{g}_p>0$。进一步的，我们还可以假设
+  $f\in L^p$ 以及 $g\in L^q$，否则右边为 $\infty$ 显然成立。
+
+  先假设 $p=1$ 和 $q=\infty$，那么
+  \[
+    \int|fg|\d\mu\leq \norm{g}_{\infty}\int |f|\d\mu
+    =  \norm{f}_1\norm{g}_\infty.
+  \]
+  下面假设 $1<p,q<\infty$。
+
+  设 $\alpha\in (0,1)$，那么对于 $x\in [0,\infty)$ 有不等式
+  \[
+    x^\alpha-\alpha x\leq 1-\alpha,  
+  \]
+  取 $x=u/v\ (u\geq 0,v>0)$，我们有
+  \[
+    u^\alpha v^{1-\alpha}\leq \alpha u+(1-\alpha) v,  
+  \]
+  该不等式在 $v=0$ 时也成立。取 $\alpha=1/p$，$1-\alpha=1/q$，
+  以及
+  \[
+    u=\frac{|f|^p}{\norm{f}_p^p} ,\quad v=\frac{|g|^q}{\norm{g}_q^q},
+  \]
+  那么
+  \[
+  \frac{|fg|}{\norm{f}_p^p\norm{g}_q^q}\leq
+  \frac{1}{p}\frac{|f|^p}{\norm{f}_p^p}+
+  \frac{1}{q}\frac{|g|^q}{\norm{g}_q^q},
+  \]
+  两边积分，即得
+  \[
+    \int|fg|\d\mu\leq   \norm{f}_p^p\norm{g}_q^q.\qedhere
+  \]
+\end{proof}
+
+\begin{corollary}[Cauchy-Schwarz 不等式]
+  取 $p=q=2$，即得
+  \[
+    \int |fg|\d\mu\leq \left(\int |f|^2 \d\mu\right)^{1/2}  
+    \left(\int |g|^2 \d\mu\right)^{1/2}  .
+  \]
+\end{corollary}
+ 
+\begin{corollary}
+  假设 $\mu$ 是有限测度，$p,q$ 是共轭指数且 $p>1$，那么对于
+  任意可测函数 $f:E\to \mathbb{R}$，有
+  \[
+    \norm{f}_1\leq \mu(E)^{1/q}\norm{f}_p,  
+  \]
+  因此，对于任意 $p\in (1,\infty]$，有 $L^p\subseteq L^1$。
+  更一般地，对于任意 $1\leq r< r'<\infty$，有
+  \[
+    \norm{f}_r\leq \mu(E)^{\frac{1}{r}-\frac{1}{r'}}  
+    \norm{f}_{r'},
+  \]
+  因此，对于任意 $1\leq p<q\leq \infty$，有 $L^q\subseteq L^p$，
+  特别地，当 $\mu$ 是概率测度的时候，还有 $\norm{f}_p\leq\norm{f}_q$。
+\end{corollary}
+\begin{proof}
+  取 $g=\indicator{E}$，即得
+  \[
+    \int|f|\d\mu=\int|f \indicator{E}|\d\mu\leq
+    \norm{f}_p \norm{\indicator{E}}_q=\mu(E)^{1/q}\norm{f}_p. 
+  \]
+  用 $f^r$ 替代 $f$，取 $p=r'/r$，$1/q=1-r/r'$，那么
+  \[
+    \norm{f}_r\leq \mu(E)^{1/r-1/r'}\norm{f^r}_{r'/r}^{1/r}  
+    =\mu(E)^{1/r-1/r'}\norm{f}_{r'}.\qedhere
+  \]
+\end{proof}
+
+
+\begin{theorem}[Jensen 不等式]
+  假设 $\mu$ 是概率测度，$\varphi:\mathbb{R}\to \mathbb{R}_+$
+  是凸函数，那么对于每个 $f\in L^1(E,\mathcal{A},\mu)$，有
+  \[
+    \int \varphi\circ f\d\mu\geq \varphi\left(\int f\d\mu\right).
+  \]
+\end{theorem}
+
+
+
+
+
+\section{Banach 空间 $L^p(E,\mathcal{A},\mu)$}
+
+\begin{theorem}[Minkowski 不等式]
+  令 $p\in [1,\infty]$，$f,g\in L^p(E,\mathcal{A},\mu)$，那么
+  $f+g\in L^p(E,\mathcal{A},\mu)$ 并且
+  \[
+    \norm{f+g}_p\leq \norm{f}_p+\norm{g}_p.
+  \]
+\end{theorem}
+\begin{proof}
+  $p=1$ 时就是绝对值不等式 $|f+g|\leq |f|+|g|$。$p=\infty$ 时也是显然的。
+  假设 $1<p<\infty$。由于
+  \[
+    |f+g|^p\leq (|f|+|g|)^p\leq \bigl(2\max(|f|,|g|)\bigr)^p
+    \leq 2^p\bigl(|f|^p+|g|^p\bigr),
+  \]
+  所以 $f+g\in L^p(E,\mathcal{A},\mu)$。然后，考虑不等式
+  \[
+    |f+g|^p=|f+g|\times |f+g|^{p-1}\leq |f||f+g|^{p-1}+|g||f+g|^{p-1},
+  \]
+  两边积分，并且利用 H\"older 不等式，取 $p$ 和 $q=p/(p-1)$，即得
+  \[
+    \int|f+g|^p\d \mu\leq 
+    \norm{f}_p\left(\int |f+g|^p\d\mu\right)^{\frac{p-1}{p}}+
+    \norm{g}_p\left(\int |f+g|^p\d\mu\right)^{\frac{p-1}{p}}.
+  \]
+  如果 $\int |f+g|^p\d\mu=0$，那么定理自然成立，否则两边同时除以
+  $\left(\int |f+g|^p\d\mu\right)^{(p-1)/p}$，即得所需不等式。
+\end{proof}
+
+\begin{theorem}[Reisz]
+  对于每个 $p\in[1,\infty]$，空间 $L^p(E,\mathcal{A},\mu)$ 配备
+  范数 $f\mapsto \norm{f}_p$ 是一个 Banach 空间(即完备的赋范向量空间)。
+\end{theorem}
+\begin{proof}
+  首先考虑 $1\leq p<\infty$。先验证 $f\mapsto \norm f_p$ 是一个范数。
+  我们有
+  \[
+    \norm f_p=0\Rightarrow \int |f|^p\d\mu=0\Rightarrow |f|=0,\ \alev{\mu}
+  \]
+  这意味着在 $L^p$ 中有 $f=0$。线性性 $\norm{\lambda f}_p=|\lambda| \norm{f}_p$
+  是显然的。三角不等式由 Minkowski 不等式保证。
+
+  然后我们说明 $L^p$ 空间是完备的。令 $(f_n)_{n\geq 1}$ 是 $L^p$ 中的一个
+  Cauchy 列。我们可以找到一个严格递增的序列 $(k_n)$，使得对于每个 $n\geq 1$，有
+  \[
+    \norm{f_{k_{n+1}}-f_{k_n}}_p<2^{-n}.
+  \]
+  令 $g_n=f_{k_n}$，那么有 $\norm{g_{n+1}-g_n}_p <2^{-n}$。利用单调
+  收敛定理和 Minkowski 不等式，我们有
+  \begin{align*}
+    \int\left(
+      \sum_{n=1}^\infty |g_{n+1}-g_n|
+    \right)^p\d\mu&=\ulim[N\to\infty]
+    \int\left(
+      \sum_{n=1}^N |g_{n+1}-g_n|
+    \right)^p\d\mu\\
+    &=\ulim[N\to\infty]
+    \norm{\sum_{n=1}^N (g_{n+1}-g_n)}_p^p\\
+    &\leq \ulim[N\to\infty]\left(\sum_{n=1}^N\norm{g_{n+1}-g_n}_p\right)^p\\
+    &<\infty,
+  \end{align*}
+  这表明
+  \[
+    \sum_{n=1}^\infty |g_{n+1}-g_n|<\infty,\ \alev{\mu},
+  \]
+  对于每个使得 $\sum_{n=1}^\infty |g_{n+1}(x)-g_n(x)|<\infty$
+  的 $x$，我们有
+  \[
+    h(x)=g_1(x)+\sum_{n=1}^\infty\bigl(g_{n+1}(x)-g_n(x)\bigr)
+    =\lim_{n\to\infty} g_n(x).
+  \]
+  否则令 $h(x)=0$。根据 \autoref{lemma:pointwise limit measurable}，
+  $h$ 是可测函数。因为 $g_n$ 几乎处处收敛到 $h$，所以几乎处处有
+  $|h|=\liminf |g_n|$，利用 Fatou 引理，我们有
+  \[
+    \int |h|^p\d\mu\leq \liminf \int|g_n|^p\d\mu
+    \leq \sup_{n\geq 1}\int |g_n|^p\d\mu<\infty,
+  \]
+  最后一个小于号是因为 Cauchy 列 $(f_n)$ 一定有界。因此，$h\in L^p$。
+  再次利用 Fatou 引理，对于每个 $n\geq 1$，有
+  \begin{align*}
+    \norm{h-g_n}_p^p&=\int |h-g_n|^p\d\mu\leq 
+    \liminf_{m\to\infty} \int|g_m-g_n|^p\d \mu\\
+    &=\liminf_{m\to\infty}\norm{g_m-g_n}_p^p\leq (2^{-n+1})^p,
+  \end{align*}
+  最后一个不等号使用了估计
+  \[
+    \norm{g_m-g_n}_p\leq \norm{g_{n+1}-g_n}_p+\cdots +\norm{g_m-g_{m-1}}_p<2^{-n+1}.
+  \]
+  于是，序列 $(g_n)$ 在 $L^p$ 中收敛到 $h$。由于 Cauchy 列有收敛子列则一定收敛，
+  所以 $(f_n)$ 也收敛到 $h$，这就完成了 $1\leq p<\infty$ 时的证明。
+
+  当 $p=\infty$ 时，验证 $f\mapsto\norm{f}_\infty$ 是一个范数的方法是一样的。
+  令 $(f_n)_{n\geq 1}$ 是 $L^\infty$ 中的 Cauchy 列。
+  根据 $L^\infty$-范数的定义，对于每个 $m>n\geq 1$，存在一个零可测集 $N_{m,n}$
+  使得对于 $x\in E\setminus N_{m,n}$，有 $|f_m(x)-f_n(x)|\leq \norm{f_m-f_n}_\infty$。
+  令 $N$ 是所有 $N_{m,n}$ 的可数并，那么仍然有 $\mu(N)=0$，并且
+  对于每个 $x\in E\setminus N$ 有 $|f_n(x)-f_m(x)|\leq \norm{f_n-f_m}_\infty$。
+  此时，对于每个 $x\in E\setminus N$，序列 $(f_n(x))_{n\geq 1}$ 是 $\mathbb{R}$ 中的 Cauchy 列，
+  因此有一个极限，记为 $g(x)$。若 $x\in N$ 则令 $g(x)=0$。此时 $g$ 是可测函数，
+  并且
+  \[
+    \sup_{x\in E\setminus N}|f_n(x)-g(x)|\leq \sup_{m\in\{n+1,n+2,\dots\}}
+    \norm{f_n-f_m}_\infty,
+  \]
+  右端在 $n\to\infty$ 时趋于 $0$，因此 $f_n$ 在 $L^\infty$ 中收敛到 $g$。
+\end{proof}
+ 
+\begin{example}
+  如果 $E=\mathbb{N}$ 并且 $\mu$ 是计数测度，那么对于每个 $p\in [1,\infty)$，
+  空间 $L^p(\mathbb{N},\mathcal{P}(\mathbb{N}),\mu)$ 就是所有实数列
+  $a=(a_n)_{n\in \mathbb{N}}$ 的空间，并且满足
+  \[
+    \norm{a}_p=\left(\sum_{n=0}^\infty |a_n|^p\right)^{1/p}<\infty.
+  \]
+  空间 $L^\infty$ 则是所有有界实数列构成的空间，并且范数 $\norm{a}_\infty=\sup_{n\in \mathbb{N}}|a_n|$。
+  注意到这个测度空间中没有非空的零测集，所以此时 $L^p$ 和 $\mathcal{L}^p$ 是重合的。
+  这个空间通常记为 $\ell^p=\ell^p(\mathbb{N})$，是一个非常重要的 Banach 空间。
+\end{example}
+
+从上述定理的证明中我们还可以得到以下命题。
+
+\begin{proposition}\label{prop:subsequence pointwise convergence in Lp}
+  令 $p\in [1,\infty)$，$(f_n)_{n\in \mathbb{N}}$ 是 $L^p(E,\mathcal{A},\mu)$
+  中的收敛序列，有极限 $f$。那么存在一个子列 $(f_{k_n})_{n\in \mathbb{N}}$
+  几乎处处逐点收敛到 $f$。
+\end{proposition}
+\begin{remark}
+  这个命题对 $p=\infty$ 时也成立，但是这种情况下不需要提取子列了，
+  因为 $L^\infty$ 中的范数在除开零测集的意义上等价于一致收敛。
+\end{remark}
+
+需要注意的是，函数空间 $L^p$ 中的收敛并不意味着逐点收敛。
+下面的例子说明了这两种收敛之间的区别。我们构造一个在 $L^p\bigl([0,1],\mathcal{B}([0,1]),\lambda\bigr)$
+中收敛到 $0$ 但是逐点处处发散的序列 $(f_n)$。
+首先，我们把区间 $[0,1]$ 不断二等分、四等分、八等分、……，按照下面的顺序依次编号为 $I_n$：
+\[
+  [0,1],\left[0,\frac{1}{2}\right],\left[\frac{1}{2},1\right],
+  \left[0,\frac{1}{4}\right],\left[\frac{1}{4},\frac{1}{2}\right],
+  \left[\frac{1}{2},\frac{3}{4}\right],\left[\frac{3}{4},1\right],\dots.
+\] 
+令 $f_n=\idf_{I_n}$。对于任意 $p\in [1,\infty)$，有
+\[
+  \norm{f_n-0}_p=\lambda(I_n)^{1/p}\to 0,
+\]
+因此 $f_n\xlongrightarrow{L^p}0$。但是任取 $x\in [0,1]$，
+总存在无穷多个 $n$ 使得 $x\in I_n$，于是有无穷多个 $f_n(x)=1$，
+因此序列 $(f_n(x))$ 发散。所以为了构造 $(f_n)$ 在 $L^p$ 中的收敛函数，
+直接取逐点的极限是不行的，必须要从中挑选收敛行为一致的子列。
+例如，在这个例子中，我们可以取 $g_n=f_{2^n}=\idf_{[0,1/2^n]}$，那么
+对于任意 $x\in [0,1]$ 有
+\[
+  \sum_{n=1}^\infty |g_{n+1}(x)-g_n(x)|<\infty.
+\]
+此时再取极限
+\[
+  h(x)=g_1(x)+\sum_{n=1}^\infty(g_{n+1}(x)-g_n(x))=\lim_{n\to\infty} g_n(x)=\begin{cases}
+    1 & x=0,\\
+    0 & x\in (0,1],
+  \end{cases}
+\]
+就能得到 $L^p$ 空间中的极限函数。
+
+不过，根据 \autoref{prop:subsequence pointwise convergence in Lp}，如果已知
+$L^p(E,\mathcal{A},\mu)$ 空间中的函数列 $(f_n)$ 有极限 $f$，并且几乎处处
+有逐点收敛 $f_n(x)\to g(x)$，那么可以得到 $f=g,\,\alev{\mu}$。
+
+对于 $p\in [1,\infty)$，我们可能会问什么时候反过来成立：如果 $L^p(E,\mathcal{A},\mu)$
+中的函数列 $(f_n)$ 几乎处处逐点收敛到 $f$，那么是否在 $L^p$ 中收敛？
+也即函数空间 $L^p$ 中的逐点收敛是否意味着 $L^p$ 中的收敛？
+一般来说这也是错误的，但是根据控制收敛定理，如果满足下面的条件，
+\begin{enumerate}
+  \item $f_n\to f,\,\alev{\mu}$,
+  \item 存在一个非负可测函数 $g$ 使得 $\int g^p\d\mu<\infty$ 并且对于每个 $n$
+  有 $|f_n|\leq g,\,\alev{\mu}$，
+\end{enumerate}
+那么函数 $f\in L^p$ 且 $f_n\xrightarrow{L^p}f$。
+
+$p=2$ 的时候尤其重要，因为 $L^2$ 空间有一个 Hilbert 空间的结构。
+
+\begin{theorem}
+  空间 $L^2(E,\mathcal{A},\mu)$ 配备内积
+  \[
+    \langle f,g\rangle=\int f g\d\mu  
+  \]
+  是一个实 Hilbert 空间。
+\end{theorem}
+\begin{proof}
+  Cauchy-Schwarz 不等式保证了 $fg$ 是可积的，因此内积是良定义的。 
+  在这个内积中有 $\langle f,f\rangle=\norm f_{2}^2$，完备性在上面已经证明。
+\end{proof}
+
+经典的 Hilbert 空间理论可以应用到 $L^2$ 空间中。例如，如果
+$\varPhi:L^2(E,\mathcal{A},\mu)\to \mathbb{R}$ 是连续线性映射，
+那么存在唯一的 $g\in L^2(E,\mathcal{A},\mu)$，使得对于每个
+$f\in L^2(E,\mathcal{A},\mu)$，都有 $\varPhi(f)=\langle f,g\rangle$。
+这个结果非常有用。
+
+\section{$L^p$ 空间中的密度定理}
+ 
+令 $(E,d)$ 是度量空间。回顾一个函数 $f:E\to \mathbb{R}$ 被称为 Lipschitz
+的，如果存在常数 $K>0$ 使得
+\[
+  \forall x,y\in E,\quad |f(x)-f(y)|\leq K d(x,y).
+\]
+$(E,\mathcal{B}(E))$ 上的测度 $\mu$ 被称为外正则的，如果对于每个 $A\in \mathcal{B}(E)$，
+都有
+\[
+  \mu(A)=\inf \big\{\mu(U)\,\big|\, U\supseteq A,\ U\text{ 是开集}\big\}.
+\]  
+当 $\mu$ 是有限测度时，外正则性总是成立的。
+
+考虑一般的可测空间 $(E,\mathcal{A},\mu)$，我们在前面的章节引入了简单函数。
+如果 $\mu$ 是 $(E,\mathcal{A})$ 上的测度，对于可积的简单函数和任意 $p\in [1,\infty)$，
+它们也都是 $L^p(\mu)$ 中的元素。
+
+\begin{theorem}
+  对于 $p\in [1,\infty)$。
+  \begin{enumerate}
+    \item 如果 $(E,\mathcal{A},\mu)$ 是测度空间，那么所有可积的简单函数
+    集合在 $L^p(E,\mathcal{A},\mu)$ 中稠密。
+    \item 如果 $(E,d)$ 是度量空间，$\mu$ 是 $(E,\mathcal{B}(E))$ 上的外正则测度，
+    那么所有有界 Lipschitz 函数的集合是 $L^p(E,\mathcal{B}(E),\mu)$ 的稠密子集。
+    \item 如果 $(E,d)$ 是可分的局部紧的度量空间，$\mu$ 是 $E$ 上的 Radon 测度，
+    那么所有紧支的 Lipschitz 函数的集合在 $L^p(E,\mathcal{B}(E),\mu)$ 中稠密。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  (1) 任取函数 $f\in L^p$，有分解 $f=f^+-f^-$，所以不妨假设 $f$ 是非负函数。
+  此时，根据 \autoref{prop:property of integral of positive function}，
+  $f$ 是一列递增简单函数 $(\varphi_n)$ 的逐点极限，记作
+  \[
+    f=\ulim[n\to\infty] \varphi_n.
+  \]
+  那么 $\int |\varphi_n|^p\d\mu \leq \int|f|^p\d\mu<\infty$，
+  所以 $\varphi_n\in L^p$ (对于简单函数而言，这等价于 $\varphi_n\in L^1$)。
+  因为 $|f-\varphi_n|^p\leq f^p$，根据控制收敛定理，有
+  \[
+    \lim_{n\to\infty}\int |f-\varphi_n|^p\d\mu=0.
+  \]
+  这就表明 $\varphi_n\xrightarrow{L^p} f$。
+
+  (2) 令 $f\in L^p(E,\mathcal{B}(E),\mu)$，根据 (1)，存在一列
+\end{proof}
+
+
+
+

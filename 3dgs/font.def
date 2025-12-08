@@ -1,0 +1,71 @@
+\ProvidesFile{font.def}
+
+\setCJKmainfont{Source Han Serif SC}[
+  UprightFont=*-Regular,
+  BoldFont=*-Bold,
+  ItalicFont=HYKaiTi S,
+  ItalicFeatures={Scale=1.1}
+]
+\newCJKfontfamily[zhsong]\songti{Source Han Serif SC}[
+  UprightFont=*-Regular,
+  BoldFont=*-Bold,
+  ItalicFont=HYKaiTi S,
+  ItalicFeatures={Scale=1.1}
+]
+\setCJKsansfont{Source Han Sans SC}[
+  UprightFont=*-Regular,
+  BoldFont=*-Bold
+]
+\newCJKfontfamily[zhhei]\heiti{Source Han Sans SC}[
+  UprightFont=*-Regular,
+  BoldFont=*-Bold
+]
+\setCJKmonofont{HYFangSong S}[
+  BoldFont=*,
+  ItalicFont=*,
+  BoldItalicFont=*
+]
+\newCJKfontfamily[zhfs]\fangsong{HYFangSong S}[
+  BoldFont=*,
+  ItalicFont=*,
+  BoldItalicFont=*
+]
+\newCJKfontfamily[zhkai]\kaishu{HYKaiTi S}[
+  BoldFont=*,
+  ItalicFont=*,
+  BoldItalicFont=*
+]
+
+\setmainfont{texgyretermes}[
+  Extension=.otf,
+  UprightFont=*-regular,
+  BoldFont=*-bold,
+  ItalicFont=*-italic,
+  BoldItalicFont=*-bolditalic,
+  SlantedFont=*-italic
+]
+%\setmathrm{texgyretermes}[
+%  Extension=.otf,
+%  UprightFont=*-regular,
+%  BoldFont=*-bold,
+%  ItalicFont=*-italic,
+%  BoldItalicFont=*-bolditalic,
+%  SlantedFont=*-italic
+%]
+\setsansfont{Cantarell}[
+  UprightFont=* Regular,
+  ItalicFont=* Italic,
+  BoldFont=* Bold,
+  BoldItalicFont=* Bold Italic,
+  SmallCapsFont=Alegreya Sans SC
+]
+\setmonofont{Ubuntu Mono}[
+  UprightFont=*,
+  ItalicFont=* Italic,
+  BoldFont=* Bold,
+  BoldItalicFont=* Bold Italic
+]
+%\setmathfont{texgyretermes-math.otf}
+%\setmathfont[range={\mathcal,\mathbfcal,\mathfrak},StylisticSet=1]{XITSMath-Regular.otf}
+%\setmathfont[range={\mathbb}]{KpMath-Sans.otf}
+

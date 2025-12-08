@@ -1,0 +1,78 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{notes}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=4cf59b50463b475dc0aac665915d2ac1}{%
+           family={Gallier},
+           familyi={G\bibinitperiod},
+           given={Jean},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{4cf59b50463b475dc0aac665915d2ac1}
+      \strng{fullhash}{4cf59b50463b475dc0aac665915d2ac1}
+      \strng{fullhashraw}{4cf59b50463b475dc0aac665915d2ac1}
+      \strng{bibnamehash}{4cf59b50463b475dc0aac665915d2ac1}
+      \strng{authorbibnamehash}{4cf59b50463b475dc0aac665915d2ac1}
+      \strng{authornamehash}{4cf59b50463b475dc0aac665915d2ac1}
+      \strng{authorfullhash}{4cf59b50463b475dc0aac665915d2ac1}
+      \strng{authorfullhashraw}{4cf59b50463b475dc0aac665915d2ac1}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{02}
+      \field{title}{Notes on Spherical Harmonics and Linear Representations of Lie Groups}
+      \field{year}{2009}
+      \true{nocite}
+    \endentry
+    \entry{kirillov2008introduction}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=03b9417e92f257ad686ccf63401f4055}{%
+           family={Kirillov},
+           familyi={K\bibinitperiod},
+           given={Alexander\bibnamedelima A},
+           giveni={A\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{03b9417e92f257ad686ccf63401f4055}
+      \strng{fullhash}{03b9417e92f257ad686ccf63401f4055}
+      \strng{fullhashraw}{03b9417e92f257ad686ccf63401f4055}
+      \strng{bibnamehash}{03b9417e92f257ad686ccf63401f4055}
+      \strng{authorbibnamehash}{03b9417e92f257ad686ccf63401f4055}
+      \strng{authornamehash}{03b9417e92f257ad686ccf63401f4055}
+      \strng{authorfullhash}{03b9417e92f257ad686ccf63401f4055}
+      \strng{authorfullhashraw}{03b9417e92f257ad686ccf63401f4055}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{An introduction to Lie groups and Lie algebras}
+      \field{volume}{113}
+      \field{year}{2008}
+      \true{nocite}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
