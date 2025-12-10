@@ -316,7 +316,35 @@ $\sigma$-域上定义。
     \bigr\}.
   \]
   首先我们证明 $\bar{\mathcal{A}}=\mathcal{B}$。
+  首先，直接验证可知 $\mathcal{B}$ 是一个 $\sigma$-域。显然还有 $\mathcal{A}\subseteq \mathcal{B}$
+  以及 $\mathcal{N}\subseteq \mathcal{B}$，所以 $\bar{\mathcal{A}}\subseteq \mathcal{B}$。
+  反之，任取 $A\in \mathcal{B}$，那么存在 $B,B'\in \mathcal{A}$ 使得
+  $B\subseteq A\subseteq B'$ 且 $\mu(B'\setminus B)=0$。
+  此时 $A\setminus B\subseteq B'\setminus B$ 且 $\mu(B'\setminus B)=0$，
+  所以 $A\setminus B\in \mathcal{N}$，所以 $A=B\cup (A\setminus B)\in \bar{\mathcal{A}}$。
+
+  下面我们把 $\mu$ 延拓到 $\mathcal{B}$ 上。如果 $A\in \bar{\mathcal{A}}=\mathcal{B}$，
+  且 $B,B'\in \mathcal{A}$ 是满足 $B\subseteq A\subseteq B'$ 且 $\mu(B'\setminus B)=0$ 的集合，
+  那么定义 $\mu(A)=\mu(B)=\mu(B')$。这种定义不依赖于 $B$ 和 $B'$ 的选取：
+  如果 $C,C'$ 也有这样的性质，那么同时有 $\mu(C)\leq \mu(B')$ 以及 $\mu(B)\leq \mu(C')$，
+  所以必须有 $\mu(B)=\mu(B')=\mu(C)=\mu(C')$。最后只需要验证 $\mu$ 在 $\mathcal{B}$
+  上确实是一个测度。假设 $(A_n)$ 是 $\mathcal{B}$ 中一列不相交的集合，那么对于每个 $n$
+  都可以选取一个 $B_n\in \mathcal{A}$ 使得 $B_n\subseteq A_n$ 并且 $A_n\setminus B_n$
+  是可忽略集。此时，有
+  \[
+    \mu\biggl(
+      \bigcup_{n\in \mathbb{N}} A_n
+    \biggr)=\mu\biggl(
+      \bigcup_{n\in \mathbb{N}} B_n
+    \biggr)=\sum_{n\in \mathbb{N}}\mu(B_n)=\sum_{n\in \mathbb{N}}\mu(A_n).\qedhere
+  \]
 \end{proof}
+
+\begin{remark}
+  令 $f,g$ 是两个定义在 $E$ 上的实值函数。假设 $g$ 是 $\mathcal{A}$-可测的
+  并且 $f=g,\ \alev{\mu}$。 
+\end{remark}
+
 
 
 
