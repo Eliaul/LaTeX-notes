@@ -41,6 +41,17 @@ $\sigma$-域上定义。
   所以要验证子集 $B$ 是 $\mu^*$-可测的，只需要说明反向的不等式即可。
 \end{remark}
 
+外测度的定义来源于 $\mathbb{R}$ 中定义集合长度的想法，也即用一堆开区间
+覆盖这个集合，然后取这些开区间长度之和的下确界，所以叫“外”测度，有
+从外面逼近的含义。$\mu^*$-可测的定义看似奇怪，其实可以把 $A$ 理解为一个
+“测试集”，用集合 $B$ 把 $A$ 切成两部分 $A\cap B$ 和 $A\cap B^c$，如果
+这两部分的测度之和等于 $A$ 的测度，那么就说 $B$ 是可测的，也就是比较好的集合。
+如果 $B$ 的形状非常复杂，那么切出来的两部分可能会产生很多复杂的碎片，
+导致体积之和增大，这时说 $B$ 是不可测的。
+
+
+
+
 \begin{theorem}\label{thm:outer measure}
   \mbox{}
   \begin{enumerate}
@@ -49,6 +60,86 @@ $\sigma$-域上定义。
     \item $\mu^*$ 在 $\mathcal{M}(\mu^*)$ 上的限制是一个测度。
   \end{enumerate}
 \end{theorem}
+\begin{proof}
+  (1) 如果 $\mu^*(B)=0$，那么对于任意 $A\subseteq E$，由于
+  $A\cap B\subseteq B$，所以 $\mu^*(A\cap B)\leq \mu^*(B)=0$，所以
+  \[
+    \mu^*(A\cap B)+\mu^*(A\cap B^c)\leq \mu^*(A\cap B)+\mu^*(A)=\mu^*(A),
+  \]
+  这就表明 $B\in \mathcal{M}(\mu^*)$。
+
+  显然 $\emptyset\in \mathcal{M}(\mu^*)$，并且 $B\in \mathcal{M}(\mu^*)$
+  蕴含 $B^c\in \mathcal{M}(\mu^*)$。下面证明 $\mathcal{M}(\mu^*)$ 对
+  可数并运算封闭。我们首先证明 $\mathcal{M}(\mu^*)$ 对有限并封闭。令
+  $B_1,B_2\in \mathcal{M}(\mu^*)$，任取 $A\subseteq E$，则 $B_1\in \mathcal{M}(\mu^*)$
+  表明
+  \begin{align*}
+    \mu^*(A\cap (B_1\cup B_2))&=\mu^*(A\cap(B_1\cup B_2)\cap B_1)+\mu^*(A\cap(B_1\cup B_2)\cap B_1^c) \\
+    &=\mu^*(A\cap B_1)+\mu^*(A\cap B_2\cap B_1^c),
+  \end{align*}
+  再利用 $B_2\in \mathcal{M}(\mu^*)$，就得到
+  \begin{align*}
+    &\quad \mu^*(A\cap (B_1\cup B_2))+\mu^*(A\cap (B_1\cup B_2)^c)\\
+    &=\mu^*(A\cap B_1)+\mu^*(A\cap B_1^c\cap B_2)+\mu^*(A\cap B_1^c\cap B_2^c) \\
+    &=\mu^*(A\cap B_1)+\mu^*(A\cap B_1^c) \\
+    &=\mu^*(A).
+  \end{align*}
+  所以 $B_1\cup B_2\in \mathcal{M}(\mu^*)$。因为 $\mathcal{M}(\mu^*)$ 对有限并
+  和补运算封闭，所以对有限交也封闭。因此，如果 $B,B'\in \mathcal{M}(\mu^*)$，
+  那么 $B'\setminus B=B'\cap B^c\in \mathcal{M}(\mu^*)$。
+
+  由于 $\mathcal{M}(\mu^*)$ 对差集运算封闭，所以要证明可数并封闭，只需要
+  证明 $\mathcal{M}(\mu^*)$ 中一列不相交的集合 $(B_k)_{k\in \mathbb{N}}$ 的并在 $\mathcal{M}(\mu^*)$ 中。
+  采用归纳法。对于任意整数 $m\in \mathbb{N}$ 和任意 $A\subseteq E$，我们证明 
+  \begin{equation}\label{eq:outer measure tmp1}
+    \mu^*(A)=\sum_{k=1}^m\mu^*(A\cap B_k)+\mu^*\biggl(A\cap \bigcap_{k=1}^m B_k^c\biggr).
+  \end{equation}
+  当 $m=1$ 时，这就是 $B_1\in \mathcal{M}(\mu^*)$ 的定义。假设 $m$ 步成立，
+  $B_k$ 互不相交表明对于 $1\leq k\leq m$ 有 $B_{m+1}\subseteq B_k^c$，那么
+  \begin{align*}
+    \mu^*\biggl(
+      A\cap \bigcap_{k=1}^m B_k^c
+    \biggr)&=\mu^*\biggl(
+      A\cap \bigcap_{k=1}^m B_k^c \cap B_{m+1}
+    \biggr)+\mu^*\biggl(
+      A\cap \bigcap_{k=1}^m B_k^c \cap B_{m+1}^c
+    \biggr) \\
+    &=\mu^*(A\cap B_{m+1})+\mu^*\biggl(
+      A\cap \bigcap_{k=1}^{m+1} B_k^c
+    \biggr).
+  \end{align*}
+  再根据归纳假设，就得到式 \eqref{eq:outer measure tmp1} 对 $m+1$ 也成立。
+  利用式 \eqref{eq:outer measure tmp1}，对于任意 $A\subseteq E$，都有
+  \[
+    \mu^*(A)\geq \sum_{k=1}^m \mu^*(A\cap B_k)+
+    \mu^*\biggl(
+      A\cap \bigcap_{k=1}^\infty B_k^c
+    \biggr).
+  \]
+  然后令 $m\to\infty$，就得到
+  \begin{align}
+    \mu^*(A)&\geq \sum_{k=1}^\infty \mu^*(A\cap B_k)+
+    \mu^*\biggl(
+      A\cap \bigcap_{k=1}^\infty B_k^c
+    \biggr) \label{eq:outer measure tmp2} \\
+    &\geq \mu^*\biggl(
+      A\cap \bigcup_{k=1}^\infty B_k
+    \biggr)+\mu^*\biggl(
+      A\cap \bigcap_{k=1}^\infty B_k^c
+    \biggr),\notag
+  \end{align}
+  这就表明 $\bigcup_{k=1}^\infty B_k\in \mathcal{M}(\mu^*)$。
+
+  (2) 显然 $\mu^*(\emptyset)=0$。下面证明 $\sigma$-可加性。令
+  $(B_k)_{k\in \mathbb{N}}$ 是 $\mathcal{M}(\mu^*)$ 中的一列互不相交的集合，
+  那么根据 \eqref{eq:outer measure tmp2}，取 $A=\bigcup_{k\in \mathbb{N}}B_k$，就得到
+  \[
+    \mu^*\biggl(\bigcup_{k\in \mathbb{N}}B_k\biggr)\geq
+    \sum_{k=1}^\infty\mu^*(B_k).
+  \]
+  结合外测度的 $\sigma$-次可加性，就得到等号成立，所以 $\mu^*$ 在
+  $\mathcal{M}(\mu^*)$ 上是一个测度。
+\end{proof}
 
 
 \section{Lebesgue 测度}
@@ -60,7 +151,7 @@ $\sigma$-域上定义。
 注意这个下确界的取值范围为 $[0,\infty]$：如果 $A$ 无界，那么
 将会得到 $\infty$。
 
-\begin{theorem}
+\begin{theorem}\label{thm:lebesgue measure}
   \mbox{}
   \begin{enumerate}
     \item $\lambda^*$ 是 $\mathbb{R}$ 上的一个外测度。
@@ -68,6 +159,13 @@ $\sigma$-域上定义。
     \item 对于任意实数 $a\leq b$，$\lambda^*([a,b])=\lambda^*((a,b))=b-a$。
   \end{enumerate}
 \end{theorem}
+\begin{remark}
+  $\lambda^*$ 在 $\mathcal{B}(\mathbb{R})$ 上的限制被称为 $\mathbb{R}$
+  上的\emph{Lebesgue 测度}，记为 $\lambda$。根据单调类定理的推论 
+  \ref{coro:uniqueness of measure}，这是 $\mathcal{B}(\mathbb{R})$ 上
+  唯一一个满足 $\lambda([a,b])=b-a$ 的测度。
+\end{remark}
+
 \begin{proof}
   (1) 显然 $\lambda^*(\emptyset)=0$ 并且 $A\subseteq B$ 表明 $\lambda^*(A)\leq\lambda^*(B)$。
   下面证明 $\sigma$-次可加性。任取 $\mathbb{R}$ 的一列子集 $(A_n)_{n\in \mathbb{N}}$，
@@ -86,6 +184,142 @@ $\sigma$-域上定义。
   \]
   由于 $\varepsilon$ 的任意性，所以 $\lambda^*$ 满足 $\sigma$-次可加性。
 
-  (2) 
+  (2) 因为 $\mathcal{M}(\lambda^*)$ 是一个 $\sigma$-域，所以只需要证明其
+  包含生成 Borel $\sigma$-域的某个集合族即可，我们选择所有区间 $(-\infty,\alpha]$。
+  固定 $\alpha\in \mathbb{R}$，记 $B=(-\infty,\alpha]$。我们需要证明
+  对于任意 $A\subseteq \mathbb{R}$，都有
+  \[
+    \lambda^*(A)\geq \lambda^*(A\cap B)+\lambda^*(A\cap B^c).
+  \]
+  令 $\bigl((a_i,b_i)\bigr)_{i\in \mathbb{N}}$ 是 $A$ 的一个开覆盖，$\varepsilon>0$。
+  那么区间 $\bigl(a_i\wedge\alpha,(b_i\wedge\alpha)+\varepsilon 2^{-i}\bigr)$
+  覆盖 $A\cap B$，并且区间 $(a_i\vee \alpha,b_i\vee\alpha)$ 覆盖 $A\cap B^c$，所以
+  \begin{align*}
+    \lambda^*(A\cap B)&\leq \sum_{i\in \mathbb{N}}
+    \bigl((b_i\wedge\alpha)-(a_i\wedge\alpha)\bigr)+\varepsilon,\\
+    \lambda^*(A\cap B^c)&\leq \sum_{i\in \mathbb{N}}
+    \bigl((b_i\vee\alpha)-(a_i\vee\alpha)\bigr).
+  \end{align*}
+  将上面两式相加，就有
+  \[
+    \lambda^*(A\cap B)+\lambda^*(A\cap B^c)\leq
+    \sum_{i\in \mathbb{N}}(b_i-a_i)+\varepsilon.
+  \]
+  因为 $\varepsilon$ 的任意性，就有
+    \[
+    \lambda^*(A\cap B)+\lambda^*(A\cap B^c)\leq
+    \sum_{i\in \mathbb{N}}(b_i-a_i).
+  \]
+  由于 $\lambda^*(A)$ 是所有开覆盖长度之和的下确界，所以就得到需要的结论。
+
+  (3) 根据定义，立马得到
+  \[
+    \lambda^*([a,b])\leq b-a.
+  \]
+  假设 $[a,b]\subseteq \bigcup_{i\in \mathbb{N}}(a_i,b_i)$。根据紧性，
+  存在 $N$ 使得 $[a,b]\subseteq \bigcup_{i=1}^N (a_i,b_i)$。
+  那么
+  \[
+    b-a\leq \sum_{i=1}^N (b_i-a_i)\leq \sum_{i\in \mathbb{N}}(b_i-a_i).
+  \]
+  这就表明 $b-a\leq \lambda^*([a,b])$。最后，注意到 $\lambda^*(\{a\})=\lambda^*(\{b\})=0$
+  就得到 $\lambda^*((a,b))=\lambda^*([a,b])=b-a$。
 \end{proof}
+
+下面我们将 Lebesgue 测度推广到 $\mathbb{R}^d$ 上。我们说 $\mathbb{R}^d$
+中的一个开矩形 $P$ 是形如以下形式的集合：
+\[
+  P=(a_1,b_1)\times (a_2,b_2)\times \cdots \times (a_d,b_d),
+\]
+对应的，如果每个区间都是闭区间，那么我们说 $P$ 是一个闭矩形。
+定义 $P$ 的体积为
+\[
+  \vol(P)=\prod_{i=1}^d (b_i-a_i).
+\]
+然后，对于每个子集 $A\subseteq \mathbb{R}^d$，定义
+\[
+  \lambda^*(A)=\inf\bigg\{\sum_{i\in \mathbb{N}}\vol(P_i)\,|\, A\subseteq \bigcup_{i\in \mathbb{N}}P_i\bigg\},
+\]
+即考虑所有覆盖 $A$ 的开矩形体积之和的下确界。
+现在我们可以推广 \autoref{thm:lebesgue measure} 的结论到 $\mathbb{R}^d$ 上。
+
+\begin{theorem}
+  \mbox{}
+  \begin{enumerate}
+    \item $\lambda^*$ 是 $\mathbb{R}^d$ 上的一个外测度。
+    \item $\sigma$-域 $\mathcal{M}(\lambda^*)$ 包含 $\mathcal{B}(\mathbb{R}^d)$。
+    \item 对于任意开或者闭矩形 $P$，有 $\lambda^*(P)=\vol(P)$。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  (1) 这一点和 $d=1$ 时的证明完全相同。
+
+  (2) 只需要证明，如果 $A\subseteq \mathbb{R}^d$ 形如
+  \[
+    A=\mathbb{R}\times \cdots\times \mathbb{R}\times (-\infty,a]
+    \times \mathbb{R}\times \cdots\times \mathbb{R},
+  \]
+  其中 $a\in \mathbb{R}$，那么 $A\in \mathcal{M}(\lambda^*)$。证明和
+  $d=1$ 时的做法也完全类似。
+
+  (3) 根据定义，立马得到 $\lambda^*(P)\leq \vol(P)$。下面证明反向不等式。
+  同样利用 $P$ 的紧性，只需要证明：如果 $P$ 是闭矩形，并且
+  $ P\subseteq \bigcup_{i=1}^n P_i$，
+  其中 $P_i$ 是开矩形，那么 
+  \[
+    \vol(P)\leq \sum_{i=1}^n\vol(P_i).
+  \]
+  记
+  \[
+    C_{n}^{k_1\dots k_n}=[k_12^{-n},(k_1+1)2^{-n}]\times \cdots \times
+    [k_d2^{-n},(k_d+1)2^{-n}],\quad k_1,\ldots,k_d\in \mathbb{Z}.
+  \]
+  那么 $\{C_n^{k_1\dots k_d}\,|\, k_1,\ldots,k_d\in \mathbb{Z}\}$ 构成了
+  $\mathbb{R}^d$ 的一个划分，并且每个 $C_n^{k_1\dots k_d}$ 的体积为 $2^{-nd}$。
+  固定 $n$，假设 $P$ 和 $c_n$ 个 $C_n^{k_1\dots k_d}$ 相交，
+  $\bigcup_{i=1}^n P_i$ 和 $c_n'$ 个 $C_n^{k_1\dots k_d}$ 相交，那么
+  $c_n\leq c_n'$，所以
+  \[
+    c_n 2^{-nd}\leq c_n' 2^{-nd}.
+  \]
+  取 $n\to\infty$，就得到 $\vol(P)\leq \sum_{i=1}^n\vol(P_i)$。
+\end{proof}
+
+通常，我们用
+\[
+  \int_{\mathbb{R}^d} f(x)\d x =\int_{\mathbb{R}^d} f(x)\lambda(\d x)
+\]
+表示 $f$ 相对于 Lebesgue 测度的积分。当 $d=1$ 以及 $a\leq b$ 时，
+我们也用
+\[
+  \int_a^b f(x)\d x =\int_{[a,b]} f(x)\lambda(\d x).
+\]
+
+一个自然的问题是 $\mathcal{M}(\lambda^*)$ 比 $\mathcal{B}(\mathbb{R}^d)$
+大多少。从某种意义上，这两个 $\sigma$-域的差距不算很大。
+
+\begin{proposition}
+  令 $(E,\mathcal{A},\mu)$ 是测度空间。定义 $\mu$-可忽略集的集合为
+  \[
+    \mathcal{N}=\bigl\{A\in \mathcal{P}(E)\bigm| \exists B\in \mathcal{A},A\subseteq B\text{\ and\ }\mu(B)=0\bigr\}.
+  \]
+  我们把包含 $\mathcal{A}$ 和 $\mathcal{N}$ 的最小 $\sigma$-域称为 $\mathcal{A}$
+  相对于 $\mu$ 的\emph{完备化}，记作 $\bar{\mathcal{A}}$。
+  此时，$(E,\bar{\mathcal{A}})$ 上存在唯一的测度使得其在 $\mathcal{A}$ 上的限制等于 $\mu$。
+\end{proposition}
+\begin{proof}
+  令
+  \[
+    \mathcal{B}=\bigl\{
+      A\in \mathcal{P}(E)\bigm| \exists B,B'\in \mathcal{A},
+      B\subseteq A\subseteq B',\ \mu(B'\setminus B)=0
+    \bigr\}.
+  \]
+  首先我们证明 $\bar{\mathcal{A}}=\mathcal{B}$。
+\end{proof}
+
+
+
+
+
 
