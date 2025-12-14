@@ -342,8 +342,145 @@ $\sigma$-域上定义。
 
 \begin{remark}
   令 $f,g$ 是两个定义在 $E$ 上的实值函数。假设 $g$ 是 $\mathcal{A}$-可测的
-  并且 $f=g,\ \alev{\mu}$。 
+  并且 $f=g,\ \alev{\mu}$，这里指的是集合 $\{x\in E\,|\, f(x)\neq g(x)\}$
+  是 $\mu$-可忽略集。那么 $f$ 是 $\bar{\mathcal{A}}$-可测的。
+  根据定义，存在 $C\in \mathcal{A}$ 使得 $\mu(C)=0$ 并且 $f(x)=g(x)$ 
+  对于 $x\notin C$。此时，任取 Borel 集 $H\subseteq \mathbb{R}$，有
+  $g^{-1}(H)\setminus C\subseteq f^{-1}(H)\subseteq g^{-1}(H)\cup C$，
+  所以 $f^{-1}(H)\in \bar{\mathcal{A}}$。 
 \end{remark}
+
+\begin{proposition}
+  $\sigma$-域 $\mathcal{M}(\lambda^*)$ 等于 $\mathcal{B}(\mathbb{R}^d)$
+  相对于 Lebesgue 测度的完备化 $\overline{\mathcal{B}}(\mathbb{R}^d)$。
+\end{proposition}
+\begin{proof}
+  $\overline{\mathcal{B}}(\mathbb{R}^d)\subseteq \mathcal{M}(\lambda^*)$
+  是简单的。如果 $A$ 是可忽略集，那么存在 $B\in \mathcal{B}(\mathbb{R}^d)$
+  使得 $\lambda(B)=0$ 且 $A\subseteq B$。于是 $\lambda^*(A)\leq \lambda^*(B)=0$，
+  根据 \autoref{thm:outer measure}，$A\in \mathcal{M}(\lambda^*)$。
+
+  反之，令 $A\in \mathcal{M}(\lambda^*)$，我们需要证明 $A\in \overline{\mathcal{B}}(\mathbb{R}^d)$。
+  不失一般性，我们假设存在某个 $K>0$ 使得 $A\subseteq (-K,K)^d$，
+  否则我们可以把 $A$ 写为可数个集合 $A\cap (-n,n)^d$ 的并集。
+  那么 $\lambda^*(A)<\infty$，并且对于每个 $n\geq 1$，我们可以找到可数个
+  开矩形 $(P_i^n)_{i\in \mathbb{N}}$ 使得
+  \[
+    A\subseteq \bigcup_{i\in \mathbb{N}} P_i^n,\quad
+    \sum_{i\in \mathbb{N}} \vol(P_i^n)\leq \lambda^*(A)+\frac{1}{n}.
+  \]
+  我们还可以假设每个 $P_i^n\subseteq (-K,K)^d$，否则
+  将 $P_i^n$ 替换为 $P_i^n\cap (-K,K)^d$ (两个开矩形的交依然是开矩形)即可。
+  令
+  \[
+    B_n=\bigcup_{i\in \mathbb{N}} P_i^n,\quad B=\bigcap_{n=1}^\infty B_n.
+  \]
+  那么 $B\in \mathcal{B}(\mathbb{R}^d)$ 并且 $A\subseteq B$。对于每个 $n$，还有
+  \[
+    \lambda(B)\leq \lambda(B_n)\leq \sum_{i\in \mathbb{N}} \vol(P_i^n)
+    \leq \lambda^*(A)+\frac{1}{n},
+  \]
+  这就表明 $\lambda(B)\leq \lambda^*(A)$，同时还有 $\lambda(B)=\lambda^*(B)\geq \lambda^*(A)$，
+  所以 $\lambda(B)=\lambda^*(A)$。然后把 $A$ 替换为 $(-K,K)^d\setminus A$，
+  同样的论证表明存在 $B'\in \mathcal{B}(\mathbb{R}^d)$ 使得
+  $(-K,K)^d\setminus A\subseteq B'$ 且 $\lambda(B')=\lambda^*((-K,K)^d\setminus A)$。
+  再令 $C=(-K,K)^d\setminus B'$，那么 $C\subseteq A\subseteq B$ 且
+  $\lambda(C)=\lambda^*(A)=\lambda(B)$。由于 $\lambda(B\setminus C)=0$，
+  所以 $A\in \overline{\mathcal{B}}(\mathbb{R}^d)$。
+\end{proof}
+
+
+\begin{proposition}
+  $\mathbb{R}^d$ 上的 Lebesgue 测度是平移不变的：对于任意 $A\in \mathcal{B}(\mathbb{R}^d)$
+  和 $x\in \mathbb{R}^d$，有 $\lambda(A+x)=\lambda(A)$。
+  反过来，如果 $\mu$ 是 $\mathcal{B}(\mathbb{R}^d)$ 上的一个测度，
+  其在有界集上的值有限并且平移不变，那么存在常数 $c\geq 0$ 使得
+  $\mu=c\lambda$。
+\end{proposition}
+\begin{proof}
+  对于 $x\in \mathbb{R}^d$，记 $\sigma_x$ 是平移映射 $\sigma_x(y)=y-x$。
+  那么推前测度 $\sigma_x(\lambda)$ 满足
+  \[
+    \forall A\in \mathcal{B}(\mathbb{R}^d),\quad
+    \sigma_x(\lambda)(A)=\lambda(x+A).
+  \]
+  首先，对于任意矩形 $A$，肯定有 $\sigma_x(\lambda)(A)=\lambda(A)$，所以
+  根据单调类定理的推论 \ref{coro:uniqueness of measure}，对于任意 $A\in \mathcal{B}(\mathbb{R}^d)$，
+  都有 $\sigma_x(\lambda)(A)=\lambda(A)$。
+
+
+\end{proof}
+
+
+\section{$\mathbb{R}$ 上的有限测度和 Stieltjes 积分}
+
+下面的定理描述了 $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ 上的所有有限测度。
+
+\begin{theorem}
+  \mbox{}
+  \begin{enumerate}
+    \item 令 $\mu$ 是 $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ 上的一个有限测度。
+    对于每个 $x\in \mathbb{R}$，令
+    \[
+      F_\mu(x)=\mu((-\infty,x]).
+    \]
+    函数 $F_\mu$ 是递增的，有界的，右连续的，并且使得 $F_\mu(-\infty)=0$
+    (这意味着 $F_\mu(x)$ 在 $x\to-\infty$ 时为零)。
+    \item 反之，若函数 $F:\mathbb{R}\to \mathbb{R}_+$ 是递增的，有界的，右连续的，并且
+    使得 $F(-\infty)=0$，那么唯一存在 $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ 上的一个有限测度 $\mu$ 使得
+    $F=F_\mu$。
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  (1) 显然 $F_\mu$ 是递增的并且有界的。下面证明右连续性。
+  令 $(x_n)$ 是一个递减到 $x$ 的数列，那么
+  \[
+    F_\mu(x_n)=\mu((-\infty,x_n])\xrightarrow[n\to\infty]{} \mu\biggl(
+      \bigcap_{n=1}^\infty (-\infty,x_n]
+    \biggr)=\mu((-\infty,x])=F_\mu(x).
+  \]
+  类似地，如果 $(x_n)$ 是递减趋于 $-\infty$ 的数列，由于 $\bigcap_{n}(-\infty,x_n]=\emptyset$，
+  所以 $F_\mu(x_n)\to 0$。
+
+  (2) 因为集合族 $\mathcal{C}=\{(-\infty,x]\,|\, x\in \mathbb{R}\}$
+  对有限交封闭并且生成了 $\mathcal{B}(\mathbb{R})$，
+  所以 $\mu$ 的唯一性由单调类定理的推论 \ref{coro:uniqueness of measure} 保证。
+  下面证明存在性。对于每个 $A\subseteq \mathbb{R}$，令
+  \[
+    \mu^*(A)=\inf\left\{
+      \sum_{i\in \mathbb{N}} \bigl(
+        F(b_i)-F(a_i)
+      \bigr)\,\middle|\, A\subseteq \bigcup_{i\in \mathbb{N}}(a_i,b_i]
+    \right\}.
+  \]
+  注意这里使用左开右闭区间覆盖更加方便。类似于 Lebesgue 测度的证明，可以验证
+  $\mu^*$ 是 $\mathbb{R}$ 上的一个外测度并且区间 $(-\infty,\alpha]$
+  在 $\mathcal{M}(\mu^*)$ 中，所以 $\mathcal{B}(\mathbb{R})\subseteq \mathcal{M}(\mu^*)$。
+  于是我们可以把 $\mu^*$ 限制到 $\mathcal{B}(\mathbb{R})$ 上，得到一个测度 $\mu$。
+  显然，$\mu$ 是有限测度。
+
+  最后只需要验证 $\mu((-\infty,x])=F(x)$。只需要证明 $a<b$ 的时候有 $\mu((a,b])=F(b)-F(a)$。
+  根据 $\mu^*$ 的定义，立马得到 $\mu((a,b])\leq F(b)-F(a)$。
+
+  反过来，令 $((x_i,y_i])$ 是 $(a,b]$ 的可数覆盖，$\varepsilon\in (0,b-a)$。
+  对于每个 $i\in \mathbb{N}$，我们可以找到 $y_i'>y_i$ 使得 $F(y_i')\leq F(y_i)+\varepsilon 2^{-i}$。
+  根据紧性，我们可以找到足够大的 $N_\varepsilon$ 使得 $[a+\varepsilon,b]$ 可以被
+  有限个 $((x_i,y_i'))_{i\in \{1,\dots,N_\varepsilon\}}$ 覆盖。 我们有
+  \begin{align*}
+    F(b)-F(a+\varepsilon)&\leq \sum_{i=1}^{N_\varepsilon}(F(y_i')-F(x_i))
+    \leq \sum_{i=1}^\infty (F(y_i')-F(x_i))\\
+    &\leq \sum_{i=1}^\infty (F(y_i)-F(x_i))+\varepsilon.
+  \end{align*}
+  因为 $\varepsilon$ 是任意的并且 $\varepsilon\to 0$ 的时候有
+  $F(a+\varepsilon)\to F(a)$，所以就得到
+  \[
+    F(b)-F(a)\leq \sum_{i=1}^\infty (F(y_i)-F(x_i)).
+  \]
+  这就表明 $\mu((a,b])\geq F(b)-F(a)$。
+\end{proof}
+
+
+
 
 
 
