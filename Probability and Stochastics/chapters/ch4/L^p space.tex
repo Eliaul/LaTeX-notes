@@ -399,6 +399,229 @@ $(E,\mathcal{B}(E))$ 上的测度 $\mu$ 被称为外正则的，如果对于每�
 
 \section{Radon-Nikodym 定理}
 
+\begin{definition}
+  令 $\mu$ 和 $\nu$ 是 $(E,\mathcal{A})$ 上的两个测度。
+  \begin{enumerate}
+    \item 如果
+    \[
+      \forall A\in \mathcal{A},\quad \mu(A)=0\Rightarrow \nu(A)=0,
+    \]
+    那么说 $\nu$ 相对于 $\mu$ 是\emph{绝对连续}的，记作 $\nu\ll \mu$。
+    \item 如果存在 $N\in \mathcal{A}$ 使得 $\mu(N)=0$ 并且 $\nu(N^c)=0$，
+    那么说 $\nu$ 相对于 $\mu$ 是\emph{奇异}的，记作 $\nu\perp \mu$。
+  \end{enumerate}
+\end{definition}
+
+\begin{example}
+  令 $f$ 是 $E$ 上的非负可测函数。那么测度 $\nu =f\cdot \mu$ 相对于 $\mu$
+  是绝对连续的。实际上，如果 $A\in \mathcal{A}$ 且 $\mu(A)=0$，那么
+  \[
+    \nu(A)=\int_A f\d\mu=\int \idf_A f\d\mu=0.
+  \]
+\end{example}
+
+回顾 $\mu$ 是 $\sigma$-有限的，如果 $E$ 是可数个 $\mu$-有限测度集的并。
+
+\begin{theorem}[Radon-Nikodym]
+  假设 $\mu$ 是 $\sigma$-有限的，并且 $\nu$ 是另一个 $\sigma$-有限测度。
+  那么，存在唯一的 $\sigma$-有限测度对 $(\nu_a,\nu_s)$，使得
+  \begin{enumerate}
+    \item $\nu=\nu_a+\nu_s$。
+    \item $\nu_a\ll \mu$ 并且 $\nu_s\perp \mu$。
+  \end{enumerate}
+  此外，存在非负可测函数 $g:E\to \mathbb{R}_+$ 使得 $\nu_a=g\cdot\mu$，
+  也即
+  \[
+    \forall A\in \mathcal{A},\quad \nu_a(A)=\int_A g\d\mu.
+  \]
+  并且 $g$ 在以下意义下唯一：如果 $\tilde g$ 也满足上述性质，那么
+  有 $g=\tilde g,\,\alev{\mu}$。
+\end{theorem}
+\begin{remark}
+  这个定理的第一部分，是说 $\nu$ 可以分解为绝对连续部分和奇异部分的和，
+  被称为\emph{Lebesgue 分解}。如果 $\nu\ll \mu$，这个定理表明存在
+  非负可测函数 $g$ 使得 $\nu=g\cdot \mu$，这个函数 $g$ 被称为
+  $\nu$ 相对于 $\mu$ 的\emph{Radon-Nikodym 导数}。
+\end{remark}
+\begin{proof}
+  我们证明 $\mu$ 和 $\nu$ 都是有限测度的情况，最后解释如何推广到
+  $\sigma$-有限测度的情况。
+
+  \noindent\textit{Step 1.} 假设 $\mu$ 和 $\nu$ 是有限的且 $\nu\leq\mu$。
+  也就是说，我们假设对于每个 $A\in \mathcal{A}$，都有 $\nu(A)\leq \mu(A)$，
+  特别的，这当然表明 $\nu\ll \mu$。并且，对于任意非负可测函数 $g$，有
+  $\int g\d \nu\leq \int g\d\mu$。考虑线性映射 $\varPhi:L^2(E,\mathcal{A},\mu)\to \mathbb{R}$
+  为
+  \[
+    \varPhi(f)=\int f\d\nu.
+  \]
+  注意到这个积分是良定义的，因为 $\int |f|\d\nu\leq \int |f|\d\mu$，并且
+  $\mu$ 是有限测度表明 $L^2(\mu)\subseteq L^1(\mu)$。此外 $\varPhi$
+  也不依赖于代表元 $f$ 的选取，这是因为
+  \[
+    f=\tilde f,\ \alev{\mu}\Rightarrow f=\tilde f,\ \alev{\nu}
+    \Rightarrow \int f\d\nu=\int \tilde f\d\nu.
+  \]
+  那么 Cauchy-Schwarz 不等式表明
+  \[
+    |\varPhi(f)|\leq \left(
+      \int |f|^2\d\nu
+    \right)^{1/2}\nu(E)^{1/2}\leq 
+    \left(
+      \int |f|^2\d\mu
+    \right)^{1/2}\nu(E)^{1/2}=\nu(E)^{1/2}\norm{f}_{L^2(\mu)}.
+  \]
+  这表明 $\varPhi$ 是连续线性映射，因此根据 Riesz 表示定理，
+  存在唯一的 $g\in L^2(E,\mathcal{A},\mu)$，使得对于每个
+  $f\in L^2(E,\mathcal{A},\mu)$，都有
+  \[
+    \varPhi(f)=\langle f,g\rangle=\int f g\d\mu.
+  \]
+  特别的，取 $f=\idf_{A}$，就有
+  \[
+    \forall A\in \mathcal{A},\quad \nu(A)=\int_A g\d\mu.
+  \]
+  我们还可以注意到 $0\leq g\leq 1,\ \alev{\mu}$。这是因为，任取 $\varepsilon>0$，
+  有
+  \begin{align*}
+    \mu\bigl(\{x\in E\,|\, g(x)\geq 1+\varepsilon\}\bigr)&\geq 
+    \nu\bigl(\{x\in E\,|\, g(x)\geq 1+\varepsilon\}\bigr)\\
+    &=\int_{\{x|g(x)\geq 1+\varepsilon\}} g\d\mu \\
+    &\geq (1+\varepsilon)\mu\bigl(\{x\in E\,|\, g(x)\geq 1+\varepsilon\}\bigr),
+  \end{align*}
+  这表明 $\mu(\{x|g(x)\geq 1+\varepsilon\})=0$，由于 $\varepsilon$ 是任意的，
+  所以 $g\leq 1,\ \alev{\mu}$。类似的论述可以得到 $g\geq 0,\ \alev{\mu}$。
+  将 $g$ 替换为 $(g\vee 0)\wedge 1$ 之后，我们可以假设对于
+  任意 $x\in E$ 有 $0\leq g(x)\leq 1$。于是，我们得到了定理在
+  $\nu_a=g\cdot \mu$ 以及 $\nu_s=0$ 的情况下的结论。$g$ 的唯一性
+  在第二步证明。
+
+  \noindent\textit{Step 2.} 假设 $\mu$ 和 $\nu$ 是有限测度。首先我们用 $\mu+\nu$
+  替代 $\mu$，根据第一步的结论，存在满足 $0\leq h\leq 1$ 的可测函数 $h$，
+  使得对于任意 $f\in L^2(\mu+\nu)$，都有
+  \[
+    \int f\d\nu =\int fh\d(\mu+\nu).
+  \]
+  特别的，对于任意有界可测函数 $f$，都有 
+  \[
+    \int f\d\nu=\int fh\d\mu+\int fh\d\nu.
+  \]
+  这表明
+  \begin{equation}\label{eq:radon-nikodym step2}
+    \int f(1-h)\d\nu=\int fh\d\mu.
+  \end{equation}
+  使用单调收敛定理，我们可以将上式推广到任意非负可测函数 $f$。
+
+  令 $N=\{x\in E\,|\, h(x)=1\}$。那么，在 \eqref{eq:radon-nikodym step2} 中取
+  $f=\idf_N$，我们得到 $\mu(N)=0$。考虑测度 $\nu_s=\idf_N\cdot \nu$，
+  那么对于任意 $A\in \mathcal{A}$，都有
+  \[
+    \nu_s(A)=\nu(A\cap N),
+  \]
+  于是 $\nu_s(N^c)=0$，因此 $\nu_s$ 相对于 $\mu$ 是奇异的。另一方面，
+  在 \eqref{eq:radon-nikodym step2} 中取 $f=\idf_{N^c}(1-h)^{-1}f$，我们得到，
+  对于每个非负可测函数 $f$，都有
+  \[
+    \int_{N^c}f\d\nu=\int_{N^c}f\frac{h}{1-h}\d\mu=\int fg\d\mu,
+  \]
+  其中 $g=\idf_{N^c}\frac{h}{1-h}$。令
+  \[
+    \nu_a=\idf_{N^c}\cdot\nu =g\cdot \mu.
+  \]
+  此时定理的 (1) 和 (2) 就得到了满足。注意到 $\int g\d\mu=\nu_a(E)<\infty$。
+
+  下面验证 $(\nu_a,\nu_s)$ 的唯一性。假设 $(\tilde\nu_a,\tilde \nu_s)$
+  是另一个满足 (1) 和 (2) 的测度对。那么对于每个 $A\in \mathcal{A}$，都有
+  \[
+    \nu_s(A)-\tilde \nu_s(A)=\tilde \nu_a(A)-\nu_a(A).
+  \]
+  由于 $\nu_s\perp \mu$ 并且 $\tilde\nu_s\perp \mu$，所以可以找到两个
+  可测集 $N$ 和 $\tilde N$ 使得 $\nu_s(N^c)=0$ 并且 $\tilde \nu_s(\tilde N^c)=0$。
+  那么，对于每个 $A\in \mathcal{A}$，就有
+  \begin{align*}
+    \nu_s(A)-\tilde \nu_s(A)&=\nu_s(A\cap (N\cup \tilde N))-\tilde \nu_s
+    (A\cap (N\cup \tilde N))\\
+    &=\tilde \nu_a(A\cap (N\cup \tilde N))-\nu_a(A\cap (N\cup \tilde N))=0.
+  \end{align*}
+  第一个等号是因为 $\nu_s(N^c\cap \tilde N^c)=0$，所以 $\nu_s(N\cup \tilde N)=\nu_s(E)$。
+  第三个等号是因为 $\mu(N\cup\tilde N)=0$，同时 $\nu_a\ll \mu$ 以及 $\tilde\nu_a\ll\mu$。
+  所以我们证明了 $\nu_s=\tilde \nu_s$，那么自然也有 $\nu_a=\tilde\nu_a$。
+
+  最后，再说明 $g$ 的唯一性。假设存在另一个函数 $\tilde g$ 使得 $\nu_a=\tilde g\cdot\mu$。
+  令 $\{\tilde g\geq g\}$ 表示集合 $\{x\in E\,|\, \tilde g(x)\geq g(x)\}$。
+  那么
+  \[
+    \int_{\{\tilde g\geq g\}} \tilde g\d\mu=\nu_a(\{\tilde g\geq g\})
+    =\int_{\{\tilde g\geq g\}} g\d\mu,
+  \]
+  这表明
+  \[
+    \int_{\{\tilde g\geq g\}} (\tilde g -g)\d\mu=0,
+  \]
+  即 $\idf_{\{\tilde g\geq g\}}(\tilde g-g)=0,\ \alev{\mu}$，即
+  $\tilde g\leq g,\ \alev{\mu}$。交换 $g$ 和 $\tilde g$ 的角色，我们也可以得到
+  $\tilde g\geq g,\ \alev{\mu}$。综上所述，$g=\tilde g,\ \alev{\mu}$。
+
+  \noindent\textit{Step 3.} 现在考虑一般情况。如果 $\mu$ 和 $\nu$
+  都是 $\sigma$-有限的，那么可以找到 $E$ 的一列不相交的可测集 $(E_n)_{n\in \mathbb{N}}$
+  使得每个 $\mu(E_n)<\infty$ 和 $\nu(E_n)<\infty$，并且 $E=\bigcup_{n}E_n$。
+  令 $\mu_n$ 是 $\mu$ 在 $E_n$ 上的限制，$\nu_n$ 是 $\nu$ 在 $E_n$ 上的限制。
+  根据第二步的结论，对于每个 $n\in \mathbb{N}$，有分解
+  \[
+    \nu_n=\nu_{a}^n+\nu_{s}^n,
+  \]
+  其中 $\nu_s^n\perp \mu_n$ 并且 $\nu_a^n=g_n\cdot\mu_n$，我们还可以假设
+  $g_n$ 在 $E_n^c$ 上为零。令
+  \[
+    \nu_a=\sum_{n\in \mathbb{N}}\nu_a^n,\quad
+    \nu_s=\sum_{n\in \mathbb{N}}\nu_s^n,\quad
+    g=\sum_{n\in \mathbb{N}} g_n.
+  \]
+  对于每个 $x\in E$，由于 $E_n$ 互不相交，所以只有一个 $n$ 使得 $g_n(x)>0$。
+  $(\nu_a,\nu_s,g)$ 的唯一性与有限测度的情况类似。
+\end{proof} 
+
+\begin{example}
+  \mbox{}
+  \begin{enumerate}
+    \item 取 $(E,\mathcal{A})=(\mathbb{R},\mathcal{B}(\mathbb{R}))$，
+    假设 $\mu=f\cdot\lambda$，其中 $\lambda$ 是 Lebesgue 测度。
+    假设 $f$ 在 $(0,\infty)$ 上是正的，在 $(-\infty,0]$ 上为零。令 $\nu=g\cdot \lambda$
+    是另一个相对于 $\lambda$ 绝对连续的测度，此时 $\nu$ 相对于 $\mu$
+    的 Lebesgue 分解为
+    \[
+      \nu= h\cdot\mu +\theta,
+    \]
+    其中 $h(x)=\idf_{(0,\infty)}\cdot g(x)/f(x)$ 并且 $\theta(\d x)=\idf_{(-\infty,0]}(x)\nu(\d x)$。
+    \item 取 $E=[0,1)$ 和 $\mathcal{A}=\mathcal{B}([0,1))$，对于每个 $n\in \mathbb{N}$，
+    令 $\sigma$-域
+    \[
+      \mathcal{F}_n=\sigma\left(
+        \left\{
+          \Bigl[
+            \frac{i-1}{2^n},\frac{i}{2^n}
+          \Bigr)\,\middle|\, i\in\{1,2,\dots,2^n\}
+        \right\}
+      \right),
+    \]
+    不难发现任意 $A\in \mathcal{F}_n$ 都是区间 $\bigl[(i-1)2^{-n},i2^{-n}\bigr)$
+    的有限并。记 $\lambda$ 是 $[0,1)$ 上的 Lebesgue 测度，$\nu$ 是 $\mathcal{B}([0,1))$
+    上的有限测度。把 $\lambda$ 和 $\nu$ 都限制到 $\mathcal{F}_n$ 上，可以把
+    $\lambda$ 和 $\nu$ 都视为 $([0,1),\mathcal{F}_n)$ 上的测度。显然，此时
+    $\nu$ 相对于 $\lambda$ 是绝对连续的，因为只有 $\emptyset$ 使得 $\lambda(\emptyset)=0$。
+    此外，还可以验证 $\nu$ 相对于 $\lambda$ 的 Radon-Nikodym 导数为
+    \[
+      f_n(x)=\sum_{i=1}^{2^n}\frac{\nu\bigl(\bigl[(i-1)2^{-n},i2^{-n}\bigr)\bigr)}{2^{-n}}
+      \idf_{[(i-1)2^{-n},i2^{-n})}(x).
+    \]
+    后面，我们将使用鞅论证明存在一个 Borel 可测函数 $f$ 使得
+    $f_n(x)\to f(x),\ \alev{\lambda}$，并且将 $\nu$ 和 $\lambda$ 视为
+    $([0,1),\mathcal{B}([0,1)))$ 上的测度时，$\nu$ 相对于 $\lambda$ 的
+    Lebesgue 分解的绝对连续部分正是 $f\cdot\lambda$。
+  \end{enumerate}
+\end{example}
+
+
 
 
 

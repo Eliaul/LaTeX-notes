@@ -416,7 +416,7 @@ $\sigma$-域上定义。
 
 下面的定理描述了 $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ 上的所有有限测度。
 
-\begin{theorem}
+\begin{theorem}\label{thm:finite measure on R}
   \mbox{}
   \begin{enumerate}
     \item 令 $\mu$ 是 $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ 上的一个有限测度。
@@ -479,7 +479,85 @@ $\sigma$-域上定义。
   这就表明 $\mu((a,b])\geq F(b)-F(a)$。
 \end{proof}
 
+令 $F$ 是满足上述条件的函数，$\mu$ 是对应的使得 $F=F_\mu$ 的有限测度。
+对于任意有界的 Borel 可测函数 $f:\mathbb{R}\to \mathbb{R}$，我们定义
+\[
+  \int f(x)\d F(x)=\int f(x)\mu(\d x).
+\]
+此时把 $\int f(x)\d F(x)$ 称为 $f$ 关于 $F$ 的\emph{Stieltjes 积分}。
+这个记号来源于下面的等式，对于每个 $a\leq b$，有
+\[
+  \int \idf_{(a,b]}(x)\d F(x)=F(b)-F(a).
+\]
+同时，我们还有
+\[
+  \int \idf_{[a,b]}(x) \d F(x)=\lim_{n\to\infty}
+  \int \idf_{(a-\frac{1}{n},b]}(x)\d F(x)=F(b)-F(a-).
+\]
+其中 $F(a-)$ 表示左极限。特别的，取 $b=a$，函数 $F$ 连续当且仅当 $\mu$
+是扩散的。
 
+\begin{example}
+  当 $F$ 连续可导的时候，Stieltjes 积分和 Riemann 积分
+  $\int f(x)F'(x)\d x$ 一致。Stieltjes 积分的威力在于可以处理性质更奇怪的函数。
+  例如，考虑 $f:\mathbb{R}\to \mathbb{R}$ 是连续函数，定义
+  \[
+    F(x)=\begin{cases}
+      0, & x <0, \\
+      1, & x\geq 0. \\
+    \end{cases}
+  \]
+  那么显然有 $\mu(\{0\})=1$，并且当 $x\notin A$ 时有 $\mu(A)=0$，
+  $x\in A$ 时有 $\mu(A)=1$。此时，有
+  \[
+    \int f(x)\d F(x)=f(0).
+  \]
+  这实际上严格定义了 Dirac $\delta$ 函数 $\delta_0$，即
+  $\d F(x)$ 在 $x=0$ 处放置了一个质量为 $1$ 的点质量。
+\end{example}
+
+
+\section{Riesz-Markov-Kakutani 表示定理}
+
+回顾一个拓扑空间 $X$ 被称为局部紧的，如果 $X$ 中的每个点都有一个紧邻域。
+我们考虑局部紧的度量空间 $X$。$X$ 上的所有紧支实值连续函数空间记为 $C_c(X)$。
+$C_c(X)$ 上的一个线性泛函 $J$ 指的是从 $C_c(X)$ 到 $\mathbb{R}$ 的线性映射。
+如果当 $f\geq 0$ 的时候 $J(f)\geq 0$，那么说 $J$ 是\emph{正定的}。
+
+$(X,\mathcal{B}(X))$ 上的测度 $\mu$ 如果对于 $X$ 的每个紧集 $K$ 都有 $\mu(K)<\infty$，
+那么说 $\mu$ 是\emph{Radon 测度}。如果 $\mu$ 是 Ranon 测度，那么可以定义 $C_c(X)$ 上的线性泛函
+\[
+  J(f)=\int f\d \mu.
+\]
+注意到这个定义是良好的，因为存在紧集 $K$ 和常数 $C$ 使得 $|f|\leq C\idf_K$ 并且
+$\mu(K)<\infty$。此外，显然 $J$ 还是正定的。
+
+Riesz-Markov-Kakutani 表示定理给出了反向的结论。在合适的条件下，
+任意正定的线性泛函都可以来源于某个 Radon 测度。
+
+\begin{theorem}
+  令 $X$ 是可分的局部紧的度量空间，$J$ 是 $C_c(X)$ 上的一个正定的线性泛函。
+  那么存在唯一的 Radon 测度 $\mu$ 使得
+  \[
+    \forall f\in C_c(X),\quad J(f)=\int f\d \mu.
+  \]
+  测度 $\mu$ 还是正则的，也即，对于每个 $A\in \mathcal{B}(X)$，有
+  \begin{align*}
+    \mu(A)&=\inf \{\mu(U)\,|\, A\subseteq U,\ U\text{ 是开集}\},\\
+    &=\sup \{\mu(K)\,|\, K\subseteq A,\ K\text{ 是紧集}\}.
+  \end{align*}
+  此外，对于 $X$ 的任意开集 $U$，有
+  \[
+    \mu(U)=\sup\{J(f)\,|\, f\in C_c(X),\ 0\leq f\leq \idf_U\}.
+  \]
+\end{theorem}
+
+\begin{example}
+  如果 $X=\mathbb{R}$，我们可以取 $J(f)=I(f)$，其中 $I(f)$ 是 Riemann 积分。
+  可以验证 $J$ 是 $C_c(\mathbb{R})$ 上的一个正定的线性泛函，并且
+  对应的 Radon 测度就是 Lebesgue 测度。Riesz-Markov-Kakutani 表示定理
+  给出了 Lebesgue 测度的另一个构造。
+\end{example}
 
 
 

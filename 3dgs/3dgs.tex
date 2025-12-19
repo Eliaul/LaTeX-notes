@@ -21,6 +21,9 @@
 
 \input{font.def}
 
+\usepackage{biblatex}
+\addbibresource{ref.bib}
+
 \usepackage[subscriptcorrection,nofontinfo,mtpbb,mtpfrak]{mtpro2}
 \usepackage[normal]{fixdif}
 
@@ -284,7 +287,163 @@ gaussians.training_setup(opt)
 
 \subsection{前向传播渲染}
 
+3DGS 的渲染使用了 EWA Splatting 技术 \cite{1021576}，
+大致流程是：首先将每个高斯球投影到图像平面上，形成一个椭圆形的 splat，
+然后根据每个 splat 的颜色和不透明度属性，对图像进行逐像素的颜色累积和混合。
 
+对于一个高斯球，设其参数为：均值 $\mu\in \mathbb{R}^3$，协方差 $\Sigma\in \mathbb{R}^{3\times 3}$，
+颜色 $c\in \mathbb{R}^3$ 和不透明度 $o\in \mathbb{R}$。
+假设相机外参是
+\[
+  T_{\text{cw}}=\begin{bmatrix}
+    R_{\text{cw}} & t_{\text{cw}} \\
+    0 & 1
+  \end{bmatrix}.
+\]
+首先将世界坐标系中的 $\mu$ 转换到相机坐标系：
+\[
+  t=T_{\text{cw}}\begin{bmatrix}
+    \mu \\
+    1 
+  \end{bmatrix}.
+\]
+得到相机坐标系的中心点 $t=(t_x,t_y,t_z,1)^T$。
+下一步是计算像素坐标，但是并不是用内参矩阵直接投影到像素坐标系，因为我们需要遵循图形学（OpenGL/DirectX）的标准管线，
+以便利用 GPU 的硬件加速和排序算法。因此，我们需要把 $t$
+转换到 NDC 坐标系(归一化设备坐标系)，这是三维图形渲染管线中的中间坐标系统，
+用于将不同分辨率的屏幕坐标统一到一个空间中，$xyz$ 的范围都是 $[-1,1]$。
+假设内参矩阵
+\[
+  K=\begin{bmatrix}
+    f_x & 0 & c_x \\
+    0 & f_y & c_y \\
+    0 & 0 & 1
+  \end{bmatrix}.
+\]
+图像宽高分别为 $w,h$。根据传统的方法，利用内参得到的像素坐标
+应该为
+\begin{align*}
+  \begin{bmatrix}
+    u \\ 
+    v \\
+    1
+  \end{bmatrix}=K \begin{bmatrix}
+    t_x/t_z \\
+    t_y/t_z \\
+    1
+  \end{bmatrix}=\begin{bmatrix}
+    f_x t_x/t_z + c_x \\
+    f_y t_y/t_z + c_y\\ 
+    1
+  \end{bmatrix}.
+\end{align*}
+然后我们需要构建一个线性映射把 $u,v$ 的值变到 $[-1,1]$ 内，
+最简单的方法为：
+\begin{equation}\label{eq:ndc}
+  t_x' = 2\frac{u}{w} - 1, \quad t_y' = 2\frac{v}{h}-1.
+\end{equation}
+显然 $u=0$ 时 $t_x'=-1$，$u=w$ 时 $t_y'=1$，在这个过程中，$t_x',t_y'$ 在 $[-1,1]$ 外的点会被扔掉。于是
+\[
+  t_x' = 2\frac{f_x t_x/t_z + c_x}{w} - 1, \quad t_y' = 2\frac{f_y t_y/t_z + c_y}{h}-1.
+\]
+% 在图形学中，通常假设光心 $c_x$ 和 $c_y$ 位于图像中心，即 $c_x=w/2$，$c_y=h/2$。
+% 带入后得到
+% \[
+%   t_x' = \frac{2 f_x t_x}{w t_z}, \quad t_y' = \frac{2 f_y t_y}{h t_z}.
+% \]
+于是投影矩阵 $P$ 应该满足
+\[
+  \begin{bmatrix}
+    t_x' \\ t_y' \\ t_z' \\ t_w'
+  \end{bmatrix}=\begin{bmatrix}
+    2f_x/w & 0 & 2c_x/w-1 & 0 \\
+    0 & 2f_y/h & 2c_y/h-1 & 0 \\
+    0 & 0 & A & B \\
+    0 & 0 & 1 & 0
+  \end{bmatrix}
+  \begin{bmatrix}
+    t_x/t_z \\ t_y/t_z \\ 1 \\ 1/t_z
+  \end{bmatrix}
+  ,
+\]
+接下来处理深度 $t_z$，将其映射到 $[-1,1]$ 范围内，假设近平面和远平面分别为 $n,f$，
+那么 $t_z=n$ 的时候应该映射到 $t_z'=-1$，$t_z=f$ 的时候映射到 $t_z'=1$。
+而 $t_z'=A+B/t_z$，所以
+\[
+  \begin{cases}
+    A + B/n = -1 \\
+    A + B/f = 1
+  \end{cases} \implies
+  \begin{cases}
+    A = (f+n)/(f-n) \\
+    B = -2fn/(f-n)
+  \end{cases}.
+\]
+综上所述，投影矩阵为
+\[
+  P=\begin{bmatrix}
+    2f_x/w & 0 & 2c_x/w-1 & 0 \\
+    0 & 2f_y/h & 2c_y/h-1 & 0 \\
+    0 & 0 & (f+n)/(f-n) & -2fn/(f-n) \\
+    0 & 0 & 1 & 0
+  \end{bmatrix}.
+\]
+NDC 坐标为 $t'=Pt\in \mathbb{R}^4$。最后，再把 $t'$ 变回像素坐标系。
+也即把 \eqref{eq:ndc} 反过来，得到
+\[
+  \mu_u' = \frac{w}{2}(t_x' + 1)+\frac{1}{2}, \quad \mu_v' = \frac{h}{2}(t_y' + 1)+\frac{1}{2}.
+\]
+注意这里加上了 $0.5$，是因为像素坐标系的原点在像素的中心而不是左上角。
+通常情况下光心 $c_x$ 和 $c_y$ 位于图像中心，即 $c_x=w/2$，$c_y=h/2$，
+此时 $P$ 可以简化为
+\[
+  P=\begin{bmatrix}
+    2f_x/w & 0 & 0 & 0 \\
+    0 & 2f_y/h & 0 & 0 \\
+    0 & 0 & (f+n)/(f-n) & -2fn/(f-n) \\
+    0 & 0 & 1 & 0
+  \end{bmatrix}.
+\]
+
+下面我们需要计算投影后的协方差矩阵。首先，经过外参变换点 $x\mapsto R_{\text{cw}}x+t_{\text{cw}}$，
+这个变换后依然是高斯椭球，协方差变为 $\Sigma\mapsto R_{\text{cw}}\Sigma R_{\text{cw}}^\top $。
+然后是像素坐标转换
+\[
+  u=f_x \frac{t_x}{t_z}+c_x,\quad v=f_y \frac{t_y}{t_z}+c_y,
+\]
+这不是一个仿射变换，所以变换后实际上不再是高斯分布。但是我们可以在 
+$( t_x, t_y, t_z)$ 处做微分，得到近似后的高斯分布。我们有
+\[
+  J=\begin{bmatrix}
+    \dfrac{\partial u}{\partial t_x} & \dfrac{\partial u}{\partial t_y} & \dfrac{\partial u}{\partial t_z} \\[3mm]
+    \dfrac{\partial v}{\partial t_x} & \dfrac{\partial v}{\partial t_y} & \dfrac{\partial v}{\partial t_z}
+  \end{bmatrix}=
+  \begin{bmatrix}
+    f_x/t_z & 0 & -f_x t_x/t_z^2 \\[2mm]
+    0 & f_y/t_z & -f_y t_y/t_z^2
+  \end{bmatrix}.  
+\]
+于是 splatting 后的 2D 协方差矩阵为
+\[
+  \Sigma' = J (R_{\text{cw}}\Sigma R_{\text{cw}}^\top) J^\top\in \mathbb{R}^{2\times 2}.
+\]
+为了方便后面的反向传播，设四元数 $q=(q_x,q_y,q_z,q_w)$，尺度 $s\in \mathbb{R}^3$，
+那么四元数对应的旋转矩阵为
+\[
+  R=\begin{bmatrix}
+    1-2q_y^2-2q_z^2 & 2q_x q_y - 2 q_z q_w & 2 q_x q_z + 2 q_y q_w \\
+    2 q_x q_y + 2 q_z q_w & 1 - 2 q_x^2 - 2 q_z^2 & 2 q_y q_z - 2 q_x q_w \\
+    2 q_x q_z - 2 q_y q_w & 2 q_y q_z + 2 q_x q_w & 1 - 2 q_x^2 - 2 q_y^2
+  \end{bmatrix}.
+\]
+此时 $\Sigma=RSS^\top R^\top$。
+
+
+
+
+
+
+\printbibliography
 
 
 
