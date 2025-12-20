@@ -740,5 +740,50 @@ $\cov(X,X)=\var(X)$，还有 Cauchy-Schwarz 不等式表明
     \right),\quad \forall \xi\in \mathbb{R}.
   \]
 \end{lemma}
+\begin{proof}
+  不妨设 $\sigma>0$ 且用 $X-m$ 替代 $X$，也即 $m=0$。那么
+  \[
+    \varPhi_X(\xi)=\int_{\mathbb{R}}e^{i\xi x}\frac{1}{\sigma\sqrt{2\pi}}
+    \exp\left(-\frac{x^2}{2\sigma^2}\right)\d x.
+  \]
+  通过换元，不妨设 $\sigma=1$。并且扔掉奇函数的部分，只需要计算含参积分
+  \[
+    f(\xi)=\int_{\mathbb{R}}\frac{1}{\sqrt{2\pi}}e^{-x^2/2}\cos(\xi x)\d x.
+  \]
+  由于 $|xe^{-x^2/2}\sin(\xi x)|\leq |x| e^{-x^2/2}$ 是可积函数，所以
+  \[
+    f'(\xi)=-\int_{\mathbb{R}}\frac{1}{\sqrt{2\pi}}xe^{-x^2/2}\sin(\xi x)\d x.
+  \]
+  再通过分部积分，有
+  \[
+    f'(\xi)=-\xi \int_{\mathbb{R}}\frac{1}{\sqrt{2\pi}}e^{-x^2/2}\cos(\xi x)\d x
+    =-\xi f(\xi).
+  \]
+  且初值条件 $f(0)=1$，解这个微分方程，就得到 $f(\xi)=e^{-\xi^2/2}$。
+\end{proof}
+
+\begin{theorem}
+  值在 $\mathbb{R}^d$ 中的随机变量 $X$ 的特征函数确定了它的分布律。
+  换句话说，$\mathbb{R}^d$ 上概率测度的 Fourier 变换算子是单射。 
+\end{theorem}
+\begin{proof}
+  考虑 $d=1$ 的情况。对于每个 $\sigma>0$，令 $g_\sigma$ 是正态分布 $\mathcal{N}(0,\sigma^2)$
+  的密度
+  \[
+    g_\sigma(x)=\frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{x^2}{2\sigma^2}\right).
+  \]
+  令 $\mu$ 是 $\mathbb{R}$ 上的概率测度，令 
+  \begin{align*}
+    f_\sigma(x)&=\int_{\mathbb{R}}g_\sigma(x-y)\mu(\d y)=g_\sigma * \mu (x),\\
+    \mu_\sigma(\d x)&=f_\sigma(x)\d x.
+  \end{align*}
+  记 $C_b(\mathbb{R})$ 是所有有界连续函数 $\varphi:\mathbb{R}\to \mathbb{R}$
+  构成的空间。
+\end{proof}
+
+
+
+
+
 
 
