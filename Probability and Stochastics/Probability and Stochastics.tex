@@ -118,6 +118,31 @@ $A,B\in \mathcal{A}$ 且
   \mathbb{P}(A\cap B)=\mathbb{P}(A)\mathbb{P}(B),  
 \]
 那么我们说 $A$ 和 $B$ 是\emph{独立的}。
+如果 $\mathbb{P}(B)>0$，我们定义条件概率
+\[
+  \mathbb{P}(A|B)=\frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}.
+\]
+此时 $A$ 和 $B$ 独立等价于 $\mathbb{P}(A|B)=\mathbb{P}(A)$。
+
+\begin{definition}
+  如果对于 $\{1,\dots,n\}$
+  的任意子集 $\{j_1,\dots,j_p\}$ 都有
+  \[
+    \mathbb{P}(A_{j_1}\cap \cdots\cap A_{j_p})
+    =\mathbb{P}(A_{j_1})\cdots \mathbb{P}(A_{j_p}),
+  \]
+  那么我们说 $n$ 个事件 $A_1,\dots,A_n$ 是独立的。
+\end{definition}
+
+\begin{proposition}\label{prop:independence by sigma algebra}
+  $n$ 个事件 $A_1,\dots,A_n$ 独立当且仅当
+  \[
+    \mathbb{P}(B_1\cap\cdots\cap B_n)=\mathbb{P}(B_1)\cdots \mathbb{P}(B_n),
+  \]
+  其中 $B_i\in\sigma(A_i)=\{\emptyset,A,A^c,\Omega\}$。
+\end{proposition}
+
+
 
 \section{$\sigma$-域和随机变量的独立性}
 
@@ -147,7 +172,21 @@ $\sigma(X_1),\dots,\sigma(X_n)$ 是独立的。这等价于
   =\mathbb{P}(X_1\in F_1)\cdots \mathbb{P}(X_n\in F_n).
 \]
 
-\begin{theorem}
+有时候考虑一族随机变量之间的独立性也是有用的。对于两族随机变量 $(X_i)_{i\in I}$
+和 $(Y_j)_{j\in J}$，如果 $\sigma$-域 $\sigma((X_i)_{i\in I})$ 和 $\sigma((Y_j)_{j\in J})$
+是独立的，那么我们说这两族随机变量是独立的。注意到这比任意 $X_i$ 与 $Y_j$ 独立要更强。
+
+\begin{remark}
+  (1) 如果 $\mathcal{B}_1,\dots,\mathcal{B}_n$ 是 $\mathcal{A}$ 的 $n$ 个独立的 $\sigma$-子域，
+  并且 $X_i$ 是 $\mathcal{B}_i$-可测的随机变量，那么 $X_1,\dots,X_n$ 是独立的。这是因为
+  $X_i$ 是 $\mathcal{B}_i$-可测的就表明 $\sigma(X_i)\subseteq \mathcal{B}_i$。
+
+  (2) $n$ 个事件 $A_1,\dots,A_n$ 是独立的当且仅当 $\sigma$-域 $\sigma(A_1),\dots,\sigma(A_n)$
+  是独立的(\autoref{prop:independence by sigma algebra})。
+\end{remark}
+
+
+\begin{theorem}\label{thm:independence by product measure}
   令 $X_1,\dots,X_n$ 分别是值在 $(E_1,\mathcal{E}_1),\dots,(E_n,\mathcal{E}_n)$
   中的随机变量。那么 $X_1,\dots,X_n$ 是独立的当且仅当 $(X_1,\dots,X_n)$
   的分布是 $X_1,\dots,X_n$ 的分布的乘积测度，即
@@ -187,8 +226,34 @@ $\sigma(X_1),\dots,\sigma(X_n)$ 是独立的。这等价于
 \begin{remark}
   该定理中 $f_i$ 也可以是任意符号，此时如果 $\mathbb{E}[|f_i(X_i)|]<\infty$，
   也即 $f_i\in \mathcal{L}^1(E_i,\mathcal{E}_i,\mathbb{P}_{X_i})$，那么
-  定理的结论依然成立。
+  定理的结论依然成立。只需要注意到
+  \[
+    \mathbb{E}\biggl[
+      \prod_{i=1}^n |f_i(X_i)|
+    \biggr]=\prod_{i=1}^n \mathbb{E}[|f_i(X_i)|]<\infty.
+  \]
+  特别地，如果 $X_1,\dots,X_n$ 是独立的实值随机变量且 $X_i\in L^1$，
+  那么 $X_1\cdots X_n\in L^1$ 且
+  \[
+    \mathbb{E}[X_1\cdots X_n]=\prod_{i=1}^n \mathbb{E}[X_i].
+  \]
+  需要注意一般情况下 $L^1$ 中的随机变量的积不一定还在 $L^1$ 中。
 \end{remark}
+
+\autoref{thm:independence by product measure} 展示了如何构造有限多个独立的随机变量。
+考虑实值随机变量的情况。令 $\mu_1,\dots,\mu_n$ 是 $\mathbb{R}$ 上的 $n$ 个
+概率测度。首先我们可以构造一个值在 $\mathbb{R}^n$ 中的随机变量 $Y=(Y_1,\dots,Y_n)$
+使得其有分布律 $\mu_1\otimes\cdots\otimes \mu_n$ (比如令 $\Omega=\mathbb{R}^n$，
+$\mathcal{A}=\mathcal{B}(\mathbb{R}^n)$，$\mu_1\otimes\cdots\otimes \mu_n$
+是概率测度，那么随机变量 $Y(\omega)=\omega$ 即符合要求)。然后 \autoref{thm:independence by product measure}
+表明分量 $Y_1,\dots,Y_n$ 是分别拥有分布律 $\mu_1,\dots,\mu_n$ 的独立实值随机变量。
+
+\begin{corollary}
+  如果 $X_1,X_2$ 是 $L^2$ 中的两个独立实值随机变量，那么 $\cov(X_1,X_2)=0$。
+\end{corollary}
+
+
+
 
 \begin{corollary}\label{coro:independence by pdf}
   令 $X_1,\dots,X_n$ 是实值随机变量。

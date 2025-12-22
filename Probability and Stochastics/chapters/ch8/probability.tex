@@ -247,18 +247,31 @@ $\mathbb{P}_X$ 唯一确定。
   \mathbb{E}[X]=\int_{\mathbb{R}} x \mathbb{P}_X(\d x)=\int_{\mathbb{R}} x p(x)\d x.
 \]
 
+\paragraph{分布律的刻画} 根据 \autoref{coro:uniqueness of measure}，$\mathbb{R}^d$
+上的概率测度 $\mu$ 完全由其在开矩形上的值确定，也即由所有 $\mu((a_1,b_1)\times\cdots\times (a_d,b_d))$
+确定 (当然，也可以把区间换成闭区间，甚至要求所有的 $a_i,b_i$ 都是有理数)。因为开矩形
+上的示性函数是一列紧支连续函数的递增极限，所以概率测度 $\mu$ 也可以由所有 $\int\varphi(x)\mu(\d x)$
+的值确定，其中 $\varphi\in C_c(\mathbb{R}^d)$ 是从 $\mathbb{R}^d$ 到 $\mathbb{R}$ 的紧支连续函数。
+特别地，对于值在 $\mathbb{R}^d$ 中的随机向量 $X=(X_1,\dots,X_d)$，分布律 $\mathbb{P}_X$
+由所有
+\[
+  \mathbb{P}_X((a_1,b_1)\times\cdots\times (a_d,b_d))=\mathbb{P}
+  (a_1<X_1<b_1,\dots,a_d<X_d<b_d)
+\]
+确定，其中 $a_1<b_1,\dots,a_d<b_d$。或者，由所有
+\[
+  \int_{\mathbb{R}^d}\varphi(x) \mathbb{P}_X(\d x)=\mathbb{E}[\varphi(X)]
+\]
+确定，其中 $\varphi\in C_c(\mathbb{R}^d)$。
+
 \autoref{prop:use law to calculate exception} 告诉我们可以使用
 分布 $\mathbb{P}_X$ 来计算 $f(X)$ 的期望。实际上这个过程可以倒过来，
 如果我们能找到 $E$ 上的测度 $\nu$ 使得
 \[
   \mathbb{E}[f(X)]=\int f\d\nu,  
 \]
-其中 $f:E\to \mathbb{R}$ 是任意示性函数，此时对于任意
-$E$ 的可测子集 $A$，有
-\[
-  \mathbb{P}_X(A)=\int \indicator{A} \d \mathbb{P}_X=\mathbb{E}[\indicator{A}(X)]=  \int \indicator{A}\d\nu=\nu(A),
-\]
-所以分布 $\mathbb{P}_X=\nu$。下面的命题应用了这样的思想。
+其中 $f:E\to \mathbb{R}$ 属于某个足够大的函数类(如 $E=\mathbb{R}^d$ 时 $f$ 取变所有紧支的连续函数)，
+此时就一定有 $\mathbb{P}_X=\nu$。下面的命题应用了这样的思想。
 
 \begin{proposition}\label{prop:margin pdf}
   令 $X=(X_1,\dots,X_d)$ 是值在 $\mathbb{R}^d$ 中的随机变量，假设
@@ -731,7 +744,7 @@ $\cov(X,X)=\var(X)$，还有 Cauchy-Schwarz 不等式表明
 我们的目标是证明特征函数确定了分布律 $\mathbb{P}_X$。这等价于
 说明 Fourier 变换 $\mathbb{P}_X\mapsto \what{\mathbb{P}}_X$ 是单射的映射。
 
-\begin{lemma}
+\begin{lemma}\label{lemma:characteristic function of normal distribution}
   令 $X$ 是服从正态分布 $\mathcal{N}(m,\sigma^2)$ 的实值随机变量，
   那么
   \[
@@ -778,8 +791,78 @@ $\cov(X,X)=\var(X)$，还有 Cauchy-Schwarz 不等式表明
     \mu_\sigma(\d x)&=f_\sigma(x)\d x.
   \end{align*}
   记 $C_b(\mathbb{R})$ 是所有有界连续函数 $\varphi:\mathbb{R}\to \mathbb{R}$
-  构成的空间。
+  构成的空间。回顾 $\mathbb{R}$ 上的概率测度 $\nu$ 由所有 $\int \varphi(x)\nu(\d x)$
+  刻画，其中 $\varphi\in C_c(\mathbb{R})\subseteq C_b(\mathbb{R})$。我们证明
+  下面两点：
+  \begin{enumerate}
+    \item $\mu_\sigma$ 被 $\hat\mu$ 确定。
+    \item 对于每个 $\varphi\in C_b(\mathbb{R})$，当 $\sigma\to 0$ 时有
+    $\int\varphi(x)\mu_\sigma(\d x)\to\int\varphi(x)\mu(\d x)$。
+  \end{enumerate}
+
+  根据 \autoref{lemma:characteristic function of normal distribution}，对于任意 $x\in \mathbb{R}$，有
+  \[
+    \sigma\sqrt{2\pi}g_\sigma(x)=\exp\left(-\frac{x^2}{2\sigma^2}\right)
+    =\int_{\mathbb{R}}e^{i\xi x}g_{1/\sigma}(\xi) \d\xi.
+  \]
+  因此，有
+  \begin{align*}
+    f_\sigma(x)=\int_{\mathbb{R}}g_\sigma(x-y)\mu(\d y)&=
+    \bigl(\sigma\sqrt{2\pi}\bigr)^{-1}\int_{\mathbb{R}}
+    \left(
+      \int_{\mathbb{R}}e^{i\xi (x-y)}g_{1/\sigma}(\xi)\d\xi
+    \right) \mu(\d y)\\
+    &=\bigl(\sigma\sqrt{2\pi}\bigr)^{-1}\int_{\mathbb{R}}e^{i\xi x}
+    g_{1/\sigma}(\xi)\left(
+      \int_{\mathbb{R}}e^{-i\xi y}\mu(\d y)
+    \right)\d\xi\\
+    &=\bigl(\sigma\sqrt{2\pi}\bigr)^{-1}\int_{\mathbb{R}}e^{i\xi x}g_{1/\sigma}(\xi)
+    \hat\mu(-\xi)\d \xi.
+  \end{align*}
+  注意我们使用了 Fubini-Tonelli 定理来交换积分次序。这就表明 $f_\sigma$
+  完全由 $\hat\mu$ 确定，所以 $\mu_\sigma$ 也由 $\hat\mu$ 确定。
+
+  下面证明 (2)。对于每个 $\varphi\in C_b(\mathbb{R})$，有
+  \begin{align*}
+    \int\varphi(x)\mu_\sigma(\d x)=\int \varphi(x)\left(
+      \int g_\sigma(x-y)\mu(\d y)
+    \right) \d x&=\int\left(
+      \int \varphi(x)g_\sigma(x-y)\d x
+    \right) \mu(\d y)\\
+    &=\int g_\sigma *\varphi(y)\mu(\d y).
+  \end{align*}
+  这里再次使用了 Fubini-Tonelli 定理来交换积分次序。注意到
+  \begin{gather*}
+    \int g_\sigma(x) \d x=1,\\
+    \lim_{\sigma\to 0}\int_{\{|x|>\varepsilon\}}g_\sigma(x)\d x=0,\quad 
+    \forall\varepsilon>0.
+  \end{gather*}
+  这表明对于任意 $y\in \mathbb{R}$，有
+  \[
+    \lim_{\sigma\to 0}g_\sigma*\varphi(y)=\varphi(y).
+  \]
+  根据控制收敛，注意到 $|g_\sigma*\varphi|\leq \sup\{|\varphi(x)|\,|\, x\in \mathbb{R}\}$，
+  我们有
+  \[
+    \lim_{\sigma\to 0}\int\varphi(x)\mu_\sigma(\d x)=\lim_{\sigma\to 0}
+    \int g_\sigma*\varphi(y)\mu(\d y)=\int\varphi(x)\mu(\d x).
+  \]
+  这就证明了 (2)。
+
+  对于一般 $d$ 维的情况，使用辅助函数
+  \[
+    g_\sigma^{(d)}(x_1,\dots,x_d)=\prod_{j=1}^d g_\sigma(x_j)
+  \]
+  即可。此时，对于 $\xi=(\xi_1,\dots,\xi_d)\in \mathbb{R}^d$ 有
+  \[
+    \int_{\mathbb{R}^d} g_\sigma^{(d)}(x)e^{i\xi\cdot x}\d x=
+    \prod_{j=1}^d \int_{\mathbb{R}} g_\sigma(x_j)e^{i\xi_jx_j}\d x_j=
+    (2\pi/\sigma^2)^{d/2}g_{1/\sigma}^{(d)}(\xi),
+  \]
+  然后采取同样的论述即可。
 \end{proof}
+
+
 
 
 
