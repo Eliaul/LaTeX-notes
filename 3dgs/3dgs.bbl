@@ -19,6 +19,93 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global/global}
+    \entry{kerbl3Dgaussians}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=c73d638ffd25328757379835747302ff}{%
+           family={Kerbl},
+           familyi={K\bibinitperiod},
+           given={Bernhard},
+           giveni={B\bibinitperiod}}}%
+        {{hash=2ab758a425dcd6ed440f4ae0d994dc2c}{%
+           family={Kopanas},
+           familyi={K\bibinitperiod},
+           given={Georgios},
+           giveni={G\bibinitperiod}}}%
+        {{hash=23f06719145b1e18e13a7e436bb8c2fc}{%
+           family={Leimkühler},
+           familyi={L\bibinitperiod},
+           given={Thomas},
+           giveni={T\bibinitperiod}}}%
+        {{hash=70ecb4c4a672f7c20e4b53b57d5a437e}{%
+           family={Drettakis},
+           familyi={D\bibinitperiod},
+           given={George},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{38ed96775a79b080a25e1e45e0aaa88a}
+      \strng{fullhash}{36d84a8a291db8ba20b3f78b93a2eeee}
+      \strng{fullhashraw}{36d84a8a291db8ba20b3f78b93a2eeee}
+      \strng{bibnamehash}{38ed96775a79b080a25e1e45e0aaa88a}
+      \strng{authorbibnamehash}{38ed96775a79b080a25e1e45e0aaa88a}
+      \strng{authornamehash}{38ed96775a79b080a25e1e45e0aaa88a}
+      \strng{authorfullhash}{36d84a8a291db8ba20b3f78b93a2eeee}
+      \strng{authorfullhashraw}{36d84a8a291db8ba20b3f78b93a2eeee}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM Transactions on Graphics}
+      \field{month}{7}
+      \field{number}{4}
+      \field{title}{3D Gaussian Splatting for Real-Time Radiance Field Rendering}
+      \field{volume}{42}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/
+      \endverb
+      \verb{url}
+      \verb https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/
+      \endverb
+    \endentry
+    \entry{ye2023mathematicalsupplementtextttgsplatlibrary}{misc}{}{}
+      \name{author}{2}{}{%
+        {{hash=8934eb629a707e2d2caaa1878c0a5d82}{%
+           family={Ye},
+           familyi={Y\bibinitperiod},
+           given={Vickie},
+           giveni={V\bibinitperiod}}}%
+        {{hash=6739ae1219e43710a65f37e9a5b5e902}{%
+           family={Kanazawa},
+           familyi={K\bibinitperiod},
+           given={Angjoo},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{74a6d1a91ca508616e02882d04cd2de4}
+      \strng{fullhash}{74a6d1a91ca508616e02882d04cd2de4}
+      \strng{fullhashraw}{74a6d1a91ca508616e02882d04cd2de4}
+      \strng{bibnamehash}{74a6d1a91ca508616e02882d04cd2de4}
+      \strng{authorbibnamehash}{74a6d1a91ca508616e02882d04cd2de4}
+      \strng{authornamehash}{74a6d1a91ca508616e02882d04cd2de4}
+      \strng{authorfullhash}{74a6d1a91ca508616e02882d04cd2de4}
+      \strng{authorfullhashraw}{74a6d1a91ca508616e02882d04cd2de4}
+      \field{sortinit}{Y}
+      \field{sortinithash}{fd67ad5a9ef0f7456bdd9aab10fe1495}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.MS}
+      \field{eprinttype}{arXiv}
+      \field{title}{Mathematical Supplement for the $\texttt{gsplat}$ Library}
+      \field{year}{2023}
+      \verb{eprint}
+      \verb 2312.02121
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2312.02121
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2312.02121
+      \endverb
+    \endentry
     \entry{1021576}{article}{}{}
       \name{author}{4}{}{%
         {{hash=c41ccc3cf2ea31ff1e05daba8641db60}{%

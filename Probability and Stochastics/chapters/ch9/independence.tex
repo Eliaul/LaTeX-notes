@@ -1,0 +1,765 @@
+
+\chapter{独立性}
+
+\section{独立事件}
+
+在本章中，我们考虑概率空间 $(\Omega,\mathcal{A},\mathbb{P})$。如果 
+$A,B\in \mathcal{A}$ 且
+\[
+  \mathbb{P}(A\cap B)=\mathbb{P}(A)\mathbb{P}(B),  
+\]
+那么我们说 $A$ 和 $B$ 是\emph{独立的}。
+如果 $\mathbb{P}(B)>0$，我们定义条件概率
+\[
+  \mathbb{P}(A|B)=\frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}.
+\]
+此时 $A$ 和 $B$ 独立等价于 $\mathbb{P}(A|B)=\mathbb{P}(A)$。
+
+\begin{definition}
+  如果对于 $\{1,\dots,n\}$
+  的任意子集 $\{j_1,\dots,j_p\}$ 都有
+  \[
+    \mathbb{P}(A_{j_1}\cap \cdots\cap A_{j_p})
+    =\mathbb{P}(A_{j_1})\cdots \mathbb{P}(A_{j_p}),
+  \]
+  那么我们说 $n$ 个事件 $A_1,\dots,A_n$ 是独立的。
+\end{definition}
+
+\begin{proposition}\label{prop:independence by sigma algebra}
+  $n$ 个事件 $A_1,\dots,A_n$ 独立当且仅当
+  \[
+    \mathbb{P}(B_1\cap\cdots\cap B_n)=\mathbb{P}(B_1)\cdots \mathbb{P}(B_n),
+  \]
+  其中 $B_i\in\sigma(A_i)=\{\emptyset,A,A^c,\Omega\}$。
+\end{proposition}
+
+
+
+\section{$\sigma$-域和随机变量的独立性}
+
+如果 $\mathcal{B}\subseteq \mathcal{A}$ 是一个 $\sigma$-域，那么我们说
+$\mathcal{B}$ 是 $\mathcal{A}$ 的\emph{子 $\mathbold{\sigma}$-域}。我们可以认为
+子 $\sigma$-域 $\mathcal{B}$ 反映了概率空间的部分信息，即 $\mathcal{B}$ 中
+发生的事件。例如，如果 $\mathcal{B}=\sigma(X)$，$X$ 是随机变量，那么
+$\mathcal{B}$ 反映了 $X$ 的值的信息。这暗示了子 $\sigma$-域的独立性的概念：
+我们希望两个子 $\sigma$-域 $\mathcal{B}$ 和 $\mathcal{B}'$ 是独立的当且仅当
+它们中的任意两个事件都是独立的。
+
+\begin{definition}
+  令 $\mathcal{B}_1,\dots,\mathcal{B}_n$ 是 $\mathcal{A}$ 的 $n$ 个
+  $\sigma$-子域，我们说 $\mathcal{B}_1,\dots,\mathcal{B}_n$ 是独立的，如果
+  对于任意 $A_1\in \mathcal{B}_1,\dots,A_n\in \mathcal{B}_n$，都有
+  \[
+    \mathbb{P}(A_1\cap\cdots\cap A_n)=\mathbb{P}(A_1)\cdots \mathbb{P}(A_n).  
+  \]
+\end{definition}
+
+令 $X_1,\dots,X_n$ 分别是值在 $(E_1,\mathcal{E}_1),\dots,(E_n,\mathcal{E}_n)$
+中的随机变量，我们说 $X_1,\dots,X_n$ 是独立的当且仅当
+$\sigma(X_1),\dots,\sigma(X_n)$ 是独立的。这等价于
+任取 $F_1\in \mathcal{E}_1,\dots,F_n\in \mathcal{E}_n$ 有
+\[
+  \mathbb{P}(\{X_1\in F_1\}\cap\cdots\cap\{X_n\in F_n\})  
+  =\mathbb{P}(X_1\in F_1)\cdots \mathbb{P}(X_n\in F_n).
+\]
+
+有时候考虑一族随机变量之间的独立性也是有用的。对于两族随机变量 $(X_i)_{i\in I}$
+和 $(Y_j)_{j\in J}$，如果 $\sigma$-域 $\sigma((X_i)_{i\in I})$ 和 $\sigma((Y_j)_{j\in J})$
+是独立的，那么我们说这两族随机变量是独立的。注意到这比任意 $X_i$ 与 $Y_j$ 独立要更强。
+
+\begin{remark}
+  (1) 如果 $\mathcal{B}_1,\dots,\mathcal{B}_n$ 是 $\mathcal{A}$ 的 $n$ 个独立的 $\sigma$-子域，
+  并且 $X_i$ 是 $\mathcal{B}_i$-可测的随机变量，那么 $X_1,\dots,X_n$ 是独立的。这是因为
+  $X_i$ 是 $\mathcal{B}_i$-可测的就表明 $\sigma(X_i)\subseteq \mathcal{B}_i$。
+
+  (2) $n$ 个事件 $A_1,\dots,A_n$ 是独立的当且仅当 $\sigma$-域 $\sigma(A_1),\dots,\sigma(A_n)$
+  是独立的(\autoref{prop:independence by sigma algebra})。
+\end{remark}
+
+
+\begin{theorem}\label{thm:independence by product measure}
+  令 $X_1,\dots,X_n$ 分别是值在 $(E_1,\mathcal{E}_1),\dots,(E_n,\mathcal{E}_n)$
+  中的随机变量。那么 $X_1,\dots,X_n$ 是独立的当且仅当 $(X_1,\dots,X_n)$
+  的分布是 $X_1,\dots,X_n$ 的分布的乘积测度，即
+  \[
+    \mathbb{P}_{(X_1,\dots,X_n)}=\mathbb{P}_{X_1}\otimes\cdots
+    \otimes \mathbb{P}_{X_n}.  
+  \]
+  此外，我们有
+  \[
+    \mathbb{E}\biggl[\prod_{i=1}^n f_i(X_i)\biggr] =\prod_{i=1}^n \mathbb{E}[f_i(X_i)],
+  \]
+  其中 $f_i$ 是 $(E_i,\mathcal{E}_i)$ 上的非负可测函数。
+\end{theorem}
+\begin{proof}
+  令 $F_i\in \mathcal{E}_i$，$X_1,\dots,X_n$ 独立当且仅当
+  \[
+    \mathbb{P}(\{X_1\in F_1\}\cap\cdots\cap\{X_n\in F_n\})  
+    =\mathbb{P}(X_1\in F_1)\cdots \mathbb{P}(X_n\in F_n),
+  \]
+  这表明
+  \[ 
+    \mathbb{P}_{(X_1,\dots,X_n)}(F_1\times\cdots\times F_n)
+    =\mathbb{P}_{X_1}(F_1)\cdots \mathbb{P}_{X_n}(F_n).
+  \]
+  所以 $\mathbb{P}_{(X_1,\dots,X_n)}$ 就是乘积测度 
+  $\mathbb{P}_{X_1}\otimes\cdots\otimes \mathbb{P}_{X_n}$。
+
+  记 $\pi_i:E_1\times \cdots\times E_n\to E_i$ 为投影，根据 Fubini 定理，有
+  \begin{align*}
+    \mathbb{E}\biggl[\prod_{i=1}^n f_i(X_i)\biggr]&=
+    \int_{E_1\times\cdots \times E_n}\prod_{i=1}^n f_i\circ\pi_i
+    \d\mathbb{P}_{(X_1,\dots,X_n)}\\
+    &=\prod_{i=1}^n \int_{E_i} f_i(x_i) \mathbb{P}_{X_i}(\d x_i)\\
+    &=\prod_{i=1}^n \mathbb{E}[f_i(X_i)].\qedhere
+  \end{align*}
+\end{proof}
+\begin{remark}
+  该定理中 $f_i$ 也可以是任意符号，此时如果 $\mathbb{E}[|f_i(X_i)|]<\infty$，
+  也即 $f_i\in \mathcal{L}^1(E_i,\mathcal{E}_i,\mathbb{P}_{X_i})$，那么
+  定理的结论依然成立。只需要注意到
+  \[
+    \mathbb{E}\biggl[
+      \prod_{i=1}^n |f_i(X_i)|
+    \biggr]=\prod_{i=1}^n \mathbb{E}[|f_i(X_i)|]<\infty.
+  \]
+  特别地，如果 $X_1,\dots,X_n$ 是独立的实值随机变量且 $X_i\in L^1$，
+  那么 $X_1\cdots X_n\in L^1$ 且
+  \[
+    \mathbb{E}[X_1\cdots X_n]=\prod_{i=1}^n \mathbb{E}[X_i].
+  \]
+  需要注意一般情况下 $L^1$ 中的随机变量的积不一定还在 $L^1$ 中。
+\end{remark}
+
+\autoref{thm:independence by product measure} 展示了如何构造有限多个独立的随机变量。
+考虑实值随机变量的情况。令 $\mu_1,\dots,\mu_n$ 是 $\mathbb{R}$ 上的 $n$ 个
+概率测度。首先我们可以构造一个值在 $\mathbb{R}^n$ 中的随机变量 $Y=(Y_1,\dots,Y_n)$
+使得其有分布律 $\mu_1\otimes\cdots\otimes \mu_n$ (比如令 $\Omega=\mathbb{R}^n$，
+$\mathcal{A}=\mathcal{B}(\mathbb{R}^n)$，$\mu_1\otimes\cdots\otimes \mu_n$
+是概率测度，那么随机变量 $Y(\omega)=\omega$ 即符合要求)。然后 \autoref{thm:independence by product measure}
+表明分量 $Y_1,\dots,Y_n$ 是分别拥有分布律 $\mu_1,\dots,\mu_n$ 的独立实值随机变量。
+
+\begin{corollary}\label{coro:independence implies uncorrelated}
+  如果 $X_1,X_2$ 是 $L^2$ 中的两个独立实值随机变量，那么 $\cov(X_1,X_2)=0$。
+\end{corollary}
+
+\begin{corollary}\label{coro:independence by pdf}
+  令 $X_1,\dots,X_n$ 是实值随机变量。
+  \begin{enumerate}
+    \item 假设 $X_i$ 有密度 $p_i$ 并且 $X_1,\dots,X_n$ 是独立的，那么
+    $(X_1,\dots,X_n)$ 有密度
+    \[
+      p(x_1,\dots,x_n)=\prod_{i=1}^n p_i(x_i).  
+    \]
+    \item 反之，假设 $(X_1,\dots,X_n)$ 有密度 $p$，并且
+    $p$ 可以表达为
+    \[
+    p(x_1,\dots,x_n)=\prod_{i=1}^n q_i(x_i),  
+    \]
+    其中 $q_i$ 是 $\mathbb{R}$ 上的非负可测函数。那么 $X_1,\dots,X_n$
+    是独立的并且 $X_i$ 有密度 $p_i=C_iq_i$，其中 $C_i>0$ 为常数。
+  \end{enumerate}
+\end{corollary}
+\begin{proof}
+  (1) $X_i$ 有密度 $p_i$ 表明 $\mathbb{P}_{X_i}(\d x)=p_i(x)\d x$，
+  $X_1,\dots,X_n$ 独立表明
+  \begin{align*}
+    \mathbb{P}_{(X_1,\dots,X_n)}(A)&=
+    \mathbb{P}_{X_1}\otimes\cdots\otimes \mathbb{P}_{X_n}(A)
+    =\int_{\mathbb{R}^n} \indicator{A} \d \mathbb{P}_{X_1}\otimes\cdots\otimes \mathbb{P}_{X_n}
+    \\
+    &=\int_{\mathbb{R}}\cdots \int_{\mathbb{R}}\indicator{A}(x_1,\dots,x_n)
+    \mathbb{P}_{X_1}(\d x_1)\cdots \mathbb{P}_{X_n}(\d x_n) \\
+    &=\int_{\mathbb{R}}\cdots \int_{\mathbb{R}}\indicator{A}(x_1,\dots,x_n)
+    \prod_{i=1}^n p_i(x_i)
+    \d x_1\cdots \d x_n\\
+    &=\int_{\mathbb{R}^n} \indicator{A}\prod_{i=1}^n p_i \d \lambda
+    =\int_A \prod_{i=1}^np_i(x_i) \d x_1\cdots\d x_n,
+  \end{align*}
+  这就表明 
+  \[
+    p(x_1,\dots,x_n)=\prod_{i=1}^n p_i(x_i).  
+  \]
+
+  (2) 根据 \autoref{prop:margin pdf}，有
+  \[
+    p_i(x_i)=\int_{\mathbb{R}^{n-1}}p(x_1,\dots,x_n)\d x_1\cdots \d x_{i-1}
+    \d x_{i+1}\cdots\d x_n
+    =q_i(x_i)\prod_{j\neq i}\int_{\mathbb{R}}q_j(x_j)\d x_j,
+  \]
+  故 $p_i=C_iq_i$。此时
+  \begin{align*}
+    p(x_1,\dots,x_n)=\prod_{i=1}^n q_i(x_i)
+    =\prod_{i=1}^n \frac{1}{C_i}p_i(x_i),
+  \end{align*}
+  两边积分可知 $\prod_{i=1}^n C_i=1$，所以
+  \[
+    p(x_1,\dots,x_n)=\prod_{i=1}^n p_i(x_i),  
+  \]
+  这就表明 $\mathbb{P}_{(X_1,\dots,X_n)}=\mathbb{P}_{X_1}\otimes\cdots \mathbb{P}_{X_n}$，
+  即 $X_1,\dots,X_n$ 独立。
+\end{proof} 
+
+\begin{example}
+  令 $U$ 是服从参数 $1$ 的指数分布的随机变量，$V$ 是服从 $[0,1]$ 上
+  的均匀分布的随机变量，假设 $U,V$ 是独立的，记
+  \[
+    X=\sqrt{U}\cos(2\pi V),\quad Y=\sqrt{U}\sin(2\pi V),  
+  \]
+  证明 $X,Y$ 是独立的随机变量。
+\end{example}
+\begin{proof}
+  任取非负可测函数 $\varphi:\mathbb{R}^2\to \mathbb{R}$，有
+  \begin{align*}
+    \mathbb{E}[\varphi(X,Y)]
+    &=\mathbb{E}
+    \bigl[\varphi\bigl(\sqrt{U}\cos(2\pi V),\sqrt{U}\sin(2\pi V)\bigr)\bigr]\\
+    &=\int_{\mathbb{R}^2}\varphi\bigl(\sqrt{u}\cos(2\pi v),\sqrt{u}\sin(2\pi v)\bigr)
+    \d \mathbb{P}_{(U,V)}\\
+    &=\int_{\mathbb{R}}\int_{\mathbb{R}}\varphi\bigl(\sqrt{u}\cos(2\pi v),\sqrt{u}\sin(2\pi v)\bigr)
+      e^{-u}\indicator{[0,\infty)}(u)\indicator{[0,1]}(v)\d u\d v\\
+    &=\int_{0}^\infty\int_0^1\varphi\bigl(\sqrt{u}\cos(2\pi v),\sqrt{u}\sin(2\pi v)\bigr)
+    e^{-u}\d u\d v \\
+    &=\frac{1}{\pi}\int_0^\infty\int_0^{2\pi}
+    \varphi(r\cos\theta,r\sin\theta)re^{-r^2}\d r\d\theta\\
+    &=\frac{1}{\pi}\int_{\mathbb{R}^2}\varphi(x,y)e^{-x^2-y^2}\d x\d y.
+  \end{align*}
+  这表明 $(X,Y)$ 有概率密度 $p(x,y)=\pi^{-1}\exp(-x^2-y^2)=\pi^{-1}\exp(-x^2)\exp(-y^2)$，
+  根据 \autoref{coro:independence by pdf}，这表明 $X,Y$
+  是独立的。
+\end{proof}
+
+下面是一个技术性的结论。
+
+\begin{proposition}\label{prop:independence by generating class}
+  令 $\mathcal{B}_1,\dots,\mathcal{B}_n$ 是 $\mathcal{A}$ 的 $\sigma$-子域。
+  对于每个 $1\leq i\leq n$，令 $\mathcal{C}_i\subseteq \mathcal{B}_i$
+  是对有限交封闭的、包含 $\Omega$ 的并且满足 $\sigma(\mathcal{C}_i)=\mathcal{B}_i$
+  的类。如果
+  \[
+    \forall C_1\in \mathcal{C}_1,\dots,\forall C_n\in \mathcal{C}_n,\ 
+    \mathbb{P}(C_1\cap\cdots\cap C_n)=\mathbb{P}(C_1)\cdots \mathbb{P}(C_n),
+  \]
+  那么 $\sigma$-域 $\mathcal{B}_1,\dots,\mathcal{B}_n$ 是独立的。
+\end{proposition}
+
+\paragraph{分组独立的随机变量} 回顾，如果 $\mathcal{A}_1,\dots,\mathcal{A}_k$
+是 $\sigma$-域，那么 $\mathcal{A}_1\vee \cdots\vee \mathcal{A}_k$ 表示
+包含 $\mathcal{A}_1\cup\cdots\cup\mathcal{A}_k$ 的最小 $\sigma$-域。令 $\mathcal{B}_1,\dots,\mathcal{B}_n$
+是独立的 $\sigma$-域，令 $n_0=0<n_1<\cdots< n_p=n$。那么 $\sigma$-域
+\begin{align*}
+  \mathcal{D}_1&= \mathcal{B}_{1}\vee \cdots\vee \mathcal{B}_{n_1}\\
+  \mathcal{D}_2&= \mathcal{B}_{n_1+1}\vee \cdots\vee \mathcal{B}_{n_2}\\
+  &\ \vdots \\
+  \mathcal{D}_p&= \mathcal{B}_{n_{p-1}+1}\vee \cdots\vee \mathcal{B}_{n_p}
+\end{align*}
+是独立的。我们使用 \autoref{prop:independence by generating class} 来证明这一点。
+对于任意 $1\leq j\leq p$，令 $\mathcal{C}_j$ 是所有形如
+\[
+  B_{n_{j-1}+1}\cap \cdots\cap B_{n_j},\quad B_i\in \mathcal{B}_i, i\in \{n_{j-1}+1,\dots,n_j\}
+\]
+的集合构成的类。那么 $\mathcal{C}_1,\dots,\mathcal{C}_p$ 满足 \autoref{prop:independence by generating class}
+的要求，并且 $\mathcal{D}_j=\sigma(\mathcal{C}_j)$，这就得到了结论。
+特别的，如果 $X_1,\dots,X_n$ 是独立随机变量，那么随机变量
+\[
+  Y_1=(X_1,\dots,X_{n_1}), Y_2=(X_{n_1+1},\dots,X_{n_2}), \dots,
+  Y_p=(X_{n_{p-1}+1},\dots,X_{n_p})
+\]
+也是独立的。
+
+\begin{example}
+  如果 $X_1,X_2,X_3,X_4$ 是独立的随机变量，那么随机变量 $Z_1=X_1X_3$
+  和 $Z_2=X_2^3+X_4$ 是独立的。因为 $\sigma(Z_1)\subseteq \sigma(X_1,X_3)$
+  以及 $\sigma(Z_2)\subseteq \sigma(X_2,X_4)$，而 $\sigma(X_1,X_3)$ 和
+  $\sigma(X_2,X_4)$ 是独立的。
+\end{example}
+
+\begin{proposition}
+  令 $X_1,\dots,X_n$ 是 $n$ 个实值随机变量。下面的说法互相等价：
+  \begin{enumerate}
+    \item $X_1,\dots,X_n$ 独立。
+    \item 对于每个 $a_1,\dots,a_n\in \mathbb{R}$，有 
+    $\mathbb{P}(X_1\leq a_1,\dots,X_n\leq a_n)=\prod_{i=1}^n \mathbb{P}(X_i\leq a_i)$。
+    \item 令 $f_1,\dots,f_n$ 是从 $\mathbb{R}$ 到 $\mathbb{R}_+$ 的紧支连续函数，
+    那么
+    \[
+      \mathbb{E}\biggl[
+        \prod_{i=1}^n f_i(X_i)
+      \biggr]=\prod_{i=1}^n \mathbb{E}[f_i(X_i)].
+    \]
+    \item 随机向量 $X=(X_1,\dots,X_n)$ 的特征函数为
+    \[
+      \varPhi_X(\xi_1,\dots,\xi_n)=\prod_{i=1}^n \varPhi_{X_i}(\xi_i).
+    \]
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  \autoref{thm:independence by product measure} 表明 $(1)$ 能推出 $(2)$
+  和 $(3)$。反之，对于 $(3)\Rightarrow (1)$，注意到开区间上的示性函数
+  是一列紧支连续函数的递增极限，再利用单调收敛定理，就表明对于开区间
+  $F_1,\dots,F_n$，有
+  \[
+    \mathbb{P}(X_1\in F_1,\dots,X_n\in F_n)=\prod_{i=1}^n \mathbb{P}(X_i\in F_i).
+  \]
+  再利用 \autoref{prop:independence by generating class}，取 $\mathcal{C}_j$
+  是所有 $\{X_j\in F\}$，$F\subseteq \mathbb{R}$ 是开区间构成的类，就得到结论。
+  $(2)\Rightarrow (1)$ 同理。
+
+  对于 $(1)\Leftrightarrow (4)$。注意到积测度 $\mathbb{P}_{X_1}\otimes\cdots\otimes \mathbb{P}_{X_n}$
+  的 Fourier 变换为
+  \begin{align*}
+    (\xi_1,\dots,\xi_n)\mapsto & \int \exp\biggl(
+      i\sum_{j=1}^n \xi_j x_j
+    \biggr) \mathbb{P}_{X_1}(\d x_1)\cdots \mathbb{P}_{X_n}(\d x_n)\\
+    &=\prod_{j=1}^n \int \exp(i\xi_j x_j)\mathbb{P}_{X_j}(\d x_j)
+    =\prod_{j=1}^n \varPhi_{X_j}(\xi_j).
+  \end{align*}
+  所以 $(4)$ 等价于 $\mathbb{P}_{(X_1,\dots,X_n)}$ 的 Fourier 变换等于
+  $\mathbb{P}_{X_1}\otimes\cdots\otimes \mathbb{P}_{X_n}$ 的 Fourier 变换，根据
+  Fourier 变换的唯一性定理，这就表明 $\mathbb{P}_{(X_1,\dots,X_n)}= \mathbb{P}_{X_1}\otimes\cdots\otimes \mathbb{P}_{X_n}$，
+  即 $X_1,\dots,X_n$ 独立。
+\end{proof}
+
+考虑无限多个随机变量的独立性也是有用的。
+
+\begin{definition}
+  令 $(\mathcal{B}_i)_{i\in I}$ 是 $\mathcal{A}$ 的一族 $\sigma$-子域。
+  如果对于 $I$ 的任意有限子集 $\{i_1,\dots,i_p\}$，$\sigma$-域 $\mathcal{B}_{i_1},\dots,\mathcal{B}_{i_p}$
+  都是独立的，那么我们说 $(\mathcal{B}_i)_{i\in I}$ 是独立的。
+  如果 $(X_i)_{i\in I}$ 是一族随机变量，我们说 $X_i$ 是独立的当且仅当
+  $\sigma$-域 $(\sigma(X_i))_{i\in I}$ 是独立的。
+  类似的，对于一族事件 $(A_i)_{i\in I}$，我们说 $A_i$ 是独立的当且仅当
+  $\sigma$-域 $(\sigma(A_i))_{i\in I}$ 是独立的。
+\end{definition}
+
+分组独立的概念也可以推广到无限多个 $\sigma$-域上去。我们仅陈述一个后面
+会用到的简单版本。
+
+\begin{proposition}\label{prop:grouped independence infinite}
+  令 $(X_n)_{n\in \mathbb{N}}$ 是一列独立随机变量。那么，对于每个 $p\in \mathbb{N}$，
+  $\sigma$-域
+  \[
+    \mathcal{B}_1=\sigma(X_1,\dots,X_p),\quad
+    \mathcal{B}_2=\sigma(X_{p+1},X_{p+2},\dots)  
+  \]
+  是独立的。
+\end{proposition}
+\begin{proof}
+  令
+  \begin{align*}
+    \mathcal{C}_1&=\sigma(X_1,\dots,X_p)=\mathcal{B}_1,\\
+    \mathcal{C}_2&=\bigcup_{k=p+1}^\infty \sigma(X_{p+1},X_{p+2},\dots,X_k)\subseteq \mathcal{B}_2,
+  \end{align*}
+  那么 $\sigma(\mathcal{C}_2)=\mathcal{B}_2$，利用 \autoref{prop:independence by generating class}，
+  就得到结论。
+\end{proof}
+
+
+
+\section{Borel-Cantelli 引理}
+
+回顾集合极限的定义：如果 $(A_n)_{n\in \mathbb{N}}$ 是一列集合，
+我们记
+\[
+  \limsup A_n=\bigcap_{n=1}^\infty \bigcup_{k=n}^\infty A_k,  
+\]
+不难发现点 $\omega\in\limsup A_n$ 当且仅当存在无限多个
+$n$ 使得 $\omega\in A_n$。这意味着 $\omega$ 属于无限多个 $A_n$，
+也即事件 $(A_n)$ 会发生无限次。注意到
+\autoref{lemma:liminf and limsup ineq} 告诉我们
+$\mathbb{P}(\limsup A_n)\geq \limsup \mathbb{P}(A_n)$。
+
+\begin{lemma}
+  令 $(A_n)_{n\in \mathbb{N}}$ 是一列事件。
+  \begin{enumerate}
+    \item 如果 $\sum_{n\in \mathbb{N}}\mathbb{P}(A_n)<\infty$，那么
+    \[
+      \mathbb{P}(\limsup A_n)=0,  
+    \]
+    等价的说，几乎肯定集合 $\{n\in \mathbb{N}\,|\, \omega\in A_n\}$ 是有限集。
+    \item 如果 $\sum_{n\in \mathbb{N}}\mathbb{P}(A_n)=\infty$，
+    事件 $A_n$ 是独立的，那么
+    \[
+      \mathbb{P}(\limsup A_n)=1.  
+    \]
+    等价的说，几乎肯定集合 $\{n\in \mathbb{N}\,|\, \omega\in A_n\}$ 是无限集。
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  (1) 如果 $\sum_{n\in \mathbb{N}}\mathbb{P}(A_n)<\infty$，那么
+  \[
+    \mathbb{E}\biggl[
+      \sum_{n\in \mathbb{N}}\idf_{A_n}
+    \biggr]=\sum_{n\in \mathbb{N}}\mathbb{P}(A_n)<\infty.
+  \]
+  所以 $\sum_{n\in \mathbb{N}}\idf_{A_n}<\infty\ \alsu{}$，这就表明存在
+  一个测度为 $1$ 的集合 $\Omega_0\subseteq \Omega$，使得对于任意 
+  任取 $\omega\in \Omega_0$，集合 $\{n\in \mathbb{N}\,|\, \omega\in A_n\}$ 是有限集。
+  因此 $\mathbb{P}(\limsup A_n)=0$。
+
+  (2) 固定 $n_0\in \mathbb{N}$，如果 $n\geq n_0$，那么($A_n$ 独立)
+  \[
+    \mathbb{P}\biggl(
+      \bigcap_{k=n_0}^n A_k^c
+    \biggr)=\prod_{k=n_0}^n \mathbb{P}(A_k^c)=\prod_{k=n_0}^n (1-\mathbb{P}(A_k)).
+  \]
+  因为 $\sum_{n\in \mathbb{N}}\mathbb{P}(A_n)=\infty$，所以上式右端在 $n\to\infty$
+  的时候趋于 $0$。所以
+  \[
+    \mathbb{P}\biggl(
+      \bigcap_{k=n_0}^\infty A_k^c  
+    \biggr)=0.
+  \]
+  由于对每个 $n_0\in \mathbb{N}$ 上式都成立，所以
+  \[
+    \mathbb{P}\biggl(
+      \bigcup_{n_0=1}^\infty \bigcap_{k=n_0}^\infty A_k^c
+    \biggr)=0.
+  \]
+  取补集，就得到
+  \[
+    \mathbb{P} \biggl(
+      \bigcap_{n_0=1}^\infty \bigcup_{k=n_0}^\infty A_k
+    \biggr)=1.\qedhere
+  \]
+\end{proof}
+
+Borel-Cantelli 引理的直观理解就是通过检查 $\sum \mathbb{P}(A_n)$ 的收敛性
+来判断事件 $A_n$ 是否会无限次发生。如果 $\sum \mathbb{P}(A_n)$ 收敛，
+那么事件 $A_n$ 几乎肯定只会发生有限次；如果 $\sum \mathbb{P}(A_n)$ 发散
+并且事件 $A_n$ 独立，那么事件 $A_n$ 几乎肯定会发生无限次。
+
+\paragraph{两个应用}
+(1) 我们不可能找到 $\mathbb{N}$ 上的概率测度 $\mathbb{P}$ 满足：对于每个 $n\geq 1$，
+所有 $n$ 的倍数的集合的概率是 $1/n$。假设这样的概率测度存在，令 $\mathcal{P}$
+是所有素数的集合，对于每个 $p\in \mathcal{P}$，令 $A_p=p \mathbb{N}$ 是 $p$
+的倍数的集合。那么容易发现所有的 $A_p$ 是独立的。因为，如果 $p_1,\dots,p_k$
+是任意不同的素数，那么
+\begin{equation*}
+  \mathbb{P}(A_{p_1}\cap\cdots\cap A_{p_k})=
+  \mathbb{P}(p_1 p_2 \cdots p_k \mathbb{N})
+  =\frac{1}{p_1 p_2 \cdots p_k}=\prod_{i=1}^k \mathbb{P}(A_{p_i}).
+\end{equation*}
+另一方面，有
+\[
+  \sum_{p\in \mathcal{P}}\mathbb{P}(A_p)=\sum_{p\in \mathcal{P}}\frac{1}{p}=\infty.
+\]
+所以 Borel-Cantelli 引理表明几乎肯定有 $n\in \mathbb{N}$ 使得 
+$\{p\in \mathcal{P}\,|\, n\in A_p\}$ 是无限集，这与每个 $n$ 只能有有限多个素因数矛盾。
+
+(2) 我们令
+\[
+  (\Omega,\mathcal{A},\mathbb{P})=\bigl([0,1),\mathcal{B}([0,1)),\lambda\bigr) ,
+\]
+其中 $\lambda$ 表示 Lebesgue 测度。对于每个 $n\in \mathbb{N}$，令
+\[
+  X_n(\omega)=\lfloor 2^n\omega\rfloor-2\lfloor 2^{n-1}\omega\rfloor,
+\]
+其中 $\lfloor x\rfloor$ 表示向下取整。那么 $X_n(\omega)\in\{0,1\}$
+并且容易验证对于任意 $\omega\in [0,1)$ 有
+\[
+  0\leq\omega-\sum_{k=1}^nX_k(\omega)2^{-k}<2^{-n}.  
+\]
+这表明
+\[
+  \omega=\sum_{k=1}^\infty X_k(\omega)2^{-k}.  
+\]
+数 $X_k(\omega)$ 实际上是 $\omega$ 的二进制展开的系数。对于每个 $n\in \mathbb{N}$，
+可以计算出
+\[
+  \mathbb{P}(X_n=0)=\mathbb{P}(X_n=1)=\frac{1}{2},
+\]
+我们还可以注意到随机变量 $X_n$ 是独立的。事实上，对于任意 $i_1,\dots,i_p\in \{0,1\}$，
+有
+\[
+  \{X_1=i_1,\dots,X_p=i_p\}=\biggl[
+    \sum_{j=1}^p i_j 2^{-j},\sum_{j=1}^p i_j 2^{-j}+2^{-p}  
+  \biggr),
+\]
+那么就有
+\[
+  \mathbb{P}(X_1=i_1,\dots,X_p=i_p)=2^{-p}=\prod_{j=1}^p \mathbb{P}(X_j=i_j).
+\]
+
+令 $p\in \mathbb{N}$ 和 $i_1,\dots,i_p\in\{0,1\}$。我们使用 Borel-Cantelli 引理来证明
+\[
+  \card\{k\geq 0\,|\, X_{k+1}=i_1,\dots,X_{k+p}=i_p\}=\infty\quad \alsu{}
+\]
+也就是说，对于 $[0,1)$ 内的几乎所有 $\omega$，其二进制展开中都可以包含
+无限次任意给定的有限字符串 $i_1,\dots,i_p$。为了证明这一点，对于每个 $n$，
+记
+\[
+  Y_n=(X_{np+1},X_{np+2},\dots,X_{np+p}).
+\]
+分组法则表明 $Y_n$ 也是独立的。考虑独立事件 $A_n=\{Y_n=(i_1,\dots,i_p)\}$，
+显然有 $\mathbb{P}(A_n)=2^{-p}$，所以 $\sum_n \mathbb{P}(A_n)=\infty$，
+所以 Borel-Cantelli 引理表明几乎肯定有无限多个 $n$ 使得 $Y_n=(i_1,\dots,i_p)$，这就得到了结论。
+
+\section{独立序列的构造}
+
+后面的许多研究基于一列独立同分布的随机变量。一个显然的问题是在一个恰当的概率空间
+中，这样的随机变量的序列是否存在。
+
+考虑上节末尾提到的概率空间
+\[
+  (\Omega,\mathcal{A},\mathbb{P})=\bigl([0,1),\mathcal{B}([0,1)),\lambda\bigr) .
+\]
+我们已经看到实数 $\omega\in [0,1)$ 的二进制展开 
+\[
+  \omega=\sum_{k=1}^\infty X_k(\omega)2^{-k}
+\]
+导出了一列参数 $1/2$ 的 Bernoulli 分布的独立随机变量 $(X_n)_{n\in \mathbb{N}}$。
+令 $\varphi$ 是一个固定的从 $\mathbb{N}\times \mathbb{N}$ 到 $\mathbb{N}$ 的双射，
+令 $Y_{i,j}=X_{\varphi(i,j)}$，也即把 $(X_n)_{n\in \mathbb{N}}$ 按照某种
+顺序排成一个二维数组。对于每个 $i\in \mathbb{N}$，令
+\[
+  U_i=\sum_{j=1}^\infty 2^{-j}Y_{i,j}.
+\]
+实际上我们就得到了一组独立的且在 $[0,1]$ 上均匀分布的随机变量 $(U_i)_{i\in \mathbb{N}}$。
+
+由于 $\sigma$-域 $\mathcal{G}_i=\sigma(Y_{i,j}\,|\, j\in \mathbb{N})$ 是独立的，
+所以 $U_1,U_2,\dots$ 是独立的。为了证明 $U_i$ 是 $[0,1]$ 上的均匀分布，
+定义 $U_i^{(p)}=\sum_{j=1}^p Y_{i,j}2^{-j}$，那么 $U_i^{(p)}$ 与 $X^{(p)}=\sum_{n=1}^p X_n 2^{-n}$
+有相同的分布律。如果 $\varphi$ 是 $\mathbb{R}$ 上的任意有界连续函数，
+那么 $\mathbb{E}[\varphi(U_i^{(p)})]=\mathbb{E}[\varphi(X^{(p)})]$，
+令 $p\to\infty$，于是 $\mathbb{E}[\varphi(U_i)]=\mathbb{E}[\varphi(X)]$，
+其中 $X(\omega)=\omega$ 是 $[0,1]$ 上的均匀分布的随机变量。
+
+
+
+
+\section{独立随机变量的和}
+
+独立随机变量的和在概率论中有重要的地位。
+
+我们首先引入 $\mathbb{R}^d$ 上的概率测度的卷积。如果 $\mu$ 和 $\nu$
+是 $\mathbb{R}^d$ 上的两个概率测度，那么定义卷积 $\mu*\nu$ 是 
+$\mathbb{R}^d\times \mathbb{R}^d$ 上的乘积测度 $\mu\otimes\nu$ 在映射 $(x,y)\mapsto x+y$
+下的推前。也就是说，对于 $\mathbb{R}^d$ 上的任意非负可测函数 $\varphi$，有
+\[
+  \int_{\mathbb{R}^d}\varphi(z) \mu*\nu (\d z)=\int_{\mathbb{R}^d}
+  \int_{\mathbb{R}^d}\varphi(x+y)\mu(\d x)\nu(\d y).
+\]
+特别的，如果 $\mu$ 相对于 Lebesgue 测度有密度 $f$，$\nu$ 相对于 Lebesgue 测度有密度 $g$，
+那么 $\mu*\nu$ 有密度 $f*g$。这是因为
+\[
+  \int\int \varphi(x+y) f(x)g(y) \d x\d y=
+  \int\varphi(z) \left(
+    \int f(x)g(z-x) \d x
+  \right) \d z.
+\]
+
+如果 $\mu$ 和 $\nu$ 是 $\mathbb{R}^d$ 上的概率测度，那么 $\mu *\nu$ 的 Fourier 
+变换是 $\mu$ 和 $\nu$ 的 Fourier 变换的乘积 $\hat\mu\hat\nu$。这是因为对于
+$\xi\in \mathbb{R}^d$，有
+\[
+  \widehat{\mu*\nu}(\xi)=\int_{\mathbb{R}^d} e^{i\xi\cdot z} \mu*\nu(\d z)
+  =\int_{\mathbb{R}^d}\int_{\mathbb{R}^d} e^{i\xi\cdot (x+y)} \mu(\d x)\nu(\d y)
+  =\hat\mu(\xi)\hat\nu(\xi).
+\]
+
+\begin{proposition}
+  令 $X,Y$ 是两个值在 $\mathbb{R}^d$ 中的独立随机变量。
+  \begin{enumerate}
+    \item $X+Y$ 的分布律是 $\mathbb{P}_X* \mathbb{P}_Y$。特别的，
+    如果 $X$ 和 $Y$ 分别有概率密度 $p_X$ 和 $p_Y$，那么 $X+Y$
+    有概率密度 $p_X*p_Y$。
+    \item $X+Y$ 的特征函数是 $\varPhi_{X+Y}(\xi)=\varPhi_X(\xi)\varPhi_Y(\xi)$。
+    \item 如果 $\mathbb{E}[|X|^2]<\infty$ 且 $\mathbb{E}[|Y|^2]<\infty$，$K_X$
+    是 $X$ 的协方差矩阵，那么 $K_{X+Y}=K_X+K_Y$。特别的，如果 $d=1$
+    并且 $X,Y\in L^2$，那么 $\var(X+Y)=\var(X)+\var(Y)$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) $X,Y$ 独立表明 $\mathbb{P}_{(X,Y)}=\mathbb{P}_X\otimes \mathbb{P}_Y$。
+  因此对于任意非负可测函数 $\varphi$，有
+  \[
+    \mathbb{E}[\varphi(X+Y)]=\int_{\mathbb{R}^d}\int_{\mathbb{R}^d}
+    \varphi(x+y)\mathbb{P}_X(\d x)\mathbb{P}_Y(\d y)=
+    \int \varphi(z) \mathbb{P}_X*\mathbb{P}_Y(\d z).
+  \]
+  这就表明 $\mathbb{P}_{X+Y}=\mathbb{P}_X*\mathbb{P}_Y$。
+
+  (2) 由 (1)，然后利用卷积的 Fourier 变换的性质，就得到结论。
+
+  (3) 如果 $X=(X_1,\dots,X_d)$ 和 $Y=(Y_1,\dots,Y_d)$，\autoref{coro:independence implies uncorrelated}
+  表明 $\cov(X_i,Y_j)=0$。因此，利用双线性性，有
+  \[
+    \cov(X_i+Y_i,X_j+Y_j)=\cov(X_i,X_j)+\cov(Y_i,Y_j),
+  \]
+  这就表明 $K_{X+Y}=K_X+K_Y$。
+\end{proof}
+
+\begin{theorem}[弱大数定律]
+  令 $(X_n)_{n\in \mathbb{N}}$ 是 $L^2$ 中的一列独立同分布的实值随机变量。那么
+  \[
+    \frac{1}{n}(X_1+\cdots+X_n)\xrightarrow[n\to\infty]{L^2} \mathbb{E}[X_1].
+  \] 
+\end{theorem}
+\begin{proof}
+  根据线性性，有
+  \[
+    \mathbb{E}\biggl[
+      \frac{1}{n}(X_1+\cdots+X_n)
+    \biggr]=\mathbb{E}[X_1],
+  \]
+  此外，独立性表明 $\var(X_1+\cdots+X_n)=n\var (X_1)$。所以有
+  \[
+    \mathbb{E}\biggl[
+      \biggl(
+        \frac{1}{n}(X_1+\cdots+X_n)-\mathbb{E}[X_1]
+      \biggr)^2
+    \biggr]=\frac{1}{n^2}\var(X_1+\cdots+X_n)=\frac{1}{n}\var(X_1),
+  \]
+  当 $n\to\infty$ 时，右端趋于 $0$，这就得到了结论。
+\end{proof}
+\begin{remark}
+  这个证明表明该结论实际上不需要独立同分布，只要 $(X_n)_{n\in \mathbb{N}}$ 是一列
+  $L^2$ 中的随机变量，且对于每个 $n$ 有 $\mathbb{E}[X_n]=\mathbb{E}[X_1]$。
+  而且独立性也可以替换为对于每个 $m\neq n$ 有 $\cov(X_m,X_n)=0$ 即可。
+\end{remark}
+
+\begin{proposition}[强大数定律]\label{prop:strong law}
+  令 $(X_n)_{n\in \mathbb{N}}$ 是一列独立同分布的实值随机变量，
+  若 $\mathbb{E}[X_1^4]<\infty$，那么我们几乎肯定有
+  \[
+    \frac{1}{n}(X_1+\cdots+X_n)\xrightarrow[n\to\infty]{} \mathbb{E}[X_1].
+  \]
+\end{proposition}
+
+
+\section{Poisson 过程}\label{sec:poisson}
+
+在本节，我们固定一个参数 $\lambda>0$，令 $U_1,U_2,\dots$ 是
+一列独立同分布的随机变量，它们都服从参数 $\lambda$ 的指数分布，
+即有概率密度 $\lambda e^{-\lambda x}\indicator{\mathbb{R}_+}$。
+令
+\[
+  T_n=U_1+U_2+\cdots+U_n.  
+\]
+对于任意实数 $t\geq 0$，令
+\[
+  N_t=\sum_{n=1}^\infty \indicator{\{T_n\leq t\}}=\sup\{n\in \mathbb{N}\,|\,T_n\leq t\}  .
+\]
+约定 $\sup\emptyset =0 $。\autoref{prop:strong law}
+告诉我们在 $n\to\infty$ 的时候，$T_n\to\infty \alsu{}$。
+因此，使得 $(T_n)_{n\in \mathbb{N}}$ 有界的 $\omega\in\Omega$ 的集合构成一个零测集，
+除开这个零测集，对于任意 $t\geq 0$，我们都有 $N_t<\infty$。类似地，因为
+随机变量 $U_i$ 几乎处处是正值，我们可以假设对于每个 $\omega\in\Omega$ 都有
+$0<T_1(\omega)<T_2(\omega)<\cdots$。
+
+固定 $\omega$，函数 $t\mapsto N_t(\omega)$ 在 $0$ 处为零、单调递增且右连续，此外
+其每次以大小为 $1$ 的幅度增加。这个函数我们称为计数函数。在 $t\to\infty$
+的时候有 $N_t\to\infty$。
+
+\begin{definition}
+  随机变量族 $(N_t)_{t\geq 0}$ 被称为参数 $\lambda$ 的 Poisson 过程。
+\end{definition}
+
+泊松过程经常用于应用概率模型中，例如在排队论中，$N_t$ 表示在时间 $t$ 之前到达
+服务器的客户数量。选择指数分布来模拟两个连续到达的客户之间的时间段与指数分布缺乏记忆的特性有关。
+粗略地说，该属性表示，对于任何给定时间 $t \geq 0$，$t$ 与客户下一次到达之间的时间始终
+具有相同的分布，与时间 $t$ 之前发生的情况无关。
+
+\begin{proposition}
+  对于每个 $n\geq 1$，$T_n$ 服从 Gamma 分布 $\Gamma(n,\lambda)$，
+  密度为
+  \[
+    p(x)=\frac{\lambda^n}{(n-1)!}x^{n-1}e^{-\lambda x}\indicator{\mathbb{R}_+}(x).  
+  \]
+  对于每个 $t> 0$，$N_t$ 服从参数 $\lambda t$ 的 Poisson 分布：
+  \[
+    \mathbb{P}(N_t=k)=\frac{(\lambda t)^k}{k!}e^{-\lambda t},
+    \quad \forall k\in \mathbb{N} . 
+  \]
+\end{proposition}
+\begin{proof}
+  注意到参数 $\lambda$ 的指数分布就是 Gamma 分布 $\Gamma(1,\lambda)$。
+  我们首先证明若 $X$ 服从分布 $\Gamma(a,\lambda)$，$Y$
+  服从分布 $\Gamma(b,\lambda)$，且 $X,Y$ 独立，那么 $X+Y$
+  服从分布 $\Gamma(a+b,\lambda)$。
+  那么
+  \begin{align*}
+    \mathbb{E}[\varphi(X+Y)]&=\int_{\mathbb{R}^2}
+    \varphi(x+y)p_a(x)p_b(y)\d x\d y\\
+    &=\int_{\mathbb{R}}\varphi(z)\left(\int_{\mathbb{R}}p_a(x)p_b(z-x)\d x\right)\d z\\
+    &=\int_0^\infty\varphi(z)\left(\int_{0}^z
+    \frac{\lambda^{a+b}}{\Gamma(a)\Gamma(b)}x^{a-1}
+    (z-x)^{b-1}e^{-\lambda z}\d x\right) \d z\\
+    &=\int_0^\infty \frac{\lambda^{a+b}e^{-\lambda z}z^{a+b-1}}{\Gamma(a)\Gamma(b)}
+    \varphi(z)\left(\int_0^1 x^{a-1}(1-x)^{b-1}\d x\right)\d z\\
+    &=\int_0^\infty \varphi(z)\frac{\lambda^{a+b}}{\Gamma(a+b)}
+    z^{a+b-1}e^{-\lambda z}\d z,
+  \end{align*}
+  这就表明 $X+Y$ 服从分布 $\Gamma(a+b,\lambda)$。由于
+  $T_n=U_1+\cdots+U_n$，所以 $T_n$ 服从分布 $\Gamma(n,\lambda)$。
+
+  对于 $k\geq 1$，有
+  \begin{align*}
+    \mathbb{P}(N_t=k)&=\mathbb{P}(T_k\leq t< T_{k+1})\\
+    &=\mathbb{P}(T_{k}\leq t)-\mathbb{P}(T_{k+1}\leq t)\\
+    &=\int_0^t \frac{\lambda^k}{(n-1)!}x^{k-1}e^{-\lambda x}\d x
+    -\int_0^t \frac{\lambda^{k+1}}{k!}x^{k}e^{-\lambda x}\d x\\
+    &=\frac{(\lambda t)^k}{k!}e^{-\lambda t}.
+  \end{align*}
+  对于 $k=0$ 的时候，有
+  $\mathbb{P}(N_t=0)=\mathbb{P}(T_1>t)=e^{-\lambda t}$。
+  这就表明 $N_t$ 服从参数 $\lambda t$ 的 Poisson 分布。
+\end{proof}
+
+我们现在将陈述有关 Poisson 过程的第一个重要结果。我们需要引入
+给定事件的条件概率的概念（更多关于条件的内容将在 \autoref{chap:condition} 中找到）。
+如果 $B\in \mathcal{A}$ 使得 $\mathbb{P}(B)>0$，我们定义 $(\Omega,\mathcal{A})$
+上的一个新的概率测度：已知 $B$ 的条件概率，记为 $\mathbb{P}(\cdot\,|\, B)$。
+对于每个 $A\in \mathcal{A}$，其满足
+\[
+  \mathbb{P}(A|B)=\frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}.  
+\]
+对于每个非负随机变量 $X$，$X$ 在 $\mathbb{P}(\cdot\,|\, B)$ 下的期望
+记为 $\mathbb{E}[X|B]$，容易看出
+\[
+  \mathbb{P}(A|B)=  \frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}
+  =\int_{A}\frac{\indicator{B}}{\mathbb{P}(B)}\d \mathbb{P},
+\]
+所以 $\mathbb{P}(\cdot\,|\, B)$ 相对于 $\mathbb{P}$ 有密度 $\indicator{B}/\mathbb{P}(B)$，
+故
+\[
+  \mathbb{E}[X|B]=\int_{\Omega} X(\omega) \mathbb{P}(\d\omega|B)
+  = \int_\Omega X(\omega)\frac{\indicator{B}(\omega)}{\mathbb{P}(B)}
+  \mathbb{P}(\d\omega)=\frac{\mathbb{E}[X\indicator{B}]}{\mathbb{P}(B)}. 
+\]
+
+\begin{proposition}
+  令 $t>0$，$n\in \mathbb{N}$。在条件概率 $\mathbb{P}(\cdot\,|\, N_t=n)$
+  下，随机变量 $(T_1,\dots,T_n)$ 有密度
+  \[
+    \frac{n!}{t^n}\indicator{\{0<s_1<s_2<\cdots<s_n<t\}}  .
+  \]
+  此外，在条件概率 $\mathbb{P}(\cdot\,|\, N_t=n)$ 下，随机变量
+  $T_{n+1}-t$ 服从参数 $\lambda$ 的指数分布并且独立于 $(T_1,\dots,T_n)$。
+\end{proposition}
+
+现在我们陈述关于 Poisson 过程的一个非常重要的定理。
+
+\begin{theorem}
+  令 $t>0$，对于每个 $r\geq 0$，令
+  \[
+    N_r^{(t)}=N_{t+r}-N_t.  
+  \]
+  随机变量族 $(N_r^{(t)})_{r\geq 0}$ 仍然是参数 $\lambda$
+  的 Poisson 过程，并且与 $(N_r)_{0\leq r\leq t}$ 独立。
+\end{theorem}
+\begin{remark}[直观解释]
+  如果我们将 Poisson 过程的跳跃时间解释为客户到达服务器的时间，
+  则该定理意味着如果有一个在时间 $t > 0$ 到达的观察者，其记录 $t$
+  之后客户的到达时间，看到（在分布的意义下）的情况与他在时间 $0$ 到达
+  的时候一样，并且了解时间 $0$ 和 $t$ 之间客户的到达时间不会给他提供
+  有关时间 $t$ 之后客户到达情况的信息。这可以被视为所谓“Markov 性质”的
+  一个方面。
+\end{remark}
+
+\begin{corollary}
+  令 $t_0=0\leq t_1\leq\cdots\leq t_k$，随机变量 $N_{t_1},N_{t_2}-N_{t_1},
+  \dots,N_{t_k}-N_{t_{k-1}}$ 是独立的，并且，对于每个 $1\leq j\leq k$，
+  $N_{t_j}-N_{t_{j-1}}$ 服从参数 $\lambda(t_j-t_{j-1})$ 的 Poisson 分布。
+\end{corollary}

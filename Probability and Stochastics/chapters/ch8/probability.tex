@@ -721,8 +721,40 @@ $\cov(X,X)=\var(X)$，还有 Cauchy-Schwarz 不等式表明
     \sum_{j=1}^n \alpha_j \cov(Y_j,Y_k)=\cov(X,Y_k),\quad 1\leq k\leq n.
   \]
   特别的，如果 $K_Y$ 是可逆的，那么我们有 $\alpha=\cov(X,Y)K_Y^{-1}$，
-  这里 $\cov(X,Y)$ 表示向量 $(\cov(X,Y_j))_{1\leq j\leq n}$。
+  这里 $\cov(X,Y)$ 表示行向量 $(\cov(X,Y_j))_{1\leq j\leq n}$，此时
+  \[
+    Z=\mathbb{E}[X]+\cov(X,Y)K_Y^{-1}(Y-\mathbb{E}[Y]).
+  \]
 \end{proposition}
+\begin{proof}
+  令 $H$ 是 $1,Y_1,\dots,Y_n$ 张成的 $L^2(\Omega,\mathcal{A},\mathbb{P})$
+  的闭子空间，或者等价的说，由 $1,Y_1-\mathbb{E}[Y_1],\dots,Y_n-\mathbb{E}[Y_n]$
+  张成的闭子空间。根据 Hilbert 空间的投影定理，我们知道使得 $\Vert X-U\Vert_2$
+  最小的 $U\in H$ 是 $X$ 在 $H$ 上的正交投影。记这个投影为 $Z$，设
+  \[
+    Z=\alpha_0+\sum_{j=1}^n \alpha_j (Y_j- \mathbb{E}[Y_j]).
+  \] 
+  那么必须有 $X-Z$ 与空间 $H$ 正交，这当且仅当
+  \[
+    \mathbb{E}[(X-Z)\times 1] =0,
+  \]  
+  以及对于每个 $1\leq k\leq n$，有
+  \[
+    \mathbb{E}[(X-Z)(Y_k-\mathbb{E}[Y_k])]=0.
+  \]
+  由于
+  \[
+    \mathbb{E}[X-Z]=\mathbb{E}[X]-\alpha_0=0,
+  \]
+  所以 $\alpha_0=\mathbb{E}[X]$。此外，对于每个 $1\leq k\leq n$，有
+  \[
+    \mathbb{E}[(X-Z)(Y_k-\mathbb{E}[Y_k])]=
+    \cov(X,Y_k)-\sum_{j=1}^n \alpha_j \cov(Y_j,Y_k)=0.
+  \]
+  这就得到了系数 $\alpha_j$ 满足的线性方程组。
+\end{proof}
+
+
 
 \section{特征函数}
 
@@ -775,7 +807,7 @@ $\cov(X,X)=\var(X)$，还有 Cauchy-Schwarz 不等式表明
   且初值条件 $f(0)=1$，解这个微分方程，就得到 $f(\xi)=e^{-\xi^2/2}$。
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}\label{thm:characteristic function determines distribution}
   值在 $\mathbb{R}^d$ 中的随机变量 $X$ 的特征函数确定了它的分布律。
   换句话说，$\mathbb{R}^d$ 上概率测度的 Fourier 变换算子是单射。 
 \end{theorem}

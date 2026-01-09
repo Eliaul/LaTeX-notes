@@ -1,0 +1,131 @@
+\chapter{随机变量的收敛}
+
+\section{不同收敛性的定义}
+
+在本章中，我们固定一个概率空间 $(\Omega,\mathcal{A},\mathbb{P})$。
+令 $(X_n)_{n\in \mathbb{N}}$ 和 $X$ 是值在 $\mathbb{R}^d$ 中的随机变量。
+我们已经遇到序列 $(X_n)_{n\in \mathbb{N}}$ 收敛到 $X$ 的几种不同方式。
+例如，几乎处处收敛被定义为
+\[
+  X_n\xlongrightarrow[n\to\infty]{\alsu{}} X\quad
+  \text{当且仅当}\quad
+  \mathbb{P}\bigl(\{\omega\in\Omega\,|\,X(\omega)=\lim_{n\to\infty}X_n(\omega)\}\bigr)=1.
+\]
+令 $p\in [1,\infty)$，并且假设对于每个 $n\in \mathbb{N}$ 有 $\mathbb{E}[|X|^p]<\infty$
+并且 $\mathbb{E}[|X_n|^p]<\infty$。我们可以定义 $L^p$ 空间中 $X_n$ 收敛到 $X$：
+\[
+  X_n\xlongrightarrow[n\to\infty]{L^p} X\quad
+  \text{当且仅当}\quad
+  \lim_{n\to\infty}\mathbb{E}[|X_n-X|^p]=0.
+\]
+这等价于说 $(X_n)_{n\in \mathbb{N}}$ 的每个分量序列在 Banach 空间 $L^p(\Omega,\mathcal{A},\mathbb{P})$ 中收敛
+到 $X$ 的对应分量。
+
+\begin{definition}
+  如果对于每个 $\varepsilon>0$ 有
+  \[
+    \lim_{n\to\infty}\mathbb{P}(|X_n-X|>\varepsilon)=0,
+  \]
+  那么我们说 $X_n$ 依概率收敛到 $X$，记作
+  \[
+    X_n\xlongrightarrow[n\to\infty]{(\mathbb{P})} X.
+  \]
+\end{definition}
+
+\begin{proposition}
+  令 $\mathcal{L}_{\mathbb{R}^d}^0(\Omega,\mathcal{A},\mathbb{P})$ 是值在 $\mathbb{R}^d$ 中的随机变量的空间。
+  定义等价关系 $X\sim Y$ 当且仅当 $\mathbb{P}(X=Y)=1$，记商空间为 $L_{\mathbb{R}^d}^0(\Omega,\mathcal{A},\mathbb{P})$。
+  那么
+  \[
+    d(X,Y)=\mathbb{E}[|X-Y|\wedge 1]
+  \]
+  定义了 $L_{\mathbb{R}^d}^0(\Omega,\mathcal{A},\mathbb{P})$ 上的度量，并且
+  这个度量与依概率收敛的概念相容，也即一个序列 $(X_n)_{n\in \mathbb{N}}$ 依概率
+  收敛到 $X$ 当且仅当 $\lim_{n\to\infty} d(X_n,X)=0$。此外，空间 $L_{\mathbb{R}^d}^0(\Omega,\mathcal{A},\mathbb{P})$ 关于度量 $d$ 是完备的。
+\end{proposition}
+\begin{proof}
+  不难验证 $d$ 确实是 $L_{\mathbb{R}^d}^0(\Omega,\mathcal{A},\mathbb{P})$ 上的度量。
+  例如，我们验证 $d(X,Y)=0$ 表明 $X=Y\, \alsu{}$。当 $d(X,Y)=0$ 时，有
+  $\mathbb{E}[|X-Y|\wedge 1]=0$，因此 $|X-Y|\wedge 1=0\, \alsu{}$，所以
+  $|X-Y|=0\, \alsu{}$，即 $X=Y\in L_{\mathbb{R}^d}^0(\Omega,\mathcal{A},\mathbb{P})$。
+  接下来，假设 $(X_n)_{n\in \mathbb{N}}$ 依概率收敛到 $X$。任取 $1>\varepsilon>0$，我们有
+  \begin{align*}
+    \mathbb{E}[|X_n-X|\wedge 1]&= \mathbb{E}[|X_n-X|\idf_{\{|X_n-X|\leq\varepsilon\}}]
+    +\mathbb{E}[(|X_n-X|\wedge 1)\idf_{\{|X_n-X|>\varepsilon\}}]\\
+    &\leq \varepsilon+ \mathbb{P}(|X_n-X|>\varepsilon),
+  \end{align*}
+  于是我们得到 $\lim_{n\to\infty} d(X_n,X)\leq\varepsilon$，根据 $\varepsilon$ 的任意性可知
+  $\lim_{n\to\infty} d(X_n,X)=0$。反之，若 $d(X_n,X)\to 0$，
+  对于任意 $\varepsilon\in (0,1)$，根据 Markov 不等式，有
+  \[
+    \mathbb{P}(|X_n-X|>\varepsilon)\leq \frac{1}{\varepsilon}\mathbb{E}[|X_n-X|\wedge 1]=\frac{1}{\varepsilon}d(X_n,X)
+    \to 0,
+  \]
+  因此 $X_n$ 依概率收敛到 $X$。
+
+  最后，我们验证 $(L_{\mathbb{R}^d}^0(\Omega,\mathcal{A},\mathbb{P}),d)$ 是完备的。
+  令 $(X_n)_{n\in \mathbb{N}}$ 是 Cauchy 列。那么，我们可以找到子列 $Y_k=X_{n_k}$，
+  使得对于每个 $k\geq 1$ 有 $d(Y_{k+1},Y_k)<2^{-k}$。
+  那么有
+  \[
+    \mathbb{E}\biggl[
+      \sum_{k=1}^\infty (|Y_{k+1}-Y_k|\wedge 1)
+    \biggr]=\sum_{k=1}^\infty d(Y_k,Y_{k+1})<\infty,
+  \]
+  这表明 $\sum_{k=1}^\infty (|Y_{k+1}-Y_k|\wedge 1)<\infty\, \alsu{}$，因此有 
+  $\sum_{k=1}^\infty |Y_{k+1}-Y_k|<\infty\, \alsu{}$。当级数 $\sum_{k=1}^\infty (Y_{k+1}-Y_k)$ 
+  绝对收敛的时候定义随机变量
+  \[
+    X=Y_1+\sum_{k=1}^\infty (Y_{k+1}-Y_k),
+  \]
+  否则令 $X=0$。根据这个构造，序列 $(Y_k)_{k\in \mathbb{N}}$ 几乎处处收敛到 $X$，并且根据控制
+  收敛定理，有 
+  \[
+    d(Y_k,X)=\mathbb{E}[|Y_k-X|\wedge 1]\xlongrightarrow[k\to\infty]{} 0.
+  \]
+  因此 $(Y_k)_{k\in \mathbb{N}}$ 在度量 $d$ 下收敛到 $X$。由于 $(X_n)_{n\in \mathbb{N}}$ 是 Cauchy 列
+  且有收敛子列，所以 $(X_n)_{n\in \mathbb{N}}$ 也在度量 $d$ 下收敛到 $X$。
+\end{proof}
+
+上述证明中还可以得到依概率收敛的序列存在一个几乎处处收敛的子列。将其与
+\autoref{prop:subsequence pointwise convergence in Lp} 结合，我们有下面的结论。
+
+\begin{proposition}
+  如果序列 $(X_n)_{n\in \mathbb{N}}$ 几乎处处收敛到 $X$，或者对于某个 $p\in [1,\infty]$
+  在 $L^p$ 空间中收敛到 $X$，那么它也依概率收敛到 $X$。反之，如果序列 $(X_n)_{n\in \mathbb{N}}$
+  依概率收敛到 $X$，那么它存在一个子列 $(X_{n_k})_{k\in \mathbb{N}}$ 几乎处处收敛到 $X$。
+\end{proposition}
+\begin{proof}
+  如果 $X_n$ 几乎处处收敛到 $X$，那么根据控制收敛定理，有
+  \[
+    d(X_n,X)=\mathbb{E}[|X_n-X|\wedge 1]\xlongrightarrow[n\to\infty]{} 0.
+  \]
+  如果 $X_n$ 在 $L^p$ 空间中收敛到 $X$，那么
+  \[
+    d(X_n,X)\leq \mathbb{E}[|X_n-X|]=\norm{X_n-X}_1\leq 
+    \norm{X_n-X}_p\xrightarrow[n\to\infty]{} 0.
+  \]
+  反过来的情况由上一个命题的证明已经给出。
+\end{proof}
+
+总的来说，依概率收敛比几乎处处收敛和任意 $L^p$ 收敛都要弱。反过来，
+依概率收敛表明沿一个子列几乎处处收敛。下面的命题给出了一种从
+依概率收敛提升到 $L^p$ 中的收敛的条件。
+
+\begin{proposition}
+  假设序列 $(X_n)_{n\in \mathbb{N}}$ 依概率收敛到 $X$，并且存在一个 $r\in (1,\infty)$
+  使得序列 $\bigl(\mathbb{E}[|X_n|^r]\bigr)_{n\in \mathbb{N}}$ 有界。那么
+  $\mathbb{E}[|X|^r]<\infty$，并且对于每个 $p\in [1,r)$ 序列 $(X_n)_{n\in \mathbb{N}}$
+  在 $L^p$ 空间中收敛到 $X$。
+\end{proposition}
+\begin{proof}
+  
+\end{proof}
+
+
+
+
+
+
+
+

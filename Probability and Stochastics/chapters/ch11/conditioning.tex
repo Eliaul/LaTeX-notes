@@ -1,0 +1,774 @@
+
+
+\chapter{条件}\label{chap:condition}
+
+\section{离散条件}
+
+本章中考虑概率空间 $(\Omega,\mathcal{A},\mathbb{P})$。我们已经在
+\autoref{sec:poisson} 中提到了，如果 $B\in \mathcal{A}$ 是
+一个概率为正的事件，我们可以定义 $(\Omega,\mathcal{A})$ 上的一个
+新的概率测度：对于 $A\in \mathcal{A}$，定义
+\[
+  \mathbb{P}(A|B)=\frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}
+  =\int_A \frac{\idf_B(\omega)}{\mathbb{P}(B)} \mathbb{P}(\d \omega).  
+\]
+概率测度 $A\mapsto \mathbb{P}(A|B)$ 被称为给定 $B$ 下的条件概率，
+显然 $\mathbb{P}(\cdot \,|\, B)=\idf_B/ \mathbb{P}(B) \cdot \mathbb{P}$ 。
+类似地，对于每个非负随机变量 $X$，或者 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，
+定义给定 $B$ 下的 $X$ 的\emph{条件期望}为
+\[
+  \mathbb{E}[X|B]=\frac{\mathbb{E}[X\indicator{B}]}{\mathbb{P}(B)}.  
+\]
+可以验证 $\mathbb{E}[X|B]$ 就是 $X$ 在概率测度 $\mathbb{P}(\cdot\,|\, B)$ 下的期望：
+\[
+  \int X(\omega) \mathbb{P}(\d\omega|B)= 
+  \int X(\omega)\frac{\indicator{B}(\omega)}{\mathbb{P}(B)}  \mathbb{P}(\d\omega) 
+  =\frac{\mathbb{E}[X\indicator{B}]}{\mathbb{P}(B)}.
+\]
+
+现在我们定义已知一个离散随机变量下的条件期望。考虑一个离散随机变量
+$Y$，取值在可数空间 $E$ 中（$\sigma$-域为幂集）。令
+$E'=\{y\in E\,|\, \mathbb{P}(Y=y)>0\}$。如果 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，
+那么对于每个 $y\in E'$，有
+\[
+  \mathbb{E}[X|Y=y]=\frac{\mathbb{E}[X\indicator{\{Y=y\}}]}{\mathbb{P}(Y=y)}.
+\]
+
+\begin{definition}
+  令 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，定义已知 $Y$ 下
+  的 $X$ 的条件期望为一个\emph{随机变量}
+  \[
+    \mathbb{E}[X|Y]=\varphi(Y),  
+  \]
+  其中 $\varphi:E\to \mathbb{R}$ 为
+  \[
+    \varphi(y)=\begin{cases}
+      \mathbb{E}[X|Y=y] & y\in E',\\
+      0 & y\in E\smallsetminus E'.
+    \end{cases}
+  \] 
+\end{definition}
+\begin{remark}
+  定义中 $y\in E \smallsetminus E'$ 时 $\varphi(y)$ 的取值
+  是无关紧要的，因为我们可以证明这样的情况仅仅构成一个零测集：
+  \[
+    \mathbb{P}(Y\in E \smallsetminus E')=
+    \sum_{y\in E \smallsetminus E'}\mathbb{P}(Y=y)
+    =0.
+  \]
+\end{remark}
+
+与相对于一个事件的条件期望相比，需要注意 $\mathbb{E}[X|Y]$
+是一个 $\Omega\to \mathbb{R}$ 的\emph{随机变量}，其几乎肯定满足
+\[
+  \mathbb{E}[X|Y](\omega)=\mathbb{E}[X|Y=Y(\omega)].  
+\]
+同时还可以注意到 $\mathbb{E}[X|Y]$ 是 $Y$ 的一个函数，因此是 $\sigma(Y)$-可测的。
+后面我们将看到这意味着通过 $Y$ 的函数对 $X$ 的最佳逼近。
+
+\begin{example}
+  取 $\Omega=\{1,2,\dots,6\}$ 以及对于每个 $\omega\in \Omega$，$\mathbb{P}(\{\omega\})=1/6$。
+  令
+  \[
+    Y(\omega)=\begin{cases}
+      0 & \omega \text{ 是偶数},\\
+      1 & \omega \text{ 是奇数},
+    \end{cases}
+  \]
+  以及 $X(\omega)=\omega$。那么 
+  \[
+    \mathbb{E}[X|Y](\omega)=\frac{\mathbb{E}[X\idf_{\{Y=Y(\omega)\}}]}{\mathbb{P}(Y=Y(\omega))},
+  \]
+  于是 $\omega\in\{1,3,5\}$ 的时候，有
+  \[
+    \mathbb{E}[X|Y](\omega)=\frac{(1+3+5)/6}{1/2}=3.
+  \]
+  而 $\omega\in\{2,4,6\}$ 的时候，有
+  \[
+    \mathbb{E}[X|Y](\omega)=\frac{(2+4+6)/6}{1/2}=4.  
+  \]
+\end{example}
+
+\begin{proposition}\label{prop:conditioning discrete basic}
+  令 $X\in L^1(\Omega, \mathcal{A},\mathbb{P})$，我们有
+  $\mathbb{E}\bigl[\bigl|\mathbb{E}[X|Y]\bigr|\bigr]\leq \mathbb{E}[|X|]$，
+  这表明 $\mathbb{E}[X|Y]\in L^1(\Omega,\mathcal{A},\mathbb{P})$。
+  此外，对于任意有界的 $\sigma(Y)$-可测的实值随机变量 $Z$，
+  有
+  \[
+    \mathbb{E}[ZX]=\mathbb{E}\bigl[Z \mathbb{E}[X|Y]\bigr]  .
+  \]
+\end{proposition}
+\begin{proof}
+  记 $E'=\{y\in E\,|\, \mathbb{P}(Y=y)>0\}$，那么 $\mathbb{P}(Y\in E\setminus E')=0$。
+  根据定义，有
+  \begin{align*}
+        \mathbb{E}\bigl[\bigl|\mathbb{E}[X|Y]\bigr|\bigr]
+    &=\int_{E'} \bigl|\mathbb{E}[X|Y=y]\bigr| \mathbb{P}_Y(\d y)
+    =\sum_{y\in E'} \bigl|\mathbb{E}[X|Y=y]\bigr| \mathbb{P}(Y=y)\\
+    &=\sum_{y\in E'} \bigl|\mathbb{E}[X\idf_{\{Y=y\}}]\bigr|
+    =\sum_{y\in E} \bigl|\mathbb{E}[X\idf_{\{Y=y\}}]\bigr|
+    \\&\leq 
+    \sum_{y\in E} \mathbb{E}[|X|\idf_{\{Y=y\}}]=\mathbb{E}[|X|].
+  \end{align*}
+  如果 $Z$ 是 $\sigma(Y)$-可测的有界实值随机变量，根据 \autoref{prop:sigmaX-measurable}，
+  存在可测函数 $\psi:E\to \mathbb{R}$ 使得 $Z=\psi(Y)$，那么
+  \begin{align*}
+    \mathbb{E}\bigl[\psi(Y)\mathbb{E}[X|Y]\bigr]&=\sum_{y\in E}
+    \psi(y)\mathbb{E}[X\idf_{\{Y=y\}}]=\sum_{y\in E} \mathbb{E}[\psi(Y)X\idf_{\{Y=y\}}]\\
+    &=\mathbb{E}\biggl[
+      \psi(Y) X \sum_{y\in E}\indicator{\{Y=y\}}
+    \biggr]=\mathbb{E}[ZX].
+  \end{align*}
+  第三个等号交换求和与期望是因为 $\mathbb{E}[|\psi(Y)X|]<\infty$，
+  然后利用 Fubini 定理。
+\end{proof}
+
+\paragraph{推论}
+令 $Y'$ 是另一个离散随机变量且 $\sigma(Y)=\sigma(Y')$。我们断言
+\[
+  \mathbb{E}[X|Y]=\mathbb{E}[X|Y']\quad \alsu{}.
+\]
+考虑 $Z=\idf_{\{\mathbb{E}[X|Y]>\mathbb{E}[X|Y']\}}$，
+因为 $\mathbb{E}[X|Y]$ 和 $\mathbb{E}[X|Y']$ 都是 $\sigma(Y)$-可测的，
+所以 $Z$ 也是 $\sigma(Y)$-可测的。使用上面的命题，就有
+\[
+  \mathbb{E}\bigl[
+    \idf_{\{\mathbb{E}[X|Y]>\mathbb{E}[X|Y']\}}
+    \bigl(
+      \mathbb{E}[X|Y]-\mathbb{E}[X|Y']
+    \bigr)
+  \bigr]=0,
+\]
+所以 $\idf_{\{\mathbb{E}[X|Y]>\mathbb{E}[X|Y']\}}\bigl(\mathbb{E}[X|Y]-\mathbb{E}[X|Y']\bigr)=0,\alsu{}$，
+这表明 $\mathbb{E}[X|Y]\leq \mathbb{E}[X|Y']\, \alsu{}$。交换 $Y$ 和 $Y'$ 的角色，就得到相反的不等式，
+所以 $\mathbb{E}[X|Y]=\mathbb{E}[X|Y']\,\alsu{}$。这个论述表明 \autoref{prop:conditioning discrete basic}
+可以将 $\mathbb{E}[X|Y]$ 刻画为某种可积且 $\sigma(Y)$-可测的随机变量。
+
+前面的讨论暗示条件的一个“好”的定义应该是相对于 $\mathcal{A}$ 的一个子 $\sigma$-域的。
+在下一节中我们将给出这样的定义。
+
+
+\section{条件期望的定义}
+
+\subsection{可积随机变量}
+
+下面的定理提供了关于一个子 $\sigma$-域的可积随机变量的条件期望
+的定义。
+
+\begin{theorem}\label{thm:conditioning variable}
+  令 $\mathcal{B}$ 是 $\mathcal{A}$ 的一个子 $\sigma$-域，$X\in L^1(\Omega,\mathcal{A},\mathbb{P})$。
+  那么 $L^1(\Omega,\mathcal{B},\mathbb{P})$ 中存在唯一的随机变量
+  $\mathbb{E}[X| \mathcal{B}]$，使得
+  \begin{equation}\label{eq:conditioning variable}
+    \forall B\in \mathcal{B},\quad
+    \mathbb{E}[X \indicator{B}]=\mathbb{E}\bigl[\mathbb{E}[X| \mathcal{B}]\indicator{B}\bigr]  .
+  \end{equation}
+  更一般地，对于每个有界的 $\mathcal{B}$-可测的实值随机变量 $Z$，
+  有
+  \begin{equation}\label{eq:conditioning variable general}
+        \mathbb{E}[XZ]=\mathbb{E}\bigl[\mathbb{E}[X| \mathcal{B}]Z\bigr]  .
+  \end{equation}
+  如果 $X\geq 0$，那么我们几乎肯定有 $\mathbb{E}[X| \mathcal{B}]\geq 0$。
+\end{theorem}
+
+一个关键事实是 $\mathbb{E}[X|\mathcal{B}]$ 是 $\mathcal{B}$-可测的。
+式 \eqref{eq:conditioning variable} 和 \eqref{eq:conditioning variable general}
+中的任意一个都将 $\mathbb{E}[X|\mathcal{B}]$ 刻画为 $L^1(\Omega,\mathcal{B},\mathbb{P})$
+中的一个随机变量。我们说这两个式子是 $\mathbb{E}[X|\mathcal{B}]$ 的\emph{特征性质}。
+
+特别地，如果 $\mathcal{B}=\sigma(Y)$ 是随机变量 $Y$ 生成的 $\sigma$-域，
+我们在写法上不区分
+\[
+  \mathbb{E}[X| \mathcal{B}] = \mathbb{E}[X|\sigma(Y)]
+  =\mathbb{E}[X|Y].
+\]
+这与前文离散情况下的定义是不冲突的。
+
+\begin{proof}
+  我们先证明唯一性。令 $X'$ 和 $X''$ 是 $L^1(\Omega,\mathcal{B},\mathbb{P})$ 中
+  的两个随机变量，均满足
+  \[
+    \forall B\in \mathcal{B},\quad
+    \mathbb{E}[X'\idf_{B}]=\mathbb{E}[X\idf_{B}]=\mathbb{E}[X''\idf_{B}].
+  \]
+  取 $B=\{X'> X''\}$，那么
+  \[
+    \mathbb{E}[(X'-X'')\idf_{\{X'>X''\}}]=0,
+  \]
+  这表明 $X'\leq X''\,\alsu{}$。交换 $X'$ 和 $X''$ 的角色，就得到相反的不等式，
+  因此 $X'=X''\,\alsu{}$。这就意味着 $X'$ 和 $X''$ 在 $L^1(\Omega,\mathcal{B},\mathbb{P})$
+  中是相等的。
+
+  接下来说明存在性。首先假设 $X\geq 0$，令 $\mathbf{Q}$ 是 $(\Omega,\mathcal{B})$
+  上的有限测度，定义为
+  \[
+    \forall B\in \mathcal{B},\quad \mathbf{Q}(B)=\mathbb{E}[X\idf_{B}].
+  \]
+  再次强调 $\mathbf{Q}$ 只在 $\mathcal{B}$ 上定义。
+  实际上 $\mathbf{Q}$ 是 $X\cdot \mathbb{P}$ 在 $(\Omega,\mathcal{B})$ 上的限制。
+  我们也可以把 $\mathbb{P}$
+  视为 $(\Omega,\mathcal{B})$ 上的测度，此时立马得到 $\mathbf{Q}\ll \mathbb{P}$。
+  根据 Radon-Nikodym 定理，存在一个 $\mathcal{B}$-可测的非负随机变量 $\wtilde X$
+  使得 $\mathbf{Q}=\wtilde X \cdot \mathbb{P}$，也即
+  \[
+    \forall B\in \mathcal{B},\quad 
+    \mathbb{E}[X\idf_B]=\mathbf{Q}(B)
+    =\mathbb{E}[\wtilde X\idf_B].
+  \]
+  取 $B=\Omega$，就有 $\mathbb{E}[\wtilde X]=\mathbb{E}[X]<\infty$，因此
+  $\wtilde X\in L^1(\Omega,\mathcal{B},\mathbb{P})$。此时随机变量 $\mathbb{E}[X|\mathcal{B}]=\wtilde X$
+  就满足 \eqref{eq:conditioning variable} 式。当 $X$ 是任意符号的时候，
+  只需要取
+  \[
+    \mathbb{E}[X|\mathcal{B}]=\mathbb{E}[X^+|\mathcal{B}]-\mathbb{E}[X^-|\mathcal{B}],
+  \]
+  此时 \eqref{eq:conditioning variable} 式也成立。
+
+  最后，我们证明 \eqref{eq:conditioning variable general} 式成立。
+  当 $Z$ 是简单随机变量的时候，由 \eqref{eq:conditioning variable} 式
+  即可。对于一般情况，设 $Z$ 是一列简单 $\mathcal{B}$-可测随机变量
+  序列 $(Z_n)_{n\in \mathbb{N}}$ 的逐点极限，并且这个序列是一致有界的，
+  然后利用控制收敛定理即可。
+\end{proof}
+
+可以发现，(在 $X\geq 0$ 的情况下)条件期望 $\mathbb{E}[X|\mathcal{B}]$ 实际上是测度 $X\cdot \mathbb{P}$
+限制在子 $\sigma$-域 $\mathcal{B}$ 上相对于 $\mathbb{P}$ 限制在 $\mathcal{B}$ 上的
+Radon-Nikodym 导数。
+
+\begin{example}
+  令 $\Omega=(0,1],\mathcal{A}=\mathcal{B}((0,1])$ 以及 $\mathbb{P}(\d\omega)=\d\omega$。
+  令 $\mathcal{B}$ 是由区间 $(\frac{i-1}{n},\frac{i}{n}]$ 生成的 $\sigma$-域，其中
+  $i=1,2,\dots,n$，$n\geq 1$ 是固定的整数。如果 $f\in L^1(\Omega,\mathcal{A},\mathbb{P})$，
+  也即 $\int_0^1 |f(\omega)| \d\omega<\infty$，那么不难验证
+  \[
+    \mathbb{E}[f| \mathcal{B}]=\sum_{i=1}^n f_i \idf_{(\frac{i-1}{n},\frac{i}{n}]},
+  \]
+  其中 $f_i=n\int_{(i-1)/n}^{i/n}f(\omega)\d\omega$ 是 $f$ 在 $(\frac{i-1}{n},\frac{i}{n}]$
+  上的平均值。这是因为 $\mathbb{E}[f|\mathcal{B}]$ 需要满足：对于每个 
+  $B_i=(\frac{i-1}{n},\frac{i}{n}]$，都有
+  \[
+    \int_{B_i} f(\omega)\d\omega=\int_{B_i} \mathbb{E}[f|\mathcal{B}](\omega)\d\omega.
+  \]
+\end{example}
+
+\begin{proposition}[条件期望的性质]
+  \mbox{}
+  \begin{enumerate}
+    \item 如果 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$
+    并且 $X$ 是 $\mathcal{B}$-可测的，那么
+    $\mathbb{E}[X|\mathcal{B}]=X$。
+    \item $L^1(\Omega,\mathcal{A},\mathbb{P})$
+    上的映射 $X\mapsto \mathbb{E}[X| \mathcal{B}]$
+    是线性映射。
+    \item 如果 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，
+    那么 $\mathbb{E}\bigl[\mathbb{E}[X| \mathcal{B}]\bigr]=\mathbb{E}[X]$。
+    \item 如果 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，那么
+    $|\mathbb{E}[X|\mathcal{B}]|\leq \mathbb{E}\bigl[|X|\big| \mathcal{B}\bigr]\alsu{}$，
+    因此 $\mathbb{E}\bigl[\bigl|\mathbb{E}[X|\mathcal{B}]\bigr|\bigr]\leq \mathbb{E}[|X|]$。
+    因此映射 $X\mapsto \mathbb{E}[X|\mathcal{B}]$ 是 $L^1(\Omega,\mathcal{A},\mathbb{P})$
+    上的压缩映射。
+    \item 如果 $X,X'\in L^1(\Omega,\mathcal{A},\mathbb{P})$ 并且
+    $X\geq X'$，那么 $\mathbb{E}[X|\mathcal{B}]\geq \mathbb{E}[X'|\mathcal{B}]\alsu{}$。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 如果 $X$ 是 $\mathcal{B}$-可测的，那么 \eqref{eq:conditioning variable} 式
+  显然成立，根据唯一性就有 $\mathbb{E}[X|\mathcal{B}]=X$。
+
+  (2) 如果 $X,X'\in L^1(\Omega,\mathcal{A},\mathbb{P})$，$\alpha,\alpha'\in \mathbb{R}$，对于
+  随机变量 $\alpha \mathbb{E}[X|\mathcal{B}]+\alpha' \mathbb{E}[X'|\mathcal{B}]$，
+  不难验证其是 $\alpha X+\alpha' X'$ 的条件期望，所以 $X\mapsto \mathbb{E}[X|\mathcal{B}]$
+  是线性映射。
+
+  (3) 在 \eqref{eq:conditioning variable} 式中取 $B=\Omega$ 即可。
+
+  (4) 注意到 $X\geq 0$ 的时候有 $\mathbb{E}[X|\mathcal{B}]\geq 0$。
+  因此，我们有
+  \[
+    |\mathbb{E}[X|\mathcal{B}]|=\bigl|
+      \mathbb{E}[X^+|\mathcal{B}]-\mathbb{E}[X^-|\mathcal{B}]
+    \bigr|\leq 
+    \mathbb{E}[X^+|\mathcal{B}]+\mathbb{E}[X^-|\mathcal{B}]=
+    \mathbb{E}[|X|\big| \mathcal{B}].
+  \]
+  
+  (5) 由线性性即可得到。
+\end{proof}
+
+\subsection{非负随机变量}
+
+现在我们转向非负随机变量 $X$ 的条件期望的定义。这非常类似于非负函数积分的定义，
+我们允许 $X$ 取值为 $+\infty$。
+
+\begin{theorem}\label{thm:conditioning variable nonnegative}
+  令 $X$ 是值在 $[0,\infty]$ 中的随机变量。那么存在值在 $[0,\infty]$
+  中的 $\mathcal{B}$-可测随机变量 $\mathbb{E}[X|\mathcal{B}]$，使得对于每个
+  $\mathcal{B}$-可测的非负随机变量 $Z$，都有
+  \begin{equation}\label{eq:conditioning variable nonnegative}
+    \mathbb{E}[XZ]=\mathbb{E}\bigl[\mathbb{E}[X|\mathcal{B}]Z\bigr]  .
+  \end{equation} 
+  此外 $\mathbb{E}[X|\mathcal{B}]$ 在相差一个 $\mathcal{B}$-零测集的意义下是唯一的。
+\end{theorem}
+
+当 $X$ 是可积的时候，这与 \autoref{thm:conditioning variable} 中的定义是一致的。
+实际上在 \eqref{eq:conditioning variable nonnegative} 式中取 $Z=1$，
+那么 $\mathbb{E}[\mathbb{E}[X|\mathcal{B}]]=\mathbb{E}[X]$，所以
+$\mathbb{E}[X|\mathcal{B}]<\infty \, \alsu{}$，这就表明 $\mathbb{E}[X|\mathcal{B}]\in L^1(\Omega,\mathcal{B},\mathbb{P})$。
+然后在 $Z=\idf_B$ 的时候 \eqref{eq:conditioning variable nonnegative} 式就变成了
+\eqref{eq:conditioning variable} 式。
+
+\subsection{平方可积随机变量}
+
+当 $X\in L^2$ 的时候，$\mathbb{E}[X|\mathcal{B}]$ 有另一种非常重要的解释，
+这涉及到 $L^2$ 空间的 Hilbert 空间结构。我们注意到 $L^2(\Omega,\mathcal{B},\mathbb{P})$
+可以等距同构于 $L^2(\Omega,\mathcal{A},\mathbb{P})$ 的一个闭子空间：
+由 $L^2(\Omega,\mathcal{A},\mathbb{P})$ 中至少存在一个代表元是 $\mathcal{B}$-可测的随机变量
+构成。然后我们可以把 Hilbert 空间 $L^2(\Omega,\mathcal{A},\mathbb{P})$ 中的
+元素投影到闭子空间 $L^2(\Omega,\mathcal{B},\mathbb{P})$ 上。
+
+\begin{theorem}
+  如果 $X\in L^2(\Omega,\mathcal{A},\mathbb{P})$，那么 $\mathbb{E}[X|\mathcal{B}]$
+  是 $X$ 的正交投影。
+\end{theorem}
+\begin{proof}
+  先说明 $\mathbb{E}[X|\mathcal{B}]$ 也是平方可积的。Jensen 不等式表明 $\mathbb{E}[X|\mathcal{B}]^2\leq \mathbb{E}[X^2|\mathcal{B}]\, \alsu{}$。
+  这表明 $\mathbb{E}\bigl[\mathbb{E}[X|\mathcal{B}]^2\bigr]\leq \mathbb{E}[\mathbb{E}[X^2|\mathcal{B}]]=\mathbb{E}[X^2]<\infty$，
+  因此 $\mathbb{E}[X|\mathcal{B}]\in L^2(\Omega,\mathcal{B},\mathbb{P})$。
+
+  另一方面，对于任意有界 $\mathcal{B}$-可测随机变量 $Z$，有
+  \[
+    \mathbb{E}\bigl[
+      Z(X-\mathbb{E}[X|\mathcal{B}])
+    \bigr]=\mathbb{E}[ZX]-\mathbb{E}\bigl[
+      Z\mathbb{E}[X|\mathcal{B}]
+    \bigr]=0.
+  \]
+  所以 $X-\mathbb{E}[X|\mathcal{B}]$ 和所有有界 $\mathcal{B}$-可测随机变量空间
+  正交，而这个空间在 $L^2(\Omega,\mathcal{B},\mathbb{P})$ 中是稠密的(\autoref{thm:density in Lp space})，因此
+  $X-\mathbb{E}[X|\mathcal{B}]$ 和 $L^2(\Omega,\mathcal{B},\mathbb{P})$ 正交。
+\end{proof}
+
+\begin{remark}
+  我们可以使用这个投影性质来重新给出平方可积随机变量的条件期望的定义，
+  这个定义避免了使用 Radon-Nikodym 定理。但是对于可积和非负随机变量的情况，
+  还是要使用 Radon-Nikodym 定理来定义条件期望。
+\end{remark}
+
+根据正交投影的性质，对于平方可积的随机变量的条件期望，有一个
+有趣的解释：$\mathbb{E}[X|\mathcal{B}]$ 是 $X$ 的通过 $\mathcal{B}$-可测
+随机变量的最佳逼近，也就是说对于任意 $\mathcal{B}$-可测随机变量 $Y$，
+都有 $\mathbb{E}[(Y-X)^2]\geq \mathbb{E}\bigl[(\mathbb{E}[X|\mathcal{B}]-X)^2\bigr]$。
+
+
+
+\section{条件期望的独有性质}
+
+目前为止我们得到的条件期望的大部分性质都与可测函数的积分的性质类似。
+本节我们给出一些条件期望独有的性质，下面两个命题在操作条件期望的时候非常有用。
+
+\begin{proposition}
+  令 $X$ 和 $Y$ 是实值随机变量，假设 $Y$ 是 $\mathcal{B}$-可测的。那么
+  \[
+    \mathbb{E}[YX|\mathcal{B}]=Y\mathbb{E}[X|\mathcal{B}],
+  \]
+  只要 $X$ 和 $Y$ 都是非负的，或者 $X$ 和 $YX$ 都是可积的。
+\end{proposition}
+\begin{proof}
+  假设 $X\geq 0$ 且 $Y\geq 0$。那么，对于每个非负 $\mathcal{B}$-可测随机变量 $Z$，
+  有
+  \[
+    \mathbb{E}[Z(YX)]=\mathbb{E}[(ZY)X]=\mathbb{E}[ZY\mathbb{E}[X|\mathcal{B}]],
+  \]
+  因为 $Y \mathbb{E}[X|\mathcal{B}]$ 是非负的 $\mathcal{B}$-可测随机变量，所以
+  特征性质 \autoref{thm:conditioning variable nonnegative} 表明
+  $\mathbb{E}[YX|\mathcal{B}]=Y \mathbb{E}[X|\mathcal{B}]$。
+
+  当 $X$ 和 $YX$ 都可积的时候，取 $X=X^+-X^-$ 和 $Y=Y^+-Y^-$ 的分解即可。
+\end{proof}
+
+
+\begin{proposition}[嵌套 $\sigma$-域]\label{prop:nested sigma field}
+  令 $\mathcal{B}_1,\mathcal{B}_2$ 是 $\mathcal{A}$ 的两个子 $\sigma$-域且
+  $\mathcal{B}_1\subseteq \mathcal{B}_2$。那么对于任意非负（或者可积）随机变量 $X$，我们有
+  \[
+    \mathbb{E}\bigl[\mathbb{E}[X|\mathcal{B}_2]\big| \mathcal{B}_1\bigr]=
+    \mathbb{E}[X|\mathcal{B}_1].
+  \]
+\end{proposition}
+\begin{remark}
+  在这个假设下还有 $\mathbb{E}\bigl[\mathbb{E}[X|\mathcal{B}_1]\big| \mathcal{B}_2\bigr]=\mathbb{E}[X|\mathcal{B}_1]$，
+  但是这是平凡的，因为 $\mathbb{E}[X|\mathcal{B}_1]$ 本身就是 $\mathcal{B}_2$-可测的。
+\end{remark}
+\begin{remark}
+  这个命题本身是好记忆的：考虑平方可积的情况，那么 
+  $\mathbb{E}\bigl[
+      Z\mathbb{E}\bigl[\mathbb{E}[X|\mathcal{B}_2]\big| \mathcal{B}_1\bigr]
+    \bigr]$ 
+  代表 $X$ 先后投影到 $L^2(\Omega,\mathcal{B}_2,\mathbb{P})$，再投影到
+  $L^2(\Omega,\mathcal{B}_1,\mathbb{P})$，而由于 $\mathcal{B}_1\subseteq \mathcal{B}_2$，
+  这相当于直接投影到 $L^2(\Omega,\mathcal{B}_1,\mathbb{P})$。
+\end{remark}
+\begin{proof}
+  考虑 $X\geq 0$ 的情况，令 $Z$ 是非负 $\mathcal{B}_1$-可测的随机变量。
+  此时 $Z$ 也是 $\mathcal{B}_2$-可测的，所以
+  \[
+    \mathbb{E}\bigl[
+      Z\mathbb{E}\bigl[\mathbb{E}[X|\mathcal{B}_2]\big| \mathcal{B}_1\bigr]
+    \bigr]=\mathbb{E}\bigl[
+      Z \mathbb{E}[X|\mathcal{B}_2]
+    \bigr]=\mathbb{E}[ZX].\qedhere
+  \]
+\end{proof}
+
+下面的定理利用条件期望对独立性进行了刻画。
+
+\begin{theorem}
+  $\mathcal{A}$ 的两个子 $\sigma$-域 $\mathcal{B}_1$ 和 $\mathcal{B}_2$
+  独立当且仅当对于每个 $B\in \mathcal{B}_2$，有 $\mathbb{E}[\idf_{B}|\mathcal{B}_1]=\mathbb{P}(B)$。
+  此外，如果 $\mathcal{B}_1$ 和 $\mathcal{B}_2$ 独立，对于每个非负 $\mathcal{B}_2$-可测
+  的随机变量 $X$ 和可积随机变量 $X\in L^1(\Omega,\mathcal{B}_2,\mathbb{P})$，
+  都有 $\mathbb{E}[X|\mathcal{B}_1]=\mathbb{E}[X]$。
+\end{theorem}
+\begin{proof}
+  假设 $\mathcal{B}_1$ 和 $\mathcal{B}_2$ 独立。对于非负 $\mathcal{B}_2$-可测随机变量 $X$，
+  任取非负 $\mathcal{B}_1$-可测随机变量 $Z$，那么 $X$ 和 $Z$ 独立，所以
+  \[
+    \mathbb{E}[ZX]=\mathbb{E}[Z]\mathbb{E}[X]=\mathbb{E}[Z\mathbb{E}[X]],
+  \]
+  所以 $\mathbb{E}[X|\mathcal{B}_1]=\mathbb{E}[X]$。当 $X$ 可积的时候，取 $X=X^+-X^-$ 即可。
+
+  反之，假设任取 $B\in \mathcal{B}_2$ 都有 $\mathbb{E}[\idf_{B}|\mathcal{B}_1]=\mathbb{P}(B)$。
+  那么对于 $A\in \mathcal{B}_1$ 和 $B\in \mathcal{B}_2$，有
+  \[
+    \mathbb{P}(A\cap B)=\mathbb{E}[\idf_{A}\idf_B]=
+    \mathbb{E}[\idf_{A}\mathbb{E}[\idf_B|\mathcal{B}_1]]=
+    \mathbb{E}[\idf_{A}\mathbb{P}(B)]=\mathbb{P}(A)\mathbb{P}(B),
+  \]
+  这就表明 $\mathcal{B}_1$ 和 $\mathcal{B}_2$ 独立。
+\end{proof}
+
+令 $X$ 和 $Y$ 是两个实值随机变量。\autoref{prop:sigmaX-measurable} 表明
+$\sigma(X)$-可测的随机变量恰好是 $X$ 的某个可测函数，于是上面的定理表明
+$X$ 和 $Y$ 独立当且仅当
+\[
+  \mathbb{E}[h(X)|Y]=\mathbb{E}[h(X)],
+\]
+其中 $h:\mathbb{R}\to \mathbb{R}$ 是任意可测函数使得 $\mathbb{E}[|h(X)|]<\infty$。
+假设 $X$ 是可积的，取 $h$ 是恒等映射，这也表明
+\[
+  \mathbb{E}[X|Y]=\mathbb{E}[X].
+\]
+需要注意上面的式子并不能反过来说明 $X$ 和 $Y$ 独立。例如，假设 $X$
+服从正态分布 $\mathcal{N}(0,1)$，$Y=|X|$。对于任意 $\sigma(Y)$-可测的
+有界随机变量 $Z$，假设 $Z=g(Y)$，$g$ 是可测的有界函数，那么
+\[
+  \mathbb{E}[ZX]=\mathbb{E}[g(|X|)X]=\frac{1}{\sqrt{2\pi}}
+  \int_{-\infty}^\infty g(|y|)ye^{-y^2/2}\d y=0,
+\]
+所以 $\mathbb{E}[X|Y]=0=\mathbb{E}[X]$，但是 $X$ 和 $Y$ 并不独立。
+
+\begin{theorem}
+  令 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 是两个可测空间，
+  $X$ 和 $Y$ 分别是值在 $E$ 和 $F$ 中的随机变量。假设 $X$ 和 $\mathcal{B}$
+  独立，$Y$ 是 $\mathcal{B}$-可测的。那么，对于每个 $\mathcal{E}\otimes \mathcal{F}$-可测
+  函数 $g:E\times F\to \mathbb{R}_+$，有
+  \[
+    \mathbb{E}[g(X,Y)|\mathcal{B}]=\int g(x,Y) \mathbb{P}_X(\d x).
+  \]
+  右端表示随机变量 $Y$ 与函数 $\varPsi:F\to \mathbb{R}_+$ 的复合，
+  其中 $\varPsi(y)=\int g(x,y) \mathbb{P}_X(\d x)$。
+\end{theorem}
+\begin{remark}
+  我们可以这样理解上面的定理：如果考虑 $\mathcal{B}$-可测随机变量 $Y$
+  相对于 $\mathcal{B}$ 的条件期望，那么这是一个常数，然而 $\mathcal{B}$
+  没有提供关于 $X$ 的任何信息，所以 $g(X,Y)$ 相对于 $\mathcal{B}$ 的条件期望
+  需要相对于 $X$ 的分布律对 $g(\cdot ,Y)$ 积分。
+\end{remark}
+\begin{proof}
+  我们需要证明，对于任意非负 $\mathcal{B}$-可测随机变量 $Z$，都有
+  \[
+    \mathbb{E}[Zg(X,Y)]=\mathbb{E}[Z\varPsi(Y)].
+  \]
+  考虑 $(X,Y,Z)$ 的分布律 $\mathbb{P}_{(X,Y,Z)}$，这是 $E\times F\times \mathbb{R}_+$
+  上的概率测度。因为 $X$ 和 $\mathcal{B}$ 独立，而 $Y$ 和 $Z$ 都是 $\mathcal{B}$-可测的，
+  所以 $X$ 和 $(Y,Z)$ 独立。因此 $\mathbb{P}_{(X,Y,Z)}=\mathbb{P}_X\otimes \mathbb{P}_{(Y,Z)}$。
+  所以
+  \begin{align*}
+    \mathbb{E}[Zg(X,Y)]&=\int g(x,y)z \mathbb{P}_{(X,Y,Z)}(\d x,\d y,\d z)\\
+    &=\int g(x,y)z \mathbb{P}_X(\d x)\mathbb{P}_{(Y,Z)}(\d y,\d z)\\
+    &=\int \varPsi(y)z \mathbb{P}_{(Y,Z)}(\d y,\d z)\\
+    &=\mathbb{E}[Z\varPsi(Y)].
+  \end{align*}
+  这就完成了证明。
+\end{proof}
+
+
+
+
+
+\section{条件期望的计算}
+
+\subsection{离散条件}
+
+如果 $Y$ 是值在可数空间 $E$ 中的随机变量，令 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$。
+那么我们有
+\[
+  \mathbb{E}[X|Y]=\varphi(Y),  
+\]
+其中 $y\in E$ 且 $\mathbb{P}(Y=y)>0$ 的时候有
+\[
+  \varphi(y)=\frac{\mathbb{E}[X\indicator{\{Y=y\}}]}{\mathbb{P}(Y=y)}.
+\]
+
+\subsection{带有密度的随机变量}
+
+令 $X,Y$ 分别是值在 $\mathbb{R}^m$ 和 $\mathbb{R}^n$ 中的随机变量，
+假设 $(X,Y)$ 有相对于 Lebesgue 测度的密度，记为 $p(x,y)$。
+那么对于任意 Borel 可测函数 $f:\mathbb{R}^m\times \mathbb{R}^n\to \mathbb{R}_+$，有
+\[
+  \mathbb{E}[f(X,Y)]=\int_{\mathbb{R}^m\times \mathbb{R}^n}
+  f(x,y)p(x,y)\d x\d y.  
+\]
+注意此时 $Y$ 有密度
+\[
+  p_Y(y)=\int_{\mathbb{R}^m}p(x,y)\d x.
+\]
+
+令 $h:\mathbb{R}^m\to \mathbb{R}_+$ 是可测函数，我们计算
+$\mathbb{E}[h(X)|Y]$。那么我们需要计算，对于任意 $\sigma^{-1}(Y)$-可测的有界实值随机变量 $Z$
+的期望 $\mathbb{E}[h(X)Z]$。根据 \autoref{prop:sigmaX-measurable}，只需要研究
+对于任意可测函数 $g:\mathbb{R}^n\to \mathbb{R}_+$，计算期望 $\mathbb{E}[h(X)g(Y)]$ 即可，那么
+我们有
+\begin{align*}
+  \mathbb{E}[h(X)g(Y)]&=\int_{\mathbb{R}^m\times \mathbb{R}^n}
+  h(x)g(y)p(x,y)\d x\d y\\
+  &=\int_{\mathbb{R}^n}\left(\int_{\mathbb{R}^m}h(x)p(x,y)\d x\right)g(y)\d y\\
+  &=\int_{\mathbb{R}^n}\left(\int_{\mathbb{R}^m}h(x)p(x,y)\d x\right)
+  g(y)\indicator{\{p_Y(y)>0\}}\d y,
+\end{align*}
+最后一个等式是因为若 $y$ 使得 $p_Y(y)=0$，那么对于 $x$ 而言几乎处处有 $p(x,y)=0$，
+所以 $\int h(x)p(x,y)\d x=0$。于是 
+\begin{align*}
+  \mathbb{E}[h(X)g(Y)]&=\int_{\mathbb{R}^n}
+  \frac{\int_{\mathbb{R}^m}h(x)p(x,y)\d x}{p_Y(y)}
+  g(y)p_Y(y)\indicator{\{p_Y(y)>0\}}\d y\\
+  &=\int_{\mathbb{R}^n}\varphi(y)g(y)p_Y(y)\indicator{\{p_Y(y)>0\}}\d y\\
+  &=\mathbb{E}[\varphi(Y)g(Y)],
+\end{align*}
+其中
+\[
+  \varphi(y)=\begin{dcases}
+    \frac{1}{p_Y(y)}\int_{\mathbb{R}^m}h(x)p(x,y)\d x & p_Y(y)>0,\\
+    h(0) & p_Y(y)=0.
+  \end{dcases}  
+\]
+实际上在 $p_Y(y)=0$ 时，$\varphi(y)$ 的取值可以任意取，因为这不会影响积分值。
+
+由于 $g$ 的任意性，根据 \autoref{prop:sigmaX-measurable}，这就表明
+对于每个有界的 $\sigma^{-1}(Y)$-可测的实值随机变量 $Z$ 有
+\[
+  \mathbb{E}[h(X)Z]=\mathbb{E}[\varphi(Y)Z],  
+\]
+即
+\[
+  \mathbb{E}[h(X)|Y]=\varphi(Y).  
+\]
+再观察 $\varphi(y)$ 的表达式，当 $p_Y(y)=0$ 时 $h(0)$ 可以解释为相对于
+Dirac 测度 $\delta_0$ 的积分 $\int h(x)\delta_0(\d x)$。当
+$p_Y(y)>0$ 时
+\[
+  \varphi(y)=\int h(x)\frac{p(x,y)}{p_Y(y)}\d x,
+\]
+这也可以解释为相对于概率测度 $p(x,y)/p_Y(y) \cdot \d x$ 的积分，故我们得到了下面的命题。
+
+\begin{proposition}
+  对于每个 $y\in \mathbb{R}^n$，令 $\nu(y,\d x)$ 为
+  $\mathbb{R}^m$ 上的概率测度，定义为
+  \[
+    \nu(y,\d x)=\begin{dcases}
+      \frac{p(x,y)}{p_Y(y)}\d x & p_Y(y)>0,\\
+      \delta_0(\d x) & p_Y(y)=0,
+    \end{dcases}  
+  \]
+  那么对于任意可测函数 $h:\mathbb{R}^m\to \mathbb{R}_+$，我们有
+  \[
+    \mathbb{E}[h(X)|Y]=\int h(x)\nu(Y,\d x).  
+  \]
+\end{proposition}
+
+对于使得 $p_Y(y)>0$ 的 $y$，我们有
+\[
+  \mathbb{E}[h(X)|Y=y]=\int h(x)\nu(y,\d x)
+  =\int h(x)\frac{p(x,y)}{p_Y(y)}\d x,  
+\]
+我们通常记为
+\[
+  p_{X|Y}(x|y):x\mapsto\frac{p(x,y)}{p_Y(y)}  
+\]
+是已知 $Y=y$ 下 $X$ 的条件密度函数。
+
+当 $p_Y(y)$ 和 $p_X(x)$ 都严格大于 $0$ 时，我们有
+\[
+  p_{X|Y}(x|y)p_Y(y)=p(x,y)=p_{Y|X}(y|x)p_X(x),
+\]
+这就得到了著名的 Bayes 公式
+\[
+  p_{X|Y}(x|y)=\frac{p_{Y|X}(y|x)p_X(x)}{p_Y(y)}.
+\]
+
+\subsection{高斯条件}
+
+令 $X,Y_1,\dots,Y_p$ 是 $L^2(\Omega,\mathcal{A},\mathbb{P})$ 中的 $p+1$
+个实值随机变量。我们已经看到条件期望 $\mathbb{E}[X|Y_1,\dots,Y_p]$
+是 $X$ 向子空间 $L^2(\Omega,\sigma(Y_1,\dots,Y_p),\mathbb{P})$ 的正交投影。
+这个正交投影是 $X$ 的形如 $\varphi(Y_1,\dots,Y_p)$ 的随机变量的最佳逼近。
+
+另一方面，我们已经知道 $X$ 的通过 $Y_1,\dots,Y_p$ 的仿射函数的最佳逼近
+是 $X$ 在由 $1,Y_1,\dots,Y_p$ 张成的线性子空间上的正交投影。一般来说，
+后者的投影与条件期望 $\mathbb{E}[X|Y_1,\dots,Y_p]$ 是非常不同的，
+显然条件期望是 $X$ 的更好的逼近，因为条件期望是 $X$ 在所有
+$Y_1,\dots,Y_p$ 的可测函数上的最佳逼近。然而，我们发现对于高斯变量
+这两个逼近是相同的。于是计算条件期望可以简化为向一个有限维子空间
+的投影，这是一个巨大的优势。
+
+回顾值在 $\mathbb{R}^k$ 中的随机向量 $Z=(Z_1,\dots,Z_k)$ 
+是高斯的当且仅当分量 $Z_1,\dots,Z_k$ 的任意线性组合是一个高斯变量，
+这也等价于说 $Z_1,\dots,Z_k\in L^2$ 且
+\[
+  \forall \xi\in \mathbb{R}^k,\quad
+  \mathbb{E}[e^{i\xi\cdot Z}]=\exp\left(
+    i\xi\cdot \mathbb{E}[Z]-\frac{1}{2}\xi^T K_Z\xi
+  \right),
+\]
+这里 $K_Z$ 是 $Z$ 的协方差矩阵。特别的，当 $Z_1,\dots,Z_k$
+是独立高斯变量时，这个条件是满足的。
+
+\begin{proposition}
+  令 $(X_1,\dots,X_m,Y_1,\dots,Y_n)$ 是高斯向量。向量
+  $(X_1,\dots,X_m)$ 和 $(Y_1,\dots,Y_n)$ 独立当且仅当
+  它们的协方差矩阵的交叉项全为零，即对于任意 $1\leq i\leq m$ 和 $1\leq j\leq n$，
+  都有 $\mathrm{Cov}(X_i,Y_j)=0$。
+  因此，如果 $(Z_1,\dots,Z_k)$ 是高斯向量且协方差矩阵是对角矩阵，那么
+  $Z_1,\dots,Z_k$ 相互独立。
+\end{proposition}
+\begin{proof}
+  由于独立蕴含不相关性，所以只需要证明反过来即可。
+  假设 $\mathrm{Cov}(X_i,Y_j)=0$ 对任意 $i,j$ 都成立。那么对于任意
+  $\xi=(\eta_1,\dots,\eta_m,\zeta_1,\dots,\zeta_n)\in \mathbb{R}^{m+n}$，
+  我们有
+  \begin{align*}
+    &\mathbb{E}[e^{i\xi\cdot (X_1,\dots,X_m,Y_1,\dots,Y_n)}]\\
+    &=\exp\left(
+      i\xi\cdot \mathbb{E}[(X_1,\dots,X_m,Y_1,\dots,Y_n)]-
+      \frac{1}{2}\xi^T K_{(X_1,\dots,X_m,Y_1,\dots,Y_n)}\xi
+    \right).
+  \end{align*}
+  记 $\eta=(\eta_1,\dots,\eta_m)$ 以及 $\zeta=(\zeta_1,\dots,\zeta_n)$，那么
+  \[
+    \xi\cdot \mathbb{E}[(X_1,\dots,X_m,Y_1,\dots,Y_n)]=
+    \eta\cdot \mathbb{E}[(X_1,\dots,X_m)]+
+    \zeta\cdot \mathbb{E}[(Y_1,\dots,Y_n)],
+  \]
+  并且 $\mathrm{Cov}(X_i,Y_j)=0$ 表明
+  \[
+    \xi^\top K_{(X_1,\dots,X_m,Y_1,\dots,Y_n)}\xi=
+    \eta^\top K_{(X_1,\dots,X_m)}\eta+
+    \zeta^\top K_{(Y_1,\dots,Y_n)}\zeta.
+  \]
+  所以
+  \begin{equation*}
+    \mathbb{E}[e^{i\xi\cdot (X_1,\dots,X_m,Y_1,\dots,Y_n)}]
+    =\mathbb{E}[e^{i\eta\cdot (X_1,\dots,X_m)}]
+    \mathbb{E}[e^{i\zeta\cdot (Y_1,\dots,Y_n)}],
+  \end{equation*}
+  或者等价的说，有
+  \begin{align*}
+    &\what{\mathbb{P}}_{(X_1,\dots,X_m,Y_1,\dots,Y_n)}(\eta_1,\dots,\eta_m,\zeta_1,\dots,\zeta_n)\\
+    &=\what{\mathbb{P}}_{(X_1,\dots,X_m)}(\eta_1,\dots,\eta_m)
+    \what{\mathbb{P}}_{(Y_1,\dots,Y_n)}(\zeta_1,\dots,\zeta_n),
+  \end{align*}
+  右边是 $\mathbb{P}_{(X_1,\dots,X_m)}\otimes \mathbb{P}_{(Y_1,\dots,Y_n)}$
+  的 Fourier 变换。根据 \autoref{thm:characteristic function determines distribution}，这就表明
+  \[
+    \mathbb{P}_{(X_1,\dots,X_m,Y_1,\dots,Y_n)}=
+    \mathbb{P}_{(X_1,\dots,X_m)}\otimes \mathbb{P}_{(Y_1,\dots,Y_n)},
+  \]
+  即 $(X_1,\dots,X_m)$ 和 $(Y_1,\dots,Y_n)$ 独立。
+
+  第二点是第一点的推论。首先可以知道 $Z_k$ 和 $(Z_1,\dots,Z_{k-1})$
+  独立，然后 $Z_{k-1}$ 和 $(Z_1,\dots,Z_{k-2})$ 独立，依此类推，
+  这就表明 $Z_1,\dots,Z_k$ 独立。
+\end{proof}
+
+
+
+
+
+\section{转移概率和条件分布}
+
+\begin{definition}
+  令 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 是两个可测空间，
+  $E$ 到 $F$ 的一个\emph{转移概率}指的是映射
+  \[
+    \nu:E\times \mathcal{F}\to [0,1],  
+  \]
+  其满足：
+  \begin{enumerate}
+    \item 对于每个 $x\in E$，$A\mapsto \nu(x,A)$ 是
+    $(F,\mathcal{F})$ 上的概率测度。
+    \item 对于每个 $A\in \mathcal{F}$，$x\mapsto \nu(x,A)$
+    是 $\mathcal{E}$-可测的。
+  \end{enumerate}
+\end{definition}
+
+从直观上，每固定一个“起点” $x\in E$，概率测度 $\nu(x,\cdot)$
+给出了一种随机的选择一个“到达点” $y\in F$ 的方法，这个概念将在
+Markov 链中发挥重要作用。
+
+\begin{example}
+  令 $\mu$ 是 $(F,\mathcal{F})$ 上的 $\sigma$-有限测度，$f:E\times F\to \mathbb{R}_+$
+  是 $\mathcal{E}\otimes \mathcal{F}$-可测函数，且对于每个 $x\in E$，
+  有 $\int_F f(x,y)\mu(\d y)=1$。那么定义
+  \[
+    \nu(x,A)=\int_A f(x,y)\mu(\d y),
+  \]
+  这定义了 $E$ 到 $F$ 的一个转移概率。
+\end{example}
+
+
+\begin{definition}
+  令 $X$ 和 $Y$ 分别是值在 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$
+  中的随机变量。如果 $E$ 到 $F$ 的转移概率 $\nu$ 使得：
+  对于任意 $F$ 上的非负可测函数 $h$，有
+  \[
+    \mathbb{E}[h(Y)|X]=\int\nu(X,\d y) h(y),\quad 
+    \alsu{},  
+  \]
+  那么我们说 $\nu$ 是已知 $X$ 下 $Y$ 的条件分布。
+\end{definition}
+
+根据定义，如果 $\nu$ 是已知 $X$ 下 $Y$ 的条件分布，那么对于每个
+$A\in \mathcal{F}$，有
+\[
+  \mathbb{P}(Y\in A|X)=\mathbb{E}[\indicator{\{Y\in A\}}|X]
+  =\nu(X,A),\quad \alsu{}
+\]
+也可以写为对于任意 $x\in E$，有
+\[
+  \mathbb{P}(Y\in A| X=x)=\nu(x,A).  
+\]
+虽然这给出了条件期望背后的概率意义，但是一般来说上面的等式
+并不成立，因为在 $x$ 使得 $\mathbb{P}(X=x)=0$ 的时候，条件期望
+$\mathbb{P}(Y\in A|X=x)$ 的取值并不唯一。所以说严格的等式应该是
+第一个 $\mathbb{P}(Y\in A|X)=\nu (X,A)$，这是 $L^2(\Omega,\mathcal{A},\mathbb{P})$
+中的等式。
+
+
+
+
+
+
+
+
+

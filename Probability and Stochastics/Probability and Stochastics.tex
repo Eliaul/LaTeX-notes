@@ -107,704 +107,415 @@
 
 \include{chapters/ch8/probability}
 
+\include{chapters/ch9/independence}
 
-\chapter{独立性}
+\include{chapters/ch10/convergence}
 
-\section{独立事件}
-
-在本章中，我们考虑概率空间 $(\Omega,\mathcal{A},\mathbb{P})$。如果 
-$A,B\in \mathcal{A}$ 且
-\[
-  \mathbb{P}(A\cap B)=\mathbb{P}(A)\mathbb{P}(B),  
-\]
-那么我们说 $A$ 和 $B$ 是\emph{独立的}。
-如果 $\mathbb{P}(B)>0$，我们定义条件概率
-\[
-  \mathbb{P}(A|B)=\frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}.
-\]
-此时 $A$ 和 $B$ 独立等价于 $\mathbb{P}(A|B)=\mathbb{P}(A)$。
-
-\begin{definition}
-  如果对于 $\{1,\dots,n\}$
-  的任意子集 $\{j_1,\dots,j_p\}$ 都有
-  \[
-    \mathbb{P}(A_{j_1}\cap \cdots\cap A_{j_p})
-    =\mathbb{P}(A_{j_1})\cdots \mathbb{P}(A_{j_p}),
-  \]
-  那么我们说 $n$ 个事件 $A_1,\dots,A_n$ 是独立的。
-\end{definition}
-
-\begin{proposition}\label{prop:independence by sigma algebra}
-  $n$ 个事件 $A_1,\dots,A_n$ 独立当且仅当
-  \[
-    \mathbb{P}(B_1\cap\cdots\cap B_n)=\mathbb{P}(B_1)\cdots \mathbb{P}(B_n),
-  \]
-  其中 $B_i\in\sigma(A_i)=\{\emptyset,A,A^c,\Omega\}$。
-\end{proposition}
-
-
-
-\section{$\sigma$-域和随机变量的独立性}
-
-如果 $\mathcal{B}\subseteq \mathcal{A}$ 是一个 $\sigma$-域，那么我们说
-$\mathcal{B}$ 是 $\mathcal{A}$ 的\emph{子 $\mathbold{\sigma}$-域}。我们可以认为
-子 $\sigma$-域 $\mathcal{B}$ 反映了概率空间的部分信息，即 $\mathcal{B}$ 中
-发生的事件。例如，如果 $\mathcal{B}=\sigma(X)$，$X$ 是随机变量，那么
-$\mathcal{B}$ 反映了 $X$ 的值的信息。这暗示了子 $\sigma$-域的独立性的概念：
-我们希望两个子 $\sigma$-域 $\mathcal{B}$ 和 $\mathcal{B}'$ 是独立的当且仅当
-它们中的任意两个事件都是独立的。
-
-\begin{definition}
-  令 $\mathcal{B}_1,\dots,\mathcal{B}_n$ 是 $\mathcal{A}$ 的 $n$ 个
-  $\sigma$-子域，我们说 $\mathcal{B}_1,\dots,\mathcal{B}_n$ 是独立的，如果
-  对于任意 $A_1\in \mathcal{B}_1,\dots,A_n\in \mathcal{B}_n$，都有
-  \[
-    \mathbb{P}(A_1\cap\cdots\cap A_n)=\mathbb{P}(A_1)\cdots \mathbb{P}(A_n).  
-  \]
-\end{definition}
-
-令 $X_1,\dots,X_n$ 分别是值在 $(E_1,\mathcal{E}_1),\dots,(E_n,\mathcal{E}_n)$
-中的随机变量，我们说 $X_1,\dots,X_n$ 是独立的当且仅当
-$\sigma(X_1),\dots,\sigma(X_n)$ 是独立的。这等价于
-任取 $F_1\in \mathcal{E}_1,\dots,F_n\in \mathcal{E}_n$ 有
-\[
-  \mathbb{P}(\{X_1\in F_1\}\cap\cdots\cap\{X_n\in F_n\})  
-  =\mathbb{P}(X_1\in F_1)\cdots \mathbb{P}(X_n\in F_n).
-\]
-
-有时候考虑一族随机变量之间的独立性也是有用的。对于两族随机变量 $(X_i)_{i\in I}$
-和 $(Y_j)_{j\in J}$，如果 $\sigma$-域 $\sigma((X_i)_{i\in I})$ 和 $\sigma((Y_j)_{j\in J})$
-是独立的，那么我们说这两族随机变量是独立的。注意到这比任意 $X_i$ 与 $Y_j$ 独立要更强。
-
-\begin{remark}
-  (1) 如果 $\mathcal{B}_1,\dots,\mathcal{B}_n$ 是 $\mathcal{A}$ 的 $n$ 个独立的 $\sigma$-子域，
-  并且 $X_i$ 是 $\mathcal{B}_i$-可测的随机变量，那么 $X_1,\dots,X_n$ 是独立的。这是因为
-  $X_i$ 是 $\mathcal{B}_i$-可测的就表明 $\sigma(X_i)\subseteq \mathcal{B}_i$。
-
-  (2) $n$ 个事件 $A_1,\dots,A_n$ 是独立的当且仅当 $\sigma$-域 $\sigma(A_1),\dots,\sigma(A_n)$
-  是独立的(\autoref{prop:independence by sigma algebra})。
-\end{remark}
-
-
-\begin{theorem}\label{thm:independence by product measure}
-  令 $X_1,\dots,X_n$ 分别是值在 $(E_1,\mathcal{E}_1),\dots,(E_n,\mathcal{E}_n)$
-  中的随机变量。那么 $X_1,\dots,X_n$ 是独立的当且仅当 $(X_1,\dots,X_n)$
-  的分布是 $X_1,\dots,X_n$ 的分布的乘积测度，即
-  \[
-    \mathbb{P}_{(X_1,\dots,X_n)}=\mathbb{P}_{X_1}\otimes\cdots
-    \otimes \mathbb{P}_{X_n}.  
-  \]
-  此外，我们有
-  \[
-    \mathbb{E}\biggl[\prod_{i=1}^n f_i(X_i)\biggr] =\prod_{i=1}^n \mathbb{E}[f_i(X_i)],
-  \]
-  其中 $f_i$ 是 $(E_i,\mathcal{E}_i)$ 上的非负可测函数。
-\end{theorem}
-\begin{proof}
-  令 $F_i\in \mathcal{E}_i$，$X_1,\dots,X_n$ 独立当且仅当
-  \[
-    \mathbb{P}(\{X_1\in F_1\}\cap\cdots\cap\{X_n\in F_n\})  
-    =\mathbb{P}(X_1\in F_1)\cdots \mathbb{P}(X_n\in F_n),
-  \]
-  这表明
-  \[ 
-    \mathbb{P}_{(X_1,\dots,X_n)}(F_1\times\cdots\times F_n)
-    =\mathbb{P}_{X_1}(F_1)\cdots \mathbb{P}_{X_n}(F_n).
-  \]
-  所以 $\mathbb{P}_{(X_1,\dots,X_n)}$ 就是乘积测度 
-  $\mathbb{P}_{X_1}\otimes\cdots\otimes \mathbb{P}_{X_n}$。
-
-  记 $\pi_i:E_1\times \cdots\times E_n\to E_i$ 为投影，根据 Fubini 定理，有
-  \begin{align*}
-    \mathbb{E}\biggl[\prod_{i=1}^n f_i(X_i)\biggr]&=
-    \int_{E_1\times\cdots \times E_n}\prod_{i=1}^n f_i\circ\pi_i
-    \d\mathbb{P}_{(X_1,\dots,X_n)}\\
-    &=\prod_{i=1}^n \int_{E_i} f_i(x_i) \mathbb{P}_{X_i}(\d x_i)\\
-    &=\prod_{i=1}^n \mathbb{E}[f_i(X_i)].\qedhere
-  \end{align*}
-\end{proof}
-\begin{remark}
-  该定理中 $f_i$ 也可以是任意符号，此时如果 $\mathbb{E}[|f_i(X_i)|]<\infty$，
-  也即 $f_i\in \mathcal{L}^1(E_i,\mathcal{E}_i,\mathbb{P}_{X_i})$，那么
-  定理的结论依然成立。只需要注意到
-  \[
-    \mathbb{E}\biggl[
-      \prod_{i=1}^n |f_i(X_i)|
-    \biggr]=\prod_{i=1}^n \mathbb{E}[|f_i(X_i)|]<\infty.
-  \]
-  特别地，如果 $X_1,\dots,X_n$ 是独立的实值随机变量且 $X_i\in L^1$，
-  那么 $X_1\cdots X_n\in L^1$ 且
-  \[
-    \mathbb{E}[X_1\cdots X_n]=\prod_{i=1}^n \mathbb{E}[X_i].
-  \]
-  需要注意一般情况下 $L^1$ 中的随机变量的积不一定还在 $L^1$ 中。
-\end{remark}
-
-\autoref{thm:independence by product measure} 展示了如何构造有限多个独立的随机变量。
-考虑实值随机变量的情况。令 $\mu_1,\dots,\mu_n$ 是 $\mathbb{R}$ 上的 $n$ 个
-概率测度。首先我们可以构造一个值在 $\mathbb{R}^n$ 中的随机变量 $Y=(Y_1,\dots,Y_n)$
-使得其有分布律 $\mu_1\otimes\cdots\otimes \mu_n$ (比如令 $\Omega=\mathbb{R}^n$，
-$\mathcal{A}=\mathcal{B}(\mathbb{R}^n)$，$\mu_1\otimes\cdots\otimes \mu_n$
-是概率测度，那么随机变量 $Y(\omega)=\omega$ 即符合要求)。然后 \autoref{thm:independence by product measure}
-表明分量 $Y_1,\dots,Y_n$ 是分别拥有分布律 $\mu_1,\dots,\mu_n$ 的独立实值随机变量。
-
-\begin{corollary}
-  如果 $X_1,X_2$ 是 $L^2$ 中的两个独立实值随机变量，那么 $\cov(X_1,X_2)=0$。
-\end{corollary}
-
-
-
-
-\begin{corollary}\label{coro:independence by pdf}
-  令 $X_1,\dots,X_n$ 是实值随机变量。
-  \begin{enumerate}
-    \item 假设 $X_i$ 有密度 $p_i$ 并且 $X_1,\dots,X_n$ 是独立的，那么
-    $(X_1,\dots,X_n)$ 有密度
-    \[
-      p(x_1,\dots,x_n)=\prod_{i=1}^n p_i(x_i).  
-    \]
-    \item 反之，假设 $(X_1,\dots,X_n)$ 有密度 $p$，并且
-    $p$ 可以表达为
-    \[
-    p(x_1,\dots,x_n)=\prod_{i=1}^n q_i(x_i),  
-    \]
-    其中 $q_i$ 是 $\mathbb{R}$ 上的非负可测函数。那么 $X_1,\dots,X_n$
-    是独立的并且 $X_i$ 有密度 $p_i=C_iq_i$，其中 $C_i>0$ 为常数。
-  \end{enumerate}
-\end{corollary}
-\begin{proof}
-  (1) $X_i$ 有密度 $p_i$ 表明 $\mathbb{P}_{X_i}(\d x)=p_i(x)\d x$，
-  $X_1,\dots,X_n$ 独立表明
-  \begin{align*}
-    \mathbb{P}_{(X_1,\dots,X_n)}(A)&=
-    \mathbb{P}_{X_1}\otimes\cdots\otimes \mathbb{P}_{X_n}(A)
-    =\int_{\mathbb{R}^n} \indicator{A} \d \mathbb{P}_{X_1}\otimes\cdots\otimes \mathbb{P}_{X_n}
-    \\
-    &=\int_{\mathbb{R}}\cdots \int_{\mathbb{R}}\indicator{A}(x_1,\dots,x_n)
-    \mathbb{P}_{X_1}(\d x_1)\cdots \mathbb{P}_{X_n}(\d x_n) \\
-    &=\int_{\mathbb{R}}\cdots \int_{\mathbb{R}}\indicator{A}(x_1,\dots,x_n)
-    \prod_{i=1}^n p_i(x_i)
-    \d x_1\cdots \d x_n\\
-    &=\int_{\mathbb{R}^n} \indicator{A}\prod_{i=1}^n p_i \d \lambda
-    =\int_A \prod_{i=1}^np_i(x_i) \d x_1\cdots\d x_n,
-  \end{align*}
-  这就表明 
-  \[
-    p(x_1,\dots,x_n)=\prod_{i=1}^n p_i(x_i).  
-  \]
-
-  (2) 根据 \autoref{prop:margin pdf}，有
-  \[
-    p_i(x_i)=\int_{\mathbb{R}^{n-1}}p(x_1,\dots,x_n)\d x_1\cdots \d x_{i-1}
-    \d x_{i+1}\cdots\d x_n
-    =q_i(x_i)\prod_{j\neq i}\int_{\mathbb{R}}q_j(x_j)\d x_j,
-  \]
-  故 $p_i=C_iq_i$。此时
-  \begin{align*}
-    p(x_1,\dots,x_n)=\prod_{i=1}^n q_i(x_i)
-    =\prod_{i=1}^n \frac{1}{C_i}p_i(x_i),
-  \end{align*}
-  两边积分可知 $\prod_{i=1}^n C_i=1$，所以
-  \[
-    p(x_1,\dots,x_n)=\prod_{i=1}^n p_i(x_i),  
-  \]
-  这就表明 $\mathbb{P}_{(X_1,\dots,X_n)}=\mathbb{P}_{X_1}\otimes\cdots \mathbb{P}_{X_n}$，
-  即 $X_1,\dots,X_n$ 独立。
-\end{proof} 
-
-\begin{example}
-  令 $U$ 是服从参数 $1$ 的指数分布的随机变量，$V$ 是服从 $[0,1]$ 上
-  的均匀分布的随机变量，假设 $U,V$ 是独立的，记
-  \[
-    X=\sqrt{U}\cos(2\pi V),\quad Y=\sqrt{U}\sin(2\pi V),  
-  \]
-  证明 $X,Y$ 是独立的随机变量。
-\end{example}
-\begin{proof}
-  任取非负可测函数 $\varphi:\mathbb{R}^2\to \mathbb{R}$，有
-  \begin{align*}
-    \mathbb{E}[\varphi(X,Y)]
-    &=\mathbb{E}
-    \bigl[\varphi\bigl(\sqrt{U}\cos(2\pi V),\sqrt{U}\sin(2\pi V)\bigr)\bigr]\\
-    &=\int_{\mathbb{R}^2}\varphi\bigl(\sqrt{u}\cos(2\pi v),\sqrt{u}\sin(2\pi v)\bigr)
-    \d \mathbb{P}_{(U,V)}\\
-    &=\int_{\mathbb{R}}\int_{\mathbb{R}}\varphi\bigl(\sqrt{u}\cos(2\pi v),\sqrt{u}\sin(2\pi v)\bigr)
-      e^{-u}\indicator{[0,\infty)}(u)\indicator{[0,1]}(v)\d u\d v\\
-    &=\int_{0}^\infty\int_0^1\varphi\bigl(\sqrt{u}\cos(2\pi v),\sqrt{u}\sin(2\pi v)\bigr)
-    e^{-u}\d u\d v \\
-    &=\frac{1}{\pi}\int_0^\infty\int_0^{2\pi}
-    \varphi(r\cos\theta,r\sin\theta)re^{-r^2}\d r\d\theta\\
-    &=\frac{1}{\pi}\int_{\mathbb{R}^2}\varphi(x,y)e^{-x^2-y^2}\d x\d y.
-  \end{align*}
-  这表明 $(X,Y)$ 有概率密度 $p(x,y)=\pi^{-1}\exp(-x^2-y^2)=\pi^{-1}\exp(-x^2)\exp(-y^2)$，
-  根据 \autoref{coro:independence by pdf}，这表明 $X,Y$
-  是独立的。
-\end{proof}
-
-\section{Borel-Cantelli 引理}
-
-回顾集合极限的定义：如果 $(A_n)_{n\in \mathbb{N}}$ 是一列集合，
-我们记
-\[
-  \limsup A_n=\bigcap_{n=1}^\infty \bigcup_{k=n}^\infty A_k,  
-\]
-不难发现点 $\omega\in\limsup A_n$ 当且仅当存在无限多个
-$n$ 使得 $\omega\in A_n$。注意到
-\ref{lemma:liminf and limsup ineq} 告诉我们
-$\mathbb{P}(\limsup A_n)\geq \limsup \mathbb{P}(A_n)$。
-
-\begin{lemma}
-  令 $(A_n)_{n\in \mathbb{N}}$ 是一列事件。
-  \begin{enumerate}
-    \item 如果 $\sum_{n\in \mathbb{N}}\mathbb{P}(A_n)<\infty$，那么
-    \[
-      \mathbb{P}(\limsup A_n)=0,  
-    \]
-    \item 如果 $\sum_{n\in \mathbb{N}}\mathbb{P}(A_n)=\infty$，
-    事件 $A_n$ 是独立的，那么
-    \[
-      \mathbb{P}(\limsup A_n)=1.  
-    \]
-  \end{enumerate}
-\end{lemma}
-
-\paragraph{两个应用}
-(2) 我们令
-\[
-  (\Omega,\mathcal{A},\mathbb{P})=\bigl([0,1),\mathcal{B}([0,1)),\lambda\bigr) ,
-\]
-其中 $\lambda$ 表示 Lebesgue 测度。对于每个 $n\in \mathbb{N}$，令
-\[
-  X_n(\omega)=\lfloor 2^n\omega\rfloor-2\lfloor 2^{n-1}\omega\rfloor,
-\]
-其中 $\lfloor x\rfloor$ 表示向下取整。那么 $X_n(\omega)\in\{0,1\}$
-并且容易验证对于任意 $\omega\in [0,1)$ 有
-\[
-  0\leq\omega-\sum_{k=1}^nX_k(\omega)2^{-k}<2^{-n}.  
-\]
-这表明
-\[
-  \omega=\sum_{k=1}^\infty X_k(\omega)2^{-k}.  
-\]
-
-\section{独立随机变量的和}
-
-\begin{proposition}[强大数定律]\label{prop:strong law}
-  令 $(X_n)_{n\in \mathbb{N}}$ 是一列独立同分布的实值随机变量，
-  若 $\mathbb{E}[X_1^4]<\infty$，那么我们几乎肯定有
-  \[
-    \frac{1}{n}(X_1+\cdots+X_n)\xrightarrow[n\to\infty]{} \mathbb{E}[X_1].
-  \]
-\end{proposition}
-
-
-\section{Poisson 过程}\label{sec:poisson}
-
-在本节，我们固定一个参数 $\lambda>0$，令 $U_1,U_2,\dots$ 是
-一列独立同分布的随机变量，它们都服从参数 $\lambda$ 的指数分布，
-即有概率密度 $\lambda e^{-\lambda x}\indicator{\mathbb{R}_+}$。
-令
-\[
-  T_n=U_1+U_2+\cdots+U_n.  
-\]
-对于任意实数 $t\geq 0$，令
-\[
-  N_t=\sum_{n=1}^\infty \indicator{\{T_n\leq t\}}=\sup\{n\in \mathbb{N}\,|\,T_n\leq t\}  .
-\]
-约定 $\sup\emptyset =0 $。\autoref{prop:strong law}
-告诉我们在 $n\to\infty$ 的时候，$T_n\to\infty \alsu{}$。
-因此，使得 $(T_n)_{n\in \mathbb{N}}$ 有界的 $\omega\in\Omega$ 的集合构成一个零测集，
-除开这个零测集，对于任意 $t\geq 0$，我们都有 $N_t<\infty$。类似地，因为
-随机变量 $U_i$ 几乎处处是正值，我们可以假设对于每个 $\omega\in\Omega$ 都有
-$0<T_1(\omega)<T_2(\omega)<\cdots$。
-
-固定 $\omega$，函数 $t\mapsto N_t(\omega)$ 在 $0$ 处为零、单调递增且右连续，此外
-其每次以大小为 $1$ 的幅度增加。这个函数我们称为计数函数。在 $t\to\infty$
-的时候有 $N_t\to\infty$。
-
-\begin{definition}
-  随机变量族 $(N_t)_{t\geq 0}$ 被称为参数 $\lambda$ 的 Poisson 过程。
-\end{definition}
-
-泊松过程经常用于应用概率模型中，例如在排队论中，$N_t$ 表示在时间 $t$ 之前到达
-服务器的客户数量。选择指数分布来模拟两个连续到达的客户之间的时间段与指数分布缺乏记忆的特性有关。
-粗略地说，该属性表示，对于任何给定时间 $t \geq 0$，$t$ 与客户下一次到达之间的时间始终
-具有相同的分布，与时间 $t$ 之前发生的情况无关。
-
-\begin{proposition}
-  对于每个 $n\geq 1$，$T_n$ 服从 Gamma 分布 $\Gamma(n,\lambda)$，
-  密度为
-  \[
-    p(x)=\frac{\lambda^n}{(n-1)!}x^{n-1}e^{-\lambda x}\indicator{\mathbb{R}_+}(x).  
-  \]
-  对于每个 $t> 0$，$N_t$ 服从参数 $\lambda t$ 的 Poisson 分布：
-  \[
-    \mathbb{P}(N_t=k)=\frac{(\lambda t)^k}{k!}e^{-\lambda t},
-    \quad \forall k\in \mathbb{N} . 
-  \]
-\end{proposition}
-\begin{proof}
-  注意到参数 $\lambda$ 的指数分布就是 Gamma 分布 $\Gamma(1,\lambda)$。
-  我们首先证明若 $X$ 服从分布 $\Gamma(a,\lambda)$，$Y$
-  服从分布 $\Gamma(b,\lambda)$，且 $X,Y$ 独立，那么 $X+Y$
-  服从分布 $\Gamma(a+b,\lambda)$。
-  那么
-  \begin{align*}
-    \mathbb{E}[\varphi(X+Y)]&=\int_{\mathbb{R}^2}
-    \varphi(x+y)p_a(x)p_b(y)\d x\d y\\
-    &=\int_{\mathbb{R}}\varphi(z)\left(\int_{\mathbb{R}}p_a(x)p_b(z-x)\d x\right)\d z\\
-    &=\int_0^\infty\varphi(z)\left(\int_{0}^z
-    \frac{\lambda^{a+b}}{\Gamma(a)\Gamma(b)}x^{a-1}
-    (z-x)^{b-1}e^{-\lambda z}\d x\right) \d z\\
-    &=\int_0^\infty \frac{\lambda^{a+b}e^{-\lambda z}z^{a+b-1}}{\Gamma(a)\Gamma(b)}
-    \varphi(z)\left(\int_0^1 x^{a-1}(1-x)^{b-1}\d x\right)\d z\\
-    &=\int_0^\infty \varphi(z)\frac{\lambda^{a+b}}{\Gamma(a+b)}
-    z^{a+b-1}e^{-\lambda z}\d z,
-  \end{align*}
-  这就表明 $X+Y$ 服从分布 $\Gamma(a+b,\lambda)$。由于
-  $T_n=U_1+\cdots+U_n$，所以 $T_n$ 服从分布 $\Gamma(n,\lambda)$。
-
-  对于 $k\geq 1$，有
-  \begin{align*}
-    \mathbb{P}(N_t=k)&=\mathbb{P}(T_k\leq t< T_{k+1})\\
-    &=\mathbb{P}(T_{k}\leq t)-\mathbb{P}(T_{k+1}\leq t)\\
-    &=\int_0^t \frac{\lambda^k}{(n-1)!}x^{k-1}e^{-\lambda x}\d x
-    -\int_0^t \frac{\lambda^{k+1}}{k!}x^{k}e^{-\lambda x}\d x\\
-    &=\frac{(\lambda t)^k}{k!}e^{-\lambda t}.
-  \end{align*}
-  对于 $k=0$ 的时候，有
-  $\mathbb{P}(N_t=0)=\mathbb{P}(T_1>t)=e^{-\lambda t}$。
-  这就表明 $N_t$ 服从参数 $\lambda t$ 的 Poisson 分布。
-\end{proof}
-
-我们现在将陈述有关 Poisson 过程的第一个重要结果。我们需要引入
-给定事件的条件概率的概念（更多关于条件的内容将在 \autoref{chap:condition} 中找到）。
-如果 $B\in \mathcal{A}$ 使得 $\mathbb{P}(B)>0$，我们定义 $(\Omega,\mathcal{A})$
-上的一个新的概率测度：已知 $B$ 的条件概率，记为 $\mathbb{P}(\cdot\,|\, B)$。
-对于每个 $A\in \mathcal{A}$，其满足
-\[
-  \mathbb{P}(A|B)=\frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}.  
-\]
-对于每个非负随机变量 $X$，$X$ 在 $\mathbb{P}(\cdot\,|\, B)$ 下的期望
-记为 $\mathbb{E}[X|B]$，容易看出
-\[
-  \mathbb{P}(A|B)=  \frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}
-  =\int_{A}\frac{\indicator{B}}{\mathbb{P}(B)}\d \mathbb{P},
-\]
-所以 $\mathbb{P}(\cdot\,|\, B)$ 相对于 $\mathbb{P}$ 有密度 $\indicator{B}/\mathbb{P}(B)$，
-故
-\[
-  \mathbb{E}[X|B]=\int_{\Omega} X(\omega) \mathbb{P}(\d\omega|B)
-  = \int_\Omega X(\omega)\frac{\indicator{B}(\omega)}{\mathbb{P}(B)}
-  \mathbb{P}(\d\omega)=\frac{\mathbb{E}[X\indicator{B}]}{\mathbb{P}(B)}. 
-\]
-
-\begin{proposition}
-  令 $t>0$，$n\in \mathbb{N}$。在条件概率 $\mathbb{P}(\cdot\,|\, N_t=n)$
-  下，随机变量 $(T_1,\dots,T_n)$ 有密度
-  \[
-    \frac{n!}{t^n}\indicator{\{0<s_1<s_2<\cdots<s_n<t\}}  .
-  \]
-  此外，在条件概率 $\mathbb{P}(\cdot\,|\, N_t=n)$ 下，随机变量
-  $T_{n+1}-t$ 服从参数 $\lambda$ 的指数分布并且独立于 $(T_1,\dots,T_n)$。
-\end{proposition}
-
-现在我们陈述关于 Poisson 过程的一个非常重要的定理。
-
-\begin{theorem}
-  令 $t>0$，对于每个 $r\geq 0$，令
-  \[
-    N_r^{(t)}=N_{t+r}-N_t.  
-  \]
-  随机变量族 $(N_r^{(t)})_{r\geq 0}$ 仍然是参数 $\lambda$
-  的 Poisson 过程，并且与 $(N_r)_{0\leq r\leq t}$ 独立。
-\end{theorem}
-\begin{remark}[直观解释]
-  如果我们将 Poisson 过程的跳跃时间解释为客户到达服务器的时间，
-  则该定理意味着如果有一个在时间 $t > 0$ 到达的观察者，其记录 $t$
-  之后客户的到达时间，看到（在分布的意义下）的情况与他在时间 $0$ 到达
-  的时候一样，并且了解时间 $0$ 和 $t$ 之间客户的到达时间不会给他提供
-  有关时间 $t$ 之后客户到达情况的信息。这可以被视为所谓“Markov 性质”的
-  一个方面。
-\end{remark}
-
-\begin{corollary}
-  令 $t_0=0\leq t_1\leq\cdots\leq t_k$，随机变量 $N_{t_1},N_{t_2}-N_{t_1},
-  \dots,N_{t_k}-N_{t_{k-1}}$ 是独立的，并且，对于每个 $1\leq j\leq k$，
-  $N_{t_j}-N_{t_{j-1}}$ 服从参数 $\lambda(t_j-t_{j-1})$ 的 Poisson 分布。
-\end{corollary}
-
-
-\chapter{随机变量的收敛}
-
-
-\chapter{条件}\label{chap:condition}
-
-\section{离散条件}
-
-本章中考虑概率空间 $(\Omega,\mathcal{A},\mathbb{P})$。我们已经在
-\autoref{sec:poisson} 中提到了，如果 $B\in \mathcal{A}$ 是
-一个概率为正的事件，我们可以定义 $(\Omega,\mathcal{A})$ 上的一个
-新的概率测度：对于 $A\in \mathcal{A}$，定义
-\[
-  \mathbb{P}(A|B)=\frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}.  
-\]
-概率测度 $A\mapsto \mathbb{P}(A|B)$ 被称为给定 $B$ 下的条件概率。
-类似地，对于每个非负随机变量 $X$，或者 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，
-定义给定 $B$ 下的 $X$ 的\emph{条件期望}为
-\[
-  \mathbb{E}[X|B]=\frac{\mathbb{E}[X\indicator{B}]}{\mathbb{P}(B)}.  
-\]
-
-现在我们定义已知一个离散随机变量下的条件期望。考虑一个离散随机变量
-$Y$，取值在可数空间 $E$ 中（$\sigma$-域为幂集）。令
-$E'=\{y\in E\,|\, \mathbb{P}(Y=y)>0\}$。如果 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，
-那么对于每个 $y\in E'$，有
-\[
-  \mathbb{E}[X|Y=y]=\frac{\mathbb{E}[X\indicator{\{Y=y\}}]}{\mathbb{P}(Y=y)}.
-\]
-
-\begin{definition}
-  令 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，定义已知 $Y$ 下
-  的 $X$ 的条件期望为一个\emph{随机变量}
-  \[
-    \mathbb{E}[X|Y]=\varphi(Y),  
-  \]
-  其中 $\varphi:E\to \mathbb{R}$ 为
-  \[
-    \varphi(y)=\begin{cases}
-      \mathbb{E}[X|Y=y] & y\in E',\\
-      0 & y\in E\smallsetminus E'.
-    \end{cases}
-  \] 
-\end{definition}
-\begin{remark}
-  定义中 $y\in E \smallsetminus E'$ 时 $\varphi(y)$ 的取值
-  是无关紧要的，因为我们可以证明这样的情况仅仅构成一个零测集：
-  \[
-    \mathbb{P}(Y\in E \smallsetminus E')=
-    \sum_{y\in E \smallsetminus E'}\mathbb{P}(Y=y)
-    =0.
-  \]
-\end{remark}
-
-与相对于一个事件的条件期望相比，需要注意 $\mathbb{E}[X|Y]$
-是一个 $\Omega\to \mathbb{R}$ 的\emph{随机变量}，其几乎肯定满足
-\[
-  \mathbb{E}[X|Y](\omega)=\mathbb{E}[X|Y=Y(\omega)].  
-\]
-
-\begin{proposition}
-  令 $X\in L^1(\Omega, \mathcal{A},\mathbb{P})$，我们有
-  $\mathbb{E}\bigl[\bigl|\mathbb{E}[X|Y]\bigr|\bigr]\leq \mathbb{E}[|X|]$，
-  这表明 $\mathbb{E}[X|Y]\in L^1(\Omega,\mathcal{A},\mathbb{P})$。
-  此外，对于任意有界的 $\sigma(Y)$-可测的实值随机变量 $Z$，
-  有
-  \[
-    \mathbb{E}[ZX]=\mathbb{E}\bigl[Z \mathbb{E}[X|Y]\bigr]  .
-  \]
-\end{proposition}
-
-\section{条件期望的定义}
-
-\subsection{可积随机变量}
-
-下面的定理提供了关于一个子 $\sigma$-域的可积随机变量的条件期望
-的定义。
-
-\begin{theorem}\label{thm:conditioning variable}
-  令 $\mathcal{B}$ 是 $\mathcal{A}$ 的一个子 $\sigma$-域，$X\in L^1(\Omega,\mathcal{A},\mathbb{P})$。
-  那么 $L^1(\Omega,\mathcal{A},\mathbb{P})$ 中存在唯一的随机变量
-  $\mathbb{E}[X| \mathcal{B}]$，使得
-  \[
-    \forall B\in \mathcal{B},\quad
-    \mathbb{E}[X \indicator{B}]=\mathbb{E}\bigl[\mathbb{E}[X| \mathcal{B}]\indicator{B}\bigr]  .
-  \]
-  更一般地，对于每个有界的 $\mathcal{B}$-可测的实值随机变量 $Z$，
-  有
-  \[
-    \mathbb{E}[XZ]=\mathbb{E}\bigl[\mathbb{E}[X| \mathcal{B}]Z\bigr]  .
-  \]
-  如果 $X\geq 0$，那么我们几乎肯定有 $\mathbb{E}[X| \mathcal{B}]\geq 0$。
-\end{theorem}
-
-特别地，如果 $\mathcal{B}=\sigma(Y)$ 是随机变量 $Y$ 生成的 $\sigma$-域，
-我们在写法上不区分
-\[
-  \mathbb{E}[X| \mathcal{B}] = \mathbb{E}[X|\sigma(Y)]
-  =\mathbb{E}[X|Y].
-\]
-这与前文离散情况下的定义是不冲突的。
-
-\begin{proposition}[条件期望的性质]
-  \mbox{}
-  \begin{enumerate}
-    \item 如果 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$
-    并且 $X$ 是 $\mathcal{B}$-可测的，那么
-    $\mathbb{E}[X|\mathcal{B}]=X$。
-    \item $L^1(\Omega,\mathcal{A},\mathbb{P})$
-    上的映射 $X\mapsto \mathbb{E}[X| \mathcal{B}]$
-    是线性映射。
-    \item 如果 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，
-    那么 $\mathbb{E}\bigl[\mathbb{E}[X| \mathcal{B}]\bigr]=\mathbb{E}[X]$。
-    \item 如果 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$，那么
-    $|\mathbb{E}[X|\mathcal{B}]|\leq \mathbb{E}\bigl[|X|\bigm| \mathcal{B}\bigr]\alsu{}$，
-    因此 $\mathbb{E}\bigl[\bigl|\mathbb{E}[X|\mathcal{B}]\bigr|\bigr]\leq \mathbb{E}[|X|]$。
-    因此映射 $X\mapsto \mathbb{E}[X|\mathcal{B}]$ 是 $L^1(\Omega,\mathcal{A},\mathbb{P})$
-    上的压缩映射。
-    \item 如果 $X,X'\in L^1(\Omega,\mathcal{A},\mathbb{P})$ 并且
-    $X\geq X'$，那么 $\mathbb{E}[X|\mathcal{B}]\geq \mathbb{E}[X'|\mathcal{B}]\alsu{}$。
-  \end{enumerate}
-\end{proposition}
-
-\section{条件期望的具体性质}
-
-\begin{proposition}[嵌套 $\sigma$-域]\label{prop:nested sigma field}
-  令 $\mathcal{B}_1,\mathcal{B}_2$ 是 $\mathcal{A}$ 的两个子 $\sigma$-域且
-  $\mathcal{B}_1\subseteq \mathcal{B}_2$。那么对于任意非负（可积）随机变量 $X$，我们有
-  \[
-    \mathbb{E}\bigl[\mathbb{E}[X|\mathcal{B}_2]\bigm| \mathcal{B}_1\bigr]=
-    \mathbb{E}[X|\mathcal{B}_1].
-  \]
-\end{proposition}
-
-
-\section{条件期望的计算}
-
-\subsection{离散条件}
-
-如果 $Y$ 是值在可数空间 $E$ 中的随机变量，令 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$。
-那么我们有
-\[
-  \mathbb{E}[X|Y]=\varphi(Y),  
-\]
-其中 $y\in E$ 且 $\mathbb{P}(Y=y)>0$ 的时候有
-\[
-  \varphi(y)=\frac{\mathbb{E}[X\indicator{\{Y=y\}}]}{\mathbb{P}(Y=y)}.
-\]
-
-\subsection{带有密度的随机变量}
-
-令 $X,Y$ 分别是值在 $\mathbb{R}^m$ 和 $\mathbb{R}^n$ 中的随机变量，
-假设 $(X,Y)$ 有相对于 Lebesgue 测度的密度，记为 $p(x,y)$。
-那么对于任意 Borel 可测函数 $f:\mathbb{R}^m\times \mathbb{R}^n\to \mathbb{R}_+$，有
-\[
-  \mathbb{E}[f(X,Y)]=\int_{\mathbb{R}^m\times \mathbb{R}^n}
-  f(x,y)p(x,y)\d x\d y.  
-\]
-注意此时 $Y$ 有密度
-\[
-  q(y)=\int_{\mathbb{R}^m}p(x,y)\d x.
-\]
-
-令 $h:\mathbb{R}^m\to \mathbb{R}_+$ 是可测函数，我们计算
-$\mathbb{E}[h(X)|Y]$。对于任意可测函数 $g:\mathbb{R}^n\to \mathbb{R}_+$，
-我们有
-\begin{align*}
-  \mathbb{E}[h(X)g(Y)]&=\int_{\mathbb{R}^m\times \mathbb{R}^n}
-  h(x)g(y)p(x,y)\d x\d y\\
-  &=\int_{\mathbb{R}^n}\left(\int_{\mathbb{R}^m}h(x)p(x,y)\d x\right)g(y)\d y\\
-  &=\int_{\mathbb{R}^n}\left(\int_{\mathbb{R}^m}h(x)p(x,y)\d x\right)
-  g(y)\indicator{\{q(y)>0\}}\d y,
-\end{align*}
-最后一个等式是因为若 $y$ 使得 $q(y)=0$，那么对于 $x$ 而言几乎处处有 $p(x,y)=0$，
-所以 $\int h(x)p(x,y)\d x=0$。于是 
-\begin{align*}
-  \mathbb{E}[h(X)g(Y)]&=\int_{\mathbb{R}^n}
-  \frac{\int_{\mathbb{R}^m}h(x)p(x,y)\d x}{q(y)}
-  g(y)q(y)\indicator{\{q(y)>0\}}\d y\\
-  &=\int_{\mathbb{R}^n}\varphi(y)g(y)q(y)\indicator{\{q(y)>0\}}\d y\\
-  &=\mathbb{E}[\varphi(Y)g(Y)],
-\end{align*}
-其中
-\[
-  \varphi(y)=\begin{dcases}
-    \frac{1}{q(y)}\int_{\mathbb{R}^m}h(x)p(x,y)\d x & q(y)>0,\\
-    h(0) & q(y)=0.
-  \end{dcases}  
-\]
-
-由于 $g$ 的任意性，根据 \autoref{prop:sigmaX-measurable}，这就表明
-对于每个有界的 $\sigma^{-1}(Y)$-可测的实值随机变量 $Z$ 有
-\[
-  \mathbb{E}[h(X)Z]=\mathbb{E}[\varphi(Y)Z],  
-\]
-即
-\[
-  \mathbb{E}[h(X)|Y]=\varphi(Y).  
-\]
-故我们得到了下面的命题。
-
-\begin{proposition}
-  对于每个 $y\in \mathbb{R}^n$，令 $\nu(y,\d x)$ 为
-  $\mathbb{R}^m$ 上的概率测度，定义为
-  \[
-    \nu(y,\d x)=\begin{dcases}
-      \frac{1}{q(y)}p(x,y)\d x & q(y)>0,\\
-      \delta_0(\d x) & q(y)=0,
-    \end{dcases}  
-  \]
-  那么对于任意可测函数 $h:\mathbb{R}^m\to \mathbb{R}_+$，我们有
-  \[
-    \mathbb{E}[h(X)|Y]=\int h(x)\nu(Y,\d x).  
-  \]
-\end{proposition}
-
-对于使得 $q(y)>0$ 的 $y$，我们有
-\[
-  \mathbb{E}[h(X)|Y=y]=\int h(x)\nu(y,\d x)
-  =\frac{1}{q(y)}\int h(x)p(x,y)\d x,  
-\]
-我们通常说
-\[
-  x\mapsto\frac{p(x,y)}{q(y)}  
-\]
-是已知 $Y=y$ 下 $X$ 的条件密度函数。
-
-\section{转移概率和条件分布}
-
-\begin{definition}
-  令 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$ 是两个可测空间，
-  $E$ 到 $F$ 的一个\emph{转移概率}指的是映射
-  \[
-    \nu:E\times \mathcal{F}\to [0,1],  
-  \]
-  其满足：
-  \begin{enumerate}
-    \item 对于每个 $x\in E$，$A\mapsto \nu(x,A)$ 是
-    $(F,\mathcal{F})$ 上的概率测度。
-    \item 对于每个 $A\in \mathcal{F}$，$x\mapsto \nu(x,A)$
-    是 $\mathcal{E}$-可测的。
-  \end{enumerate}
-\end{definition}
-
-从直观上，每固定一个“起点” $x\in E$，概率测度 $\nu(x,\cdot)$
-给出了一种随机的选择一个“到达点” $y\in F$ 的方法，这个概念将在
-Markov 链中发挥重要作用。
-
-\begin{definition}
-  令 $X$ 和 $Y$ 分别是值在 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$
-  中的随机变量。如果 $E$ 到 $F$ 的转移概率 $\nu$ 使得：
-  对于任意 $F$ 上的非负可测函数 $h$，有
-  \[
-    \mathbb{E}[h(Y)|X]=\int\nu(X,\d y) h(y),\quad 
-    \alsu{},  
-  \]
-  那么我们说 $\nu$ 是已知 $X$ 下 $Y$ 的条件分布。
-\end{definition}
-
-根据定义，如果 $\nu$ 是已知 $X$ 下 $Y$ 的条件分布，那么对于每个
-$A\in \mathcal{F}$，有
-\[
-  \mathbb{P}(Y\in A|X)=\mathbb{E}[\indicator{\{Y\in A\}}|X]
-  =\nu(X,A),\quad \alsu{}
-\]
-也可以写为对于任意 $x\in E$，有
-\[
-  \mathbb{P}(Y\in A| X=x)=\nu(x,A).  
-\]
+\include{chapters/ch11/conditioning}
 
 \part{随机过程}
+
+\chapter{鞅论}
+
+鞅是随机过程的一种重要类型。一个(离散时间)鞅指的是一列可积的实值
+随机变量 $(X_n)_{n\in \mathbb{Z}_+}$，对于每个 $n$，在已知 $X_0,\dots,X_n$
+下 $X_{n+1}$ 的条件期望等于 $X_n$。从直觉上来说，我们可以考虑一个公平游戏中
+玩家的财富：在已知时间 $n$ 之前的所有事件的情况下，$n+1$ 时刻的财富平均值
+仍然等于 $n$ 时刻的财富。鞅在高等概率论中有十分重要的地位。
+
+\section{定义和例子}
+
+我们考虑概率空间 $(\Omega,\mathcal{A},\mathbb{P})$。根据定义，一个(离散时间)
+随机过程指的是一列 $(\Omega,\mathcal{A},\mathbb{P})$ 上的随机变量 $(X_n)_{n\in \mathbb{Z}_+}$，
+并且 $X_n$ 的取值也在同一个可测空间中。在本章，随机过程将在 $\mathbb{R}$ 中取值。
+
+\begin{definition}
+  $(\Omega,\mathcal{A},\mathbb{P})$ 上的一个滤子指的是一个递增的 $\mathcal{A}$
+  的子 $\sigma$-域序列 $(\mathcal{F}_n)_{n\in \mathbb{Z}_+}$，也即
+  \[
+    \mathcal{F}_0\subseteq \mathcal{F}_1\subseteq \mathcal{F}_2\subseteq \cdots \subseteq \mathcal{A}.
+  \]
+  我们也说 $(\Omega,\mathcal{A},(\mathcal{F}_n)_{n\in \mathbb{Z}_+},\mathbb{P})$ 是
+  一个过滤概率空间。
+\end{definition}
+
+参数 $n\in \mathbb{Z}_+$ 通常理解为时间。$\sigma$-域 $\mathcal{F}_n$
+收集了时间 $n$ 时的信息(一个 $\mathcal{F}_n$-可测的时间理解为依赖于时间 $n$
+发生的事件)。我们有记号
+\[
+  \mathcal{F}_\infty=\bigvee_{n\in \mathbb{Z}_+}\mathcal{F}_n=\sigma\biggl(
+    \bigcup_{n\in \mathbb{Z}_+}\mathcal{F}_n
+  \biggr).
+\]  
+
+\begin{example}\label{exa:filtration}
+  \mbox{}
+  \begin{enumerate}
+    \item 如果 $(X_n)_{n\in \mathbb{Z}_+}$ 是随机过程，那么对于每个 $n$，定义
+    $\mathcal{F}_n^X$ 是使得 $X_0,\dots,X_n$ 都可测的最小 $\sigma$-域：
+    \[
+      \mathcal{F}_n^X=\sigma(X_0,X_1,\dots,X_n).
+    \]
+    那么 $(\mathcal{F}_n^X)_{n\in \mathbb{Z}_+}$ 是一个滤子，称为
+    $(X_n)_{n\in \mathbb{Z}_+}$ 的典范滤子。
+    \item 假设 $\Omega=[0,1)$，$\mathcal{A}$ 是 Borel $\sigma$-域，$\mathbb{P}$ 是 Lebesgue 测度。
+    对于每个 $n$，定义
+    \[
+      \mathcal{F}_n=\sigma\biggl(
+        \biggl[\frac{i-1}{2^n},\frac{i}{2^n}\biggr):k=1,2,\dots,2^n
+      \biggr).
+    \]
+    那么 $(\mathcal{F}_n)_{n\in \mathbb{Z}_+}$ 是一个滤子，被称为
+    $[0,1)$ 上的 dyadic 滤子。
+  \end{enumerate}
+\end{example}
+
+\begin{definition}
+  一个随机过程 $(X_n)_{n\in \mathbb{Z}_+}$ 如果每个 $X_n$ 是 $\mathcal{F}_n$-可测的，
+  那么我们说 $(X_n)_{n\in \mathbb{Z}_+}$ 是适应于滤子 $(\mathcal{F}_n)_{n\in \mathbb{Z}_+}$ 的。
+\end{definition}
+
+根据定义，$(X_n)_{n\in \mathbb{Z}_+}$ 的典范滤子是使得
+$(X_n)_{n\in \mathbb{Z}_+}$ 适应的最小滤子。
+
+在本章的剩余部分，我们固定一个过滤概率空间
+$(\Omega,\mathcal{A},(\mathcal{F}_n)_{n\in \mathbb{Z}_+},\mathbb{P})$。
+
+\begin{definition}
+  令 $(X_n)_{n\in \mathbb{Z}_+}$ 是适应的(实值)随机过程，并且 $\mathbb{E}[|X_n|]<\infty$。
+  \begin{enumerate}
+    \item 如果对于每个 $n\geq 0$，都有
+    \[
+      \mathbb{E}[X_{n+1}|\mathcal{F}_n]=X_n,
+    \]
+    那么我们说 $(X_n)_{n\in \mathbb{Z}_+}$ 是一个鞅。
+    \item 如果对于每个 $n\geq 0$，都有
+    \[
+      \mathbb{E}[X_{n+1}|\mathcal{F}_n]\leq X_n,
+    \]
+    那么我们说 $(X_n)_{n\in \mathbb{Z}_+}$ 是一个上鞅。
+    \item 如果对于每个 $n\geq 0$，都有
+    \[
+      \mathbb{E}[X_{n+1}|\mathcal{F}_n]\geq X_n,
+    \]
+    那么我们说 $(X_n)_{n\in \mathbb{Z}_+}$ 是一个下鞅。
+  \end{enumerate}
+\end{definition}
+
+根据定义，鞅的一个很强的性质是：对于任意 $0\leq n\leq m$，都有
+\begin{equation}\label{eq:martingale property}
+  \mathbb{E}[X_{m}|\mathcal{F}_n]=X_n.
+\end{equation}
+这只需要对 $m-n$ 进行归纳。$m=n$ 时，因为 $X_n$ 是 $\mathcal{F}_n$-可测的，所以
+\eqref{eq:martingale property} 式成立。如果 $m=n+1$，\eqref{eq:martingale property}
+式是鞅的定义。如果 $m-n\geq 2$，那么条件期望的嵌套性质表明 
+\[
+  \mathbb{E}[X_m| \mathcal{F}_n]=\mathbb{E}[\mathbb{E}[X_m|\mathcal{F}_{m-1}]|\mathcal{F}_n]
+  =\mathbb{E}[X_{m-1}|\mathcal{F}_n].
+\]
+注意到 \eqref{eq:martingale property} 式还表明 $\mathbb{E}[X_m]=\mathbb{E}[X_n]$，
+因此，对于任意 $n$ 都有 $\mathbb{E}[X_n]=\mathbb{E}[X_0]$。
+
+
+类似地，如果 $(X_n)_{n\in \mathbb{Z}_+}$ 是上鞅(下鞅)，那么对于任意 $0\leq n\leq m$，都有
+\[
+  \mathbb{E}[X_{m}|\mathcal{F}_n]\leq X_n\quad
+  \bigl(\mathbb{E}[X_{m}|\mathcal{F}_n]\geq X_n\bigr).
+\]
+并且还有 $\mathbb{E}[X_m]\leq \mathbb{E}[X_n]$
+$\bigl(\mathbb{E}[X_m]\geq \mathbb{E}[X_n]\bigr)$。
+也就是说，对于上鞅，期望序列 $(\mathbb{E}[X_n])_{n\in \mathbb{Z}_+}$ 是单调递减的，
+而对于下鞅，期望序列是单调递增的。
+
+\begin{example}
+  \mbox{}
+  \begin{enumerate}
+    \item 令 $X\in L^1(\Omega,\mathcal{A},\mathbb{P})$。对于每个 $n\geq 0$，令
+    \[
+      X_n=\mathbb{E}[X| \mathcal{F}_n].
+    \]
+    那么 $(X_n)_{n\in \mathbb{Z}_+}$ 是一个鞅，被称为闭鞅。这是因为 
+    \[
+      \mathbb{E}[X_{n+1}| \mathcal{F}_n]=
+      \mathbb{E}[\mathbb{E}[X|\mathcal{F}_{n+1}]| \mathcal{F}_n]=
+      \mathbb{E}[X| \mathcal{F}_n]=X_n.
+    \]
+    \item 令 $(X_n)_{n\in \mathbb{Z}_+}$ 是一列递减的可积随机变量，
+    并且假设 $(X_n)_{n\in \mathbb{Z}_+}$ 是适应的。那么 
+    $(X_n)_{n\in \mathbb{Z}_+}$ 是一个上鞅。这是因为
+    \[
+      \mathbb{E}[X_{n+1}|\mathcal{F}_n]\leq \mathbb{E}[X_n|\mathcal{F}_n]=X_n.
+    \]
+    \item \textbf{$\mathbb{R}$ 上的随机游走}。令 $x\in \mathbb{R}$，
+    $(Y_n)_{n\in \mathbb{N}}$ 是一列独立同分布的实值随机变量，有分布 $\mu$
+    且 $\mathbb{E}[|Y_1|]<\infty$。令
+    \[
+      X_0=x,\quad X_n=X_0+\sum_{k=1}^n Y_k,\quad n\geq 1.
+    \]
+    同时定义滤子 $(\mathcal{F}_n)_{n\in \mathbb{Z}_+}$ 为 
+    \[
+      \mathcal{F}_0=\{\emptyset,\Omega\},\quad 
+      \mathcal{F}_n=\sigma(Y_1,Y_2,\dots,Y_n),\quad n\geq 1.
+    \]
+    也即 $\mathcal{F}_n$ 是 $(X_n)_{n\in \mathbb{Z}_+}$ 的典范滤子。
+    \begin{itemize}
+      \item 如果 $\mathbb{E}[Y_1]=0$，那么 $(X_n)_{n\in \mathbb{Z}_+}$ 是一个鞅。
+      \item 如果 $\mathbb{E}[Y_1]\leq 0$，那么 $(X_n)_{n\in \mathbb{Z}_+}$ 是一个上鞅。
+      \item 如果 $\mathbb{E}[Y_1]\geq 0$，那么 $(X_n)_{n\in \mathbb{Z}_+}$ 是一个下鞅。
+    \end{itemize}
+    考虑 $\mathbb{E}[Y_1]=0$ 的情况，我们有
+    \[
+      \mathbb{E}[X_{n+1}|\mathcal{F}_n]=
+      \mathbb{E}[X_n+Y_{n+1}| \mathcal{F}_n]=
+      X_n+\mathbb{E}[Y_{n+1}]=X_n,
+    \]
+    第二个等号是因为 $X_n$ 是 $\mathcal{F}_n$-可测的，并且 $Y_{n+1}$
+    与 $\mathcal{F}_n$ 独立。
+    我们说 $(X_n)_{n\in \mathbb{Z}_+}$ 是以 $x$ 为起点的移动概率 $\mu$
+    的随机游走。一个特别的情况是 $\mu(1)=\mu(-1)=1/2$ 并且 $x\in \mathbb{Z}$，
+    此时我们说 $(X_n)_{n\in \mathbb{Z}_+}$ 是在 $\mathbb{Z}$ 上以 $x$ 为起点的简单随机游走。
+    \item 考虑 \autoref{exa:filtration} 中的 (2)。令 $\mu$ 是 $[0,1)$ 上的
+    有限测度。对于每个 $n\geq 0$，定义
+    \[
+      f_n=\frac{\d \mu}{\d \lambda}\bigg|_{\mathcal{F}_n},
+    \]
+    注意，这里的 $\mu$ 和 $\lambda$ 都视为限制在 $\mathcal{F}_n$ 上的测度，
+    此时 $\mathcal{F}_n$ 上的任意测度相对于 $\lambda$ 都是绝对连续的，
+    所以有 Radon-Nikodym 导数 $f_n$。容易验证
+    \[
+      f_n(\omega)=\sum_{i=1}^{2^n}\frac{\mu([(i-1)2^{-n},i2^{-n}))}{2^{-n}}
+      \idf_{[(i-1)2^{-n},i2^{-n})}(\omega),\quad \forall \omega\in [0,1).
+    \]
+    那么，$(f_n)_{n\in \mathbb{Z}_+}$ 是一个鞅。实际上，如果 $A\in \mathcal{F}_n$，
+    我们有
+    \[
+      \mathbb{E}[\idf_A f_{n+1}]=\int \idf_A(\omega)f_{n+1}(\omega)\d\omega
+      =\mu(A)=\int \idf_A(\omega)f_n(\omega)\d\omega =\mathbb{E}[\idf_A f_n],
+    \]
+    这就表明 $f_n=\mathbb{E}[f_{n+1}|\mathcal{F}_n]$。
+  \end{enumerate}
+\end{example}
+
+\begin{definition}
+  一个实值随机变量序列 $(H_n)_{n\in \mathbb{N}}$ 被称为是可预测的，
+  如果每个 $H_n$ 都是有界且 $\mathcal{F}_{n-1}$-可测的。
+\end{definition}
+
+\begin{proposition}\label{prop:martingale transform}
+  令 $(X_n)_{n\in \mathbb{Z}_+}$ 是适应过程，$(H_n)_{n\in \mathbb{N}}$ 是
+  可预测过程。令 $(H \bullet X)_0=0$，对于 $n\geq 1$，令
+  \[
+    (H \bullet X)_n=\sum_{k=1}^n H_k (X_k - X_{k-1}).
+  \]
+  那么 
+  \begin{enumerate}
+    \item 如果 $(X_n)_{n\in \mathbb{Z}_+}$ 是鞅，那么 $(H \bullet X)_{n\in \mathbb{Z}_+}$ 也是鞅；
+    \item 如果 $(X_n)_{n\in \mathbb{Z}_+}$ 是上鞅(或者下鞅)，并且对于每个 $n\in \mathbb{N}$
+    有 $H_n\geq 0$，那么 $(H \bullet X)_{n\in \mathbb{Z}_+}$ 也是上鞅(或者下鞅)。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  我们只证明 (1)。由于 $H_n$ 有界，所以 $(H \bullet X)_n$ 是可积的。
+  接下来对 $n$ 归纳。当 $n=0$ 时，有
+  \[ 
+    \mathbb{E}[(H\bullet X)_1|\mathcal{F}_0]=\mathbb{E}[H_1(X_1-X_0)|\mathcal{F}_0]
+    =H_1 \mathbb{E}[X_1-X_0|\mathcal{F}_0]=0,
+  \]
+  第二个等号是因为 $H_1$ 是 $\mathcal{F}_0$-可测的。考虑 $n+1$
+  的情况，那么有
+  \begin{align*}
+        \mathbb{E}[(H\bullet X)_{n+1}| \mathcal{F}_n]&=
+    \mathbb{E}[(H\bullet X)_n|\mathcal{F}_{n}]+\mathbb{E}[H_{n+1}(X_{n+1}-X_n)|\mathcal{F}_n]\\
+    &=(H\bullet X)_n+H_{n+1}\mathbb{E}[X_{n+1}-X_n|\mathcal{F}_n]\\
+    &=(H\bullet X)_n,
+  \end{align*}
+  这就表明 $(H\bullet X)_{n\in \mathbb{Z}_+}$ 是鞅。
+\end{proof}
+
+回顾我们把一个鞅 $X_n$ 视为公平游戏中玩家的财富的例子。此时差 $X_{n+1}-X_n$
+是玩家在 $n$ 和 $n+1$ 时刻之间的收益。我们可以想象，在 $n$ 时刻，玩家
+决定使用倍数 $H_{n+1}$ 来下注。由于玩家只能基于 $n$ 时刻之前的信息来决定下注倍数，
+所以 $H_{n+1}$ 必须是 $\mathcal{F}_n$-可测的。那么新的收益 $H_{n+1}(X_{n+1}-X_n)$
+仍然是一个公平游戏的收益。这给出了 $H\bullet X$ 的一个直观解释。
+
+
+\section{停时}
+
+\begin{definition}
+  一个随机变量 $T:\Omega\to \overline{\mathbb{Z}}_+=\mathbb{Z}_+\cup \{+\infty\}$
+  被称为停时，如果对于每个 $n\in \mathbb{Z}_+$，都有
+  \[
+    \{T=n\}\in \mathcal{F}_n.
+  \]
+  或者等价的说，对于每个 $n\in \mathbb{Z}_+$，都有 $\{T\leq n\}\in \mathcal{F}_n$。
+\end{definition}
+
+若对于每个 $n$ 有 $\{T=n\}\in \mathcal{F}_n$，那么
+\[
+  \{T\leq n\}=\bigcup_{k=0}^n\{T=k\}\in \mathcal{F}_n.
+\]
+反之，如果对于每个 $n$ 有 $\{T\leq n\}\in \mathcal{F}_n$，那么
+\[
+  \{T=n\}=\{T\leq n\}\setminus \{T\leq n-1\}\in \mathcal{F}_n.
+\] 
+所以这两个定义是等价的。
+
+需要注意的是我们允许 $T=+\infty$。由于
+\[
+  \{T=+\infty\}=\Omega\setminus \bigcup_{n\geq 0} \{T=n\},
+\]
+所以 $\{T=+\infty\}\in \mathcal{F}_\infty$。
+
+回到公平游戏的例子上，停时可以理解为玩家决定离开游戏的时间点，这是一个
+取决于玩家财富的随机变量。注意到玩家如果在 $n$ 时刻离开游戏，那么
+他只能拥有在 $n$ 时刻之前的信息，所以我们要求 $\{T=n\}\in \mathcal{F}_n$。
+类似地，在股票市场中，一个人也只能基于当前时间点之前的信息决定是否卖出股票。
+
+\begin{example}
+  \mbox{}
+  \begin{enumerate}
+    \item 令 $k\in \overline{ \mathbb{Z}}_+$，那么常数时间 $T=k$
+    显然是一个停时。
+    \item 令 $(Y_n)_{n\in \mathbb{Z}_+}$ 是一个适应过程，$A\in \mathcal{B}(\mathbb{R})$，
+    令
+    \[
+      T_A=\inf \{n\in \mathbb{Z}_+\,|\, Y_n\in A\},
+    \]
+    约定 $\inf \emptyset=+\infty$。那么 $T_A$ 是一个停时。这是因为，对于每个
+    $n\in \mathbb{Z}_+$，有
+    \[
+      \{T_A=n\}=\{Y_0\notin A,Y_1\notin A,\dots,Y_{n-1}\notin A,Y_n\in A\}
+      \in \mathcal{F}_n.
+    \]
+    我们说 $T_A$ 是 $A$ 的首次到达时间。
+    \item 在上一个例子的假设下。固定 $N\in \mathbb{N}$，令 
+    \[
+      L_A=\sup\{n\leq N\,|\, Y_n\in A\}.
+    \]
+    那么 $L_A$ 通常不是停时。这是因为对于每个 $n\in\{1,\dots,N-1\}$，事件
+    \[
+      \{L_A=n\}=\{Y_n\in A,Y_{n+1}\notin A,\dots, Y_N\notin A\},
+    \]
+    这涉及到了 $Y_{n+1},\dots,Y_N$，它们不一定是 $\mathcal{F}_n$-可测的。
+  \end{enumerate}
+\end{example}
+
+\begin{definition}
+  令 $T$ 是停时。定义到 $T$ 截止的 $\sigma$-域为
+  \[
+    \mathcal{F}_T=\{A\in \mathcal{F}_\infty\,|\, \forall n\in \mathbb{Z}_+, A\cap \{T=n\}\in \mathcal{F}_n \},
+  \]
+  或者等价的说
+  \[
+    \mathcal{F}_T=\{A\in \mathcal{F}_\infty\,|\, \forall n\in \mathbb{Z}_+, A\cap \{T\leq n\}\in \mathcal{F}_n \}.
+  \]
+\end{definition}
+
+这两个定义的等价性也是显然的，并且可以验证 $\mathcal{F}_T$ 确实是一个 $\sigma$-域。
+如果 $T=n$ 是常数时间，那么 $\mathcal{F}_T=\mathcal{F}_n$。
+还可以注意到停时 $T$ 是 $\mathcal{F}_T$-可测的：对于每个 $k\in \mathbb{Z}_+$，
+如果 $n\neq k$ 那么 $\{T=k\}\cap \{T=n\}=\emptyset$，
+如果 $n=k$ 那么 $\{T=k\}\cap \{T=n\}=\{T=k\}\in \mathcal{F}_n$。
+所以对于每个 $k\in \mathbb{Z}_+$，都有 $\{T=k\}\in \mathcal{F}_T$。
+
+\begin{proposition}
+  令 $S$ 和 $T$ 是两个停时并且 $S\leq T$。那么 $\mathcal{F}_S\subseteq \mathcal{F}_T$。
+\end{proposition}
+\begin{proof}
+  令 $A\in \mathcal{F}_S$，那么对于每个 $n\in \mathbb{Z}_+$，
+  有 $\{T=n\}\subseteq \{S\leq n\}$，所以
+  \[
+    A\cap \{T=n\}= \bigcup_{k=0}^n (A\cap \{S=k\})\cap \{T=n\}\in \mathcal{F}_n.\qedhere
+  \]
+\end{proof}
+
+\begin{proposition}
+  令 $S$ 和 $T$ 是两个停时。那么 $S\wedge T$ 和 $S\vee T$ 也是停时。此外，有
+  $\mathcal{F}_{S\wedge T}=\mathcal{F}_S\cap \mathcal{F}_T$。
+\end{proposition}
+\begin{proof}
+  注意到 $\{S\wedge T\leq n\}=\{S\leq n\}\cup \{T\leq n\}$
+  以及 $\{S\vee T\leq n\}=\{S\leq n\}\cap \{T\leq n\}$，
+  所以 $S\wedge T$ 和 $S\vee T$ 都是停时。
+  由于 $S\wedge T\leq S$，所以 $\mathcal{F}_{S\wedge T}\subseteq \mathcal{F}_S$。
+  同理，$\mathcal{F}_{S\wedge T}\subseteq \mathcal{F}_T$，所以
+  $\mathcal{F}_{S\wedge T}\subseteq \mathcal{F}_S\cap \mathcal{F}_T$。
+  反之，令 $A\in \mathcal{F}_S\cap \mathcal{F}_T$。那么对于每个 $n\in \mathbb{Z}_+$，有
+  $A\cap \{S\leq n\}\in \mathcal{F}_n$ 且 $A\cap \{T\leq n\}\in \mathcal{F}_n$，所以
+  \[
+    A\cap \{S\wedge T\leq n\}=A\cap (\{S\leq n\}\cup \{T\leq n\})\in \mathcal{F}_n.\qedhere
+  \]
+\end{proof}
+
+下面的命题表明一个随机过程在停时 $T$ 时的取值是 $\mathcal{F}_T$-可测的随机变量。
+一个技术性的细节是只有 $T<\infty$ 时才有意义。出于这个原因，对于一个
+定义在 $\Omega$ 的某个可测子集 $A$ 上的实值函数 $Z$：如果 $\mathcal{G}$
+是满足 $A\in \mathcal{G}$ 的 $\mathcal{A}$ 的一个子 $\sigma$-域，
+那么我们说 $Z$ 是 $\mathcal{G}$-可测的当且仅当对于每个 $B\in \mathcal{B}(\mathbb{R})$
+有 $Z^{-1}(B)\in \mathcal{G}$。
+
+\begin{proposition}
+  令 $(Y_n)_{n\in \mathbb{Z}_+}$ 是一个适应过程，$T$ 是停时。
+  定义 $\{T<\infty\}$ 上的随机变量 $Y_T$ 为 $Y_T(\omega)=Y_{T(\omega)}(\omega)$，
+  那么 $Y_T$ 是 $\mathcal{F}_T$-可测的。
+\end{proposition}
+\begin{proof}
+  令 $B\in \mathcal{B}(\mathbb{R})$，那么对于每个 $n\in \mathbb{Z}_+$，有
+  \[
+    \{Y_T\in B\}\cap \{T=n\}=\{Y_n\in B\}\cap \{T=n\} \in \mathcal{F}_n,
+  \]
+  所以 $\{Y_T\in B\}\in \mathcal{F}_T$。
+\end{proof}
+
+如果 $T$ 是停时，那么对于每个 $n\in \mathbb{Z}_+$，$n\wedge T$ 也是停时，
+所以 $Y_{n\wedge T}$ 是 $\mathcal{F}_{n\wedge T}$-可测的，由于
+$\mathcal{F}_{n\wedge T}\subseteq \mathcal{F}_n$，所以 $Y_{n\wedge T}$
+也是 $\mathcal{F}_n$-可测的。
+
+\begin{theorem}[可选停时定理 1]
+  假设 $(X_n)_{n\in \mathbb{Z}_+}$ 是鞅(或者上鞅)，$T$ 是停时。
+  那么 $(X_{n\wedge T})_{n\in \mathbb{Z}_+}$ 也是鞅(或者上鞅)。
+  特别的，如果停时 $T$ 有界，那么 $X_T\in L^1$，并且
+  \[
+    \mathbb{E}[X_T]=\mathbb{E}[X_0]\quad
+    \bigl(\text{或者 } \mathbb{E}[X_T]\leq \mathbb{E}[X_0]\bigr).
+  \]
+\end{theorem}
+\begin{proof}
+  对于每个 $n\geq 1$，令
+  \[
+    H_n= \idf_{\{T\geq n\}}=1- \idf_{\{T\leq n-1\}}.
+  \]
+  因为 $\{T\leq n-1\}\in \mathcal{F}_{n-1}$，所以 $H_n$ 是 $\mathcal{F}_{n-1}$-可测的，
+  即 $H_n$ 是可预测的。注意到
+  \[
+    X_{n\wedge T}=X_0+\sum_{i=1}^{n\wedge T}(X_i - X_{i-1})
+    =X_0+\sum_{i=1}^n \idf_{\{T\geq i\}} (X_i - X_{i-1})=X_0+(H\bullet X)_n,
+  \]
+  根据 \autoref{prop:martingale transform}，$(X_{n\wedge T})_{n\in \mathbb{Z}_+}$
+  也是鞅。
+  
+  如果 $T$ 有界，设 $T\leq N$，那么 $X_T=X_{N\wedge T}\in L^1$ 
+  以及 $\mathbb{E}[X_T]=\mathbb{E}[X_{N\wedge T}]=\mathbb{E}[X_0]$。
+\end{proof}
+
+上述定理中最后对于 $T$ 有界的要求是必须的。考虑从 $0$ 开始的简单随机游走
+$(X_n)_{n\in \mathbb{Z}_+}$，那么 $X_n=Y_1+\cdots+Y_n$，
+其中 $Y_1,Y_2,\dots$ 是独立同分布 $\mathbb{P}(Y_1=1)=\mathbb{P}(Y_1=-1)=\frac{1}{2}$
+的随机变量。因为 $\mathbb{E}[Y_1]=0$，所以 $(X_n)_{n\in \mathbb{Z}_+}$ 是鞅。
+定义
+\[
+  T=\inf\{n\geq 0\,|\, X_n=1\}
+\]
+是停时，根据 ?? 表明 $T<\infty \,\alsu{}$。但是，
+\[
+  1=\mathbb{E}[X_T]\neq \mathbb{E}[X_0]=0,
+\]
+这是因为停时 $T$ 并不是有界的。
+
+
+
+
 
 \chapter{Markov 链}
 

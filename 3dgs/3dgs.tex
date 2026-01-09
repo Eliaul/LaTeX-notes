@@ -352,8 +352,8 @@ gaussians.training_setup(opt)
 %   t_x' = \frac{2 f_x t_x}{w t_z}, \quad t_y' = \frac{2 f_y t_y}{h t_z}.
 % \]
 于是投影矩阵 $P$ 应该满足
-\[
-  \begin{bmatrix}
+\begin{equation}\label{eq:proj_matrix}
+    \begin{bmatrix}
     t_x' \\ t_y' \\ t_z' \\ t_w'
   \end{bmatrix}=\begin{bmatrix}
     2f_x/w & 0 & 2c_x/w-1 & 0 \\
@@ -365,7 +365,7 @@ gaussians.training_setup(opt)
     t_x/t_z \\ t_y/t_z \\ 1 \\ 1/t_z
   \end{bmatrix}
   ,
-\]
+\end{equation}
 接下来处理深度 $t_z$，将其映射到 $[-1,1]$ 范围内，假设近平面和远平面分别为 $n,f$，
 那么 $t_z=n$ 的时候应该映射到 $t_z'=-1$，$t_z=f$ 的时候映射到 $t_z'=1$。
 而 $t_z'=A+B/t_z$，所以
@@ -390,9 +390,9 @@ gaussians.training_setup(opt)
 \]
 NDC 坐标为 $t'=Pt\in \mathbb{R}^4$。最后，再把 $t'$ 变回像素坐标系。
 也即把 \eqref{eq:ndc} 反过来，得到
-\[
+\begin{equation}\label{eq:pixel_coord}
   \mu_u' = \frac{w}{2}(t_x' + 1)+\frac{1}{2}, \quad \mu_v' = \frac{h}{2}(t_y' + 1)+\frac{1}{2}.
-\]
+\end{equation}
 注意这里加上了 $0.5$，是因为像素坐标系的原点在像素的中心而不是左上角。
 通常情况下光心 $c_x$ 和 $c_y$ 位于图像中心，即 $c_x=w/2$，$c_y=h/2$，
 此时 $P$ 可以简化为
@@ -429,14 +429,347 @@ $( t_x, t_y, t_z)$ 处做微分，得到近似后的高斯分布。我们有
 \]
 为了方便后面的反向传播，设四元数 $q=(q_x,q_y,q_z,q_w)$，尺度 $s\in \mathbb{R}^3$，
 那么四元数对应的旋转矩阵为
-\[
-  R=\begin{bmatrix}
+\begin{equation}\label{eq:quat_rot}
+    R=\begin{bmatrix}
     1-2q_y^2-2q_z^2 & 2q_x q_y - 2 q_z q_w & 2 q_x q_z + 2 q_y q_w \\
     2 q_x q_y + 2 q_z q_w & 1 - 2 q_x^2 - 2 q_z^2 & 2 q_y q_z - 2 q_x q_w \\
     2 q_x q_z - 2 q_y q_w & 2 q_y q_z + 2 q_x q_w & 1 - 2 q_x^2 - 2 q_y^2
   \end{bmatrix}.
-\]
+\end{equation}
 此时 $\Sigma=RSS^\top R^\top$。
+
+在高斯球的混合过程中，\cite{kerbl3Dgaussians} 使用以下排序策略。将屏幕划分
+为 $16\times 16$ 的小块，然后对每个块内的 2D 高斯按照深度排序。具体来说，
+对于每个高斯球，先计算一个包围盒，这个包围盒的大小覆盖了 99\% 的置信区间(即 3 倍标准差)，
+如果一个高斯球的包围盒与某个小块相交，它就会被放入该小块的处理队列中。
+然后在每个小块内，对这些高斯球按照其深度进行排序，深度较小的高斯球优先渲染。
+
+然后对每个小块内排序好的高斯球进行光栅化。对于像素 $i$ 的颜色，设该像素
+被 $N$ 个高斯球影响，那么这个像素的颜色为
+\begin{equation}\label{eq:color_mix}
+  C_i=\sum_{n\leq N}c_n\alpha_n T_n,\quad T_n=\prod_{m< n}(1-\alpha_m),
+\end{equation}
+其中 $c_n$ 是第 $n$ 个高斯球的颜色，由球谐函数算出，$\alpha_n$
+是第 $n$ 个高斯球在该像素处的不透明度，由以下公式计算：
+\[
+  \alpha_n=o_n\exp(-\sigma_n),\quad \sigma_n=\frac{1}{2}\Delta_n^\top \Sigma_n'^{-1}\Delta_n,
+\]
+这里 $\Delta_n\in \mathbb{R}^2$ 表示 2D 高斯球中心 $\mu'\in \mathbb{R}^2$ 和像素中心
+的偏移，$o_n$ 是高斯球的全局不透明度属性。$T_n$ 是透射率，表示
+光线到达当前第 $n$ 个高斯球时，还剩下多少光没被前面的遮挡。如果
+前面的高斯球 $m<n$ 非常不透明 ($\alpha_m$ 接近 1)，那么 $1−\alpha_m$ 接近 0，
+累乘后 $T_n$ 就会变得非常小。这意味着后面的高斯球会被前面的挡住，
+对最终颜色的贡献几乎为 0。
+
+\subsection{反向传播优化}
+
+我们现在计算一个标量 loss 相对于高斯参数的梯度。给定输出图像相对于
+每个像素的一个标量 loss $\mathcal{L}$，我们利用链式法则
+反向计算到每个输入参数的梯度。本节主要参考了 \cite{ye2023mathematicalsupplementtextttgsplatlibrary}。
+
+我们先介绍一些矩阵求导的符号和基本法则。对于两个矩阵 $X,Y$，定义内积
+\[
+  \langle X,Y \rangle = \mathrm{Tr}(X^\top Y).
+\]
+这实际上就是把 $X$ 和 $Y$ 展开成向量后做点积。容易得出这个内积的一些基本性质：
+\begin{align*}
+  \langle X,Y\rangle&=\langle Y,X\rangle, \\
+  \langle X^\top, Y^\top \rangle&=\langle X,Y\rangle, \\
+  \langle X,YZ\rangle&=\langle Y^\top X, Z\rangle=\langle XZ^\top, Y\rangle,\\
+  \langle X,Y+Z\rangle&=\langle X,Y\rangle+\langle X,Z\rangle.
+\end{align*}
+现在假设有一个矩阵函数 $f:\mathbb R^{m\times n}\to \mathbb{R}$，以及一个
+矩阵变量 $X:\mathbb{R}\to \mathbb{R}^{m\times n}$，那么复合函数
+$f\circ X:\mathbb{R}\to \mathbb{R}$ 的导数为
+\[
+  (f\circ X)'(x)=\sum_{i,j} \frac{\partial f}{\partial X_{ij}}(X_{ij}(x)) X_{ij}'(x) 
+  = \left\langle \frac{\partial f}{\partial X}(X(x)), X'(x)\right\rangle,
+\]
+我们简记为
+\[
+  \frac{\partial f}{\partial x}=\biggl\langle \frac{\partial f}{\partial X}, \frac{\partial X}{\partial x}\biggr\rangle
+  \in \mathbb{R}.
+\]
+这里 $\frac{\partial f}{\partial X},\frac{\partial X}{\partial x}\in \mathbb{R}^m\times n$
+就是各个元素的偏导数组成的矩阵。在这个记号下，链式法则仍然是有效的。
+例如，如果 $X=AY$，其中 $A:\mathbb{R}\to \mathbb{R}^{m\times p}$，
+$Y:\mathbb{R}\to \mathbb{R}^{p\times n}$，那么 
+\begin{align*}
+  \frac{\partial f}{\partial x} &=\biggl\langle \frac{\partial f}{\partial X}, \frac{\partial (AY)}{\partial x}\biggr\rangle
+  =\biggl\langle \frac{\partial f}{\partial X}, \frac{\partial A}{\partial x}Y + A\frac{\partial Y}{\partial x}\biggr\rangle \\
+  &=\biggl\langle \frac{\partial f}{\partial X}Y^\top, \frac{\partial A}{\partial x}\biggr\rangle
+  +\biggl\langle A^\top \frac{\partial f}{\partial X}, \frac{\partial Y}{\partial x}\biggr\rangle.
+\end{align*}
+如果把 $x$ 替换为 $A_{ij}$，可以得到
+\[
+  \frac{\partial f}{\partial A_{ij}}=\biggl\langle \frac{\partial f}{\partial X}Y^\top, \frac{\partial A}{\partial A_{ij}}\biggr\rangle
+  =\left(\frac{\partial f}{\partial X}Y^\top\right)_{ij},
+\]
+所以
+\[
+  \frac{\partial f}{\partial A}=\frac{\partial f}{\partial X}Y^\top\in \mathbb{R}^{m\times p}.
+\]
+同理可得
+\[
+  \frac{\partial f}{\partial Y}=A^\top \frac{\partial f}{\partial X}\in \mathbb{R}^{p\times n}.
+\]
+于是，我们有
+\[
+  \frac{\partial f}{\partial x}=\biggl\langle \frac{\partial f}{\partial A}, \frac{\partial A}{\partial x}\biggr\rangle
+  +\biggl\langle \frac{\partial f}{\partial Y}, \frac{\partial Y}{\partial x}\biggr\rangle.
+\]
+
+下面我们分两个部分计算梯度。
+
+\paragraph{深度混合梯度}
+
+我们首先把像素 $i$ 的梯度传播到该像素影响的每个高斯球上。
+具体来说，对于像素 $i$ 影响的第 $n$ 个高斯球，我们需要计算相对于颜色
+的梯度 $\partial \mathcal{L}/\partial c_n\in \mathbb{R}^3$，
+不透明度的梯度 $\partial \mathcal{L}/\partial o_n\in \mathbb{R}$，
+2D 均值的梯度 $\partial \mathcal{L}/\partial \mu_n'\in \mathbb{R}^2$，
+以及 2D 协方差的梯度 $\partial \mathcal{L}/\partial \Sigma_n'\in \mathbb{R}^{2\times 2}$。
+
+对于颜色，根据 \eqref{eq:color_mix} 式，每个颜色通道 $k$ 的梯度为
+\begin{equation}
+  \frac{\partial C_{i}(k)}{\partial c_n(k)}=\alpha_n T_n.
+\end{equation}
+为了加速 $T_n$ 的计算，我们在前向传播步骤会保存 $T_N$ 的值，
+然后依次向前计算 $T_{N-1},T_{N-2},\dots,T_1$，只需要
+利用递推公式 $T_{n-1}=T_n/(1-\alpha_{n-1})$。
+
+对于 $\alpha_n$ 的梯度，对于每个颜色通道 $k$，有
+\begin{equation}
+  \frac{\partial C_i(k)}{\partial\alpha_n}=c_n(k)T_n-\frac{S_n(k)}{1-\alpha_n},
+  \quad S_n=\sum_{m>n}c_m\alpha_mT_m.
+\end{equation}
+同样，我们也可以从后往前计算 $S_n$。只需要注意到 
+\[
+  S_N(k)=0,\quad S_{n-1}(k)=c_n(k)\alpha_nT_n+S_n(k).
+\]
+
+对于不透明度 $o_n$ 和 $\sigma_n$，有 
+\begin{equation}
+    \frac{\partial \alpha_n}{\partial o_n}=\exp(-\sigma_n),\quad
+  \frac{\partial \alpha_n}{\partial \sigma_n}=-o_n \exp(-\sigma_n)=-\alpha_n.
+\end{equation}
+
+对于 2D 均值 $\mu_n'$，有
+\begin{equation}
+  \frac{\partial \sigma_n}{\partial \mu_n'}
+  = \frac{\partial \sigma_n}{\partial \Delta_n}= \Sigma_n'^{-1}\Delta_n.
+\end{equation}
+
+对于 2D 协方差 $\Sigma_n'$，回顾 $\sigma_n=\frac{1}{2}\Delta_n^\top\Sigma_n'^{-1}\Delta_n$,
+我们先计算
+\begin{align*}
+  \frac{\partial \sigma_n}{\partial x}&=
+  \biggl\langle \frac{\partial \sigma_n}{\partial(\Sigma_n'^{-1})}, \frac{\partial(\Sigma_n'^{-1})}{\partial x}\biggr\rangle
+  =\biggl\langle
+  \frac{1}{2}\Delta_n\Delta_n^\top,
+  -\Sigma_n'^{-1}\frac{\partial \Sigma_n'}{\partial x}\Sigma_n'^{-1}
+  \biggr\rangle\\
+  &=\biggl\langle
+  -\frac{1}{2}\Sigma_n'^{-1}\Delta_n\Delta_n^\top \Sigma_n'^{-1},
+  \frac{\partial \Sigma_n'}{\partial x}
+  \biggr\rangle,
+\end{align*}
+再取 $x=(\Sigma_n')_{ij}$，便得到 
+\begin{equation}
+  \frac{\partial \sigma_n}{\partial\Sigma_n'}=
+  -\frac{1}{2}\Sigma_n'^{-1}\Delta_n\Delta_n^\top \Sigma_n'^{-1}.
+\end{equation}
+
+\paragraph{投影梯度}
+接下来我们处理投影变换导致的梯度传播。给定 $\mathcal{L}$
+相对于 2D 均值 $\mu_n'$ 和 2D 协方差 $\Sigma_n'$ 的梯度，我们需要
+传播到相对于 3D 均值 $\mu$ 和 3D 协方差 $\Sigma$ 的梯度。
+这个步骤只会涉及到单个高斯球，所以我们可以扔掉下标 $n$，目标
+是计算 $\partial \mathcal{L}/\partial \mu\in \mathbb{R}^3$
+以及 $\partial \mathcal{L}/\partial \Sigma\in \mathbb{R}^{2\times 2}$。
+
+首先我们注意到 loss $\mathcal{L}$ 可以视为 $\mu'$ 和 $\Sigma'$ 的函数，
+而 $\mu'$ 和 $\Sigma'$ 又是相机系坐标 $t\in \mathbb{R}^3$ (这里我们去掉最后一个常数 $1$)的函数，所以 $\mathcal{L}$
+相对于相机系坐标 $t\in \mathbb{R}^3$ 的梯度为
+\begin{equation}\label{eq:grad_t}
+  \frac{\partial \mathcal{L}}{\partial t_i}=
+  \biggl\langle \frac{\partial \mathcal{L}}{\partial \mu'},\frac{\partial \mu'}{\partial t_i}\biggr\rangle
+  +\biggl\langle \frac{\partial \mathcal{L}}{\partial \Sigma'}, \frac{\partial \Sigma'}{\partial t_i}\biggr\rangle.
+\end{equation}
+其中 $\partial \mathcal{L}/\partial \mu'\in \mathbb{R}^2$ 和
+$\partial \mathcal{L}/\partial \Sigma'\in \mathbb{R}^{2\times 2}$
+是前一步计算得到的梯度。所以接下来我们需要计算 $\partial \mu'/\partial t_i$ 和 $\partial \Sigma'/\partial t_i$。
+
+对于 2D 均值 $\mu'$ 相对于 $t$ 的梯度，这就是矩阵 $J$，即
+\begin{equation}\label{eq:grad_mu_t}
+  \frac{\partial \mu'}{\partial t}=J=\begin{bmatrix}
+    f_x/t_z & 0 & -f_x t_x/t_z^2 \\
+    0 & f_y/t_z & -f_y t_y/t_z^2  
+  \end{bmatrix}=
+  \begin{bmatrix}
+    \dfrac{\partial \mu'}{\partial t_x} & \dfrac{\partial \mu'}{\partial t_y} & \dfrac{\partial \mu'}{\partial t_z}
+  \end{bmatrix}.
+\end{equation}
+
+对于 2D 协方差 $\Sigma'$，回顾 $\Sigma' = J (R_{\text{cw}}\Sigma R_{\text{cw}}^\top) J^\top$，
+其中只有 $J$ 是 $t$ 的函数。我们有
+\begin{equation}\label{eq:grad_sigma_t}
+  \frac{\partial \Sigma'}{\partial t_i}=
+  \frac{\partial(J R_{\text{cw}})}{\partial t_i} \Sigma (J R_{\text{cw}})^\top
+  + (J R_{\text{cw}}) \Sigma \frac{\partial (J R_{\text{cw}})^\top}{\partial t_i},
+\end{equation}
+对于 $J$，有
+\begin{gather*}
+    \frac{\partial J}{\partial t_x}=
+  \begin{bmatrix}
+    0 & 0 -f_x/t_z^2 \\
+    0 & 0 & 0
+  \end{bmatrix},\ 
+  \frac{\partial J}{\partial t_y}=
+  \begin{bmatrix}
+    0 & 0 & 0 \\
+    0 & 0 & -f_y/t_z^2
+  \end{bmatrix},\\
+  \frac{\partial J}{\partial t_z}=
+  \begin{bmatrix}
+    -f_x/t_z^2 & 0 & 2 f_x t_x/t_z^3 \\
+    0 & -f_y/t_z^2 & 2 f_y t_y/t_z^3
+  \end{bmatrix}.
+\end{gather*}
+
+把 \eqref{eq:grad_mu_t} 和 \eqref{eq:grad_sigma_t} 带入 \eqref{eq:grad_t} 中，
+就可以得到
+\begin{align}
+  \frac{\partial \mathcal{L}}{\partial t_i}&=
+  \biggl\langle \frac{\partial \mathcal{L}}{\partial \mu'}, \frac{\partial \mu'}{\partial t_i}\biggr\rangle 
+  +\biggl\langle \frac{\partial \mathcal{L}}{\partial \Sigma'}, 
+  \frac{\partial J}{\partial t_i}R_{\text{cw}}\Sigma  R_{\text{cw}}^\top J^\top
+  +JR_{\text{cw}}\Sigma R_{\text{cw}}^\top\frac{\partial J^\top}{\partial t_i}
+  \biggr\rangle\notag{}\\
+  &=\biggl\langle \frac{\partial \mathcal{L}}{\partial \mu'}, \frac{\partial \mu'}{\partial t_i}\biggr\rangle
+  +\biggl\langle
+  \frac{\partial \mathcal{L}}{\partial \Sigma'} J R_{\text{cw}}\Sigma^\top R_{\text{cw}}^\top
+  +
+  \bigl(\frac{\partial \mathcal{L}}{\partial \Sigma'}\bigr)^\top
+  J R_{\text{cw}}\Sigma R_{\text{cw}}^\top
+  , \frac{\partial J}{\partial t_i} 
+  \biggr\rangle,\notag{}\\
+  &=\biggl\langle \frac{\partial \mathcal{L}}{\partial \mu'}, \frac{\partial \mu'}{\partial t_i}\biggr\rangle
+  +\biggl\langle
+  \left(\frac{\partial \mathcal{L}}{\partial \Sigma'} 
+  +\bigl(\frac{\partial \mathcal{L}}{\partial \Sigma'}\bigr)^\top
+  \right)J R_{\text{cw}}\Sigma R_{\text{cw}}^\top,
+  \frac{\partial J}{\partial t_i} 
+  \biggr\rangle,\label{eq:grad_t_final}
+\end{align}
+然后只需要计算 $t_i$ 对 $\mu$ 的梯度即可完成对 $\mu$ 的反向传播。
+由于 $t=R_{\text{cw}}\mu + t_{\text{cw}}$，所以
+\begin{equation}
+  \frac{\partial \mathcal{L}}{\partial \mu} = 
+  R_{\text{cw}}^\top \frac{\partial \mathcal{L}}{\partial t}.
+\end{equation}
+
+下面我们转向对 $\Sigma$ 的梯度传播。由于 $\mu'$ 不依赖于 $\Sigma$，
+所以只有 $\Sigma'$ 会传递这部分的梯度，于是
+\begin{align*}
+  \frac{\partial \mathcal{L}}{\partial \Sigma_{ij}}&=
+  \biggl\langle \frac{\partial \mathcal{L}}{\partial \Sigma'}, \frac{\partial \Sigma'}{\partial \Sigma}\biggr\rangle=
+  \biggl\langle \frac{\partial \mathcal{L}}{\partial \Sigma'}, J R_{\text{cw}} \frac{\partial \Sigma}{\partial \Sigma_{ij}} R_{\text{cw}}^\top J^\top\biggr\rangle\\
+  &=
+  \biggl\langle
+  R_{\text{cw}}^\top J^\top \frac{\partial \mathcal{L}}{\partial \Sigma'} J R_{\text{cw}},
+  \frac{\partial \Sigma}{\partial \Sigma_{ij}}
+  \biggr\rangle.
+\end{align*}
+于是
+\begin{equation}
+  \frac{\partial \mathcal{L}}{\partial \Sigma}=
+  R_{\text{cw}}^\top J^\top \frac{\partial \mathcal{L}}{\partial \Sigma'} J R_{\text{cw}}.
+\end{equation}
+
+\paragraph{尺度和旋转梯度}
+最后，我们只需要把 $\Sigma$ 的梯度传播到尺度 $s$ 和旋转四元数 $q$ 上。
+回顾 $\Sigma=RSS^\top R^\top$，于是
+\begin{align*}
+  \frac{\partial \mathcal{L}}{\partial S_{ij}}&=
+  \biggl\langle \frac{\partial \mathcal{L}}{\partial \Sigma}, \frac{\partial (RSS^\top R^\top)}{\partial S_{ij}}\biggr\rangle
+  =\biggl\langle \frac{\partial \mathcal{L}}{\partial \Sigma}, R \frac{\partial S}{\partial S_{ij}} S^\top R^\top
+  + R S \frac{\partial S^\top}{\partial S_{ij}} R^\top \biggr\rangle\\
+  &=\biggl\langle R^\top \frac{\partial \mathcal{L}}{\partial \Sigma} R,
+  \frac{\partial S}{\partial S_{ij}} S^\top + S \frac{\partial S^\top}{\partial S_{ij}}
+  \biggr\rangle=
+  \biggl\langle 
+    R^T\biggl(\frac{\partial \mathcal{L}}{\partial \Sigma}
+    +\bigl(\frac{\partial \mathcal{L}}{\partial \Sigma}\bigr)^\top
+    \biggr) RS
+    ,
+    \frac{\partial S}{\partial S_{ij}}
+  \biggr\rangle,
+\end{align*}
+所以
+\begin{equation}
+  \frac{\partial \mathcal{L}}{\partial S}=
+    R^T\biggl(\frac{\partial \mathcal{L}}{\partial \Sigma}
+    +\bigl(\frac{\partial \mathcal{L}}{\partial \Sigma}\bigr)^\top
+    \biggr) RS.
+\end{equation}
+最后，注意到 $S$ 是对角矩阵，且 $S_{ii}=s_i$，所以
+\[
+  \frac{\partial S}{\partial s_i}=E_{ii}.
+\]
+这里 $E_{ii}$ 是只有第 $(i,i)$ 元素为 1，其余元素为 0 的矩阵。
+
+对于四元数，首先有
+\begin{align*}
+  \frac{\partial \mathcal{L}}{\partial R_{ij}}&=
+  \biggl\langle \frac{\partial \mathcal{L}}{\partial \Sigma}, \frac{\partial (RSS^\top R^\top)}{\partial R_{ij}}\biggr\rangle
+  =\biggl\langle \frac{\partial \mathcal{L}}{\partial \Sigma},
+  \frac{\partial R}{\partial R_{ij}} S S^\top R^\top
+  + R S S^\top \frac{\partial R^\top}{\partial R_{ij}}
+  \biggr\rangle\\
+  &=\biggl\langle
+    \biggl(\frac{\partial \mathcal{L}}{\partial \Sigma}
+    +\bigl(\frac{\partial \mathcal{L}}{\partial \Sigma}\bigr)^\top
+    \biggr)RSS^\top
+  ,
+  \frac{\partial R}{\partial R_{ij}}
+  \biggr\rangle.
+\end{align*}
+也即
+\begin{equation}
+  \frac{\partial \mathcal{L}}{\partial R}=
+    \biggl(\frac{\partial \mathcal{L}}{\partial \Sigma}
+    +\bigl(\frac{\partial \mathcal{L}}{\partial \Sigma}\bigr)^\top
+    \biggr)RSS^\top.
+\end{equation}
+最后，根据旋转矩阵和四元数的关系 \eqref{eq:quat_rot}，可以计算
+\begin{gather*}
+  \frac{\partial R}{\partial q_x}=
+  2\begin{bmatrix}
+    0 & q_y & q_z \\
+    q_y & -2 q_x & q_w \\
+    q_z & -q_w & -2 q_x
+  \end{bmatrix},\quad
+  \frac{\partial R}{\partial q_y}=
+  2\begin{bmatrix}
+    -2 q_y & q_x & -q_w \\
+    q_x & 0 & q_z \\
+    q_w & q_z & -2 q_y
+  \end{bmatrix},\\
+  \frac{\partial R}{\partial q_z}=
+  2\begin{bmatrix}
+    -2 q_z & q_w & q_x \\
+    -q_w & -2 q_z & q_y \\
+    q_x & q_y & 0
+  \end{bmatrix},\quad
+  \frac{\partial R}{\partial q_w}=
+  2\begin{bmatrix}
+    0 & -q_z & q_y \\
+    q_z & 0 & -q_x \\
+    -q_y & q_x & 0
+  \end{bmatrix}.  
+\end{gather*}
+
 
 
 
