@@ -701,7 +701,37 @@ $Y_1,\dots,Y_p$ 的可测函数上的最佳逼近。然而，我们发现对于�
   这就表明 $Z_1,\dots,Z_k$ 独立。
 \end{proof}
 
+一个随机向量 $(Z_1,\dots,Z_n)$ 被称为中心化的，如果每个分量都在 $L^1$
+中且每个 $\mathbb{E}[Z_j]=0$。接下来我们考虑中心化的高斯向量，
+对于一般情况很容易得到。
 
+\begin{theorem}
+  令 $(Y_1,\dots,Y_n,X)$ 是中心化的高斯向量。那么 $\mathbb{E}[X|Y_1,\dots,Y_n]$
+  等于 $X$ 在由 $Y_1,\dots,Y_n$ 张成的向量空间上的正交投影。因此，
+  存在实数 $\lambda_1,\dots,\lambda_n$ 使得
+  \[
+    \mathbb{E}[X|Y_1,\dots,Y_n]=
+    \sum_{j=1}^n \lambda_j Y_j.
+  \]
+  令 $\sigma^2=\mathbb{E}\bigl[(X-\mathbb{E}[X|Y_1,\dots,Y_n])^2\bigr]$，
+  设 $\sigma>0$。那么，对于任意可测函数 $h:\mathbb{R}\to \mathbb{R}_+$，有
+  \begin{equation}\label{eq:gaussian conditional expectation}
+    \mathbb{E}[h(X)|Y_1,\dots,Y_n]=\int_{\mathbb{R}}
+    h(x)q_{\sum_{j=1}^n\lambda_j Y_j,\sigma^2}(x)\d x,
+  \end{equation}
+  其中，对于每个 $m\in \mathbb{R}$，
+  \[
+    q_{m,\sigma^2}(x)=\frac{1}{\sigma\sqrt{2\pi}}\exp\left(
+      -\frac{(x-m)^2}{2\sigma^2}
+    \right)
+  \]
+  是高斯分布 $N(m,\sigma^2)$ 的密度函数。\eqref{eq:gaussian conditional expectation}
+  式的右端解释为随机变量 $\sum_{j=1}^n\lambda_jY_j$ 和函数 $m\mapsto \int_{\mathbb{R}}h(x)q_{m,\sigma^2}(x)\d x$ 的
+  复合。
+\end{theorem}
+\begin{proof}
+  
+\end{proof}
 
 
 
