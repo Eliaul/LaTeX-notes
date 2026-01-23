@@ -1,0 +1,434 @@
+\chapter{基本的表示论}
+
+\section{表示}
+
+如果 $V$ 是有限维实或者复向量空间，令 $\GL(V)$ 表示 $V$ 上的所有可逆线性变换构成的群。
+如果我们选取 $V$ 的一组基，那么 $\GL(V)$ 在矩阵表示下同构于 $\GL(n,\mathbb{R})$ 
+或者 $\GL(n,\mathbb{C})$，其中 $n=\dim V$。上述的任意同构都给出了 $\GL(V)$ 的一个
+拓扑，并且这个拓扑与所选基无关。因此，我们可以把 $\GL(V)$ 看作是一个李群。
+类似地，令 $\lie{gl}(V)=\End(V)$ 表示 $V$ 上的所有线性变换构成的李代数，
+李括号为 $[X,Y]=XY-YX$。
+
+\begin{definition}
+  令 $G$ 是矩阵李群。$G$ 的一个\emph{有限维复表示}指的是一个李群同态
+  \[
+    \Pi:G\to \GL(V),
+  \]
+  其中 $V$ 是一个有限维复向量空间。类似地，如果 $V$ 是有限维实向量空间，
+  则称 $\Pi$ 为 $G$ 的一个\emph{有限维实表示}。
+
+  如果 $\lie g$ 是实或者复李代数，则 $\lie g$ 的一个\emph{有限维复表示}指的是一个李代数同态
+  $\pi:\lie g\to\lie{gl}(V)$，其中 $V$ 是一个有限维复向量空间。类似地，如果 $V$ 是有限维实向量空间，
+  则称 $\pi$ 为 $\lie g$ 的一个\emph{有限维实表示}。
+
+  如果 $\Pi$ 或者 $\pi$ 是一个单射，则称其为\emph{忠实表示}。
+\end{definition}
+
+我们可以把表示视为一个群或者李代数在某个向量空间上的\emph{线性作用}。
+如果给定表示 $\Pi:G\to \GL(V)$，这实际上给出了 $G$ 在 $V$ 上的一个作用
+$G\times V\to V$，定义为 $(g,v)\mapsto \Pi(g)(v)$。
+所以在后面我们经常使用 $g\cdot v$ 来表示 $\Pi(g)(v)$。
+
+如果一个表示 $\Pi$ 是忠实的，那么 $\{\Pi(A)\,|\, A\in G\}$ 是
+一个同构于 $G$ 的矩阵群。因此，$\Pi$ 允许我们把 $G$ 表示为某个
+矩阵群，这也是“表示”一词的由来。
+
+\begin{definition}
+  令 $\Pi$ 是矩阵李群 $G$ 的一个有限维实或者复表示，表示空间为 $V$。
+  $V$ 的子空间 $W$ 称为\emph{$G$-不变子空间}，如果对于任意 $A\in G$ 和 $w\in W$，
+  都有 $A\cdot w\in W$。如果不变子空间 $W$ 满足 $W\neq \{0\}$ 且 $W\neq V$，则称 $W$ 为
+  \emph{非平凡不变子空间}。一个没有非平凡不变子空间的表示称为\emph{不可约表示}。
+
+  不变、非平凡、不可约的概念同样适用于李代数的表示。
+\end{definition}
+
+即使 $\lie g$ 是实李代数，我们也主要关注 $\lie g$ 的\emph{复表示}。
+需要确定的是，如果我们谈论一个实李代数 $\lie g$ 作用在复向量空间 $V$ 上
+的复表示，那么不变子空间 $W$ 需要是 $V$ 的复子空间。
+
+\begin{definition}
+  令 $G$ 是矩阵李群，$\Pi$ 是 $G$ 在空间 $V$ 上的表示，$\Sigma$
+  是 $G$ 在空间 $W$ 上的表示。线性映射 $\phi:V\to W$ 被称为
+  表示的\emph{等变映射}，如果对于任意 $A\in G$ 和 $v\in V$，有
+  \[
+    \phi(\Pi(A)v)=\Sigma(A)\phi(v).
+  \]
+  对于李代数的表示，等变映射的定义类似。
+\end{definition}
+
+如果 $\phi$ 是可逆的等变映射，那么称 $\phi$ 是表示\emph{同构}。
+如果存在表示同构 $\phi:V\to W$，则称表示 $\Pi$ 和 $\Sigma$ 是\emph{同构}的。
+
+等变映射利用群作用的记号，可以简化为
+\[
+  \phi(A\cdot v)=A\cdot \phi(v).
+\]
+表示论中一个一般性的问题就是，在同构的意义下，确定
+某个特定群或者李代数的所有不可约表示。
+
+根据 \autoref{thm:homomorphism of lie groups induce homomorphism of lie algebras}，
+李群表示和李代数表示之间存在如下关系。
+
+\begin{proposition}
+  令 $G$ 是矩阵李群，$\lie g$ 是 $G$ 的李代数。$\Pi$ 是 $G$ 在空间 $V$ 上的（实或者复）表示。
+  那么存在唯一的 $\lie g$ 在 $V$ 上的（实或者复）表示 $\pi$，使得对于任意 $X\in \lie g$，都有
+  \[
+    \Pi(e^X)=e^{\pi(X)}.
+  \]
+  $\pi$ 可以由 $\Pi$ 的微分计算：
+  \[
+    \pi(X)=\frac{d}{dt}\bigg|_{t=0} \Pi(e^{tX}),
+  \]
+  并且对于任意 $A\in G$ 和 $X\in \lie g$，都有
+  \[
+    \pi(AXA^{-1})=\Pi(A)\pi(X)\Pi(A)^{-1}.
+  \]
+\end{proposition}
+
+\begin{proposition}
+  \mbox{}
+  \begin{enumerate}
+    \item 令 $G$ 是连通的矩阵李群，有李代数 $\lie g$。设 $\Pi$ 是 $G$ 的一个表示，
+    $\pi$ 是对应的 $\lie g$ 的表示。那么 $\Pi$ 不可约当且仅当 $\pi$ 不可约。
+    \item 令 $G$ 是连通的矩阵李群，$\Pi_1$ 和 $\Pi_2$ 是 $G$ 的两个表示，
+    $\pi_1$ 和 $\pi_2$ 是对应的 $\lie g$ 的表示。那么 $\Pi_1$ 和 $\Pi_2$ 同构当且仅当
+    $\pi_1$ 和 $\pi_2$ 同构。
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  (1) 首先假设 $\Pi$ 是不可约的。令 $W$ 是 $V$ 的一个 $\lie g$-不变子空间，
+  我们证明 $W=0$ 或者 $W=V$。任取 $A\in G$，因为 $G$ 是连通的，所以存在
+  $X_1,\dots,X_m\in\lie g$，使得 $A=e^{X_1}\cdots e^{X_m}$。
+  因为 $W$ 在 $\pi(X_j)$ 的作用下不变，所以 $W$ 在
+  $\exp(\pi(X_j))=I+\pi(X_j)+\pi(X_j)^2/2+\cdots$ 的作用下也不变，因此
+  $W$ 在
+  \[
+    \Pi(A)=\Pi(e^{X_1})\cdots \Pi(e^{X_m})=\exp(\pi(X_1))\cdots \exp(\pi(X_m))
+  \]
+  的作用下也不变。由于 $\Pi$ 不可约，所以 $W=0$ 或者 $W=V$。
+  这就说明了 $\pi$ 也是不可约的。
+
+  反之，假设 $\pi$ 是不可约的。令 $W$ 是 $V$ 的一个 $G$-不变子空间，
+  我们证明 $W=0$ 或者 $W=V$。任取 $X\in \lie g$，因为 $W$ 在 $\Pi(e^{tX})$ 的作用下不变，
+  所以 $W$ 在 $\pi(X)=d(\Pi(e^{tX}))/dt|_{t=0}$ 的作用下也不变。因此由于 $\pi$ 不可约，所以 $W=0$ 或者 $W=V$。
+  这就说明了 $\Pi$ 也是不可约的。
+
+  (2) 首先假设 $\Pi_1$ 和 $\Pi_2$ 同构。令 $\phi:V_1\to V_2$ 是一个表示同构映射。
+  那么对于任意 $X\in \lie g$ 和 $v\in V_1$，都有
+  \begin{align*}
+    \phi(\pi_1(X)v)
+    &=\phi\bigg(\frac{d}{dt}\bigg|_{t=0} \Pi_1(e^{tX})v\bigg) 
+    =\frac{d}{dt}\bigg|_{t=0} \phi(\Pi_1(e^{tX})v) \\
+    &=\frac{d}{dt}\bigg|_{t=0} \Pi_2(e^{tX})\phi(v) =\pi_2(X)\phi(v).
+  \end{align*}
+  这就说明了 $\pi_1$ 和 $\pi_2$ 同构。
+
+  反之，假设 $\pi_1$ 和 $\pi_2$ 同构。令 $\phi:V_1\to V_2$ 是一个表示同构映射。
+  那么对于任意 $A\in G$ 和 $v\in V_1$，同样假设 $A=e^{X_1}\cdots e^{X_m}$，那么 
+  \begin{align*}
+    \phi(\Pi_1(e^{X_j})v)
+    &=\phi\bigl(e^{\pi_1(X_j)} v\bigr) 
+    =\phi\bigg(\sum_{k=0}^\infty \pi_1(X_j)^kv\bigg) \\
+    &=\sum_{k=0}^\infty \phi(\pi_1(X_j)^kv)=\sum_{k=0}^\infty \pi_2(X_j)^k\phi(v)\\
+    &=e^{\pi_2(X_j)}\phi(v)=\Pi_2(e^{X_j})\phi(v).
+  \end{align*}
+  那么这显然表明 $\phi(\Pi_1(A)v)=\Pi_2(A)\phi(v)$，这就说明了 $\Pi_1$ 和 $\Pi_2$ 同构。
+\end{proof}
+
+\begin{proposition}
+  令 $\lie g$ 是实李代数，$\lie g_{\mathbb{C}}$ 是 $\lie g$ 的复化。
+  那么 $\lie g$ 的任意有限维复表示 $\pi$ 都可以唯一地扩展为 $\lie g_{\mathbb{C}}$ 的复表示，
+  仍然记为 $\pi$。此时，$\pi$ 作为 $\lie g_{\mathbb{C}}$ 的表示是不可约的，当且仅当
+  $\pi$ 作为 $\lie g$ 的表示是不可约的。
+\end{proposition}
+\begin{proof}
+  显然 $\pi$ 在 $\lie g_{\mathbb{C}}$ 上的扩展是唯一的，且定义为
+  \[
+    \pi(X+iY)=\pi(X)+i\pi(Y),\quad X,Y\in\lie g.
+  \]
+  假设 $W$ 是 $V$ 的 $\lie g_{\mathbb{C}}$-不变子空间。任取 $X,Y\in\lie g$，
+  那么 $W$ 在 $\pi(X+iY)$ 的作用下不变当且仅当 $W$ 在 $\pi(X)$ 和 $\pi(Y)$ 的作用下都不变。
+  因此，$W$ 是 $\lie g_{\mathbb{C}}$-不变子空间当且仅当 $W$ 是 $\lie g$-不变子空间。
+\end{proof}
+
+\begin{definition}
+  如果 $V$ 是有限维内积空间，$G$ 是矩阵李群，表示 $\Pi:G\to\GL(V)$
+  被称为\emph{酉表示}，如果对于每个 $A\in G$，$\Pi(A)$ 都是 $V$ 上的酉算子。
+\end{definition}
+
+\begin{proposition}
+  设 $G$ 是矩阵李群，有李代数 $\lie g$。假设 $V$ 是有限维内积空间，
+  $\Pi$ 是 $G$ 在 $V$ 上的表示，$\pi$ 是对应的 $\lie g$ 在 $V$ 上的表示。
+  如果 $\Pi$ 是酉表示，那么对于任意 $X\in\lie g$，$\pi(X)$ 是反自伴算子。
+  反之，如果 $G$ 是连通的，并且对于任意 $X\in\lie g$，$\pi(X)$ 是反自伴算子，
+  那么 $\Pi$ 是酉表示。
+\end{proposition}
+\begin{proof}
+  证明和计算 $\U(n)$ 的李代数基本类似。如果 $\Pi$ 是酉表示，那么对于
+  任意 $X\in\lie g$ 和 $v,w\in V$，都有
+  \[
+    \langle \pi(X)v,w\rangle=\frac{d}{dt}\bigg|_{t=0} 
+    \bigl\langle \Pi(e^{tX})v,w\bigr\rangle
+    =\frac{d}{dt}\bigg|_{t=0} \langle v,\Pi(e^{tX})^{-1}w\rangle
+    =-\langle v,\pi(X)w\rangle,
+  \]
+  这就表明 $\pi(X)^*+\pi(X)=0$，即 $\pi(X)$ 是反自伴算子。
+
+  反之，假设 $G$ 是连通的，并且对于任意 $X\in\lie g$，$\pi(X)$ 是反自伴算子。
+  那么
+  \[
+    (e^{\pi(X)})^*e^{\pi(X)}=e^{\pi(X)^*+\pi(X)}=I,
+  \]
+  所以 $e^{\pi(X)}=\Pi(e^X)$ 是酉算子。由于 $G$ 是连通的，任意 $A\in G$ 都可以写成
+  $A=e^{X_1}\cdots e^{X_m}$ 的形式，因此 $\pi(A)$ 也是酉算子。
+\end{proof}
+
+\section{表示的例子}
+
+根据定义，矩阵李群 $G$ 是 $\GL(n,\mathbb{C})$ 的一个闭子群，因此
+$G\to \GL(n,\mathbb{C})$ 的包含映射就是 $G$ 的一个表示，
+被称为 $G$ 的\emph{标准表示}。如果 $G$ 是实矩阵，也即 $G\subseteq \GL(n,\mathbb{R})\subseteq \GL(n,\mathbb{C})$，
+那么我们把 $G$ 的标准表示视为实表示。例如，$\SO(3)$ 的标准表示就是 
+$\SO(3)$ 作用在 $\mathbb{R}^3$ 上的乘法，$\SU(2)$ 的标准表示就是
+$\SU(2)$ 作用在 $\mathbb{C}^2$ 上的乘法。类似地，如果 $\lie g\subseteq \lie{gl}(n,\mathbb{C})$
+是矩阵的李代数，那么映射 $\pi(X)=X$ 被称为 $\lie g$ 的\emph{标准表示}。
+
+考虑一维复向量空间 $\mathbb{C}$。对于任意矩阵李群 $G$，我们可以
+定义一个\emph{平凡表示} $\Pi:G\to \GL(\mathbb{C})$，定义为
+\[
+  \Pi(A) =I,\quad A\in G.
+\]
+当然，这是一个不可约表示，因为 $\mathbb{C}$ 没有非平凡子空间。
+如果 $\lie g$ 是一个李代数，我们也可以定义 $\lie g$ 的平凡表示
+$\pi:\lie g\to \lie{gl}(1,\mathbb{C})$，定义为
+\[
+  \pi(X)=0,\quad X\in\lie g.
+\]
+这也是一个不可约表示。
+
+回顾李群的伴随映射，我们有下面的定义。
+
+\begin{definition}
+  如果 $G$ 是矩阵李群，$\lie g$ 是 $G$ 的李代数，那么 $G$ 的
+  \emph{伴随表示}指的是映射 $\Ad:G\to\GL(\lie g)$，满足 $A\mapsto \Ad_A$。
+  类似地，有限维李代数 $\lie g$ 的\emph{伴随表示}指的是映射
+  $\ad:\lie g\to\lie{gl}(\lie g)$，满足 $X\mapsto \ad_X$。
+\end{definition}
+
+对于矩阵李群 $G$ 和其李代数 $\lie g$，我们知道其李代数的伴随表示
+就是李群伴随表示的微分。对于 $\SO(3)$ 而言，我们可以证明其标准表示
+和伴随表示是同构的。记标准表示为 $\Pi:\SO(3)\to\GL(\mathbb{R}^3)$，
+伴随表示为 $\Ad:\SO(3)\to\GL(\lie{so}(3))$。定义映射 $\phi:\mathbb{R}^3\to\lie{so}(3)$
+满足
+\begin{equation*}
+  \phi\begin{pmatrix}
+    x\\y\\z
+  \end{pmatrix}
+  =\begin{pmatrix}
+    0 & -z & y \\
+    z & 0 & -x \\
+    -y & x & 0
+  \end{pmatrix}.
+\end{equation*}
+那么 $\phi$ 显然是向量空间的同构。并且对于任意 $A\in \SO(3)$ 和 $v\in \mathbb{R}^3$，
+可以直接验证 $\phi(Av)=\Ad_A(\phi(v))$，所以 $\phi$ 是表示同构。因此，$\SO(3)$ 的标准表示和伴随表示是同构的。
+
+\begin{example}
+  令 $V_m$ 表示 $m$ 次的两个复变量的齐次多项式空间。对于每个 $U\in\SU(2)$，
+  定义 $V_m$ 上的线性变换 $\Pi_m(U)$ 为
+  \begin{equation}
+    [\Pi_m(U)f](z)=f(U^{-1}z),\quad z\in \mathbb{C}^2.
+  \end{equation}
+  那么 $\Pi_m$ 是 $\SU(2)$ 的一个表示。
+
+  $V_m$ 的元素形如
+  \begin{equation}
+    f(z_1,z_2)=a_0z_1^m+a_1z_1^{m-1}z_2+a_2z_1^{m-2}z_2^2+\cdots +a_mz_2^m,
+  \end{equation}
+  其中 $z_1,z_2\in \mathbb{C}$，$a_j$ 是复系数。因此，$V_m$ 的维数为 $m+1$。
+  此时表示的作用可以具体地写为
+  \[
+    [\Pi_m(U)f](z_1,z_2)=\sum_{k=0}^m a_k
+    (U_{11}^{-1}z_1+U_{12}^{-1}z_2)^{m-k}
+    (U_{21}^{-1}z_1+U_{22}^{-1}z_2)^k.
+  \]
+  可以发现 $\Pi_m(U)f$ 确实还是一个 $m$ 次的齐次多项式。
+  在后面我们会证明 $\Pi_m$ 是 $\SU(2)$ 的一个不可约表示，
+  并且 $\SU(2)$ 的每个有限维不可约表示都同构于某个 $\Pi_m$。
+
+  $\Pi_m$ 对应的 $\lie{su}(2)$ 的李代数表示 $\pi_m$ 为
+  \[
+    (\pi_m(X)f)(z)=\frac{d}{dt}\bigg|_{t=0} f(e^{-tX}z).
+  \]
+  令 $z(t)=(z_1(t),z_2(t))$ 是 $\mathbb{C}^2$ 中的曲线，满足 $z(t)=e^{-tX}z$。
+  那么
+  \[
+    \pi_m(X)f=\frac{\partial f}{\partial z_1}\frac{d z_1}{dt}\bigg|_{t=0}
+    +\frac{\partial f}{\partial z_2}\frac{d z_2}{dt}\bigg|_{t=0}.
+  \]
+  计算可得
+  \[
+    \pi_m(X)f=-\frac{\partial f}{\partial z_1}(X_{11}z_1+X_{12}z_2)
+    -\frac{\partial f}{\partial z_2}(X_{21}z_1+X_{22}z_2).
+  \]
+  我们也可以考虑复化 $\lie{sl}(2,\mathbb{C})=\lie{su}(2)_{\mathbb{C}}$ 的表示 $\pi_m$，
+  延拓后对于 $X\in\lie{sl}(2,\mathbb{C})$，$\pi_m(X)$ 的表达式与上面相同。
+
+  如果 $X,Y,H$ 是 $\lie{sl}(2,\mathbb{C})$ 的基，也即
+  \[
+    H=\begin{pmatrix}
+      1 & 0 \\
+      0 & -1
+    \end{pmatrix},\quad
+    X=\begin{pmatrix}
+      0 & 1 \\
+      0 & 0
+    \end{pmatrix},\quad
+    Y=\begin{pmatrix}
+      0 & 0 \\ 
+      1 & 0
+    \end{pmatrix},
+  \]
+  那么 
+  \begin{align*}
+    \pi_m(H)&=-z_1\frac{\partial}{\partial z_1}+z_2\frac{\partial}{\partial z_2},\\
+    \pi_m(X)&=-z_2\frac{\partial}{\partial z_1},\\
+    \pi_m(Y)&=-z_1\frac{\partial}{\partial z_2}.
+  \end{align*}
+  将上面的算子作用在 $V_m$ 的基多项式 $z_1^{m-k}z_2^k$ 上，可以得到
+  \begin{align}
+    \pi_m(H)(z_1^{m-k}z_2^k)&=(2k-m)z_1^{m-k}z_2^k,\notag \\
+    \pi_m(X)(z_1^{m-k}z_2^k)&= (k-m) z_1^{m-k-1}z_2^{k+1},\notag \\
+    \pi_m(Y)(z_1^{m-k}z_2^k)&= -k z_1^{m-k+1}z_2^{k-1}.
+  \end{align}
+  因此，$z_1^{m-k}z_2^k$ 是 $\pi_m(H)$ 的特征值 $2k-m$ 的特征向量，
+  并且 $\pi_m(X)$ 和 $\pi_m(Y)$ 分别把 $z_2$ 的次数 $k$ 增加 $1$ 和减少 $1$。
+\end{example}
+
+\begin{proposition}
+  对于每个 $m\geq 0$，表示 $\pi_m$ 是不可约的。
+\end{proposition}
+
+\section{从旧表示构造新表示}
+
+\subsection{直和}
+
+\begin{definition}
+  令 $G$ 是矩阵李群，$\Pi_1,\dots,\Pi_m$ 是 $G$ 作用在向量空间 $V_1,V_2,\dots,V_m$
+  上的表示。定义 $G$ 在直和空间 $V_1\oplus V_2\oplus \cdots \oplus V_m$ 上的表示
+  $\Pi_1\oplus \Pi_2\oplus \cdots \oplus \Pi_m$，满足
+  \[
+    (\Pi_1\oplus \cdots \oplus \Pi_m)(A)(v_1,\dots,v_m)
+    =(\Pi_1(A)v_1,\dots,\Pi_m(A)v_m),
+  \]
+  其中 $A\in G$，$v_j\in V_j$。
+\end{definition}
+
+类似地，如果 $\lie g$ 是李代数，$\pi_1,\dots,\pi_m$ 是 $\lie g$ 作用在向量空间
+$V_1,\dots,V_m$ 上的表示，那么我们也可以定义 $\lie g$ 在直和空间
+$V_1\oplus \cdots \oplus V_m$ 上的表示 $\pi_1\oplus \cdots \oplus \pi_m$，满足
+\[
+  (\pi_1\oplus \cdots \oplus \pi_m)(X)(v_1,\dots,v_m)
+  =(\pi_1(X)v_1,\dots,\pi_m(X)v_m),
+\]
+其中 $X\in \lie g$，$v_j\in V_j$。
+
+\subsection{张量积}
+
+\begin{definition}
+  令 $G$ 和 $H$ 是矩阵李群，$\Pi_1$ 是 $G$ 在空间 $U$ 上的表示，$\Pi_2$
+  是 $H$ 在空间 $V$ 上的表示。定义 $\Pi_1$ 和 $\Pi_2$ 的\emph{张量积}
+  $\Pi_1\otimes\Pi_2$ 为 $G\times H$ 在张量积空间 $U\otimes V$ 上的表示，满足
+  \[
+    (\Pi_1\otimes \Pi_2)(A,B)=\Pi_1(A)\otimes \Pi_2(B),\quad A\in G,\, B\in H.
+  \]
+\end{definition}
+
+\begin{proposition}
+  令 $G$ 和 $H$ 是矩阵李群，$\lie g$ 和 $\lie h$ 分别是 $G$ 和 $H$ 的李代数。
+  令 $\Pi_1$ 和 $\Pi_2$ 分别是 $G$ 和 $H$ 的表示，考虑 $G\times H$
+  的表示 $\Pi_1\otimes\Pi_2$。如果 $\pi_1\otimes\pi_2$ 是
+  对应的 $\lie g\oplus \lie h$ 的表示，那么
+  \[
+    (\pi_1\otimes\pi_2)(X,Y)=\pi_1(X)\otimes I + I\otimes \pi_2(Y),\quad X\in\lie g,\, Y\in\lie h.  
+  \]
+\end{proposition}
+\begin{proof}
+  设 $u(t)$ 是 $U$ 中的光滑曲线，$v(t)$ 是 $V$ 中的光滑曲线，那么我们有求导
+  法则
+  \[
+    \frac{d}{dt}(u(t)\otimes v(t))=\frac{du}{dt}\otimes v(t)+u(t)\otimes \frac{dv}{dt}.
+  \]
+  因此，对于任意 $X\in\lie g$ 和 $Y\in\lie h$，$u\in U$ 和 $v\in V$，都有
+  \begin{align*}
+    &(\pi_1\otimes\pi_2)(X,Y)(u\otimes v) \\
+    &=\frac{d}{dt}\bigg|_{t=0} \Pi_1(e^{tX})(u)\otimes \Pi_2(e^{tY})(v) \\
+    &=\pi_1(X)(u)\otimes v+u\otimes \pi_2(Y)(v), \\
+  \end{align*}
+  这就证明了结论。
+\end{proof}
+
+\begin{definition}
+  令 $\lie g$ 和 $\lie h$ 是李代数，$\pi_1$ 和 $\pi_2$ 分别是 $\lie g$ 和 $\lie h$
+  的表示。定义 $\pi_1$ 和 $\pi_2$ 的\emph{张量积}
+  $\pi_1\otimes \pi_2$ 为 $\lie g\oplus \lie h$ 在张量积空间 $U\otimes V$ 上的表示，满足
+  \[
+    (\pi_1\otimes \pi_2)(X,Y)=\pi_1(X)\otimes I + I\otimes \pi_2(Y),\quad X\in\lie g,\, Y\in\lie h.  
+  \]
+\end{definition}
+
+现在我们定义同一个矩阵李群 $G$ 的两个表示的张量积，并且将这个
+表示视为 $G$ 的表示而不是 $G\times G$ 的表示。
+
+\begin{definition}
+  令 $G$ 的矩阵李群，$\Pi_1$ 和 $\Pi_2$ 分别是 $G$ 在空间 $V_1$ 和 $V_2$ 上的表示。
+  定义 $G$ 的作用在 $V_1\otimes V_2$ 上的\emph{张量积表示}为
+  \[
+    (\Pi_1\otimes \Pi_2)(A)=\Pi_1(A)\otimes \Pi_2(A),\quad A\in G.
+  \]
+  类似地，如果 $\pi_1$ 和 $\pi_2$ 分别是 $\lie g$ 在空间 $V_1$ 和 $V_2$ 上的表示，
+  定义 $\lie g$ 的作用在 $V_1\otimes V_2$ 上的\emph{张量积表示}为
+  \[
+    (\pi_1\otimes \pi_2)(X)=\pi_1(X)\otimes I + I\otimes \pi_2(X),\quad X\in \lie g.
+  \]
+\end{definition}
+
+不难验证 $\Pi_1\otimes\Pi_2$ 和 $\pi_1\otimes\pi_2$ 确实是表示。
+
+\subsection{对偶表示}
+
+假设 $\pi$ 是李代数 $\lie g$ 在有限维向量空间 $V$ 上的表示。令 $V^*$
+是 $V$ 的对偶空间。如果 $A$ 是 $V$ 上的线性变换，令 $A^T$ 表示 $V^*$ 上的
+对偶线性变换，满足
+\[
+  A^T(\phi)(v)=\phi(Av),\quad \phi\in V^*,\, v\in V.
+\]
+
+\begin{definition}
+  假设 $G$ 是矩阵李群，$\Pi$ 是 $G$ 在空间 $V$ 上的表示。定义 $G$ 在
+  $V^*$ 上的\emph{对偶表示} $\Pi^*$ 为
+  \[
+    \Pi^*(g)=\bigl(\Pi(g^{-1})\bigr)^T,\quad g\in G.
+  \]
+  如果 $\pi$ 是李代数 $\lie g$ 在空间 $V$ 上的表示，定义 $\lie g$ 在
+  $V^*$ 上的\emph{对偶表示} $\pi^*$ 为
+  \[
+    \pi^*(X)=-\bigl(\pi(X)\bigr)^T,\quad X\in \lie g.
+  \]
+\end{definition}
+
+\section{完全可约性}
+
+\begin{definition}
+  一个有限维李群或者李代数表示被称为\emph{完全可约}，如果其同构于
+  有限个不可约表示的直和。
+\end{definition}
+
+\begin{definition}
+  一个李群或者李代数被称为拥有\emph{完全可约性}，如果其每个有限维表示都是完全可约的。
+\end{definition}
+
+
+
+
+

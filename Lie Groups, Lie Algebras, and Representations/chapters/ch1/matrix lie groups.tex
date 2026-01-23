@@ -1,0 +1,185 @@
+\chapter{矩阵李群}
+
+\section{例子}
+
+\subsection{广义正交群和 Lorentz 群}
+
+令 $n$ 和 $k$ 是正整数，考虑空间 $\mathbb{R}^{n+k}$。
+定义 $\mathbb{R}^{n+k}$ 上的对称双线性型 $[\cdot,\cdot]_{n,k}$ 为 
+\begin{equation}
+  [x,y]_{n,k} = x_1y_1 + x_2y_2 + \cdots + x_ny_n - x_{n+1}y_{n+1} - \cdots - x_{n+k}y_{n+k}.
+\end{equation}
+所有保持该双线性型不变的 $(n+k)\times (n+k)$ 实矩阵 $A$ 的集合
+被称为\emph{广义正交群}，记为 $\Orth(n,k)$。也就是说，对于任意 $x,y\in \mathbb{R}^{n+k}$，都有
+$[Ax,Ay]_{n,k}=[x,y]_{n,k}$。可以验证 $\Orth(n,k)$ 是 $\GL(n+k,\mathbb{R})$ 的一个闭子群，
+所以是一个矩阵李群。特别的，物理学家把 $\Orth(3,1)$ 称为\emph{Lorentz 群}。
+我们把 $\Orth(n,k)$ 中行列式为 $1$ 的矩阵构成的子群记为 $\SO(n,k)$。
+
+如果 $A$ 是 $(n+k)\times (n+k)$ 的实矩阵，我们记 $A^{(j)}$ 为 $A$ 的第 $j$
+个列向量，即
+\[
+  A^{(j)}=\begin{pmatrix}
+    A_{1,j} \\
+    A_{2,j} \\
+    \vdots \\
+    A_{(n+k),j}
+  \end{pmatrix}.
+\]
+注意到 $A^{(j)}=Ae_j$。因此，$A\in \Orth(n,k)$ 当且仅当对于任意 $1\leq j,l\leq n+k$，都有
+$[Ae_j,Ae_l]=[e_j,e_l]$。更明确地，$A\in \Orth(n,k)$ 当且仅当
+\begin{equation}
+  \begin{aligned}
+    [A^{(j)},A^{(l)}]_{n,k} & = 0, \quad \text{if } j\neq l, \\
+    [A^{(j)},A^{(j)}]_{n,k} & = 1, \quad \text{if } 1\leq j\leq n, \\
+    [A^{(j)},A^{(j)}]_{n,k} & = -1, \quad \text{if } n+1\leq j\leq n+k.
+  \end{aligned}
+\end{equation}
+
+令 $g$ 是前 $n$ 个对角元为 $1$，后 $k$ 个对角元为 $-1$ 的 $(n+k)\times (n+k)$ 矩阵，
+即
+\[
+  g=\begin{pmatrix}
+    I_n & 0 \\
+    0 & -I_k
+  \end{pmatrix}.
+\]
+那么 $A\in \Orth(n,k)$ 当且仅当 $A^TgA=g$。取行列式，可得 $\det(A)^2=1$，所以
+$A\in\Orth(n,k)$ 时必有 $\det(A)=\pm 1$。
+
+\subsection{辛群}
+
+考虑 $\mathbb{R}^{2n}$ 上的反对称双线性型 $\omega$ 为
+\begin{equation}
+  \omega(x,y)=\sum_{j=1}^n (x_jy_{n+j}-x_{n+j}y_j ).
+\end{equation}
+所有保持该双线性型不变的 $2n\times 2n$ 实矩阵 $A$ 的集合
+被称为\emph{辛群}，记为 $\Sp(n,\mathbb{R})$。也就是说，对于任意 $x,y\in \mathbb{R}^{2n}$，都有
+$\omega(Ax,Ay)=\omega(x,y)$。可以验证 $\Sp(n,\mathbb{R})$ 是 $\GL(2n,\mathbb{R})$ 的一个闭子群，
+所以是一个矩阵李群。记 $\Omega$ 是 $2n\times 2n$ 矩阵
+\[
+  \Omega=\begin{pmatrix}
+    0 & I_n \\
+    -I_n & 0
+  \end{pmatrix}.
+\]
+那么 $\omega(x,y)=\langle x,\Omega y\rangle$。
+所以
+\[
+  \omega(Ax,Ay)=\langle Ax,\Omega Ay\rangle=\langle x,A^T\Omega A y\rangle.
+\]
+所以 $A\in \Sp(n,\mathbb{R})$ 当且仅当 $A^T\Omega A=\Omega$。
+取行列式，可得 $\det(A)^2=1$，所以
+$A\in\Sp(n,\mathbb{R})$ 时必有 $\det(A)=\pm 1$。实际上
+进一步有 $\det(A)=1$，即使这并不显然。
+
+同样的，对于 $\mathbb{C}^{2n}$，也可以定义类似的辛群。
+此时我们有关系 $\omega(z,w)=(z,\Omega w)$，注意这里的 $(\cdot,\cdot)$
+指的是复双线性型（不是复内积）
+\[
+  (z,w)=\sum_{j=1}^{2n} z_j w_j.
+\]
+保持这个双线性型不变的矩阵构成的群被称为\emph{复辛群}，记为 $\Sp(n,\mathbb{C})$。
+同样，$A\in \Sp(n,\mathbb{C})$ 当且仅当 $A^T\Omega A=\Omega$，并且 $A$
+满足 $\det(A)=\pm 1$，当然实际上也有 $\det(A)=1$。最后，定义
+\emph{紧辛群} $\Sp(n)$ 为
+\[
+  \Sp(n)=\Sp(n,\mathbb{C})\cap \U(2n).
+\]
+也就是说，$\Sp(n)$ 是同时保持双线性型 $\omega$ 和复内积的 $2n\times 2n$ 矩阵构成的群。
+
+\subsection{Heisenberg 群}
+
+形如
+\[
+  A=\begin{pmatrix}
+    1 & a & b \\
+    0 & 1 & c \\
+    0 & 0 & 1
+  \end{pmatrix}, \quad a,b,c\in \mathbb{R}
+\]
+的 $3\times 3$ 实矩阵构成一个群，称为\emph{Heisenberg 群}。
+直接计算可知
+\[
+  A^{-1}=\begin{pmatrix}
+    1 & -a & ac - b \\
+    0 & 1 & -c \\
+    0 & 0 & 1
+  \end{pmatrix}.
+\]
+
+
+\subsection{紧辛群}
+
+紧辛群的定义 $\Sp(n)=\Sp(n,\mathbb{C})\cap \U(2n)$ 看上去有些牵强，
+在本节我们把紧辛群解释为“四元数上的酉群”。
+
+因为 $\Sp(n)$ 的定义涉及到酉性，所以把 $\mathbb{C}^{2n}$ 上的双线性型
+$\omega$ 使用内积 $\langle\cdot,\cdot\rangle$ 而不是复双线性型 $(\cdot,\cdot)$ 来表示更为
+方便。定义\emph{共轭-线性映射} $J:\mathbb{C}^{2n}\to \mathbb{C}^{2n}$ 为
+\[
+  J(\alpha,\beta)=(-\bar\beta,\bar\alpha), \quad \alpha,\beta\in \mathbb{C}^n.
+\]
+那么很容易验证，对于任意 $z,w\in \mathbb{C}^{2n}$，都有
+\[
+  \omega(z,w)=\langle Jz,w\rangle.
+\]
+注意我们复内积的定义是在第一个分量上取共轭的。容易验证对于
+$z,w\in \mathbb{C}^{2n}$，有
+\[
+  \langle Jz,w\rangle=-\overline{\langle z,Jw\rangle}=-\langle Jw,z\rangle.
+\]
+此外，还有 $J^2=-I$。
+
+\begin{proposition}
+  如果 $U\in\U(2n)$，那么 $U\in\Sp(n)$ 当且仅当 $UJ=JU$。
+\end{proposition}
+\begin{proof}
+  对于 $z,w\in \mathbb{C}^{2n}$，有
+  \[
+    \omega(Uz,Uw)=\langle JUz,Uw\rangle=\langle U^*JUz,w\rangle.
+  \]
+  所以 $U\in\Sp(n)$ 当且仅当 $U^*JU=J$，即 $UJ=JU$。
+\end{proof}
+
+考虑四元数代数 $\mathbb{H}$，把 $1$ 视为 $M_2(\mathbb{C})$ 中的单位矩阵，
+令
+\[
+  \mathbf i=\begin{pmatrix}
+    i & 0 \\
+    0 & -i
+  \end{pmatrix}, \quad
+  \mathbf j=\begin{pmatrix}
+    0 & 1 \\
+    -1 & 0
+  \end{pmatrix}, \quad
+  \mathbf k=\begin{pmatrix}
+    0 & i \\
+    i & 0
+  \end{pmatrix}.  
+\]
+那么 $\{1,\mathbf i,\mathbf j,\mathbf k\}$ 构成 $\mathbb{H}$ 的一个基，
+
+因为 $J$ 是共轭线性的，所以
+\[
+  J(iz)=-iJ(z), \quad \forall z\in \mathbb{C}^{2n}.
+\]
+也就是说 $iJ=-Ji$。如果我们定义 $K=iJ$，那么
+\[
+  K^2=(iJ)(iJ)=-Ji^2J=J^2=-I,
+\]
+于是，我们发现 $iI,J,K$ 和 $\mathbf{i},\mathbf{j},\mathbf{k}$ 有同样的乘法关系。
+因此，我们可以把 $\mathbb{C}^{2n}$ 看作是一个非交换代数 $\mathbb{H}$
+上的"向量空间"(严格来说是模)，我们只要定义
+\[
+  \mathbf{i}\cdot z=iz, \quad \mathbf{j}\cdot z=Jz, \quad \mathbf{k}\cdot z=Kz.
+\] 
+
+现在，如果 $U\in\Sp(n)$，那么 $U$ 和 $J$ 交换，又因为 $U$ 显然和 $i$ 交换，
+所以 $U$ 和 $K$ 也交换。反之，如果 $U$ 和 $i,J,K$ 都交换，那么 $U\in\Sp(n)$。
+所以 $U\in\Sp(n)$ 当且仅当 $U$ 是 $\mathbb{H}$-线性的并且保范数，
+所以我们说 $\Sp(n)$ 是“四元数上的酉群”。  
+
+
+
+
+

@@ -408,6 +408,128 @@ $\lie g$ 确实是一个复向量空间。
 
 \section{示例}
 
+\begin{proposition}
+  $\GL(n,\mathbb{C})$ 的李代数 $\lie{gl}(n,\mathbb{C})$ 是所有 $n\times n$ 复矩阵构成的空间 $M_n(\mathbb{C})$。
+  类似地，$\GL(n,\mathbb{R})$ 的李代数 $\lie{gl}(n,\mathbb{R})$ 是所有 $n\times n$ 实矩阵构成的空间 $M_n(\mathbb{R})$。
+  $\SL(n,\mathbb{C})$ 的李代数 $\lie{sl}(n,\mathbb{C})$ 是所有迹为零的 $n\times n$ 复矩阵构成的空间，
+  $\SL(n,\mathbb{R})$ 的李代数 $\lie{sl}(n,\mathbb{R})$ 是所有迹为零的 $n\times n$ 实矩阵构成的空间。
+\end{proposition}
+\begin{proof}
+  任取 $X\in M_n(\mathbb{C})$，对于任意 $t\in \mathbb{R}$，指数 $e^{tX}$
+  都是可逆的，所以 $X\in \lie{gl}(n,\mathbb{C})$。
+  对于实矩阵同理。
+  
+  任取 $X\in M_n(\mathbb{C})$ 是迹为零的矩阵，那么
+  $\det(e^{tX})=e^{t\tr(X)}=1$，所以 $X\in \lie{sl}(n,\mathbb{C})$。
+  反之，如果 $X\in \lie{sl}(n,\mathbb{C})$，那么对于任意 $t\in\mathbb{R}$，
+  有 $\det(e^{tX})=1$，所以 $\tr(X)=0$。对于实矩阵同理。
+\end{proof}
+
+\begin{proposition}
+  $\U(n)$ 的李代数 $\lie u(n)$ 是所有满足 $X^*+X=0$ 的 $n\times n$ 复矩阵构成的空间。
+  $\SU(n)$ 的李代数 $\lie{su}(n)$ 是所有满足 $X^*+X=0$ 且 $\tr X=0$ 的 $n\times n$ 复矩阵构成的空间。
+  $\Orth(n)$ 的李代数 $\lie{o}(n)$ 是所有满足 $X^T+X=0$ 的 $n\times n$ 实矩阵构成的空间。
+  $\SO(n)$ 的李代数 $\lie{so}(n)$ 和 $\lie{o}(n)$ 相同。
+\end{proposition}
+\begin{proof}
+  任取 $X\in M_n(\mathbb{C})$，那么对于任意实数 $t$，有
+  \[
+    (e^{tX})^*e^{tX}=e^{t(X^*+X)}.
+  \]
+  所以 $X\in \lie u(n)$ 当且仅当对于任意实数 $t$ 有 $e^{t(X^*+X)}=I$，
+  注意到
+  \[
+    X^*+X=\frac{d}{dt}\bigg|_{t=0}e^{t(X^*+X)},
+  \]
+  所以 $X\in \lie{u}(n)$ 当且仅当 $X^*+X=0$。
+  类似地，$X\in \lie{su}(n)$ 当且仅当 $X^*+X=0$ 且 $\tr X=0$。
+
+  对于实矩阵的情况同理。
+\end{proof}
+
+\begin{proposition}
+  记
+  \[
+    g=\begin{pmatrix}
+      I_n & 0 \\
+      0 & -I_k
+    \end{pmatrix},\quad
+    \Omega=\begin{pmatrix}
+      0 & I_n \\
+      -I_n & 0
+    \end{pmatrix}.
+  \]
+  $\Orth(n,k)$ 的李代数 $\lie{o}(n,k)$ 是所有满足
+  \[
+    gX^Tg=-X
+  \]
+  的 $(n+k)\times (n+k)$ 实矩阵 $X$ 构成的空间。
+  $\SO(n,k)$ 的李代数 $\lie{so}(n,k)$ 和 $\lie{o}(n,k)$ 相同。
+  $\Sp(n,\mathbb{R})$ 的李代数 $\lie{sp}(n,\mathbb{R})$ 是所有满足
+  \[
+    \Omega X^T\Omega=X
+  \]
+  的 $2n\times 2n$ 实矩阵 $X$ 构成的空间。$\Sp(n,\mathbb{C})$ 的李代数 $\lie{sp}(n,\mathbb{C})$ 是所有满足
+  上式的复矩阵构成的空间。$\Sp(n)$ 的李代数 $\lie{sp}(n)$ 是所有满足
+  $\Omega X^T\Omega=X$ 且 $X^*=-X$ 的复矩阵 $X$ 构成的空间。
+\end{proposition}
+\begin{proof}
+  假设 $X\in \lie{o}(n,k)$，那么对于任意实数 $t$ 有
+  \[
+    e^{tX^T}ge^{tX}=g,
+  \]
+  两边对 $t$ 在 $t=0$ 处求导，得到
+  \[
+    X^Tg+gX=0,
+  \]
+  再注意到 $g=g^{-1}$，所以 $gX^Tg=-X$。反之，如果 $X$ 满足
+  $gX^Tg=-X$，那么对于任意实数 $t$ 有
+  \[  
+    e^{tX^T}g e^{tX}=ge^{tgX^Tg}e^{tX}=g,
+  \]
+  所以 $e^{tX}\in\Orth(n,k)$。当 $X\in \lie{o}(n,k)$ 时，
+  有 $\tr X=-\tr(gX^Tg)=-\tr X$，所以 $\tr X=0$，因此，
+  $\det(e^{tX})=1$，所以 $X\in \lie{so}(n,k)$，所以 $\lie{so}(n,k)=\lie{o}(n,k)$。
+
+  假设 $X\in\lie{sp}(n,\mathbb{C})$，那么对于任意实数 $t$ 有
+  \[
+    e^{tX^T}\Omega e^{tX}=\Omega,
+  \]
+  两边对 $t$ 在 $t=0$ 处求导，得到
+  \[
+    X^T\Omega+\Omega X=0,
+  \]
+  再注意到 $\Omega^{-1}=-\Omega$，所以 $\Omega X^T\Omega=X$。反之，如果 $X$ 满足
+  $\Omega X^T\Omega=X$，那么对于任意实数 $t$ 有
+  \[  
+    e^{tX^T}\Omega e^{tX}=\Omega e^{-t\Omega X^T\Omega}e^{tX}=\Omega,
+  \]
+  所以 $e^{tX}\in\Sp(n,\mathbb{C})$。类似地可证实实矩阵的情况。
+  由于 $\Sp(n)=\Sp(n,\mathbb{C})\cap \U(2n)$，所以 $\lie{sp}(n)=\lie{sp}(n,\mathbb{C})\cap \lie u(2n)$。
+\end{proof}
+
+\begin{proposition}
+  Heisenberg 群 $H$ 的李代数 $\lie h$ 是所有形如
+  \[
+    X=\begin{pmatrix}
+      0 & a & b \\
+      0 & 0 & c \\
+      0 & 0 & 0
+    \end{pmatrix},\quad a,b,c\in \mathbb{R}
+  \]
+  的矩阵构成的空间。
+\end{proposition}
+\begin{proof}
+  如果 $X\in \lie h$，那么对于任意实数 $t$ 和整数 $m\geq 1$，
+  $(tX)^m$ 是上三角矩阵并且对角线为零，所以 $e^{tX}=I+B$，
+  其中 $B$ 是上三角矩阵且对角线为零，所以 $e^{tX}\in H$。
+  反之，如果对于任意实数 $t$ 有 $e^{tX}\in H$，那么 
+  $X=d(e^{tX})/dt\big|_{t=0}$  也是上三角矩阵且对角线为零。
+\end{proof}
+
+
+
+
 \begin{example}\label{exa:base of su2 and so3}
   由于 $\lie{su}(2)=\{A\in M_2(\mathbb C)\,|\, A^*+A=0,\tr A=0\}$
   以及 $\lie{so}(3)=\{A\in M_3(\mathbb R)\,|\, A^T+A=0\}$。
@@ -452,7 +574,7 @@ $\lie g$ 确实是一个复向量空间。
 
 \section{李群和李代数同态}
 
-\begin{theorem}
+\begin{theorem}\label{thm:homomorphism of lie groups induce homomorphism of lie algebras}
   令 $G,H$ 是矩阵李群，分别有李代数 $\lie g,\lie h$。
   设 $\Phi:G\to H$ 是李群同态。那么存在唯一的实线性映射 $\phi:\lie g\to\lie h$
   使得对所有的 $X\in\lie g$ 有
@@ -464,12 +586,17 @@ $\lie g$ 确实是一个复向量空间。
     \item 对于所有 $X\in\lie g,A\in G$ 有
     $\phi(AXA^{-1})=\Phi(A)\phi(X)\Phi(A)^{-1}$。
     \item 对于所有 $X,Y\in\lie g$ 有 $\phi([X,Y])=[\phi(X),\phi(Y)]$。
+    也就是说，$\phi$ 是李代数同态。
     \item 对于所有 $X\in\lie g$ 有 $\phi(X)=\frac{d}{dt}\big|_{t=0}\Phi(e^{tX})$。
+    也就是说，$\phi$ 是 $\Phi$ 在单位元处的微分。
   \end{enumerate}
 \end{theorem}
 \begin{proof}
-  
+  (1) 对于任意 $X\in\lie g$，定义 $\phi(X)$ 为满足
 \end{proof}
+
+
+
 
 \begin{example}\label{exa:homo of SU2 and SO3}
   我们构造一个 $\SU(2)\to \SO(3)$ 的满同态。这是一个非常重要的例子。
@@ -641,7 +768,7 @@ $\lie g$ 确实是一个复向量空间。
       -x_3-ix_2 & 0
     \end{pmatrix},
   \]
-  这表明 $\phi(E_1)$ 对应矩阵
+  这表明 $\phi(E_1)$ 有表示矩阵
   \[
     F_1=\begin{pmatrix}
       0 & 0 & 0 \\
@@ -765,6 +892,55 @@ $\ad:\lie g\to \lie{gl}(\lie g)$，记为 $X\mapsto \ad_X$。那么它们满足
     \bigl\{X+iY\bigm| X,Y\in\lie g\bigr\}.
   \]
 \end{proposition}
+\begin{proof}
+  定义映射 $\phi:\lie g_{\mathbb{C}}\to M_n(\mathbb{C})$ 为
+  \[
+    \phi(X+iY)=X+iY,\quad X,Y\in\lie g.
+  \]
+  显然 $\phi$ 是线性映射。若 $\phi(X+iY)=0$，那么 $X+iY=0$，
+  所以 $Y=-iX$。由于 $X,Y\in\lie g$，所以 $X=Y=0$，所以 $\phi$
+  是单射。任取 $X+iY$，其中 $X,Y\in\lie g$，显然存在
+  $Z=X+iY\in\lie g_{\mathbb{C}}$ 使得 $\phi(Z)=X+iY$，所以 $\phi$
+  是满射。因此 $\phi$ 是同构。
+\end{proof}
+
+利用上述命题，我们可以很容易地得到下面的同构：
+\begin{align*}
+  \lie{gl}(n,\mathbb{R})_{\mathbb{C}}&\simeq \lie{gl}(n,\mathbb{C}),\\
+  \lie{sl}(n,\mathbb{R})_{\mathbb{C}}&\simeq \lie{sl}(n,\mathbb{C}),\\
+  \lie{u}(n)_{\mathbb{C}}&\simeq \lie{gl}(n,\mathbb{C}),\\
+  \lie{su}(n)_{\mathbb{C}}&\simeq \lie{sl}(n,\mathbb{C}),\\
+  \lie{so}(n)_{\mathbb{C}}&\simeq \lie{so}(n,\mathbb{C}),\\
+  \lie{sp}(n,\mathbb{R})_{\mathbb{C}}&\simeq \lie{sp}(n,\mathbb{C}),\\
+  \lie{sp}(n)_{\mathbb{C}}&\simeq \lie{sp}(n,\mathbb{C}).
+\end{align*}
+我们来验证 $\lie{u}(n)_{\mathbb{C}}\simeq \lie{gl}(n,\mathbb{C})$。
+任取矩阵 $X\in \lie{gl}(n,\mathbb{C})$，那么 
+\[
+  X=\frac{X-X^*}{2}+i\frac{X+X^*}{2i},
+\]
+其中 $(X-X^*)/2,(X+X^*)/(2i)\in \lie{u}(n)$，所以 $X\in \lie{u}(n)_{\mathbb{C}}$。
+
+\begin{proposition}
+  令 $\lie g$ 是实李代数，$\lie g_{\mathbb{C}}$ 是复化，$\lie h$ 是
+  任意复李代数。那么 $\lie g\to\lie h$ 的任意实李代数同态都可以唯一
+  延拓为 $\lie g_{\mathbb{C}}\to\lie h$ 的复李代数同态。
+\end{proposition}
+\begin{proof}
+  对于李代数同态 $\phi:\lie g\to\lie h$，显然应该定义其延拓
+  $\phi_{\mathbb{C}}:\lie g_{\mathbb{C}}\to\lie h$ 为
+  \[
+    \phi_{\mathbb{C}}(X+iY)=\phi(X)+i\phi(Y),\quad X,Y\in\lie g.
+  \]
+  接下来只需要验证 $\pi$ 是复李代数同态即可。
+\end{proof}
+
+\section{指数映射}
+
+
+
+
+
 
 
 
