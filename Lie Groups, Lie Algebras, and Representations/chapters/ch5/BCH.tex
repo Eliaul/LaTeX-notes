@@ -1,0 +1,76 @@
+\chapter{Baker-Campbell-Hausdorff \mbox{公式}}
+
+\section{一些困难的问题}
+
+目前我们已经得到一些基本结论：(1) 每个矩阵李群 $G$ 都有一个李代数 $\lie g$。
+(2) 每个矩阵李群 $G$ 到 $H$ 之间的连续同态 $\Phi$ 都诱导出李代数同态
+$\phi:\lie g\to\lie h$。(3) 如果 $G$ 和 $H$ 的矩阵李群，$H$ 是 $G$
+的子群，那么 $H$ 的李代数 $\lie h$ 是 $\lie g$ 的子代数。
+上面的每个结论都是从李群到李代数，但是从李代数到李群的反向结论是怎么样的呢？
+我们将会研究下面三个问题。
+\begin{itemize}[noitemsep]
+  \item 每个有限维实李代数都是某个矩阵李群的李代数吗？
+  \item 令 $G$ 和 $H$ 是矩阵李群，$\phi:\lie g\to\lie h$ 是李代数同态。
+  是否存在李群同态 $\Phi:G\to H$，使得 $\phi$ 是由 $\Phi$ 诱导出来的？
+  也即 $\Phi(e^X)=e^{\phi(X)}$ 对于所有 $X\in\lie g$ 成立？
+  \item 令 $G$ 是矩阵李群，$\lie h$ 是 $\lie g$ 的子代数，是否
+  存在 $G$ 的子群 $H$，使得 $\lie h$ 是 $H$ 的李代数？
+\end{itemize}
+
+第一个问题的答案是肯定的。第二个问题的答案是否定的，但是在 $G$
+单连通的时候是肯定的。第三个问题的答案是否定的，但是在 $H$
+是连通李子群的时候是肯定的。
+
+研究这些问题的工具是 Baker-Campbell-Hausdorff 公式，当 $X$
+和 $Y$ 都是充分小的时候，它将 $\log(e^Xe^Y)$ 用李代数表达出来。
+这个公式表明矩阵李群在单位元附近处的乘法可以完全用李代数的结构
+来描述。
+
+\section{一个例子}
+
+在本节，我们先研究 Heisenberg 群对于问题 2 的答案。
+假设 $G$ 和 $H$ 是矩阵李群，$\phi:\lie g\to\lie h$ 是李代数同态。
+我们想要构造一个李群同态 $\Phi:G\to H$ 使得 $\Phi(e^X)=e^{\phi(X)}$ 对于所有
+$X\in\lie g$ 成立。由于指数映射在单位元附近是一个微分同胚，所以我们可以
+在 $G$ 的单位元的某个邻域 $U$ 上定义 $\Phi$，满足
+\[
+  \Phi(A)=e^{\phi(\log A)},
+\]
+这样至少对于充分小的 $X$，有 $\Phi(e^X)=e^{\phi(X)}$。
+
+一个关键的问题是上面的 $\Phi$ 是否是一个同态映射？也即对于 $A=e^X,B=e^Y\in U$
+以及 $e^Xe^Y\in U$，我们需要计算 $\Phi(AB)=\Phi(e^Xe^Y)$。
+如果我们可以把 $e^Xe^Y$ 写成 $e^Z$ 的形式，那么我们就有 $\Phi(e^Xe^Y)=e^{\phi(Z)}$。
+Baker-Campbell-Hausdorff 公式说：对于充分小的 $X$ 和 $Y$，我们有
+\begin{align}
+  Z&=\log(e^Xe^Y) \notag \\
+  &=X+Y+\frac{1}{2}[X,Y]+\frac{1}{12}[X,[X,Y]]-\frac{1}{12}[Y,[X,Y]]+\cdots, \label{BCH}
+\end{align}
+其中 $\cdots$ 表示涉及到 $X$ 和 $Y$ 的更多层李括号的项。此时，如果 $\phi$
+是李代数同态，那么
+\begin{align*}
+  \phi\bigl(\log(e^Xe^Y)\bigr)&=\phi(X)+\phi(Y)+\frac{1}{2}[\phi(X),\phi(Y)] \\
+  &\quad +\frac{1}{12}[\phi(X),[\phi(X),\phi(Y)]]-\frac{1}{12}[\phi(Y),[\phi(X),\phi(Y)]]+\cdots \\
+  &=\log\bigl(e^{\phi(X)}e^{\phi(Y)}\bigr).
+\end{align*}
+这就表明 $\Phi(e^Xe^Y)=e^{\phi(X)}e^{\phi(Y)}=\Phi(e^X)\Phi(e^Y)$。
+
+在一般的情况中，需要大量的力气来证明 Baker-Campbell-Hausdorff 公式，
+然后证明 $G$ 是单连通的时候，$\Phi$ 可以延拓成 $G$ 上的李群同态映射。
+但是在 Heisenberg 群(这是单连通的)的情况下，情况要简单得多。
+
+\begin{theorem}
+  假设 $X$ 和 $Y$ 是 $n\times n$ 复矩阵，并且
+  \begin{equation}
+    [X,[X,Y]]=[Y,[X,Y]]=0. \label{BCH-condition}
+  \end{equation}
+  那么我们有
+  \[
+    e^Xe^Y=e^{X+Y+\frac{1}{2}[X,Y]}.
+  \]
+\end{theorem}
+
+
+
+
+
