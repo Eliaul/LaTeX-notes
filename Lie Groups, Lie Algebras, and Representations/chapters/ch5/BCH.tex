@@ -59,7 +59,7 @@ Baker-Campbell-Hausdorff 公式说：对于充分小的 $X$ 和 $Y$，我们有
 然后证明 $G$ 是单连通的时候，$\Phi$ 可以延拓成 $G$ 上的李群同态映射。
 但是在 Heisenberg 群(这是单连通的)的情况下，情况要简单得多。
 
-\begin{theorem}
+\begin{theorem}\label{thm:BCH-Heisenberg}
   假设 $X$ 和 $Y$ 是 $n\times n$ 复矩阵，并且
   \begin{equation}
     [X,[X,Y]]=[Y,[X,Y]]=0. \label{BCH-condition}
@@ -69,6 +69,305 @@ Baker-Campbell-Hausdorff 公式说：对于充分小的 $X$ 和 $Y$，我们有
     e^Xe^Y=e^{X+Y+\frac{1}{2}[X,Y]}.
   \]
 \end{theorem}
+\begin{proof}
+  任取 $X,Y\in M_n(\mathbb{C})$，我们将证明
+  \[
+    e^{tX}e^{tY}=\exp\left(
+      tX+tY+\frac{t^2}{2}[X,Y]
+    \right).
+  \]
+  由于 $X,Y$ 都和 $[X,Y]$ 交换，所以上式可以写成
+  \begin{equation}
+    e^{tX}e^{tY}e^{-\frac{t^2}{2}[X,Y]}=e^{tX+tY}. \label{BCH-goal}
+  \end{equation}
+  记上式左端为 $A(t)$，右端为 $B(t)$。显然 $A(0)=B(0)=I$。我们证明
+  $A(t)$ 和 $B(t)$ 都满足相同的微分方程。显然，有
+  \[
+    \frac{dB}{dt}= B(t)(X+Y).
+  \]
+
+  另一方面，根据乘积法则，有
+  \begin{equation}\label{eq:dA/dt}
+    \frac{d A}{dt}=e^{tX}Xe^{tY}e^{-\frac{t^2}{2}[X,Y]}+
+    e^{tX}e^{tY}Ye^{-\frac{t^2}{2}[X,Y]}+
+    e^{tX}e^{tY}e^{-\frac{t^2}{2}[X,Y]}\left(-t[X,Y]\right),
+  \end{equation}
+  因为 $Y$ 和 $[X,Y]$ 交换，所以 $Y$ 和 $e^{-\frac{t^2}{2}[X,Y]}$ 也交换，所以上式右端
+  第二项可以写成 $e^{tX}e^{tY}e^{-\frac{t^2}{2}[X,Y]}Y$。对于上式右端的第一项，我们有
+  \[
+    Xe^{tY}=e^{tY}e^{-tY}Xe^{tY}=e^{tY}\Ad_{e^{-tY}}(X)
+    =e^{tY}e^{-t\ad_Y}(X).
+  \]
+  因为 $[Y,[X,Y]]=-[Y,[X,Y]]=0$，所以
+  \[
+    e^{-t\ad_Y}(X)=X-t[Y,X]=X+t[X,Y].
+  \]
+  于是 \eqref{eq:dA/dt} 可以化简为 
+  \[
+    \frac{dA}{dt}=e^{tX}e^{tY}e^{-\frac{t^2}{2}[X,Y]}(X+Y)=A(t)(X+Y).
+  \]
+  因此，$A(t)$ 和 $B(t)$ 满足系统的微分方程，且有相同的初值条件 $A(0)=B(0)=I$。
+  根据常微分方程的唯一性定理，$A(t)=B(t)$ 对所有 $t$ 成立。取 $t=1$ 即得所需结论。
+\end{proof}
+
+\begin{theorem}
+  令 $H$ 是 Heisenberg 群，$\lie h$ 是 $H$ 的李代数。$G$ 是任意矩阵李群，
+  $\lie g$ 是 $G$ 的李代数。假设 $\phi:\lie h\to\lie g$ 是李代数同态。
+  那么存在唯一的李群同态 $\Phi:H\to G$，使得对于所有 $X\in\lie h$，都有
+  \[
+    \Phi(e^X)=e^{\phi(X)}.
+  \]
+\end{theorem}
+\begin{proof}
+  我们先证明 Heisenberg 群的指数映射是双射，即一个微分同胚。
+
+  于是，我们定义 $\Phi:H\to G$ 为
+  \[
+    \Phi(A)=e^{\phi(\log A)}.
+  \]
+  我们证明 $\Phi$ 是一个群同态。如果 $X$ 和 $Y$ 都是 $\lie h$ 的元素，那么
+  $X$ 和 $Y$ 都是 $3\times 3$ 的严格上三角矩阵，直接计算可知
+  $[X,Y]$ 除开右上角的一个元素外，其余元素全为零。因此，$[X,[X,Y]]=[Y,[X,Y]]=0$。
+  因为 $\phi$ 是李代数同态，所以 $\phi(X)$ 和 $\phi(Y)$ 也
+  和 $[\phi(X),\phi(Y)]$ 交换。于是，根据定理 \ref{thm:BCH-Heisenberg}，我们有
+  \begin{align*}
+    \Phi(e^Xe^Y)&=\Phi\left(e^{X+Y+\frac{1}{2}[X,Y]}\right)=
+    e^{\phi(X)+\phi(Y)+\frac{1}{2}[\phi(X),\phi(Y)]} \\
+    &=e^{\phi(X)}e^{\phi(Y)}=\Phi(e^X)\Phi(e^Y).
+  \end{align*}
+  这就表明 $\Phi$ 是一个群同态。
+\end{proof}
+
+\section{Baker-Campbell-Hausdorff 公式}
+
+Baker-Campbell-Hausdorff 公式(BCH 公式)的目标是计算 $\log(e^Xe^Y)$。
+有些人可能会问：“为什么不能直接将指数映射展开成幂级数然后乘起来呢？”
+虽然这是可行的，但是并不显然的是为什么结果可以写成李括号的形式。
+例如，$\log(e^Xe^Y)$ 展开式中的二次项是 $X^2,Y^2,XY$ 和 $YX$ 的线性组合，
+要表示为李括号的形式，那么必须是 $XY-YX$ 的倍数。直接计算对于更高次项
+是非常复杂的。
+
+我们先证明 BCH 公式的积分形式，然后再从积分形式推导出级数形式。
+
+考虑函数 
+\[
+  g(z)=\frac{\log z}{1-\frac{1}{z}},
+\]
+这定义在圆盘 $\{|z-1|<1\}$ 上，并且是全纯的。也就是说，$g(z)$ 可以表示为
+收敛半径 $1$ 的级数
+\[
+  g(z)=\sum_{m=0}^\infty a_m(z-1)^m.
+\]
+如果 $V$ 是有限维向量空间，我们可以把 $V$ 视为 $\mathbb{C}^n$。
+对于 $V$ 上的任意满足 $\Vert A-I\Vert<1$ 的算子 $A$，我们可以定义
+\[
+  g(A)=\sum_{m=0}^\infty a_m(A-I)^m.
+\]
+现在我们可以陈述 BCH 公式的积分形式。
+
+\begin{theorem}[Baker-Campbell-Hausdorff]
+  令 $X$ 和 $Y$ 是 $n\times n$ 复矩阵，当 $\Vert X\Vert$ 和 $\Vert Y\Vert$
+  足够小时，有
+  \begin{equation}\label{eq:BCH-integral}
+    \log(e^Xe^Y)=X+\int_0^1 g\bigl(e^{\ad_X}e^{t\ad_Y}\bigr)(Y)\d t.
+  \end{equation}
+\end{theorem}
+
+要求 $X$ 和 $Y$ 足够小是为了保证 $e^{\ad_X}e^{\ad_Y}$ 足够接近单位矩阵，
+从而 $g\bigl(e^{\ad_X}e^{t\ad_Y}\bigr)$ 有意义。虽然 \eqref{eq:BCH-integral}
+式在计算上非常复杂，但是我们并不在意这个公式的细节，其主要目的是
+将 $\log(e^Xe^Y)$ 用李代数的量 $\ad_X$ 和 $\ad_Y$ 表示出来。
+
+\section{指数映射的微分}
+
+在本节我们证明一个关于指数映射微分的引理，这个引理在 BCH 公式的证明中
+起到关键作用。考虑 $\exp$ 在点 $X$ 沿方向 $Y$ 的微分
+\begin{equation}\label{eq:exp-diff}
+  \left.\frac{d}{dt}\right|_{t=0}e^{X+tY}.
+\end{equation}
+除非 $X$ 和 $Y$ 交换，否则上式并不等于 $e^XY$。考虑 $z$ 的全纯
+函数 $(1-e^{-z})/z$ (在 $z=0$ 处是可去奇点)，然后有幂级数
+\[
+  \frac{1-e^{-z}}{z}=\sum_{k=0}^\infty (-1)^k\frac{z^k}{(k+1)!}.
+\]
+其收敛半径是无穷大，因此对于任意有限维空间上的线性算子 $A$，我们都可以把
+$z$ 换成 $A$ 来定义算子。
+
+\begin{theorem}[指数映射的导数]\label{thm:exp-derivative}
+  对于任意 $X,Y\in M_n(\mathbb{C})$，我们有
+  \begin{equation}\label{eq:exp-derivative}
+    \frac{d}{dt}\bigg|_{t=0}e^{X+tY}=e^X\left(
+      \frac{I-e^{-\ad_X}}{\ad_X}(Y)
+    \right)=e^X\left(
+      Y-\frac{[X,Y]}{2!}+\frac{[X,[X,Y]]}{3!}-\cdots
+    \right).
+  \end{equation}
+  更一般的，如果 $X(t)$ 是光滑矩阵值函数，那么
+  \begin{equation}
+    \frac{d}{dt}e^{X(t)}=e^{X(t)}\left(
+      \frac{I-e^{-\ad_{X(t)}}}{\ad_{X(t)}}\left(
+        \frac{dX}{dt}
+      \right)
+    \right).
+  \end{equation}
+\end{theorem}
+
+\begin{lemma}
+  如果 $Z$ 是有限维空间上的线性算子，那么
+  \begin{equation}\label{eq:operator-limit}
+    \lim_{m\to\infty}\frac{1}{m}\sum_{k=0}^{m-1}(e^{-Z/m})^k=\frac{I-e^{-Z}}{Z}.
+  \end{equation}
+\end{lemma}
+\begin{proof}
+  注意到 
+  \[
+    \frac{1-e^{-x}}{x}=\int_0^1 e^{-tx}\d t,
+  \]
+  所以
+  \[
+    \frac{1-e^{-Z}}{Z}=\int_0^1 e^{-tZ}\d t.
+  \]
+  因为 $(e^{-Z/m})^k=e^{-kZ/m}$，所以 \eqref{eq:operator-limit} 式的左端
+  就是一个 Riemann 和式，当 $m\to\infty$ 时收敛到上式的积分。
+\end{proof}
+
+\begin{proof}[Proof of \ref{thm:exp-derivative}]
+  由于 $\frac{d}{dt}e^{X(t)}=d(\exp)_{X(t)}\circ dX_t$，所以只需证明
+  \eqref{eq:exp-derivative} 式。对于 $n\times n$ 矩阵 $X$ 和 $Y$，令
+  \[
+    \Delta (X,Y)=\frac{d}{dt}\bigg|_{t=0}e^{X+tY}.
+  \]
+  由于 $\exp$ 是光滑映射，所以 $\Delta$ 也是光滑映射，并且对于每个固定的 $X$，
+  $\Delta$ 关于 $Y$ 是线性的。
+
+  现在，对于每个正整数 $m$，我们有
+  \[
+    e^{X+tY}=\left[
+      \exp\left(
+        \frac{X}{m}+t\frac{Y}{m}
+      \right)
+    \right]^m.
+  \]
+  利用乘积法则，我们会得到 $m$ 项，即
+  \begin{align*}
+    \frac{d}{dt}\bigg|_{t=0}e^{X+tY}&=\sum_{k=0}^{m-1}
+    (e^{X/m})^{m-k-1}\left[
+      \frac{d}{dt}\bigg|_{t=0}\exp\left(
+        \frac{X}{m}+t\frac{Y}{m}
+      \right)
+    \right](e^{X/m})^k\\
+    &=e^{(m-1)X/m}\sum_{k=0}^{m-1}(e^{X/m})^{-k}
+    \Delta\left(
+      \frac{X}{m},\frac{Y}{m}
+    \right)(e^{X/m})^k\\
+    &=e^{(m-1)X/m}\frac{1}{m}\sum_{k=0}^{m-1}
+    \exp\left(-\frac{\ad_X}{m }\right)^k\Delta\left(\frac{X}{m},Y\right).
+  \end{align*}
+  最后一个等号利用了 $\Delta$ 关于第二个变量的线性，以及 $\Ad$
+  和 $\ad$ 的关系。
+
+  现在令 $m\to\infty$。因为 $\Delta$ 是光滑映射，所以 $\Delta(X/m,Y)$ 
+  趋于 $\Delta(0,Y)=Y$。最后，再根据引理 \eqref{eq:operator-limit}，我们得到
+  \[
+    \lim_{m\to\infty}\frac{1}{m}\sum_{k=0}^{m-1}
+    \exp\left(-\frac{\ad_X}{m }\right)^k\Delta\left(\frac{X}{m},Y\right)
+    =\frac{I-e^{-\ad_X}}{\ad_X}(Y).
+  \]
+  这就证明了定理。
+\end{proof}
+
+\section{BCH 公式的证明}
+
+对于充分小的 $X$ 和 $Y$，我们定义
+\[
+  Z(t)=\log(e^Xe^{tY})\quad 0\leq t\leq 1.
+\]
+我们需要计算 $Z(1)$。因为 $e^{Z(t)}=e^Xe^{tY}$，所以
+\[
+  e^{-Z(t)}\frac{d}{dt}e^{Z(t)}=(e^Xe^{-tY})^{-1}e^Xe^{tY}Y=Y.
+\]
+另一方面，根据 \autoref{thm:exp-derivative}，有
+\[
+  e^{-Z(t)}\frac{d}{dt}e^{Z(t)}=\frac{I-e^{-\ad_{Z(t)}}}{\ad_{Z(t)}}
+  \left(\frac{d Z}{dt}\right).
+\]
+所以
+\[
+  \frac{I-e^{-\ad_{Z(t)}}}{\ad_{Z(t)}}
+  \left(\frac{d Z}{dt}\right)
+  =Y.
+\]
+现在，如果 $X$ 和 $Y$ 都足够小，那么 $Z(t)$ 也足够小，因此
+$\bigl(I-e^{-\ad_{Z(t)}}\bigr)/\ad_{Z(t)}$ 也会足够接近单位矩阵，从而是可逆的。
+因此，我们有
+\begin{equation}\label{eq:dZ/dt}
+  \frac{d Z}{dt}=\left(
+    \frac{I-e^{-\ad_{Z(t)}}}{\ad_{Z(t)}}
+  \right)^{-1}(Y).
+\end{equation}
+
+同时，如果我们对 $e^{Z(t)}=e^Xe^{tY}$ 应用 $\Ad$，并且利用 $\Ad$ 和 $\ad$
+的关系，我们有
+\begin{align*}
+  \Ad_{e^{Z(t)}}&=\Ad_{e^X}\Ad_{e^{tY}}, \\
+  e^{\ad_{Z(t)}}&=e^{\ad_X}e^{t\ad_Y},\\
+  \ad_{Z(t)}&=\log\bigl(e^{\ad_X}e^{t\ad_Y}\bigr).
+\end{align*}
+代入 \eqref{eq:dZ/dt} 式，我们得到
+\begin{equation}
+  \frac{d Z}{dt}=\left(
+    \frac{I-(e^{\ad_X}e^{t\ad_Y})^{-1}}{\log(e^{\ad_X}e^{t\ad_Y})}
+  \right)^{-1}(Y).
+\end{equation}
+注意到
+\[
+  g(z)=\left(\frac{1-z^{-1}}{\log z}\right)^{-1},
+\]
+所以
+\[
+  \frac{d Z}{d t}=g(e^{\ad_X}e^{t\ad_Y})(Y).
+\]
+注意到 $Z(0)=X$，所以我们便得到 BCH 公式
+\[
+  \log(e^Xe^Y)=Z(1)=X+\int_0^1 g\bigl(e^{\ad_X}e^{t\ad_Y}\bigr)(Y)\d t.
+\]
+
+\section{BCH 公式的级数形式}
+
+将 $g(z)$ 进行展开，我们有
+\[
+  g(z)=1+\frac{1}{2}(z-1)-\frac{1}{6}(z-1)^2+\frac{1}{12}(z-1)^3-\cdots,
+\]
+同时
+\begin{align*}
+  &e^{\ad_X}e^{t\ad_Y}-I\\
+  &=\left(
+    I+\ad_X+\frac{(\ad_X)^2}{2}+\cdots
+  \right)\left(
+    I+t\ad_Y+\frac{t^2(\ad_Y)^2}{2}+\cdots
+  \right)-I \\
+  &=\ad_X+t\ad_Y+t\ad_X\ad_Y+\frac{(\ad_X)^2}{2}+ \frac{t^2(\ad_Y)^2}{2}+\cdots.
+\end{align*}
+因为 $e^{\ad_X}e^{t\ad_Y}-I$ 没有零阶项，所以 $(e^{\ad_X}e^{t\ad_Y}-I)^m$
+最低阶是 $m$ 次项。如果我们算到 $2$ 次，那么
+\begin{align*}
+    g(e^{\ad_X}e^{t\ad_Y})&=I+\frac{1}{2}\left(
+    \ad_X+t\ad_Y+t\ad_X\ad_Y+\frac{(\ad_X)^2}{2}+\frac{t^2(\ad_Y)^2}{2}
+  \right)\\
+  &\quad -\frac{1}{6}\left(
+    (\ad_X)^2+t^2(\ad_Y)^2+t\ad_X\ad_Y+t\ad_Y\ad_X
+  \right)+\cdots,
+\end{align*}
+现在对 $t$ 从 $0$ 到 $1$ 积分，我们得到
+\begin{align*}
+  \log(e^Xe^Y)&\approx X+\int_0^1
+  \left[
+    Y+\frac{1}{2}[X,Y]+\frac{1}{4}[X,[X,Y]]-\frac{1}{6}[X,[X,Y]]
+    -\frac{t}{6}[Y,[X,Y]]
+  \right]\d t\\
+  &\approx X+Y+\frac{1}{2}[X,Y]+\frac{1}{12}[X,[X,Y]]-\frac{1}{12}[Y,[X,Y]].
+\end{align*}
+
 
 
 

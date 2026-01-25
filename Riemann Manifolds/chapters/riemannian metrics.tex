@@ -1,0 +1,58 @@
+\chapter{黎曼度量}
+
+\section{黎曼度量}
+
+令 $M$ 是光滑流形。$M$ 上的\emph{黎曼度量}指的是一个
+光滑协变 $2$-张量场 $g\in \mathcal{T}^2(M)$，其在每个点 $p\in M$
+处都是 $T_pM$ 上的一个内积。因此，$g$ 是一个对称 $2$-张量场，
+并且是正定的，即对于每个 $p\in M$ 和 $v\in T_pM$，有 $g_p(v,v)\geq 0$
+，且当且仅当 $v=0$ 时取等号。一个\emph{黎曼流形}指的是
+一个配备了黎曼度量的光滑流形 $(M,g)$。如果 $M$ 上的黎曼度量
+是清楚的，通常也说 $M$ 是一个黎曼流形。
+
+下面的命题表明黎曼度量是广泛存在的，在 Lee 的《光滑流形导引》中
+有具体的证明。
+
+\begin{proposition}
+  每个光滑流形都有一个黎曼度量。
+\end{proposition}
+
+
+令 $g$ 是带边或者无边光滑流形 $M$ 上的一个黎曼度量。对于每个 $p\in M$
+和 $v,w\in T_pM$，我们通常采用记号
+\[
+  \inn{v,w}_g=g_p(v,w).
+\]
+利用内积，我们可以定义向量 $v\in T_pM$ 的长度为 $|v|_g=\sqrt{\inn{v,v}_g}$。
+如果度量是清楚的，我们也可以省略下标 $g$。
+
+\begin{example}[Euclid 度量]
+  $\mathbb{R}^n$ 上的\emph{Euclid 度量} $\bar g$ 就是通常意义下的点积，
+  对于每个 $x\in \mathbb{R}^n$，切空间 $T_x \mathbb{R}^n$ 可以自然地
+  同构为 $\mathbb{R}^n$ 本身。这意味着对于 $v,w\in T_x \mathbb{R}^n$，
+  在标准坐标 $(x^1,\dots,x^n)$ 中有 $v=\sum v^i\partial_i|_x$ 和
+  $w=\sum w^i\partial_i|_x$，因此
+  \[
+    \inn{v,w}_{\bar g}= \sum_{i=1}^n v^i w^i.
+  \]
+  以后，当谈及 $\mathbb{R}^n$ 时，我们总是指的是 $\mathbb{R}^n$ 配备 Euclid 度量。
+\end{example}
+
+\section{等距}
+
+设 $(M,g)$ 和 $\bigl(\wtilde M,\tilde g\bigr)$ 是带边或者无边黎曼流形。
+$(M,g)$ 到 $\bigl(\wtilde M,\tilde g\bigr)$ 的\emph{等距}指的是
+一个微分同胚 $\varphi:M\to\wtilde M$，并且使得 $\varphi^*\tilde g=g$。
+
+
+
+
+
+
+
+
+
+
+
+
+
