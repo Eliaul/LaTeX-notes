@@ -43,6 +43,81 @@
 设 $(M,g)$ 和 $\bigl(\wtilde M,\tilde g\bigr)$ 是带边或者无边黎曼流形。
 $(M,g)$ 到 $\bigl(\wtilde M,\tilde g\bigr)$ 的\emph{等距}指的是
 一个微分同胚 $\varphi:M\to\wtilde M$，并且使得 $\varphi^*\tilde g=g$。
+这意味着每个微分 $d\varphi_p:T_pM\to T_{\varphi(p)}\wtilde M$
+都是线性等距。如果存在这样一个等距映射，那么我们就说 $(M,g)$ 和
+$\bigl(\wtilde M,\tilde g\bigr)$ 是\emph{等距的}。
+
+显然等距的复合和逆也都是等距，所以等距构成一个等价关系。黎曼几何
+的课题就是考虑黎曼流形的哪些性质被等距所保持。
+
+如果 $(M,g)$ 和 $\bigl(\wtilde M,\tilde g\bigr)$ 是黎曼流形，每个点 $p\in M$
+都有一个邻域 $U$ 使得 $\varphi|_U$ 是到 $\wtilde M$ 的某个开子集的等距，那么
+我们说 $\varphi:M\to\wtilde M$ 是\emph{局部等距}。
+
+一个黎曼 $n$-流形被称为\emph{平坦的}，如果其局部等距于某个 Euclid 空间，也即
+每个点都有一个邻域和 $\mathbb{R}^n$ 中的某个开子集等距。可以证明所有黎曼
+$1$-流形都是平坦的。
+
+$(M,g)$ 到自身的等距被称为 $(M,g)$ 的等距，显然所有 $(M,g)$ 的等距在复合下
+构成一个群，被称为 $(M,g)$ 的\emph{等距群}，记为 $\Iso(M,g)$。有时候
+也简记为 $\Iso(M)$。
+
+\section{度量的局部表示}
+
+令 $(M,g)$ 是带边或者无边黎曼流形。$(x^1,\dots,x^n)$ 是开子集 $U\subseteq M$
+上的光滑局部坐标，那么 $g$ 可以局部表示为
+\[
+  g=g_{ij}dx^i\otimes dx^j.
+\]
+其中 $g_{ij}:U\to \mathbb{R}$ 是光滑函数。$g$ 也可以用对称积表示，利用 $g_{ij}$
+的对称性，有
+\begin{align*}
+  g&=g_{ij}dx^i\otimes dx^j =\frac{1}{2}(g_{ij}dx^i\otimes dx^j+g_{ji}dx^i\otimes dx^j)\\
+  &=\frac{1}{2}g_{ij}(dx^i\otimes dx^j+dx^j\otimes dx^i)=g_{ij}dx^i dx^j.
+\end{align*}
+
+关于 $M$ 的在开集 $U$ 上的局部标架 $(E_i)$ 被称为\emph{正交标架}，如果在每个 $p\in U$
+处向量 $E_1|_p,\dots,E_n|_p$ 构成 $T_pM$ 的一个正交基。等价地说，$(E_{i})$
+是正交标架当且仅当
+\[
+  \inn{E_i,E_j}=\delta_{ij},
+\]
+此时 $g$ 可以局部表示为
+\[
+  g=(\varepsilon^1)^2+\cdots+(\varepsilon^n)^2,
+\]
+其中 $(\varepsilon^i)^2$ 表示对称积 $\varepsilon^i\varepsilon^i=\varepsilon^i\otimes\varepsilon^i$。
+
+\begin{proposition}[正交标架的存在性]
+  令 $(M,g)$ 是带边或者无边黎曼 $n$-流形。如果 $(X_j)$ 是开集 $U\subseteq M$ 上的光滑局部标架，
+  那么存在 $U$ 上的光滑正交标架 $(E_j)$ 使得：对于每个 $k=1,\dots,n$ 和 $p\in U$，
+  有 $\mathrm{span}(E_1|_p,\dots,E_k|_p)=\mathrm{span}(X_1|_p,\dots,E_k|_p)$。
+  特别地，这表明对于每个 $p\in M$，都存在一个定义在 $p$ 的某个邻域上的局部正交标架。
+\end{proposition}
+\begin{proof}
+  对于每个 $p\in U$，对向量组 $(X_1|_p,\dots,X_n|_p)$ 应用 Gram-Schmidt 正交化，
+  得到 $U$ 上的正交向量场 $(E_1,\dots,E_n)$，且满足上面的张成条件。
+  由于 Gram-Schmidt 正交化过程是光滑的（因为 $g$ 是光滑的），
+  得到的正交向量场 $(E_1,\dots,E_n)$ 也是光滑的。
+  因此，$(E_j)$ 是满足命题条件的光滑正交标架。
+\end{proof}
+
+注意，这并不意味着我们可以找到 $p$ 附近的某个坐标使得坐标标架 $(\partial_i)$
+是正交的。实际上，这只在平坦度量的情况下成立。
+
+对于带边或者无边黎曼流形 $(M,g)$，我们可以定义\emph{单位切丛} $UTM\subseteq TM$
+为由单位向量构成的子集：
+\begin{equation}
+  UTM=\{(p,v)\in TM\,|\, |v|_g=1\}.
+\end{equation}
+
+ \begin{proposition}
+  如果 $(M,g)$ 是带边或者无边黎曼流形，那么单位切丛 $UTM$ 是光滑的，并且
+  是 $TM$ 的恰当嵌入的余维数为 $1$ 的带边子流形，边界 $\partial(UTM)=\pi^{-1}(\partial M)$，
+  这里 $\pi:UTM\to M$ 是自然投影。单位切丛连通当且仅当 $M$ 连通，单位切丛紧当且仅当 $M$ 紧。
+ \end{proposition}
+
+\section{构造黎曼流形的方法}
 
 
 
