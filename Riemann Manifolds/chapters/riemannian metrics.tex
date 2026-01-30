@@ -111,21 +111,200 @@ $(M,g)$ 到自身的等距被称为 $(M,g)$ 的等距，显然所有 $(M,g)$ 的
   UTM=\{(p,v)\in TM\,|\, |v|_g=1\}.
 \end{equation}
 
- \begin{proposition}
-  如果 $(M,g)$ 是带边或者无边黎曼流形，那么单位切丛 $UTM$ 是光滑的，并且
-  是 $TM$ 的恰当嵌入的余维数为 $1$ 的带边子流形，边界 $\partial(UTM)=\pi^{-1}(\partial M)$，
-  这里 $\pi:UTM\to M$ 是自然投影。单位切丛连通当且仅当 $M$ 连通，单位切丛紧当且仅当 $M$ 紧。
- \end{proposition}
+\begin{proposition}
+如果 $(M,g)$ 是带边或者无边黎曼流形，那么单位切丛 $UTM$ 是光滑的，并且
+是 $TM$ 的恰当嵌入的余维数为 $1$ 的带边子流形，边界 $\partial(UTM)=\pi^{-1}(\partial M)$，
+这里 $\pi:UTM\to M$ 是自然投影。单位切丛连通当且仅当 $M$ 连通，单位切丛紧当且仅当 $M$ 紧。
+\end{proposition}
+\begin{proof}
+  定义映射 $F:TM\to \mathbb{R}$ 为 $F(p,v)=|v|_g^2$。任取光滑坐标卡 $(x^i)$，
+  此时 $v=v^i\partial_i|_p$，因此 $F$ 有局部表示
+  \[
+    (x^1,\dots,x^n,v^1,\dots,v^n)\mapsto g_{ij}(x)v^iv^j,
+  \]
+  这是光滑的，所以 $F$ 是光滑映射。显然 $F$ 是浸没，注意到 $UTM=F^{-1}(1)$，所以 $UTM$ 是 $TM$ 的
+  余维数为 $1$ 的嵌入子流形。任取 $p\in\partial M$，则 $T_pM$ 是带边流形 $M$ 的切空间，所以 $T_pM$ 是带边空间，其边界为
+  $T_p(\partial M)$。因此，$UTM\cap T_pM$ 是 $T_pM$ 的单位球面与边界 $T_p(\partial M)$ 的交集，所以
+  $\partial(UTM)=\pi^{-1}(\partial M)$。由于每个 $T_pM$ 都是连通的，所以 $UTM$ 连通当且仅当 $M$ 连通。由于 $\pi:UTM\to M$ 是连续的且纤维是紧的，所以 $UTM$ 紧当且仅当 $M$ 紧。
+\end{proof}
+
+
 
 \section{构造黎曼流形的方法}
 
+\subsection{黎曼子流形}
 
+黎曼流形的每个子流形都自动继承一个黎曼度量，这来源于下面的引理。
 
+\begin{lemma}
+  设 $\bigl(\wtilde M,\tilde g\bigr)$ 是带边或者无边黎曼流形，
+  $M$ 是带边或者无边光滑流形，$F:M\to\wtilde M$ 是光滑映射。
+  $2$-张量场 $g=F^*\tilde{g}$ 是 $M$ 上的一个黎曼度量当且仅当
+  $F$ 是浸入。
+\end{lemma}
+\begin{proof}
+  若 $g=F^*\tilde{g}$ 是黎曼度量，任取 $p\in M$，如果 $dF_p(v)=0$，那么
+  \[
+    \inn{v,v}_g=\tilde g_{F(p)}(dF_p(v),dF_p(v))=0,
+  \] 
+  所以 $v=0$，因此 $dF_p$ 是单射，所以 $F$ 是浸入。
+  反之，若 $F$ 是浸入，任取 $p\in M$ 和 $v\in T_pM$，如果 $v\neq 0$，那么
+  $dF_p(v)\neq 0$，所以
+  \[
+    \inn{v,v}_g=\tilde g_{F(p)}(dF_p(v),dF_p(v))>0,
+  \]
+  因此 $g$ 是正定的，所以 $g$ 是黎曼度量。
+\end{proof}
 
+假设 $\bigl(\wtilde M,\tilde g\bigr)$ 是带边或者无边黎曼流形。
+给定光滑浸入 $F:M\to\wtilde M$，度量 $g=F^*\tilde g$ 被称为\emph{$F$ 的诱导度量}。
+另一方面，如果 $M$ 已经配备了一个黎曼度量 $g$，那么满足 $F^*\tilde g=g$ 的
+浸入或者嵌入 $F:M\to\wtilde M$ 被称为\emph{等距浸入}或者\emph{等距嵌入}。
+使用哪个术语取决于 $M$ 上的度量是否已经被指定。
 
+诱导度量最重要的例子是子流形。假设 $M\subseteq \wtilde M$
+是(浸入或者嵌入)子流形。\emph{$M$ 上的诱导度量}指的是由包含映射
+$\iota:M\hookrightarrow\wtilde M$ 诱导的度量 $g=\iota^*\tilde g$。
+在这个度量下，$M$ 被称为 $\wtilde M$ 的\emph{黎曼子流形}。
 
+如果 $(M,g)$ 是 $\bigl(\wtilde M,\tilde g\bigr)$ 的黎曼子流形，
+那么对于每个 $p\in M$ 和 $v,w\in T_pM$，有
+\[
+  g_p(v,w)=\tilde g_p\bigl(d\iota_p(v),d\iota_p(w)\bigr).
+\]
+我们通常把 $T_pM$ 视为 $T_p\wtilde M$ 的子空间 $d\iota_p(T_pM)$，
+因此上式通常写为 $g_p(v,w)=\tilde g_p(v,w)$。换句话说，诱导度量
+$g$ 仅仅是 $\tilde g$ 在 $M$ 上的限制。
 
+\begin{example}[球面]
+  对于每个正整数 $n$，单位 $n$-球面 $\mathbb{S}^n\subseteq \mathbb{R}^{n+1}$
+  是嵌入子流形。由 Euclid 度量诱导的 $\mathbb{S}^n$ 上的黎曼度量记为
+  $\mathring g$，被称为 $\mathbb{S}^n$ 上的\emph{圆度量}或者说\emph{标准度量}。
+\end{example}
 
+如果 $\bigl(\wtilde M,\tilde g\bigr)$ 是 $m$-维黎曼流形，$M\subseteq \wtilde M$
+是 $n$-维子流形，开子集 $\wtilde U\subseteq \wtilde M$ 上的一个局部标架
+$(E_1,\dots,E_m)$ 被称为\emph{适应 $M$ 的}，如果前 $n$ 个向量场 $(E_1,\dots,E_n)$ 
+与 $M$ 相切。在 $\wtilde M$ 无边的情况下，适应 $M$ 的局部标架总是存在的。
+
+\begin{proposition}[适应正交标架的存在性]\label{prop:adapted orthonormal frame}
+  令 $\bigl(\wtilde M,\tilde g\bigr)$ 是无边黎曼流形，$M\subseteq \wtilde M$ 是
+  嵌入的带边或者无边子流形。给定 $p\in M$，存在 $p$ 在 $\wtilde M$ 中的
+  某个邻域 $\wtilde U$ 和 $\wtilde U$ 上的适应 $M$ 的光滑正交标架。
+\end{proposition}
+\begin{proof}
+  设 $\wtilde M$ 是 $m$ 维，$M$ 是 $n$ 维子流形。任取 $p\in M$，
+  取 $p$ 在 $\wtilde M$ 中的切片坐标卡 $(\wtilde U,(x^1,\dots,x^m))$，使得
+  $M\cap \wtilde U$ 由方程 $x^{n+1}=\cdots=x^m=0$ 给出。对这个坐标标架
+  $(\partial_i)$ 应用 Gram-Schmidt 正交化，得到 $\wtilde U$ 上的光滑正交标架
+  $(E_1,\dots,E_m)$。由于正交化过程保持张成性质，所以 $(E_1,\dots,E_n)$ 与 $M$ 相切。
+  于是 $(E_1,\dots,E_m)$ 是适应 $M$ 的光滑正交标架。
+\end{proof}
+
+假设 $\bigl(\wtilde M,\tilde g\bigr)$ 是黎曼流形，$M\subseteq \wtilde M$ 是
+带边或者无边子流形。给定 $p\in M$，向量 $v\in T_p\wtilde M$ 被称为\emph{正交于 $M$ 的}，
+如果对于每个 $w\in T_pM$，有 $\inn{v,w}=0$。$T_p\wtilde M$ 的所有正交于 $M$ 的向量
+构成 $T_p\wtilde M$ 的一个子空间，记为 $N_pM=(T_pM)^\bot$，被称为\emph{$p$ 处的法空间}。
+在每个 $p\in M$ 处，环境切丛 $T_p\wtilde M$ 可以正交分解为
+$T_p\wtilde M=T_pM\oplus N_pM$。环境切丛 $T\wtilde M|_M$ 的截面
+$N$ 被称为\emph{沿 $M$ 的法向量场}，如果对于每个 $p\in M$，有 $N_p\in N_pM$。
+集合
+\[
+  NM=\coprod_{p\in M}N_pM
+\]
+被称为 $M$ 的\emph{法丛}。
+
+\begin{proposition}[法丛]\label{prop:normal bundle}
+  如果 $\wtilde M$ 是黎曼 $m$-流形，$M\subseteq \wtilde M$ 是浸入或者嵌入的
+  黎曼 $n$-子流形，那么 $NM$ 是环境切丛 $T\wtilde M|_M$ 的
+  秩 $(m-n)$ 的光滑子丛。光滑丛同态
+  \[
+    \pi^\top:T\wtilde M|_M\to TM,\quad \pi^\bot:T\wtilde M|_M\to NM
+  \]
+  分别被称为 \emph{切向投影}和\emph{法向投影}，它们在每个点 $p\in M$ 处
+  分别限制为 $T_p\wtilde M$ 到 $T_pM$ 和 $N_pM$ 的正交投影。
+\end{proposition}
+\begin{proof}
+  给定 $p\in M$，那么存在 $p$ 处的邻域 $U\subseteq M$ 使得 $U\subseteq \wtilde M$
+  是嵌入子流形。根据 \autoref{prop:adapted orthonormal frame}，在 $p$
+  的某个邻域 $\wtilde U\subseteq \wtilde M$ 上存在适应 $U$ 的光滑正交标架
+  $(E_1,\dots,E_m)$。于是 $(E_1,\dots,E_n)$ 是 $\wtilde U\cap U$
+  上的正交标架。那么后 $m-n$ 个向量场 $(E_{n+1},\dots,E_m)$ 
+  构成了 $NM$ 的光滑局部标架，这就表明 $NM$ 是光滑子丛。
+
+  丛同态 $\pi^\top$ 和 $\pi^\bot$ 在每个点 $p\in M$ 处的定义就是向
+  切空间和法空间做正交投影，所以它们是唯一确定的。用适应的正交标架，它们可以
+  表示为
+  \begin{align*}
+    \pi^\top(X^1E_1+\cdots+X^mE_m)&=X^1E_1+\cdots+X^nE_n,\\
+    \pi^\bot(X^1E_1+\cdots+X^mE_m)&=X^{n+1}E_{n+1}+\cdots+X^mE_m.
+  \end{align*}
+  这表明它们都是光滑的。 
+\end{proof}
+
+在 $\wtilde M$ 是带边流形的情况下，上面的构造不总是成立，
+因为此时没有切片坐标卡的一般构造。但是，当子流形是边界本身时，
+利用边界条件而不是切片坐标卡，我们仍然可以构造法丛。
+
+假设 $(M,g)$ 是带边黎曼流形。我们总是把边界 $\partial M$ 视为 $M$ 的
+黎曼子流形，附带诱导度量。
+
+\begin{proposition}[向外法向的存在性]
+  如果 $(M,g)$ 是带边黎曼流形，那么 $\partial M$ 的法丛是
+  秩 $1$ 的光滑向量丛，并且存在唯一沿 $\partial M$ 的向外的单位光滑法向量场。
+\end{proposition}
+
+在子流形 $M\subseteq \wtilde M$ 上计算通常使用\emph{光滑局部参数化}：
+一个光滑映射 $X:U\to\wtilde M$，其中 $U$ 是 $\mathbb{R}^n$
+的开子集，使得 $X(U)$ 是 $M$ 的开子集，并且 $X$ 视为 $U\to M$
+的映射时是到像集的微分同胚。注意到我们可以把 $X$ 视为到 $M$ 或者
+到 $\wtilde M$ 的映射，我们都记为 $X$。显然，如果记 $V=X(U)$，
+$\varphi=X^{-1}:V\to U$，那么 $(V,\varphi)$ 是 $M$ 的一个光滑坐标卡。
+
+假设 $(M,g)$ 是 $\bigl(\wtilde M,\tilde g\bigr)$ 的黎曼子流形，
+$X:U\to\wtilde M$ 是 $M$ 的一个光滑局部参数化。$g$ 在这个坐标中
+的局部表示为 $U$ 上的 $2$-张量场：
+\[
+  (\varphi^{-1})^*g=X^*g=X^*\iota^*\tilde g=(\iota\circ X)^*\tilde g.
+\]
+因为 $\iota\circ X$ 就是 $X$ 本身，所以这实际上就是 $X^*\tilde g$。
+然后只需要应用拉回张量的计算公式即可。例如，如果 $M$ 是 $\mathbb{R}^m$
+的浸入 $n$-维黎曼子流形，$X:U\to \mathbb{R}^m$ 是 $M$ 的光滑局部参数化，
+那么 $U$ 上的诱导度量为 
+\[
+  g=X^*\bar g=\sum_{i=1}^m (dX^i)^2
+  =\sum_{i=1}^m\left(
+    \sum_{j=1}^m\frac{\partial X^i}{\partial u^j}du^j
+  \right)^2.
+\]
+
+\begin{example}[图像坐标中的度量]
+  如果 $U\subseteq \mathbb{R}^n$ 是开集，$f:U\to \mathbb{R}$ 是光滑函数，
+  那么 $f$ 的图像指的是子集 $\Gamma(f)=\{(x,f(x))\,|\, x\in U\}\subseteq \mathbb{R}^{n+1}$，
+  这是 $\mathbb{R}^{n+1}$ 的一个 $n$ 维嵌入子流形。其有全局参数化 $X:U\to \mathbb{R}^{n+1}$
+  为 $X(u)=(u,f(u))$，这被称为\emph{图像参数化}，对应的 $M$ 上的坐标
+  $(u^1,\dots,u^n)$ 被称为\emph{图像坐标}。在图像坐标中，$\Gamma(f)$
+  的诱导度量为
+  \[
+    X^*\bar g=X^*\bigl(
+      (dx^1)^2+\cdots+(dx^{n+1})^2
+    \bigr)=(du^1)^2+\cdots+(du^n)^2+df^2.
+  \]
+  应用到 $\mathbb{S}^2$ 的上半球面，有参数化 $X: \mathbb{B}^2\to \mathbb{R}^3$
+  为
+  \[
+    X(u,v)=\bigl(u,v,\sqrt{1-u^2-v^2}\bigr),
+  \]
+  于是 $\mathbb{S}^2$ 上的圆度量在图像坐标 $(u,v)$ 中表示为
+  \begin{align*}
+    \mathring{g}&=X^*\bar g=(du)^2+(dv)^2+d\bigl(\sqrt{1-u^2-v^2}\bigr)^2\\
+    &=\frac{(1-v^2)\d u^2+(1-u^2)\d v^2+2uv\d u\d v}{1-u^2-v^2}.
+  \end{align*}
+\end{example}
+
+\begin{example}[旋转曲面]
+  
+\end{example}
 
 
 

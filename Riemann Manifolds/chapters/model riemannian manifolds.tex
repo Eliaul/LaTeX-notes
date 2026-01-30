@@ -1,0 +1,46 @@
+\chapter{典型的黎曼流形}
+
+\section{黎曼流形的对称性}
+
+令 $(M,g)$ 是一个黎曼流形。回顾 $\Iso(M,g)$ 表示所有 $M$ 到自身的等距的集合，这构成一个
+群。如果 $\Iso(M,g)$ 传递地作用在 $M$ 上，那么我们说 $M$ 是一个\emph{齐次黎曼流形}，
+这意味着对于任意两个点 $p,q\in M$，都存在一个等距 $\varphi:M\to M$ 使得 $\varphi(p)=q$。
+
+等距群不仅仅可以作用在 $M$ 上。对于每个 $\varphi\in\Iso(M,g)$，全局微分 $d\varphi$
+是 $TM$ 到自身的丛同构，并且对于每个点 $p\in M$ 都可以限制为一个等距线性映射
+$d\varphi_p:T_pM\to T_{\varphi(p)}M$。
+
+给定 $p\in M$，令 $\Iso_p(M,g)$ 表示 $p$ 处的等距子群，由 $\Iso(M,g)$
+中使得 $p$ 不动的等距构成。对于每个 $\varphi\in \Iso_p(M,g)$，
+线性映射 $d\varphi_p$ 把 $T_pM$ 送到自身。映射 $I_p:\Iso_p(M,g)\to \GL(T_pM)$
+定义为 $I_p(\varphi)=d\varphi_p$，这构成 $\Iso_p(M,g)$ 的一个表示，
+称为\emph{等距表示}。如果 $\Iso_p(M,g)$ 的等距表示可以传递地作用在 $T_pM$
+的单位向量集合上，那么我们说 $M$ 在 $p$ 处是\emph{迷向的}。如果 $M$
+在每个点 $p\in M$ 处都是迷向的，那么我们说 $M$ 是\emph{迷向的}。
+
+还存在比迷向更强的对称性条件。令 $\Orth(M)$ 是 $M$ 的所有切空间
+中的所有正交基构成的集合：
+\[
+  \Orth(M)=\coprod_{p\in M}\{\text{$T_pM$ 的所有正交基}\}.
+\]
+此时，存在 $\Iso(M,g)$ 在 $\Orth(M)$ 上的诱导作用，
+利用等距 $\varphi$ 的微分把 $p$ 处的正交基推前到 $\varphi(p)$ 处的正交基：
+\begin{equation}
+  \varphi\cdot (b_1,\dots,b_n)=(d\varphi_p(b_1),\dots,d\varphi_p(b_n)).
+\end{equation}
+我们说 $(M,g)$ 是\emph{标架齐次的}，如果这个诱导作用在 $\Orth(M)$ 上是传递的。
+换句话说，对于所有 $p,q\in M$ 并且任取 $p$ 和 $q$ 处的正交基，
+都存在一个等距把 $p$ 送到 $q$ 并且把 $p$ 处的正交基送到 $q$ 处的正交基。
+
+\begin{proposition}
+  令 $(M,g)$ 是黎曼流形。
+  \begin{enumerate}
+    \item 如果 $M$ 在某个点处迷向并且 $M$ 是齐次的，那么 $M$ 是迷向的。
+    \item 如果 $M$ 是标架齐次的，那么 $M$ 是齐次并且迷向的。
+  \end{enumerate}
+\end{proposition}
+
+
+
+
+
