@@ -1,0 +1,724 @@
+\documentclass[fontset=none,zihao=-4]{Notes}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\usepackage{tikz-cd,wrapstuff}
+\usepackage{fixdif,siunitx,tikz,nicematrix}
+
+\usetikzlibrary{hobby,calc,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.pathreplacing}
+
+\input{font.def}
+
+\DeclareMathOperator\Int{Int}
+\DeclareMathOperator\supp{supp}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Ann{Ann}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\diag{diag}
+\DeclareMathOperator\Or{O}
+\DeclareMathOperator\rank{rank}
+\DeclareMathOperator\Ob{Ob}
+\DeclareMathOperator\Ad{Ad}
+\DeclareMathOperator\ad{ad}
+\DeclareMathOperator\id{id}
+\DeclareMathOperator\SO{SO}
+\DeclareMathOperator\SU{SU}
+\DeclareMathOperator\GL{GL}
+\DeclareMathOperator\SL{SL}
+
+\newcommand{\cat}[1]{\mathsf{#1}}
+
+\newcommand{\inn}[1]{\left\langle#1\right\rangle}
+\newcommand{\lie}[1]{\mathfrak{#1}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\spa}[1]{\operatorname{span}\left(#1\right)}
+
+\makeatletter
+\DeclareRobustCommand\bigop[2][1]{%
+  \mathop{\vphantom{\sum}\mathpalette\bigop@{{#1}{#2}}}\slimits@
+}
+\newcommand{\bigop@}[2]{\bigop@@#1#2}
+\newcommand{\bigop@@}[3]{%
+  \vcenter{%
+    \sbox\z@{$#1\sum$}%
+    \hbox{\resizebox{\ifx#1\displaystyle#2\fi\dimexpr\ht\z@+\dp\z@}{!}{$\m@th#3$}}%
+  }%
+}
+\makeatother
+
+\newcommand{\fprod}{\DOTSB\bigop[1.05]{\ast}}
+
+\tikzcdset{
+  arrow style=tikz,
+  diagrams={>={Straight Barb[scale=0.8]}}
+}
+
+\tikzset{
+  point/.style={
+    circle,fill,inner sep=0pt,minimum width=5pt
+  }
+}
+
+\usepackage[subscriptcorrection,nofontinfo,mtpbb,mtpfrak]{mtpro2}
+
+\newcommand{\mat}[1]{\mathbold{#1}}
+
+\usepackage{biblatex}
+% \addbibresource{ref.bib}
+% \begin{filecontents}{ref.bib}
+% @book{kirillov2008introduction,
+%   title={An introduction to Lie groups and Lie algebras},
+%   author={Kirillov, Alexander A},
+%   volume={113},
+%   year={2008},
+%   publisher={Cambridge University Press}
+% }
+
+% @article{notes,
+%   author = {Gallier, Jean},
+%   year = {2009},
+%   month = {02},
+%   pages = {},
+%   title = {Notes on Spherical Harmonics and Linear Representations of Lie Groups}
+% }
+% \end{filecontents}
+
+\setlist[enumerate]{nosep,label=(\arabic*)}
+\setlist[itemize]{nosep}
+
+\title{\sffamily Kalman 滤波的数学原理}
+\author{Eliauk}
+
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{数学准备}
+
+\subsection{随机微分方程 (SDE)}
+
+\section{基础 Kalman 滤波：基于最大后验估计}
+
+\subsection{连续时间系统的离散化}
+
+考虑一个带有加性高斯白噪声的连续时间线性时变系统。在严密的随机微积分框架下，
+我们避免使用不严谨的“连续白噪声”概念，而是使用多维标准 Brown 运动(Wiener 过程)
+$W_t$ 的随机微分方程来描述系统的过程演化：
+\begin{equation}\label{eq:sde}
+  \d X_t=\mat A(t)X_t\d t+\mat B(t)\mat u(t)\d t+\mat G(t)\d W_t,
+\end{equation}
+其中 $\{X_t\}_{t\geq 0}$ 是 $\mathbb{R}^n$ 中的随机过程，
+$W_t$ 是多维的一般 Brown 运动，这意味着 $W_t$ 的各个分量独立，并且
+对于任意 $t>s$，增量 $W_t-W_s$ 服从正态分布 $\mathcal{N}\left(
+  \mat 0,\int_s^t \mat Q_c(\tau)\d \tau
+\right)$，其中 $\mat Q_c(t)$ 是一个时间相关的正定矩阵，称为功率谱密度矩阵。
+系数矩阵 $\mat A(t)\in \mathbb{R}^{n\times n}$ 是系数矩阵，
+$\mat u(t)\in \mathbb{R}^p$ 是控制输入，$\mat G(t)$ 是噪声驱动矩阵。
+
+假设我们在离散时间序列 $\{t_k\}_{k\geq 0}$ 上进行采样，我们
+需要计算 $t_{k-1}$ 到 $t_k$ 的状态转移关系。
+首先，我们定义状态转移矩阵 $\Phi(t,s)$ 是满足以下矩阵微分方程的矩阵函数：
+\[
+  \frac{\d}{\d t}\mat\Phi(t,s)=\mat{A}(t)\mat\Phi(t,s),\quad \mat\Phi(s,s)=\mat I.
+\]
+对 $\mat\Phi(t_k,t)X_t$ 应用 It\^o 公式，我们得到
+\begin{equation}\label{eq:ito}
+    \d\left(
+    \mat\Phi(t_k,t)X_t
+  \right)=
+  -\mat\Phi(t_k,t)\mat A(t)X_t\d t+\mat\Phi(t_k,t)\d X_t,
+\end{equation}
+注意由于 $\mat\Phi(t_k,t)X_t$ 对 $X_t$ 的各项的二阶导数为零，因此 \eqref{eq:ito} 式中没有二阶项。
+将 $\d X_t$ 的表达式 \eqref{eq:sde} 代入 \eqref{eq:ito} ，我们得到
+\[
+  \d\left(
+    \mat\Phi(t_k,t)X_t
+  \right)=
+  \mat\Phi(t_k,t)\mat B(t)\mat u(t)\d t+\mat\Phi(t_k,t)\mat G(t)\d W_t.
+\]
+在区间 $[t_{k-1},t_k]$ 上对上式积分，我们得到
+\[
+  X_{t_k}=\mat\Phi(t_k,t_{k-1})X_{t_{k-1}}+\int_{t_{k-1}}^{t_k}\mat\Phi(t_k,t)\mat B(t)\mat u(t)\d t+\int_{t_{k-1}}^{t_k}\mat\Phi(t_k,t)\mat G(t)\d W_t.
+\]
+我们记 $x_k=X_{t_k}$，于是离散化的状态转移方程为
+\begin{equation}\label{eq:discrete}
+  x_k=\mat\Phi(t_k,t_{k-1})x_{k-1}+\int_{t_{k-1}}^{t_k}\mat\Phi(t_k,t)\mat B(t)\mat u(t)\d t+\int_{t_{k-1}}^{t_k}\mat\Phi(t_k,t)\mat G(t)\d W_t.
+\end{equation}
+记
+\[
+  w_{k-1}=\int_{t_{k-1}}^{t_k}\mat\Phi(t_k,t)\mat G(t)\d W_t,
+\]
+根据 It\^o 等距，离散过程噪声 $w_{k-1}$ 是零均值的 Gauss 随机变量，
+其协方差矩阵为
+\begin{equation}\label{eq:cov}
+  \mat Q_{k-1}=\mathbb{E}\bigl[w_{k-1}w_{k-1}^\top\bigr]=\int_{t_{k-1}}^{t_k}\mat\Phi(t_k,t)\mat G(t)\mat Q_c(t)\mat G(t)^\top\mat\Phi(t_k,t)^\top\d t.
+\end{equation}
+于是，我们得到了离散时间的系统模型为
+\begin{equation}\label{eq:discrete2}
+  x_k=\mat F_{k-1}x_{k-1}+\mat B_{k-1}\mat u_{k-1}+w_{k-1},\quad
+  w_{k-1}\sim \mathcal{N}(\mat 0,\mat Q_{k-1}).
+\end{equation}
+其中 $\mat F_{k-1}=\mat\Phi(t_k,t_{k-1})$ 是状态转移矩阵，
+$\mat B_{k-1}=\int_{t_{k-1}}^{t_k}\mat\Phi(t_k,t)\mat B(t)\d t$ 是离散化的控制输入矩阵，
+这里我们假设 $\mat u(t)$ 在 $[t_{k-1},t_k]$ 上是常数 $\mat u_{k-1}$。
+
+\subsection{基于最大后验的 Kalman 滤波}\label{subsec:map}
+
+假设我们有离散的观测模型
+\begin{equation}\label{eq:obs}
+  z_k=\mat H_kx_k+v_k,\quad v_k\sim \mathcal{N}(\mat 0,\mat R_k),
+\end{equation}
+Kalman 滤波的目标是在已知所有历史观测 $z_1,\ldots,z_k$ 的条件下，
+估计当前状态 $x_k$ 的后验分布 $p(x_k|z_{1:k})$。
+
+首先我们需要计算先验分布 $p(x_k|z_{1:k-1})$，
+我们直接计算条件期望 $\hat x_{k|k-1}=\mathbb{E}[x_k|z_{1:k-1}]$，即在给定过去观测的条件下对当前状态的预测。
+根据 \eqref{eq:discrete2} 式，我们有
+\begin{equation}\label{eq:predict}
+  \hat x_{k|k-1}=\mat F_{k-1}\hat x_{k-1|k-1}+\mat B_{k-1}\mat u_{k-1},
+\end{equation}
+于是
+\[
+  x_k-\hat x_{k|k-1}=\mat F_{k-1}(x_{k-1}-\hat x_{k-1|k-1})+w_{k-1}.
+\]
+所以 $\hat x_{k|k-1}$ 的协方差为
+\begin{equation}\label{eq:predict_cov}
+  \what{\mat P}_{k|k-1}=\mathbb{E}\bigl[(x_k-\hat x_{k|k-1})(x_k-\hat x_{k|k-1})^\top\bigr]
+  =\mat F_{k-1}\what{\mat P}_{k-1|k-1}\mat F_{k-1}^\top+\mat Q_{k-1}.
+\end{equation}
+于是先验分布 $p(x_k|z_{1:k-1})$ 是一个均值为 $\hat x_{k|k-1}$，协方差为 $\what{\mat P}_{k|k-1}$ 的正态分布。
+
+根据 Bayes 定理，后验分布 $p(x_k|z_{1:k})$ 与先验分布 $p(x_k|z_{1:k-1})$ 和似然函数 $p(z_k|x_k)$ 成正比：
+\[
+  p(x_k|z_{1:k})\propto p(z_k|x_k)p(x_k|z_{1:k-1}),
+\]
+带入 \eqref{eq:obs} 式和先验分布的表达式，我们得到
+\begin{equation}\label{eq:posterior}
+  p(x_k|z_{1:k})\propto \exp\left(
+    -\frac{1}{2}\bigl\Vert z_k-\mat H_kx_k\bigr\Vert_{\mat R_k^{-1}}^2
+  \right)\exp\left(
+    -\frac{1}{2}\bigl\Vert x_k-\hat x_{k|k-1}\bigr\Vert_{\what{\mat P}_{k|k-1}^{-1}}^2
+  \right),
+\end{equation}
+其中 $\Vert x\Vert_{\mat M}^2=x^\top \mat M x$ 表示 Mahalanobis 距离的平方。
+最大后验概率要求我们最大化 \eqref{eq:posterior} 式，这等价于最小化
+负对数似然函数 $J(x_k)$：
+\begin{equation}\label{eq:cost}
+  J(x_k)=\frac{1}{2}\bigl\Vert z_k-\mat H_kx_k\bigr\Vert_{\mat R_k^{-1}}^2+\frac{1}{2}\bigl\Vert x_k-\hat x_{k|k-1}\bigr\Vert_{\what{\mat P}_{k|k-1}^{-1}}^2.
+\end{equation}
+这只需要对 $J(x_k)$ 关于 $x_k$ 求导，我们有
+\[
+  \what{\mat P}_{k|k-1}^{-1}(x_k-\hat x_{k|k-1})-\mat H_k^\top\mat R_k^{-1}(z_k-\mat H_kx_k)=0,
+\]
+也即
+\begin{align*}
+  \bigl(\what{\mat P}_{k|k-1}^{-1}+\mat H_k^\top\mat R_k^{-1}\mat H_k\bigr)x_k&=\what{\mat P}_{k|k-1}^{-1}\hat x_{k|k-1}+\mat H_k^\top\mat R_k^{-1}z_k\\
+  &=\bigl(\what{\mat P}_{k|k-1}^{-1}+\mat H_k^\top\mat R_k^{-1}\mat H_k\bigr)\hat x_{k|k-1}
+  +\mat H_k^\top\mat R_k^{-1}(z_k-\mat H_k\hat x_{k|k-1}),
+\end{align*}
+令 $\what{\mat P}_{k|k}=\bigl(\what{\mat P}_{k|k-1}^{-1}+\mat H_k^\top\mat R_k^{-1}\mat H_k\bigr)^{-1}$，我们得到
+\begin{equation*}
+  x_k=\hat x_{k|k-1}+\what{\mat P}_{k|k}\mat H_k^\top\mat R_k^{-1}(z_k-\mat H_k\hat x_{k|k-1}).
+\end{equation*}
+通常我们记这个最优的 $x_k$ 为 $\hat x_{k|k}$，并且
+利用 Sherman-Morrison-Woodbury 公式，我们可以将 $\what{\mat P}_{k|k}$ 的表达式化简为
+\[
+  \what{\mat P}_{k|k}=\what{\mat P}_{k|k-1}-\what{\mat P}_{k|k-1}\mat H_k^\top\bigl(\mat R_k+\mat H_k\what{\mat P}_{k|k-1}\mat H_k^\top\bigr)^{-1}\mat H_k\what{\mat P}_{k|k-1},
+\]
+通常我们记 Kalman 增益为
+\begin{equation}
+  \mat K_k=\what{\mat P}_{k|k-1}\mat H_k^\top\bigl(\mat R_k+\mat H_k\what{\mat P}_{k|k-1}\mat H_k^\top\bigr)^{-1},
+\end{equation}
+于是 Kalman 滤波的更新方程为
+\begin{equation}\label{eq:update}
+  \begin{aligned}
+    \hat x_{k|k}&=\hat x_{k|k-1}+\mat K_k(z_k-\mat H_k\hat x_{k|k-1}),\\
+    \what{\mat P}_{k|k}&=(\mat I-\mat K_k\mat H_k)\what{\mat P}_{k|k-1}.
+  \end{aligned}
+\end{equation}
+
+\subsection{最大后验估计的概率解释}\label{subsec:map_prob}
+
+在前面的推导中，我们通过最大化后验概率来得到 Kalman 滤波的更新方程。
+我们采取了两个记号 $\hat x_{k|k}$ 和 $\hat{\mat P}_{k|k}$，自然的，
+我们会想知道它们是否真的对应于后验分布 $p(x_k|z_{1:k})$ 的均值和协方差。
+答案是肯定的，我们现在来证明这一点。
+
+回顾后验概率的表达式 \eqref{eq:posterior}，我们可以将其重写为
+\[
+  p(x_k|z_{1:k})=\eta\exp(-J(x_k)),
+\]
+其中 $\eta$ 是归一化常数。我们把 $J(x_k)$ 在最优估计 $\hat x_{k|k}$ 处
+进行 Taylor 展开，由于 $J(x_k)$ 本身是关于 $x_k$ 的二次型，所以其展开式中
+最高只有二阶项，也即
+\[
+  J(x_k)=J(\hat x_{k|k})+\nabla J(\hat x_{k|k})^\top (x_k-\hat x_{k|k})+\frac{1}{2}(x_k-\hat x_{k|k})^\top \nabla^2 J(\hat x_{k|k})(x_k-\hat x_{k|k}),
+\]
+由于 $\hat x_{k|k}$ 是 $J(x_k)$ 的极值点，所以 $\nabla J(\hat x_{k|k})=0$。
+计算 Hessian 矩阵，我们有
+\[
+  \nabla^2 J(x_k)=\what{\mat P}_{k|k-1}^{-1}+\mat H_k^\top\mat R_k^{-1}\mat H_k
+  =\hat{\mat P}_{k|k}^{-1},
+\]
+因此，有
+\[
+  J(x_k)=J(\hat x_{k|k})+\frac{1}{2}(x_k-\hat x_{k|k})^\top \hat{\mat P}_{k|k}^{-1}(x_k-\hat x_{k|k}),
+\]
+这表明
+\[
+  p(x_k|z_{1:k})=\eta \exp(-J(\hat x_{k|k})) \exp\left(
+    -\frac{1}{2}(x_k-\hat x_{k|k})^\top \hat{\mat P}_{k|k}^{-1}(x_k-\hat x_{k|k})
+  \right),
+\]
+其中 $\eta \exp(-J(\hat x_{k|k}))$ 是一个常数，这就表明 $p(x_k|z_{1:k})$ 是一个均值为 $\hat x_{k|k}$，协方差为 $\hat{\mat P}_{k|k}$ 的正态分布。
+
+这意味着，对于线性 Gauss 系统，虽然通过最大后验估计只是寻找了一个使得后验
+概率最大的点估计，但是实际上这完全确定了整个后验分布 $p(x_k|z_{1:k})$，
+这个视角赋予了最优估计 $\hat x_{k|k}$ 和协方差 $\hat{\mat P}_{k|k}$ 更深刻的统计意义，
+使得我们不仅知道最优估计的值，还知道了这个估计的不确定性。有了这个视角，
+也有利于我们在后面通过投影方法来重新推导 Kalman 滤波的更新方程。
+
+\section{误差状态 Kalman 滤波}
+
+下面考虑 Lie 群 $G$ 中的系统 $X_t$。我们可以把 $X_t$ 视为 $G$
+上的一个光滑曲线，满足 $X_t\in T_{X_t}G$。我们采取左平凡化
+$T_{A}G=\{\d (L_A)_{e}(X)\,|\, X\in\lie g\}$，
+其中 $\lie g$ 是 $G$ 的 Lie 代数，$L_A$ 是 $G$ 上的左乘映射，
+$e$ 是 $G$ 的单位元。于是，我们可以将 $X_t$ 的演化描述为一个 Lie 群上的微分方程：
+\begin{equation}\label{eq:lie_sde}
+  \dot X_t=\d (L_{X_t})_e\left(
+    f(t,X_t)+\mat G(t,X_t) w_t
+  \right)^\wedge,
+\end{equation}
+其中 $f:\mathbb{R}\times G\to \mathbb{R}^n$ 是光滑函数，$(\cdot)^\wedge:\mathbb{R}^n\to \lie g$
+是 Lie 代数同构。这里 $w_t$ 表示一个白噪声。我们没有直接使用 SDE 的形式来描述系统的演化，
+因为 Lie 群上的 SDE 的定义更为复杂，涉及到 Stratonovich 积分等概念，我们放在后面再来讨论。
+然后我们定义无噪声的状态 $\hat X_t$，其满足常微分方程：
+\[
+  \dot{\hat X}_t=\d (L_{X_t})_e\left(
+    f(t,\hat X_t)
+  \right)^\wedge.
+\]
+我们定义误差状态 $\delta x_t\in \mathbb{R}^n$ 为
+\[
+  \delta x_t=X_t\boxminus \hat X_t=\log\left(
+    \hat X_t^{-1}X_t
+  \right)^\vee,
+\]
+或者说其满足右扰动的形式：
+\[
+  X_t=\hat X_t\boxplus \delta x_t=\hat X_t\exp\left(
+    (\delta x_t)^\wedge
+  \right).
+\]
+
+我们把漂移项 $f(t,X_t)$ 在 $\hat X_t$ 处进行一阶 Taylor 展开，
+记 $f_t(X_t)=f(t,X_t)$，根据微分的链式法则，我们有
+\[
+  f_t(X_t)=f_t(\hat X_t\boxplus \delta x_t)
+  \approx  f_t(\hat X_t)+ \d (f_t)_{\hat X_t} \circ \d (L_{\hat X_t})_e
+  \circ \d (\exp)_0\bigl(
+  (\delta x_t)^\wedge\bigr),
+\]
+由于 $\d(\exp)_0$ 是恒等映射，所以上式可以化简为
+\[
+  f_t(X_t)\approx f_t(\hat X_t)+ \d (f_t)_{\hat X_t} \circ \d (L_{\hat X_t})_e\bigl(
+  (\delta x_t)^\wedge\bigr),
+\]
+记 $\mat J_f=\d (f_t)_{\hat X_t} \circ \d (L_{\hat X_t})_e\circ (\cdot)^\wedge$，上式
+可以写成
+\[
+  f_t(X_t)\approx f_t(\hat X_t)+ \mat J_f (\delta x_t).
+\]
+类似的，我们可以将 $\mat G_t(X_t)$ 在 $\hat X_t$ 处进行一阶 Taylor 展开，
+有
+\begin{align*}
+  \mat G_t(X_t)&\approx \mat G_t(\hat X_t)+\mat J_G (\delta x_t).
+\end{align*}
+
+令 $\eta_t=\hat X_t^{-1}X_t$，那么
+\begin{equation}\label{eq:error_sde}
+  \begin{aligned}
+    \dot \eta_t&=\frac{\d}{\d t} \bigl(\hat X_t^{-1}\bigr)X_t+
+    \hat X_t^{-1}\dot X_t\\
+    &=-\left(
+      f_t(\hat X_t)
+    \right)^\wedge\eta_t+\eta_t\left(
+      f_t( X_t)+ \mat G_t(X_t) w_t
+    \right)^\wedge\\
+    &\approx -\left(
+      f_t(\hat X_t)
+    \right)^\wedge\eta_t+\eta_t\left(
+      f_t(\hat X_t)+\mat J_f\delta x_t+\mat G_t(\hat X_t) w_t
+      \right)^\wedge.
+  \end{aligned} 
+\end{equation}
+回顾右 Jacobian 矩阵的定义：
+\[
+  \exp(-\xi^\wedge)\exp(\xi^\wedge+\delta \xi^\wedge)\approx 
+  \d L_{\exp(-\xi^\wedge)}\circ \d (\exp)_{\xi^\wedge} (\delta \xi^\wedge)=
+  \bigl(\mat J_R(\xi)\delta \xi\bigr)^\wedge,
+\]
+也即
+\[
+  \d (\exp)_{\xi^\wedge}(\delta \xi^\wedge)=\d L_{\exp(\xi^\wedge)}\bigl( \mat J_R(\xi)\delta \xi\bigr)^\wedge,
+\]
+由于 $\eta_t=\exp(\delta x_t)^\wedge$，所以
+\[
+  \dot\eta_t=\d L_{\eta_t}\bigl(\mat J_R(\delta x_t)\delta\dot x_t\bigr)^\wedge,
+\]
+与 \eqref{eq:error_sde} 式比较，我们得到误差状态 $\delta x_t$ 的微分方程为
+\[
+  \delta \dot x_t\approx\mat J_R(\delta x_t)^{-1}
+  \left(
+    \bigl(\mat I-\Ad_{\eta_t^{-1}}^\vee\bigr)
+      f_t(\hat X_t)+\mat J_f\delta x_t
+  +
+  \mat G_t(\hat X_t) w_t
+  \right).
+\]
+注意到 
+\[
+  \mat I-\Ad_{\eta_t^{-1}}^\vee=\mat I-\exp(-\ad_{\delta x_t}^\vee)\approx \ad_{\delta x_t}^\vee,
+\]
+所以保留一阶项后，我们有
+\[
+  \delta\dot x_t\approx \left(\mat J_f -\ad_{f_t(\hat X_t)}^\vee\right)\delta x_t+\mat G_t(\hat X_t) w_t.
+\]
+然后采取前一节的结论即可完成误差状态 Kalman 滤波的推导。
+
+\begin{example}[IMU 系统]
+  考虑 IMU 系统状态 $(\mat C,\mat v,\mat r,\mat b_g,\mat b_a)\in \SO(3)\times \mathbb{R}^3 \times \mathbb{R}^3 \times \mathbb{R}^3 \times \mathbb{R}^3$。
+  其状态满足微分方程
+  \begin{align*}
+    \dot{\mat C}&=\mat C(\omega-\mat b_g+n_g)^\wedge,\\
+    \dot{\mat v}&=\mat C(a-{\mat b}_a+n_a)+\mat g,\\
+    \dot{\mat r}&=\mat v,\\
+    \dot{\mat b}_g&=n_{bg},\\
+    \dot{\mat b}_a&=n_{ba}.
+  \end{align*}
+  其中 $\omega$ 和 $a$ 分别是陀螺仪和加速度计的测量值，$n_g$ 和 $n_a$ 是测量噪声，$n_{bg}$ 和 $n_{ba}$ 是偏置的随机游走噪声。我们可以将上述系统写成 \eqref{eq:lie_sde} 的形式，然后通过误差状态 Kalman 滤波来进行状态估计。
+  令 $X=(\mat C,\mat v,\mat r,\mat b_g,\mat b_a)$ 表示系统状态，那么
+  \[
+    \dot X=\d (L_X)_e\left(
+      \begin{bmatrix}
+        \omega-\mat b_g\\
+        \mat C(a-{\mat b}_a)+\mat g\\
+        \mat v\\
+        \mat 0\\
+        \mat 0
+      \end{bmatrix}+
+      \begin{bmatrix}
+        n_g\\
+        \mat C n_a\\
+        \mat 0\\
+        n_{bg}\\
+        n_{ba}
+      \end{bmatrix}
+    \right)^\wedge,
+  \] 
+  其中
+  \[
+      f_t(X)=\begin{bmatrix}
+        \omega-\mat b_g\\
+        \mat C(a-{\mat b}_a)+\mat g\\
+        \mat v\\
+        \mat 0\\
+        \mat 0
+      \end{bmatrix},
+  \]
+  于是
+  \[
+      \mat J_f=\begin{bmatrix}
+        0 & 0 & 0 & -\mat I & 0\\
+        -(\hat{\mat C}(a-\hat{\mat b}_a))^\wedge & 0 & 0 & 0 & -\hat{\mat C}\\
+        0 & \mat I & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0
+      \end{bmatrix},\quad 
+      \ad_{f(\hat X)}^\vee=\begin{bmatrix}
+        (\omega-\hat{\mat b}_g)^\wedge & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0
+      \end{bmatrix},
+  \]
+  因此误差状态的微分方程为
+  \[
+      \delta\dot{x}=\begin{bmatrix}
+        -(\omega-\hat{\mat b}_g)^\wedge & 0 & 0 & -\mat I & 0\\
+        -(\hat{\mat C}(a-\hat{\mat b}_a))^\wedge & 0 & 0 & 0 & -\hat{\mat C}\\
+        0 & \mat I & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0
+      \end{bmatrix}\delta x+\begin{bmatrix}
+        \mat I & 0 & 0 & 0 \\
+        0 & \hat{\mat C} & 0 & 0\\
+        0 & 0 & 0 & 0\\
+        0 & 0 & \mat I & 0\\
+        0 & 0 & 0 & \mat I
+      \end{bmatrix}\begin{bmatrix}
+        n_g\\
+        n_a\\
+        n_{bg}\\
+        n_{ba}
+      \end{bmatrix}.
+  \]
+\end{example}
+
+\section{迭代的误差状态 Kalman 滤波}
+
+根据 \ref{subsec:map} 节的解释，Kalman 滤波是在最小化代价函数 \eqref{eq:cost} 式。
+现在我们考虑 Lie 群上的状态 $X_t$，以及非线性的量测方程
+\[
+  z_t=h(X_t)+v_k, \quad v_k\sim \mathcal{N}(\mat 0,\mat R_k).
+\]
+同样用 $x_k$ 来表示 $X_{t_k}$，以及考虑误差状态 $\delta x_k=x_k\boxminus \hat x_k$。
+首先把量测方程线性化，得到
+\[
+  z_k=h(\hat x_k\boxplus \delta x_k)+v_k\approx 
+  h(\hat x_k)+\d h_{\hat x_k}\circ \d (L_{\hat x_k})_e(\delta x_k)^\wedge+v_k,
+\]
+通常记 $\mat H_k=\d h_{\hat x_k}\circ \d (L_{\hat x_k})_e\circ (\cdot)^\wedge$，
+那么有线性量测方程
+\[
+  z_k\approx h(\hat x_k)+\mat H_k \delta x_k+v_k.
+\]
+迭代 Kalman 滤波考虑的问题是，如何解决线性化误差较大时 Kalman 滤波性能下降的问题。迭代 Kalman 滤波的核心思想是，在每次更新时，不仅更新状态估计 $\hat x_k$，还要重新线性化量测方程，并且迭代这个过程，直到收敛为止。
+
+与 \ref{subsec:map} 节的推导一样，在非线性量测的时候，最大后验估计的代价函数为
+\begin{equation}\label{eq:nonlinear_cost}
+  J(x_k)=\frac{1}{2}\norm{x_k\boxminus \hat x_{k|k-1}}_{\what{\mat P}_{k|k-1}^{-1}}^2+\frac{1}{2}\norm{z_k-h(x_k)}_{\mat R_k^{-1}}^2.
+\end{equation}
+这个式子是精确的，但是由于 $h(x_k)$ 的非线性，我们无法直接求解这个优化问题。迭代 Kalman 滤波的做法是，在每次迭代中，使用当前的状态估计 $\hat x_k^{(i)}$ 来线性化量测方程，然后求解线性化后的 Kalman 滤波更新方程，得到新的状态估计 $\hat x_k^{(i+1)}$，然后重复这个过程，直到 $\hat x_k^{(i)}$ 收敛，
+最终得到最优估计 $\hat x_{k|k}$。
+首先，$\hat x_k^{(0)}=\hat x_{k|k-1}$。在 $\hat x_k^{(i)}$ 处，
+有量测
+\begin{equation}\label{eq:iterative_measurement}
+  z_k\approx h\bigl(\hat x_k^{(i)}\bigr)+\mat H_k^{(i)}\delta x_k^{(i)}+v_k
+\end{equation}
+对于状态，有 $x_k=\hat x_k^{(i)}\boxplus \delta x_k^{(i)}$，所以
+\begin{equation}\label{eq:iterative_error}
+  x_k\boxminus \hat x_{k|k-1}=\bigl(\hat x_k^{(i)}\boxplus \delta x_k^{(i)}\bigr)\boxminus \hat x_{k|k-1}\approx 
+  \hat x_k^{(i)}\boxminus \hat x_{k|k-1}+ \mat J^{(i)} \delta x_k^{(i)}.
+\end{equation}
+记 $e^{(i)}=\hat x_k^{(i)}\boxminus \hat x_{k|k-1}$，由于
+\begin{align*}
+  \log\bigl(\hat x_{k|k-1}^{-1}\hat x_k^{(i)}\exp(\delta x_k^{(i)})\bigr)&\approx
+  e^{(i)}+\d(\log)_{\hat x_{k|k-1}^{-1}\hat x_k^{(i)}}\circ 
+  \d \left(L_{\hat x_{k|k-1}^{-1}\hat x_k^{(i)}}\right)_e\bigl(\delta x_k^{(i)}\bigr)^\wedge\\
+  &= e^{(i)} + \mat J_r^{-1}\bigl(e^{(i)}\bigr) \delta x_k^{(i)},
+\end{align*}
+所以 \eqref{eq:iterative_error} 式中的 $\mat J^{(i)}$ 就是右 Jacobian 矩阵
+的逆 $\mat J_r^{-1}\bigl(e^{(i)}\bigr)$。
+
+将 \eqref{eq:iterative_measurement} 式和 \eqref{eq:iterative_error} 式
+带入 \eqref{eq:nonlinear_cost} 式，我们得到迭代 Kalman 滤波的代价函数为
+\begin{equation}
+  J\bigl(\delta x_k^{(i)}\bigr)\approx \frac{1}{2}\norm{
+    e^{(i)}+\mat J^{(i)}\delta x_k^{(i)}
+  }_{\what{\mat P}_{k|k-1}^{-1}}^2+\frac{1}{2}\norm{
+    z_k-h\bigl(\hat x_k^{(i)}\bigr)-\mat H_k^{(i)}\delta x_k^{(i)}
+  }_{\mat R_k^{-1}}^2.
+\end{equation}
+接下来的求解方法和线性的情况完全一致。令 $\nabla J\bigl(\delta x_k^{(i)}\bigr)=0$，我们得到方程
+\begin{equation}\label{eq:iterative_update}
+  \left(
+    {\mat J^{(i)}}^\top\what{\mat P}_{k|k-1}^{-1}\mat J^{(i)}+{\mat H_k^{(i)}}^\top\mat R_k^{-1}\mat H_k^{(i)}
+  \right)\delta x_k^{(i)}={\mat H_k^{(i)}}^\top\mat R_k^{-1}\bigl(z_k-h\bigl(\hat x_k^{(i)}\bigr)\bigr)
+  -{\mat J^{(i)}}^\top\what{\mat P}_{k|k-1}^{-1}e^{(i)}.
+\end{equation}
+我们一般把左端的矩阵称为信息矩阵或者说 Hessian 矩阵，记为
+\begin{equation}\label{eq:hessian}
+  \mat S^{(i)}={\mat J^{(i)}}^\top\what{\mat P}_{k|k-1}^{-1}\mat J^{(i)}+{\mat H_k^{(i)}}^\top\mat R_k^{-1}\mat H_k^{(i)},
+\end{equation}
+令 Kalman 增益为
+\begin{equation}
+  \mat K^{(j)}= 
+    \bigl(\mat S^{(i)}\bigr)^{-1}
+  {\mat H_k^{(i)}}^\top\mat R_k^{-1},
+\end{equation}
+那么更新量
+\begin{equation}
+    \delta x_k^{(i)}=\mat K^{(i)}\bigl(z_k-h\bigl(\hat x_k^{(i)}\bigr)\bigr)-
+  \left(
+    \mat I-\mat K^{(i)}\mat H_k^{(i)}
+  \right) {\mat J^{(i)}}^{-1} e^{(i)}.
+\end{equation}
+最后，当更新量足够小 $\norm{\delta x_k^{(j)}}<\epsilon$ 时，
+我们认为收敛，令最优的估计状态为 $\hat x_{k|k}=\hat x_k^{(j+1)}$。
+根据 \ref{subsec:map_prob} 节的解释，此时状态协方差就是 
+Hessian 矩阵的逆，即
+\begin{equation}
+  \what{\mat P}_{k|k}=
+    \left(
+    {\mat J^{(j)}}^\top\what{\mat P}_{k|k-1}^{-1}\mat J^{(j)}+{\mat H_k^{(j)}}^\top\mat R_k^{-1}\mat H_k^{(j)}
+  \right)^{-1}=
+  \left(
+    \mat I-\mat K^{(j)}\mat H_k^{(j)}
+  \right){\mat J^{(j)}}^{-1}\what{\mat P}_{k|k-1}{\mat J^{(j)}}^{-\top}.
+\end{equation}
+这就完成了迭代的误差状态 Kalman 滤波的推导。
+
+\subsection{与 Gauss-Newton 方法的关系}
+
+回到 \eqref{eq:nonlinear_cost} 式，对协方差矩阵进行 Cholesky 分解 $\what{\mat P}_{k|k-1}^{-1}=\mat L_P^\top\mat L_P$
+以及 $\mat R_k^{-1}=\mat L_R^\top\mat L_R$，我们可以将代价函数 $J(x_k)$ 重写为
+标准的 $\ell_2$-范数形式：
+\[
+  J(x_k)=\frac{1}{2}
+  \norm{
+    \mat L_P\bigl(x_k\boxminus \hat x_{k|k-1}\bigr)
+  }^2+\frac{1}{2}\norm{
+    \mat L_R\bigl(z_k-h(x_k)\bigr)
+  }^2.
+\]
+令
+\[
+  r(x_k)=\begin{bmatrix}
+    \mat L_P\bigl(x_k\boxminus \hat x_{k|k-1}\bigr)\\
+    \mat L_R\bigl(z_k-h(x_k)\bigr)
+  \end{bmatrix},
+\]
+那么
+\[
+  J(x_k)=\frac{1}{2}\norm{r(x_k)}^2,
+\]
+这是一个标准的非线性最小二乘问题。迭代 Kalman 滤波的更新步骤实际上就是在求解这个非线性最小二乘问题的 Gauss-Newton 迭代步骤。
+这是因为，我们有
+\[
+  r\bigl(\hat x_k^{(i)}\boxplus \delta x_k^{(i)}\bigr)\approx 
+  r\bigl(\hat x_k^{(i)}\bigr)+\begin{bmatrix}
+    \mat L_P\mat J^{(i)} \\
+    -\mat L_R\mat H_k^{(i)}
+  \end{bmatrix}\delta x_k^{(i)},
+\]
+所以
+\begin{align*}
+  J\bigl(\delta x_k^{(i)}\bigr)&\approx \frac{1}{2}\norm{
+    r\bigl(\hat x_k^{(i)}\bigr)+\begin{bmatrix}
+    \mat L_P\mat J^{(i)} \\
+    -\mat L_R\mat H_k^{(i)}
+  \end{bmatrix}\delta x_k^{(i)}
+  }^2\\
+  &=\frac{1}{2}\left(
+    \norm{r\bigl(\hat x_k^{(i)}\bigr)}^2+2
+    r\bigl(\hat x_k^{(i)}\bigr)^\top\begin{bmatrix}
+    \mat L_P\mat J^{(i)} \\
+    -\mat L_R\mat H_k^{(i)}
+  \end{bmatrix}\delta x_k^{(i)}+
+  \bigl(\delta x_k^{(i)}\bigr)^\top 
+  \mat S^{(i)}
+  \delta x_k^{(i)}
+  \right),
+\end{align*}
+回顾这里的 $\mat S^{(i)}$ 就是 \eqref{eq:hessian} 式的 Hessian 矩阵。
+于是 $\nabla J\bigl(\delta x_k^{(i)}\bigr)=0$ 等价于下面的式子：
+\begin{equation}
+  \mat S^{(i)}\delta x_k^{(i)}=-\begin{bmatrix}
+    \mat L_P\mat J^{(i)} \\
+    -\mat L_R\mat H_k^{(i)}
+  \end{bmatrix}^\top r\bigl(\hat x_k^{(i)}\bigr),
+\end{equation}
+这和 \eqref{eq:iterative_update} 式是完全一致的。这就表明，迭代 Kalman 滤波的更新步骤实际上就是在求解非线性最小二乘问题的 Gauss-Newton 迭代步骤。
+
+
+\section{不变 Kalman 滤波}
+
+还是考虑 Lie 群上的状态 $X_t$，定义右不变的误差
+\[
+  \eta_t=\hat X_tX_t^{-1}=\exp(\xi_t^\wedge).
+\]
+(也可以定义左不变的误差 $\eta_t=X_t^{-1}\hat X_t$，这里我们以右不变误差为例进行推导。)
+
+假设系统的动力学为
+\begin{equation}
+  \dot X_t=f_{u_t}(X_t),
+\end{equation}
+其中 $u_t$ 是系统的输入。不变 Kalman 滤波所需的系统动力学不能是任意的非线性函数，
+它必须满足一种被称为\emph{群仿射}的性质。
+
+\begin{definition}[群仿射系统]
+  若对于 Lie 群 $G$ 中的任意元素 $X_1,X_2\in G$，动力学函数 $f_u: G \to TG$ 满足
+  \begin{equation}
+    f_u(X_1X_2)=\d (R_{X_2})_{X_1}f_u(X_1)+\d (L_{X_1})_{X_2}f_u(X_2)-\d (L_{X_1})_{X_2}\d (R_{X_2})_{e}f_u(e),
+  \end{equation}
+  其中 $e\in G$ 是单位元，那么我们说这个系统是群仿射的。当 $G$ 是矩阵 Lie 群时，
+  可以写为
+  \[
+    f_u(X_1X_2)=f_u(X_1)X_2+X_1f_u(X_2)-X_1f_u(e)X_2.
+  \]
+\end{definition}
+
+计算 $\eta_t$ 的微分方程，我们有
+\begin{equation}\label{eq:invariant_error_ode}
+  \begin{aligned}
+    \dot\eta_t&=\d (R_{X_t^{-1}})_{\hat X_t}\dot{\hat X}_t+\d (L_{\hat X_t})_{X_t^{-1}}\frac{\d}{\d t}\bigl(X_t^{-1}\bigr)\\
+    &=\d (R_{X_t^{-1}})_{\hat X_t}f_{u_t}(\hat X_t)-
+    \d (L_{\hat X_t})_{X_t^{-1}}\circ\d (L_{X_t^{-1}})_{e}
+    \circ \d (R_{X_t^{-1}})_{X_t}
+    f_{u_t}(X_t)\\
+    &=\d (R_{X_t^{-1}})_{\hat X_t}f_{u_t}(\hat X_t)-
+    \d (L_{\eta_t})_e
+    \circ \d (R_{X_t^{-1}})_{X_t}
+    f_{u_t}(X_t).
+  \end{aligned}
+\end{equation}
+由于 $\hat X_t=\eta_tX_t$，再根据群仿射的性质，我们有
+\[
+  f_{u_t}(\hat X_t)=
+  \d(R_{X_t})_{\eta_t}f_{u_t}(\eta_t)+\d (L_{\eta_t})_{X_t}f_{u_t}(X_t)-\d (L_{\eta_t})_{X_t}\d (R_{X_t})_{e}f_{u_t}(e),
+\]
+代入 \eqref{eq:invariant_error_ode} 式，我们得到不变误差的微分方程：
+\[
+  \dot\eta_t=f_{u_t}(\eta_t)-\d(L_{\eta_t})_{e}f(e).
+\]
+令 $g_{u}(\eta)=f_u(\eta)-\d (L_{\eta})_e f(e)$，于是误差的微分方程为
+\begin{equation}
+  \dot\eta_t=g_{u_t}(\eta_t).
+\end{equation}
+这表明误差 $\eta_t$ 和当前的状态 $\hat X_t$ 无关，这就是不变 Kalman 滤波的核心思想。由于误差的演化与当前状态无关，我们可以直接对误差进行 Kalman 滤波，而不需要考虑当前状态的影响。
+
+\subsection{对数线性性质}
+
+按照通常的方式推导线性化的微分方程，设 $\eta_t=\exp(\xi_t^\wedge)$，
+那么 $\dot\eta_t=\d (L_{\eta_t})_e\bigl(\mat J_R(\xi_t)\dot\xi_t\bigr)^\wedge$，
+所以 $\xi_t$ 应该满足严格的微分方程
+\begin{equation}\label{eq:ode of xi}
+  \dot\xi_t=\mat J_R(\xi_t)^{-1}
+  \left(\d (L_{\eta_t^{-1}})_{\eta_t}\circ 
+  g_{u_t}\bigl(\exp(\xi_t)^\wedge\bigr)\right)^\vee.
+\end{equation}
+只考虑一阶项，那么 $\d (L_{\eta_t^{-1}})_{\eta_t}$ 近似为恒等映射，并且设
+矩阵 $\mat A_{u_t}=\d (g_{u_t})_e$，我们有
+\[
+  g_{u_t}(\exp(\xi_t)^\wedge)\approx g_{u_t}(e)+\d (g_{u_t})_e\circ \d (\exp)_0\bigl(\xi_t^\wedge\bigr)
+  =\d (g_{u_t})_e\bigl(\xi_t^\wedge\bigr)=\bigl(\mat A_{u_t}\xi_t\bigr)^\wedge,
+\]
+于是 \eqref{eq:ode of xi} 式变为
+\begin{equation}
+  \dot\xi_t\approx \mat A_{u_t}\xi_t
+\end{equation}
+
+
+
+
+
+
+
+
+\end{document}
+

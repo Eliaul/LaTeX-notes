@@ -731,6 +731,39 @@ $\{i_1,\dots,i_k\}$，我们有
 
 \subsection{$\mathbb{Z}^d$ 上的随机游走}
 
+令 $\eta,\xi_1,\xi_2,\dots$ 是 $\mathbb{Z}^d$ 中的独立随机变量。
+我们假设 $\xi_1,\xi_2,\dots$ 有同样的分布律 $\mu$，并且对于每个 $n\geq 0$，
+令
+\[
+  X_n=\eta+\xi_1+\cdots+\xi_n.
+\] 
+那么 $(X_n)_{n\in \mathbb{Z}_+}$ 是 $E=\mathbb{Z}^d$ 
+中的 Markov 链，有转移矩阵
+\[
+  Q(x,y)=\mu(y-x),\quad x,y\in \mathbb{Z}^d.
+\]
+为了验证这一点，只需要注意到 $\xi_{n+1}$ 和 $(X_0,X_1,\dots,X_n)$
+是独立的，那么
+\begin{align*}
+  &\mathbb{P}(X_{n+1}=y|X_0,\dots,X_n)\\
+  &=\mathbb{P}(\eta+\xi_1+\cdots+\xi_{n+1}=y|X_0,\dots,X_n)\\
+  &=\mathbb{P}(\xi_{n+1}=y-X_n|X_0,\dots,X_n)\\
+  &=
+  \mathbb{P}(\xi_{n+1}=y-X_n)=\mu(y-X_n).
+\end{align*}
+我们把 $(X_n)_{n\in \mathbb{Z}_+}$ 称为 $\mathbb{Z}^d$
+上的跳跃分布为 $\mu$ 的\emph{随机游走}。
+
+令 $(e_1,\dots,e_d)$ 是 $\mathbb{R}^d$ 的标准基向量。
+当对于每个 $i\in\{1,\dots,d\}$ 的时候，如果有 $\mu(e_i)=\mu(-e_i)=\frac{1}{2d}$，
+那么我们说 $(X_n)_{n\in \mathbb{Z}_+}$ 是 $\mathbb{Z}^d$ 上的\emph{简单随机游走}。
+
+
+
+
+
+
+
 
 \section{典范的 Markov 链}
 
@@ -882,8 +915,7 @@ $N_x$ 可以解释为状态经过点 $x$ 的次数。
   那么 $y\in R$ 且 $\matup P_y(H_x<\infty)=1$，因此 $U(y,x)>0\ (y\to x)$。
 \end{lemma}
 
-
-
+\include{chapters/ch14/brown motion}
 
 
 \end{document}

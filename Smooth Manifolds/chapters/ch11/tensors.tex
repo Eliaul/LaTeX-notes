@@ -414,6 +414,80 @@ $\mathcal{F}$ 是 $C^\infty(M)$-多重线性的。
   是光滑向量场。
 \end{proof}
 
+我们还可以定义张量的迹。我们需要利用以下自然同构：
+\[
+  T^{(1,1)}(V)\simeq \End(V).
+\]
+对于一个矩阵 $A\in\End(V)$，其自然的把向量 $v\in V$ 送到一个向量 $Av$，
+如何把 $Av$ 变成一个数呢？我们可以利用一个余向量 $\omega\in V^*$，输出
+$\omega(Av)$。因此，$A$ 可以自然诱导出一个 $(1,1)$-张量 $V^*\times V\to \mathbb{R}$
+为
+\[
+  A(\omega,v)=\omega(Av).
+\]
+反之，对于任意 $(1,1)$-张量 $F:V^*\times V\to \mathbb{R}$，固定一个向量 $v\in V$，
+考虑线性映射 $F(\cdot,v)\in V^{**}$，由于 $V^{**}$ 自然同构于 $V$，所以 $F(\cdot,v)$
+自然对应到一个向量。换句话说，$F$ 可以自然诱导出一个线性映射 $A:V\to V$，
+满足对于任意 $\omega\in V^*$ 有 $F(\omega,v)=\omega(Av)$。
+因此，$T^{(1,1)}(V)$ 与 $\End(V)$ 存在自然同构。
+更一般的，我们有下面的命题。
+
+\begin{proposition}\label{prop:natural isomorphism between (k+1,l)-tensor and multilinear map}
+  令 $V$ 是有限维向量空间，那么存在 $T^{(k+1,l)}(V)$ 和多重线性映射
+  \[
+    \underbrace{V^*\times\cdots\times V^*}_{\text{$k$ copies}}
+    \times \underbrace{V\times\cdots\times V}_{\text{$l$ copies}}\to V
+  \]
+  空间之间的自然同构。
+\end{proposition}
+\begin{proof}
+  与 $T^{(1,1)}(V)$ 的情况一样。对于上述形式的多重线性映射 $A$，其诱导出
+  一个 $(k+1,l)$-张量 $F$ 为
+  \[
+    F(\omega^1,\dots,\omega^k,\omega,v_1,\dots,v_l)=
+    \omega\bigl(A(\omega^1,\dots,\omega^k,v_1,\dots,v_l)\bigr).
+  \]
+  反之，对于一个 $(k+1,l)$-张量 $F$，其诱导出一个多重线性映射 $A$ 满足：
+  对于任意 $\omega\in V^*$，有
+  \[
+    F(\omega^1,\dots,\omega^k,\omega,v_1,\dots,v_l)=
+    \omega\bigl(A(\omega^1,\dots,\omega^k,v_1,\dots,v_l)\bigr).\qedhere
+  \]
+\end{proof}
+
+我们可以利用 \autoref{prop:natural isomorphism between (k+1,l)-tensor and multilinear map}
+来定义一个自然的\emph{迹}算子或者说\emph{缩并}算子，其把张量的秩降低 $2$。
+对于矩阵 $A$，我们知道 $\tr$ 是 $A$ 的对角线元素之和。根据前面的自然同构，$A$ 可以看作一个 $(1,1)$-张量 $F$，
+此时自然可以定义 $F$ 的迹 $\tr F$ 就是 $A$ 的迹 $\tr A$。在给定基下，
+若 $F=F^i_j E_i\otimes\varepsilon^j$，那么对于任意 $\omega\in V^*$ 和 $v\in V$，有
+\[
+  F(\omega,v)=F^i_j\omega_iv^j,
+\]
+另一方面有
+\[
+  \omega(Av)=(\omega_i\varepsilon^i)(A^j_kv^kE_j)=A^i_k\omega_i v^k,
+\]
+所以必有 $F^i_j=A^i_j$，因此 $\tr F$ 在坐标中的表达就是 $\tr F= F_i^i$。
+于是，迹算子可以视为一个线性映射 $\tr:T^{(1,1)}(V)\to \mathbb{R}$，
+其作用为把 $F$ 的一个逆变指标和协变指标变成相同然后进行求和，我们称为\emph{缩并}。
+更一般的，我们可以定义迹 $\tr:T^{(k+1,l+1)}(V)\to T^{(k,l)}(V)$，
+满足 $(\tr F)(\omega^1,\dots,\omega^k,v_1,\dots,v_l)$
+是 $(1,1)$-张量
+\[
+  F\bigl(\omega^1,\dots,\omega^k,\cdot,v_1,\dots,v_l,\cdot\bigr)
+  \in T^{(1,1)}(V)
+\]
+的迹。在某组基中，$\tr F$ 的分量为
+\[
+  (\tr F)_{j_1\dots j_l}^{i_1\dots i_k}=
+  F_{j_1\dots j_l m}^{i_1\dots i_k m}.
+\]
+换句话说，仅仅就是把 $F$ 的最后一个逆变指标和最后一个协变指标进行缩并。
+
+
+
+
+
 流形上的\emph{对称张量场}指的是一个协变张量场并且其在每个点处的取值都是
 对称张量。两个或多个张量场的对称积由逐点张量的对称积定义。例如，
 如果 $A,B$ 是两个光滑余向量场，那么它们的对称积指的是一个光滑 $2$-张量场

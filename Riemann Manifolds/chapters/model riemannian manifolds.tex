@@ -39,6 +39,266 @@ $d\varphi_p:T_pM\to T_{\varphi(p)}M$。
     \item 如果 $M$ 是标架齐次的，那么 $M$ 是齐次并且迷向的。
   \end{enumerate}
 \end{proposition}
+\begin{proof}
+  (1) 假设 $M$ 在 $p\in M$ 处迷向，并且 $M$ 是齐次的。
+  任取 $q\in M$ 和单位向量 $v,w\in T_qM$。
+  因为 $M$ 齐次，所以存在 $\varphi\in \Iso(M,g)$ 使得 $\varphi(q)=p$。
+  此时 $\d\varphi_q:T_qM \to T_pM$ 是等距同构，于是 $\d\varphi_q(v)$
+  和 $\d\varphi_q(w)$ 都是 $T_pM$ 中的单位向量。
+  因为 $M$ 在 $p$ 处迷向，所以存在 $\psi\in \Iso_p(M,g)$ 使得
+  $\d\psi_p(\d\varphi_q(v))=\d\varphi_q(w)$。
+  于是，映射 $\varphi^{-1}\circ \psi\circ \varphi$ 是一个等距，且
+  \[
+    (\varphi^{-1}\circ \psi\circ \varphi)(q)=\varphi^{-1}(\psi(p))=\varphi^{-1}(p)=q,
+  \]
+  并且
+  \[
+    \d(\varphi^{-1}\circ \psi\circ \varphi)_q(v)
+    =\d\varphi^{-1}_p(\d\psi_p(\d\varphi_q(v)))
+    =\d\varphi^{-1}_p(\d\varphi_q(w))=w.
+  \]
+  因此，$M$ 在 $q$ 处迷向。因为 $q$ 是任意选取的，所以 $M$ 是迷向的。
+
+  (2) 假设 $M$ 是标架齐次的。根据定义，显然 $M$ 是齐次的。
+  任取 $p\in M$ 和单位向量 $v,w\in T_pM$。
+  考虑包含 $v$ 的一组正交基和包含 $w$ 的一组正交基。 
+  因为 $M$ 是标架齐次的，所以存在 $\varphi\in \Iso(M,g)$ 使得 $\varphi(p)=p$ 并且 $\d\varphi_p(v)=w$。
+  因此，$M$ 在 $p$ 处迷向。因为 $p$ 是任意选取的，所以 $M$ 是迷向的。
+\end{proof}
+
+一个齐次黎曼流形几何上来说在每个点处看上去都相同，而一个迷向流形则是在每个方向
+方向上看上去都相同。可以证明一个迷向流形自动是齐次的，然而，
+一个黎曼流形可能只在一个点处的迷向的；也可能是齐次的但是处处都不是迷向的；
+也可能是齐次并且迷向但是不是标架齐次的。这些断言的证明需要等到我们
+引入测地线和曲率的理论才能够完成。
+
+\section{Euclid 空间}
+
+最简单且最重要的黎曼流形当然是\emph{$n$ 维 Euclid 空间}，即 $\mathbb{R}^n$
+配备 Euclid 度量 $\bar g$。
+
+更一般的，如果 $V$ 是 $n$-维实内积空间，对于任意 $p\in V$ 和 $v,w\in T_pV\simeq V$，
+令 $g_p(v,w)=\langle v,w\rangle$，其中 $\langle\cdot,\cdot\rangle$ 是 $V$ 上的内积。
+选取 $V$ 的一组正交基 $(b_1,\dots,b_n)$，定义 $\mathbb{R}^n\to V$ 的同构
+$(x^1,\dots,x^n)\mapsto x^ib_i$，显然这是一个 $(V,g)$ 和 $(\mathbb{R}^n,\bar g)$ 之间的等距，
+所以所有的 $n$-维内积空间都互相等距。
+
+构造黎曼流形 $\bigl(\mathbb{R}^n,\bar g \bigr)$ 上的等距是非常简单的：
+例如，每个正交变换 $A:\mathbb{R}^n\to \mathbb{R}^n$ 都保持 Euclid 度量，
+平移 $x\mapsto b+x$ 也保持 Euclid 度量。这表明复合 $x\mapsto b+Ax$
+也是一个等距。
+
+可以证明所有这样的等距构成的集合可以视为一个李群光滑地作用在 $\mathbb{R}^n$
+上。令 $\theta:\Orth(n)\times \mathbb{R}^n\to \mathbb{R}^n$ 是
+自然地作用。定义\emph{Euclid 群} $\E(n)$ 是由这个作用确定的半直积 $\mathbb{R}^n\rtimes_\theta \Orth(n)$，
+那么乘法为 $(b,A)(b',A')=(b+A b',AA')$。通过矩阵形式，定义映射
+$\rho:\E(n)\to \GL(n+1,\mathbb{R})$ 为
+\[
+  \rho(b,A)=\begin{pmatrix}
+    A & b\\
+    0 & 1
+  \end{pmatrix},
+\]
+这给出了一个忠实表示。
+
+Euclid 群通过
+\begin{equation}
+  (b,A)\cdot x=b+Ax
+\end{equation}
+作用在 $\mathbb{R}^n$ 上。事实上可以证明，这个作用在 $\Orth(\mathbb{R}^n)$
+上是传递的。(在后面几章，我们将证明 $\bigl(\mathbb{R}^n,\bar g\bigr)$ 的所有 
+等距都形如这种形式)因此，Euclid 空间都是标架齐次的。
+
+\section{球面}
+
+给定 $R>0$，令 $\mathbb{S}^n(R)$ 是 $\mathbb{R}^{n+1}$ 中以原点为
+中心半径 $R$ 的球面，配备诱导度量 $\mathring g_R$。当 $R=1$ 时，
+我们使用记号 $\mathring g=\mathring g_1$。
+
+注意到正交群 $\Orth(n+1)$ 在 $\mathbb{R}^{n+1}$ 上的自然作用也保持
+$\mathbb{S}^n(R)$ 不变，所以 $\Orth(n+1)$ 也可以等距作用在 $\mathbb{S}^n(R)$ 上。
+事实上也可以证明 $\mathbb{S}^n(R)$ 的所有等距都形如这种形式。
+
+\begin{proposition}
+  群 $\Orth(n+1)$ 传递地作用在 $\Orth(\mathbb{S}^n(R))$ 上，因此
+  每个球面都是标架齐次的。
+\end{proposition}
+\begin{proof}
+  只要证明对于任意 $p\in \mathbb{S}^n(R)$ 和任意 $T_p \mathbb{S}^n(R)$
+  处的正交基 $(b_i)$，都存在一个正交映射把北极点 $N=(0,\dots,0,R)$
+  映射到 $p$，并且把 $T_N \mathbb{S}^n(R)$ 处的基 $(\partial_1,\dots,\partial_n)$ 
+  映射到 $(b_i)$。
+
+  令 $\hat p=p/R$ 是方向相同的单位向量。因为基向量 $(b_i)$ 与球面相切，所以
+  它们和 $\hat p$ 正交，所以 $(b_1,\dots,b_n,\hat p)$ 是 $\mathbb{R}^{n+1}$ 的一组正交基。
+  令 $\alpha$ 是这些基向量拼成的矩阵，那么 $\alpha\in \Orth(n+1)$，并且
+  把 $(\partial_1,\dots,\partial_{n+1})$ 送到 $(b_1,\dots,b_n,\hat p)$。
+  于是 $\alpha(N)=p$。此外，由于 $\alpha$ 是线性映射，
+  所以微分 $\d\alpha_N:T_N \mathbb{R}^{n+1}\to T_{p} \mathbb{R}^{n+1}$
+  的表示矩阵和 $\alpha$ 本身相同，所以对于每个 $i=1,\dots,n$ 有
+  $\d\alpha_N(\partial_i)=b_i$，所以 $\alpha$ 是所需的正交映射。
+\end{proof}
+
+圆度量的另一个重要性质是它们与 Euclid 度量有非常密切的关系。
+流形 $M$ 上的两个度量 $g_1$ 和 $g_2$ 被称为\emph{共形相关的}，
+如果存在一个正值函数 $f\in C^\infty(M)$ 使得 $g_2=fg_1$。
+给定两个黎曼流形 $(M,g)$ 和 $\bigl(\wtilde M,\tilde g\bigr)$，
+一个微分同胚 $\varphi:M\to\wtilde M$ 被称为\emph{共形微分同胚}，
+如果其把 $\tilde g$ 拉回到一个与 $g$ 共形相关的度量，即存在正值函数
+$f\in C^\infty(M)$ 使得 $\varphi^*\tilde g=f g$。
+如果两个流形之间存在一个共形微分同胚，那么说它们是\emph{共形等价的}。
+
+\begin{proposition}
+  证明两个黎曼度量 $g_1$ 和 $g_2$ 共形相关当且仅当它们定义了同样的角度
+  而不必是同样的长度，因此，一个微分同胚是共形等价当且仅当其保持角度。
+\end{proposition}
+\begin{proof}
+  若 $g_1$ 和 $g_2$ 共形相关。任取 $p\in M$ 和 $v,w\in T_pM$，则
+  $v$ 和 $w$ 在 $g_1$ 下的夹角满足
+  \[
+    \cos\theta_{g_1} =\frac{g_1|_p(v,w)}{\sqrt{g_1|_p(v,v)g_1|_p(w,w)}},
+  \]
+  此时存在正值函数 $f\in C^\infty(M)$ 使得 $g_2=f g_1$，所以
+  \begin{align*}
+    \cos\theta_{g_2}&=\frac{g_2|_p(v,w)}{\sqrt{g_2|_p(v,v)g_2|_p(w,w)}}
+    =\frac{f(p)g_1|_p(v,w)}{\sqrt{f(p)g_1|_p(v,v)f(p)g_1|_p(w,w)}}\\
+    &=\frac{g_1|_p(v,w)}{\sqrt{g_1|_p(v,v)g_1|_p(w,w)}}=\cos\theta_{g_1}.
+  \end{align*}
+  这就表明 $g_1$ 和 $g_2$ 定义了同样的角度。
+
+  反之，如果 $g_1$ 和 $g_2$ 定义了同样的角度。任取关于 $g_1$ 的一个局部正交标架
+  $(E_i)$，于是对于任意 $\theta$ 和 $i\neq j$，有
+  \[
+    g_1(E_i,\cos\theta E_i+\sin\theta E_j)=\cos\theta,
+  \] 
+  由于 $E_i$ 和 $\cos\theta E_i+\sin\theta E_j$ 在 $g_1$ 下的模长都是 $1$，
+  所以这表明 $E_i$ 和 $\cos\theta E_i+\sin\theta E_j$ 在 $g_2$ 下的夹角也是 $\cos\theta$。
+  于是有
+  \[
+    \frac{g_2(E_i,\cos\theta E_i+\sin\theta E_j)}{\sqrt{g_2(E_i,E_i)g_2(\cos\theta E_i+\sin\theta E_j,\cos\theta E_i+\sin\theta E_j)}}
+    =\cos\theta.
+  \]
+  令 $\theta=\pi/2$，得到 $g_2(E_i,E_j)=0$。所以上式可以化简为 
+  \[
+    \frac{\cos\theta\, g_2(E_i,E_i)}{\sqrt{
+      g_2(E_i,E_i)\bigl(
+        \cos^2\theta\, g_2(E_i,E_i)+\sin^2\theta\, g_2(E_j,E_j)
+      \bigr)
+    }}=\cos\theta,
+  \]
+  当 $\cos\theta\neq 0$ 时，也即
+  \[
+    \sin^2\theta\, g_2(E_j,E_j)=\sin^2\theta\, g_2(E_i,E_i),
+  \]
+  这表明 $g_2(E_i,E_i)=g_2(E_j,E_j)$。因此，$g_2(E_i,E_i)$
+  的值与 $i$ 无关。
+
+  假设 $(F_i)$ 是另一组关于 $g_1$ 的局部正交标架，那么存在正交矩阵函数 $A$ 使得 $F_i=A_i^j E_j$，所以
+  \begin{align*}
+    g_2(F_i,F_i)&=A_i^j A_i^k g_2(E_j,E_k)
+    =A_i^j A_i^j g_2(E_j,E_j)\\
+    &=g_2(E_i,E_i)\sum_j A_i^j A_i^j =g_2(E_i,E_i).
+  \end{align*}
+  这表明 $g_2(E_i,E_i)$ 的值与 $i$ 和局部正交标架的选择都无关。
+  因此，我们可以定义光滑函数 $f=g_2(E_i,E_i)$，这是良定义的，
+  显然此时有 $g_2=f g_1$，所以 $g_1$ 和 $g_2$ 共形相关。
+\end{proof}
+
+一个黎曼流形 $(M,g)$ 被称为\emph{局部共形平坦的}，如果 $M$
+的每个点都有一个邻域共形等价于 $\bigl(\mathbb{R}^n,\bar g\bigr)$ 的某个开子集。
+
+从北极点出发的球极投影给出了 $\mathbb{R}^n$ 和 $\mathbb{S}^n(R)$ 挖去北极点
+之间的共形等价。映射 $\sigma:\mathbb{S}^n(R)\setminus \{N\}\to \mathbb{R}^n$
+把点 $P=\bigl(\xi^1,\dots,\xi^n,\tau\bigr)\in \mathbb{S}^n(R)\setminus\{N\}$
+送到点 $u=(u^1,\dots,u^n)\in \mathbb{R}^n$，满足 $U=(u^1,\dots,u^n,0)$
+是 $N$ 和 $P$ 与超平面 $\{(\xi,\tau)\,|\,\tau=0\}\subseteq \mathbb{R}^{n+1}$ 
+的交点。因此，我们有 $U-N=\lambda(P-N)$，其中 $\lambda$ 是非零实数。
+记 $N=(0,R),U=(u,0)$ 和 $P=(\xi,\tau)\in \mathbb{R}^{n+1}$，我们得到方程
+\begin{align*}
+  u^i&=\lambda \xi^i,\\
+  -R&=\lambda(\tau-R).
+\end{align*}
+解得
+\[
+  \sigma(\xi,\tau)=u=\frac{R\xi}{R-\tau }.
+\]
+显然 $\sigma$ 是光滑的，并且是微分同胚。逆映射为
+\[
+  \sigma^{-1}(u)=(\xi,\tau)=\left(
+    \frac{2R^2 u}{|u|^2+R^2},R\frac{|u|^2-R^2}{|u|^2+R^2}
+  \right).
+\]
+
+\begin{proposition}
+  球极投影是 $\mathbb{S}^n(R)\setminus\{N\}$ 和 $\bigl(\mathbb{R}^n,\bar g\bigr)$ 之间的共形微分同胚。
+\end{proposition}
+\begin{proof}
+  $\sigma^{-1}: \mathbb{R}^n \to \mathbb{S}^n(R)\setminus\{N\}$ 是 $\mathbb{S}^n\setminus\{N\}$
+  的光滑参数化，我们直接计算拉回度量：
+  \[
+    (\sigma^{-1})^*\mathring g_R
+    =(\sigma^{-1})^*\bar g=\sum_j
+    \left(
+      \d\left(
+        \frac{2R^2 u^j}{|u|^2+R^2}
+      \right)
+    \right)^2+\left(
+      \d\left(
+        R\frac{|u|^2-R^2}{|u|^2+R^2}
+      \right)
+    \right)^2.
+  \]
+  单独计算每个部分，有
+  \begin{align*}
+    \d\left(
+      \frac{2R^2 u^j}{|u|^2+R^2}
+    \right)&=
+    \frac{2R^2\d u^j}{|u|^2+R^2}-\frac{4R^2u^j\sum_i u^i\d u^i}{(|u|^2+R^2)^2},\\
+    \d\left(
+      R\frac{|u|^2-R^2}{|u|^2+R^2}
+    \right)&=\frac{2R\sum_i u^i\d u^i }{|u|^2+R^2}-
+    \frac{2R(|u|^2-R^2)\sum_i u^i\d u^i}{(|u|^2+R^2)^2}\\
+    &=\frac{4R^3\sum_i u^i\d u^i }{(|u|^2+R^2)^2}.
+  \end{align*}
+  因此，我们有
+  \begin{align*}
+    (\sigma^{-1})^*\mathring g_R&=
+    \frac{4R^4\sum_j(\d u^j)^2}{(|u|^2+R^2)^2}-\frac{16R^4\bigl(\sum_iu^i\d u^i\bigr)^2}{(|u|^2+R^2)^3}
+    +\frac{16R^4|u|^2\bigl(\sum_iu^i\d u^i\bigr)^2}{(|u|^2+R^2)^4}\\
+    &\quad +\frac{16R^6\bigl(\sum_i u^i\d u^i\bigr)^2}{(|u|^2+R^2)^4}\\
+    &=\frac{4R^4\sum_j(\d u^j)^2}{(|u|^2+R^2)^2}=
+    \frac{4R^4}{(|u|^2+R^2)^2}\sum_j(\d u^j)^2,
+  \end{align*}
+  也即
+  \[
+    (\sigma^{-1})^*\mathring g_R=\frac{4R^4}{(|u|^2+R^2)^2}\bar g,
+  \]
+  这表明 $\sigma$ 是一个共形微分同胚。
+\end{proof}
+
+\begin{corollary}
+  每个球面附带圆度量都是局部共性平坦的。
+\end{corollary}
+\begin{proof}
+  挖去南极点的球极投影也是共形微分同胚，所以 $\mathbb{S}^n(R)$ 的每个点都有一个邻域共形等价于 $\bigl(\mathbb{R}^n,\bar g\bigr)$ 的某个开子集。
+\end{proof}
+
+\section{双曲空间}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

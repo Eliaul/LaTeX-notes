@@ -651,8 +651,79 @@ $\d f$ 的指标上升，即 $\grad f=(\d f)^\sharp$。利用这个定义，
   如果非空，那么 $M_c$ 是 $M$ 中的嵌入光滑超曲面，并且 $\grad f$ 与 $M_c$ 处处正交。
 \end{proposition}
 \begin{proof}
-  
+  $M_c$ 是嵌入超曲面根据正则水平集定理即可得到。任取 $p\in M_c$ 和 $w\in T_pM_c$，
+  由于 $\ker \d f_p=T_pM_c$，
+  所以 $\d f_p(w)= 0$，即 $\langle \grad f|_p, w \rangle = 0$。这表明 $\grad f$ 与 $M_c$ 处处正交。
 \end{proof}
+
+上升和下降算符可以应用到任意秩的张量上，即在任意指标处，把张量从协变变成逆变
+或者反过来。形式上，可以做如下定义：如果 $F$ 是任意 $(k,l)$-张量，$i\in\{1,\dots,k+l\}$
+是任意协变指标分量(意味着 $F$ 的第 $i$ 个参数是向量)，我们可以构造一个 
+$(k+1,l-1)$ 型张量 $F^\sharp$ 为
+\[
+  F^\sharp(\alpha_1,\dots,\alpha_{k+l})=F(\alpha_1,\dots,\alpha_{i-1},\alpha_i^\sharp,\alpha_{i+1},\dots,\alpha_{k+l}),
+\]
+其中 $\alpha_1,\dots,\alpha_{k+l}$ 是合适的向量或者余向量。在任意局部标架中，
+$F^\sharp$ 的分量由 $F$ 的分量乘以 $g^{kl}$ 得到，并且缩并在 $i$ 和 $k$ 上。类似地，如果 $i\in\{1,\dots,k+l\}$
+我们可以定义一个 $(k-1,l+1)$ 型张量 $F^\flat$ 为
+\[
+  F^\flat(\alpha_1,\dots,\alpha_{k+l})=F(\alpha_1,\dots,\alpha_{i-1},\alpha_i^\flat,\alpha_{i+1},\dots,\alpha_{k+l}).
+\]
+用分量的形式，其由 $g_{kl}$ 相乘并缩并得到。
+
+例如，如果一个混合 $3$-张量 $A$ 在某个局部标架中表示为
+\[
+  A={{A_i}^j}_k\varepsilon^i\otimes E_j\otimes \varepsilon^k,
+\]
+那么我们可以下降中间的指标得到一个协变 $3$-张量 $A^\flat$，其分量为
+\[
+  A_{ijk}=g_{jl}{{A_i}^l}_k.
+\]
+
+另一个应用是定义协变张量的迹。如果 $h$ 是黎曼流形上的任意协变 $k$-张量场，
+我们可以提升其中一个指标得到一个 $(1,k-1)$-张量 $h^\sharp$，然后
+取迹就可以得到一个协变 $(k-2)$-张量场。于是我们定义\emph{$h$ 相对于 $g$ 的迹}
+为
+\[
+  \tr_g(h)=\tr(h^\sharp).
+\]
+一种重要的情况是 $h$ 是协变 $2$-张量场。在这种情况下，$h^\sharp$ 就是 $(1,1)$-张量场，
+再取迹就得到一个数。在一组基中，此时有
+\[
+  \tr_g(h)=\tr (g^{kj}h_{ik}\varepsilon^i\otimes E_j)=g^{ki}h_{ik}=g^{ij}h_{ij}.
+\]
+
+\subsection{张量的内积}
+
+一个黎曼度量可以在每个点处的切空间导出一个内积。因为有音乐同构的存在，
+所以我们可以把内积运算推广到余向量上。
+
+
+
+\subsection{体积形式和积分}
+
+在定向流形上的度量提供的一个重要构造是典范的体积形式。
+
+\begin{proposition}[黎曼体积形式]
+  令 $(M,g)$ 是定向的带边或者无边黎曼 $n$-流形。那么 $M$ 上存在唯一的 $n$-形式
+  $\d V_g$，被称为\emph{黎曼体积形式}，由下面的任一等价条件刻画：
+  \begin{enumerate}
+    \item 如果 $\bigl(\varepsilon^1,\dots,\varepsilon^n\bigr)$ 是关于 $T^*M$
+    的任意局部定向正交余标架，那么
+    \[
+      \d V_g=\varepsilon^1\wedge\cdots\wedge \varepsilon^n.
+    \]
+    \item 如果 $(E_1,\dots,E_n)$ 是关于 $TM$ 的任意局部定向正交标架，那么
+    \[
+      \d V_g(E_1,\dots,E_n)=1.
+    \]
+    \item 如果 $\bigl(x^1,\dots,x^n\bigr)$ 是任意定向局部坐标，那么
+    \[
+      \d V_g=\sqrt{\det(g_{ij})}\d x^1\wedge\cdots\wedge \d x^n.
+    \]
+  \end{enumerate}
+\end{proposition}
+
 
 
 

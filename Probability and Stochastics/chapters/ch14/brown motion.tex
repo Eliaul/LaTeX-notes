@@ -1,0 +1,89 @@
+\chapter{Brown 运动}
+
+\section{Brown 运动作为随机游走的极限}
+
+Brown 运动这一物理现象证实了 Brown 粒子因与周围分子发生频繁碰撞
+而产生的不规则且不可预测的运动，这导致了方向的持续变化。从数学视角来看，
+这暗示我们考虑一个在格点 $\mathbb{Z}^d$ 上移动的点，其在每个离散时间
+$n\in \mathbb{Z}_+$ 时都会随机地独立于过去状态地选取一个方向进行移动。
+换句话说，我们考虑 $\mathbb{Z}^d$ 上的随机游走模型。本节我们的目标
+是引入 Brown 运动作为随机游走的极限的定义。这个结果在本章的后续
+章节将不会被用到，但是为我们的研究提供了一个重要的动机。
+
+令 $(S_n)_{n\in \mathbb{Z}_+}$ 是 $\mathbb{Z}^d$ 上的从 $0$ 开始的随机游走。
+这意味着 $S_0=0$，并且对于每个 $n\in \mathbb{N}$，有
+\[
+  S_n=Y_1+\cdots +Y_n,
+\]
+其中 $Y_1,Y_2,\dots$ 是值在 $\mathbb{Z}^d$ 中的独立同分布 $\mu$ 的随机变量。
+我们假设 $\mu$ 满足下面的两个性质：
+\begin{itemize}[noitemsep]
+  \item $\sum_{k\in \mathbb{Z}^d}|k|^2\mu(k)<\infty$，并且
+  对于每个 $i,j\in \{1,\dots,d\}$，有
+  \begin{equation}\label{eq:brownian assumption}
+    \sum_{k\in \mathbb{Z}^d}k_ik_j\mu(k)=\sigma^2 \delta_{ij},
+  \end{equation}
+  其中 $\sigma>0$ 是常数，并且记 $k=(k_1,\dots,k_d)\in \mathbb{Z}^d$。
+  \item $\sum_{k\in \mathbb{Z}^d}k\mu (k)=0$，即 $\mu$ 是中心化的。
+\end{itemize}
+
+显然 $\mathbb{Z}^d$ 上的简单随机游走满足这两个假设，此时 $\sigma^2=1/d$。
+\eqref{eq:brownian assumption} 式等价于对于每个 $\xi\in \mathbb{R}^d$，
+有 $\mathbb{E}\bigl[(\xi\cdot Y_1)^2\bigr]=\sigma^2 |\xi|^2$，这是因为
+\[
+  \mathbb{E}\bigl[(\xi\cdot Y_1)^2\bigr] = \sum_{i,j=1}^d \xi_i \xi_j \mathbb{E}[Y_{1,i} Y_{1,j}] = 
+  \sum_{i,j=1}^d \xi_i \xi_j \sigma^2 \delta_{ij} = \sigma^2 |\xi|^2,
+\]
+这在形式上表明随机游走需要在所有方向上以相同的速度移动。
+
+我们对函数 $n\mapsto S_n$ 的长时间行为感兴趣。根据多维的中心极限定理，
+我们已经知道 $n^{-1/2}S_n$ 依分布收敛于协方差为 $\sigma^2 I$ 的中心
+高斯分布。为了获取更多的信息，对于每个 $n\in \mathbb{N}$ 和 $t\geq 0$，
+令
+\[
+  S_t^{(n)}=\frac{1}{\sqrt{n}}S_{\lfloor nt\rfloor},
+\]
+其中 $\lfloor x\rfloor$ 是不超过 $x$ 的最大整数，即 $x$ 的整数部分。
+
+\begin{proposition}
+  对于每个整数 $p\geq 1$ 和实数 $0=t_0<t_1<\cdots<t_p$，我们有
+  \[
+    \bigl(S_{t_1}^{(n)},S_{t_2}^{(n)},\dots,S_{t_p}^{(n)}\bigr)\xlongrightarrow[n\to\infty]{(\mathrm{d})}
+    (U_1,U_2,\dots,U_p),
+  \]
+  其中极限分布的随机向量 $(U_1,\dots,U_p)$ 可以由下面的性质刻画：
+  \begin{itemize}[noitemsep]
+    \item 随机变量 $U_1,U_2-U_2,\dots,U_p-U_{p-1}$ 是独立的；
+    \item 对于每个 $j\in\{1,\dots,p\}$，$U_j-U_{j-1}$ 是有协方差矩阵
+    $\sigma^2(t_j-t_{j-1})I$ 的中心高斯向量，通常记 $U_0=0$。
+  \end{itemize}
+\end{proposition}
+
+\begin{remark}
+  $U_j-U_{j-1}$ 的密度是 $p_{\sigma^2(t_j-t_{j-1})}(x)$，其中，对于每个
+  $a>0$，定义
+  \begin{equation}\label{eq:gaussian density}
+    p_a(x)=\frac{1}{(2\pi a)^{d/2}}\exp\left(
+      -\frac{|x|^2}{2a}
+    \right),\quad \forall x\in \mathbb{R}^d,    
+  \end{equation}
+  也即 $p_a(x)$ 是协方差矩阵为 $aI$ 的中心高斯分布的密度函数。
+  利用 $U_1,U_2-U_1,\dots,U_p-U_{p-1}$ 的独立性，我们得到
+  $(U_1,U_2-U_1,\dots,U_p-U_{p-1})$ 的密度函数是 $g:(\mathbb{R}^d)^p\to \mathbb{R}$，满足
+  \[
+    g(x_1,\dots,x_p)=p_{\sigma^2 t_1}(x_1) p_{\sigma^2(t_2-t_1)}(x_2)\cdots p_{\sigma^2(t_p-t_{p-1})}(x_p),
+    \quad x_1,\dots,x_p\in \mathbb{R}^d.
+  \]
+  通过直接换元，$(U_1,U_2,\dots,U_p)$ 的密度函数为
+  \begin{align*}
+    f(y_1,\dots,y_p)&=g(y_1,y_2-y_1,\dots,y_p-y_{p-1})\\
+    &=p_{\sigma^2 t_1}(y_1) p_{\sigma^2(t_2-t_1)}(y_2-y_1)\cdots p_{\sigma^2(t_p-t_{p-1})}(y_p-y_{p-1}).
+  \end{align*}
+\end{remark}
+
+
+
+ 
+
+
+
