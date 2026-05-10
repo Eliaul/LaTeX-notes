@@ -1,0 +1,314 @@
+\documentclass[fontset=none,zihao=-4]{Notes}
+
+\makeatletter
+\DeclareRobustCommand{\em}{%
+  \@nomath\em \if b\expandafter\@car\f@series\@nil
+  \normalfont \else \bfseries \fi}
+\makeatother
+
+\usepackage{tikz-cd,wrapstuff}
+\usepackage{fixdif,siunitx,tikz,nicematrix}
+
+\usetikzlibrary{hobby,calc,arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.pathreplacing}
+
+\input{font.def}
+
+\DeclareMathOperator\Int{Int}
+\DeclareMathOperator\supp{supp}
+\DeclareMathOperator\im{im}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Ann{Ann}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\diag{diag}
+\DeclareMathOperator\Or{O}
+\DeclareMathOperator\rank{rank}
+\DeclareMathOperator\Ob{Ob}
+\DeclareMathOperator\Ad{Ad}
+\DeclareMathOperator\ad{ad}
+\DeclareMathOperator\id{id}
+\DeclareMathOperator\SO{SO}
+\DeclareMathOperator\SU{SU}
+\DeclareMathOperator\GL{GL}
+\DeclareMathOperator\SL{SL}
+
+\newcommand{\cat}[1]{\mathsf{#1}}
+
+\newcommand{\inn}[1]{\left\langle#1\right\rangle}
+\newcommand{\lie}[1]{\mathfrak{#1}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\spa}[1]{\operatorname{span}\left(#1\right)}
+
+\makeatletter
+\DeclareRobustCommand\bigop[2][1]{%
+  \mathop{\vphantom{\sum}\mathpalette\bigop@{{#1}{#2}}}\slimits@
+}
+\newcommand{\bigop@}[2]{\bigop@@#1#2}
+\newcommand{\bigop@@}[3]{%
+  \vcenter{%
+    \sbox\z@{$#1\sum$}%
+    \hbox{\resizebox{\ifx#1\displaystyle#2\fi\dimexpr\ht\z@+\dp\z@}{!}{$\m@th#3$}}%
+  }%
+}
+\makeatother
+
+\newcommand{\fprod}{\DOTSB\bigop[1.05]{\ast}}
+
+\tikzcdset{
+  arrow style=tikz,
+  diagrams={>={Straight Barb[scale=0.8]}}
+}
+
+\tikzset{
+  point/.style={
+    circle,fill,inner sep=0pt,minimum width=5pt
+  }
+}
+
+\usepackage[subscriptcorrection,nofontinfo,mtpbb,mtpfrak]{mtpro2}
+
+\newcommand{\mat}[1]{\mathbold{#1}}
+
+\usepackage{biblatex}
+% \addbibresource{ref.bib}
+% \begin{filecontents}{ref.bib}
+% @book{kirillov2008introduction,
+%   title={An introduction to Lie groups and Lie algebras},
+%   author={Kirillov, Alexander A},
+%   volume={113},
+%   year={2008},
+%   publisher={Cambridge University Press}
+% }
+
+% @article{notes,
+%   author = {Gallier, Jean},
+%   year = {2009},
+%   month = {02},
+%   pages = {},
+%   title = {Notes on Spherical Harmonics and Linear Representations of Lie Groups}
+% }
+% \end{filecontents}
+
+\setlist[enumerate]{nosep,label=(\arabic*)}
+\setlist[itemize]{nosep}
+
+\title{\sffamily 强化学习的数学原理}
+\author{Eliauk}
+
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{系统动力学的公理化构造}
+
+本节我们构建强化学习的系统框架，即马尔可夫决策过程（Markov Decision Process, MDP）。
+我们将从最基本的概念出发，逐步建立起 MDP 的数学定义。
+
+MDP 指的是一个六元组 $(S, A, \mathcal P, r,\rho_0, \gamma)$，其中：
+\begin{enumerate}
+  \item \emph{状态空间}。系统所有可能的状态的集合，记为 $S$。默认
+  是一个可测空间，配备一个 $\sigma$-代数 $\mathcal{S}$。
+  \item \emph{动作空间}。系统所有可能的动作的集合，记为 $A$。同样是一个可测空间，配备一个 $\sigma$-代数 $\mathcal{A}$。
+  为了描述系统的交互，还会考虑乘积空间 $S \times A$，配备 $\sigma$-代数 $\mathcal{S} \otimes \mathcal{A}$。
+  \item \emph{状态转移核}。状态转移核 $\mathcal P$ 指的是一个从 $S\times A$ 到 
+  $S$ 的转移概率，也即映射
+  \[
+    \mathcal P: (S\times A)\times \mathcal{S} \to [0,1],
+  \]
+  满足：对于任意 $(s,a)\in S\times A$，$\mathcal P(s,a,\cdot)$ 是 $S$ 上的一个概率测度；
+  对于任意 $E\in \mathcal{S}$，$\mathcal P(\cdot,\cdot,E)$ 是 $S\times A$ 上的一个可测函数。
+  通常，我们记 $\mathcal P(E|s,a) := \mathcal P(s,a,E)$，表示在状态 $s$ 下执行动作 $a$ 后状态集 $E$ 
+  出现的概率。
+  \item \emph{奖励函数}。奖励函数 $r$ 是 $S\times A$ 上的有界实值随机变量。
+  \item \emph{初始状态分布}。$\rho_0$ 是 $S$ 上的一个概率测度，表示系统的初始状态分布。
+  \item \emph{折扣因子}。$\gamma\in [0,1)$ 是一个实数，表示未来奖励的折扣率。
+\end{enumerate}
+
+在此基础上，我们需要优化的目标是一个策略 $\pi_\theta$，它是从 $S$ 到 $A$ 的转移概率，所以
+满足：对于任意 $s\in S$，$\pi_\theta(s,\cdot)$ 是 $A$ 上的一个概率测度；对于任意 $E\in \mathcal{A}$，$\pi_\theta(\cdot,E)$ 是 $S$ 上的一个可测函数。
+同样记 $\pi_\theta(E|s) := \pi_\theta(s,E)$，表示在状态 $s$ 下选择动作集 $E$ 的概率。
+$\theta$ 表示策略的参数。
+
+\section{无穷维轨迹空间与目标泛函}
+
+在强化学习中，系统的完整状态是一条无限长的序列，我们需要构造一个容纳
+所有可能轨迹的空间。
+
+对于每个时刻 $t\in \mathbb{N}$，系统的状态是一个二元组 $(s_t,a_t)\in S \times A$，表示在时刻 $t$ 的状态和动作。
+因此，系统的完整状态可以表示为一个无限长的序列 $\tau = ((s_0,a_0),(s_1,a_1),\ldots)$，其中每个 $(s_t,a_t)\in S \times A$。
+因此我们的状态空间应该是
+\[
+  \Omega=(S\times A)^{\mathbb{N}}=\prod_{t=0}^\infty S\times A,
+\]
+其配备自然的 $\sigma$-代数 $\mathcal{F}$，由所有有限维的柱集生成。
+
+接下来我们要给 $(\Omega,\mathcal F)$ 赋予一个概率测度 $\mathbb P_\theta$。
+现在我们拥有的是：
+\begin{itemize}
+  \item 初始概率测度 $\rho_0(\d s_0)$。
+  \item 策略核 $\pi_\theta(\d a_t|s_t)$，即给定状态输出动作的概率测度。
+  \item 系统转移核 $\mathcal P(\d s_{t+1}|s_t,a_t)$，即
+  给定当前时刻状态和动作输出下一个时刻状态的概率测度。
+\end{itemize}
+我们定义一个从 $S\times A$ 到 $S\times A$ 的联合转移核
+\[
+  K_\theta(\d s_{t+1},\d a_{t+1}|s_t,a_t) \coloneq \mathcal P(\d s_{t+1}|s_t,a_t)\pi_\theta(\d a_{t+1}|s_{t+1}).
+\]
+换句话说，给定 $s_t,a_t$，$K_\theta(\cdot| s_t,a_t)$ 是积测度 $\mathcal P(\cdot|s_t,a_t)\otimes \pi_\theta(\cdot|s_{t+1})$，
+根据 Ionescu-Tulcea 定理，空间 $(\Omega,\mathcal F)$ 上存在唯一的
+概率测度 $\mathbb P_\theta$，使得对于任意时间 $T\in \mathbb{N}$
+和可测集 $B_0,B_1,\dots,B_T\in \mathcal S$ 以及 $C_0,C_1,\dots,C_T\in \mathcal A$，满足
+\begin{align*}
+  &\mathbb P_\theta\left(
+    (B_0\times C_0)\times (B_1\times C_1)\times \cdots \times (B_T\times C_T) \times (S\times A)^{\mathbb{N}}
+  \right) \\
+  &= \int_{B_0}\rho_0(\d s_0)
+  \int_{C_0}\pi_\theta(\d a_0|s_0)
+  \int_{B_1\times C_1} K_\theta(\d s_1,\d a_1|s_0,a_0)
+  \cdots \int_{B_T\times C_T} K_\theta(\d s_T,\d a_T|s_{T-1},a_{T-1})\\
+  &=\int_{B_0\times C_0}\int_{B_1\times C_1} \cdots \int_{B_T\times C_T} \rho_0(\d s_0)
+  \prod_{t=0}^{T-1} \pi_\theta(\d a_t|s_t)\mathcal P(\d s_{t+1}|s_t,a_t) \pi_\theta(\d a_{T}|s_{T}).
+\end{align*}
+这也表明 $\mathbb{P}_\theta$ 有概率密度函数
+\begin{equation}\label{eq:prob-density}
+  p_\theta(\tau) = \rho_0(s_0)\prod_{t=0}^\infty \pi_\theta(a_t|s_t)\mathcal P(s_{t+1}|s_t,a_t).
+\end{equation}
+
+有了概率空间 $(\Omega,\mathcal F,\mathbb P_\theta)$，我们就可以定义强化学习的目标函数了。
+定义投影函数 $X_t:\Omega \to S \times A$ 为 $X_t(\tau) = (s_t,a_t)$，其中 $\tau = ((s_0,a_0),(s_1,a_1),\ldots) \in \Omega$。
+我们定义单步奖励是复合函数 $r_t=r\circ X_t:\Omega \to \mathbb{R}$，即
+\[
+  r_t(\tau)=r(s_t,a_t).
+\]
+$r_t$ 是 $\Omega$ 上的有界实值随机变量。
+通过折扣因子 $\gamma$，我们定义整条轨迹的累计奖励为无穷级数
+\begin{equation}\label{eq:reward}
+  R(\tau)=\sum_{t=0}^\infty \gamma^t r_t(\tau).
+\end{equation}
+由于 $r_t$ 的有界性，$R(\tau)$ 是绝对收敛的，并且关于 $\tau$ 是一致收敛的，
+所以 $R$ 也是 $\Omega$ 上的一个有界实值随机变量。
+也就是说，$R(\tau)\in L^1(\Omega,\mathcal F,\mathbb P_\theta)$。
+最后，强化学习的\emph{目标泛函} $J:\Theta\to \mathbb{R}$ 定义为
+随机变量 $R$ 的期望值，即
+\begin{equation}\label{eq:objective-functional}
+  J(\theta)= \mathbb{E}[R]=\int_\Omega R(\tau)\mathbb P_\theta(\d \tau).
+\end{equation}
+可以看到，强化学习的奖励并不依赖于参数 $\theta$。
+参数 $\theta$ 唯一控制的变量是概率测度 $\mathbb P_\theta$。
+因此强化学习优化的本质是在参数空间 $\Theta$ 上不断改变测度 $ \mathbb{P}_\theta$，
+把更多的“概率质量”集中到 $R$ 较大的轨迹集合上。
+
+\section{策略梯度}
+
+为了书写方便，我们先对机器学习文献中常见的期望写法进行一些符号上的说明。
+对于随机变量 $f:\Omega \to \mathbb{R}$，记号 $\mathbb{E}_{x\sim \mathbb{P}}[f(x)]$
+表示 $f$ 关于测度 $\mathbb{P}$ 的期望值，即
+\[
+  \mathbb{E}_{x\sim \mathbb{P}}[f(x)] = \int_\Omega f(x)\mathbb{P}(\d x).
+\] 
+有时候也简写成 $\mathbb{E}_x[f(x)]$。对于带有转移核的情况，
+设两个可测空间 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$，以及一个从 $E$ 到 $F$ 的转移核 $K:E\times \mathcal{F}\to [0,1]$，
+$\mathbb{P}$ 是 $E$ 上的概率测度，$f$ 是 $E\times F$ 上的随机变量，那么
+记号 $\mathbb{E}_{x\sim \mathbb{P},y\sim K(\cdot|x)}[f(x,y)]$ 表示
+\[
+  \mathbb{E}_{x\sim \mathbb{P},y\sim K(\cdot|x)}[f(x,y)] = \int_E \int_F f(x,y) K(\d y|x)\mathbb{P}(\d x).   
+\]
+有时候也简写成 $\mathbb{E}_{x\sim \mathbb{P},y\sim K}[f(x,y)]$ 或者 $\mathbb{E}_{x,y}[f(x,y)]$。
+
+回顾 \eqref{eq:objective-functional} 式，结合累计奖励 \eqref{eq:reward} 和
+概率密度 \eqref{eq:prob-density}，我们可以把目标函数 $J(\theta)$ 展开成如下形式：
+\[
+  J(\theta)=\int_\Omega \left(
+    \sum _{k=0}^\infty \gamma^k r(s_k,a_k)
+  \right) p_\theta(\tau) \d \tau,
+\]
+对 $\theta$ 求梯度，交换积分和梯度算子，利用恒等变形 $\nabla_\theta p_\theta(\tau) = p_\theta(\tau)\nabla_\theta \log p_\theta(\tau)$，我们得到
+\[
+  \nabla_\theta J(\theta) = \int_\Omega \left(
+    \sum _{k=0}^\infty \gamma^k r(s_k,a_k)
+  \right) p_\theta(\tau)\nabla_\theta \log p_\theta(\tau) \d \tau
+  =\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
+    \nabla_\theta \log p_\theta(\tau)
+    \sum _{k=0}^\infty \gamma^k r(s_k,a_k)
+  \right].
+\]
+再回顾概率密度 \eqref{eq:prob-density}，
+表达式中只有 $\pi_\theta(a_t|s_t)$ 依赖于 $\theta$，所以
+\[
+  \nabla_\theta \log p_\theta(\tau) = \sum_{t=0}^\infty \nabla_\theta \log \pi_\theta(a_t|s_t),
+\]
+代入到上式中，我们就得到了强化学习的\emph{原始策略梯度表达式}：
+\begin{equation}\label{eq:policy-gradient}
+  \nabla_\theta J(\theta) = \mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
+    \sum_{t=0}^\infty\sum_{k=0}^\infty \gamma^k r(s_k,a_k) \nabla_\theta \log \pi_\theta(a_t|s_t)
+  \right].  
+\end{equation}
+
+原始策略梯度的表达式极难处理，包含了二重无穷级数，
+我们需要利用时间上的因果性来进行一些简化。
+
+记 $S_k:\Omega\to S$ 和 $A_k:\Omega\to A$ 分别为时刻 $k$ 的状态和动作的投影函数，即 $S_k(\tau)=s_k$ 和 $A_k(\tau)=a_k$。
+对于每个时刻 $t$，我们考虑历史轨迹生成子 $\sigma$-代数 $\mathcal H_t$：
+\[
+  \mathcal H_t = \sigma\left(
+    S_0,A_0,S_1,A_1,\dots,S_{t-1},A_{t-1},S_t
+  \right).
+\]
+利用条件期望的塔式法则，我们有
+\[
+  \mathbb{E}_\tau\left[
+    \nabla_\theta\log \pi_\theta(a_t|s_t)\sum_{k=0}^{t-1}\gamma^k r_k
+  \right]= \mathbb{E}\left[
+    \mathbb{E}\left[
+      \nabla_\theta\log \pi_\theta(A_t|S_t)\sum_{k=0}^{t-1}\gamma^k r_k
+      \middle| \mathcal H_t
+    \right]
+  \right],
+\]
+内层期望中，$\sum_{k=0}^{t-1}\gamma^k r_k$ 是 $\mathcal H_t$-可测的，
+根据条件期望的性质，我们可以把它往外提一层，得到
+\[
+  \mathbb{E}\left[
+    \nabla_\theta\log \pi_\theta(A_t|S_t)\sum_{k=0}^{t-1}\gamma^k r_k
+    \middle| \mathcal H_t
+  \right] = \left(\sum_{k=0}^{t-1}\gamma^k r_k\right) \mathbb{E}\left[
+    \nabla_\theta\log \pi_\theta(A_t|S_t)
+    \middle| \mathcal H_t
+  \right].
+\]
+其中 $\pi_\theta(A_t|S_t)$ 只有 $A_t$ 是未知信息，所以有
+\begin{align*}
+  \mathbb{E}[
+    \nabla_\theta\log \pi_\theta(A_t|S_t)
+    | \mathcal H_t]&=\mathbb{E}[
+    \nabla_\theta\log \pi_\theta(A_t|S_t)|S_t]
+    =\int_A 
+    \nabla_\theta\log \pi_\theta(a_t|S_t)\pi_\theta(\d a_t|S_t)\\
+    &=\int_A \frac{\nabla_\theta \pi_\theta(a_t|S_t)}{\pi_\theta(a_t|S_t)}\pi_\theta( a_t|S_t)
+    \d a_t=\int_A \nabla_\theta \pi_\theta(a_t|S_t) \d a_t\\
+    &=\nabla_\theta \int_A \pi_\theta(a_t|S_t) \d a_t=\nabla_\theta 1=0.
+\end{align*}
+于是我们有
+\[
+  \mathbb{E}_\tau\left[
+    \nabla_\theta\log \pi_\theta(a_t|s_t)\sum_{k=0}^{t-1}\gamma^k r_k
+  \right]= 0.
+\]
+所以 \eqref{eq:policy-gradient} 中关于 $k$ 的求和可以截断到 $t$，即
+\begin{equation}\label{eq:policy-gradient-simplified}
+  \nabla_\theta J(\theta) = \mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
+    \sum_{t=0}^\infty\sum_{k=t}^\infty \gamma^k r(s_k,a_k) \nabla_\theta \log \pi_\theta(a_t|s_t)
+  \right].
+\end{equation}
+
+
+
+
+
+\end{document}
