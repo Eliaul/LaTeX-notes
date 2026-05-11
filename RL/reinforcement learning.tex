@@ -307,6 +307,62 @@ $\mathbb{P}$ 是 $E$ 上的概率测度，$f$ 是 $E\times F$ 上的随机变量
   \right].
 \end{equation}
 
+把 $t$ 的求和与期望交换并提取因子 $\gamma^t$，得到
+\[
+  \nabla_\theta J(\theta) = \sum_{t=0}^\infty \gamma^t\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
+    \nabla_\theta \log \pi_\theta(a_t|s_t) \sum_{k=t}^\infty \gamma^{k-t} r(s_k,a_k)
+  \right].
+\]
+继续利用条件期望的塔式法则，我们有
+\begin{align*}
+  &\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
+    \nabla_\theta \log \pi_\theta(a_t|s_t) \sum_{k=t}^\infty \gamma^{k-t} r(s_k,a_k)
+  \right]\\
+  &= \mathbb{E}\left[
+    \mathbb{E}\left[
+      \nabla_\theta \log \pi_\theta(A_t|S_t) \sum_{k=t}^\infty \gamma^{k-t} r_k
+      \middle| S_t,A_t
+    \right]
+  \right]\\
+  &=\mathbb{E}\left[
+    \nabla_\theta \log \pi_\theta(A_t|S_t) \mathbb{E}\left[
+      \sum_{k=t}^\infty \gamma^{k-t} r_k
+      \middle| S_t,A_t
+    \right]
+  \right],
+\end{align*}
+第二个等号是因为 $\nabla_\theta \log \pi_\theta(A_t|S_t)$ 是 $\sigma(S_t,A_t)$-可测的。
+记\emph{动作价值函数}为
+\[
+  Q^{\pi_\theta} = \mathbb{E}\left[
+    \sum_{k=t}^\infty \gamma^{k-t} r_k
+    \middle| S_t,A_t
+  \right],
+\]
+其表示在状态 $S_t$ 下执行动作 $A_t$ 后，未来累计奖励的条件期望，是 $S\times A$ 上的一个随机变量。
+于是策略梯度表达式变为
+\[
+  \nabla_\theta J(\theta) = \sum_{t=0}^\infty \gamma^t\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
+    \nabla_\theta \log \pi_\theta(a_t|s_t) Q^{\pi_\theta}(s_t,a_t)
+  \right].
+\]
+由于期望内层的 $\nabla_\theta \log \pi_\theta(A_t|S_t) Q^{\pi_\theta}(S_t,A_t)$ 
+只和 $S_t$ 和 $A_t$ 有关，所以期望的积分只需要在 $S\times A$ 上进行，即
+\[
+  \nabla_\theta J(\theta) = \sum_{t=0}^\infty \gamma^t\mathbb{E}_{s_t,a_t\sim \mathbb{P}_\theta}\left[
+    \nabla_\theta \log \pi_\theta(a_t|s_t) Q^{\pi_\theta}(s_t,a_t)
+  \right].
+\]
+
+
+
+
+
+
+
+
+
+
 
 
 
