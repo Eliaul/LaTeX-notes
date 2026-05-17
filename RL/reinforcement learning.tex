@@ -173,12 +173,14 @@ $\theta$ 表示策略的参数。
   \int_{B_1\times C_1} K_\theta(\d s_1,\d a_1|s_0,a_0)
   \cdots \int_{B_T\times C_T} K_\theta(\d s_T,\d a_T|s_{T-1},a_{T-1})\\
   &=\int_{B_0\times C_0}\int_{B_1\times C_1} \cdots \int_{B_T\times C_T} \rho_0(\d s_0)
-  \prod_{t=0}^{T-1} \pi_\theta(\d a_t|s_t)\mathcal P(\d s_{t+1}|s_t,a_t) \pi_\theta(\d a_{T}|s_{T}).
+  \pi_\theta(\d a_0|s_0)
+  \prod_{t=0}^{T-1} K_\theta(\d s_{t+1},\d a_{t+1}|s_{t},a_{t})
 \end{align*}
 这也表明 $\mathbb{P}_\theta$ 有概率密度函数
 \begin{equation}\label{eq:prob-density}
-  p_\theta(\tau) = \rho_0(s_0)\prod_{t=0}^\infty \pi_\theta(a_t|s_t)\mathcal P(s_{t+1}|s_t,a_t).
+  p_\theta(\tau) = \prod_{t=-1}^\infty K_\theta(s_{t+1},a_{t+1}|s_{t},a_{t}).
 \end{equation}
+这里为了方便，记 $K_{\theta}(\d s_0,\d a_0|s_{-1},a_{-1}) = \rho_0(\d s_0)\pi_\theta(\d a_0|s_0)$。
 
 有了概率空间 $(\Omega,\mathcal F,\mathbb P_\theta)$，我们就可以定义强化学习的目标函数了。
 定义投影函数 $X_t:\Omega \to S \times A$ 为 $X_t(\tau) = (s_t,a_t)$，其中 $\tau = ((s_0,a_0),(s_1,a_1),\ldots) \in \Omega$。
@@ -283,17 +285,19 @@ $\mathbb{P}$ 是 $E$ 上的概率测度，$f$ 是 $E\times F$ 上的随机变量
   \right].
 \]
 其中 $\pi_\theta(A_t|S_t)$ 只有 $A_t$ 是未知信息，所以有
-\begin{align*}
-  \mathbb{E}[
-    \nabla_\theta\log \pi_\theta(A_t|S_t)
-    | \mathcal H_t]&=\mathbb{E}[
-    \nabla_\theta\log \pi_\theta(A_t|S_t)|S_t]
-    =\int_A 
-    \nabla_\theta\log \pi_\theta(a_t|S_t)\pi_\theta(\d a_t|S_t)\\
-    &=\int_A \frac{\nabla_\theta \pi_\theta(a_t|S_t)}{\pi_\theta(a_t|S_t)}\pi_\theta( a_t|S_t)
-    \d a_t=\int_A \nabla_\theta \pi_\theta(a_t|S_t) \d a_t\\
-    &=\nabla_\theta \int_A \pi_\theta(a_t|S_t) \d a_t=\nabla_\theta 1=0.
-\end{align*}
+\begin{equation}\label{eq:zero-mean}
+  \begin{aligned}
+    \mathbb{E}[
+      \nabla_\theta\log \pi_\theta(A_t|S_t)
+      | \mathcal H_t]&=\mathbb{E}[
+      \nabla_\theta\log \pi_\theta(A_t|S_t)|S_t]
+      =\int_A 
+      \nabla_\theta\log \pi_\theta(a_t|S_t)\pi_\theta(\d a_t|S_t)\\
+      &=\int_A \frac{\nabla_\theta \pi_\theta(a_t|S_t)}{\pi_\theta(a_t|S_t)}\pi_\theta( a_t|S_t)
+      \d a_t=\int_A \nabla_\theta \pi_\theta(a_t|S_t) \d a_t\\
+      &=\nabla_\theta \int_A \pi_\theta(a_t|S_t) \d a_t=\nabla_\theta 1=0.
+  \end{aligned}
+\end{equation}
 于是我们有
 \[
   \mathbb{E}_\tau\left[
@@ -339,20 +343,113 @@ $\mathbb{P}$ 是 $E$ 上的概率测度，$f$ 是 $E\times F$ 上的随机变量
     \middle| S_t,A_t
   \right],
 \]
-其表示在状态 $S_t$ 下执行动作 $A_t$ 后，未来累计奖励的条件期望，是 $S\times A$ 上的一个随机变量。
+其表示在状态 $S_t$ 下执行动作 $A_t$ 后，未来累计奖励的条件期望，是 $(S_t,A_t)$ 的函数。
 于是策略梯度表达式变为
 \[
   \nabla_\theta J(\theta) = \sum_{t=0}^\infty \gamma^t\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
     \nabla_\theta \log \pi_\theta(a_t|s_t) Q^{\pi_\theta}(s_t,a_t)
   \right].
 \]
-由于期望内层的 $\nabla_\theta \log \pi_\theta(A_t|S_t) Q^{\pi_\theta}(S_t,A_t)$ 
-只和 $S_t$ 和 $A_t$ 有关，所以期望的积分只需要在 $S\times A$ 上进行，即
+% 由于期望内层的 $\nabla_\theta \log \pi_\theta(A_t|S_t) Q^{\pi_\theta}(S_t,A_t)$ 
+% 只和 $S_t$ 和 $A_t$ 有关，所以期望的积分可以推前到 $S\times A$ 上的测度进行，即
+% \[
+%   \nabla_\theta J(\theta) = \sum_{t=0}^\infty \gamma^t\mathbb{E}_{s_t,a_t\sim \mathbb{P}_\theta}\left[
+%     \nabla_\theta \log \pi_\theta(a_t|s_t) Q^{\pi_\theta}(s_t,a_t)
+%   \right].
+% \]
+% 注意这里下标 $s_t,a_t\sim \mathbb{P}_\theta$ 是一种符号滥用，
+% 严格来说 $\mathbb{P}_\theta$ 应该推前到 $S\times A$ 上的测度 $(S_t,A_t)_*\mathbb{P}_\theta$。
+
+为了降低策略梯度的方差，我们可以引入一个\emph{基线函数} $b:S\to \mathbb{R}$，
+与 \eqref{eq:zero-mean} 类似，我们有
 \[
-  \nabla_\theta J(\theta) = \sum_{t=0}^\infty \gamma^t\mathbb{E}_{s_t,a_t\sim \mathbb{P}_\theta}\left[
-    \nabla_\theta \log \pi_\theta(a_t|s_t) Q^{\pi_\theta}(s_t,a_t)
-  \right].
+  \mathbb{E}\left[
+    \strut\nabla_\theta \log \pi_\theta(A_t|S_t) b(S_t)\middle| S_t
+  \right] = b(S_t) \mathbb{E}\left[
+    \nabla_\theta \log \pi_\theta(A_t|S_t)\middle| S_t
+  \right] = 0.  
 \]
+为了最小化估计方差，最好的选择是 $Q^{\pi_\theta}$ 的条件期望。定义\emph{状态价值函数}为
+\begin{align*}
+  V^{\pi_\theta}=\mathbb{E}[Q^{\pi_\theta}|S_t]=
+  \mathbb{E}\left[
+    \sum_{k=t}^\infty \gamma^{k-t} r_k
+    \middle| S_t
+  \right],
+\end{align*}
+此时 $V^{\pi_\theta}$ 是 $S_t$ 的函数，表示在状态 $S_t$ 下未来累计奖励的条件期望。
+差值 $A^{\pi_\theta}=Q^{\pi_\theta}-V^{\pi_\theta}$ 被称为\emph{优势函数}，表示在状态 $S_t$ 下执行动作 $A_t$ 相对于平均水平的优势。
+由于
+\[
+  \mathbb{E}\left[
+    \nabla_\theta \log \pi_\theta(A_t|S_t) V^{\pi_\theta}(S_t)
+  \right]=\mathbb{E}\Bigl[
+  \mathbb{E}\bigl[
+    \nabla_\theta \log \pi_\theta(A_t|S_t) V^{\pi_\theta}(S_t)\big| S_t
+  \bigr]\Bigr]=0,
+\]
+所以我们可以把策略梯度表达式改写成
+\begin{equation}\label{eq:policy-gradient-advantage}
+  \nabla_\theta J(\theta) = \sum_{t=0}^\infty \gamma^t\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
+    \nabla_\theta \log \pi_\theta(a_t|s_t) A^{\pi_\theta}(s_t,a_t)
+  \right].
+\end{equation}
+
+记 $\nu_{t,\theta}$ 表示 $\mathbb{P}_\theta$ 在 $(S_t,A_t)$ 下的推前测度。
+$t=0$ 时，有
+\[
+  \nu_{0,\theta}(E\times F) = \mathbb{P}_\theta((S_0,A_0)\in E\times F) = \int_E \rho_0(\d s_0)\int_F \pi_\theta(\d a_0|s_0).
+\]
+$t=1$ 时，有
+\begin{align*}
+  \nu_{1,\theta}(E\times F) &= \int_{S\times A}\int_{E\times F} K_\theta(\d s_1,\d a_1|s_0,a_0)\rho_0(\d s_0)\pi_\theta(\d a_0|s_0)\\
+  &=\int_{S\times A}\int_{E\times F} \mathcal P(\d s_1|s_0,a_0)\pi_\theta(\d a_1|s_1)\rho_0(\d s_0)\pi_\theta(\d a_0|s_0)\\
+  &=\int_{S\times A}\nu_{0,\theta}(\d s_0\d a_0)\int_{E\times F} \mathcal P(\d s_1|s_0,a_0)\pi_\theta(\d a_1|s_1).
+\end{align*}
+以此类推，对于一般的 $t$，我们有
+\begin{align*}
+  \nu_{t,\theta}(E\times F) &= \int_{S\times A}\nu_{t-1,\theta}(\d s_{t-1}\d a_{t-1})\int_{E\times F} \mathcal P(\d s_t|s_{t-1},a_{t-1})\pi_\theta(\d a_t|s_t)\\
+  &=\int_{S\times A}\nu_{t-1,\theta}(\d s_{t-1}\d a_{t-1})\int_E \mathcal P(\d s_t|s_{t-1},a_{t-1})
+  \pi_\theta(F|s_t)\\
+  &=\int_E \pi_\theta(F|s_t)\int_{S\times A}\nu_{t-1,\theta}(\d s_{t-1}\d a_{t-1})\mathcal P(\d s_t|s_{t-1},a_{t-1})\\
+  &=\int_E \pi_\theta(F|s_t)\mu_{t,\theta}(\d s_t)=
+  \int_{E\times F} \pi_\theta(\d a_t|s_t)\mu_{t,\theta}(\d s_t).
+\end{align*}
+其中 
+\[
+  \mu_{t,\theta}(E) =\int_E \int_{S\times A}\nu_{t-1,\theta}(\d s_{t-1}\d a_{t-1})\mathcal P(\d s_t|s_{t-1},a_{t-1})
+  =\nu_{t,\theta}(E\times A)
+\]
+是 $S$ 上的测度。
+
+于是 \eqref{eq:policy-gradient-advantage} 中的积分可以推前到 $S\times A$ 上的测度 $\nu_{t,\theta}$，
+得到
+\begin{align*}
+  &\mathbb{E}\left[
+    \nabla_\theta \log \pi_\theta(A_t|S_t) A^{\pi_\theta}(S_t,A_t)
+  \right] = \int_{S\times A} \nabla_\theta \log \pi_\theta(a|s) A^{\pi_\theta}(s,a) \nu_{t,\theta}(\d s \d a)\\
+  &=\int_S\mu_{t,\theta}(\d s)\int_A \nabla_\theta \log \pi_\theta(a|s) A^{\pi_\theta}(s,a) \pi_\theta(\d a|s),
+\end{align*}
+交换积分和求和，得到
+\[
+  \nabla_\theta J(\theta)=\int_S \left(
+    \sum_{t=0}^\infty \gamma^t \mu_{t,\theta}(\d s)
+  \right)\int_A \nabla_\theta \log \pi_\theta(a|s) A^{\pi_\theta}(s,a) \pi_\theta(\d a|s).
+\]
+定义\emph{归一化折现状态分布}为
+\[
+  \rho_{\pi_\theta}(E) = (1-\gamma)\sum_{t=0}^\infty \gamma^t \mu_{t,\theta}(E),
+\]
+其是 $S$ 上的一个概率测度，表示在策略 $\pi_\theta$ 下系统访问状态集 $E$ 的归一化折现频率。
+至此，我们得到了需要的\emph{最终策略梯度表达式}：
+\begin{equation}
+  \begin{aligned}
+    \nabla_\theta J(\theta) &= \frac{1}{1-\gamma}\int_S \rho_{\pi_\theta}(\d s)\int_A \nabla_\theta \log \pi_\theta(a|s) A^{\pi_\theta}(s,a) \pi_\theta(\d a|s)\\
+    &=\frac{1}{1-\gamma}\mathbb{E}_{s\sim\rho_{\pi_\theta},a\sim \pi_\theta}\left[
+      \nabla_\theta \log \pi_\theta(a|s) A^{\pi_\theta}(s,a)
+    \right].
+  \end{aligned}
+\end{equation}
 
 
 
