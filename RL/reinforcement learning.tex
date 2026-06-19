@@ -67,7 +67,7 @@
   }
 }
 
-\usepackage[subscriptcorrection,nofontinfo,mtpbb,mtpfrak]{mtpro2}
+\usepackage[subscriptcorrection,nofontinfo,mtpbb,mtpfrak,mtpscr]{mtpro2}
 
 \newcommand{\mat}[1]{\mathbold{#1}}
 
@@ -105,351 +105,574 @@
 
 \tableofcontents
 
-\section{系统动力学的公理化构造}
+\section{Markov 决策过程}
 
-本节我们构建强化学习的系统框架，即马尔可夫决策过程（Markov Decision Process, MDP）。
-我们将从最基本的概念出发，逐步建立起 MDP 的数学定义。
+\subsection{带折扣的 Markov 决策过程}
 
-MDP 指的是一个六元组 $(S, A, \mathcal P, r,\rho_0, \gamma)$，其中：
-\begin{enumerate}
-  \item \emph{状态空间}。系统所有可能的状态的集合，记为 $S$。默认
-  是一个可测空间，配备一个 $\sigma$-代数 $\mathcal{S}$。
-  \item \emph{动作空间}。系统所有可能的动作的集合，记为 $A$。同样是一个可测空间，配备一个 $\sigma$-代数 $\mathcal{A}$。
-  为了描述系统的交互，还会考虑乘积空间 $S \times A$，配备 $\sigma$-代数 $\mathcal{S} \otimes \mathcal{A}$。
-  \item \emph{状态转移核}。状态转移核 $\mathcal P$ 指的是一个从 $S\times A$ 到 
-  $S$ 的转移概率，也即映射
-  \[
-    \mathcal P: (S\times A)\times \mathcal{S} \to [0,1],
-  \]
-  满足：对于任意 $(s,a)\in S\times A$，$\mathcal P(s,a,\cdot)$ 是 $S$ 上的一个概率测度；
-  对于任意 $E\in \mathcal{S}$，$\mathcal P(\cdot,\cdot,E)$ 是 $S\times A$ 上的一个可测函数。
-  通常，我们记 $\mathcal P(E|s,a) := \mathcal P(s,a,E)$，表示在状态 $s$ 下执行动作 $a$ 后状态集 $E$ 
-  出现的概率。
-  \item \emph{奖励函数}。奖励函数 $r$ 是 $S\times A$ 上的有界实值随机变量。
-  \item \emph{初始状态分布}。$\rho_0$ 是 $S$ 上的一个概率测度，表示系统的初始状态分布。
-  \item \emph{折扣因子}。$\gamma\in [0,1)$ 是一个实数，表示未来奖励的折扣率。
-\end{enumerate}
-
-在此基础上，我们需要优化的目标是一个策略 $\pi_\theta$，它是从 $S$ 到 $A$ 的转移概率，所以
-满足：对于任意 $s\in S$，$\pi_\theta(s,\cdot)$ 是 $A$ 上的一个概率测度；对于任意 $E\in \mathcal{A}$，$\pi_\theta(\cdot,E)$ 是 $S$ 上的一个可测函数。
-同样记 $\pi_\theta(E|s) := \pi_\theta(s,E)$，表示在状态 $s$ 下选择动作集 $E$ 的概率。
-$\theta$ 表示策略的参数。
-
-\section{无穷维轨迹空间与目标泛函}
-
-在强化学习中，系统的完整状态是一条无限长的序列，我们需要构造一个容纳
-所有可能轨迹的空间。
-
-对于每个时刻 $t\in \mathbb{N}$，系统的状态是一个二元组 $(s_t,a_t)\in S \times A$，表示在时刻 $t$ 的状态和动作。
-因此，系统的完整状态可以表示为一个无限长的序列 $\tau = ((s_0,a_0),(s_1,a_1),\ldots)$，其中每个 $(s_t,a_t)\in S \times A$。
-因此我们的状态空间应该是
+在强化学习中，agent 与环境的交互被建模为一个带折扣的 Markov 决策过程
+(Markov Decision Process, MDP)：
 \[
-  \Omega=(S\times A)^{\mathbb{N}}=\prod_{t=0}^\infty S\times A,
+  M=(\mathcal S, \mathcal A,  P, r, \gamma,\mu).
 \]
-其配备自然的 $\sigma$-代数 $\mathcal{F}$，由所有有限维的柱集生成。
-
-接下来我们要给 $(\Omega,\mathcal F)$ 赋予一个概率测度 $\mathbb P_\theta$。
-现在我们拥有的是：
+其中各项的定义如下：
 \begin{itemize}
-  \item 初始概率测度 $\rho_0(\d s_0)$。
-  \item 策略核 $\pi_\theta(\d a_t|s_t)$，即给定状态输出动作的概率测度。
-  \item 系统转移核 $\mathcal P(\d s_{t+1}|s_t,a_t)$，即
-  给定当前时刻状态和动作输出下一个时刻状态的概率测度。
+  \item 状态空间 $\mathcal S$，可能有限或者无限。一般来说，要求 $\mathcal S$ 是一个可测空间，
+  配备一个 $\sigma$-代数 $\mathscr{S}$。为了数学上的便利，我们要求 $\mathcal S$ 是
+  有限或者可数无限的。
+  \item 动作空间 $\mathcal A$，同样可能有限或者无限。一般来说，要求 $\mathcal A$ 是一个可测空间，
+  配备一个 $\sigma$-代数 $\mathscr{A}$。为了数学上的便利，我们要求 $\mathcal A$ 是
+  有限的。
+  \item 转移函数 $P:(\mathcal S\times \mathcal A)\times \mathscr{S}\to [0,1]$，满足：对于任意 $(s,a)\in \mathcal S\times \mathcal A$，$P(\cdot | s,a)$ 是 $\mathcal S$ 上的一个概率测度。
+  我们也记 $P_{s,a} := P(\cdot | s,a)$。
+  \item 奖励函数 $r: \mathcal S \times \mathcal A \to [0,1]$，表示在状态 $s$ 下执行动作 $a$ 所获得的即时奖励。
+  $r$ 视为 $\mathcal S \times \mathcal A$ 上的一个随机变量，且要求 $r$ 是有界的。
+  \item 折扣因子 $\gamma\in [0,1)$，定义了问题的有效视野。
+  \item 初值分布 $\mu$，是 $\mathcal S$ 上的一个概率测度，表示系统的初始状态分布。
+在许多情况下，我们假设初值状态是固定的 $s_0$，即 $\mu = \delta_{s_0}$。
 \end{itemize}
-我们定义一个从 $S\times A$ 到 $S\times A$ 的联合转移核
+
+\subsubsection{目标、策略和价值}
+
+\paragraph{策略} 给定 MDP $M=(\mathcal S, \mathcal A,  P, r, \gamma,\mu)$，agent 遵从下面的原则和环境进行交互：
+agent 从某个状态 $s_0\sim \mu$ 开始；在每个时间 $t=0,1,2,\dots$ 处，agent 首先观测当前状态 $s_t$，
+然后选择一个动作 $a_t\in \mathcal A$，获得一个即时奖励 $r_t=r(s_t,a_t)$，最后再观测下一个状态 
+$s_{t+1}\sim P(\cdot|s_t,a_t)$。
+
+在一个决策时间 $t$ 时，约定历史信息为截至 $t$ 的可观测的状态和动作的序列，即
 \[
-  K_\theta(\d s_{t+1},\d a_{t+1}|s_t,a_t) \coloneq \mathcal P(\d s_{t+1}|s_t,a_t)\pi_\theta(\d a_{t+1}|s_{t+1}).
+  \tau_t:=(s_0,a_0,s_1,a_1,\dots,s_{t-1},a_{t-1},s_t).
 \]
-换句话说，给定 $s_t,a_t$，$K_\theta(\cdot| s_t,a_t)$ 是积测度 $\mathcal P(\cdot|s_t,a_t)\otimes \pi_\theta(\cdot|s_{t+1})$，
-根据 Ionescu-Tulcea 定理，空间 $(\Omega,\mathcal F)$ 上存在唯一的
-概率测度 $\mathbb P_\theta$，使得对于任意时间 $T\in \mathbb{N}$
-和可测集 $B_0,B_1,\dots,B_T\in \mathcal S$ 以及 $C_0,C_1,\dots,C_T\in \mathcal A$，满足
-\begin{align*}
-  &\mathbb P_\theta\left(
-    (B_0\times C_0)\times (B_1\times C_1)\times \cdots \times (B_T\times C_T) \times (S\times A)^{\mathbb{N}}
-  \right) \\
-  &= \int_{B_0}\rho_0(\d s_0)
-  \int_{C_0}\pi_\theta(\d a_0|s_0)
-  \int_{B_1\times C_1} K_\theta(\d s_1,\d a_1|s_0,a_0)
-  \cdots \int_{B_T\times C_T} K_\theta(\d s_T,\d a_T|s_{T-1},a_{T-1})\\
-  &=\int_{B_0\times C_0}\int_{B_1\times C_1} \cdots \int_{B_T\times C_T} \rho_0(\d s_0)
-  \pi_\theta(\d a_0|s_0)
-  \prod_{t=0}^{T-1} K_\theta(\d s_{t+1},\d a_{t+1}|s_{t},a_{t})
-\end{align*}
-这也表明 $\mathbb{P}_\theta$ 有概率密度函数
-\begin{equation}\label{eq:prob-density}
-  p_\theta(\tau) = \prod_{t=-1}^\infty K_\theta(s_{t+1},a_{t+1}|s_{t},a_{t}).
+注意到 $\tau_t$ 中不包含 $a_t$，因为 $a_t$ 是在历史信息 $\tau_t$ 的基础上选择的。
+
+在最一般的情况下，一个策略指的是 agent 自适应地根据历史信息来选择动作的规则。准确地说，
+一个策略是一个映射 $\pi:\mathcal H\times \mathscr A \to [0,1]$，其中 $\mathcal H$ 包含所有有限长的历史信息。
+在时间 $t$ 处，动作采样于 $ a_t\sim \pi(\cdot|\tau_t)$。
+
+一个稳定策略 $\pi$ 是一个映射 $\pi:\mathcal S\times \mathscr A \to [0,1]$，满足：对于任意 $s\in \mathcal S$，$\pi(\cdot|s)$ 是 $\mathcal A$ 上的一个概率测度。
+也即，agent 选取的动作采样于 $a_t\sim \pi(\cdot|s_t)$，只依赖于当前状态 $s_t$。
+一个确定性的稳定策略指的是映射 $\pi:\mathcal S \to \mathcal A$，满足 $\pi(s)\in \mathcal A$，即在状态 $s$ 下总是选择动作 $\pi(s)$。
+
+\paragraph{价值} 我们现在定义一般策略的价值。对于一个策略 $\pi$ 和初始状态 $S_0=s$，我们定义价值函数 $V^\pi_M: \mathcal S \to \mathbb{R}$ 为
+\[
+  V_M^\pi(s)= \mathbb{E}\biggl[
+    \sum_{t=0}^\infty \gamma^t r(S_t,A_t) \biggm| S_0=s
+  \biggr].
+\]
+这里的期望相对于轨迹的随机性(依赖于状态转移和策略 $\pi$)。因为 $r(s,a)\in [0,1]$，所以
+$ 0<V_M^\pi(s)\leq \sum_{t=0}^\infty \gamma^t = \frac{1}{1-\gamma}$。
+
+类似地，定义动作价值函数 $Q^\pi_M:\mathcal S\times \mathcal A \to \mathbb{R}$ 为
+\[
+  Q_M^\pi(s,a) = \mathbb{E}\biggl[
+    \sum_{t=0}^\infty \gamma^t r(S_t,A_t) \biggm| S_0=s, A_0=a
+  \biggr].
+\]
+显然 $Q_M^\pi(s,a)$ 也有上界 $\frac{1}{1-\gamma}$。
+
+\paragraph{目标} 给定状态 $s$，agent 的目标是寻找策略 $\pi$ 使得最大化价值：
+\begin{equation}
+  \sup_\pi V_M^\pi(s),
 \end{equation}
-这里为了方便，记 $K_{\theta}(\d s_0,\d a_0|s_{-1},a_{-1}) = \rho_0(\d s_0)\pi_\theta(\d a_0|s_0)$。
+其中上确界针对所有可能的(非稳定的或者随机的)策略。我们将看到，存在一个稳定的确定性策略对于所有初始状态 $s$ 
+都是最优的。
 
-有了概率空间 $(\Omega,\mathcal F,\mathbb P_\theta)$，我们就可以定义强化学习的目标函数了。
-定义投影函数 $X_t:\Omega \to S \times A$ 为 $X_t(\tau) = (s_t,a_t)$，其中 $\tau = ((s_0,a_0),(s_1,a_1),\ldots) \in \Omega$。
-我们定义单步奖励是复合函数 $r_t=r\circ X_t:\Omega \to \mathbb{R}$，即
-\[
-  r_t(\tau)=r(s_t,a_t).
-\]
-$r_t$ 是 $\Omega$ 上的有界实值随机变量。
-通过折扣因子 $\gamma$，我们定义整条轨迹的累计奖励为无穷级数
-\begin{equation}\label{eq:reward}
-  R(\tau)=\sum_{t=0}^\infty \gamma^t r_t(\tau).
-\end{equation}
-由于 $r_t$ 的有界性，$R(\tau)$ 是绝对收敛的，并且关于 $\tau$ 是一致收敛的，
-所以 $R$ 也是 $\Omega$ 上的一个有界实值随机变量。
-也就是说，$R(\tau)\in L^1(\Omega,\mathcal F,\mathbb P_\theta)$。
-最后，强化学习的\emph{目标泛函} $J:\Theta\to \mathbb{R}$ 定义为
-随机变量 $R$ 的期望值，即
-\begin{equation}\label{eq:objective-functional}
-  J(\theta)= \mathbb{E}[R]=\int_\Omega R(\tau)\mathbb P_\theta(\d \tau).
-\end{equation}
-可以看到，强化学习的奖励并不依赖于参数 $\theta$。
-参数 $\theta$ 唯一控制的变量是概率测度 $\mathbb P_\theta$。
-因此强化学习优化的本质是在参数空间 $\Theta$ 上不断改变测度 $ \mathbb{P}_\theta$，
-把更多的“概率质量”集中到 $R$ 较大的轨迹集合上。
+为了简化记号，我们有时候会省略 MDP 的下标 $M$，直接写成 $V^\pi$ 和 $Q^\pi$。
 
-\section{策略梯度}
+\begin{example}[导航]
+  导航也许是最简单的强化学习的例子。状态是 agent 的当前位置。动作为东南西北四个移动方向。
+  此时状态转移函数是确定性的。
+  agent 有一个目标状态 $g$，当 agent 到达目标状态 $g$ 时获得奖励 $1$，其他时候奖励为 $0$。
+  因为 $\gamma <1$，所以存在一个激励使得 agent 尽快地到达目标状态 $g$。
+  因此，最优的行为是找到从起点到目标状态 $g$ 的最短路径。如果策略在 $d$ 步到达目标并且保
+  持在目标状态，那么价值函数的值为 $\gamma^d$。
+\end{example}
 
-为了书写方便，我们先对机器学习文献中常见的期望写法进行一些符号上的说明。
-对于随机变量 $f:\Omega \to \mathbb{R}$，记号 $\mathbb{E}_{x\sim \mathbb{P}}[f(x)]$
-表示 $f$ 关于测度 $\mathbb{P}$ 的期望值，即
-\[
-  \mathbb{E}_{x\sim \mathbb{P}}[f(x)] = \int_\Omega f(x)\mathbb{P}(\d x).
-\] 
-有时候也简写成 $\mathbb{E}_x[f(x)]$。对于带有转移核的情况，
-设两个可测空间 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$，以及一个从 $E$ 到 $F$ 的转移核 $K:E\times \mathcal{F}\to [0,1]$，
-$\mathbb{P}$ 是 $E$ 上的概率测度，$f$ 是 $E\times F$ 上的随机变量，那么
-记号 $\mathbb{E}_{x\sim \mathbb{P},y\sim K(\cdot|x)}[f(x,y)]$ 表示
-\[
-  \mathbb{E}_{x\sim \mathbb{P},y\sim K(\cdot|x)}[f(x,y)] = \int_E \int_F f(x,y) K(\d y|x)\mathbb{P}(\d x).   
-\]
-有时候也简写成 $\mathbb{E}_{x\sim \mathbb{P},y\sim K}[f(x,y)]$ 或者 $\mathbb{E}_{x,y}[f(x,y)]$。
+\begin{example}[策略游戏]
+  这是一类很受欢迎的应用场景，强化学习已经在围棋、国际象棋以及各种形式的扑克中达到了人类水平的表现。通常，状态
+  是当前的游戏局面，动作是合法的走法，而奖励则是最终的胜负结果（或者是更详细的得分）。从技术上讲，这些属于
+  多 agent 环境，但许多成功的方法使用的技术并不会显式地对多个 agent 建模。
+\end{example}
 
-回顾 \eqref{eq:objective-functional} 式，结合累计奖励 \eqref{eq:reward} 和
-概率密度 \eqref{eq:prob-density}，我们可以把目标函数 $J(\theta)$ 展开成如下形式：
-\[
-  J(\theta)=\int_\Omega \left(
-    \sum _{k=0}^\infty \gamma^k r(s_k,a_k)
-  \right) p_\theta(\tau) \d \tau,
-\]
-对 $\theta$ 求梯度，交换积分和梯度算子，利用恒等变形 $\nabla_\theta p_\theta(\tau) = p_\theta(\tau)\nabla_\theta \log p_\theta(\tau)$，我们得到
-\[
-  \nabla_\theta J(\theta) = \int_\Omega \left(
-    \sum _{k=0}^\infty \gamma^k r(s_k,a_k)
-  \right) p_\theta(\tau)\nabla_\theta \log p_\theta(\tau) \d \tau
-  =\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
-    \nabla_\theta \log p_\theta(\tau)
-    \sum _{k=0}^\infty \gamma^k r(s_k,a_k)
-  \right].
-\]
-再回顾概率密度 \eqref{eq:prob-density}，
-表达式中只有 $\pi_\theta(a_t|s_t)$ 依赖于 $\theta$，所以
-\[
-  \nabla_\theta \log p_\theta(\tau) = \sum_{t=0}^\infty \nabla_\theta \log \pi_\theta(a_t|s_t),
-\]
-代入到上式中，我们就得到了强化学习的\emph{原始策略梯度表达式}：
-\begin{equation}\label{eq:policy-gradient}
-  \nabla_\theta J(\theta) = \mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
-    \sum_{t=0}^\infty\sum_{k=0}^\infty \gamma^k r(s_k,a_k) \nabla_\theta \log \pi_\theta(a_t|s_t)
-  \right].  
-\end{equation}
+\subsubsection{稳定策略的 Bellman 一致性方程}
 
-原始策略梯度的表达式极难处理，包含了二重无穷级数，
-我们需要利用时间上的因果性来进行一些简化。
+稳定策略满足下面的一致性条件：
 
-记 $S_k:\Omega\to S$ 和 $A_k:\Omega\to A$ 分别为时刻 $k$ 的状态和动作的投影函数，即 $S_k(\tau)=s_k$ 和 $A_k(\tau)=a_k$。
-对于每个时刻 $t$，我们考虑历史轨迹生成子 $\sigma$-代数 $\mathcal H_t$：
-\[
-  \mathcal H_t = \sigma\left(
-    S_0,A_0,S_1,A_1,\dots,S_{t-1},A_{t-1},S_t
-  \right).
-\]
-利用条件期望的塔式法则，我们有
-\[
-  \mathbb{E}_\tau\left[
-    \nabla_\theta\log \pi_\theta(a_t|s_t)\sum_{k=0}^{t-1}\gamma^k r_k
-  \right]= \mathbb{E}\left[
-    \mathbb{E}\left[
-      \nabla_\theta\log \pi_\theta(A_t|S_t)\sum_{k=0}^{t-1}\gamma^k r_k
-      \middle| \mathcal H_t
-    \right]
-  \right],
-\]
-内层期望中，$\sum_{k=0}^{t-1}\gamma^k r_k$ 是 $\mathcal H_t$-可测的，
-根据条件期望的性质，我们可以把它往外提一层，得到
-\[
-  \mathbb{E}\left[
-    \nabla_\theta\log \pi_\theta(A_t|S_t)\sum_{k=0}^{t-1}\gamma^k r_k
-    \middle| \mathcal H_t
-  \right] = \left(\sum_{k=0}^{t-1}\gamma^k r_k\right) \mathbb{E}\left[
-    \nabla_\theta\log \pi_\theta(A_t|S_t)
-    \middle| \mathcal H_t
-  \right].
-\]
-其中 $\pi_\theta(A_t|S_t)$ 只有 $A_t$ 是未知信息，所以有
-\begin{equation}\label{eq:zero-mean}
-  \begin{aligned}
-    \mathbb{E}[
-      \nabla_\theta\log \pi_\theta(A_t|S_t)
-      | \mathcal H_t]&=\mathbb{E}[
-      \nabla_\theta\log \pi_\theta(A_t|S_t)|S_t]
-      =\int_A 
-      \nabla_\theta\log \pi_\theta(a_t|S_t)\pi_\theta(\d a_t|S_t)\\
-      &=\int_A \frac{\nabla_\theta \pi_\theta(a_t|S_t)}{\pi_\theta(a_t|S_t)}\pi_\theta( a_t|S_t)
-      \d a_t=\int_A \nabla_\theta \pi_\theta(a_t|S_t) \d a_t\\
-      &=\nabla_\theta \int_A \pi_\theta(a_t|S_t) \d a_t=\nabla_\theta 1=0.
-  \end{aligned}
-\end{equation}
-于是我们有
-\[
-  \mathbb{E}_\tau\left[
-    \nabla_\theta\log \pi_\theta(a_t|s_t)\sum_{k=0}^{t-1}\gamma^k r_k
-  \right]= 0.
-\]
-所以 \eqref{eq:policy-gradient} 中关于 $k$ 的求和可以截断到 $t$，即
-\begin{equation}\label{eq:policy-gradient-simplified}
-  \nabla_\theta J(\theta) = \mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
-    \sum_{t=0}^\infty\sum_{k=t}^\infty \gamma^k r(s_k,a_k) \nabla_\theta \log \pi_\theta(a_t|s_t)
-  \right].
-\end{equation}
+\begin{lemma}
+  假设 $\pi$ 是稳定策略，那么 $V^\pi$ 和 $Q^\pi$ 满足下面的 Bellman 一致性方程：
+  对于任意 $s\in \mathcal S$ 和 $a\in \mathcal A$，有
+  \begin{align*}
+    V^\pi(s)&=\mathbb{E}_{a\sim \pi(\cdot|s)} [Q^\pi(s,a)],\\
+    Q^\pi(s,a) &= r(s,a) + \gamma \mathbb{E}_{s'\sim P(\cdot|s,a)} [V^\pi(s')].
+  \end{align*}
+  特别地，如果 $\pi$ 是确定性的，那么 $V^\pi(s)=Q^\pi(s,\pi(s))$。
+\end{lemma}
+\begin{proof}
+  直接利用条件期望的塔式法则，我们有
+  \begin{equation*}
+    \mathbb{E}\biggl[
+      \mathbb{E}\Bigl[
+        \sum_{t=0}^\infty \gamma^t r(S_t,A_t)\Bigm| S_0,A_0
+      \Bigr]\biggm| S_0
+    \biggr]= \mathbb{E}\biggl[
+      \sum_{t=0}^\infty \gamma^t r(S_t,A_t) \biggm| S_0
+      \biggr],
+  \end{equation*}
+  右端是 $V^\pi$，左端是 $\mathbb{E}_{a\sim \pi(\cdot|S_0)}[Q^\pi(S_0,a)]$。
+  对于第二点，有
+  \begin{align*}
+    Q^\pi&=\mathbb{E}\biggl[
+      r(S_0,A_0) + \sum_{t=1}^\infty \gamma^t r(S_t,A_t) \biggm| S_0,A_0
+    \biggr]\\
+    &=r(S_0,A_0)+\gamma \mathbb{E}\biggl[
+      \sum_{t=0}^\infty \gamma^t r(S_{t+1},A_{t+1}) \biggm| S_0,A_0
+    \biggr]\\
+    &= r(S_0,A_0) + \gamma \mathbb{E}\biggl[
+      \mathbb{E}\Bigl[
+        \sum_{t=0}^\infty \gamma^t r(S_{t+1},A_{t+1}) \Bigm| S_1
+      \Bigr] \biggm| S_0,A_0
+    \biggr]\\
+    &= r(S_0,A_0) + \gamma \mathbb{E}_{s'\sim P(\cdot|S_0,A_0)}[V^\pi(s')].\qedhere
+  \end{align*}
+\end{proof}
 
-把 $t$ 的求和与期望交换并提取因子 $\gamma^t$，得到
+换一个视角，把 $V^\pi$ 视为长度 $|\mathcal S|$ 的向量，$Q^\pi$ 视为长度 $|\mathcal S|\cdot |\mathcal A|$ 的向量。
+记符号 $P$ 为转移函数 $P$ 的矩阵表示，即一个 $|\mathcal S|\cdot |\mathcal A|$ 行 $|\mathcal S|$ 列的矩阵，
+满足 $P_{(s,a),s'}=P(s'|s,a)$。
+同时记 $P^\pi$ 是稳定策略 $\pi$ 诱导的状态-动作对的转移矩阵：
 \[
-  \nabla_\theta J(\theta) = \sum_{t=0}^\infty \gamma^t\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
-    \nabla_\theta \log \pi_\theta(a_t|s_t) \sum_{k=t}^\infty \gamma^{k-t} r(s_k,a_k)
-  \right].
+  P^\pi_{(s,a),(s',a')} = P(s'|s,a)\pi(a'|s').
 \]
-继续利用条件期望的塔式法则，我们有
-\begin{align*}
-  &\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
-    \nabla_\theta \log \pi_\theta(a_t|s_t) \sum_{k=t}^\infty \gamma^{k-t} r(s_k,a_k)
-  \right]\\
-  &= \mathbb{E}\left[
-    \mathbb{E}\left[
-      \nabla_\theta \log \pi_\theta(A_t|S_t) \sum_{k=t}^\infty \gamma^{k-t} r_k
-      \middle| S_t,A_t
-    \right]
-  \right]\\
-  &=\mathbb{E}\left[
-    \nabla_\theta \log \pi_\theta(A_t|S_t) \mathbb{E}\left[
-      \sum_{k=t}^\infty \gamma^{k-t} r_k
-      \middle| S_t,A_t
-    \right]
-  \right],
-\end{align*}
-第二个等号是因为 $\nabla_\theta \log \pi_\theta(A_t|S_t)$ 是 $\sigma(S_t,A_t)$-可测的。
-记\emph{动作价值函数}为
+特别的，对于确定性策略，有
 \[
-  Q^{\pi_\theta} = \mathbb{E}\left[
-    \sum_{k=t}^\infty \gamma^{k-t} r_k
-    \middle| S_t,A_t
-  \right],
+  P^\pi_{(s,a),(s',a')} = \begin{cases}
+    P(s'|s,a) & \text{if $a'=\pi(s')$},\\
+    0 & \text{otherwise}.
+  \end{cases}
 \]
-其表示在状态 $S_t$ 下执行动作 $A_t$ 后，未来累计奖励的条件期望，是 $(S_t,A_t)$ 的函数。
-于是策略梯度表达式变为
+在这个记号下，可以直接验证得到：
 \[
-  \nabla_\theta J(\theta) = \sum_{t=0}^\infty \gamma^t\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
-    \nabla_\theta \log \pi_\theta(a_t|s_t) Q^{\pi_\theta}(s_t,a_t)
-  \right].
+  Q^\pi=r+\gamma PV^\pi=r+\gamma P^\pi Q^\pi.
 \]
-% 由于期望内层的 $\nabla_\theta \log \pi_\theta(A_t|S_t) Q^{\pi_\theta}(S_t,A_t)$ 
-% 只和 $S_t$ 和 $A_t$ 有关，所以期望的积分可以推前到 $S\times A$ 上的测度进行，即
+
+\begin{corollary}
+  假设 $\pi$ 是稳定策略，那么 
+  \begin{equation}
+    Q^\pi=(I-\gamma P^\pi)^{-1}r,
+  \end{equation}
+  其中 $I$ 是 $|\mathcal S|\cdot |\mathcal A|$ 维的单位矩阵。
+\end{corollary}
+\begin{proof}
+  只需要说明 $I-\gamma P^\pi$ 是可逆的。注意到对于任意非零的向量 $x\in \mathbb{R}^{|\mathcal S| |\mathcal A|}$，有
+  \begin{equation*}
+    \| (I-\gamma P^\pi)x\|_\infty \geq \|x\|_\infty - \gamma \|P^\pi x\|_\infty\geq 
+    \|x\|_\infty - \gamma \|x\|_\infty = (1-\gamma)\|x\|_\infty >0.
+  \end{equation*}
+  其中第一步利用了三角不等式，第二步利用了 $P^\pi$ 是一个转移矩阵，所以 $\|P^\pi x\|_\infty \leq \|x\|_\infty$。
+\end{proof}
+
+\subsubsection{Bellman 最优性方程}
+
+带折扣的 MDP 的一个非常重要和方便的性质是，存在一个稳定和确定性的策略使得对于所有的 $s \in \mathcal S$
+都能最大化 $V^\pi(s)$。
+
+\begin{theorem}
+  令 $\Pi$ 是所有策略(可能是非稳定的或者随机的)的集合。定义
+  \[
+    V^*(s) = \sup_{\pi\in \Pi} V^\pi(s),\quad Q^*(s,a) = \sup_{\pi\in \Pi} Q^\pi(s,a).
+  \]
+  那么存在一个稳定的确定性策略 $\pi$，使得对于所有 $s\in \mathcal S$ 和 $a\in \mathcal A$，满足 
+  \[
+    V^\pi(s) = V^*(s),\quad Q^\pi(s,a)=Q^*(s,a).
+  \]
+  我们把这样的策略称为最优策略。
+\end{theorem}
+\begin{proof}
+  我们首先证明：在考虑一步历史 $(S_0,A_0,S_1)=(s,a,s')$ 的条件下，最大的未来折扣回报
+  不依赖于 $(s,a)$ 的值。准确地说，我们证明下面的式子：
+  \begin{equation}\label{eq:optimality}
+    \sup_{\pi\in \Pi} \mathbb{E}\biggl[
+      \sum_{t=1}^\infty \gamma^t r(S_t,A_t) \biggm| S_0=s, A_0=a, S_1=s'
+    \biggr]=\gamma V^*(s').
+  \end{equation}
+  固定任意策略 $\pi$。定义一个“偏移”策略 $\pi_{(s,a)}$ 如下：对于 $t\geq 0$ 和历史 $(s_0,a_0,\dots,s_t)$，有
+  \begin{align*}
+    &\pi_{(s,a)}(A_t=b\mid S_0=s_0,A_0=a_0,\dots,S_t=s_t)\\&=
+    \pi(A_{t+1}=b\mid S_0=s,A_0=a,S_1=s_0,A_1=a_0,\dots,S_{t+1}=s_t).
+  \end{align*}
+  那么在已知 $(S_0,A_0,S_1)=(s,a,s')$ 的条件下策略 $\pi$ 的表现，与
+  已知 $S_0=s'$ 的条件下策略 $\pi_{(s,a)}$ 的表现完全一样。也就是说，有
+  \[
+    \mathbb{E}^\pi \biggl[
+      \sum_{t=1}^\infty \gamma^t r(S_t,A_t) \biggm| (S_0,A_0,S_1)=(s,a,s')
+    \biggr] = \gamma \mathbb{E}^{\pi_{(s,a)}} \biggl[
+      \sum_{t=0}^\infty \gamma^t r(S_t,A_t) \biggm| S_0=s'
+    \biggr]=\gamma V^{\pi_{(s,a)}}(s').
+  \]
+  此外，对于每个 $(s,a)$，集合 $\{\pi_{(s,a)} : \pi \in \Pi\}$ 与 $\Pi$ 是相同的。
+  因此，有
+  \[
+    \sup_{\pi\in \Pi} \mathbb{E}^\pi \biggl[
+      \sum_{t=1}^\infty \gamma^t r(S_t,A_t) \biggm| (S_0,A_0,S_1)=(s,a,s')
+    \biggr] = \gamma \sup_{\pi\in \Pi} V^{\pi_{(s,a)}}(s') = \gamma V^*(s').
+  \]
+  这就证明了 \eqref{eq:optimality} 式。
+
+
+\end{proof}
+
+
+
+
+
+
+
+
+
+% \section{系统动力学的公理化构造}
+
+% 本节我们构建强化学习的系统框架，即马尔可夫决策过程（Markov Decision Process, MDP）。
+% 我们将从最基本的概念出发，逐步建立起 MDP 的数学定义。
+
+% MDP 指的是一个六元组 $(S, A, \mathcal P, r,\rho_0, \gamma)$，其中：
+% \begin{enumerate}
+%   \item \emph{状态空间}。系统所有可能的状态的集合，记为 $S$。默认
+%   是一个可测空间，配备一个 $\sigma$-代数 $\mathcal{S}$。
+%   \item \emph{动作空间}。系统所有可能的动作的集合，记为 $A$。同样是一个可测空间，配备一个 $\sigma$-代数 $\mathcal{A}$。
+%   为了描述系统的交互，还会考虑乘积空间 $S \times A$，配备 $\sigma$-代数 $\mathcal{S} \otimes \mathcal{A}$。
+%   \item \emph{状态转移核}。状态转移核 $\mathcal P$ 指的是一个从 $S\times A$ 到 
+%   $S$ 的转移概率，也即映射
+%   \[
+%     \mathcal P: (S\times A)\times \mathcal{S} \to [0,1],
+%   \]
+%   满足：对于任意 $(s,a)\in S\times A$，$\mathcal P(s,a,\cdot)$ 是 $S$ 上的一个概率测度；
+%   对于任意 $E\in \mathcal{S}$，$\mathcal P(\cdot,\cdot,E)$ 是 $S\times A$ 上的一个可测函数。
+%   通常，我们记 $\mathcal P(E|s,a) := \mathcal P(s,a,E)$，表示在状态 $s$ 下执行动作 $a$ 后状态集 $E$ 
+%   出现的概率。
+%   \item \emph{奖励函数}。奖励函数 $r$ 是 $S\times A$ 上的有界实值随机变量。
+%   \item \emph{初始状态分布}。$\rho_0$ 是 $S$ 上的一个概率测度，表示系统的初始状态分布。
+%   \item \emph{折扣因子}。$\gamma\in [0,1)$ 是一个实数，表示未来奖励的折扣率。
+% \end{enumerate}
+
+% 在此基础上，我们需要优化的目标是一个策略 $\pi_\theta$，它是从 $S$ 到 $A$ 的转移概率，所以
+% 满足：对于任意 $s\in S$，$\pi_\theta(s,\cdot)$ 是 $A$ 上的一个概率测度；对于任意 $E\in \mathcal{A}$，$\pi_\theta(\cdot,E)$ 是 $S$ 上的一个可测函数。
+% 同样记 $\pi_\theta(E|s) := \pi_\theta(s,E)$，表示在状态 $s$ 下选择动作集 $E$ 的概率。
+% $\theta$ 表示策略的参数。
+
+% \section{无穷维轨迹空间与目标泛函}
+
+% 在强化学习中，系统的完整状态是一条无限长的序列，我们需要构造一个容纳
+% 所有可能轨迹的空间。
+
+% 对于每个时刻 $t\in \mathbb{N}$，系统的状态是一个二元组 $(s_t,a_t)\in S \times A$，表示在时刻 $t$ 的状态和动作。
+% 因此，系统的完整状态可以表示为一个无限长的序列 $\tau = ((s_0,a_0),(s_1,a_1),\ldots)$，其中每个 $(s_t,a_t)\in S \times A$。
+% 因此我们的状态空间应该是
 % \[
-%   \nabla_\theta J(\theta) = \sum_{t=0}^\infty \gamma^t\mathbb{E}_{s_t,a_t\sim \mathbb{P}_\theta}\left[
+%   \Omega=(S\times A)^{\mathbb{N}}=\prod_{t=0}^\infty S\times A,
+% \]
+% 其配备自然的 $\sigma$-代数 $\mathcal{F}$，由所有有限维的柱集生成。
+
+% 接下来我们要给 $(\Omega,\mathcal F)$ 赋予一个概率测度 $\mathbb P_\theta$。
+% 现在我们拥有的是：
+% \begin{itemize}
+%   \item 初始概率测度 $\rho_0(\d s_0)$。
+%   \item 策略核 $\pi_\theta(\d a_t|s_t)$，即给定状态输出动作的概率测度。
+%   \item 系统转移核 $\mathcal P(\d s_{t+1}|s_t,a_t)$，即
+%   给定当前时刻状态和动作输出下一个时刻状态的概率测度。
+% \end{itemize}
+% 我们定义一个从 $S\times A$ 到 $S\times A$ 的联合转移核
+% \[
+%   K_\theta(\d s_{t+1},\d a_{t+1}|s_t,a_t) \coloneq \mathcal P(\d s_{t+1}|s_t,a_t)\pi_\theta(\d a_{t+1}|s_{t+1}).
+% \]
+% 换句话说，给定 $s_t,a_t$，$K_\theta(\cdot| s_t,a_t)$ 是积测度 $\mathcal P(\cdot|s_t,a_t)\otimes \pi_\theta(\cdot|s_{t+1})$，
+% 根据 Ionescu-Tulcea 定理，空间 $(\Omega,\mathcal F)$ 上存在唯一的
+% 概率测度 $\mathbb P_\theta$，使得对于任意时间 $T\in \mathbb{N}$
+% 和可测集 $B_0,B_1,\dots,B_T\in \mathcal S$ 以及 $C_0,C_1,\dots,C_T\in \mathcal A$，满足
+% \begin{align*}
+%   &\mathbb P_\theta\left(
+%     (B_0\times C_0)\times (B_1\times C_1)\times \cdots \times (B_T\times C_T) \times (S\times A)^{\mathbb{N}}
+%   \right) \\
+%   &= \int_{B_0}\rho_0(\d s_0)
+%   \int_{C_0}\pi_\theta(\d a_0|s_0)
+%   \int_{B_1\times C_1} K_\theta(\d s_1,\d a_1|s_0,a_0)
+%   \cdots \int_{B_T\times C_T} K_\theta(\d s_T,\d a_T|s_{T-1},a_{T-1})\\
+%   &=\int_{B_0\times C_0}\int_{B_1\times C_1} \cdots \int_{B_T\times C_T} \rho_0(\d s_0)
+%   \pi_\theta(\d a_0|s_0)
+%   \prod_{t=0}^{T-1} K_\theta(\d s_{t+1},\d a_{t+1}|s_{t},a_{t})
+% \end{align*}
+% 这也表明 $\mathbb{P}_\theta$ 有概率密度函数
+% \begin{equation}\label{eq:prob-density}
+%   p_\theta(\tau) = \prod_{t=-1}^\infty K_\theta(s_{t+1},a_{t+1}|s_{t},a_{t}).
+% \end{equation}
+% 这里为了方便，记 $K_{\theta}(\d s_0,\d a_0|s_{-1},a_{-1}) = \rho_0(\d s_0)\pi_\theta(\d a_0|s_0)$。
+
+% 有了概率空间 $(\Omega,\mathcal F,\mathbb P_\theta)$，我们就可以定义强化学习的目标函数了。
+% 定义投影函数 $X_t:\Omega \to S \times A$ 为 $X_t(\tau) = (s_t,a_t)$，其中 $\tau = ((s_0,a_0),(s_1,a_1),\ldots) \in \Omega$。
+% 我们定义单步奖励是复合函数 $r_t=r\circ X_t:\Omega \to \mathbb{R}$，即
+% \[
+%   r_t(\tau)=r(s_t,a_t).
+% \]
+% $r_t$ 是 $\Omega$ 上的有界实值随机变量。
+% 通过折扣因子 $\gamma$，我们定义整条轨迹的累计奖励为无穷级数
+% \begin{equation}\label{eq:reward}
+%   R(\tau)=\sum_{t=0}^\infty \gamma^t r_t(\tau).
+% \end{equation}
+% 由于 $r_t$ 的有界性，$R(\tau)$ 是绝对收敛的，并且关于 $\tau$ 是一致收敛的，
+% 所以 $R$ 也是 $\Omega$ 上的一个有界实值随机变量。
+% 也就是说，$R(\tau)\in L^1(\Omega,\mathcal F,\mathbb P_\theta)$。
+% 最后，强化学习的\emph{目标泛函} $J:\Theta\to \mathbb{R}$ 定义为
+% 随机变量 $R$ 的期望值，即
+% \begin{equation}\label{eq:objective-functional}
+%   J(\theta)= \mathbb{E}[R]=\int_\Omega R(\tau)\mathbb P_\theta(\d \tau).
+% \end{equation}
+% 可以看到，强化学习的奖励并不依赖于参数 $\theta$。
+% 参数 $\theta$ 唯一控制的变量是概率测度 $\mathbb P_\theta$。
+% 因此强化学习优化的本质是在参数空间 $\Theta$ 上不断改变测度 $ \mathbb{P}_\theta$，
+% 把更多的“概率质量”集中到 $R$ 较大的轨迹集合上。
+
+% \section{策略梯度}
+
+% 为了书写方便，我们先对机器学习文献中常见的期望写法进行一些符号上的说明。
+% 对于随机变量 $f:\Omega \to \mathbb{R}$，记号 $\mathbb{E}_{x\sim \mathbb{P}}[f(x)]$
+% 表示 $f$ 关于测度 $\mathbb{P}$ 的期望值，即
+% \[
+%   \mathbb{E}_{x\sim \mathbb{P}}[f(x)] = \int_\Omega f(x)\mathbb{P}(\d x).
+% \] 
+% 有时候也简写成 $\mathbb{E}_x[f(x)]$。对于带有转移核的情况，
+% 设两个可测空间 $(E,\mathcal{E})$ 和 $(F,\mathcal{F})$，以及一个从 $E$ 到 $F$ 的转移核 $K:E\times \mathcal{F}\to [0,1]$，
+% $\mathbb{P}$ 是 $E$ 上的概率测度，$f$ 是 $E\times F$ 上的随机变量，那么
+% 记号 $\mathbb{E}_{x\sim \mathbb{P},y\sim K(\cdot|x)}[f(x,y)]$ 表示
+% \[
+%   \mathbb{E}_{x\sim \mathbb{P},y\sim K(\cdot|x)}[f(x,y)] = \int_E \int_F f(x,y) K(\d y|x)\mathbb{P}(\d x).   
+% \]
+% 有时候也简写成 $\mathbb{E}_{x\sim \mathbb{P},y\sim K}[f(x,y)]$ 或者 $\mathbb{E}_{x,y}[f(x,y)]$。
+
+% 回顾 \eqref{eq:objective-functional} 式，结合累计奖励 \eqref{eq:reward} 和
+% 概率密度 \eqref{eq:prob-density}，我们可以把目标函数 $J(\theta)$ 展开成如下形式：
+% \[
+%   J(\theta)=\int_\Omega \left(
+%     \sum _{k=0}^\infty \gamma^k r(s_k,a_k)
+%   \right) p_\theta(\tau) \d \tau,
+% \]
+% 对 $\theta$ 求梯度，交换积分和梯度算子，利用恒等变形 $\nabla_\theta p_\theta(\tau) = p_\theta(\tau)\nabla_\theta \log p_\theta(\tau)$，我们得到
+% \[
+%   \nabla_\theta J(\theta) = \int_\Omega \left(
+%     \sum _{k=0}^\infty \gamma^k r(s_k,a_k)
+%   \right) p_\theta(\tau)\nabla_\theta \log p_\theta(\tau) \d \tau
+%   =\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
+%     \nabla_\theta \log p_\theta(\tau)
+%     \sum _{k=0}^\infty \gamma^k r(s_k,a_k)
+%   \right].
+% \]
+% 再回顾概率密度 \eqref{eq:prob-density}，
+% 表达式中只有 $\pi_\theta(a_t|s_t)$ 依赖于 $\theta$，所以
+% \[
+%   \nabla_\theta \log p_\theta(\tau) = \sum_{t=0}^\infty \nabla_\theta \log \pi_\theta(a_t|s_t),
+% \]
+% 代入到上式中，我们就得到了强化学习的\emph{原始策略梯度表达式}：
+% \begin{equation}\label{eq:policy-gradient}
+%   \nabla_\theta J(\theta) = \mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
+%     \sum_{t=0}^\infty\sum_{k=0}^\infty \gamma^k r(s_k,a_k) \nabla_\theta \log \pi_\theta(a_t|s_t)
+%   \right].  
+% \end{equation}
+
+% 原始策略梯度的表达式极难处理，包含了二重无穷级数，
+% 我们需要利用时间上的因果性来进行一些简化。
+
+% 记 $S_k:\Omega\to S$ 和 $A_k:\Omega\to A$ 分别为时刻 $k$ 的状态和动作的投影函数，即 $S_k(\tau)=s_k$ 和 $A_k(\tau)=a_k$。
+% 对于每个时刻 $t$，我们考虑历史轨迹生成子 $\sigma$-代数 $\mathcal H_t$：
+% \[
+%   \mathcal H_t = \sigma\left(
+%     S_0,A_0,S_1,A_1,\dots,S_{t-1},A_{t-1},S_t
+%   \right).
+% \]
+% 利用条件期望的塔式法则，我们有
+% \[
+%   \mathbb{E}_\tau\left[
+%     \nabla_\theta\log \pi_\theta(a_t|s_t)\sum_{k=0}^{t-1}\gamma^k r_k
+%   \right]= \mathbb{E}\left[
+%     \mathbb{E}\left[
+%       \nabla_\theta\log \pi_\theta(A_t|S_t)\sum_{k=0}^{t-1}\gamma^k r_k
+%       \middle| \mathcal H_t
+%     \right]
+%   \right],
+% \]
+% 内层期望中，$\sum_{k=0}^{t-1}\gamma^k r_k$ 是 $\mathcal H_t$-可测的，
+% 根据条件期望的性质，我们可以把它往外提一层，得到
+% \[
+%   \mathbb{E}\left[
+%     \nabla_\theta\log \pi_\theta(A_t|S_t)\sum_{k=0}^{t-1}\gamma^k r_k
+%     \middle| \mathcal H_t
+%   \right] = \left(\sum_{k=0}^{t-1}\gamma^k r_k\right) \mathbb{E}\left[
+%     \nabla_\theta\log \pi_\theta(A_t|S_t)
+%     \middle| \mathcal H_t
+%   \right].
+% \]
+% 其中 $\pi_\theta(A_t|S_t)$ 只有 $A_t$ 是未知信息，所以有
+% \begin{equation}\label{eq:zero-mean}
+%   \begin{aligned}
+%     \mathbb{E}[
+%       \nabla_\theta\log \pi_\theta(A_t|S_t)
+%       | \mathcal H_t]&=\mathbb{E}[
+%       \nabla_\theta\log \pi_\theta(A_t|S_t)|S_t]
+%       =\int_A 
+%       \nabla_\theta\log \pi_\theta(a_t|S_t)\pi_\theta(\d a_t|S_t)\\
+%       &=\int_A \frac{\nabla_\theta \pi_\theta(a_t|S_t)}{\pi_\theta(a_t|S_t)}\pi_\theta( a_t|S_t)
+%       \d a_t=\int_A \nabla_\theta \pi_\theta(a_t|S_t) \d a_t\\
+%       &=\nabla_\theta \int_A \pi_\theta(a_t|S_t) \d a_t=\nabla_\theta 1=0.
+%   \end{aligned}
+% \end{equation}
+% 于是我们有
+% \[
+%   \mathbb{E}_\tau\left[
+%     \nabla_\theta\log \pi_\theta(a_t|s_t)\sum_{k=0}^{t-1}\gamma^k r_k
+%   \right]= 0.
+% \]
+% 所以 \eqref{eq:policy-gradient} 中关于 $k$ 的求和可以截断到 $t$，即
+% \begin{equation}\label{eq:policy-gradient-simplified}
+%   \nabla_\theta J(\theta) = \mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
+%     \sum_{t=0}^\infty\sum_{k=t}^\infty \gamma^k r(s_k,a_k) \nabla_\theta \log \pi_\theta(a_t|s_t)
+%   \right].
+% \end{equation}
+
+% 把 $t$ 的求和与期望交换并提取因子 $\gamma^t$，得到
+% \[
+%   \nabla_\theta J(\theta) = \sum_{t=0}^\infty \gamma^t\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
+%     \nabla_\theta \log \pi_\theta(a_t|s_t) \sum_{k=t}^\infty \gamma^{k-t} r(s_k,a_k)
+%   \right].
+% \]
+% 继续利用条件期望的塔式法则，我们有
+% \begin{align*}
+%   &\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
+%     \nabla_\theta \log \pi_\theta(a_t|s_t) \sum_{k=t}^\infty \gamma^{k-t} r(s_k,a_k)
+%   \right]\\
+%   &= \mathbb{E}\left[
+%     \mathbb{E}\left[
+%       \nabla_\theta \log \pi_\theta(A_t|S_t) \sum_{k=t}^\infty \gamma^{k-t} r_k
+%       \middle| S_t,A_t
+%     \right]
+%   \right]\\
+%   &=\mathbb{E}\left[
+%     \nabla_\theta \log \pi_\theta(A_t|S_t) \mathbb{E}\left[
+%       \sum_{k=t}^\infty \gamma^{k-t} r_k
+%       \middle| S_t,A_t
+%     \right]
+%   \right],
+% \end{align*}
+% 第二个等号是因为 $\nabla_\theta \log \pi_\theta(A_t|S_t)$ 是 $\sigma(S_t,A_t)$-可测的。
+% 记\emph{动作价值函数}为
+% \[
+%   Q^{\pi_\theta} = \mathbb{E}\left[
+%     \sum_{k=t}^\infty \gamma^{k-t} r_k
+%     \middle| S_t,A_t
+%   \right],
+% \]
+% 其表示在状态 $S_t$ 下执行动作 $A_t$ 后，未来累计奖励的条件期望，是 $(S_t,A_t)$ 的函数。
+% 于是策略梯度表达式变为
+% \[
+%   \nabla_\theta J(\theta) = \sum_{t=0}^\infty \gamma^t\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
 %     \nabla_\theta \log \pi_\theta(a_t|s_t) Q^{\pi_\theta}(s_t,a_t)
 %   \right].
 % \]
-% 注意这里下标 $s_t,a_t\sim \mathbb{P}_\theta$ 是一种符号滥用，
-% 严格来说 $\mathbb{P}_\theta$ 应该推前到 $S\times A$ 上的测度 $(S_t,A_t)_*\mathbb{P}_\theta$。
+% % 由于期望内层的 $\nabla_\theta \log \pi_\theta(A_t|S_t) Q^{\pi_\theta}(S_t,A_t)$ 
+% % 只和 $S_t$ 和 $A_t$ 有关，所以期望的积分可以推前到 $S\times A$ 上的测度进行，即
+% % \[
+% %   \nabla_\theta J(\theta) = \sum_{t=0}^\infty \gamma^t\mathbb{E}_{s_t,a_t\sim \mathbb{P}_\theta}\left[
+% %     \nabla_\theta \log \pi_\theta(a_t|s_t) Q^{\pi_\theta}(s_t,a_t)
+% %   \right].
+% % \]
+% % 注意这里下标 $s_t,a_t\sim \mathbb{P}_\theta$ 是一种符号滥用，
+% % 严格来说 $\mathbb{P}_\theta$ 应该推前到 $S\times A$ 上的测度 $(S_t,A_t)_*\mathbb{P}_\theta$。
 
-为了降低策略梯度的方差，我们可以引入一个\emph{基线函数} $b:S\to \mathbb{R}$，
-与 \eqref{eq:zero-mean} 类似，我们有
-\[
-  \mathbb{E}\left[
-    \strut\nabla_\theta \log \pi_\theta(A_t|S_t) b(S_t)\middle| S_t
-  \right] = b(S_t) \mathbb{E}\left[
-    \nabla_\theta \log \pi_\theta(A_t|S_t)\middle| S_t
-  \right] = 0.  
-\]
-为了最小化估计方差，最好的选择是 $Q^{\pi_\theta}$ 的条件期望。定义\emph{状态价值函数}为
-\begin{align*}
-  V^{\pi_\theta}=\mathbb{E}[Q^{\pi_\theta}|S_t]=
-  \mathbb{E}\left[
-    \sum_{k=t}^\infty \gamma^{k-t} r_k
-    \middle| S_t
-  \right],
-\end{align*}
-此时 $V^{\pi_\theta}$ 是 $S_t$ 的函数，表示在状态 $S_t$ 下未来累计奖励的条件期望。
-差值 $A^{\pi_\theta}=Q^{\pi_\theta}-V^{\pi_\theta}$ 被称为\emph{优势函数}，表示在状态 $S_t$ 下执行动作 $A_t$ 相对于平均水平的优势。
-由于
-\[
-  \mathbb{E}\left[
-    \nabla_\theta \log \pi_\theta(A_t|S_t) V^{\pi_\theta}(S_t)
-  \right]=\mathbb{E}\Bigl[
-  \mathbb{E}\bigl[
-    \nabla_\theta \log \pi_\theta(A_t|S_t) V^{\pi_\theta}(S_t)\big| S_t
-  \bigr]\Bigr]=0,
-\]
-所以我们可以把策略梯度表达式改写成
-\begin{equation}\label{eq:policy-gradient-advantage}
-  \nabla_\theta J(\theta) = \sum_{t=0}^\infty \gamma^t\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
-    \nabla_\theta \log \pi_\theta(a_t|s_t) A^{\pi_\theta}(s_t,a_t)
-  \right].
-\end{equation}
+% 为了降低策略梯度的方差，我们可以引入一个\emph{基线函数} $b:S\to \mathbb{R}$，
+% 与 \eqref{eq:zero-mean} 类似，我们有
+% \[
+%   \mathbb{E}\left[
+%     \strut\nabla_\theta \log \pi_\theta(A_t|S_t) b(S_t)\middle| S_t
+%   \right] = b(S_t) \mathbb{E}\left[
+%     \nabla_\theta \log \pi_\theta(A_t|S_t)\middle| S_t
+%   \right] = 0.  
+% \]
+% 为了最小化估计方差，最好的选择是 $Q^{\pi_\theta}$ 的条件期望。定义\emph{状态价值函数}为
+% \begin{align*}
+%   V^{\pi_\theta}=\mathbb{E}[Q^{\pi_\theta}|S_t]=
+%   \mathbb{E}\left[
+%     \sum_{k=t}^\infty \gamma^{k-t} r_k
+%     \middle| S_t
+%   \right],
+% \end{align*}
+% 此时 $V^{\pi_\theta}$ 是 $S_t$ 的函数，表示在状态 $S_t$ 下未来累计奖励的条件期望。
+% 差值 $A^{\pi_\theta}=Q^{\pi_\theta}-V^{\pi_\theta}$ 被称为\emph{优势函数}，表示在状态 $S_t$ 下执行动作 $A_t$ 相对于平均水平的优势。
+% 由于
+% \[
+%   \mathbb{E}\left[
+%     \nabla_\theta \log \pi_\theta(A_t|S_t) V^{\pi_\theta}(S_t)
+%   \right]=\mathbb{E}\Bigl[
+%   \mathbb{E}\bigl[
+%     \nabla_\theta \log \pi_\theta(A_t|S_t) V^{\pi_\theta}(S_t)\big| S_t
+%   \bigr]\Bigr]=0,
+% \]
+% 所以我们可以把策略梯度表达式改写成
+% \begin{equation}\label{eq:policy-gradient-advantage}
+%   \nabla_\theta J(\theta) = \sum_{t=0}^\infty \gamma^t\mathbb{E}_{\tau\sim \mathbb{P}_\theta}\left[
+%     \nabla_\theta \log \pi_\theta(a_t|s_t) A^{\pi_\theta}(s_t,a_t)
+%   \right].
+% \end{equation}
 
-记 $\nu_{t,\theta}$ 表示 $\mathbb{P}_\theta$ 在 $(S_t,A_t)$ 下的推前测度。
-$t=0$ 时，有
-\[
-  \nu_{0,\theta}(E\times F) = \mathbb{P}_\theta((S_0,A_0)\in E\times F) = \int_E \rho_0(\d s_0)\int_F \pi_\theta(\d a_0|s_0).
-\]
-$t=1$ 时，有
-\begin{align*}
-  \nu_{1,\theta}(E\times F) &= \int_{S\times A}\int_{E\times F} K_\theta(\d s_1,\d a_1|s_0,a_0)\rho_0(\d s_0)\pi_\theta(\d a_0|s_0)\\
-  &=\int_{S\times A}\int_{E\times F} \mathcal P(\d s_1|s_0,a_0)\pi_\theta(\d a_1|s_1)\rho_0(\d s_0)\pi_\theta(\d a_0|s_0)\\
-  &=\int_{S\times A}\nu_{0,\theta}(\d s_0\d a_0)\int_{E\times F} \mathcal P(\d s_1|s_0,a_0)\pi_\theta(\d a_1|s_1).
-\end{align*}
-以此类推，对于一般的 $t$，我们有
-\begin{align*}
-  \nu_{t,\theta}(E\times F) &= \int_{S\times A}\nu_{t-1,\theta}(\d s_{t-1}\d a_{t-1})\int_{E\times F} \mathcal P(\d s_t|s_{t-1},a_{t-1})\pi_\theta(\d a_t|s_t)\\
-  &=\int_{S\times A}\nu_{t-1,\theta}(\d s_{t-1}\d a_{t-1})\int_E \mathcal P(\d s_t|s_{t-1},a_{t-1})
-  \pi_\theta(F|s_t)\\
-  &=\int_E \pi_\theta(F|s_t)\int_{S\times A}\nu_{t-1,\theta}(\d s_{t-1}\d a_{t-1})\mathcal P(\d s_t|s_{t-1},a_{t-1})\\
-  &=\int_E \pi_\theta(F|s_t)\mu_{t,\theta}(\d s_t)=
-  \int_{E\times F} \pi_\theta(\d a_t|s_t)\mu_{t,\theta}(\d s_t).
-\end{align*}
-其中 
-\[
-  \mu_{t,\theta}(E) =\int_E \int_{S\times A}\nu_{t-1,\theta}(\d s_{t-1}\d a_{t-1})\mathcal P(\d s_t|s_{t-1},a_{t-1})
-  =\nu_{t,\theta}(E\times A)
-\]
-是 $S$ 上的测度。
+% 记 $\nu_{t,\theta}$ 表示 $\mathbb{P}_\theta$ 在 $(S_t,A_t)$ 下的推前测度。
+% $t=0$ 时，有
+% \[
+%   \nu_{0,\theta}(E\times F) = \mathbb{P}_\theta((S_0,A_0)\in E\times F) = \int_E \rho_0(\d s_0)\int_F \pi_\theta(\d a_0|s_0).
+% \]
+% $t=1$ 时，有
+% \begin{align*}
+%   \nu_{1,\theta}(E\times F) &= \int_{S\times A}\int_{E\times F} K_\theta(\d s_1,\d a_1|s_0,a_0)\rho_0(\d s_0)\pi_\theta(\d a_0|s_0)\\
+%   &=\int_{S\times A}\int_{E\times F} \mathcal P(\d s_1|s_0,a_0)\pi_\theta(\d a_1|s_1)\rho_0(\d s_0)\pi_\theta(\d a_0|s_0)\\
+%   &=\int_{S\times A}\nu_{0,\theta}(\d s_0\d a_0)\int_{E\times F} \mathcal P(\d s_1|s_0,a_0)\pi_\theta(\d a_1|s_1).
+% \end{align*}
+% 以此类推，对于一般的 $t$，我们有
+% \begin{align*}
+%   \nu_{t,\theta}(E\times F) &= \int_{S\times A}\nu_{t-1,\theta}(\d s_{t-1}\d a_{t-1})\int_{E\times F} \mathcal P(\d s_t|s_{t-1},a_{t-1})\pi_\theta(\d a_t|s_t)\\
+%   &=\int_{S\times A}\nu_{t-1,\theta}(\d s_{t-1}\d a_{t-1})\int_E \mathcal P(\d s_t|s_{t-1},a_{t-1})
+%   \pi_\theta(F|s_t)\\
+%   &=\int_E \pi_\theta(F|s_t)\int_{S\times A}\nu_{t-1,\theta}(\d s_{t-1}\d a_{t-1})\mathcal P(\d s_t|s_{t-1},a_{t-1})\\
+%   &=\int_E \pi_\theta(F|s_t)\mu_{t,\theta}(\d s_t)=
+%   \int_{E\times F} \pi_\theta(\d a_t|s_t)\mu_{t,\theta}(\d s_t).
+% \end{align*}
+% 其中 
+% \[
+%   \mu_{t,\theta}(E) =\int_E \int_{S\times A}\nu_{t-1,\theta}(\d s_{t-1}\d a_{t-1})\mathcal P(\d s_t|s_{t-1},a_{t-1})
+%   =\nu_{t,\theta}(E\times A)
+% \]
+% 是 $S$ 上的测度。
 
-于是 \eqref{eq:policy-gradient-advantage} 中的积分可以推前到 $S\times A$ 上的测度 $\nu_{t,\theta}$，
-得到
-\begin{align*}
-  &\mathbb{E}\left[
-    \nabla_\theta \log \pi_\theta(A_t|S_t) A^{\pi_\theta}(S_t,A_t)
-  \right] = \int_{S\times A} \nabla_\theta \log \pi_\theta(a|s) A^{\pi_\theta}(s,a) \nu_{t,\theta}(\d s \d a)\\
-  &=\int_S\mu_{t,\theta}(\d s)\int_A \nabla_\theta \log \pi_\theta(a|s) A^{\pi_\theta}(s,a) \pi_\theta(\d a|s),
-\end{align*}
-交换积分和求和，得到
-\[
-  \nabla_\theta J(\theta)=\int_S \left(
-    \sum_{t=0}^\infty \gamma^t \mu_{t,\theta}(\d s)
-  \right)\int_A \nabla_\theta \log \pi_\theta(a|s) A^{\pi_\theta}(s,a) \pi_\theta(\d a|s).
-\]
-定义\emph{归一化折现状态分布}为
-\[
-  \rho_{\pi_\theta}(E) = (1-\gamma)\sum_{t=0}^\infty \gamma^t \mu_{t,\theta}(E),
-\]
-其是 $S$ 上的一个概率测度，表示在策略 $\pi_\theta$ 下系统访问状态集 $E$ 的归一化折现频率。
-至此，我们得到了需要的\emph{最终策略梯度表达式}：
-\begin{equation}
-  \begin{aligned}
-    \nabla_\theta J(\theta) &= \frac{1}{1-\gamma}\int_S \rho_{\pi_\theta}(\d s)\int_A \nabla_\theta \log \pi_\theta(a|s) A^{\pi_\theta}(s,a) \pi_\theta(\d a|s)\\
-    &=\frac{1}{1-\gamma}\mathbb{E}_{s\sim\rho_{\pi_\theta},a\sim \pi_\theta}\left[
-      \nabla_\theta \log \pi_\theta(a|s) A^{\pi_\theta}(s,a)
-    \right].
-  \end{aligned}
-\end{equation}
+% 于是 \eqref{eq:policy-gradient-advantage} 中的积分可以推前到 $S\times A$ 上的测度 $\nu_{t,\theta}$，
+% 得到
+% \begin{align*}
+%   &\mathbb{E}\left[
+%     \nabla_\theta \log \pi_\theta(A_t|S_t) A^{\pi_\theta}(S_t,A_t)
+%   \right] = \int_{S\times A} \nabla_\theta \log \pi_\theta(a|s) A^{\pi_\theta}(s,a) \nu_{t,\theta}(\d s \d a)\\
+%   &=\int_S\mu_{t,\theta}(\d s)\int_A \nabla_\theta \log \pi_\theta(a|s) A^{\pi_\theta}(s,a) \pi_\theta(\d a|s),
+% \end{align*}
+% 交换积分和求和，得到
+% \[
+%   \nabla_\theta J(\theta)=\int_S \left(
+%     \sum_{t=0}^\infty \gamma^t \mu_{t,\theta}(\d s)
+%   \right)\int_A \nabla_\theta \log \pi_\theta(a|s) A^{\pi_\theta}(s,a) \pi_\theta(\d a|s).
+% \]
+% 定义\emph{归一化折现状态分布}为
+% \[
+%   \rho_{\pi_\theta}(E) = (1-\gamma)\sum_{t=0}^\infty \gamma^t \mu_{t,\theta}(E),
+% \]
+% 其是 $S$ 上的一个概率测度，表示在策略 $\pi_\theta$ 下系统访问状态集 $E$ 的归一化折现频率。
+% 至此，我们得到了需要的\emph{最终策略梯度表达式}：
+% \begin{equation}
+%   \begin{aligned}
+%     \nabla_\theta J(\theta) &= \frac{1}{1-\gamma}\int_S \rho_{\pi_\theta}(\d s)\int_A \nabla_\theta \log \pi_\theta(a|s) A^{\pi_\theta}(s,a) \pi_\theta(\d a|s)\\
+%     &=\frac{1}{1-\gamma}\mathbb{E}_{s\sim\rho_{\pi_\theta},a\sim \pi_\theta}\left[
+%       \nabla_\theta \log \pi_\theta(a|s) A^{\pi_\theta}(s,a)
+%     \right].
+%   \end{aligned}
+% \end{equation}
 
 
 
